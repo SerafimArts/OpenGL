@@ -148,20 +148,16 @@ class GL46 extends GL45
     public const GL_TRANSFORM_FEEDBACK_STREAM_OVERFLOW = 0x82ed;
 
     /**
-     * {@see GL46::glDeleteShader} frees the memory and invalidates the name
-     * associated with the shader object specified by $shader. This command
-     * effectively undoes the effects of a call to
-     * {@see GL46::glCreateShader}.
+     * {@see GL46::glDeleteShader} frees the memory and invalidates the name associated with the shader object
+     * specified by $shader. This command effectively undoes the effects of a call to {@see GL46::glCreateShader}.
      *
-     * If a shader object to be deleted is attached to a program object, it
-     * will be flagged for deletion, but it will not be deleted until it is
-     * no longer attached to any program object, for any rendering context
-     * (i.e., it must be detached from wherever it was attached before it
-     * will be deleted). A value of 0 for $shader will be silently ignored.
+     * If a shader object to be deleted is attached to a program object, it will be flagged for deletion, but it will
+     * not be deleted until it is no longer attached to any program object, for any rendering context (i.e., it must
+     * be detached from wherever it was attached before it will be deleted). A value of 0 for $shader will be
+     * silently ignored.
      *
-     * To determine whether an object has been flagged for deletion, call
-     * {@see GL46::glGetShader} with arguments $shader and
-     * {@see GL46::GL_DELETE_STATUS}.
+     * To determine whether an object has been flagged for deletion, call {@see GL46::glGetShader} with arguments
+     * $shader and {@see GL46::GL_DELETE_STATUS}.
      *
      * @see http://docs.gl/gl2/glCompileShader
      * @see http://docs.gl/gl2/glCreateShader
@@ -190,18 +186,15 @@ class GL46 extends GL45
     }
 
     /**
-     * {@see GL46::glMultiDrawArraysIndirect} specifies multiple geometric
-     * primitives with very few subroutine calls.
-     * {@see GL46::glMultiDrawArraysIndirect} behaves similarly to a
-     * multitude of calls to {@see GL46::glDrawArraysInstancedBaseInstance},
-     * execept that the parameters to each call to
-     * {@see GL46::glDrawArraysInstancedBaseInstance} are stored in an array
-     * in memory at the address given by $indirect, separated by the stride,
-     * in basic machine units, specified by $stride. If $stride is zero, then
-     * the array is assumed to be tightly packed in memory.
+     * {@see GL46::glMultiDrawArraysIndirect} specifies multiple geometric primitives with very few subroutine calls.
+     * {@see GL46::glMultiDrawArraysIndirect} behaves similarly to a multitude of calls to
+     * {@see GL46::glDrawArraysInstancedBaseInstance}, execept that the parameters to each call to
+     * {@see GL46::glDrawArraysInstancedBaseInstance} are stored in an array in memory at the address given by
+     * $indirect, separated by the stride, in basic machine units, specified by $stride. If $stride is zero, then the
+     * array is assumed to be tightly packed in memory.
      *
-     * The parameters addressed by $indirect are packed into an array of
-     * structures, each element of which takes the form (in C):
+     * The parameters addressed by $indirect are packed into an array of structures, each element of which takes the
+     * form (in C):
      *
      * <code>
      *     typedef  struct {
@@ -212,39 +205,32 @@ class GL46 extends GL45
      *     } DrawArraysIndirectCommand;
      * </code>
      *
-     * A single call to {@see GL46::glMultiDrawArraysIndirect} is equivalent,
-     * assuming no errors are generated to:
+     * A single call to {@see GL46::glMultiDrawArraysIndirect} is equivalent, assuming no errors are generated to:
      *
      * <code>
      *     GLsizei n;
      *     for (n = 0; n < drawcount; n++) {
      *         const DrawArraysIndirectCommand *cmd;
      *         if (stride != 0) {
-     *             cmd = (const DrawArraysIndirectCommand
-     * *)((uintptr)indirect + n * stride);
+     *             cmd = (const DrawArraysIndirectCommand  *)((uintptr)indirect + n * stride);
      *         } else  {
      *             cmd = (const DrawArraysIndirectCommand  *)indirect + n;
      *         }
      *
-     *         glDrawArraysInstancedBaseInstance(mode, cmd->first,
-     * cmd->count, cmd->instanceCount, cmd->baseInstance);
+     *         glDrawArraysInstancedBaseInstance(mode, cmd->first, cmd->count, cmd->instanceCount,
+     * cmd->baseInstance);
      *     }
      * </code>
      *
-     * If a buffer is bound to the {@see GL46::GL_DRAW_INDIRECT_BUFFER}
-     * binding at the time of a call to
-     * {@see GL46::glMultiDrawArraysIndirect}, $indirect is interpreted as an
-     * offset, in basic machine units, into that buffer and the parameter
-     * data is read from the buffer rather than from client memory.
+     * If a buffer is bound to the {@see GL46::GL_DRAW_INDIRECT_BUFFER} binding at the time of a call to
+     * {@see GL46::glMultiDrawArraysIndirect}, $indirect is interpreted as an offset, in basic machine units, into
+     * that buffer and the parameter data is read from the buffer rather than from client memory.
      *
-     * In contrast to {@see GL46::glDrawArraysInstancedBaseInstance}, the
-     * `first` member of the parameter structure is unsigned, and
-     * out-of-range indices do not generate an error.
+     * In contrast to {@see GL46::glDrawArraysInstancedBaseInstance}, the `first` member of the parameter structure
+     * is unsigned, and out-of-range indices do not generate an error.
      *
-     * Vertex attributes that are modified by
-     * {@see GL46::glMultiDrawArraysIndirect} have an unspecified value after
-     * {@see GL46::glMultiDrawArraysIndirect} returns. Attributes that aren't
-     * modified remain well defined.
+     * Vertex attributes that are modified by {@see GL46::glMultiDrawArraysIndirect} have an unspecified value after
+     * {@see GL46::glMultiDrawArraysIndirect} returns. Attributes that aren't modified remain well defined.
      *
      * @see http://docs.gl/gl4/glMultiDrawArraysIndirect
      * @since 4.6
@@ -271,19 +257,14 @@ class GL46 extends GL45
     }
 
     /**
-     * {@see GL46::glMultiDrawElementsIndirect} specifies multiple indexed
-     * geometric primitives with very few subroutine calls.
-     * {@see GL46::glMultiDrawElementsIndirect} behaves similarly to a
-     * multitude of calls to
-     * {@see GL46::glDrawElementsInstancedBaseVertexBaseInstance}, execpt
-     * that the parameters to
-     * {@see GL46::glDrawElementsInstancedBaseVertexBaseInstance} are stored
-     * in an array in memory at the address given by $indirect, separated by
-     * the stride, in basic machine units, specified by $stride. If $stride
-     * is zero, then the array is assumed to be tightly packed in memory.
+     * {@see GL46::glMultiDrawElementsIndirect} specifies multiple indexed geometric primitives with very few
+     * subroutine calls. {@see GL46::glMultiDrawElementsIndirect} behaves similarly to a multitude of calls to
+     * {@see GL46::glDrawElementsInstancedBaseVertexBaseInstance}, execpt that the parameters to
+     * {@see GL46::glDrawElementsInstancedBaseVertexBaseInstance} are stored in an array in memory at the address
+     * given by $indirect, separated by the stride, in basic machine units, specified by $stride. If $stride is zero,
+     * then the array is assumed to be tightly packed in memory.
      *
-     * The parameters addressed by $indirect are packed into a structure that
-     * takes the form (in C):
+     * The parameters addressed by $indirect are packed into a structure that takes the form (in C):
      *
      * <code>
      *     typedef  struct {
@@ -295,16 +276,14 @@ class GL46 extends GL45
      *     } DrawElementsIndirectCommand;
      * </code>
      *
-     * A single call to {@see GL46::glMultiDrawElementsIndirect} is
-     * equivalent, assuming no errors are generated to:
+     * A single call to {@see GL46::glMultiDrawElementsIndirect} is equivalent, assuming no errors are generated to:
      *
      * <code>
      *     GLsizei n;
      *     for (n = 0; n < drawcount; n++) {
      *         const DrawElementsIndirectCommand *cmd;
      *         if (stride != 0) {
-     *             cmd = (const DrawElementsIndirectCommand
-     * *)((uintptr)indirect + n * stride);
+     *             cmd = (const DrawElementsIndirectCommand  *)((uintptr)indirect + n * stride);
      *         } else {
      *             cmd = (const DrawElementsIndirectCommand  *)indirect + n;
      *         }
@@ -312,35 +291,25 @@ class GL46 extends GL45
      *         glDrawElementsInstancedBaseVertexBaseInstance(mode,
      *                                                       cmd->count,
      *                                                       type,
-     *                                                       cmd->firstIndex
-     * * size-of-type,
-     *
-     * cmd->instanceCount,
-     *
-     * cmd->baseVertex,
-     *
-     * cmd->baseInstance);
+     *                                                       cmd->firstIndex * size-of-type,
+     *                                                       cmd->instanceCount,
+     *                                                       cmd->baseVertex,
+     *                                                       cmd->baseInstance);
      *     }
      * </code>
      *
-     * If a buffer is bound to the {@see GL46::GL_DRAW_INDIRECT_BUFFER}
-     * binding at the time of a call to {@see GL46::glDrawElementsIndirect},
-     * $indirect is interpreted as an offset, in basic machine units, into
-     * that buffer and the parameter data is read from the buffer rather than
-     * from client memory.
+     * If a buffer is bound to the {@see GL46::GL_DRAW_INDIRECT_BUFFER} binding at the time of a call to
+     * {@see GL46::glDrawElementsIndirect}, $indirect is interpreted as an offset, in basic machine units, into that
+     * buffer and the parameter data is read from the buffer rather than from client memory.
      *
-     * Note that indices stored in client memory are not supported. If no
-     * buffer is bound to the {@see GL46::GL_ELEMENT_ARRAY_BUFFER} binding,
-     * an error will be generated.
+     * Note that indices stored in client memory are not supported. If no buffer is bound to the
+     * {@see GL46::GL_ELEMENT_ARRAY_BUFFER} binding, an error will be generated.
      *
-     * The results of the operation are undefined if the `reservedMustBeZero`
-     * member of the parameter structure is non-zero. However, no error is
-     * generated in this case.
+     * The results of the operation are undefined if the `reservedMustBeZero` member of the parameter structure is
+     * non-zero. However, no error is generated in this case.
      *
-     * Vertex attributes that are modified by
-     * {@see GL46::glDrawElementsIndirect} have an unspecified value after
-     * {@see GL46::glDrawElementsIndirect} returns. Attributes that aren't
-     * modified remain well defined.
+     * Vertex attributes that are modified by {@see GL46::glDrawElementsIndirect} have an unspecified value after
+     * {@see GL46::glDrawElementsIndirect} returns. Attributes that aren't modified remain well defined.
      *
      * @see http://docs.gl/gl4/glMultiDrawElementsIndirect
      * @since 4.6
@@ -370,20 +339,16 @@ class GL46 extends GL45
     }
 
     /**
-     * When {@see GL46::GL_POLYGON_OFFSET_FILL},
-     * {@see GL46::GL_POLYGON_OFFSET_LINE}, or
-     * {@see GL46::GL_POLYGON_OFFSET_POINT} is enabled, each fragment's depth
-     * value will be offset after it is interpolated from the depth values of
-     * the appropriate vertices. The value of the offset is     factor × DZ
-     * +  r × units   , where   DZ  is a measurement of the change in depth
-     * relative to the screen area of the polygon, and r is the smallest
-     * value that is guaranteed to produce a resolvable offset for a given
-     * implementation. The offset is added before the depth test is performed
-     * and before the value is written into the depth buffer.
+     * When {@see GL46::GL_POLYGON_OFFSET_FILL}, {@see GL46::GL_POLYGON_OFFSET_LINE}, or
+     * {@see GL46::GL_POLYGON_OFFSET_POINT} is enabled, each fragment's depth value will be offset after it is
+     * interpolated from the depth values of the appropriate vertices. The value of the offset is     factor × DZ  +
+     *  r × units   , where   DZ  is a measurement of the change in depth relative to the screen area of the
+     * polygon, and r is the smallest value that is guaranteed to produce a resolvable offset for a given
+     * implementation. The offset is added before the depth test is performed and before the value is written into
+     * the depth buffer.
      *
-     * {@see GL46::glPolygonOffset} is useful for rendering hidden-line
-     * images, for applying decals to surfaces, and for rendering solids with
-     * highlighted edges.
+     * {@see GL46::glPolygonOffset} is useful for rendering hidden-line images, for applying decals to surfaces, and
+     * for rendering solids with highlighted edges.
      *
      * @see http://docs.gl/gl2/glPolygonOffset
      * @see http://docs.gl/gl4/glPolygonOffset

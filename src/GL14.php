@@ -164,39 +164,30 @@ class GL14 extends GL13
     public const GL_ONE_MINUS_CONSTANT_ALPHA = 0x8004;
 
     /**
-     * Pixels can be drawn using a function that blends the incoming (source)
-     * RGBA values with the RGBA values that are already in the frame buffer
-     * (the destination values). Blending is initially disabled. Use
-     * {@see GL46::glEnable} and  {@see GL46::glDisable} with argument
-     * {@see GL46::GL_BLEND} to enable and disable blending.
+     * Pixels can be drawn using a function that blends the incoming (source) RGBA values with the RGBA values that
+     * are already in the frame buffer (the destination values). Blending is initially disabled. Use
+     * {@see GL46::glEnable} and  {@see GL46::glDisable} with argument {@see GL46::GL_BLEND} to enable and disable
+     * blending.
      *
-     * {@see GL46::glBlendFuncSeparate} defines the operation of blending for
-     * all draw buffers when it is enabled. {@see GL46::glBlendFuncSeparatei}
-     * defines the operation of blending for a single draw buffer specified
-     * by $buf when enabled for that draw buffer. $srcRGB specifies which
-     * method is used to scale the source RGB-color components. $dstRGB
-     * specifies which method is used to scale the destination RGB-color
-     * components. Likewise, $srcAlpha specifies which method is used to
-     * scale the source alpha color component, and $dstAlpha specifies which
-     * method is used to scale the destination alpha component. The possible
-     * methods are described in the following table. Each method defines four
-     * scale factors, one each for red, green, blue, and alpha.
+     * {@see GL46::glBlendFuncSeparate} defines the operation of blending for all draw buffers when it is enabled.
+     * {@see GL46::glBlendFuncSeparatei} defines the operation of blending for a single draw buffer specified by $buf
+     * when enabled for that draw buffer. $srcRGB specifies which method is used to scale the source RGB-color
+     * components. $dstRGB specifies which method is used to scale the destination RGB-color components. Likewise,
+     * $srcAlpha specifies which method is used to scale the source alpha color component, and $dstAlpha specifies
+     * which method is used to scale the destination alpha component. The possible methods are described in the
+     * following table. Each method defines four scale factors, one each for red, green, blue, and alpha.
      *
-     * In the table and in subsequent equations, first source, second source
-     * and destination color components are referred to as    R s0  G s0  B
-     * s0  A s0   ,    R s1  G s1  B s1  A s1   , and    R d  G d  B d  A d
-     * , respectively. The color specified by {@see GL46::glBlendColor} is
-     * referred to as    R c  G c  B c  A c   . They are understood to have
-     * integer values between 0 and    k R  k G  k B  k A   , where
+     * In the table and in subsequent equations, first source, second source and destination color components are
+     * referred to as    R s0  G s0  B s0  A s0   ,    R s1  G s1  B s1  A s1   , and    R d  G d  B d  A d   ,
+     * respectively. The color specified by {@see GL46::glBlendColor} is referred to as    R c  G c  B c  A c   .
+     * They are understood to have integer values between 0 and    k R  k G  k B  k A   , where
      *
      *    k c  =  2  m c    - 1
      *
-     * and    m R  m G  m B  m A    is the number of red, green, blue, and
-     * alpha bitplanes.
+     * and    m R  m G  m B  m A    is the number of red, green, blue, and alpha bitplanes.
      *
-     * Source and destination scale factors are referred to as    s R  s G  s
-     * B  s A    and    d R  d G  d B  d A   . All scale factors have range
-     *  0 1  .
+     * Source and destination scale factors are referred to as    s R  s G  s B  s A    and    d R  d G  d B  d A   .
+     * All scale factors have range    0 1  .
      *
      * | {@see GL46::GL_ZERO}                     |    0 0 0                                             |   0               |
      * | {@see GL46::GL_ONE}                      |    1 1 1                                             |   1               |
@@ -221,23 +212,17 @@ class GL14 extends GL13
      *
      *    i =  min &amp;af;  A s   1 -  A d
      *
-     * To determine the blended RGBA values of a pixel, the system uses the
-     * following equations:
+     * To determine the blended RGBA values of a pixel, the system uses the following equations:
      *
-     *    R d  =  min &amp;af;  k R   R s  &amp;it; s R  + R d  &amp;it; d R
-     *         G d  =  min &amp;af;  k G   G s  &amp;it; s G  + G d  &amp;it;
-     * d G          B d  =  min &amp;af;  k B   B s  &amp;it; s B  + B d
-     * &amp;it; d B          A d  =  min &amp;af;  k A   A s  &amp;it; s A  +
-     * A d  &amp;it; d A
+     *    R d  =  min &amp;af;  k R   R s  &amp;it; s R  + R d  &amp;it; d R          G d  =  min &amp;af;  k G   G s
+     *  &amp;it; s G  + G d  &amp;it; d G          B d  =  min &amp;af;  k B   B s  &amp;it; s B  + B d  &amp;it; d B
+     *          A d  =  min &amp;af;  k A   A s  &amp;it; s A  + A d  &amp;it; d A
      *
-     * Despite the apparent precision of the above equations, blending
-     * arithmetic is not exactly specified, because blending operates with
-     * imprecise integer color values. However, a blend factor that should be
-     * equal to 1 is guaranteed not to modify its multiplicand, and a blend
-     * factor equal to 0 reduces its multiplicand to 0. For example, when
-     * $srcRGB is {@see GL46::GL_SRC_ALPHA}, $dstRGB is
-     * {@see GL46::GL_ONE_MINUS_SRC_ALPHA}, and   A s   is equal to   k A  ,
-     * the equations reduce to simple replacement:
+     * Despite the apparent precision of the above equations, blending arithmetic is not exactly specified, because
+     * blending operates with imprecise integer color values. However, a blend factor that should be equal to 1 is
+     * guaranteed not to modify its multiplicand, and a blend factor equal to 0 reduces its multiplicand to 0. For
+     * example, when $srcRGB is {@see GL46::GL_SRC_ALPHA}, $dstRGB is {@see GL46::GL_ONE_MINUS_SRC_ALPHA}, and   A s
+     *  is equal to   k A  , the equations reduce to simple replacement:
      *
      *    R d  = R s       G d  = G s       B d  = B s       A d  = A s
      *
@@ -267,26 +252,20 @@ class GL14 extends GL13
     }
 
     /**
-     * {@see GL46::glMultiDrawArrays} specifies multiple sets of geometric
-     * primitives with very few subroutine calls. Instead of calling a GL
-     * procedure to pass each individual vertex, normal, texture coordinate,
-     * edge flag, or color, you can prespecify separate arrays of vertices,
-     * normals, and colors and use them to construct a sequence of primitives
-     * with a single call to {@see GL46::glMultiDrawArrays}.
+     * {@see GL46::glMultiDrawArrays} specifies multiple sets of geometric primitives with very few subroutine calls.
+     * Instead of calling a GL procedure to pass each individual vertex, normal, texture coordinate, edge flag, or
+     * color, you can prespecify separate arrays of vertices, normals, and colors and use them to construct a
+     * sequence of primitives with a single call to {@see GL46::glMultiDrawArrays}.
      *
-     * {@see GL46::glMultiDrawArrays} behaves identically to
-     * {@see GL46::glDrawArrays} except that $drawcount separate ranges of
-     * elements are specified instead.
+     * {@see GL46::glMultiDrawArrays} behaves identically to {@see GL46::glDrawArrays} except that $drawcount
+     * separate ranges of elements are specified instead.
      *
-     * When {@see GL46::glMultiDrawArrays} is called, it uses $count
-     * sequential elements from each enabled array to construct a sequence of
-     * geometric primitives, beginning with element $first. $mode specifies
-     * what kind of primitives are constructed, and how the array elements
-     * construct those primitives.
+     * When {@see GL46::glMultiDrawArrays} is called, it uses $count sequential elements from each enabled array to
+     * construct a sequence of geometric primitives, beginning with element $first. $mode specifies what kind of
+     * primitives are constructed, and how the array elements construct those primitives.
      *
-     * Vertex attributes that are modified by {@see GL46::glMultiDrawArrays}
-     * have an unspecified value after {@see GL46::glMultiDrawArrays}
-     * returns. Attributes that aren't modified remain well defined.
+     * Vertex attributes that are modified by {@see GL46::glMultiDrawArrays} have an unspecified value after
+     * {@see GL46::glMultiDrawArrays} returns. Attributes that aren't modified remain well defined.
      *
      * @see http://docs.gl/gl2/glMultiDrawArrays
      * @see http://docs.gl/gl4/glMultiDrawArrays
@@ -310,21 +289,16 @@ class GL14 extends GL13
     }
 
     /**
-     * {@see GL46::glMultiDrawElements} specifies multiple sets of geometric
-     * primitives with very few subroutine calls. Instead of calling a GL
-     * function to pass each individual vertex, normal, texture coordinate,
-     * edge flag, or color, you can prespecify separate arrays of vertices,
-     * normals, and so on, and use them to construct a sequence of primitives
-     * with a single call to {@see GL46::glMultiDrawElements}.
+     * {@see GL46::glMultiDrawElements} specifies multiple sets of geometric primitives with very few subroutine
+     * calls. Instead of calling a GL function to pass each individual vertex, normal, texture coordinate, edge flag,
+     * or color, you can prespecify separate arrays of vertices, normals, and so on, and use them to construct a
+     * sequence of primitives with a single call to {@see GL46::glMultiDrawElements}.
      *
-     * {@see GL46::glMultiDrawElements} is identical in operation to
-     * {@see GL46::glDrawElements} except that $drawcount separate lists of
-     * elements are specified.
+     * {@see GL46::glMultiDrawElements} is identical in operation to {@see GL46::glDrawElements} except that
+     * $drawcount separate lists of elements are specified.
      *
-     * Vertex attributes that are modified by
-     * {@see GL46::glMultiDrawElements} have an unspecified value after
-     * {@see GL46::glMultiDrawElements} returns. Attributes that aren't
-     * modified maintain their previous values.
+     * Vertex attributes that are modified by {@see GL46::glMultiDrawElements} have an unspecified value after
+     * {@see GL46::glMultiDrawElements} returns. Attributes that aren't modified maintain their previous values.
      *
      * @see http://docs.gl/gl2/glMultiDrawElements
      * @see http://docs.gl/gl4/glMultiDrawElements
@@ -354,15 +328,14 @@ class GL14 extends GL13
      * The following values are accepted for $pname:
      *
      *  - {@see GL46::GL_POINT_FADE_THRESHOLD_SIZE}: $params is a single
-     *    floating-point value that specifies the
-     *    threshold value to which point sizes are clamped if they exceed the
-     *    specified value. The default value is 1.0.
+     *    floating-point value that specifies the threshold value to which point
+     *    sizes are
+     *    clamped if they exceed the specified value. The default value is 1.0.
      *
      *  - {@see GL46::GL_POINT_SPRITE_COORD_ORIGIN}: $params is a single enum
-     *    specifying the point sprite texture
-     *    coordinate origin, either {@see GL46::GL_LOWER_LEFT} or
-     *    {@see GL46::GL_UPPER_LEFT}. The default value is
-     *    {@see GL46::GL_UPPER_LEFT}.
+     *    specifying the point sprite texture coordinate origin, either
+     *    {@see GL46::GL_LOWER_LEFT} or {@see GL46::GL_UPPER_LEFT}. The default
+     *    value is {@see GL46::GL_UPPER_LEFT}.
      *
      * @see http://docs.gl/gl2/glPointParameter
      * @see http://docs.gl/gl4/glPointParameter
@@ -387,15 +360,14 @@ class GL14 extends GL13
      * The following values are accepted for $pname:
      *
      *  - {@see GL46::GL_POINT_FADE_THRESHOLD_SIZE}: $params is a single
-     *    floating-point value that specifies the
-     *    threshold value to which point sizes are clamped if they exceed the
-     *    specified value. The default value is 1.0.
+     *    floating-point value that specifies the threshold value to which point
+     *    sizes are
+     *    clamped if they exceed the specified value. The default value is 1.0.
      *
      *  - {@see GL46::GL_POINT_SPRITE_COORD_ORIGIN}: $params is a single enum
-     *    specifying the point sprite texture
-     *    coordinate origin, either {@see GL46::GL_LOWER_LEFT} or
-     *    {@see GL46::GL_UPPER_LEFT}. The default value is
-     *    {@see GL46::GL_UPPER_LEFT}.
+     *    specifying the point sprite texture coordinate origin, either
+     *    {@see GL46::GL_LOWER_LEFT} or {@see GL46::GL_UPPER_LEFT}. The default
+     *    value is {@see GL46::GL_UPPER_LEFT}.
      *
      * @see http://docs.gl/gl2/glPointParameter
      * @see http://docs.gl/gl4/glPointParameter
@@ -418,15 +390,14 @@ class GL14 extends GL13
      * The following values are accepted for $pname:
      *
      *  - {@see GL46::GL_POINT_FADE_THRESHOLD_SIZE}: $params is a single
-     *    floating-point value that specifies the
-     *    threshold value to which point sizes are clamped if they exceed the
-     *    specified value. The default value is 1.0.
+     *    floating-point value that specifies the threshold value to which point
+     *    sizes are
+     *    clamped if they exceed the specified value. The default value is 1.0.
      *
      *  - {@see GL46::GL_POINT_SPRITE_COORD_ORIGIN}: $params is a single enum
-     *    specifying the point sprite texture
-     *    coordinate origin, either {@see GL46::GL_LOWER_LEFT} or
-     *    {@see GL46::GL_UPPER_LEFT}. The default value is
-     *    {@see GL46::GL_UPPER_LEFT}.
+     *    specifying the point sprite texture coordinate origin, either
+     *    {@see GL46::GL_LOWER_LEFT} or {@see GL46::GL_UPPER_LEFT}. The default
+     *    value is {@see GL46::GL_UPPER_LEFT}.
      *
      * @see http://docs.gl/gl2/glPointParameter
      * @see http://docs.gl/gl4/glPointParameter
@@ -451,15 +422,14 @@ class GL14 extends GL13
      * The following values are accepted for $pname:
      *
      *  - {@see GL46::GL_POINT_FADE_THRESHOLD_SIZE}: $params is a single
-     *    floating-point value that specifies the
-     *    threshold value to which point sizes are clamped if they exceed the
-     *    specified value. The default value is 1.0.
+     *    floating-point value that specifies the threshold value to which point
+     *    sizes are
+     *    clamped if they exceed the specified value. The default value is 1.0.
      *
      *  - {@see GL46::GL_POINT_SPRITE_COORD_ORIGIN}: $params is a single enum
-     *    specifying the point sprite texture
-     *    coordinate origin, either {@see GL46::GL_LOWER_LEFT} or
-     *    {@see GL46::GL_UPPER_LEFT}. The default value is
-     *    {@see GL46::GL_UPPER_LEFT}.
+     *    specifying the point sprite texture coordinate origin, either
+     *    {@see GL46::GL_LOWER_LEFT} or {@see GL46::GL_UPPER_LEFT}. The default
+     *    value is {@see GL46::GL_UPPER_LEFT}.
      *
      * @see http://docs.gl/gl2/glPointParameter
      * @see http://docs.gl/gl4/glPointParameter
@@ -479,11 +449,10 @@ class GL14 extends GL13
     }
 
     /**
-     * The {@see GL46::GL_BLEND_COLOR} may be used to calculate the source
-     * and destination blending factors. The color components are clamped to
-     * the range    0 1   before being stored. See {@see GL46::glBlendFunc}
-     * for a complete description of the blending operations. Initially the
-     * {@see GL46::GL_BLEND_COLOR} is set to (0, 0, 0, 0).
+     * The {@see GL46::GL_BLEND_COLOR} may be used to calculate the source and destination blending factors. The
+     * color components are clamped to the range    0 1   before being stored. See {@see GL46::glBlendFunc} for a
+     * complete description of the blending operations. Initially the {@see GL46::GL_BLEND_COLOR} is set to (0, 0, 0,
+     * 0).
      *
      * @see http://docs.gl/gl2/glBlendColor
      * @see http://docs.gl/gl4/glBlendColor
@@ -511,54 +480,38 @@ class GL14 extends GL13
     }
 
     /**
-     * The blend equations determine how a new pixel (the ''source'' color)
-     * is combined with a pixel already in the framebuffer (the
-     * ''destination'' color). This function sets both the RGB blend equation
-     * and the alpha blend equation to a single equation.
-     * {@see GL46::glBlendEquationi} specifies the blend equation for a
-     * single draw buffer whereas {@see GL46::glBlendEquation} sets the blend
-     * equation for all draw buffers.
+     * The blend equations determine how a new pixel (the ''source'' color) is combined with a pixel already in the
+     * framebuffer (the ''destination'' color). This function sets both the RGB blend equation and the alpha blend
+     * equation to a single equation. {@see GL46::glBlendEquationi} specifies the blend equation for a single draw
+     * buffer whereas {@see GL46::glBlendEquation} sets the blend equation for all draw buffers.
      *
-     * These equations use the source and destination blend factors specified
-     * by either {@see GL46::glBlendFunc} or
-     * {@see GL46::glBlendFuncSeparate}. See {@see GL46::glBlendFunc} or
-     * {@see GL46::glBlendFuncSeparate} for a description of the various
-     * blend factors.
+     * These equations use the source and destination blend factors specified by either {@see GL46::glBlendFunc} or
+     * {@see GL46::glBlendFuncSeparate}. See {@see GL46::glBlendFunc} or {@see GL46::glBlendFuncSeparate} for a
+     * description of the various blend factors.
      *
-     * In the equations that follow, source and destination color components
-     * are referred to as    R s  G s  B s  A s    and    R d  G d  B d  A d
-     *  , respectively. The result color is referred to as    R r  G r  B r
-     * A r   . The source and destination blend factors are denoted    s R  s
-     * G  s B  s A    and    d R  d G  d B  d A   , respectively. For these
-     * equations all color components are understood to have values in the
-     * range    0 1  .          Mode     RGB Components     Alpha Component
-     *      {@see GL46::GL_FUNC_ADD}      Rr =  R s  &amp;it; s R  + R d
-     * &amp;it; d R        Gr =  G s  &amp;it; s G  + G d  &amp;it; d G
-     *  Br =  B s  &amp;it; s B  + B d  &amp;it; d B          Ar =  A s
-     * &amp;it; s A  + A d  &amp;it; d A
-     * {@see GL46::GL_FUNC_SUBTRACT}      Rr =  R s  &amp;it; s R  - R d
-     * &amp;it; d R        Gr =  G s  &amp;it; s G  - G d  &amp;it; d G
-     *  Br =  B s  &amp;it; s B  - B d  &amp;it; d B          Ar =  A s
-     * &amp;it; s A  - A d  &amp;it; d A
-     * {@see GL46::GL_FUNC_REVERSE_SUBTRACT}      Rr =  R d  &amp;it; d R  -
-     * R s  &amp;it; s R        Gr =  G d  &amp;it; d G  - G s  &amp;it; s G
-     *       Br =  B d  &amp;it; d B  - B s  &amp;it; s B          Ar =  A d
-     * &amp;it; d A  - A s  &amp;it; s A         {@see GL46::GL_MIN}      Rr
-     * =  min &amp;af;   R s    R d          Gr =  min &amp;af;   G s    G d
-     *         Br =  min &amp;af;   B s    B d            Ar =  min &amp;af;
-     *  A s    A d           {@see GL46::GL_MAX}      Rr =  max &amp;af;   R
-     * s    R d          Gr =  max &amp;af;   G s    G d          Br =  max
-     * &amp;af;   B s    B d            Ar =  max &amp;af;   A s    A d
+     * In the equations that follow, source and destination color components are referred to as    R s  G s  B s  A s
+     *    and    R d  G d  B d  A d   , respectively. The result color is referred to as    R r  G r  B r  A r   .
+     * The source and destination blend factors are denoted    s R  s G  s B  s A    and    d R  d G  d B  d A   ,
+     * respectively. For these equations all color components are understood to have values in the range    0 1  .
+     *       Mode     RGB Components     Alpha Component        {@see GL46::GL_FUNC_ADD}      Rr =  R s  &amp;it; s R
+     *  + R d  &amp;it; d R        Gr =  G s  &amp;it; s G  + G d  &amp;it; d G        Br =  B s  &amp;it; s B  + B d
+     *  &amp;it; d B          Ar =  A s  &amp;it; s A  + A d  &amp;it; d A         {@see GL46::GL_FUNC_SUBTRACT}
+     * Rr =  R s  &amp;it; s R  - R d  &amp;it; d R        Gr =  G s  &amp;it; s G  - G d  &amp;it; d G        Br =
+     * B s  &amp;it; s B  - B d  &amp;it; d B          Ar =  A s  &amp;it; s A  - A d  &amp;it; d A
+     * {@see GL46::GL_FUNC_REVERSE_SUBTRACT}      Rr =  R d  &amp;it; d R  - R s  &amp;it; s R        Gr =  G d
+     * &amp;it; d G  - G s  &amp;it; s G        Br =  B d  &amp;it; d B  - B s  &amp;it; s B          Ar =  A d
+     * &amp;it; d A  - A s  &amp;it; s A         {@see GL46::GL_MIN}      Rr =  min &amp;af;   R s    R d          Gr
+     * =  min &amp;af;   G s    G d          Br =  min &amp;af;   B s    B d            Ar =  min &amp;af;   A s    A
+     * d           {@see GL46::GL_MAX}      Rr =  max &amp;af;   R s    R d          Gr =  max &amp;af;   G s    G d
+     *         Br =  max &amp;af;   B s    B d            Ar =  max &amp;af;   A s    A d
      *
      * The results of these equations are clamped to the range    0 1  .
      *
-     * The {@see GL46::GL_MIN} and {@see GL46::GL_MAX} equations are useful
-     * for applications that analyze image data (image thresholding against a
-     * constant color, for example). The {@see GL46::GL_FUNC_ADD} equation is
-     * useful for antialiasing and transparency, among other things.
+     * The {@see GL46::GL_MIN} and {@see GL46::GL_MAX} equations are useful for applications that analyze image data
+     * (image thresholding against a constant color, for example). The {@see GL46::GL_FUNC_ADD} equation is useful
+     * for antialiasing and transparency, among other things.
      *
-     * Initially, both the RGB blend equation and the alpha blend equation
-     * are set to {@see GL46::GL_FUNC_ADD}.
+     * Initially, both the RGB blend equation and the alpha blend equation are set to {@see GL46::GL_FUNC_ADD}.
      *
      * @see http://docs.gl/gl2/glBlendEquation
      * @see http://docs.gl/gl4/glBlendEquation

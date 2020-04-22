@@ -109,7 +109,7 @@ class KhronosRenderer
      * @param int $wrap
      * @return string
      */
-    private function renderParagraphNode(Crawler $para, int $wrap = 70): string
+    private function renderParagraphNode(Crawler $para, int $wrap = 110): string
     {
         if ($para->children()->count() === 1 && $para->children()->first()->nodeName() === 'programlisting') {
             return $this->renderProgramListing($para->children()->first());
