@@ -84,10 +84,10 @@ class KhronosRenderer
                 return $this->renderInformTable($el);
 
             case 'itemizedlist':
-                return $this->renderItemizedList($el, 70) . "\n";
+                return $this->renderItemizedList($el, 110) . "\n";
 
             case 'glosslist':
-                return $this->renderGlossList($el, 70) . "\n";
+                return $this->renderGlossList($el, 110) . "\n";
 
             case 'programlisting':
                 return $this->renderProgramListing($el);

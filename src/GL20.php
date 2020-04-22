@@ -2180,67 +2180,42 @@ class GL20 extends GL15
      * Linking of a program object can fail for a number of reasons as specified in the OpenGL Shading Language
      * Specification. The following lists some of the conditions that will cause a link error.
      *
-     *  - The number of active attribute variables supported by the
-     *    implementation has been exceeded.
+     *  - The number of active attribute variables supported by the implementation has been exceeded.
      *  - The storage limit for uniform variables has been exceeded.
-     *  - The number of active uniform variables supported by the implementation
-     *    has been exceeded.
-     *  - The {@see GL46::main} function is missing for the vertex, geometry or
-     *    fragment shader.
-     *  - A varying variable actually used in the fragment shader is not
-     *    declared in the same way (or is not declared at
+     *  - The number of active uniform variables supported by the implementation has been exceeded.
+     *  - The {@see GL46::main} function is missing for the vertex, geometry or fragment shader.
+     *  - A varying variable actually used in the fragment shader is not declared in the same way (or is not declared at
      *    all) in the vertex shader, or geometry shader if present.
      *  - A reference to a function or variable name is unresolved.
-     *  - A shared global is declared with two different types or two different
-     *    initial values.
-     *  - One or more of the attached shader objects has not been successfully
-     *    compiled.
-     *  - Binding a generic attribute matrix caused some rows of the matrix to
-     *    fall outside the allowed maximum of
+     *  - A shared global is declared with two different types or two different initial values.
+     *  - One or more of the attached shader objects has not been successfully compiled.
+     *  - Binding a generic attribute matrix caused some rows of the matrix to fall outside the allowed maximum of
      *    {@see GL46::GL_MAX_VERTEX_ATTRIBS}.
-     *  - Not enough contiguous vertex attribute slots could be found to bind
-     *    attribute matrices.
-     *  - The program object contains objects to form a fragment shader but does
-     *    not contain objects to form a vertex
+     *  - Not enough contiguous vertex attribute slots could be found to bind attribute matrices.
+     *  - The program object contains objects to form a fragment shader but does not contain objects to form a vertex
      *    shader.
-     *  - The program object contains objects to form a geometry shader but does
-     *    not contain objects to form a vertex
+     *  - The program object contains objects to form a geometry shader but does not contain objects to form a vertex
      *    shader.
-     *  - The program object contains objects to form a geometry shader and the
-     *    input primitive type, output primitive
-     *    type, or maximum output vertex count is not specified in any compiled
-     *    geometry shader object.
-     *  - The program object contains objects to form a geometry shader and the
-     *    input primitive type, output primitive
-     *    type, or maximum output vertex count is specified differently in
-     *    multiple geometry shader objects.
-     *  - The number of active outputs in the fragment shader is greater than
-     *    the value of
+     *  - The program object contains objects to form a geometry shader and the input primitive type, output primitive
+     *    type, or maximum output vertex count is not specified in any compiled geometry shader object.
+     *  - The program object contains objects to form a geometry shader and the input primitive type, output primitive
+     *    type, or maximum output vertex count is specified differently in multiple geometry shader objects.
+     *  - The number of active outputs in the fragment shader is greater than the value of
      *    {@see GL46::GL_MAX_DRAW_BUFFERS}.
-     *  - The program has an active output assigned to a location greater than
-     *    or equal to the value of
-     *    {@see GL46::GL_MAX_DUAL_SOURCE_DRAW_BUFFERS} and has an active output
-     *    assigned an index greater than or equal
+     *  - The program has an active output assigned to a location greater than or equal to the value of
+     *    {@see GL46::GL_MAX_DUAL_SOURCE_DRAW_BUFFERS} and has an active output assigned an index greater than or equal
      *    to one.
-     *  - More than one varying out variable is bound to the same number and
-     *    index.
-     *  - The explicit binding assigments do not leave enough space for the
-     *    linker to automatically assign a location
+     *  - More than one varying out variable is bound to the same number and index.
+     *  - The explicit binding assigments do not leave enough space for the linker to automatically assign a location
      *    for a varying out array, which requires multiple contiguous locations.
-     *  - The $count specified by {@see GL46::glTransformFeedbackVaryings} is
-     *    non-zero, but the program object has no
+     *  - The $count specified by {@see GL46::glTransformFeedbackVaryings} is non-zero, but the program object has no
      *    vertex or geometry shader.
-     *  - Any variable name specified to {@see
-     *    GL46::glTransformFeedbackVaryings} in the $varyings array is not
-     *    declared
+     *  - Any variable name specified to {@see GL46::glTransformFeedbackVaryings} in the $varyings array is not declared
      *    as an output in the vertex shader (or the geometry shader, if active).
-     *  - Any two entries in the $varyings array given {@see
-     *    GL46::glTransformFeedbackVaryings} specify the same varying
+     *  - Any two entries in the $varyings array given {@see GL46::glTransformFeedbackVaryings} specify the same varying
      *    variable.
-     *  - The total number of components to capture in any transform feedback
-     *    varying variable is greater than the
-     *    constant {@see GL46::GL_MAX_TRANSFORM_FEEDBACK_SEPARATE_COMPONENTS}
-     *    and the buffer mode is
+     *  - The total number of components to capture in any transform feedback varying variable is greater than the
+     *    constant {@see GL46::GL_MAX_TRANSFORM_FEEDBACK_SEPARATE_COMPONENTS} and the buffer mode is
      *    {@see GL46::GL_SEPARATE_ATTRIBS}.
      *
      * When a program object has been successfully linked, the program object can be made part of current state by

@@ -2160,82 +2160,50 @@ class GL45 extends GL44
      * apply to all other framebuffer types:
      *
      *  -  If $pname is {@see GL46::GL_FRAMEBUFFER_ATTACHMENT_RED_SIZE},
-     *    {@see GL46::GL_FRAMEBUFFER_ATTACHMENT_GREEN_SIZE}, {@see
-     *    GL46::GL_FRAMEBUFFER_ATTACHMENT_BLUE_SIZE},
-     *    {@see GL46::GL_FRAMEBUFFER_ATTACHMENT_ALPHA_SIZE}, {@see
-     *    GL46::GL_FRAMEBUFFER_ATTACHMENT_DEPTH_SIZE} or
-     *    {@see GL46::GL_FRAMEBUFFER_ATTACHMENT_STENCIL_SIZE}, then $params will
-     *    contain the number of bits in the
-     *    corresponding red, green, blue, alpha, depth, or stencil component of
-     *    the specified attachment. If the
-     *    requested component is not present in the attachment, or if no data
-     *    storage or texture image has been
+     *    {@see GL46::GL_FRAMEBUFFER_ATTACHMENT_GREEN_SIZE}, {@see GL46::GL_FRAMEBUFFER_ATTACHMENT_BLUE_SIZE},
+     *    {@see GL46::GL_FRAMEBUFFER_ATTACHMENT_ALPHA_SIZE}, {@see GL46::GL_FRAMEBUFFER_ATTACHMENT_DEPTH_SIZE} or
+     *    {@see GL46::GL_FRAMEBUFFER_ATTACHMENT_STENCIL_SIZE}, then $params will contain the number of bits in the
+     *    corresponding red, green, blue, alpha, depth, or stencil component of the specified attachment. If the
+     *    requested component is not present in the attachment, or if no data storage or texture image has been
      *    specified for the attachment, then $params will contain zero.
-     *  -  If $pname is {@see GL46::GL_FRAMEBUFFER_ATTACHMENT_COMPONENT_TYPE},
-     *    then $params will contain the format of
-     *    components of the specified attachment, one of {@see GL46::GL_FLOAT},
-     *    {@see GL46::GL_INT},
-     *    {@see GL46::GL_UNSIGNED_INT}, {@see GL46::GL_SIGNED_NORMALIZED}, or
-     *    {@see GL46::GL_UNSIGNED_NORMALIZED} for
-     *    floating-point, signed integer, unsigned integer, signed normalized
-     *    fixed-point, or unsigned normalized
-     *    fixed-point components respectively. Only color buffers may have
-     *    integer components. If no data storage or
-     *    texture image has been specified for the attachment, then $params will
-     *    contain {@see GL46::GL_NONE}. This
-     *    query cannot be performed for a combined depth+stencil attachment,
-     *    since it does not have a single format.
-     *  -  If $pname is {@see GL46::GL_FRAMEBUFFER_ATTACHMENT_COLOR_ENCODING},
-     *    then $params will contain the encoding of
-     *    components of the specified attachment, one of {@see GL46::GL_LINEAR}
-     *    or {@see GL46::GL_SRGB} for linear or
-     *    sRGB-encoded components, respectively. Only color buffer components
-     *    may be sRGB-encoded; such components are
-     *    treated as described in the OpenGL Specification. For a default
-     *    framebuffer, color encoding is determined by
-     *    the implementation. For framebuffer objects, components are
-     *    sRGB-encoded if the internal format of a color
-     *    attachment is one of the color-renderable SRGB formats. If the
-     *    attachment is not a color attachment, or if no
-     *    data storage or texture image has been specified for the attachment,
-     *    then $params will contain
+     *  -  If $pname is {@see GL46::GL_FRAMEBUFFER_ATTACHMENT_COMPONENT_TYPE}, then $params will contain the format of
+     *    components of the specified attachment, one of {@see GL46::GL_FLOAT}, {@see GL46::GL_INT},
+     *    {@see GL46::GL_UNSIGNED_INT}, {@see GL46::GL_SIGNED_NORMALIZED}, or {@see GL46::GL_UNSIGNED_NORMALIZED} for
+     *    floating-point, signed integer, unsigned integer, signed normalized fixed-point, or unsigned normalized
+     *    fixed-point components respectively. Only color buffers may have integer components. If no data storage or
+     *    texture image has been specified for the attachment, then $params will contain {@see GL46::GL_NONE}. This
+     *    query cannot be performed for a combined depth+stencil attachment, since it does not have a single format.
+     *  -  If $pname is {@see GL46::GL_FRAMEBUFFER_ATTACHMENT_COLOR_ENCODING}, then $params will contain the encoding of
+     *    components of the specified attachment, one of {@see GL46::GL_LINEAR} or {@see GL46::GL_SRGB} for linear or
+     *    sRGB-encoded components, respectively. Only color buffer components may be sRGB-encoded; such components are
+     *    treated as described in the OpenGL Specification. For a default framebuffer, color encoding is determined by
+     *    the implementation. For framebuffer objects, components are sRGB-encoded if the internal format of a color
+     *    attachment is one of the color-renderable SRGB formats. If the attachment is not a color attachment, or if no
+     *    data storage or texture image has been specified for the attachment, then $params will contain
      *    {@see GL46::GL_LINEAR}.
      *
      * If the value of {@see GL46::GL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE} is {@see GL46::GL_RENDERBUFFER}, then
      *
-     *  -  If $pname is {@see GL46::GL_FRAMEBUFFER_ATTACHMENT_OBJECT_NAME},
-     *    $params will contain the name of the
+     *  -  If $pname is {@see GL46::GL_FRAMEBUFFER_ATTACHMENT_OBJECT_NAME}, $params will contain the name of the
      *    renderbuffer object which contains the attached image.
      *
      * If the value of {@see GL46::GL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE} is {@see GL46::GL_TEXTURE}, then
      *
-     *  -  If $pname is {@see GL46::GL_FRAMEBUFFER_ATTACHMENT_OBJECT_NAME}, then
-     *    $params will contain the name of the
+     *  -  If $pname is {@see GL46::GL_FRAMEBUFFER_ATTACHMENT_OBJECT_NAME}, then $params will contain the name of the
      *    texture object which contains the attached image.
-     *  -  If $pname is {@see GL46::GL_FRAMEBUFFER_ATTACHMENT_TEXTURE_LEVEL},
-     *    then $params will contain the mipmap level
+     *  -  If $pname is {@see GL46::GL_FRAMEBUFFER_ATTACHMENT_TEXTURE_LEVEL}, then $params will contain the mipmap level
      *    of the texture object which contains the attached image.
-     *  -  If $pname is {@see
-     *    GL46::GL_FRAMEBUFFER_ATTACHMENT_TEXTURE_CUBE_MAP_FACE} and the value
-     *    of
-     *    {@see GL46::GL_FRAMEBUFFER_ATTACHMENT_OBJECT_NAME} is the name of a
-     *    cube map texture object, then $params will
-     *    contain the cube map face of the cubemap texture object which contains
-     *    the attached image. Otherwise $params
+     *  -  If $pname is {@see GL46::GL_FRAMEBUFFER_ATTACHMENT_TEXTURE_CUBE_MAP_FACE} and the value of
+     *    {@see GL46::GL_FRAMEBUFFER_ATTACHMENT_OBJECT_NAME} is the name of a cube map texture object, then $params will
+     *    contain the cube map face of the cubemap texture object which contains the attached image. Otherwise $params
      *    will contain zero.
-     *  -  If $pname is {@see GL46::GL_FRAMEBUFFER_ATTACHMENT_LAYERED}, then
-     *    $params will contain {@see GL46::GL_TRUE}
-     *    if an entire level of a three-dimensional texture, cube map texture,
-     *    or one-or two-dimensional array texture
+     *  -  If $pname is {@see GL46::GL_FRAMEBUFFER_ATTACHMENT_LAYERED}, then $params will contain {@see GL46::GL_TRUE}
+     *    if an entire level of a three-dimensional texture, cube map texture, or one-or two-dimensional array texture
      *    is attached. Otherwise, $params will contain {@see GL46::GL_FALSE}.
-     *  -  If $pname is {@see GL46::GL_FRAMEBUFFER_ATTACHMENT_TEXTURE_LAYER};
-     *    the value of
-     *    {@see GL46::GL_FRAMEBUFFER_ATTACHMENT_OBJECT_NAME} is the name of a
-     *    three-dimensional, or a one- or
-     *    two-dimensional array texture; and the value of {@see
-     *    GL46::GL_FRAMEBUFFER_ATTACHMENT_LAYERED} is
-     *    {@see GL46::GL_FALSE}, then $params will contain the texture layer
-     *    which contains the attached image.
+     *  -  If $pname is {@see GL46::GL_FRAMEBUFFER_ATTACHMENT_TEXTURE_LAYER}; the value of
+     *    {@see GL46::GL_FRAMEBUFFER_ATTACHMENT_OBJECT_NAME} is the name of a three-dimensional, or a one- or
+     *    two-dimensional array texture; and the value of {@see GL46::GL_FRAMEBUFFER_ATTACHMENT_LAYERED} is
+     *    {@see GL46::GL_FALSE}, then $params will contain the texture layer which contains the attached image.
      *    Otherwise $params will contain zero.
      *
      * @see http://docs.gl/gl4/glGetFramebufferAttachmentParameter

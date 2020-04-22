@@ -2992,17 +2992,12 @@ class GL43 extends GL42
      * A string provided to {@see GL46::glGetProgramResourceLocation} is considered to match an active variable if:
      *
      *  -  the string exactly matches the name of the active variable
-     *  -  if the string identifies the base name of an active array, where the
-     *    string would exactly match the name of
+     *  -  if the string identifies the base name of an active array, where the string would exactly match the name of
      *    the variable if the suffix "[0]" were appended to the string
-     *  -  if the string identifies an active element of the array, where the
-     *    string ends with the concatenation of the
-     *    "[" character, an integer with no "+" sign, extra leading zeroes, or
-     *    whitespace identifying an array element,
-     *    and the "]" character, the integer is less than the number of active
-     *    elements of the array variable, and where
-     *    the string would exactly match the enumerated name of the array if the
-     *    decimal integer were replaced with
+     *  -  if the string identifies an active element of the array, where the string ends with the concatenation of the
+     *    "[" character, an integer with no "+" sign, extra leading zeroes, or whitespace identifying an array element,
+     *    and the "]" character, the integer is less than the number of active elements of the array variable, and where
+     *    the string would exactly match the enumerated name of the array if the decimal integer were replaced with
      *    zero.
      *
      * Any other string is considered not to identify an active variable. If the string specifies an element of an
@@ -3043,17 +3038,12 @@ class GL43 extends GL42
      * if:
      *
      *  -  the string exactly matches the name of the active variable
-     *  -  if the string identifies the base name of an active array, where the
-     *    string would exactly match the name of
+     *  -  if the string identifies the base name of an active array, where the string would exactly match the name of
      *    the variable if the suffix "[0]" were appended to the string
-     *  -  if the string identifies an active element of the array, where the
-     *    string ends with the concatenation of the
-     *    "[" character, an integer with no "+" sign, extra leading zeroes, or
-     *    whitespace identifying an array element,
-     *    and the "]" character, the integer is less than the number of active
-     *    elements of the array variable, and where
-     *    the string would exactly match the enumerated name of the array if the
-     *    decimal integer were replaced with
+     *  -  if the string identifies an active element of the array, where the string ends with the concatenation of the
+     *    "[" character, an integer with no "+" sign, extra leading zeroes, or whitespace identifying an array element,
+     *    and the "]" character, the integer is less than the number of active elements of the array variable, and where
+     *    the string would exactly match the enumerated name of the array if the decimal integer were replaced with
      *    zero.
      *
      * Any other string is considered not to identify an active variable. If the string specifies an element of an
