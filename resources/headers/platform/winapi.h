@@ -1,3 +1,8 @@
+
+#ifndef WINAPI
+    #define WINAPI __stdcall
+#endif
+
 typedef unsigned char BYTE;
 typedef unsigned long DWORD;
 typedef unsigned short WORD;
@@ -13,8 +18,8 @@ typedef float FLOAT;
 typedef enum { TRUE, FALSE } BOOL;
 
 typedef struct _POINTFLOAT {
-    FLOAT   x;
-    FLOAT   y;
+    FLOAT x;
+    FLOAT y;
 } POINTFLOAT, *PPOINTFLOAT;
 
 typedef struct _GLYPHMETRICSFLOAT {
@@ -23,7 +28,9 @@ typedef struct _GLYPHMETRICSFLOAT {
     POINTFLOAT  gmfptGlyphOrigin;
     FLOAT       gmfCellIncX;
     FLOAT       gmfCellIncY;
-} GLYPHMETRICSFLOAT, *PGLYPHMETRICSFLOAT, *LPGLYPHMETRICSFLOAT;
+} GLYPHMETRICSFLOAT,
+  *PGLYPHMETRICSFLOAT,
+  *LPGLYPHMETRICSFLOAT;
 
 typedef struct tagLAYERPLANEDESCRIPTOR {
   WORD     nSize;
@@ -50,6 +57,10 @@ typedef struct tagLAYERPLANEDESCRIPTOR {
   BYTE     iLayerPlane;
   BYTE     bReserved;
   COLORREF crTransparent;
-} LAYERPLANEDESCRIPTOR, *PLAYERPLANEDESCRIPTOR, *LPLAYERPLANEDESCRIPTOR;
+} LAYERPLANEDESCRIPTOR,
+  *PLAYERPLANEDESCRIPTOR,
+  *LPLAYERPLANEDESCRIPTOR;
 
-typedef struct { int unused; } HGLRC;
+typedef struct {
+  int unused;
+} HGLRC;

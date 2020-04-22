@@ -14,6 +14,8 @@ namespace Serafim\OpenGL;
 use FFI\CData;
 use Serafim\OpenGL\Support\GLLibrary;
 use Serafim\OpenGL\Support\KernelTrait;
+use Serafim\OpenGL\Support\Loader;
+use Serafim\SDL\Support\SingletonTrait;
 
 /**
  * Class GL
@@ -21,6 +23,7 @@ use Serafim\OpenGL\Support\KernelTrait;
 abstract class GL
 {
     use KernelTrait;
+    use SingletonTrait;
 
     /**
      * @var array|CData[]|\Closure[]
@@ -28,18 +31,26 @@ abstract class GL
     private static array $virtualFunctions = [];
 
     /**
+     * GL constructor.
+     */
+    public function __construct()
+    {
+        $this->info = Loader::load(new GLLibrary());
+    }
+
+    /**
      * @param string $fn
      * @return mixed
      */
-    protected static function getProcAddress(string $fn)
+    protected function getProcAddressFunction(string $fn)
     {
         switch (\PHP_OS_FAMILY) {
             case 'Windows':
-                return self::$ffi->wglGetProcAddress($fn);
+                return $this->info->ffi->wglGetProcAddress($fn);
 
             case 'Linux':
                 // glXGetProcAddressARB?
-                return self::$ffi->glXGetProcAddress($fn);
+                return $this->info->ffi->glXGetProcAddress($fn);
 
             default:
                 throw new \LogicException('Unrecognized platform');
@@ -51,8 +62,8 @@ abstract class GL
      * @param string $signature
      * @return CData|\Closure
      */
-    public static function getProc(string $fn, string $signature): CData
+    public function getProcAddress(string $fn, string $signature): CData
     {
-        return self::$virtualFunctions[$fn] ??= self::cast($signature, self::getProcAddress($fn));
+        return self::$virtualFunctions[$fn] ??= $this->cast($signature, $this->getProcAddressFunction($fn));
     }
 }

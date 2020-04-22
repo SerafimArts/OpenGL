@@ -1,5 +1,3 @@
-#include <winapi.h>
-
 extern BOOL wglCopyContext(HGLRC hglrcSrc, HGLRC hglrcDst, UINT mask);
 extern HGLRC wglCreateContext(HDC hDc);
 extern HGLRC wglCreateLayerContext(HDC hDc, int level);

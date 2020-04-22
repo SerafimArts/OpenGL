@@ -11,108 +11,84 @@ declare(strict_types=1);
 
 use Serafim\OpenGL\GL43 as GL;
 
-function assert_program(int $id, int $status): void
+function assert_program(GL $gl, int $id, int $status): void
 {
-    GL::glGetProgramiv($id, $status, FFI::addr($result = GL::new('GLint')));
-    GL::glGetProgramiv($id, GL::GL_INFO_LOG_LENGTH, FFI::addr($infoLogLength = GL::new('int')));
+    $gl->glGetProgramiv($id, $status, FFI::addr($result = $gl->new('GLint')));
+    $gl->glGetProgramiv($id, GL::GL_INFO_LOG_LENGTH, FFI::addr($infoLogLength = $gl->new('int')));
 
     if ($result->cdata === GL::GL_FALSE) {
-        $ptr = GL::charPtr(\str_repeat(' ', $infoLogLength->cdata));
-        GL::glGetShaderInfoLog($id, $infoLogLength->cdata, null, $ptr);
+        $ptr = $gl->charPtr(\str_repeat(' ', $infoLogLength->cdata));
+        $gl->glGetShaderInfoLog($id, $infoLogLength->cdata, null, $ptr);
 
-        throw new \RuntimeException( FFI::string($ptr));
+        throw new \RuntimeException(FFI::string($ptr));
     }
 }
 
-function assert_shader(int $id, int $status): void
+function assert_shader(GL $gl, int $id, int $status): void
 {
-    GL::glGetShaderiv($id, $status, FFI::addr($result = GL::new('GLint')));
-    GL::glGetShaderiv($id, GL::GL_INFO_LOG_LENGTH, FFI::addr($infoLogLength = GL::new('int')));
+    $gl->glGetShaderiv($id, $status, FFI::addr($result = $gl->new('GLint')));
+    $gl->glGetShaderiv($id, GL::GL_INFO_LOG_LENGTH, FFI::addr($infoLogLength = $gl->new('int')));
 
     if ($result->cdata === GL::GL_FALSE) {
-        $ptr = GL::charPtr(\str_repeat(' ', $infoLogLength->cdata));
-        GL::glGetShaderInfoLog($id, $infoLogLength->cdata, null, $ptr);
+        $ptr = $gl->charPtr(\str_repeat(' ', $infoLogLength->cdata));
+        $gl->glGetShaderInfoLog($id, $infoLogLength->cdata, null, $ptr);
 
-        throw new \RuntimeException( FFI::string($ptr));
+        throw new \RuntimeException(FFI::string($ptr));
     }
 }
 
-function compile_shader(string $file, int $type): int
+function compile_shader(GL $gl, string $file, int $type): int
 {
     $source = \trim(\file_get_contents($file));
     $source = \str_replace("\r", '', $source);
 
-    $string = GL::charPtr($source);
+    $string = $gl->charPtr($source);
 
-    $id = GL::glCreateShader($type);
-    GL::glShaderSource($id, 1, FFI::addr($string), null);
-    GL::glCompileShader($id);
+    $id = $gl->glCreateShader($type);
+    $gl->glShaderSource($id, 1, FFI::addr($string), null);
+    $gl->glCompileShader($id);
 
-    $out = GL::charPtr($source);
+    $out = $gl->charPtr($source);
 
-    GL::glGetShaderSource($id, 512, null, $out);
+    $gl->glGetShaderSource($id, 512, null, $out);
     try {
-        assert_shader($id, GL::GL_COMPILE_STATUS);
+        assert_shader($gl, $id, GL::GL_COMPILE_STATUS);
 
         return $id;
     } catch (\Throwable $e) {
-        throw new \RuntimeException($e->getMessage() . ' in shader ' . \realpath($file) . ':0');
+        throw new \RuntimeException($e->getMessage() . ' in shader ' . \realpath($file) . ':0', 0, $e);
     } finally {
         FFI::free($string);
     }
 }
 
-/**
- * @param int $n
- * @return \FFI\CData|\FFI\CInt
- */
-function gen_vbo(int $n = 1): \FFI\CData
+function load_shaders(GL $gl, string $vertex, string $fragment)
 {
-    $vbo = GL::new('GLuint');
-    GL::glGenBuffers($n, \FFI::addr($vbo)); // Generate 1 buffer
+    $program = $gl->glCreateProgram();
 
-    return $vbo;
-}
+    $vertexId = compile_shader($gl, $vertex, GL::GL_VERTEX_SHADER);
+    $fragmentId = compile_shader($gl, $fragment, GL::GL_FRAGMENT_SHADER);
 
-/**
- * @param int $n
- * @return \FFI\CData|\FFI\CInt
- */
-function gen_vao(int $n = 1): \FFI\CData
-{
-    $vao = GL::new('GLuint');
-    GL::glGenVertexArrays($n, \FFI::addr($vao));
-
-    return $vao;
-}
-
-function load_shaders(string $vertex, string $fragment)
-{
-    $program = GL::glCreateProgram();
-
-    $vertexId = compile_shader($vertex, GL::GL_VERTEX_SHADER);
-    $fragmentId = compile_shader($fragment, GL::GL_FRAGMENT_SHADER);
-
-    GL::glAttachShader($program, $vertexId);
-    GL::glAttachShader($program, $fragmentId);
-    GL::glLinkProgram($program);
+    $gl->glAttachShader($program, $vertexId);
+    $gl->glAttachShader($program, $fragmentId);
+    $gl->glLinkProgram($program);
 
     try {
-        assert_program($program, GL::GL_LINK_STATUS);
+        assert_program($gl, $program, GL::GL_LINK_STATUS);
     } catch (\Throwable $e) {
         throw new \RuntimeException($e->getMessage() . ' in shader [' . $vertex . ', ' . $fragment . ']');
     }
 
-    GL::glDeleteShader($vertexId);
-    GL::glDeleteShader($fragmentId);
+    $gl->glDeleteShader($vertexId);
+    $gl->glDeleteShader($fragmentId);
 
     return $program;
 }
 
-function enable_logger(): void
+function enable_logger(GL $gl): void
 {
-    GL::glEnable(GL::GL_DEBUG_OUTPUT);
-    GL::glDebugMessageCallback(function ($src, $type, $id, $severity, $len, $message, $user) {
+    $gl->glEnable(GL::GL_DEBUG_OUTPUT);
+    $gl->glDebugMessageCallback(function ($src, $type, $id, $severity, $len, $message, $user) {
         $message = \substr($message, 0, $len) . "\n";
 
         switch ($type) {
@@ -143,6 +119,5 @@ function enable_logger(): void
             default:
                 \fwrite(\STDERR, '[OTHER]: ' . $message);
         }
-
-    }, GL::new('void*'));
+    }, $gl->new('void*'));
 }

@@ -15,8 +15,7 @@ use FFI\CData;
 use FFI\CPtr;
 use FFI\CType;
 use Serafim\FFILoader\LibraryInformation;
-use Serafim\FFILoader\LibraryInterface;
-use Serafim\FFILoader\Loader;
+use Serafim\OpenGL\Util;
 
 /**
  * Trait KernelTrait
@@ -24,69 +23,46 @@ use Serafim\FFILoader\Loader;
 trait KernelTrait
 {
     /**
-     * @var \FFI|mixed
-     */
-    public static \FFI $ffi;
-
-    /**
      * @var LibraryInformation
      */
-    public static LibraryInformation $info;
-
-    /**
-     * @param LibraryInterface $library
-     * @return void
-     */
-    public static function init(LibraryInterface $library): void
-    {
-        $loader = new Loader();
-
-        self::$info = $loader->load($library);
-        self::$ffi = &self::$info->ffi;
-    }
+    public LibraryInformation $info;
 
     /**
      * @param string $type
      * @param array $data
      * @return CData
      */
-    public static function arrayOf(string $type, array $data): CData
+    public function array(string $type, array $data): CData
     {
-        $instance = self::new($type . '[' . \count($data) . ']');
-
-        foreach ($data as $i => $value) {
-            $instance[$i] = $value;
-        }
-
-        return $instance;
+        return Util::array($type, $data, $this->info->ffi);
     }
 
     /**
      * @param string $string
      * @return CData
      */
-    public static function charPtr(string $string): CData
+    public function charPtr(string $string): CData
     {
-        $charArray = self::stringOf($string);
-
-        return \FFI::addr($charArray[0]);
+        return Util::charPtr($string);
     }
 
     /**
      * @param string $string
      * @return CData
      */
-    public static function stringOf(string $string): CData
+    public function string(string $string): CData
     {
-        $nullTerminated = $string . "\0";
+        return Util::string($string);
+    }
 
-        $length = \strlen($nullTerminated);
-
-        $instance = self::new('char[' . $length . ']', false);
-
-        \FFI::memcpy($instance, $nullTerminated, $length);
-
-        return $instance;
+    /**
+     * @param string $struct
+     * @param array $initializer
+     * @return CData
+     */
+    public function struct(string $struct, array $initializer = []): CData
+    {
+        return Util::struct($struct, $initializer, $this->info->ffi);
     }
 
     /**
@@ -95,10 +71,10 @@ trait KernelTrait
      * @param bool $persistent
      * @return CData
      */
-    public static function new($type, bool $owned = true, bool $persistent = false): CData
+    public function new($type, bool $owned = true, bool $persistent = false): CData
     {
         /** @noinspection StaticInvocationViaThisInspection */
-        return self::$ffi->new($type, $owned, $persistent);
+        return $this->info->ffi->new($type, $owned, $persistent);
     }
 
     /**
@@ -114,10 +90,10 @@ trait KernelTrait
      * @param CData|CPtr $pointer
      * @return CData
      */
-    public static function cast($type, CData $pointer): CData
+    public function cast($type, CData $pointer): CData
     {
         /** @noinspection StaticInvocationViaThisInspection */
-        return self::$ffi->cast($type, $pointer);
+        return $this->info->ffi->cast($type, $pointer);
     }
 
     /**
@@ -132,9 +108,9 @@ trait KernelTrait
      * @param string|CType $type
      * @return CType
      */
-    public static function type($type): CType
+    public function type($type): CType
     {
         /** @noinspection StaticInvocationViaThisInspection */
-        return self::$ffi->type($type);
+        return $this->info->ffi->type($type);
     }
 }

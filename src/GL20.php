@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Serafim\OpenGL;
 
+use Serafim\OpenGL\Support\Assert;
+
 /**
  * The OpenGL functionality up to version 2.0. Includes the deprecated symbols of the Compatibility Profile.
  *
@@ -432,5155 +434,7949 @@ class GL20 extends GL15
     public const GL_STENCIL_BACK_WRITEMASK = 0x8ca5;
 
     /**
-     * The blend equations determines how a new pixel (the ''source'' color) is combined with a pixel already in the
-     * framebuffer (the ''destination'' color). This function specifies one blend equation for the RGB-color
-     * components and one blend equation for the alpha component.
+     * The blend equations determines how a new pixel (the ''source'' color)
+     * is combined with a pixel already in the framebuffer (the
+     * ''destination'' color). These functions specify one blend equation for
+     * the RGB-color components and one blend equation for the alpha
+     * component. {@see GL46::glBlendEquationSeparatei} specifies the blend
+     * equations for a single draw buffer whereas
+     * {@see GL46::glBlendEquationSeparate} sets the blend equations for all
+     * draw buffers.
      *
-     * The blend equations use the source and destination blend factors specified by either
-     * {@see glBlendFunc} or {@see glBlendFuncSeparate}. See {@see glBlendFunc} or
-     * {@see glBlendFuncSeparate} for a description of the various blend factors.
+     * The blend equations use the source and destination blend factors
+     * specified by either {@see GL46::glBlendFunc} or
+     * {@see GL46::glBlendFuncSeparate}. See {@see GL46::glBlendFunc} or
+     * {@see GL46::glBlendFuncSeparate} for a description of the various
+     * blend factors.
      *
-     * In the equations that follow, source and destination color components are referred to as R s G s B s A s and R
-     * d G d B d A d , respectively. The result color is referred to as R r G r B r A r . The source and destination
-     * blend factors are denoted s R s G s B s A and d R d G d B d A , respectively. For these equations all color
-     * components are understood to have values in the range 0 1 .
+     * In the equations that follow, source and destination color components
+     * are referred to as    R s  G s  B s  A s    and    R d  G d  B d  A d
+     *  , respectively. The result color is referred to as    R r  G r  B r
+     * A r   . The source and destination blend factors are denoted    s R  s
+     * G  s B  s A    and    d R  d G  d B  d A   , respectively. For these
+     * equations all color components are understood to have values in the
+     * range    0 1  .          Mode     RGB Components     Alpha Component
+     *      {@see GL46::GL_FUNC_ADD}      Rr =  R s  &amp;it; s R  + R d
+     * &amp;it; d R        Gr =  G s  &amp;it; s G  + G d  &amp;it; d G
+     *  Br =  B s  &amp;it; s B  + B d  &amp;it; d B          Ar =  A s
+     * &amp;it; s A  + A d  &amp;it; d A
+     * {@see GL46::GL_FUNC_SUBTRACT}      Rr =  R s  &amp;it; s R  - R d
+     * &amp;it; d R        Gr =  G s  &amp;it; s G  - G d  &amp;it; d G
+     *  Br =  B s  &amp;it; s B  - B d  &amp;it; d B          Ar =  A s
+     * &amp;it; s A  - A d  &amp;it; d A
+     * {@see GL46::GL_FUNC_REVERSE_SUBTRACT}      Rr =  R d  &amp;it; d R  -
+     * R s  &amp;it; s R        Gr =  G d  &amp;it; d G  - G s  &amp;it; s G
+     *       Br =  B d  &amp;it; d B  - B s  &amp;it; s B          Ar =  A d
+     * &amp;it; d A  - A s  &amp;it; s A         {@see GL46::GL_MIN}      Rr
+     * =  min &amp;af;   R s    R d          Gr =  min &amp;af;   G s    G d
+     *         Br =  min &amp;af;   B s    B d            Ar =  min &amp;af;
+     *  A s    A d           {@see GL46::GL_MAX}      Rr =  max &amp;af;   R
+     * s    R d          Gr =  max &amp;af;   G s    G d          Br =  max
+     * &amp;af;   B s    B d            Ar =  max &amp;af;   A s    A d
      *
-     * **Mode** **RGB Components** **Alpha Component** `GL_FUNC_ADD` Rr = R s ⁢ s R + R d ⁢ d R
+     * The results of these equations are clamped to the range    0 1  .
      *
-     * Gr = G s ⁢ s G + G d ⁢ d G
+     * The {@see GL46::GL_MIN} and {@see GL46::GL_MAX} equations are useful
+     * for applications that analyze image data (image thresholding against a
+     * constant color, for example). The {@see GL46::GL_FUNC_ADD} equation is
+     * useful for antialiasing and transparency, among other things.
      *
-     * Br = B s ⁢ s B + B d ⁢ d B
-     *
-     * Ar = A s ⁢ s A + A d ⁢ d A
-     *
-     *  - `GL_FUNC_SUBTRACT` Rr = R s ⁢ s R - R d ⁢ d R
-     *
-     * Gr = G s ⁢ s G - G d ⁢ d G
-     *
-     * Br = B s ⁢ s B - B d ⁢ d B
-     *
-     * Ar = A s ⁢ s A - A d ⁢ d A
-     *
-     *  - `GL_FUNC_REVERSE_SUBTRACT` Rr = R d ⁢ d R - R s ⁢ s R
-     *
-     * Gr = G d ⁢ d G - G s ⁢ s G
-     *
-     * Br = B d ⁢ d B - B s ⁢ s B
-     *
-     * Ar = A d ⁢ d A - A s ⁢ s A
-     *
-     *  - `GL_MIN` Rr = min ⁡ R s R d
-     *
-     * Gr = min ⁡ G s G d
-     *
-     * Br = min ⁡ B s B d
-     *
-     * Ar = min ⁡ A s A d
-     *
-     *  - `GL_MAX` Rr = max ⁡ R s R d
-     *
-     * Gr = max ⁡ G s G d
-     *
-     * Br = max ⁡ B s B d
-     *
-     * Ar = max ⁡ A s A d
-     *
-     * The results of these equations are clamped to the range 0 1 .
-     *
-     * The `GL_MIN` and `GL_MAX` equations are useful for applications that analyze image data (image thresholding
-     * against a constant color, for example). The `GL_FUNC_ADD` equation is useful for antialiasing and
-     * transparency, among other things.
-     *
-     * Initially, both the RGB blend equation and the alpha blend equation are set to `GL_FUNC_ADD`.
+     * Initially, both the RGB blend equation and the alpha blend equation
+     * are set to {@see GL46::GL_FUNC_ADD}.
      *
      * @see http://docs.gl/gl2/glBlendEquationSeparate
-     * @see http://docs.gl/gl3/glBlendEquationSeparate
      * @see http://docs.gl/gl4/glBlendEquationSeparate
      * @since 2.0
-     * @param int $modeRGB
-     * @param int $modeAlpha
+     * @param int|\FFI\CData|\FFI\CInt $modeRGB
+     * @param int|\FFI\CData|\FFI\CInt $modeAlpha
      * @return void
      */
-    public static function glBlendEquationSeparate(int $modeRGB, int $modeAlpha): void
+    public function glBlendEquationSeparate($modeRGB, $modeAlpha): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($modeRGB >= 0 && $modeRGB <= 4_294_967_295, 'Argument $modeRGB overflow: C type GLenum is required');
-        assert($modeAlpha >= 0 && $modeAlpha <= 4_294_967_295, 'Argument $modeAlpha overflow: C type GLenum is required');
+        $modeRGB = $modeRGB instanceof \FFI\CData ? $modeRGB->cdata : $modeRGB;
+        $modeAlpha = $modeAlpha instanceof \FFI\CData ? $modeAlpha->cdata : $modeAlpha;
 
-        $proc = self::getProc('glBlendEquationSeparate', 'void (*)(GLenum modeRGB, GLenum modeAlpha)');
+        assert(Assert::uint16($modeRGB), 'Argument $modeRGB must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Assert::uint16($modeAlpha), 'Argument $modeAlpha must be a C-like GLenum, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glBlendEquationSeparate', 'void (*)(GLenum modeRGB, GLenum modeAlpha)');
         $proc($modeRGB, $modeAlpha);
     }
 
     /**
-     * Defines an array of buffers into which fragment color values or fragment data will be written. If no fragment
-     * shader is active, rendering operations will generate only one fragment color per fragment and it will be
-     * written into each of the buffers specified by *`bufs`*. If a fragment shader is active and it writes a value
-     * to the output variable `gl_FragColor`, then that value will be written into each of the buffers specified by
-     * *`bufs`*. If a fragment shader is active and it writes a value to one or more elements of the output array
-     * variable `gl_FragData[]`, then the value of `gl_FragData[0] ` will be written into the first buffer specified
-     * by *`bufs`*, the value of `gl_FragData[1] ` will be written into the second buffer specified by *`bufs`*, and
-     * so on up to `gl_FragData[n-1]`. The draw buffer used for `gl_FragData[n]` and beyond is implicitly set to be
-     * `GL_NONE`.
+     * {@see GL46::glDrawBuffers} and
+     * {@see GL46::glNamedFramebufferDrawBuffers} define an array of buffers
+     * into which outputs from the fragment shader data will be written. If a
+     * fragment shader writes a value to one or more user defined output
+     * variables, then the value of each variable will be written into the
+     * buffer specified at a location within $bufs corresponding to the
+     * location assigned to that user defined output. The draw buffer used
+     * for user defined outputs assigned to locations greater than or equal
+     * to $n is implicitly set to {@see GL46::GL_NONE} and any data written
+     * to such an output is discarded.
      *
-     * The symbolic constants contained in *`bufs`* may be any of the following:
+     * For {@see GL46::glDrawBuffers}, the framebuffer object that is bound
+     * to the {@see GL46::GL_DRAW_FRAMEBUFFER} binding will be used. For
+     * {@see GL46::glNamedFramebufferDrawBuffers}, $framebuffer is the name
+     * of the framebuffer object. If $framebuffer is zero, then the default
+     * framebuffer is affected.
      *
-     *  - `GL_NONE`The fragment color/data value is not written into any color buffer.
+     * The symbolic constants contained in $bufs may be any of the following:
      *
-     *  - `GL_FRONT_LEFT`The fragment color/data value is written into the front left color buffer.
+     *  - {@see GL46::GL_NONE}: The fragment shader output value is not written
+     *    into any color buffer.
      *
-     *  - `GL_FRONT_RIGHT`The fragment color/data value is written into the front right color buffer.
+     *  - {@see GL46::GL_FRONT_LEFT}: The fragment shader output value is
+     *    written into the front left color
+     *    buffer.
      *
-     *  - `GL_BACK_LEFT`The fragment color/data value is written into the back left color buffer.
+     *  - {@see GL46::GL_FRONT_RIGHT}: The fragment shader output value is
+     *    written into the front right color
+     *    buffer.
      *
-     *  - `GL_BACK_RIGHT`The fragment color/data value is written into the back right color buffer.
+     *  - {@see GL46::GL_BACK_LEFT}: The fragment shader output value is written
+     *    into the back left color
+     *    buffer.
      *
-     *  - `GL_AUXi`The fragment color/data value is written into auxiliary buffer `i`.
+     *  - {@see GL46::GL_BACK_RIGHT}: The fragment shader output value is
+     *    written into the back right color
+     *    buffer.
      *
-     * Except for `GL_NONE`, the preceding symbolic constants may not appear more than once in *`bufs`*. The maximum
-     * number of draw buffers supported is implementation dependent and can be queried by calling {@see glGet} with
-     * the argument `GL_MAX_DRAW_BUFFERS`. The number of auxiliary buffers can be queried by calling {@see glGet}
-     * with the argument `GL_AUX_BUFFERS`.
+     *  - {@see GL46::GL_COLOR_ATTACHMENTn}: The fragment shader output value is
+     *    written into the nth color
+     *    attachment of the current framebuffer. n may range from zero to the
+     *    value of {@see GL46::GL_MAX_COLOR_ATTACHMENTS}.
+     *
+     * Except for {@see GL46::GL_NONE}, the preceding symbolic constants may
+     * not appear more than once in $bufs. The maximum number of draw buffers
+     * supported is implementation dependent and can be queried by calling
+     * {@see GL46::glGet} with the argument {@see GL46::GL_MAX_DRAW_BUFFERS}.
      *
      * @see http://docs.gl/gl2/glDrawBuffers
-     * @see http://docs.gl/gl3/glDrawBuffers
      * @see http://docs.gl/gl4/glDrawBuffers
      * @since 2.0
-     * @param int $n
+     * @param int|\FFI\CData|\FFI\CInt $n
      * @param \FFI\CData|\FFI\CIntPtr|null $bufs
      * @return void
      */
-    public static function glDrawBuffers(int $n, ?\FFI\CData $bufs): void
+    public function glDrawBuffers($n, ?\FFI\CData $bufs): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($n >= \PHP_INT_MIN && $n <= \PHP_INT_MAX, 'Argument $n overflow: C type GLsizei is required');
+        $n = $n instanceof \FFI\CData ? $n->cdata : $n;
 
-        $proc = self::getProc('glDrawBuffers', 'void (*)(GLsizei n, const GLenum *bufs)');
+        assert(Assert::int16($n), 'Argument $n must be a C-like GLsizei, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glDrawBuffers', 'void (*)(GLsizei n, const GLenum *bufs)');
         $proc($n, $bufs);
     }
 
     /**
-     * Stenciling, like depth-buffering, enables and disables drawing on a per-pixel basis. You draw into the stencil
-     * planes using GL drawing primitives, then render geometry and images, using the stencil planes to mask out
-     * portions of the screen. Stenciling is typically used in multipass rendering algorithms to achieve special
-     * effects, such as decals, outlining, and constructive solid geometry rendering.
+     * Stenciling, like depth-buffering, enables and disables drawing on a
+     * per-pixel basis. You draw into the stencil planes using GL drawing
+     * primitives, then render geometry and images, using the stencil planes
+     * to mask out portions of the screen. Stenciling is typically used in
+     * multipass rendering algorithms to achieve special effects, such as
+     * decals, outlining, and constructive solid geometry rendering.
      *
-     * The stencil test conditionally eliminates a pixel based on the outcome of a comparison between the value in
-     * the stencil buffer and a reference value. To enable and disable the test, call {@see glEnable} and
-     * {@see glDisable} with argument `GL_STENCIL_TEST`; to control it, call {@see glStencilFunc} or
-     * {@see glStencilFuncSeparate}.
+     * The stencil test conditionally eliminates a pixel based on the outcome
+     * of a comparison between the value in the stencil buffer and a
+     * reference value. To enable and disable the test, call
+     * {@see GL46::glEnable} and  {@see GL46::glDisable} with argument
+     * {@see GL46::GL_STENCIL_TEST}; to control it, call
+     * {@see GL46::glStencilFunc} or {@see GL46::glStencilFuncSeparate}.
      *
-     * There can be two separate sets of *`sfail`*, *`dpfail`*, and *`dppass`* parameters; one affects back-facing
-     * polygons, and the other affects front-facing polygons as well as other non-polygon primitives.
-     * {@see glStencilOp} sets both front and back stencil state to the same values, as if
-     * {@see glStencilOpSeparate} were called with *`face`* set to `GL_FRONT_AND_BACK`.
+     * There can be two separate sets of $sfail, $dpfail, and $dppass
+     * parameters; one affects back-facing polygons, and the other affects
+     * front-facing polygons as well as other non-polygon primitives.
+     * {@see GL46::glStencilOp} sets both front and back stencil state to the
+     * same values, as if {@see GL46::glStencilOpSeparate} were called with
+     * $face set to {@see GL46::GL_FRONT_AND_BACK}.
      *
-     *  - `glStencilOpSeparate` takes three arguments that indicate what happens to the stored stencil value while
-     * stenciling is enabled. If the stencil test fails, no change is made to the pixel's color or depth buffers, and
-     * *`sfail`* specifies what happens to the stencil buffer contents. The following eight actions are possible.
+     * {@see GL46::glStencilOpSeparate} takes three arguments that indicate
+     * what happens to the stored stencil value while stenciling is enabled.
+     * If the stencil test fails, no change is made to the pixel's color or
+     * depth buffers, and $sfail specifies what happens to the stencil buffer
+     * contents. The following eight actions are possible.
      *
-     *  - `GL_KEEP` Keeps the current value.
+     *  - {@see GL46::GL_KEEP}: Keeps the current value.
      *
-     *  - `GL_ZERO` Sets the stencil buffer value to 0.
+     *  - {@see GL46::GL_ZERO}: Sets the stencil buffer value to 0.
      *
-     *  - `GL_REPLACE` Sets the stencil buffer value to *ref*, as specified by {@see glStencilFunc}.
+     *  - {@see GL46::GL_REPLACE}: Sets the stencil buffer value to ref, as
+     *    specified by
+     *    {@see GL46::glStencilFunc}.
      *
-     *  - `GL_INCR` Increments the current stencil buffer value. Clamps to the maximum representable unsigned value.
+     *  - {@see GL46::GL_INCR}: Increments the current stencil buffer value.
+     *    Clamps to the maximum
+     *    representable unsigned value.
      *
-     *  - `GL_INCR_WRAP` Increments the current stencil buffer value. Wraps stencil buffer value to zero when
-     * incrementing the maximum representable unsigned value.
+     *  - {@see GL46::GL_INCR_WRAP}: Increments the current stencil buffer
+     *    value. Wraps stencil buffer
+     *    value to zero when incrementing the maximum representable unsigned
+     *    value.
      *
-     *  - `GL_DECR` Decrements the current stencil buffer value. Clamps to 0.
+     *  - {@see GL46::GL_DECR}: Decrements the current stencil buffer value.
+     *    Clamps to 0.
      *
-     *  - `GL_DECR_WRAP` Decrements the current stencil buffer value. Wraps stencil buffer value to the maximum
-     * representable unsigned value when decrementing a stencil buffer value of zero.
+     *  - {@see GL46::GL_DECR_WRAP}: Decrements the current stencil buffer
+     *    value. Wraps stencil buffer
+     *    value to the maximum representable unsigned value when decrementing a
+     *    stencil buffer value of zero.
      *
-     *  - `GL_INVERT` Bitwise inverts the current stencil buffer value.
+     *  - {@see GL46::GL_INVERT}: Bitwise inverts the current stencil buffer
+     *    value.
      *
-     * Stencil buffer values are treated as unsigned integers. When incremented and decremented, values are clamped
-     * to 0 and 2 n - 1 , where n is the value returned by querying `GL_STENCIL_BITS`.
+     * Stencil buffer values are treated as unsigned integers. When
+     * incremented and decremented, values are clamped to 0 and    2 n  - 1
+     * , where n is the value returned by querying
+     * {@see GL46::GL_STENCIL_BITS}.
      *
-     * The other two arguments to `glStencilOpSeparate` specify stencil buffer actions that depend on whether
-     * subsequent depth buffer tests succeed (*`dppass`*) or fail (*`dpfail`*) (see {@see glDepthFunc}). The
-     * actions are specified using the same eight symbolic constants as *`sfail`*. Note that *`dpfail`* is ignored
-     * when there is no depth buffer, or when the depth buffer is not enabled. In these cases, *`sfail`* and
-     * *`dppass`* specify stencil action when the stencil test fails and passes, respectively.
+     * The other two arguments to {@see GL46::glStencilOpSeparate} specify
+     * stencil buffer actions that depend on whether subsequent depth buffer
+     * tests succeed ($dppass) or fail ($dpfail) (see
+     * {@see GL46::glDepthFunc}). The actions are specified using the same
+     * eight symbolic constants as $sfail. Note that $dpfail is ignored when
+     * there is no depth buffer, or when the depth buffer is not enabled. In
+     * these cases, $sfail and $dppass specify stencil action when the
+     * stencil test fails and passes, respectively.
      *
      * @see http://docs.gl/gl2/glStencilOpSeparate
-     * @see http://docs.gl/gl3/glStencilOpSeparate
      * @see http://docs.gl/gl4/glStencilOpSeparate
      * @since 2.0
-     * @param int $face
-     * @param int $sfail
-     * @param int $dpfail
-     * @param int $dppass
+     * @param int|\FFI\CData|\FFI\CInt $face
+     * @param int|\FFI\CData|\FFI\CInt $sfail
+     * @param int|\FFI\CData|\FFI\CInt $dpfail
+     * @param int|\FFI\CData|\FFI\CInt $dppass
      * @return void
      */
-    public static function glStencilOpSeparate(int $face, int $sfail, int $dpfail, int $dppass): void
+    public function glStencilOpSeparate($face, $sfail, $dpfail, $dppass): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($face >= 0 && $face <= 4_294_967_295, 'Argument $face overflow: C type GLenum is required');
-        assert($sfail >= 0 && $sfail <= 4_294_967_295, 'Argument $sfail overflow: C type GLenum is required');
-        assert($dpfail >= 0 && $dpfail <= 4_294_967_295, 'Argument $dpfail overflow: C type GLenum is required');
-        assert($dppass >= 0 && $dppass <= 4_294_967_295, 'Argument $dppass overflow: C type GLenum is required');
+        $face = $face instanceof \FFI\CData ? $face->cdata : $face;
+        $sfail = $sfail instanceof \FFI\CData ? $sfail->cdata : $sfail;
+        $dpfail = $dpfail instanceof \FFI\CData ? $dpfail->cdata : $dpfail;
+        $dppass = $dppass instanceof \FFI\CData ? $dppass->cdata : $dppass;
 
-        $proc = self::getProc('glStencilOpSeparate', 'void (*)(GLenum face, GLenum sfail, GLenum dpfail, GLenum dppass)');
+        assert(Assert::uint16($face), 'Argument $face must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Assert::uint16($sfail), 'Argument $sfail must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Assert::uint16($dpfail), 'Argument $dpfail must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Assert::uint16($dppass), 'Argument $dppass must be a C-like GLenum, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glStencilOpSeparate', 'void (*)(GLenum face, GLenum sfail, GLenum dpfail, GLenum dppass)');
         $proc($face, $sfail, $dpfail, $dppass);
     }
 
     /**
-     * Stenciling, like depth-buffering, enables and disables drawing on a per-pixel basis. You draw into the stencil
-     * planes using GL drawing primitives, then render geometry and images, using the stencil planes to mask out
-     * portions of the screen. Stenciling is typically used in multipass rendering algorithms to achieve special
-     * effects, such as decals, outlining, and constructive solid geometry rendering.
+     * Stenciling, like depth-buffering, enables and disables drawing on a
+     * per-pixel basis. You draw into the stencil planes using GL drawing
+     * primitives, then render geometry and images, using the stencil planes
+     * to mask out portions of the screen. Stenciling is typically used in
+     * multipass rendering algorithms to achieve special effects, such as
+     * decals, outlining, and constructive solid geometry rendering.
      *
-     * The stencil test conditionally eliminates a pixel based on the outcome of a comparison between the reference
-     * value and the value in the stencil buffer. To enable and disable the test, call {@see glEnable} and
-     * {@see glDisable} with argument `GL_STENCIL_TEST`. To specify actions based on the outcome of the stencil
-     * test, call {@see glStencilOp} or {@see glStencilOpSeparate}.
+     * The stencil test conditionally eliminates a pixel based on the outcome
+     * of a comparison between the reference value and the value in the
+     * stencil buffer. To enable and disable the test, call
+     * {@see GL46::glEnable} and  {@see GL46::glDisable} with argument
+     * {@see GL46::GL_STENCIL_TEST}. To specify actions based on the outcome
+     * of the stencil test, call {@see GL46::glStencilOp} or
+     * {@see GL46::glStencilOpSeparate}.
      *
-     * There can be two separate sets of *`func`*, *`ref`*, and *`mask`* parameters; one affects back-facing
-     * polygons, and the other affects front-facing polygons as well as other non-polygon primitives.
-     * {@see glStencilFunc} sets both front and back stencil state to the same values, as if
-     * {@see glStencilFuncSeparate} were called with *`face`* set to `GL_FRONT_AND_BACK`.
+     * There can be two separate sets of $func, $ref, and $mask parameters;
+     * one affects back-facing polygons, and the other affects front-facing
+     * polygons as well as other non-polygon primitives.
+     * {@see GL46::glStencilFunc} sets both front and back stencil state to
+     * the same values, as if {@see GL46::glStencilFuncSeparate} were called
+     * with $face set to {@see GL46::GL_FRONT_AND_BACK}.
      *
-     * *`func`* is a symbolic constant that determines the stencil comparison function. It accepts one of eight
-     * values, shown in the following list. *`ref`* is an integer reference value that is used in the stencil
-     * comparison. It is clamped to the range 0 2 n - 1 , where n is the number of bitplanes in the stencil buffer.
-     * *`mask`* is bitwise ANDed with both the reference value and the stored stencil value, with the ANDed values
-     * participating in the comparison.
+     * $func is a symbolic constant that determines the stencil comparison
+     * function. It accepts one of eight values, shown in the following list.
+     * $ref is an integer reference value that is used in the stencil
+     * comparison. It is clamped to the range    0  2 n  - 1   , where n is
+     * the number of bitplanes in the stencil buffer. $mask is bitwise ANDed
+     * with both the reference value and the stored stencil value, with the
+     * ANDed values participating in the comparison.
      *
-     * If *stencil* represents the value stored in the corresponding stencil buffer location, the following list
-     * shows the effect of each comparison function that can be specified by *`func`*. Only if the comparison
-     * succeeds is the pixel passed through to the next stage in the rasterization process (see
-     * {@see glStencilOp}). All tests treat *stencil* values as unsigned integers in the range 0 2 n - 1 ,
-     * where n is the number of bitplanes in the stencil buffer.
+     * If stencil represents the value stored in the corresponding stencil
+     * buffer location, the following list shows the effect of each
+     * comparison function that can be specified by $func. Only if the
+     * comparison succeeds is the pixel passed through to the next stage in
+     * the rasterization process (see {@see GL46::glStencilOp}). All tests
+     * treat stencil values as unsigned integers in the range    0  2 n  - 1
+     *  , where n is the number of bitplanes in the stencil buffer.
      *
-     * The following values are accepted by *`func`*:
+     * The following values are accepted by $func:
      *
-     *  - `GL_NEVER` Always fails.
+     *  - {@see GL46::GL_NEVER}: Always fails.
      *
-     *  - `GL_LESS` Passes if ( *`ref`* &amp; *`mask`* ) &lt; ( *stencil* &amp; *`mask`* ).
+     *  - {@see GL46::GL_LESS}: Passes if ( $ref &amp; $mask ) &lt; ( stencil
+     *    &amp; $mask ).
      *
-     *  - `GL_LEQUAL` Passes if ( *`ref`* &amp; *`mask`* ) &lt;= ( *stencil* &amp; *`mask`* ).
+     *  - {@see GL46::GL_LEQUAL}: Passes if ( $ref &amp; $mask ) &lt;= ( stencil
+     *    &amp; $mask ).
      *
-     *  - `GL_GREATER` Passes if ( *`ref`* &amp; *`mask`* ) &gt; ( *stencil* &amp; *`mask`* ).
+     *  - {@see GL46::GL_GREATER}: Passes if ( $ref &amp; $mask ) &gt; ( stencil
+     *    &amp; $mask ).
      *
-     *  - `GL_GEQUAL` Passes if ( *`ref`* &amp; *`mask`* ) &gt;= ( *stencil* &amp; *`mask`* ).
+     *  - {@see GL46::GL_GEQUAL}: Passes if ( $ref &amp; $mask ) &gt;= ( stencil
+     *    &amp; $mask ).
      *
-     *  - `GL_EQUAL` Passes if ( *`ref`* &amp; *`mask`* ) = ( *stencil* &amp; *`mask`* ).
+     *  - {@see GL46::GL_EQUAL}: Passes if ( $ref &amp; $mask ) = ( stencil
+     *    &amp; $mask ).
      *
-     *  - `GL_NOTEQUAL` Passes if ( *`ref`* &amp; *`mask`* ) != ( *stencil* &amp; *`mask`* ).
+     *  - {@see GL46::GL_NOTEQUAL}: Passes if ( $ref &amp; $mask ) != ( stencil
+     *    &amp; $mask ).
      *
-     *  - `GL_ALWAYS` Always passes.
+     *  - {@see GL46::GL_ALWAYS}: Always passes.
      *
      * @see http://docs.gl/gl2/glStencilFuncSeparate
-     * @see http://docs.gl/gl3/glStencilFuncSeparate
      * @see http://docs.gl/gl4/glStencilFuncSeparate
      * @since 2.0
-     * @param int $face
-     * @param int $func
-     * @param int $ref
-     * @param int $mask
+     * @param int|\FFI\CData|\FFI\CInt $face
+     * @param int|\FFI\CData|\FFI\CInt $func
+     * @param int|\FFI\CData|\FFI\CInt $ref
+     * @param int|\FFI\CData|\FFI\CInt $mask
      * @return void
      */
-    public static function glStencilFuncSeparate(int $face, int $func, int $ref, int $mask): void
+    public function glStencilFuncSeparate($face, $func, $ref, $mask): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($face >= 0 && $face <= 4_294_967_295, 'Argument $face overflow: C type GLenum is required');
-        assert($func >= 0 && $func <= 4_294_967_295, 'Argument $func overflow: C type GLenum is required');
-        assert($ref >= \PHP_INT_MIN && $ref <= \PHP_INT_MAX, 'Argument $ref overflow: C type GLint is required');
-        assert($mask >= 0 && $mask <= 4_294_967_295, 'Argument $mask overflow: C type GLuint is required');
+        $face = $face instanceof \FFI\CData ? $face->cdata : $face;
+        $func = $func instanceof \FFI\CData ? $func->cdata : $func;
+        $ref = $ref instanceof \FFI\CData ? $ref->cdata : $ref;
+        $mask = $mask instanceof \FFI\CData ? $mask->cdata : $mask;
 
-        $proc = self::getProc('glStencilFuncSeparate', 'void (*)(GLenum face, GLenum func, GLint ref, GLuint mask)');
+        assert(Assert::uint16($face), 'Argument $face must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Assert::uint16($func), 'Argument $func must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Assert::int16($ref), 'Argument $ref must be a C-like GLint, but incompatible or overflow value given');
+        assert(Assert::uint16($mask), 'Argument $mask must be a C-like GLuint, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glStencilFuncSeparate', 'void (*)(GLenum face, GLenum func, GLint ref, GLuint mask)');
         $proc($face, $func, $ref, $mask);
     }
 
     /**
-     * Controls the writing of individual bits in the stencil planes. The least significant n bits of *`mask`*, where
-     * n is the number of bits in the stencil buffer, specify a mask. Where a 1 appears in the mask, it's possible to
-     * write to the corresponding bit in the stencil buffer. Where a 0 appears, the corresponding bit is
-     * write-protected. Initially, all bits are enabled for writing.
+     * {@see GL46::glStencilMaskSeparate} controls the writing of individual
+     * bits in the stencil planes. The least significant n bits of $mask,
+     * where n is the number of bits in the stencil buffer, specify a mask.
+     * Where a 1 appears in the mask, it's possible to write to the
+     * corresponding bit in the stencil buffer. Where a 0 appears, the
+     * corresponding bit is write-protected. Initially, all bits are enabled
+     * for writing.
      *
-     * There can be two separate *`mask`* writemasks; one affects back-facing polygons, and the other affects
-     * front-facing polygons as well as other non-polygon primitives. {@see glStencilMask} sets both front
-     * and back stencil writemasks to the same values, as if {@see glStencilMaskSeparate} were
-     * called with *`face`* set to `GL_FRONT_AND_BACK`.
+     * There can be two separate $mask writemasks; one affects back-facing
+     * polygons, and the other affects front-facing polygons as well as other
+     * non-polygon primitives. {@see GL46::glStencilMask} sets both front and
+     * back stencil writemasks to the same values, as if
+     * {@see GL46::glStencilMaskSeparate} were called with $face set to
+     * {@see GL46::GL_FRONT_AND_BACK}.
      *
      * @see http://docs.gl/gl2/glStencilMaskSeparate
-     * @see http://docs.gl/gl3/glStencilMaskSeparate
      * @see http://docs.gl/gl4/glStencilMaskSeparate
      * @since 2.0
-     * @param int $face
-     * @param int $mask
+     * @param int|\FFI\CData|\FFI\CInt $face
+     * @param int|\FFI\CData|\FFI\CInt $mask
      * @return void
      */
-    public static function glStencilMaskSeparate(int $face, int $mask): void
+    public function glStencilMaskSeparate($face, $mask): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($face >= 0 && $face <= 4_294_967_295, 'Argument $face overflow: C type GLenum is required');
-        assert($mask >= 0 && $mask <= 4_294_967_295, 'Argument $mask overflow: C type GLuint is required');
+        $face = $face instanceof \FFI\CData ? $face->cdata : $face;
+        $mask = $mask instanceof \FFI\CData ? $mask->cdata : $mask;
 
-        $proc = self::getProc('glStencilMaskSeparate', 'void (*)(GLenum face, GLuint mask)');
+        assert(Assert::uint16($face), 'Argument $face must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Assert::uint16($mask), 'Argument $mask must be a C-like GLuint, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glStencilMaskSeparate', 'void (*)(GLenum face, GLuint mask)');
         $proc($face, $mask);
     }
 
     /**
-     * In order to create an executable, there must be a way to specify the list of things that will be linked
-     * together. Program objects provide this mechanism. Shaders that are to be linked together in a program object
-     * must first be attached to that program object. `glAttachShader` attaches the shader object specified by
-     * *`shader`* to the program object specified by *`program`*. This indicates that *`shader`* will be included in
-     * link operations that will be performed on *`program`*.
+     * In order to create a complete shader program, there must be a way to
+     * specify the list of things that will be linked together. Program
+     * objects provide this mechanism. Shaders that are to be linked together
+     * in a program object must first be attached to that program object.
+     * {@see GL46::glAttachShader} attaches the shader object specified by
+     * $shader to the program object specified by $program. This indicates
+     * that $shader will be included in link operations that will be
+     * performed on $program.
      *
-     * All operations that can be performed on a shader object are valid whether or not the shader object is attached
-     * to a program object. It is permissible to attach a shader object to a program object before source code has
-     * been loaded into the shader object or before the shader object has been compiled. It is permissible to attach
-     * multiple shader objects of the same type because each may contain a portion of the complete shader. It is also
-     * permissible to attach a shader object to more than one program object. If a shader object is deleted while it
-     * is attached to a program object, it will be flagged for deletion, and deletion will not occur until
-     * {@see glDetachShader} is called to detach it from all program objects to which it is attached.
+     * All operations that can be performed on a shader object are valid
+     * whether or not the shader object is attached to a program object. It
+     * is permissible to attach a shader object to a program object before
+     * source code has been loaded into the shader object or before the
+     * shader object has been compiled. It is permissible to attach multiple
+     * shader objects of the same type because each may contain a portion of
+     * the complete shader. It is also permissible to attach a shader object
+     * to more than one program object. If a shader object is deleted while
+     * it is attached to a program object, it will be flagged for deletion,
+     * and deletion will not occur until {@see GL46::glDetachShader} is
+     * called to detach it from all program objects to which it is attached.
      *
      * @see http://docs.gl/gl2/glAttachShader
-     * @see http://docs.gl/gl3/glAttachShader
      * @see http://docs.gl/gl4/glAttachShader
      * @since 2.0
-     * @param int $program
-     * @param int $shader
+     * @param int|\FFI\CData|\FFI\CInt $program
+     * @param int|\FFI\CData|\FFI\CInt $shader
      * @return void
      */
-    public static function glAttachShader(int $program, int $shader): void
+    public function glAttachShader($program, $shader): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($program >= 0 && $program <= 4_294_967_295, 'Argument $program overflow: C type GLuint is required');
-        assert($shader >= 0 && $shader <= 4_294_967_295, 'Argument $shader overflow: C type GLuint is required');
+        $program = $program instanceof \FFI\CData ? $program->cdata : $program;
+        $shader = $shader instanceof \FFI\CData ? $shader->cdata : $shader;
 
-        $proc = self::getProc('glAttachShader', 'void (*)(GLuint program, GLuint shader)');
+        assert(Assert::uint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Assert::uint16($shader), 'Argument $shader must be a C-like GLuint, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glAttachShader', 'void (*)(GLuint program, GLuint shader)');
         $proc($program, $shader);
     }
 
     /**
-     * Is used to associate a user-defined attribute variable in the program object specified by *`program`* with a
-     * generic vertex attribute index. The name of the user-defined attribute variable is passed as a null terminated
-     * string in *`name`*. The generic vertex attribute index to be bound to this variable is specified by *`index`*.
-     * When *`program`* is made part of current state, values provided via the generic vertex attribute *`index`*
-     * will modify the value of the user-defined attribute variable specified by *`name`*.
+     * {@see GL46::glBindAttribLocation} is used to associate a user-defined
+     * attribute variable in the program object specified by $program with a
+     * generic vertex attribute index. The name of the user-defined attribute
+     * variable is passed as a null terminated string in $name. The generic
+     * vertex attribute index to be bound to this variable is specified by
+     * $index. When $program is made part of current state, values provided
+     * via the generic vertex attribute $index will modify the value of the
+     * user-defined attribute variable specified by $name.
      *
-     * If *`name`* refers to a matrix attribute variable, *`index`* refers to the first column of the matrix. Other
-     * matrix columns are then automatically bound to locations *`index+1`* for a matrix of type mat2; *`index+1`*
-     * and *`index+2`* for a matrix of type mat3; and *`index+1`*, *`index+2`*, and *`index+3`* for a matrix of type
-     * mat4.
+     * If $name refers to a matrix attribute variable, $index refers to the
+     * first column of the matrix. Other matrix columns are then
+     * automatically bound to locations $index+1 for a matrix of type
+     * {@see GL46::mat2}; $index+1 and $index+2 for a matrix of type
+     * {@see GL46::mat3}; and $index+1, $index+2, and $index+3 for a matrix
+     * of type {@see GL46::mat4}.
      *
-     * This command makes it possible for vertex shaders to use descriptive names for attribute variables rather than
-     * generic variables that are numbered from 0 to `GL_MAX_VERTEX_ATTRIBS` -1. The values sent to each generic
-     * attribute index are part of current state, just like standard vertex attributes such as color, normal, and
-     * vertex position. If a different program object is made current by calling {@see glUseProgram}, the
-     * generic vertex attributes are tracked in such a way that the same values will be observed by attributes in the
-     * new program object that are also bound to *`index`*.
+     * This command makes it possible for vertex shaders to use descriptive
+     * names for attribute variables rather than generic variables that are
+     * numbered from zero to the value of {@see GL46::GL_MAX_VERTEX_ATTRIBS}
+     * minus one. The values sent to each generic attribute index are part of
+     * current state. If a different program object is made current by
+     * calling {@see GL46::glUseProgram}, the generic vertex attributes are
+     * tracked in such a way that the same values will be observed by
+     * attributes in the new program object that are also bound to $index.
      *
-     * Attribute variable name-to-generic attribute index bindings for a program object can be explicitly assigned at
-     * any time by calling `glBindAttribLocation`. Attribute bindings do not go into effect until
-     * {@see glLinkProgram} is called. After a program object has been linked successfully, the index
-     * values for generic attributes remain fixed (and their values can be queried) until the next link command
-     * occurs.
+     * Attribute variable name-to-generic attribute index bindings for a
+     * program object can be explicitly assigned at any time by calling
+     * {@see GL46::glBindAttribLocation}. Attribute bindings do not go into
+     * effect until {@see GL46::glLinkProgram} is called. After a program
+     * object has been linked successfully, the index values for generic
+     * attributes remain fixed (and their values can be queried) until the
+     * next link command occurs.
      *
-     * Applications are not allowed to bind any of the standard OpenGL vertex attributes using this command, as they
-     * are bound automatically when needed. Any attribute binding that occurs after the program object has been
-     * linked will not take effect until the next time the program object is linked.
+     * Any attribute binding that occurs after the program object has been
+     * linked will not take effect until the next time the program object is
+     * linked.
      *
      * @see http://docs.gl/gl2/glBindAttribLocation
-     * @see http://docs.gl/gl3/glBindAttribLocation
      * @see http://docs.gl/gl4/glBindAttribLocation
      * @since 2.0
-     * @param int $program
-     * @param int $index
+     * @param int|\FFI\CData|\FFI\CInt $program
+     * @param int|\FFI\CData|\FFI\CInt $index
      * @param \FFI\CData|\FFI\CIntPtr|null $name
      * @return void
      */
-    public static function glBindAttribLocation(int $program, int $index, ?\FFI\CData $name): void
+    public function glBindAttribLocation($program, $index, ?\FFI\CData $name): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($program >= 0 && $program <= 4_294_967_295, 'Argument $program overflow: C type GLuint is required');
-        assert($index >= 0 && $index <= 4_294_967_295, 'Argument $index overflow: C type GLuint is required');
+        $program = $program instanceof \FFI\CData ? $program->cdata : $program;
+        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
 
-        $proc = self::getProc('glBindAttribLocation', 'void (*)(GLuint program, GLuint index, const GLchar *name)');
+        assert(Assert::uint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glBindAttribLocation', 'void (*)(GLuint program, GLuint index, const GLchar *name)');
         $proc($program, $index, $name);
     }
 
     /**
-     * Compiles the source code strings that have been stored in the shader object specified by *`shader`*.
+     * {@see GL46::glCompileShader} compiles the source code strings that
+     * have been stored in the shader object specified by $shader.
      *
-     * The compilation status will be stored as part of the shader object's state. This value will be set to
-     * `GL_TRUE` if the shader was compiled without errors and is ready for use, and `GL_FALSE` otherwise. It can be
-     * queried by calling {@see glGetShader} with arguments *`shader`* and `GL_COMPILE_STATUS`.
+     * The compilation status will be stored as part of the shader object's
+     * state. This value will be set to {@see GL46::GL_TRUE} if the shader
+     * was compiled without errors and is ready for use, and
+     * {@see GL46::GL_FALSE} otherwise. It can be queried by calling
+     * {@see GL46::glGetShader} with arguments $shader and
+     * {@see GL46::GL_COMPILE_STATUS}.
      *
-     * Compilation of a shader can fail for a number of reasons as specified by the OpenGL Shading Language
-     * Specification. Whether or not the compilation was successful, information about the compilation can be
-     * obtained from the shader object's information log by calling {@see glGetShaderInfoLog}.
+     * Compilation of a shader can fail for a number of reasons as specified
+     * by the OpenGL Shading Language Specification. Whether or not the
+     * compilation was successful, information about the compilation can be
+     * obtained from the shader object's information log by calling
+     * {@see GL46::glGetShaderInfoLog}.
      *
      * @see http://docs.gl/gl2/glCompileShader
-     * @see http://docs.gl/gl3/glCompileShader
      * @see http://docs.gl/gl4/glCompileShader
      * @since 2.0
-     * @param int $shader
+     * @param int|\FFI\CData|\FFI\CInt $shader
      * @return void
      */
-    public static function glCompileShader(int $shader): void
+    public function glCompileShader($shader): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($shader >= 0 && $shader <= 4_294_967_295, 'Argument $shader overflow: C type GLuint is required');
+        $shader = $shader instanceof \FFI\CData ? $shader->cdata : $shader;
 
-        $proc = self::getProc('glCompileShader', 'void (*)(GLuint shader)');
+        assert(Assert::uint16($shader), 'Argument $shader must be a C-like GLuint, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glCompileShader', 'void (*)(GLuint shader)');
         $proc($shader);
     }
 
     /**
-     * Creates an empty program object and returns a non-zero value by which it can be referenced. A program object
-     * is an object to which shader objects can be attached. This provides a mechanism to specify the shader objects
-     * that will be linked to create a program. It also provides a means for checking the compatibility of the
-     * shaders that will be used to create a program (for instance, checking the compatibility between a vertex
-     * shader and a fragment shader). When no longer needed as part of a program object, shader objects can be
-     * detached.
+     * {@see GL46::glCreateProgram} creates an empty program object and
+     * returns a non-zero value by which it can be referenced. A program
+     * object is an object to which shader objects can be attached. This
+     * provides a mechanism to specify the shader objects that will be linked
+     * to create a program. It also provides a means for checking the
+     * compatibility of the shaders that will be used to create a program
+     * (for instance, checking the compatibility between a vertex shader and
+     * a fragment shader). When no longer needed as part of a program object,
+     * shader objects can be detached.
      *
-     * One or more executables are created in a program object by successfully attaching shader objects to it with
-     * {@see glAttachShader}, successfully compiling the shader objects with
-     * {@see glCompileShader}, and successfully linking the program object with
-     * {@see glLinkProgram}. These executables are made part of current state when
-     * {@see glUseProgram} is called. Program objects can be deleted by calling
-     * {@see glDeleteProgram}. The memory associated with the program object will be deleted when it is
-     * no longer part of current rendering state for any context.
+     * One or more executables are created in a program object by
+     * successfully attaching shader objects to it with
+     * {@see GL46::glAttachShader}, successfully compiling the shader objects
+     * with {@see GL46::glCompileShader}, and successfully linking the
+     * program object with {@see GL46::glLinkProgram}. These executables are
+     * made part of current state when {@see GL46::glUseProgram} is called.
+     * Program objects can be deleted by calling
+     * {@see GL46::glDeleteProgram}. The memory associated with the program
+     * object will be deleted when it is no longer part of current rendering
+     * state for any context.
      *
      * @see http://docs.gl/gl2/glCreateProgram
-     * @see http://docs.gl/gl3/glCreateProgram
      * @see http://docs.gl/gl4/glCreateProgram
      * @since 2.0
-     * @return int
+     * @return int|\FFI\CData|\FFI\CInt
      */
-    public static function glCreateProgram(): int
+    public function glCreateProgram(): int
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-
-        $proc = self::getProc('glCreateProgram', 'GLuint (*)(void)');
+        $proc = $this->getProcAddress('glCreateProgram', 'GLuint (*)(void)');
         return $proc();
     }
 
     /**
-     * Creates an empty shader object and returns a non-zero value by which it can be referenced. A shader object is
-     * used to maintain the source code strings that define a shader. *`shaderType`* indicates the type of shader to
-     * be created. Two types of shaders are supported. A shader of type `GL_VERTEX_SHADER` is a shader that is
-     * intended to run on the programmable vertex processor and replace the fixed functionality vertex processing in
-     * OpenGL. A shader of type `GL_FRAGMENT_SHADER` is a shader that is intended to run on the programmable fragment
-     * processor and replace the fixed functionality fragment processing in OpenGL.
+     * {@see GL46::glCreateShader} creates an empty shader object and returns
+     * a non-zero value by which it can be referenced. A shader object is
+     * used to maintain the source code strings that define a shader.
+     * $shaderType indicates the type of shader to be created. Five types of
+     * shader are supported. A shader of type {@see GL46::GL_COMPUTE_SHADER}
+     * is a shader that is intended to run on the programmable compute
+     * processor. A shader of type {@see GL46::GL_VERTEX_SHADER} is a shader
+     * that is intended to run on the programmable vertex processor. A shader
+     * of type {@see GL46::GL_TESS_CONTROL_SHADER} is a shader that is
+     * intended to run on the programmable tessellation processor in the
+     * control stage. A shader of type {@see GL46::GL_TESS_EVALUATION_SHADER}
+     * is a shader that is intended to run on the programmable tessellation
+     * processor in the evaluation stage. A shader of type
+     * {@see GL46::GL_GEOMETRY_SHADER} is a shader that is intended to run on
+     * the programmable geometry processor. A shader of type
+     * {@see GL46::GL_FRAGMENT_SHADER} is a shader that is intended to run on
+     * the programmable fragment processor.
      *
-     * When created, a shader object's `GL_SHADER_TYPE` parameter is set to either `GL_VERTEX_SHADER` or
-     * `GL_FRAGMENT_SHADER`, depending on the value of *`shaderType`*.
+     * When created, a shader object's {@see GL46::GL_SHADER_TYPE} parameter
+     * is set to either {@see GL46::GL_COMPUTE_SHADER},
+     * {@see GL46::GL_VERTEX_SHADER}, {@see GL46::GL_TESS_CONTROL_SHADER},
+     * {@see GL46::GL_TESS_EVALUATION_SHADER},
+     * {@see GL46::GL_GEOMETRY_SHADER} or {@see GL46::GL_FRAGMENT_SHADER},
+     * depending on the value of $shaderType.
      *
      * @see http://docs.gl/gl2/glCreateShader
-     * @see http://docs.gl/gl3/glCreateShader
      * @see http://docs.gl/gl4/glCreateShader
      * @since 2.0
-     * @param int $type
-     * @return int
+     * @param int|\FFI\CData|\FFI\CInt $type
+     * @return int|\FFI\CData|\FFI\CInt
      */
-    public static function glCreateShader(int $type): int
+    public function glCreateShader($type): int
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($type >= 0 && $type <= 4_294_967_295, 'Argument $type overflow: C type GLenum is required');
+        $type = $type instanceof \FFI\CData ? $type->cdata : $type;
 
-        $proc = self::getProc('glCreateShader', 'GLuint (*)(GLenum type)');
+        assert(Assert::uint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glCreateShader', 'GLuint (*)(GLenum type)');
         return $proc($type);
     }
 
     /**
-     * Frees the memory and invalidates the name associated with the program object specified by *`program.`* This
-     * command effectively undoes the effects of a call to {@see glCreateProgram}.
+     * {@see GL46::glDeleteProgram} frees the memory and invalidates the name
+     * associated with the program object specified by $program. This command
+     * effectively undoes the effects of a call to
+     * {@see GL46::glCreateProgram}.
      *
-     * If a program object is in use as part of current rendering state, it will be flagged for deletion, but it will
-     * not be deleted until it is no longer part of current state for any rendering context. If a program object to
-     * be deleted has shader objects attached to it, those shader objects will be automatically detached but not
-     * deleted unless they have already been flagged for deletion by a previous call to
-     * {@see glDeleteShader}. A value of 0 for *`program`* will be silently ignored.
+     * If a program object is in use as part of current rendering state, it
+     * will be flagged for deletion, but it will not be deleted until it is
+     * no longer part of current state for any rendering context. If a
+     * program object to be deleted has shader objects attached to it, those
+     * shader objects will be automatically detached but not deleted unless
+     * they have already been flagged for deletion by a previous call to
+     * {@see GL46::glDeleteShader}. A value of 0 for $program will be
+     * silently ignored.
      *
-     * To determine whether a program object has been flagged for deletion, call {@see glGetProgram} with
-     * arguments *`program`* and `GL_DELETE_STATUS`.
+     * To determine whether a program object has been flagged for deletion,
+     * call {@see GL46::glGetProgram} with arguments $program and
+     * {@see GL46::GL_DELETE_STATUS}.
      *
      * @see http://docs.gl/gl2/glDeleteProgram
-     * @see http://docs.gl/gl3/glDeleteProgram
      * @see http://docs.gl/gl4/glDeleteProgram
      * @since 2.0
-     * @param int $program
+     * @param int|\FFI\CData|\FFI\CInt $program
      * @return void
      */
-    public static function glDeleteProgram(int $program): void
+    public function glDeleteProgram($program): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($program >= 0 && $program <= 4_294_967_295, 'Argument $program overflow: C type GLuint is required');
+        $program = $program instanceof \FFI\CData ? $program->cdata : $program;
 
-        $proc = self::getProc('glDeleteProgram', 'void (*)(GLuint program)');
+        assert(Assert::uint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glDeleteProgram', 'void (*)(GLuint program)');
         $proc($program);
     }
 
     /**
-     * Frees the memory and invalidates the name associated with the shader object specified by *`shader`*. This
-     * command effectively undoes the effects of a call to {@see glCreateShader}.
+     * {@see GL46::glDeleteShader} frees the memory and invalidates the name
+     * associated with the shader object specified by $shader. This command
+     * effectively undoes the effects of a call to
+     * {@see GL46::glCreateShader}.
      *
-     * If a shader object to be deleted is attached to a program object, it will be flagged for deletion, but it will
-     * not be deleted until it is no longer attached to any program object, for any rendering context (i.e., it must
-     * be detached from wherever it was attached before it will be deleted). A value of 0 for *`shader`* will be
-     * silently ignored.
+     * If a shader object to be deleted is attached to a program object, it
+     * will be flagged for deletion, but it will not be deleted until it is
+     * no longer attached to any program object, for any rendering context
+     * (i.e., it must be detached from wherever it was attached before it
+     * will be deleted). A value of 0 for $shader will be silently ignored.
      *
-     * To determine whether an object has been flagged for deletion, call {@see glGetShader} with arguments
-     * *`shader`* and `GL_DELETE_STATUS`.
+     * To determine whether an object has been flagged for deletion, call
+     * {@see GL46::glGetShader} with arguments $shader and
+     * {@see GL46::GL_DELETE_STATUS}.
      *
      * @see http://docs.gl/gl2/glDeleteShader
-     * @see http://docs.gl/gl3/glDeleteShader
      * @see http://docs.gl/gl4/glDeleteShader
      * @since 2.0
-     * @param int $shader
+     * @param int|\FFI\CData|\FFI\CInt $shader
      * @return void
      */
-    public static function glDeleteShader(int $shader): void
+    public function glDeleteShader($shader): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($shader >= 0 && $shader <= 4_294_967_295, 'Argument $shader overflow: C type GLuint is required');
+        $shader = $shader instanceof \FFI\CData ? $shader->cdata : $shader;
 
-        $proc = self::getProc('glDeleteShader', 'void (*)(GLuint shader)');
+        assert(Assert::uint16($shader), 'Argument $shader must be a C-like GLuint, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glDeleteShader', 'void (*)(GLuint shader)');
         $proc($shader);
     }
 
     /**
-     * Detaches the shader object specified by *`shader`* from the program object specified by *`program`*. This
-     * command can be used to undo the effect of the command {@see glAttachShader}.
+     * {@see GL46::glDetachShader} detaches the shader object specified by
+     * $shader from the program object specified by $program. This command
+     * can be used to undo the effect of the command
+     * {@see GL46::glAttachShader}.
      *
-     * If *`shader`* has already been flagged for deletion by a call to {@see glDeleteShader} and it is
-     * not attached to any other program object, it will be deleted after it has been detached.
+     * If $shader has already been flagged for deletion by a call to
+     * {@see GL46::glDeleteShader} and it is not attached to any other
+     * program object, it will be deleted after it has been detached.
      *
      * @see http://docs.gl/gl2/glDetachShader
-     * @see http://docs.gl/gl3/glDetachShader
      * @see http://docs.gl/gl4/glDetachShader
      * @since 2.0
-     * @param int $program
-     * @param int $shader
+     * @param int|\FFI\CData|\FFI\CInt $program
+     * @param int|\FFI\CData|\FFI\CInt $shader
      * @return void
      */
-    public static function glDetachShader(int $program, int $shader): void
+    public function glDetachShader($program, $shader): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($program >= 0 && $program <= 4_294_967_295, 'Argument $program overflow: C type GLuint is required');
-        assert($shader >= 0 && $shader <= 4_294_967_295, 'Argument $shader overflow: C type GLuint is required');
+        $program = $program instanceof \FFI\CData ? $program->cdata : $program;
+        $shader = $shader instanceof \FFI\CData ? $shader->cdata : $shader;
 
-        $proc = self::getProc('glDetachShader', 'void (*)(GLuint program, GLuint shader)');
+        assert(Assert::uint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Assert::uint16($shader), 'Argument $shader must be a C-like GLuint, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glDetachShader', 'void (*)(GLuint program, GLuint shader)');
         $proc($program, $shader);
     }
 
     /**
-     * @see http://docs.gl/gl2/glDisableVertexAttribArray
-     * @see http://docs.gl/gl3/glDisableVertexAttribArray
-     * @see http://docs.gl/gl4/glDisableVertexAttribArray
-     * @since 2.0
-     * @param int $index
-     * @return void
-     */
-    public static function glDisableVertexAttribArray(int $index): void
-    {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($index >= 0 && $index <= 4_294_967_295, 'Argument $index overflow: C type GLuint is required');
-
-        $proc = self::getProc('glDisableVertexAttribArray', 'void (*)(GLuint index)');
-        $proc($index);
-    }
-
-    /**
-     * Enables the generic vertex attribute array specified by *`index`*. `glDisableVertexAttribArray` disables the
-     * generic vertex attribute array specified by *`index`*. By default, all client-side capabilities are disabled,
-     * including all generic vertex attribute arrays. If enabled, the values in the generic vertex attribute array
-     * will be accessed and used for rendering when calls are made to vertex array commands such as
-     * {@see glDrawArrays}, {@see glDrawElements}, {@see glDrawRangeElements},
-     * {@see glArrayElement}, {@see glMultiDrawElements}, or
-     * {@see glMultiDrawArrays}.
+     * {@see GL46::glEnableVertexAttribArray} and
+     * {@see GL46::glEnableVertexArrayAttrib} enable the generic vertex
+     * attribute array specified by $index.
+     * {@see GL46::glEnableVertexAttribArray} uses currently bound vertex
+     * array object for the operation, whereas
+     * {@see GL46::glEnableVertexArrayAttrib} updates state of the vertex
+     * array object with ID $vaobj.
+     *
+     * {@see GL46::glDisableVertexAttribArray} and
+     * {@see GL46::glDisableVertexArrayAttrib} disable the generic vertex
+     * attribute array specified by $index.
+     * {@see GL46::glDisableVertexAttribArray} uses currently bound vertex
+     * array object for the operation, whereas
+     * {@see GL46::glDisableVertexArrayAttrib} updates state of the vertex
+     * array object with ID $vaobj.
+     *
+     * By default, all client-side capabilities are disabled, including all
+     * generic vertex attribute arrays. If enabled, the values in the generic
+     * vertex attribute array will be accessed and used for rendering when
+     * calls are made to vertex array commands such as
+     * {@see GL46::glDrawArrays}, {@see GL46::glDrawElements},
+     * {@see GL46::glDrawRangeElements}, {@see GL46::glMultiDrawElements}, or
+     * {@see GL46::glMultiDrawArrays}.
      *
      * @see http://docs.gl/gl2/glEnableVertexAttribArray
-     * @see http://docs.gl/gl3/glEnableVertexAttribArray
      * @see http://docs.gl/gl4/glEnableVertexAttribArray
      * @since 2.0
-     * @param int $index
+     * @param int|\FFI\CData|\FFI\CInt $index
      * @return void
      */
-    public static function glEnableVertexAttribArray(int $index): void
+    public function glDisableVertexAttribArray($index): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($index >= 0 && $index <= 4_294_967_295, 'Argument $index overflow: C type GLuint is required');
+        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
 
-        $proc = self::getProc('glEnableVertexAttribArray', 'void (*)(GLuint index)');
+        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glDisableVertexAttribArray', 'void (*)(GLuint index)');
         $proc($index);
     }
 
     /**
-     * Returns information about an active attribute variable in the program object specified by *`program`*. The
-     * number of active attributes can be obtained by calling {@see glGetProgram} with the value
-     * `GL_ACTIVE_ATTRIBUTES`. A value of 0 for *`index`* selects the first active attribute variable. Permissible
-     * values for *`index`* range from 0 to the number of active attribute variables minus 1.
+     * {@see GL46::glEnableVertexAttribArray} and
+     * {@see GL46::glEnableVertexArrayAttrib} enable the generic vertex
+     * attribute array specified by $index.
+     * {@see GL46::glEnableVertexAttribArray} uses currently bound vertex
+     * array object for the operation, whereas
+     * {@see GL46::glEnableVertexArrayAttrib} updates state of the vertex
+     * array object with ID $vaobj.
      *
-     * A vertex shader may use either built-in attribute variables, user-defined attribute variables, or both.
-     * Built-in attribute variables have a prefix of "gl_" and reference conventional OpenGL vertex attribtes (e.g.,
-     * *`gl_Vertex`*, *`gl_Normal`*, etc., see the OpenGL Shading Language specification for a complete list.)
-     * User-defined attribute variables have arbitrary names and obtain their values through numbered generic vertex
-     * attributes. An attribute variable (either built-in or user-defined) is considered active if it is determined
-     * during the link operation that it may be accessed during program execution. Therefore, *`program`* should have
-     * previously been the target of a call to {@see glLinkProgram}, but it is not necessary for it to have
-     * been linked successfully.
+     * {@see GL46::glDisableVertexAttribArray} and
+     * {@see GL46::glDisableVertexArrayAttrib} disable the generic vertex
+     * attribute array specified by $index.
+     * {@see GL46::glDisableVertexAttribArray} uses currently bound vertex
+     * array object for the operation, whereas
+     * {@see GL46::glDisableVertexArrayAttrib} updates state of the vertex
+     * array object with ID $vaobj.
      *
-     * The size of the character buffer required to store the longest attribute variable name in *`program`* can be
-     * obtained by calling {@see glGetProgram} with the value `GL_ACTIVE_ATTRIBUTE_MAX_LENGTH`. This value
-     * should be used to allocate a buffer of sufficient size to store the returned attribute name. The size of this
-     * character buffer is passed in *`bufSize`*, and a pointer to this character buffer is passed in *`name`*.
+     * By default, all client-side capabilities are disabled, including all
+     * generic vertex attribute arrays. If enabled, the values in the generic
+     * vertex attribute array will be accessed and used for rendering when
+     * calls are made to vertex array commands such as
+     * {@see GL46::glDrawArrays}, {@see GL46::glDrawElements},
+     * {@see GL46::glDrawRangeElements}, {@see GL46::glMultiDrawElements}, or
+     * {@see GL46::glMultiDrawArrays}.
      *
-     *  - `glGetActiveAttrib` returns the name of the attribute variable indicated by *`index`*, storing it in the
-     * character buffer specified by *`name`*. The string returned will be null terminated. The actual number of
-     * characters written into this buffer is returned in *`length`*, and this count does not include the null
-     * termination character. If the length of the returned string is not required, a value of `NULL` can be passed
-     * in the *`length`* argument.
+     * @see http://docs.gl/gl2/glEnableVertexAttribArray
+     * @see http://docs.gl/gl4/glEnableVertexAttribArray
+     * @since 2.0
+     * @param int|\FFI\CData|\FFI\CInt $index
+     * @return void
+     */
+    public function glEnableVertexAttribArray($index): void
+    {
+        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
+
+        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glEnableVertexAttribArray', 'void (*)(GLuint index)');
+        $proc($index);
+    }
+
+    /**
+     * {@see GL46::glGetActiveAttrib} returns information about an active
+     * attribute variable in the program object specified by $program. The
+     * number of active attributes can be obtained by calling
+     * {@see GL46::glGetProgram} with the value
+     * {@see GL46::GL_ACTIVE_ATTRIBUTES}. A value of 0 for $index selects the
+     * first active attribute variable. Permissible values for $index range
+     * from zero to the number of active attribute variables minus one.
      *
-     * The *`type`* argument will return a pointer to the attribute variable's data type. The symbolic constants
-     * `GL_FLOAT`, `GL_FLOAT_VEC2`, `GL_FLOAT_VEC3`, `GL_FLOAT_VEC4`, `GL_FLOAT_MAT2`, `GL_FLOAT_MAT3`,
-     * `GL_FLOAT_MAT4`, `GL_FLOAT_MAT2x3`, `GL_FLOAT_MAT2x4`, `GL_FLOAT_MAT3x2`, `GL_FLOAT_MAT3x4`,
-     * `GL_FLOAT_MAT4x2`, or `GL_FLOAT_MAT4x3` may be returned. The *`size`* argument will return the size of the
-     * attribute, in units of the type returned in *`type`*.
+     * A vertex shader may use either built-in attribute variables,
+     * user-defined attribute variables, or both. Built-in attribute
+     * variables have a prefix of "gl_" and reference conventional OpenGL
+     * vertex attribtes (e.g., $gl_Vertex, $gl_Normal, etc., see the OpenGL
+     * Shading Language specification for a complete list.) User-defined
+     * attribute variables have arbitrary names and obtain their values
+     * through numbered generic vertex attributes. An attribute variable
+     * (either built-in or user-defined) is considered active if it is
+     * determined during the link operation that it may be accessed during
+     * program execution. Therefore, $program should have previously been the
+     * target of a call to {@see GL46::glLinkProgram}, but it is not
+     * necessary for it to have been linked successfully.
      *
-     * The list of active attribute variables may include both built-in attribute variables (which begin with the
-     * prefix "gl_") as well as user-defined attribute variable names.
+     * The size of the character buffer required to store the longest
+     * attribute variable name in $program can be obtained by calling
+     * {@see GL46::glGetProgram} with the value
+     * {@see GL46::GL_ACTIVE_ATTRIBUTE_MAX_LENGTH}. This value should be used
+     * to allocate a buffer of sufficient size to store the returned
+     * attribute name. The size of this character buffer is passed in
+     * $bufSize, and a pointer to this character buffer is passed in $name.
      *
-     * This function will return as much information as it can about the specified active attribute variable. If no
-     * information is available, *`length`* will be 0, and *`name`* will be an empty string. This situation could
-     * occur if this function is called after a link operation that failed. If an error occurs, the return values
-     * *`length`*, *`size`*, *`type`*, and *`name`* will be unmodified.
+     * {@see GL46::glGetActiveAttrib} returns the name of the attribute
+     * variable indicated by $index, storing it in the character buffer
+     * specified by $name. The string returned will be null terminated. The
+     * actual number of characters written into this buffer is returned in
+     * $length, and this count does not include the null termination
+     * character. If the length of the returned string is not required, a
+     * value of {@see GL46::NULL} can be passed in the $length argument.
+     *
+     * The $type argument specifies a pointer to a variable into which the
+     * attribute variable's data type will be written. The symbolic constants
+     * {@see GL46::GL_FLOAT}, {@see GL46::GL_FLOAT_VEC2},
+     * {@see GL46::GL_FLOAT_VEC3}, {@see GL46::GL_FLOAT_VEC4},
+     * {@see GL46::GL_FLOAT_MAT2}, {@see GL46::GL_FLOAT_MAT3},
+     * {@see GL46::GL_FLOAT_MAT4}, {@see GL46::GL_FLOAT_MAT2x3},
+     * {@see GL46::GL_FLOAT_MAT2x4}, {@see GL46::GL_FLOAT_MAT3x2},
+     * {@see GL46::GL_FLOAT_MAT3x4}, {@see GL46::GL_FLOAT_MAT4x2},
+     * {@see GL46::GL_FLOAT_MAT4x3}, {@see GL46::GL_INT},
+     * {@see GL46::GL_INT_VEC2}, {@see GL46::GL_INT_VEC3},
+     * {@see GL46::GL_INT_VEC4}, {@see GL46::GL_UNSIGNED_INT},
+     * {@see GL46::GL_UNSIGNED_INT_VEC2}, {@see GL46::GL_UNSIGNED_INT_VEC3},
+     * {@see GL46::GL_UNSIGNED_INT_VEC4}, {@see GL46::GL_DOUBLE},
+     * {@see GL46::GL_DOUBLE_VEC2}, {@see GL46::GL_DOUBLE_VEC3},
+     * {@see GL46::GL_DOUBLE_VEC4}, {@see GL46::GL_DOUBLE_MAT2},
+     * {@see GL46::GL_DOUBLE_MAT3}, {@see GL46::GL_DOUBLE_MAT4},
+     * {@see GL46::GL_DOUBLE_MAT2x3}, {@see GL46::GL_DOUBLE_MAT2x4},
+     * {@see GL46::GL_DOUBLE_MAT3x2}, {@see GL46::GL_DOUBLE_MAT3x4},
+     * {@see GL46::GL_DOUBLE_MAT4x2}, or {@see GL46::GL_DOUBLE_MAT4x3} may be
+     * returned. The $size argument will return the size of the attribute, in
+     * units of the type returned in $type.
+     *
+     * The list of active attribute variables may include both built-in
+     * attribute variables (which begin with the prefix "gl_") as well as
+     * user-defined attribute variable names.
+     *
+     * This function will return as much information as it can about the
+     * specified active attribute variable. If no information is available,
+     * $length will be 0, and $name will be an empty string. This situation
+     * could occur if this function is called after a link operation that
+     * failed. If an error occurs, the return values $length, $size, $type,
+     * and $name will be unmodified.
      *
      * @see http://docs.gl/gl2/glGetActiveAttrib
-     * @see http://docs.gl/gl3/glGetActiveAttrib
      * @see http://docs.gl/gl4/glGetActiveAttrib
      * @since 2.0
-     * @param int $program
-     * @param int $index
-     * @param int $bufSize
+     * @param int|\FFI\CData|\FFI\CInt $program
+     * @param int|\FFI\CData|\FFI\CInt $index
+     * @param int|\FFI\CData|\FFI\CInt $bufSize
      * @param \FFI\CData|\FFI\CIntPtr|null $length
      * @param \FFI\CData|\FFI\CIntPtr|null $size
      * @param \FFI\CData|\FFI\CIntPtr|null $type
      * @param \FFI\CData|\FFI\CIntPtr|null $name
      * @return void
      */
-    public static function glGetActiveAttrib(int $program, int $index, int $bufSize, ?\FFI\CData $length, ?\FFI\CData $size, ?\FFI\CData $type, ?\FFI\CData $name): void
+    public function glGetActiveAttrib($program, $index, $bufSize, ?\FFI\CData $length, ?\FFI\CData $size, ?\FFI\CData $type, ?\FFI\CData $name): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($program >= 0 && $program <= 4_294_967_295, 'Argument $program overflow: C type GLuint is required');
-        assert($index >= 0 && $index <= 4_294_967_295, 'Argument $index overflow: C type GLuint is required');
-        assert($bufSize >= \PHP_INT_MIN && $bufSize <= \PHP_INT_MAX, 'Argument $bufSize overflow: C type GLsizei is required');
+        $program = $program instanceof \FFI\CData ? $program->cdata : $program;
+        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
+        $bufSize = $bufSize instanceof \FFI\CData ? $bufSize->cdata : $bufSize;
 
-        $proc = self::getProc('glGetActiveAttrib', 'void (*)(GLuint program, GLuint index, GLsizei bufSize, GLsizei *length, GLint *size, GLenum *type, GLchar *name)');
+        assert(Assert::uint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Assert::int16($bufSize), 'Argument $bufSize must be a C-like GLsizei, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glGetActiveAttrib', 'void (*)(GLuint program, GLuint index, GLsizei bufSize, GLsizei *length, GLint *size, GLenum *type, GLchar *name)');
         $proc($program, $index, $bufSize, $length, $size, $type, $name);
     }
 
     /**
-     * Returns information about an active uniform variable in the program object specified by *`program`*. The
-     * number of active uniform variables can be obtained by calling {@see glGetProgram} with the value
-     * `GL_ACTIVE_UNIFORMS`. A value of 0 for *`index`* selects the first active uniform variable. Permissible values
-     * for *`index`* range from 0 to the number of active uniform variables minus 1.
+     * {@see GL46::glGetActiveUniform} returns information about an active
+     * uniform variable in the program object specified by $program. The
+     * number of active uniform variables can be obtained by calling
+     * {@see GL46::glGetProgram} with the value
+     * {@see GL46::GL_ACTIVE_UNIFORMS}. A value of 0 for $index selects the
+     * first active uniform variable. Permissible values for $index range
+     * from zero to the number of active uniform variables minus one.
      *
-     * Shaders may use either built-in uniform variables, user-defined uniform variables, or both. Built-in uniform
-     * variables have a prefix of "gl_" and reference existing OpenGL state or values derived from such state (e.g.,
-     * *`gl_Fog`*, *`gl_ModelViewMatrix`*, etc., see the OpenGL Shading Language specification for a complete list.)
-     * User-defined uniform variables have arbitrary names and obtain their values from the application through calls
-     * to {@see glUniform}. A uniform variable (either built-in or user-defined) is considered active if it is
-     * determined during the link operation that it may be accessed during program execution. Therefore, *`program`*
-     * should have previously been the target of a call to {@see glLinkProgram}, but it is not necessary
-     * for it to have been linked successfully.
+     * Shaders may use either built-in uniform variables, user-defined
+     * uniform variables, or both. Built-in uniform variables have a prefix
+     * of "gl_" and reference existing OpenGL state or values derived from
+     * such state (e.g., $gl_DepthRangeParameters, see the OpenGL Shading
+     * Language specification for a complete list.) User-defined uniform
+     * variables have arbitrary names and obtain their values from the
+     * application through calls to {@see GL46::glUniform}. A uniform
+     * variable (either built-in or user-defined) is considered active if it
+     * is determined during the link operation that it may be accessed during
+     * program execution. Therefore, $program should have previously been the
+     * target of a call to {@see GL46::glLinkProgram}, but it is not
+     * necessary for it to have been linked successfully.
      *
-     * The size of the character buffer required to store the longest uniform variable name in *`program`* can be
-     * obtained by calling {@see glGetProgram} with the value `GL_ACTIVE_UNIFORM_MAX_LENGTH`. This value
-     * should be used to allocate a buffer of sufficient size to store the returned uniform variable name. The size
-     * of this character buffer is passed in *`bufSize`*, and a pointer to this character buffer is passed in
-     * *`name.`*
+     * The size of the character buffer required to store the longest uniform
+     * variable name in $program can be obtained by calling
+     * {@see GL46::glGetProgram} with the value
+     * {@see GL46::GL_ACTIVE_UNIFORM_MAX_LENGTH}. This value should be used
+     * to allocate a buffer of sufficient size to store the returned uniform
+     * variable name. The size of this character buffer is passed in
+     * $bufSize, and a pointer to this character buffer is passed in $name.
      *
-     *  - `glGetActiveUniform` returns the name of the uniform variable indicated by *`index`*, storing it in the
-     * character buffer specified by *`name`*. The string returned will be null terminated. The actual number of
-     * characters written into this buffer is returned in *`length`*, and this count does not include the null
-     * termination character. If the length of the returned string is not required, a value of `NULL` can be passed
-     * in the *`length`* argument.
+     * {@see GL46::glGetActiveUniform} returns the name of the uniform
+     * variable indicated by $index, storing it in the character buffer
+     * specified by $name. The string returned will be null terminated. The
+     * actual number of characters written into this buffer is returned in
+     * $length, and this count does not include the null termination
+     * character. If the length of the returned string is not required, a
+     * value of {@see GL46::NULL} can be passed in the $length argument.
      *
-     * The *`type`* argument will return a pointer to the uniform variable's data type. The symbolic constants
-     * `GL_FLOAT`, `GL_FLOAT_VEC2`, `GL_FLOAT_VEC3`, `GL_FLOAT_VEC4`, `GL_INT`, `GL_INT_VEC2`, `GL_INT_VEC3`,
-     * `GL_INT_VEC4`, `GL_BOOL`, `GL_BOOL_VEC2`, `GL_BOOL_VEC3`, `GL_BOOL_VEC4`, `GL_FLOAT_MAT2`, `GL_FLOAT_MAT3`,
-     * `GL_FLOAT_MAT4`, `GL_FLOAT_MAT2x3`, `GL_FLOAT_MAT2x4`, `GL_FLOAT_MAT3x2`, `GL_FLOAT_MAT3x4`,
-     * `GL_FLOAT_MAT4x2`, `GL_FLOAT_MAT4x3`, `GL_SAMPLER_1D`, `GL_SAMPLER_2D`, `GL_SAMPLER_3D`, `GL_SAMPLER_CUBE`,
-     * `GL_SAMPLER_1D_SHADOW`, or `GL_SAMPLER_2D_SHADOW` may be returned.
+     * The $type argument will return a pointer to the uniform variable's
+     * data type. The symbolic constants returned for uniform types are shown
+     * in the table below.         Returned Symbolic Contant     Shader
+     * Uniform Type        {@see GL46::GL_FLOAT}   {@see GL46::float}
+     * {@see GL46::GL_FLOAT_VEC2}   {@see GL46::vec2}
+     * {@see GL46::GL_FLOAT_VEC3}   {@see GL46::vec3}
+     * {@see GL46::GL_FLOAT_VEC4}   {@see GL46::vec4}
+     * {@see GL46::GL_DOUBLE}   {@see GL46::double}
+     * {@see GL46::GL_DOUBLE_VEC2}   {@see GL46::dvec2}
+     * {@see GL46::GL_DOUBLE_VEC3}   {@see GL46::dvec3}
+     * {@see GL46::GL_DOUBLE_VEC4}   {@see GL46::dvec4}
+     * {@see GL46::GL_INT}   {@see GL46::int}     {@see GL46::GL_INT_VEC2}
+     * {@see GL46::ivec2}     {@see GL46::GL_INT_VEC3}   {@see GL46::ivec3}
+     *   {@see GL46::GL_INT_VEC4}   {@see GL46::ivec4}
+     * {@see GL46::GL_UNSIGNED_INT}   {@see GL46::unsigned int}
+     * {@see GL46::GL_UNSIGNED_INT_VEC2}   {@see GL46::uvec2}
+     * {@see GL46::GL_UNSIGNED_INT_VEC3}   {@see GL46::uvec3}
+     * {@see GL46::GL_UNSIGNED_INT_VEC4}   {@see GL46::uvec4}
+     * {@see GL46::GL_BOOL}   {@see GL46::bool}     {@see GL46::GL_BOOL_VEC2}
+     *   {@see GL46::bvec2}     {@see GL46::GL_BOOL_VEC3}
+     * {@see GL46::bvec3}     {@see GL46::GL_BOOL_VEC4}   {@see GL46::bvec4}
+     *    {@see GL46::GL_FLOAT_MAT2}   {@see GL46::mat2}
+     * {@see GL46::GL_FLOAT_MAT3}   {@see GL46::mat3}
+     * {@see GL46::GL_FLOAT_MAT4}   {@see GL46::mat4}
+     * {@see GL46::GL_FLOAT_MAT2x3}   {@see GL46::mat2x3}
+     * {@see GL46::GL_FLOAT_MAT2x4}   {@see GL46::mat2x4}
+     * {@see GL46::GL_FLOAT_MAT3x2}   {@see GL46::mat3x2}
+     * {@see GL46::GL_FLOAT_MAT3x4}   {@see GL46::mat3x4}
+     * {@see GL46::GL_FLOAT_MAT4x2}   {@see GL46::mat4x2}
+     * {@see GL46::GL_FLOAT_MAT4x3}   {@see GL46::mat4x3}
+     * {@see GL46::GL_DOUBLE_MAT2}   {@see GL46::dmat2}
+     * {@see GL46::GL_DOUBLE_MAT3}   {@see GL46::dmat3}
+     * {@see GL46::GL_DOUBLE_MAT4}   {@see GL46::dmat4}
+     * {@see GL46::GL_DOUBLE_MAT2x3}   {@see GL46::dmat2x3}
+     * {@see GL46::GL_DOUBLE_MAT2x4}   {@see GL46::dmat2x4}
+     * {@see GL46::GL_DOUBLE_MAT3x2}   {@see GL46::dmat3x2}
+     * {@see GL46::GL_DOUBLE_MAT3x4}   {@see GL46::dmat3x4}
+     * {@see GL46::GL_DOUBLE_MAT4x2}   {@see GL46::dmat4x2}
+     * {@see GL46::GL_DOUBLE_MAT4x3}   {@see GL46::dmat4x3}
+     * {@see GL46::GL_SAMPLER_1D}   {@see GL46::sampler1D}
+     * {@see GL46::GL_SAMPLER_2D}   {@see GL46::sampler2D}
+     * {@see GL46::GL_SAMPLER_3D}   {@see GL46::sampler3D}
+     * {@see GL46::GL_SAMPLER_CUBE}   {@see GL46::samplerCube}
+     * {@see GL46::GL_SAMPLER_1D_SHADOW}   {@see GL46::sampler1DShadow}
+     * {@see GL46::GL_SAMPLER_2D_SHADOW}   {@see GL46::sampler2DShadow}
+     * {@see GL46::GL_SAMPLER_1D_ARRAY}   {@see GL46::sampler1DArray}
+     * {@see GL46::GL_SAMPLER_2D_ARRAY}   {@see GL46::sampler2DArray}
+     * {@see GL46::GL_SAMPLER_1D_ARRAY_SHADOW}
+     * {@see GL46::sampler1DArrayShadow}
+     * {@see GL46::GL_SAMPLER_2D_ARRAY_SHADOW}
+     * {@see GL46::sampler2DArrayShadow}
+     * {@see GL46::GL_SAMPLER_2D_MULTISAMPLE}   {@see GL46::sampler2DMS}
+     * {@see GL46::GL_SAMPLER_2D_MULTISAMPLE_ARRAY}
+     * {@see GL46::sampler2DMSArray}     {@see GL46::GL_SAMPLER_CUBE_SHADOW}
+     *  {@see GL46::samplerCubeShadow}     {@see GL46::GL_SAMPLER_BUFFER}
+     * {@see GL46::samplerBuffer}     {@see GL46::GL_SAMPLER_2D_RECT}
+     * {@see GL46::sampler2DRect}     {@see GL46::GL_SAMPLER_2D_RECT_SHADOW}
+     *  {@see GL46::sampler2DRectShadow}     {@see GL46::GL_INT_SAMPLER_1D}
+     * {@see GL46::isampler1D}     {@see GL46::GL_INT_SAMPLER_2D}
+     * {@see GL46::isampler2D}     {@see GL46::GL_INT_SAMPLER_3D}
+     * {@see GL46::isampler3D}     {@see GL46::GL_INT_SAMPLER_CUBE}
+     * {@see GL46::isamplerCube}     {@see GL46::GL_INT_SAMPLER_1D_ARRAY}
+     * {@see GL46::isampler1DArray}     {@see GL46::GL_INT_SAMPLER_2D_ARRAY}
+     *  {@see GL46::isampler2DArray}
+     * {@see GL46::GL_INT_SAMPLER_2D_MULTISAMPLE}   {@see GL46::isampler2DMS}
+     *     {@see GL46::GL_INT_SAMPLER_2D_MULTISAMPLE_ARRAY}
+     * {@see GL46::isampler2DMSArray}     {@see GL46::GL_INT_SAMPLER_BUFFER}
+     *  {@see GL46::isamplerBuffer}     {@see GL46::GL_INT_SAMPLER_2D_RECT}
+     * {@see GL46::isampler2DRect}
+     * {@see GL46::GL_UNSIGNED_INT_SAMPLER_1D}   {@see GL46::usampler1D}
+     * {@see GL46::GL_UNSIGNED_INT_SAMPLER_2D}   {@see GL46::usampler2D}
+     * {@see GL46::GL_UNSIGNED_INT_SAMPLER_3D}   {@see GL46::usampler3D}
+     * {@see GL46::GL_UNSIGNED_INT_SAMPLER_CUBE}   {@see GL46::usamplerCube}
+     *    {@see GL46::GL_UNSIGNED_INT_SAMPLER_1D_ARRAY}
+     * {@see GL46::usampler2DArray}
+     * {@see GL46::GL_UNSIGNED_INT_SAMPLER_2D_ARRAY}
+     * {@see GL46::usampler2DArray}
+     * {@see GL46::GL_UNSIGNED_INT_SAMPLER_2D_MULTISAMPLE}
+     * {@see GL46::usampler2DMS}
+     * {@see GL46::GL_UNSIGNED_INT_SAMPLER_2D_MULTISAMPLE_ARRAY}
+     * {@see GL46::usampler2DMSArray}
+     * {@see GL46::GL_UNSIGNED_INT_SAMPLER_BUFFER}
+     * {@see GL46::usamplerBuffer}
+     * {@see GL46::GL_UNSIGNED_INT_SAMPLER_2D_RECT}
+     * {@see GL46::usampler2DRect}     {@see GL46::GL_IMAGE_1D}
+     * {@see GL46::image1D}     {@see GL46::GL_IMAGE_2D}
+     * {@see GL46::image2D}     {@see GL46::GL_IMAGE_3D}
+     * {@see GL46::image3D}     {@see GL46::GL_IMAGE_2D_RECT}
+     * {@see GL46::image2DRect}     {@see GL46::GL_IMAGE_CUBE}
+     * {@see GL46::imageCube}     {@see GL46::GL_IMAGE_BUFFER}
+     * {@see GL46::imageBuffer}     {@see GL46::GL_IMAGE_1D_ARRAY}
+     * {@see GL46::image1DArray}     {@see GL46::GL_IMAGE_2D_ARRAY}
+     * {@see GL46::image2DArray}     {@see GL46::GL_IMAGE_2D_MULTISAMPLE}
+     * {@see GL46::image2DMS}     {@see GL46::GL_IMAGE_2D_MULTISAMPLE_ARRAY}
+     *  {@see GL46::image2DMSArray}     {@see GL46::GL_INT_IMAGE_1D}
+     * {@see GL46::iimage1D}     {@see GL46::GL_INT_IMAGE_2D}
+     * {@see GL46::iimage2D}     {@see GL46::GL_INT_IMAGE_3D}
+     * {@see GL46::iimage3D}     {@see GL46::GL_INT_IMAGE_2D_RECT}
+     * {@see GL46::iimage2DRect}     {@see GL46::GL_INT_IMAGE_CUBE}
+     * {@see GL46::iimageCube}     {@see GL46::GL_INT_IMAGE_BUFFER}
+     * {@see GL46::iimageBuffer}     {@see GL46::GL_INT_IMAGE_1D_ARRAY}
+     * {@see GL46::iimage1DArray}     {@see GL46::GL_INT_IMAGE_2D_ARRAY}
+     * {@see GL46::iimage2DArray}
+     * {@see GL46::GL_INT_IMAGE_2D_MULTISAMPLE}   {@see GL46::iimage2DMS}
+     * {@see GL46::GL_INT_IMAGE_2D_MULTISAMPLE_ARRAY}
+     * {@see GL46::iimage2DMSArray}     {@see GL46::GL_UNSIGNED_INT_IMAGE_1D}
+     *   {@see GL46::uimage1D}     {@see GL46::GL_UNSIGNED_INT_IMAGE_2D}
+     * {@see GL46::uimage2D}     {@see GL46::GL_UNSIGNED_INT_IMAGE_3D}
+     * {@see GL46::uimage3D}     {@see GL46::GL_UNSIGNED_INT_IMAGE_2D_RECT}
+     * {@see GL46::uimage2DRect}     {@see GL46::GL_UNSIGNED_INT_IMAGE_CUBE}
+     *  {@see GL46::uimageCube}     {@see GL46::GL_UNSIGNED_INT_IMAGE_BUFFER}
+     *   {@see GL46::uimageBuffer}
+     * {@see GL46::GL_UNSIGNED_INT_IMAGE_1D_ARRAY}
+     * {@see GL46::uimage1DArray}
+     * {@see GL46::GL_UNSIGNED_INT_IMAGE_2D_ARRAY}
+     * {@see GL46::uimage2DArray}
+     * {@see GL46::GL_UNSIGNED_INT_IMAGE_2D_MULTISAMPLE}
+     * {@see GL46::uimage2DMS}
+     * {@see GL46::GL_UNSIGNED_INT_IMAGE_2D_MULTISAMPLE_ARRAY}
+     * {@see GL46::uimage2DMSArray}
+     * {@see GL46::GL_UNSIGNED_INT_ATOMIC_COUNTER}   {@see GL46::atomic_uint}
      *
-     * If one or more elements of an array are active, the name of the array is returned in *`name`*, the type is
-     * returned in *`type`*, and the *`size`* parameter returns the highest array element index used, plus one, as
-     * determined by the compiler and/or linker. Only one active uniform variable will be reported for a uniform
-     * array.
+     * If one or more elements of an array are active, the name of the array
+     * is returned in $name, the type is returned in $type, and the $size
+     * parameter returns the highest array element index used, plus one, as
+     * determined by the compiler and/or linker. Only one active uniform
+     * variable will be reported for a uniform array.
      *
-     * Uniform variables that are declared as structures or arrays of structures will not be returned directly by
-     * this function. Instead, each of these uniform variables will be reduced to its fundamental components
-     * containing the "." and "[]" operators such that each of the names is valid as an argument to
-     * {@see glGetUniformLocation}. Each of these reduced uniform variables is counted as one active
-     * uniform variable and is assigned an index. A valid name cannot be a structure, an array of structures, or a
-     * subcomponent of a vector or matrix.
+     * Uniform variables that are declared as structures or arrays of
+     * structures will not be returned directly by this function. Instead,
+     * each of these uniform variables will be reduced to its fundamental
+     * components containing the "." and "\[\]" operators such that each of
+     * the names is valid as an argument to
+     * {@see GL46::glGetUniformLocation}. Each of these reduced uniform
+     * variables is counted as one active uniform variable and is assigned an
+     * index. A valid name cannot be a structure, an array of structures, or
+     * a subcomponent of a vector or matrix.
      *
-     * The size of the uniform variable will be returned in *`size`*. Uniform variables other than arrays will have a
-     * size of 1. Structures and arrays of structures will be reduced as described earlier, such that each of the
-     * names returned will be a data type in the earlier list. If this reduction results in an array, the size
-     * returned will be as described for uniform arrays; otherwise, the size returned will be 1.
+     * The size of the uniform variable will be returned in $size. Uniform
+     * variables other than arrays will have a size of 1. Structures and
+     * arrays of structures will be reduced as described earlier, such that
+     * each of the names returned will be a data type in the earlier list. If
+     * this reduction results in an array, the size returned will be as
+     * described for uniform arrays; otherwise, the size returned will be 1.
      *
-     * The list of active uniform variables may include both built-in uniform variables (which begin with the prefix
-     * "gl_") as well as user-defined uniform variable names.
+     * The list of active uniform variables may include both built-in uniform
+     * variables (which begin with the prefix "gl_") as well as user-defined
+     * uniform variable names.
      *
-     * This function will return as much information as it can about the specified active uniform variable. If no
-     * information is available, *`length`* will be 0, and *`name`* will be an empty string. This situation could
-     * occur if this function is called after a link operation that failed. If an error occurs, the return values
-     * *`length`*, *`size`*, *`type`*, and *`name`* will be unmodified.
+     * This function will return as much information as it can about the
+     * specified active uniform variable. If no information is available,
+     * $length will be 0, and $name will be an empty string. This situation
+     * could occur if this function is called after a link operation that
+     * failed. If an error occurs, the return values $length, $size, $type,
+     * and $name will be unmodified.
      *
      * @see http://docs.gl/gl2/glGetActiveUniform
-     * @see http://docs.gl/gl3/glGetActiveUniform
      * @see http://docs.gl/gl4/glGetActiveUniform
      * @since 2.0
-     * @param int $program
-     * @param int $index
-     * @param int $bufSize
+     * @param int|\FFI\CData|\FFI\CInt $program
+     * @param int|\FFI\CData|\FFI\CInt $index
+     * @param int|\FFI\CData|\FFI\CInt $bufSize
      * @param \FFI\CData|\FFI\CIntPtr|null $length
      * @param \FFI\CData|\FFI\CIntPtr|null $size
      * @param \FFI\CData|\FFI\CIntPtr|null $type
      * @param \FFI\CData|\FFI\CIntPtr|null $name
      * @return void
      */
-    public static function glGetActiveUniform(int $program, int $index, int $bufSize, ?\FFI\CData $length, ?\FFI\CData $size, ?\FFI\CData $type, ?\FFI\CData $name): void
+    public function glGetActiveUniform($program, $index, $bufSize, ?\FFI\CData $length, ?\FFI\CData $size, ?\FFI\CData $type, ?\FFI\CData $name): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($program >= 0 && $program <= 4_294_967_295, 'Argument $program overflow: C type GLuint is required');
-        assert($index >= 0 && $index <= 4_294_967_295, 'Argument $index overflow: C type GLuint is required');
-        assert($bufSize >= \PHP_INT_MIN && $bufSize <= \PHP_INT_MAX, 'Argument $bufSize overflow: C type GLsizei is required');
+        $program = $program instanceof \FFI\CData ? $program->cdata : $program;
+        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
+        $bufSize = $bufSize instanceof \FFI\CData ? $bufSize->cdata : $bufSize;
 
-        $proc = self::getProc('glGetActiveUniform', 'void (*)(GLuint program, GLuint index, GLsizei bufSize, GLsizei *length, GLint *size, GLenum *type, GLchar *name)');
+        assert(Assert::uint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Assert::int16($bufSize), 'Argument $bufSize must be a C-like GLsizei, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glGetActiveUniform', 'void (*)(GLuint program, GLuint index, GLsizei bufSize, GLsizei *length, GLint *size, GLenum *type, GLchar *name)');
         $proc($program, $index, $bufSize, $length, $size, $type, $name);
     }
 
     /**
-     * Returns the names of the shader objects attached to *`program`*. The names of shader objects that are attached
-     * to *`program`* will be returned in *`shaders.`* The actual number of shader names written into *`shaders`* is
-     * returned in *`count.`* If no shader objects are attached to *`program`*, *`count`* is set to 0. The maximum
-     * number of shader names that may be returned in *`shaders`* is specified by *`maxCount`*.
+     * {@see GL46::glGetAttachedShaders} returns the names of the shader
+     * objects attached to $program. The names of shader objects that are
+     * attached to $program will be returned in $shaders. The actual number
+     * of shader names written into $shaders is returned in $count. If no
+     * shader objects are attached to $program, $count is set to 0. The
+     * maximum number of shader names that may be returned in $shaders is
+     * specified by $maxCount.
      *
-     * If the number of names actually returned is not required (for instance, if it has just been obtained by
-     * calling {@see glGetProgram}), a value of `NULL` may be passed for count. If no shader objects are
-     * attached to *`program`*, a value of 0 will be returned in *`count`*. The actual number of attached shaders can
-     * be obtained by calling {@see glGetProgram} with the value `GL_ATTACHED_SHADERS`.
+     * If the number of names actually returned is not required (for
+     * instance, if it has just been obtained by calling
+     * {@see GL46::glGetProgram}), a value of {@see GL46::NULL} may be passed
+     * for count. If no shader objects are attached to $program, a value of 0
+     * will be returned in $count. The actual number of attached shaders can
+     * be obtained by calling {@see GL46::glGetProgram} with the value
+     * {@see GL46::GL_ATTACHED_SHADERS}.
      *
      * @see http://docs.gl/gl2/glGetAttachedShaders
-     * @see http://docs.gl/gl3/glGetAttachedShaders
      * @see http://docs.gl/gl4/glGetAttachedShaders
      * @since 2.0
-     * @param int $program
-     * @param int $maxCount
+     * @param int|\FFI\CData|\FFI\CInt $program
+     * @param int|\FFI\CData|\FFI\CInt $maxCount
      * @param \FFI\CData|\FFI\CIntPtr|null $count
      * @param \FFI\CData|\FFI\CIntPtr|null $shaders
      * @return void
      */
-    public static function glGetAttachedShaders(int $program, int $maxCount, ?\FFI\CData $count, ?\FFI\CData $shaders): void
+    public function glGetAttachedShaders($program, $maxCount, ?\FFI\CData $count, ?\FFI\CData $shaders): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($program >= 0 && $program <= 4_294_967_295, 'Argument $program overflow: C type GLuint is required');
-        assert($maxCount >= \PHP_INT_MIN && $maxCount <= \PHP_INT_MAX, 'Argument $maxCount overflow: C type GLsizei is required');
+        $program = $program instanceof \FFI\CData ? $program->cdata : $program;
+        $maxCount = $maxCount instanceof \FFI\CData ? $maxCount->cdata : $maxCount;
 
-        $proc = self::getProc('glGetAttachedShaders', 'void (*)(GLuint program, GLsizei maxCount, GLsizei *count, GLuint *shaders)');
+        assert(Assert::uint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Assert::int16($maxCount), 'Argument $maxCount must be a C-like GLsizei, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glGetAttachedShaders', 'void (*)(GLuint program, GLsizei maxCount, GLsizei *count, GLuint *shaders)');
         $proc($program, $maxCount, $count, $shaders);
     }
 
     /**
-     * Queries the previously linked program object specified by *`program`* for the attribute variable specified by
-     * *`name`* and returns the index of the generic vertex attribute that is bound to that attribute variable. If
-     * *`name`* is a matrix attribute variable, the index of the first column of the matrix is returned. If the named
-     * attribute variable is not an active attribute in the specified program object or if *`name`* starts with the
-     * reserved prefix "gl_", a value of -1 is returned.
+     * {@see GL46::glGetAttribLocation} queries the previously linked program
+     * object specified by $program for the attribute variable specified by
+     * $name and returns the index of the generic vertex attribute that is
+     * bound to that attribute variable. If $name is a matrix attribute
+     * variable, the index of the first column of the matrix is returned. If
+     * the named attribute variable is not an active attribute in the
+     * specified program object or if $name starts with the reserved prefix
+     * "gl_", a value of -1 is returned.
      *
-     * The association between an attribute variable name and a generic attribute index can be specified at any time
-     * by calling {@see glBindAttribLocation}. Attribute bindings do not go into effect until
-     * {@see glLinkProgram} is called. After a program object has been linked successfully, the index
-     * values for attribute variables remain fixed until the next link command occurs. The attribute values can only
-     * be queried after a link if the link was successful. `glGetAttribLocation` returns the binding that actually
-     * went into effect the last time {@see glLinkProgram} was called for the specified program object.
-     * Attribute bindings that have been specified since the last link operation are not returned by
-     * `glGetAttribLocation`.
+     * The association between an attribute variable name and a generic
+     * attribute index can be specified at any time by calling
+     * {@see GL46::glBindAttribLocation}. Attribute bindings do not go into
+     * effect until {@see GL46::glLinkProgram} is called. After a program
+     * object has been linked successfully, the index values for attribute
+     * variables remain fixed until the next link command occurs. The
+     * attribute values can only be queried after a link if the link was
+     * successful. {@see GL46::glGetAttribLocation} returns the binding that
+     * actually went into effect the last time {@see GL46::glLinkProgram} was
+     * called for the specified program object. Attribute bindings that have
+     * been specified since the last link operation are not returned by
+     * {@see GL46::glGetAttribLocation}.
      *
      * @see http://docs.gl/gl2/glGetAttribLocation
-     * @see http://docs.gl/gl3/glGetAttribLocation
      * @see http://docs.gl/gl4/glGetAttribLocation
      * @since 2.0
-     * @param int $program
+     * @param int|\FFI\CData|\FFI\CInt $program
      * @param \FFI\CData|\FFI\CIntPtr|null $name
-     * @return int
+     * @return int|\FFI\CData|\FFI\CInt
      */
-    public static function glGetAttribLocation(int $program, ?\FFI\CData $name): int
+    public function glGetAttribLocation($program, ?\FFI\CData $name): int
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($program >= 0 && $program <= 4_294_967_295, 'Argument $program overflow: C type GLuint is required');
+        $program = $program instanceof \FFI\CData ? $program->cdata : $program;
 
-        $proc = self::getProc('glGetAttribLocation', 'GLint (*)(GLuint program, const GLchar *name)');
+        assert(Assert::uint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glGetAttribLocation', 'GLint (*)(GLuint program, const GLchar *name)');
         return $proc($program, $name);
     }
 
     /**
+     * {@see GL46::glGetProgram} returns in $params the value of a parameter
+     * for a specific program object. The following parameters are defined:
+     *
+     *  - {@see GL46::GL_DELETE_STATUS}: $params returns {@see GL46::GL_TRUE} if
+     *    $program is currently
+     *    flagged for deletion, and {@see GL46::GL_FALSE} otherwise.
+     *
+     *  - {@see GL46::GL_LINK_STATUS}: $params returns {@see GL46::GL_TRUE} if
+     *    the last link operation on
+     *    $program was successful, and {@see GL46::GL_FALSE} otherwise.
+     *
+     *  - {@see GL46::GL_VALIDATE_STATUS}: $params returns {@see GL46::GL_TRUE}
+     *    or if the last validation
+     *    operation on $program was successful, and {@see GL46::GL_FALSE}
+     *    otherwise.
+     *
+     *  - {@see GL46::GL_INFO_LOG_LENGTH}: $params returns the number of
+     *    characters in the information log for
+     *    $program including the null termination character (i.e., the size of
+     *    the character buffer required to store the information log). If
+     *    $program has no information log, a value of 0 is returned.
+     *
+     *  - {@see GL46::GL_ATTACHED_SHADERS}: $params returns the number of shader
+     *    objects attached to $program.
+     *
+     *  - {@see GL46::GL_ACTIVE_ATOMIC_COUNTER_BUFFERS}: $params returns the
+     *    number of active attribute atomic counter
+     *    buffers used by $program.
+     *
+     *  - {@see GL46::GL_ACTIVE_ATTRIBUTES}: $params returns the number of
+     *    active attribute variables for
+     *    $program.
+     *
+     *  - {@see GL46::GL_ACTIVE_ATTRIBUTE_MAX_LENGTH}: $params returns the
+     *    length of the longest active attribute name for
+     *    $program, including the null termination character (i.e., the size of
+     *    the character buffer required to store the longest attribute name). If
+     *    no active attributes exist, 0 is returned.
+     *
+     *  - {@see GL46::GL_ACTIVE_UNIFORMS}: $params returns the number of active
+     *    uniform variables for
+     *    $program.
+     *
+     *  - {@see GL46::GL_ACTIVE_UNIFORM_MAX_LENGTH}: $params returns the length
+     *    of the longest active uniform variable
+     *    name for $program, including the null termination character (i.e., the
+     *    size of the character buffer required to store the longest uniform
+     *    variable name). If no active uniform variables exist, 0 is returned.
+     *
+     *  - {@see GL46::GL_PROGRAM_BINARY_LENGTH}: $params returns the length of
+     *    the program binary, in bytes that
+     *    will be returned by a call to {@see GL46::glGetProgramBinary}. When a
+     *    progam's {@see GL46::GL_LINK_STATUS} is {@see GL46::GL_FALSE}, its
+     *    program binary length is zero.
+     *
+     *  - {@see GL46::GL_COMPUTE_WORK_GROUP_SIZE}: $params returns an array of
+     *    three integers containing the local
+     *    work group size of the compute program as specified by its input
+     *    layout qualifier(s). $program must be the name of a program object
+     *    that has been previously linked successfully and contains a binary for
+     *    the compute shader stage.
+     *
+     *  - {@see GL46::GL_TRANSFORM_FEEDBACK_BUFFER_MODE}: $params returns a
+     *    symbolic constant indicating the buffer mode used
+     *    when transform feedback is active. This may be
+     *    {@see GL46::GL_SEPARATE_ATTRIBS} or
+     *    {@see GL46::GL_INTERLEAVED_ATTRIBS}.
+     *
+     *  - {@see GL46::GL_TRANSFORM_FEEDBACK_VARYINGS}: $params returns the
+     *    number of varying variables to capture in
+     *    transform feedback mode for the program.
+     *
+     *  - {@see GL46::GL_TRANSFORM_FEEDBACK_VARYING_MAX_LENGTH}: $params returns
+     *    the length of the longest variable name to be used
+     *    for transform feedback, including the null-terminator.
+     *
+     *  - {@see GL46::GL_GEOMETRY_VERTICES_OUT}: $params returns the maximum
+     *    number of vertices that the geometry
+     *    shader in $program will output.
+     *
+     *  - {@see GL46::GL_GEOMETRY_INPUT_TYPE}: $params returns a symbolic
+     *    constant indicating the primitive type
+     *    accepted as input to the geometry shader contained in $program.
+     *
+     *  - {@see GL46::GL_GEOMETRY_OUTPUT_TYPE}: $params returns a symbolic
+     *    constant indicating the primitive type
+     *    that will be output by the geometry shader contained in $program.
+     *
+     * @see http://docs.gl/gl2/glGetProgram
+     * @see http://docs.gl/gl4/glGetProgram
      * @since 2.0
-     * @param int $program
-     * @param int $pname
+     * @param int|\FFI\CData|\FFI\CInt $program
+     * @param int|\FFI\CData|\FFI\CInt $pname
      * @param \FFI\CData|\FFI\CIntPtr|null $params
      * @return void
      */
-    public static function glGetProgramiv(int $program, int $pname, ?\FFI\CData $params): void
+    public function glGetProgramiv($program, $pname, ?\FFI\CData $params): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($program >= 0 && $program <= 4_294_967_295, 'Argument $program overflow: C type GLuint is required');
-        assert($pname >= 0 && $pname <= 4_294_967_295, 'Argument $pname overflow: C type GLenum is required');
+        $program = $program instanceof \FFI\CData ? $program->cdata : $program;
+        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
 
-        $proc = self::getProc('glGetProgramiv', 'void (*)(GLuint program, GLenum pname, GLint *params)');
+        assert(Assert::uint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Assert::uint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glGetProgramiv', 'void (*)(GLuint program, GLenum pname, GLint *params)');
         $proc($program, $pname, $params);
     }
 
     /**
-     * Returns the information log for the specified program object. The information log for a program object is
-     * modified when the program object is linked or validated. The string that is returned will be null terminated.
+     * {@see GL46::glGetProgramInfoLog} returns the information log for the
+     * specified program object. The information log for a program object is
+     * modified when the program object is linked or validated. The string
+     * that is returned will be null terminated.
      *
-     *  - `glGetProgramInfoLog` returns in *`infoLog`* as much of the information log as it can, up to a maximum of
-     * *`maxLength`* characters. The number of characters actually returned, excluding the null termination
-     * character, is specified by *`length`*. If the length of the returned string is not required, a value of `NULL`
-     * can be passed in the *`length`* argument. The size of the buffer required to store the returned information
-     * log can be obtained by calling {@see glGetProgram} with the value `GL_INFO_LOG_LENGTH`.
+     * {@see GL46::glGetProgramInfoLog} returns in $infoLog as much of the
+     * information log as it can, up to a maximum of $maxLength characters.
+     * The number of characters actually returned, excluding the null
+     * termination character, is specified by $length. If the length of the
+     * returned string is not required, a value of {@see GL46::NULL} can be
+     * passed in the $length argument. The size of the buffer required to
+     * store the returned information log can be obtained by calling
+     * {@see GL46::glGetProgram} with the value
+     * {@see GL46::GL_INFO_LOG_LENGTH}.
      *
-     * The information log for a program object is either an empty string, or a string containing information about
-     * the last link operation, or a string containing information about the last validation operation. It may
-     * contain diagnostic messages, warning messages, and other information. When a program object is created, its
-     * information log will be a string of length 0.
+     * The information log for a program object is either an empty string, or
+     * a string containing information about the last link operation, or a
+     * string containing information about the last validation operation. It
+     * may contain diagnostic messages, warning messages, and other
+     * information. When a program object is created, its information log
+     * will be a string of length 0.
      *
      * @see http://docs.gl/gl2/glGetProgramInfoLog
-     * @see http://docs.gl/gl3/glGetProgramInfoLog
      * @see http://docs.gl/gl4/glGetProgramInfoLog
      * @since 2.0
-     * @param int $program
-     * @param int $bufSize
+     * @param int|\FFI\CData|\FFI\CInt $program
+     * @param int|\FFI\CData|\FFI\CInt $bufSize
      * @param \FFI\CData|\FFI\CIntPtr|null $length
      * @param \FFI\CData|\FFI\CIntPtr|null $infoLog
      * @return void
      */
-    public static function glGetProgramInfoLog(int $program, int $bufSize, ?\FFI\CData $length, ?\FFI\CData $infoLog): void
+    public function glGetProgramInfoLog($program, $bufSize, ?\FFI\CData $length, ?\FFI\CData $infoLog): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($program >= 0 && $program <= 4_294_967_295, 'Argument $program overflow: C type GLuint is required');
-        assert($bufSize >= \PHP_INT_MIN && $bufSize <= \PHP_INT_MAX, 'Argument $bufSize overflow: C type GLsizei is required');
+        $program = $program instanceof \FFI\CData ? $program->cdata : $program;
+        $bufSize = $bufSize instanceof \FFI\CData ? $bufSize->cdata : $bufSize;
 
-        $proc = self::getProc('glGetProgramInfoLog', 'void (*)(GLuint program, GLsizei bufSize, GLsizei *length, GLchar *infoLog)');
+        assert(Assert::uint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Assert::int16($bufSize), 'Argument $bufSize must be a C-like GLsizei, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glGetProgramInfoLog', 'void (*)(GLuint program, GLsizei bufSize, GLsizei *length, GLchar *infoLog)');
         $proc($program, $bufSize, $length, $infoLog);
     }
 
     /**
+     * {@see GL46::glGetShader} returns in $params the value of a parameter
+     * for a specific shader object. The following parameters are defined:
+     *
+     *  - {@see GL46::GL_SHADER_TYPE}: $params returns {@see
+     *    GL46::GL_VERTEX_SHADER} if $shader is a vertex
+     *    shader object, {@see GL46::GL_GEOMETRY_SHADER} if $shader is a
+     *    geometry shader object, and {@see GL46::GL_FRAGMENT_SHADER} if $shader
+     *    is a fragment shader object.
+     *
+     *  - {@see GL46::GL_DELETE_STATUS}: $params returns {@see GL46::GL_TRUE} if
+     *    $shader is currently flagged
+     *    for deletion, and {@see GL46::GL_FALSE} otherwise.
+     *
+     *  - {@see GL46::GL_COMPILE_STATUS}: $params returns {@see GL46::GL_TRUE}
+     *    if the last compile operation on
+     *    $shader was successful, and {@see GL46::GL_FALSE} otherwise.
+     *
+     *  - {@see GL46::GL_INFO_LOG_LENGTH}: $params returns the number of
+     *    characters in the information log for
+     *    $shader including the null termination character (i.e., the size of
+     *    the character buffer required to store the information log). If
+     *    $shader has no information log, a value of 0 is returned.
+     *
+     *  - {@see GL46::GL_SHADER_SOURCE_LENGTH}: $params returns the length of
+     *    the concatenation of the source strings
+     *    that make up the shader source for the $shader, including the null
+     *    termination character. (i.e., the size of the character buffer
+     *    required to store the shader source). If no source code exists, 0 is
+     *    returned.
+     *
+     * @see http://docs.gl/gl2/glGetShader
+     * @see http://docs.gl/gl4/glGetShader
      * @since 2.0
-     * @param int $shader
-     * @param int $pname
+     * @param int|\FFI\CData|\FFI\CInt $shader
+     * @param int|\FFI\CData|\FFI\CInt $pname
      * @param \FFI\CData|\FFI\CIntPtr|null $params
      * @return void
      */
-    public static function glGetShaderiv(int $shader, int $pname, ?\FFI\CData $params): void
+    public function glGetShaderiv($shader, $pname, ?\FFI\CData $params): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($shader >= 0 && $shader <= 4_294_967_295, 'Argument $shader overflow: C type GLuint is required');
-        assert($pname >= 0 && $pname <= 4_294_967_295, 'Argument $pname overflow: C type GLenum is required');
+        $shader = $shader instanceof \FFI\CData ? $shader->cdata : $shader;
+        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
 
-        $proc = self::getProc('glGetShaderiv', 'void (*)(GLuint shader, GLenum pname, GLint *params)');
+        assert(Assert::uint16($shader), 'Argument $shader must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Assert::uint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glGetShaderiv', 'void (*)(GLuint shader, GLenum pname, GLint *params)');
         $proc($shader, $pname, $params);
     }
 
     /**
-     * Returns the information log for the specified shader object. The information log for a shader object is
-     * modified when the shader is compiled. The string that is returned will be null terminated.
+     * {@see GL46::glGetShaderInfoLog} returns the information log for the
+     * specified shader object. The information log for a shader object is
+     * modified when the shader is compiled. The string that is returned will
+     * be null terminated.
      *
-     *  - `glGetShaderInfoLog` returns in *`infoLog`* as much of the information log as it can, up to a maximum of
-     * *`maxLength`* characters. The number of characters actually returned, excluding the null termination
-     * character, is specified by *`length`*. If the length of the returned string is not required, a value of `NULL`
-     * can be passed in the *`length`* argument. The size of the buffer required to store the returned information
-     * log can be obtained by calling {@see glGetShader} with the value `GL_INFO_LOG_LENGTH`.
+     * {@see GL46::glGetShaderInfoLog} returns in $infoLog as much of the
+     * information log as it can, up to a maximum of $maxLength characters.
+     * The number of characters actually returned, excluding the null
+     * termination character, is specified by $length. If the length of the
+     * returned string is not required, a value of {@see GL46::NULL} can be
+     * passed in the $length argument. The size of the buffer required to
+     * store the returned information log can be obtained by calling
+     * {@see GL46::glGetShader} with the value
+     * {@see GL46::GL_INFO_LOG_LENGTH}.
      *
-     * The information log for a shader object is a string that may contain diagnostic messages, warning messages,
-     * and other information about the last compile operation. When a shader object is created, its information log
-     * will be a string of length 0.
+     * The information log for a shader object is a string that may contain
+     * diagnostic messages, warning messages, and other information about the
+     * last compile operation. When a shader object is created, its
+     * information log will be a string of length 0.
      *
      * @see http://docs.gl/gl2/glGetShaderInfoLog
-     * @see http://docs.gl/gl3/glGetShaderInfoLog
      * @see http://docs.gl/gl4/glGetShaderInfoLog
      * @since 2.0
-     * @param int $shader
-     * @param int $bufSize
+     * @param int|\FFI\CData|\FFI\CInt $shader
+     * @param int|\FFI\CData|\FFI\CInt $bufSize
      * @param \FFI\CData|\FFI\CIntPtr|null $length
      * @param \FFI\CData|\FFI\CIntPtr|null $infoLog
      * @return void
      */
-    public static function glGetShaderInfoLog(int $shader, int $bufSize, ?\FFI\CData $length, ?\FFI\CData $infoLog): void
+    public function glGetShaderInfoLog($shader, $bufSize, ?\FFI\CData $length, ?\FFI\CData $infoLog): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($shader >= 0 && $shader <= 4_294_967_295, 'Argument $shader overflow: C type GLuint is required');
-        assert($bufSize >= \PHP_INT_MIN && $bufSize <= \PHP_INT_MAX, 'Argument $bufSize overflow: C type GLsizei is required');
+        $shader = $shader instanceof \FFI\CData ? $shader->cdata : $shader;
+        $bufSize = $bufSize instanceof \FFI\CData ? $bufSize->cdata : $bufSize;
 
-        $proc = self::getProc('glGetShaderInfoLog', 'void (*)(GLuint shader, GLsizei bufSize, GLsizei *length, GLchar *infoLog)');
+        assert(Assert::uint16($shader), 'Argument $shader must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Assert::int16($bufSize), 'Argument $bufSize must be a C-like GLsizei, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glGetShaderInfoLog', 'void (*)(GLuint shader, GLsizei bufSize, GLsizei *length, GLchar *infoLog)');
         $proc($shader, $bufSize, $length, $infoLog);
     }
 
     /**
-     * Returns the concatenation of the source code strings from the shader object specified by *`shader`*. The
-     * source code strings for a shader object are the result of a previous call to {@see glShaderSource}.
-     * The string returned by the function will be null terminated.
+     * {@see GL46::glGetShaderSource} returns the concatenation of the source
+     * code strings from the shader object specified by $shader. The source
+     * code strings for a shader object are the result of a previous call to
+     * {@see GL46::glShaderSource}. The string returned by the function will
+     * be null terminated.
      *
-     *  - `glGetShaderSource` returns in *`source`* as much of the source code string as it can, up to a maximum of
-     * *`bufSize`* characters. The number of characters actually returned, excluding the null termination character,
-     * is specified by *`length`*. If the length of the returned string is not required, a value of `NULL` can be
-     * passed in the *`length`* argument. The size of the buffer required to store the returned source code string
-     * can be obtained by calling {@see glGetShader} with the value `GL_SHADER_SOURCE_LENGTH`.
+     * {@see GL46::glGetShaderSource} returns in $source as much of the
+     * source code string as it can, up to a maximum of $bufSize characters.
+     * The number of characters actually returned, excluding the null
+     * termination character, is specified by $length. If the length of the
+     * returned string is not required, a value of {@see GL46::NULL} can be
+     * passed in the $length argument. The size of the buffer required to
+     * store the returned source code string can be obtained by calling
+     * {@see GL46::glGetShader} with the value
+     * {@see GL46::GL_SHADER_SOURCE_LENGTH}.
      *
      * @see http://docs.gl/gl2/glGetShaderSource
-     * @see http://docs.gl/gl3/glGetShaderSource
      * @see http://docs.gl/gl4/glGetShaderSource
      * @since 2.0
-     * @param int $shader
-     * @param int $bufSize
+     * @param int|\FFI\CData|\FFI\CInt $shader
+     * @param int|\FFI\CData|\FFI\CInt $bufSize
      * @param \FFI\CData|\FFI\CIntPtr|null $length
      * @param \FFI\CData|\FFI\CIntPtr|null $source
      * @return void
      */
-    public static function glGetShaderSource(int $shader, int $bufSize, ?\FFI\CData $length, ?\FFI\CData $source): void
+    public function glGetShaderSource($shader, $bufSize, ?\FFI\CData $length, ?\FFI\CData $source): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($shader >= 0 && $shader <= 4_294_967_295, 'Argument $shader overflow: C type GLuint is required');
-        assert($bufSize >= \PHP_INT_MIN && $bufSize <= \PHP_INT_MAX, 'Argument $bufSize overflow: C type GLsizei is required');
+        $shader = $shader instanceof \FFI\CData ? $shader->cdata : $shader;
+        $bufSize = $bufSize instanceof \FFI\CData ? $bufSize->cdata : $bufSize;
 
-        $proc = self::getProc('glGetShaderSource', 'void (*)(GLuint shader, GLsizei bufSize, GLsizei *length, GLchar *source)');
+        assert(Assert::uint16($shader), 'Argument $shader must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Assert::int16($bufSize), 'Argument $bufSize must be a C-like GLsizei, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glGetShaderSource', 'void (*)(GLuint shader, GLsizei bufSize, GLsizei *length, GLchar *source)');
         $proc($shader, $bufSize, $length, $source);
     }
 
     /**
-     * - `glGetUniformLocation ` returns an integer that represents the location of a specific uniform variable
-     * within a program object. *`name`* must be a null terminated string that contains no white space. *`name`* must
-     * be an active uniform variable name in *`program`* that is not a structure, an array of structures, or a
-     * subcomponent of a vector or a matrix. This function returns -1 if *`name`* does not correspond to an active
-     * uniform variable in *`program`* or if *`name`* starts with the reserved prefix "gl_".
+     * {@see GL46::glGetUniformLocation } returns an integer that represents
+     * the location of a specific uniform variable within a program object.
+     * $name must be a null terminated string that contains no white space.
+     * $name must be an active uniform variable name in $program that is not
+     * a structure, an array of structures, or a subcomponent of a vector or
+     * a matrix. This function returns -1 if $name does not correspond to an
+     * active uniform variable in $program, if $name starts with the reserved
+     * prefix "gl_", or if $name is associated with an atomic counter or a
+     * named uniform block.
      *
-     * Uniform variables that are structures or arrays of structures may be queried by calling `glGetUniformLocation`
-     * for each field within the structure. The array element operator "[]" and the structure field operator "." may
-     * be used in *`name`* in order to select elements within an array or fields within a structure. The result of
-     * using these operators is not allowed to be another structure, an array of structures, or a subcomponent of a
-     * vector or a matrix. Except if the last part of *`name`* indicates a uniform variable array, the location of
-     * the first element of an array can be retrieved by using the name of the array, or by using the name appended
-     * by "[0]".
+     * Uniform variables that are structures or arrays of structures may be
+     * queried by calling {@see GL46::glGetUniformLocation} for each field
+     * within the structure. The array element operator "\[\]" and the
+     * structure field operator "." may be used in $name in order to select
+     * elements within an array or fields within a structure. The result of
+     * using these operators is not allowed to be another structure, an array
+     * of structures, or a subcomponent of a vector or a matrix. Except if
+     * the last part of $name indicates a uniform variable array, the
+     * location of the first element of an array can be retrieved by using
+     * the name of the array, or by using the name appended by "\[0\]".
      *
-     * The actual locations assigned to uniform variables are not known until the program object is linked
-     * successfully. After linking has occurred, the command `glGetUniformLocation` can be used to obtain the
-     * location of a uniform variable. This location value can then be passed to {@see glUniform} to set the
-     * value of the uniform variable or to {@see glGetUniform} in order to query the current value of the
-     * uniform variable. After a program object has been linked successfully, the index values for uniform variables
-     * remain fixed until the next link command occurs. Uniform variable locations and values can only be queried
-     * after a link if the link was successful.
+     * The actual locations assigned to uniform variables are not known until
+     * the program object is linked successfully. After linking has occurred,
+     * the command {@see GL46::glGetUniformLocation} can be used to obtain
+     * the location of a uniform variable. This location value can then be
+     * passed to {@see GL46::glUniform} to set the value of the uniform
+     * variable or to {@see GL46::glGetUniform} in order to query the current
+     * value of the uniform variable. After a program object has been linked
+     * successfully, the index values for uniform variables remain fixed
+     * until the next link command occurs. Uniform variable locations and
+     * values can only be queried after a link if the link was successful.
      *
      * @see http://docs.gl/gl2/glGetUniformLocation
-     * @see http://docs.gl/gl3/glGetUniformLocation
      * @see http://docs.gl/gl4/glGetUniformLocation
      * @since 2.0
-     * @param int $program
+     * @param int|\FFI\CData|\FFI\CInt $program
      * @param \FFI\CData|\FFI\CIntPtr|null $name
-     * @return int
+     * @return int|\FFI\CData|\FFI\CInt
      */
-    public static function glGetUniformLocation(int $program, ?\FFI\CData $name): int
+    public function glGetUniformLocation($program, ?\FFI\CData $name): int
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($program >= 0 && $program <= 4_294_967_295, 'Argument $program overflow: C type GLuint is required');
+        $program = $program instanceof \FFI\CData ? $program->cdata : $program;
 
-        $proc = self::getProc('glGetUniformLocation', 'GLint (*)(GLuint program, const GLchar *name)');
+        assert(Assert::uint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glGetUniformLocation', 'GLint (*)(GLuint program, const GLchar *name)');
         return $proc($program, $name);
     }
 
     /**
-     * @since 2.0
-     * @param int $program
-     * @param int $location
-     * @param \FFI\CData|\FFI\CFloatPtr|null $params
-     * @return void
-     */
-    public static function glGetUniformfv(int $program, int $location, ?\FFI\CData $params): void
-    {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($program >= 0 && $program <= 4_294_967_295, 'Argument $program overflow: C type GLuint is required');
-        assert($location >= \PHP_INT_MIN && $location <= \PHP_INT_MAX, 'Argument $location overflow: C type GLint is required');
-
-        $proc = self::getProc('glGetUniformfv', 'void (*)(GLuint program, GLint location, GLfloat *params)');
-        $proc($program, $location, $params);
-    }
-
-    /**
-     * @since 2.0
-     * @param int $program
-     * @param int $location
-     * @param \FFI\CData|\FFI\CIntPtr|null $params
-     * @return void
-     */
-    public static function glGetUniformiv(int $program, int $location, ?\FFI\CData $params): void
-    {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($program >= 0 && $program <= 4_294_967_295, 'Argument $program overflow: C type GLuint is required');
-        assert($location >= \PHP_INT_MIN && $location <= \PHP_INT_MAX, 'Argument $location overflow: C type GLint is required');
-
-        $proc = self::getProc('glGetUniformiv', 'void (*)(GLuint program, GLint location, GLint *params)');
-        $proc($program, $location, $params);
-    }
-
-    /**
-     * @since 2.0
-     * @param int $index
-     * @param int $pname
-     * @param \FFI\CData|\FFI\CFloatPtr|null $params
-     * @return void
-     */
-    public static function glGetVertexAttribdv(int $index, int $pname, ?\FFI\CData $params): void
-    {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($index >= 0 && $index <= 4_294_967_295, 'Argument $index overflow: C type GLuint is required');
-        assert($pname >= 0 && $pname <= 4_294_967_295, 'Argument $pname overflow: C type GLenum is required');
-
-        $proc = self::getProc('glGetVertexAttribdv', 'void (*)(GLuint index, GLenum pname, GLdouble *params)');
-        $proc($index, $pname, $params);
-    }
-
-    /**
-     * @since 2.0
-     * @param int $index
-     * @param int $pname
-     * @param \FFI\CData|\FFI\CFloatPtr|null $params
-     * @return void
-     */
-    public static function glGetVertexAttribfv(int $index, int $pname, ?\FFI\CData $params): void
-    {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($index >= 0 && $index <= 4_294_967_295, 'Argument $index overflow: C type GLuint is required');
-        assert($pname >= 0 && $pname <= 4_294_967_295, 'Argument $pname overflow: C type GLenum is required');
-
-        $proc = self::getProc('glGetVertexAttribfv', 'void (*)(GLuint index, GLenum pname, GLfloat *params)');
-        $proc($index, $pname, $params);
-    }
-
-    /**
-     * @since 2.0
-     * @param int $index
-     * @param int $pname
-     * @param \FFI\CData|\FFI\CIntPtr|null $params
-     * @return void
-     */
-    public static function glGetVertexAttribiv(int $index, int $pname, ?\FFI\CData $params): void
-    {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($index >= 0 && $index <= 4_294_967_295, 'Argument $index overflow: C type GLuint is required');
-        assert($pname >= 0 && $pname <= 4_294_967_295, 'Argument $pname overflow: C type GLenum is required');
-
-        $proc = self::getProc('glGetVertexAttribiv', 'void (*)(GLuint index, GLenum pname, GLint *params)');
-        $proc($index, $pname, $params);
-    }
-
-    /**
-     * Returns pointer information. *`index`* is the generic vertex attribute to be queried, *`pname`* is a symbolic
-     * constant indicating the pointer to be returned, and *`params`* is a pointer to a location in which to place
-     * the returned data.
+     * {@see GL46::glGetUniform} and {@see GL46::glGetnUniform} return in
+     * $params the value(s) of the specified uniform variable. The type of
+     * the uniform variable specified by $location determines the number of
+     * values returned. If the uniform variable is defined in the shader as a
+     * boolean, int, or float, a single value will be returned. If it is
+     * defined as a vec2, ivec2, or bvec2, two values will be returned. If it
+     * is defined as a vec3, ivec3, or bvec3, three values will be returned,
+     * and so on. To query values stored in uniform variables declared as
+     * arrays, call {@see GL46::glGetUniform} for each element of the array.
+     * To query values stored in uniform variables declared as structures,
+     * call {@see GL46::glGetUniform} for each field in the structure. The
+     * values for uniform variables declared as a matrix will be returned in
+     * column major order.
      *
-     * If a non-zero named buffer object was bound to the `GL_ARRAY_BUFFER` target (see {@see glBindBuffer})
-     * when the desired pointer was previously specified, the *`pointer`* returned is a byte offset into the buffer
-     * object's data store.
+     * The locations assigned to uniform variables are not known until the
+     * program object is linked. After linking has occurred, the command
+     * {@see GL46::glGetUniformLocation} can be used to obtain the location
+     * of a uniform variable. This location value can then be passed to
+     * {@see GL46::glGetUniform} or {@see GL46::glGetnUniform} in order to
+     * query the current value of the uniform variable. After a program
+     * object has been linked successfully, the index values for uniform
+     * variables remain fixed until the next link command occurs. The uniform
+     * variable values can only be queried after a link if the link was
+     * successful.
+     *
+     * The only difference between {@see GL46::glGetUniform} and
+     * {@see GL46::glGetnUniform} is that {@see GL46::glGetnUniform} will
+     * generate an error if size of the $params buffer,as described by
+     * $bufSize, is not large enough to hold the result data.
+     *
+     * @see http://docs.gl/gl2/glGetUniform
+     * @see http://docs.gl/gl4/glGetUniform
+     * @since 2.0
+     * @param int|\FFI\CData|\FFI\CInt $program
+     * @param int|\FFI\CData|\FFI\CInt $location
+     * @param \FFI\CData|\FFI\CFloatPtr|null $params
+     * @return void
+     */
+    public function glGetUniformfv($program, $location, ?\FFI\CData $params): void
+    {
+        $program = $program instanceof \FFI\CData ? $program->cdata : $program;
+        $location = $location instanceof \FFI\CData ? $location->cdata : $location;
+
+        assert(Assert::uint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Assert::int16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glGetUniformfv', 'void (*)(GLuint program, GLint location, GLfloat *params)');
+        $proc($program, $location, $params);
+    }
+
+    /**
+     * {@see GL46::glGetUniform} and {@see GL46::glGetnUniform} return in
+     * $params the value(s) of the specified uniform variable. The type of
+     * the uniform variable specified by $location determines the number of
+     * values returned. If the uniform variable is defined in the shader as a
+     * boolean, int, or float, a single value will be returned. If it is
+     * defined as a vec2, ivec2, or bvec2, two values will be returned. If it
+     * is defined as a vec3, ivec3, or bvec3, three values will be returned,
+     * and so on. To query values stored in uniform variables declared as
+     * arrays, call {@see GL46::glGetUniform} for each element of the array.
+     * To query values stored in uniform variables declared as structures,
+     * call {@see GL46::glGetUniform} for each field in the structure. The
+     * values for uniform variables declared as a matrix will be returned in
+     * column major order.
+     *
+     * The locations assigned to uniform variables are not known until the
+     * program object is linked. After linking has occurred, the command
+     * {@see GL46::glGetUniformLocation} can be used to obtain the location
+     * of a uniform variable. This location value can then be passed to
+     * {@see GL46::glGetUniform} or {@see GL46::glGetnUniform} in order to
+     * query the current value of the uniform variable. After a program
+     * object has been linked successfully, the index values for uniform
+     * variables remain fixed until the next link command occurs. The uniform
+     * variable values can only be queried after a link if the link was
+     * successful.
+     *
+     * The only difference between {@see GL46::glGetUniform} and
+     * {@see GL46::glGetnUniform} is that {@see GL46::glGetnUniform} will
+     * generate an error if size of the $params buffer,as described by
+     * $bufSize, is not large enough to hold the result data.
+     *
+     * @see http://docs.gl/gl2/glGetUniform
+     * @see http://docs.gl/gl4/glGetUniform
+     * @since 2.0
+     * @param int|\FFI\CData|\FFI\CInt $program
+     * @param int|\FFI\CData|\FFI\CInt $location
+     * @param \FFI\CData|\FFI\CIntPtr|null $params
+     * @return void
+     */
+    public function glGetUniformiv($program, $location, ?\FFI\CData $params): void
+    {
+        $program = $program instanceof \FFI\CData ? $program->cdata : $program;
+        $location = $location instanceof \FFI\CData ? $location->cdata : $location;
+
+        assert(Assert::uint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Assert::int16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glGetUniformiv', 'void (*)(GLuint program, GLint location, GLint *params)');
+        $proc($program, $location, $params);
+    }
+
+    /**
+     * {@see GL46::glGetVertexAttrib} returns in $params the value of a
+     * generic vertex attribute parameter. The generic vertex attribute to be
+     * queried is specified by $index, and the parameter to be queried is
+     * specified by $pname.
+     *
+     * The accepted parameter names are as follows:
+     *
+     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING}: $params returns a
+     *    single value, the name of the buffer object
+     *    currently bound to the binding point corresponding to generic vertex
+     *    attribute array $index. If no buffer object is bound, 0 is returned.
+     *    The initial value is 0.
+     *
+     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_ENABLED}: $params returns a single
+     *    value that is non-zero (true) if the
+     *    vertex attribute array for $index is enabled and 0 (false) if it is
+     *    disabled. The initial value is {@see GL46::GL_FALSE}.
+     *
+     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_SIZE}: $params returns a single
+     *    value, the size of the vertex attribute
+     *    array for $index. The size is the number of values for each element of
+     *    the vertex attribute array, and it will be 1, 2, 3, or 4. The initial
+     *    value is 4.
+     *
+     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_STRIDE}: $params returns a single
+     *    value, the array stride for (number of
+     *    bytes between successive elements in) the vertex attribute array for
+     *    $index. A value of 0 indicates that the array elements are stored
+     *    sequentially in memory. The initial value is 0.
+     *
+     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_TYPE}: $params returns a single
+     *    value, a symbolic constant indicating the
+     *    array type for the vertex attribute array for $index. Possible values
+     *    are {@see GL46::GL_BYTE}, {@see GL46::GL_UNSIGNED_BYTE},
+     *    {@see GL46::GL_SHORT}, {@see GL46::GL_UNSIGNED_SHORT},
+     *    {@see GL46::GL_INT}, {@see GL46::GL_UNSIGNED_INT},
+     *    {@see GL46::GL_FLOAT}, and {@see GL46::GL_DOUBLE}. The initial value
+     *    is {@see GL46::GL_FLOAT}.
+     *
+     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_NORMALIZED}: $params returns a
+     *    single value that is non-zero (true) if
+     *    fixed-point data types for the vertex attribute array indicated by
+     *    $index are normalized when they are converted to floating point, and 0
+     *    (false) otherwise. The initial value is {@see GL46::GL_FALSE}.
+     *
+     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_INTEGER}: $params returns a single
+     *    value that is non-zero (true) if
+     *    fixed-point data types for the vertex attribute array indicated by
+     *    $index have integer data types, and 0 (false) otherwise. The initial
+     *    value is 0 ({@see GL46::GL_FALSE}).
+     *
+     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_LONG}: $param returns a single
+     *    value that is non-zero (true) if a vertex
+     *    attribute is stored as an unconverted double, and 0 (false) otherwise.
+     *    The initial value is 0 ({@see GL46::GL_FALSE}).
+     *
+     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_DIVISOR}: $params returns a single
+     *    value that is the frequency divisor used
+     *    for instanced rendering. See {@see GL46::glVertexAttribDivisor}. The
+     *    initial value is 0.
+     *
+     *  - {@see GL46::GL_VERTEX_ATTRIB_BINDING}: $params returns a single value,
+     *    the vertex buffer binding of the
+     *    vertex attribute array $index.
+     *
+     *  - {@see GL46::GL_VERTEX_ATTRIB_RELATIVE_OFFSET}: $params returns a
+     *    single value that is the byte offset of the first
+     *    element relative to the start of the vertex buffer binding specified
+     *    attribute fetches from. The initial value is 0.
+     *
+     *  - {@see GL46::GL_CURRENT_VERTEX_ATTRIB}: $params returns four values
+     *    that represent the current value for
+     *    the generic vertex attribute specified by index. Generic vertex
+     *    attribute 0 is unique in that it has no current state, so an error
+     *    will be generated if $index is 0. The initial value for all other
+     *    generic vertex attributes is (0,0,0,1).
+     *    {@see GL46::glGetVertexAttribdv} and {@see GL46::glGetVertexAttribfv}
+     *    return the current attribute values as four single-precision
+     *    floating-point values; {@see GL46::glGetVertexAttribiv} reads them as
+     *    floating-point values and converts them to four integer values;
+     *    {@see GL46::glGetVertexAttribIiv} and
+     *    {@see GL46::glGetVertexAttribIuiv} read and return them as signed or
+     *    unsigned integer values, respectively;
+     *    {@see GL46::glGetVertexAttribLdv} reads and returns them as four
+     *    double-precision floating-point values.
+     *
+     * All of the parameters except {@see GL46::GL_CURRENT_VERTEX_ATTRIB}
+     * represent state stored in the currently bound vertex array object.
+     *
+     * @see http://docs.gl/gl2/glGetVertexAttrib
+     * @see http://docs.gl/gl4/glGetVertexAttrib
+     * @since 2.0
+     * @param int|\FFI\CData|\FFI\CInt $index
+     * @param int|\FFI\CData|\FFI\CInt $pname
+     * @param \FFI\CData|\FFI\CFloatPtr|null $params
+     * @return void
+     */
+    public function glGetVertexAttribdv($index, $pname, ?\FFI\CData $params): void
+    {
+        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
+        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
+
+        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Assert::uint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glGetVertexAttribdv', 'void (*)(GLuint index, GLenum pname, GLdouble *params)');
+        $proc($index, $pname, $params);
+    }
+
+    /**
+     * {@see GL46::glGetVertexAttrib} returns in $params the value of a
+     * generic vertex attribute parameter. The generic vertex attribute to be
+     * queried is specified by $index, and the parameter to be queried is
+     * specified by $pname.
+     *
+     * The accepted parameter names are as follows:
+     *
+     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING}: $params returns a
+     *    single value, the name of the buffer object
+     *    currently bound to the binding point corresponding to generic vertex
+     *    attribute array $index. If no buffer object is bound, 0 is returned.
+     *    The initial value is 0.
+     *
+     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_ENABLED}: $params returns a single
+     *    value that is non-zero (true) if the
+     *    vertex attribute array for $index is enabled and 0 (false) if it is
+     *    disabled. The initial value is {@see GL46::GL_FALSE}.
+     *
+     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_SIZE}: $params returns a single
+     *    value, the size of the vertex attribute
+     *    array for $index. The size is the number of values for each element of
+     *    the vertex attribute array, and it will be 1, 2, 3, or 4. The initial
+     *    value is 4.
+     *
+     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_STRIDE}: $params returns a single
+     *    value, the array stride for (number of
+     *    bytes between successive elements in) the vertex attribute array for
+     *    $index. A value of 0 indicates that the array elements are stored
+     *    sequentially in memory. The initial value is 0.
+     *
+     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_TYPE}: $params returns a single
+     *    value, a symbolic constant indicating the
+     *    array type for the vertex attribute array for $index. Possible values
+     *    are {@see GL46::GL_BYTE}, {@see GL46::GL_UNSIGNED_BYTE},
+     *    {@see GL46::GL_SHORT}, {@see GL46::GL_UNSIGNED_SHORT},
+     *    {@see GL46::GL_INT}, {@see GL46::GL_UNSIGNED_INT},
+     *    {@see GL46::GL_FLOAT}, and {@see GL46::GL_DOUBLE}. The initial value
+     *    is {@see GL46::GL_FLOAT}.
+     *
+     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_NORMALIZED}: $params returns a
+     *    single value that is non-zero (true) if
+     *    fixed-point data types for the vertex attribute array indicated by
+     *    $index are normalized when they are converted to floating point, and 0
+     *    (false) otherwise. The initial value is {@see GL46::GL_FALSE}.
+     *
+     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_INTEGER}: $params returns a single
+     *    value that is non-zero (true) if
+     *    fixed-point data types for the vertex attribute array indicated by
+     *    $index have integer data types, and 0 (false) otherwise. The initial
+     *    value is 0 ({@see GL46::GL_FALSE}).
+     *
+     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_LONG}: $param returns a single
+     *    value that is non-zero (true) if a vertex
+     *    attribute is stored as an unconverted double, and 0 (false) otherwise.
+     *    The initial value is 0 ({@see GL46::GL_FALSE}).
+     *
+     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_DIVISOR}: $params returns a single
+     *    value that is the frequency divisor used
+     *    for instanced rendering. See {@see GL46::glVertexAttribDivisor}. The
+     *    initial value is 0.
+     *
+     *  - {@see GL46::GL_VERTEX_ATTRIB_BINDING}: $params returns a single value,
+     *    the vertex buffer binding of the
+     *    vertex attribute array $index.
+     *
+     *  - {@see GL46::GL_VERTEX_ATTRIB_RELATIVE_OFFSET}: $params returns a
+     *    single value that is the byte offset of the first
+     *    element relative to the start of the vertex buffer binding specified
+     *    attribute fetches from. The initial value is 0.
+     *
+     *  - {@see GL46::GL_CURRENT_VERTEX_ATTRIB}: $params returns four values
+     *    that represent the current value for
+     *    the generic vertex attribute specified by index. Generic vertex
+     *    attribute 0 is unique in that it has no current state, so an error
+     *    will be generated if $index is 0. The initial value for all other
+     *    generic vertex attributes is (0,0,0,1).
+     *    {@see GL46::glGetVertexAttribdv} and {@see GL46::glGetVertexAttribfv}
+     *    return the current attribute values as four single-precision
+     *    floating-point values; {@see GL46::glGetVertexAttribiv} reads them as
+     *    floating-point values and converts them to four integer values;
+     *    {@see GL46::glGetVertexAttribIiv} and
+     *    {@see GL46::glGetVertexAttribIuiv} read and return them as signed or
+     *    unsigned integer values, respectively;
+     *    {@see GL46::glGetVertexAttribLdv} reads and returns them as four
+     *    double-precision floating-point values.
+     *
+     * All of the parameters except {@see GL46::GL_CURRENT_VERTEX_ATTRIB}
+     * represent state stored in the currently bound vertex array object.
+     *
+     * @see http://docs.gl/gl2/glGetVertexAttrib
+     * @see http://docs.gl/gl4/glGetVertexAttrib
+     * @since 2.0
+     * @param int|\FFI\CData|\FFI\CInt $index
+     * @param int|\FFI\CData|\FFI\CInt $pname
+     * @param \FFI\CData|\FFI\CFloatPtr|null $params
+     * @return void
+     */
+    public function glGetVertexAttribfv($index, $pname, ?\FFI\CData $params): void
+    {
+        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
+        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
+
+        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Assert::uint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glGetVertexAttribfv', 'void (*)(GLuint index, GLenum pname, GLfloat *params)');
+        $proc($index, $pname, $params);
+    }
+
+    /**
+     * {@see GL46::glGetVertexAttrib} returns in $params the value of a
+     * generic vertex attribute parameter. The generic vertex attribute to be
+     * queried is specified by $index, and the parameter to be queried is
+     * specified by $pname.
+     *
+     * The accepted parameter names are as follows:
+     *
+     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING}: $params returns a
+     *    single value, the name of the buffer object
+     *    currently bound to the binding point corresponding to generic vertex
+     *    attribute array $index. If no buffer object is bound, 0 is returned.
+     *    The initial value is 0.
+     *
+     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_ENABLED}: $params returns a single
+     *    value that is non-zero (true) if the
+     *    vertex attribute array for $index is enabled and 0 (false) if it is
+     *    disabled. The initial value is {@see GL46::GL_FALSE}.
+     *
+     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_SIZE}: $params returns a single
+     *    value, the size of the vertex attribute
+     *    array for $index. The size is the number of values for each element of
+     *    the vertex attribute array, and it will be 1, 2, 3, or 4. The initial
+     *    value is 4.
+     *
+     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_STRIDE}: $params returns a single
+     *    value, the array stride for (number of
+     *    bytes between successive elements in) the vertex attribute array for
+     *    $index. A value of 0 indicates that the array elements are stored
+     *    sequentially in memory. The initial value is 0.
+     *
+     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_TYPE}: $params returns a single
+     *    value, a symbolic constant indicating the
+     *    array type for the vertex attribute array for $index. Possible values
+     *    are {@see GL46::GL_BYTE}, {@see GL46::GL_UNSIGNED_BYTE},
+     *    {@see GL46::GL_SHORT}, {@see GL46::GL_UNSIGNED_SHORT},
+     *    {@see GL46::GL_INT}, {@see GL46::GL_UNSIGNED_INT},
+     *    {@see GL46::GL_FLOAT}, and {@see GL46::GL_DOUBLE}. The initial value
+     *    is {@see GL46::GL_FLOAT}.
+     *
+     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_NORMALIZED}: $params returns a
+     *    single value that is non-zero (true) if
+     *    fixed-point data types for the vertex attribute array indicated by
+     *    $index are normalized when they are converted to floating point, and 0
+     *    (false) otherwise. The initial value is {@see GL46::GL_FALSE}.
+     *
+     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_INTEGER}: $params returns a single
+     *    value that is non-zero (true) if
+     *    fixed-point data types for the vertex attribute array indicated by
+     *    $index have integer data types, and 0 (false) otherwise. The initial
+     *    value is 0 ({@see GL46::GL_FALSE}).
+     *
+     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_LONG}: $param returns a single
+     *    value that is non-zero (true) if a vertex
+     *    attribute is stored as an unconverted double, and 0 (false) otherwise.
+     *    The initial value is 0 ({@see GL46::GL_FALSE}).
+     *
+     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_DIVISOR}: $params returns a single
+     *    value that is the frequency divisor used
+     *    for instanced rendering. See {@see GL46::glVertexAttribDivisor}. The
+     *    initial value is 0.
+     *
+     *  - {@see GL46::GL_VERTEX_ATTRIB_BINDING}: $params returns a single value,
+     *    the vertex buffer binding of the
+     *    vertex attribute array $index.
+     *
+     *  - {@see GL46::GL_VERTEX_ATTRIB_RELATIVE_OFFSET}: $params returns a
+     *    single value that is the byte offset of the first
+     *    element relative to the start of the vertex buffer binding specified
+     *    attribute fetches from. The initial value is 0.
+     *
+     *  - {@see GL46::GL_CURRENT_VERTEX_ATTRIB}: $params returns four values
+     *    that represent the current value for
+     *    the generic vertex attribute specified by index. Generic vertex
+     *    attribute 0 is unique in that it has no current state, so an error
+     *    will be generated if $index is 0. The initial value for all other
+     *    generic vertex attributes is (0,0,0,1).
+     *    {@see GL46::glGetVertexAttribdv} and {@see GL46::glGetVertexAttribfv}
+     *    return the current attribute values as four single-precision
+     *    floating-point values; {@see GL46::glGetVertexAttribiv} reads them as
+     *    floating-point values and converts them to four integer values;
+     *    {@see GL46::glGetVertexAttribIiv} and
+     *    {@see GL46::glGetVertexAttribIuiv} read and return them as signed or
+     *    unsigned integer values, respectively;
+     *    {@see GL46::glGetVertexAttribLdv} reads and returns them as four
+     *    double-precision floating-point values.
+     *
+     * All of the parameters except {@see GL46::GL_CURRENT_VERTEX_ATTRIB}
+     * represent state stored in the currently bound vertex array object.
+     *
+     * @see http://docs.gl/gl2/glGetVertexAttrib
+     * @see http://docs.gl/gl4/glGetVertexAttrib
+     * @since 2.0
+     * @param int|\FFI\CData|\FFI\CInt $index
+     * @param int|\FFI\CData|\FFI\CInt $pname
+     * @param \FFI\CData|\FFI\CIntPtr|null $params
+     * @return void
+     */
+    public function glGetVertexAttribiv($index, $pname, ?\FFI\CData $params): void
+    {
+        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
+        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
+
+        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Assert::uint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glGetVertexAttribiv', 'void (*)(GLuint index, GLenum pname, GLint *params)');
+        $proc($index, $pname, $params);
+    }
+
+    /**
+     * {@see GL46::glGetVertexAttribPointerv} returns pointer information.
+     * $index is the generic vertex attribute to be queried, $pname is a
+     * symbolic constant indicating the pointer to be returned, and $params
+     * is a pointer to a location in which to place the returned data.
+     *
+     * The $pointer returned is a byte offset into the data store of the
+     * buffer object that was bound to the {@see GL46::GL_ARRAY_BUFFER}
+     * target (see {@see GL46::glBindBuffer}) when the desired pointer was
+     * previously specified.
      *
      * @see http://docs.gl/gl2/glGetVertexAttribPointerv
-     * @see http://docs.gl/gl3/glGetVertexAttribPointerv
      * @see http://docs.gl/gl4/glGetVertexAttribPointerv
      * @since 2.0
-     * @param int $index
-     * @param int $pname
+     * @param int|\FFI\CData|\FFI\CInt $index
+     * @param int|\FFI\CData|\FFI\CInt $pname
      * @param \FFI\CData|\FFI\CPtrPtr|null $pointer
      * @return void
      */
-    public static function glGetVertexAttribPointerv(int $index, int $pname, ?\FFI\CData $pointer): void
+    public function glGetVertexAttribPointerv($index, $pname, ?\FFI\CData $pointer): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($index >= 0 && $index <= 4_294_967_295, 'Argument $index overflow: C type GLuint is required');
-        assert($pname >= 0 && $pname <= 4_294_967_295, 'Argument $pname overflow: C type GLenum is required');
+        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
+        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
 
-        $proc = self::getProc('glGetVertexAttribPointerv', 'void (*)(GLuint index, GLenum pname, void **pointer)');
+        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Assert::uint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glGetVertexAttribPointerv', 'void (*)(GLuint index, GLenum pname, void **pointer)');
         $proc($index, $pname, $pointer);
     }
 
     /**
-     * Returns `GL_TRUE` if *`program`* is the name of a program object previously created with
-     * {@see glCreateProgram} and not yet deleted with {@see glDeleteProgram}. If *`program`*
-     * is zero or a non-zero value that is not the name of a program object, or if an error occurs, `glIsProgram`
-     * returns `GL_FALSE`.
+     * {@see GL46::glIsProgram} returns {@see GL46::GL_TRUE} if $program is
+     * the name of a program object previously created with
+     * {@see GL46::glCreateProgram} and not yet deleted with
+     * {@see GL46::glDeleteProgram}. If $program is zero or a non-zero value
+     * that is not the name of a program object, or if an error occurs,
+     * {@see GL46::glIsProgram} returns {@see GL46::GL_FALSE}.
      *
      * @see http://docs.gl/gl2/glIsProgram
-     * @see http://docs.gl/gl3/glIsProgram
      * @see http://docs.gl/gl4/glIsProgram
      * @since 2.0
-     * @param int $program
-     * @return int
+     * @param int|\FFI\CData|\FFI\CInt $program
+     * @return int|\FFI\CData|\FFI\CInt
      */
-    public static function glIsProgram(int $program): int
+    public function glIsProgram($program): int
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($program >= 0 && $program <= 4_294_967_295, 'Argument $program overflow: C type GLuint is required');
+        $program = $program instanceof \FFI\CData ? $program->cdata : $program;
 
-        $proc = self::getProc('glIsProgram', 'GLboolean (*)(GLuint program)');
+        assert(Assert::uint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glIsProgram', 'GLboolean (*)(GLuint program)');
         return $proc($program);
     }
 
     /**
-     * Returns `GL_TRUE` if *`shader`* is the name of a shader object previously created with
-     * {@see glCreateShader} and not yet deleted with {@see glDeleteShader}. If *`shader`* is
-     * zero or a non-zero value that is not the name of a shader object, or if an error occurs, `glIsShader ` returns
-     * `GL_FALSE`.
+     * {@see GL46::glIsShader} returns {@see GL46::GL_TRUE} if $shader is the
+     * name of a shader object previously created with
+     * {@see GL46::glCreateShader} and not yet deleted with
+     * {@see GL46::glDeleteShader}. If $shader is zero or a non-zero value
+     * that is not the name of a shader object, or if an error occurs,
+     * {@see GL46::glIsShader } returns {@see GL46::GL_FALSE}.
      *
      * @see http://docs.gl/gl2/glIsShader
-     * @see http://docs.gl/gl3/glIsShader
      * @see http://docs.gl/gl4/glIsShader
      * @since 2.0
-     * @param int $shader
-     * @return int
+     * @param int|\FFI\CData|\FFI\CInt $shader
+     * @return int|\FFI\CData|\FFI\CInt
      */
-    public static function glIsShader(int $shader): int
+    public function glIsShader($shader): int
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($shader >= 0 && $shader <= 4_294_967_295, 'Argument $shader overflow: C type GLuint is required');
+        $shader = $shader instanceof \FFI\CData ? $shader->cdata : $shader;
 
-        $proc = self::getProc('glIsShader', 'GLboolean (*)(GLuint shader)');
+        assert(Assert::uint16($shader), 'Argument $shader must be a C-like GLuint, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glIsShader', 'GLboolean (*)(GLuint shader)');
         return $proc($shader);
     }
 
     /**
-     * Links the program object specified by *`program`*. If any shader objects of type `GL_VERTEX_SHADER` are
-     * attached to *`program`*, they will be used to create an executable that will run on the programmable vertex
-     * processor. If any shader objects of type `GL_FRAGMENT_SHADER` are attached to *`program`*, they will be used
-     * to create an executable that will run on the programmable fragment processor.
+     * {@see GL46::glLinkProgram} links the program object specified by
+     * $program. If any shader objects of type {@see GL46::GL_VERTEX_SHADER}
+     * are attached to $program, they will be used to create an executable
+     * that will run on the programmable vertex processor. If any shader
+     * objects of type {@see GL46::GL_GEOMETRY_SHADER} are attached to
+     * $program, they will be used to create an executable that will run on
+     * the programmable geometry processor. If any shader objects of type
+     * {@see GL46::GL_FRAGMENT_SHADER} are attached to $program, they will be
+     * used to create an executable that will run on the programmable
+     * fragment processor.
      *
-     * The status of the link operation will be stored as part of the program object's state. This value will be set
-     * to `GL_TRUE` if the program object was linked without errors and is ready for use, and `GL_FALSE` otherwise.
-     * It can be queried by calling {@see glGetProgram} with arguments *`program`* and `GL_LINK_STATUS`.
+     * The status of the link operation will be stored as part of the program
+     * object's state. This value will be set to {@see GL46::GL_TRUE} if the
+     * program object was linked without errors and is ready for use, and
+     * {@see GL46::GL_FALSE} otherwise. It can be queried by calling
+     * {@see GL46::glGetProgram} with arguments $program and
+     * {@see GL46::GL_LINK_STATUS}.
      *
-     * As a result of a successful link operation, all active user-defined uniform variables belonging to *`program`*
-     * will be initialized to 0, and each of the program object's active uniform variables will be assigned a
-     * location that can be queried by calling {@see glGetUniformLocation}. Also, any active
-     * user-defined attribute variables that have not been bound to a generic vertex attribute index will be bound to
-     * one at this time.
+     * As a result of a successful link operation, all active user-defined
+     * uniform variables belonging to $program will be initialized to 0, and
+     * each of the program object's active uniform variables will be assigned
+     * a location that can be queried by calling
+     * {@see GL46::glGetUniformLocation}. Also, any active user-defined
+     * attribute variables that have not been bound to a generic vertex
+     * attribute index will be bound to one at this time.
      *
-     * Linking of a program object can fail for a number of reasons as specified in the *OpenGL Shading Language
-     * Specification*. The following lists some of the conditions that will cause a link error.
+     * Linking of a program object can fail for a number of reasons as
+     * specified in the OpenGL Shading Language Specification. The following
+     * lists some of the conditions that will cause a link error.
      *
-     * - The number of active attribute variables supported by the implementation has been exceeded.
-     * - The storage limit for uniform variables has been exceeded.
-     * - The number of active uniform variables supported by the implementation has been exceeded.
-     * - The `main` function is missing for the vertex shader or the fragment shader.
-     * - A varying variable actually used in the fragment shader is not declared in the same way (or is not declared
-     * at all) in the vertex shader.
-     * - A reference to a function or variable name is unresolved.
-     * - A shared global is declared with two different types or two different initial values.
-     * - One or more of the attached shader objects has not been successfully compiled.
-     * - Binding a generic attribute matrix caused some rows of the matrix to fall outside the allowed maximum of
-     * `GL_MAX_VERTEX_ATTRIBS`.
-     * - Not enough contiguous vertex attribute slots could be found to bind attribute matrices.
+     *  - The number of active attribute variables supported by the
+     *    implementation has been exceeded.
+     *  - The storage limit for uniform variables has been exceeded.
+     *  - The number of active uniform variables supported by the implementation
+     *    has been exceeded.
+     *  - The {@see GL46::main} function is missing for the vertex, geometry or
+     *    fragment shader.
+     *  - A varying variable actually used in the fragment shader is not
+     *    declared in the same way (or is not declared at all) in the vertex
+     *    shader, or geometry shader if present.
+     *  - A reference to a function or variable name is unresolved.
+     *  - A shared global is declared with two different types or two different
+     *    initial values.
+     *  - One or more of the attached shader objects has not been successfully
+     *    compiled.
+     *  - Binding a generic attribute matrix caused some rows of the matrix to
+     *    fall outside the allowed maximum of
+     *    {@see GL46::GL_MAX_VERTEX_ATTRIBS}.
+     *  - Not enough contiguous vertex attribute slots could be found to bind
+     *    attribute matrices.
+     *  - The program object contains objects to form a fragment shader but does
+     *    not contain objects to form a vertex shader.
+     *  - The program object contains objects to form a geometry shader but does
+     *    not contain objects to form a vertex shader.
+     *  - The program object contains objects to form a geometry shader and the
+     *    input primitive type, output primitive type, or maximum output vertex
+     *    count is not specified in any compiled geometry shader object.
+     *  - The program object contains objects to form a geometry shader and the
+     *    input primitive type, output primitive type, or maximum output vertex
+     *    count is specified differently in multiple geometry shader objects.
+     *  - The number of active outputs in the fragment shader is greater than
+     *    the value of {@see GL46::GL_MAX_DRAW_BUFFERS}.
+     *  - The program has an active output assigned to a location greater than
+     *    or equal to the value of {@see GL46::GL_MAX_DUAL_SOURCE_DRAW_BUFFERS}
+     *    and has an active output assigned an index greater than or equal to
+     *    one.
+     *  - More than one varying out variable is bound to the same number and
+     *    index.
+     *  - The explicit binding assigments do not leave enough space for the
+     *    linker to automatically assign a location for a varying out array,
+     *    which requires multiple contiguous locations.
+     *  - The $count specified by {@see GL46::glTransformFeedbackVaryings} is
+     *    non-zero, but the program object has no vertex or geometry shader.
+     *  - Any variable name specified to
+     *    {@see GL46::glTransformFeedbackVaryings} in the $varyings array is not
+     *    declared as an output in the vertex shader (or the geometry shader, if
+     *    active).
+     *  - Any two entries in the $varyings array given
+     *    {@see GL46::glTransformFeedbackVaryings} specify the same varying
+     *    variable.
+     *  - The total number of components to capture in any transform feedback
+     *    varying variable is greater than the constant
+     *    {@see GL46::GL_MAX_TRANSFORM_FEEDBACK_SEPARATE_COMPONENTS} and the
+     *    buffer mode is {@see GL46::GL_SEPARATE_ATTRIBS}.
      *
-     * When a program object has been successfully linked, the program object can be made part of current state by
-     * calling {@see glUseProgram}. Whether or not the link operation was successful, the program object's
-     * information log will be overwritten. The information log can be retrieved by calling
-     * {@see glGetProgramInfoLog}.
+     * When a program object has been successfully linked, the program object
+     * can be made part of current state by calling
+     * {@see GL46::glUseProgram}. Whether or not the link operation was
+     * successful, the program object's information log will be overwritten.
+     * The information log can be retrieved by calling
+     * {@see GL46::glGetProgramInfoLog}.
      *
-     *  - `glLinkProgram` will also install the generated executables as part of the current rendering state if the
-     * link operation was successful and the specified program object is already currently in use as a result of a
-     * previous call to {@see glUseProgram}. If the program object currently in use is relinked
-     * unsuccessfully, its link status will be set to `GL_FALSE` , but the executables and associated state will
-     * remain part of the current state until a subsequent call to `glUseProgram` removes it from use. After it is
-     * removed from use, it cannot be made part of current state until it has been successfully relinked.
+     * {@see GL46::glLinkProgram} will also install the generated executables
+     * as part of the current rendering state if the link operation was
+     * successful and the specified program object is already currently in
+     * use as a result of a previous call to {@see GL46::glUseProgram}. If
+     * the program object currently in use is relinked unsuccessfully, its
+     * link status will be set to {@see GL46::GL_FALSE} , but the executables
+     * and associated state will remain part of the current state until a
+     * subsequent call to {@see GL46::glUseProgram} removes it from use.
+     * After it is removed from use, it cannot be made part of current state
+     * until it has been successfully relinked.
      *
-     * If *`program`* contains shader objects of type `GL_VERTEX_SHADER` but does not contain shader objects of type
-     * `GL_FRAGMENT_SHADER`, the vertex shader will be linked against the implicit interface for fixed functionality
-     * fragment processing. Similarly, if *`program`* contains shader objects of type `GL_FRAGMENT_SHADER` but it
-     * does not contain shader objects of type `GL_VERTEX_SHADER`, the fragment shader will be linked against the
-     * implicit interface for fixed functionality vertex processing.
+     * If $program contains shader objects of type
+     * {@see GL46::GL_VERTEX_SHADER}, and optionally of type
+     * {@see GL46::GL_GEOMETRY_SHADER}, but does not contain shader objects
+     * of type {@see GL46::GL_FRAGMENT_SHADER}, the vertex shader executable
+     * will be installed on the programmable vertex processor, the geometry
+     * shader executable, if present, will be installed on the programmable
+     * geometry processor, but no executable will be installed on the
+     * fragment processor. The results of rasterizing primitives with such a
+     * program will be undefined.
      *
-     * The program object's information log is updated and the program is generated at the time of the link
-     * operation. After the link operation, applications are free to modify attached shader objects, compile attached
-     * shader objects, detach shader objects, delete shader objects, and attach additional shader objects. None of
-     * these operations affects the information log or the program that is part of the program object.
+     * The program object's information log is updated and the program is
+     * generated at the time of the link operation. After the link operation,
+     * applications are free to modify attached shader objects, compile
+     * attached shader objects, detach shader objects, delete shader objects,
+     * and attach additional shader objects. None of these operations affects
+     * the information log or the program that is part of the program object.
      *
      * @see http://docs.gl/gl2/glLinkProgram
-     * @see http://docs.gl/gl3/glLinkProgram
      * @see http://docs.gl/gl4/glLinkProgram
      * @since 2.0
-     * @param int $program
+     * @param int|\FFI\CData|\FFI\CInt $program
      * @return void
      */
-    public static function glLinkProgram(int $program): void
+    public function glLinkProgram($program): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($program >= 0 && $program <= 4_294_967_295, 'Argument $program overflow: C type GLuint is required');
+        $program = $program instanceof \FFI\CData ? $program->cdata : $program;
 
-        $proc = self::getProc('glLinkProgram', 'void (*)(GLuint program)');
+        assert(Assert::uint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glLinkProgram', 'void (*)(GLuint program)');
         $proc($program);
     }
 
     /**
-     * Sets the source code in *`shader`* to the source code in the array of strings specified by *`string`*. Any
-     * source code previously stored in the shader object is completely replaced. The number of strings in the array
-     * is specified by *`count`*. If *`length`* is `NULL`, each string is assumed to be null terminated. If
-     * *`length`* is a value other than `NULL`, it points to an array containing a string length for each of the
-     * corresponding elements of *`string`*. Each element in the *`length`* array may contain the length of the
-     * corresponding string (the null character is not counted as part of the string length) or a value less than 0
-     * to indicate that the string is null terminated. The source code strings are not scanned or parsed at this
-     * time; they are simply copied into the specified shader object.
+     * {@see GL46::glShaderSource} sets the source code in $shader to the
+     * source code in the array of strings specified by $string. Any source
+     * code previously stored in the shader object is completely replaced.
+     * The number of strings in the array is specified by $count. If $length
+     * is {@see GL46::NULL}, each string is assumed to be null terminated. If
+     * $length is a value other than {@see GL46::NULL}, it points to an array
+     * containing a string length for each of the corresponding elements of
+     * $string. Each element in the $length array may contain the length of
+     * the corresponding string (the null character is not counted as part of
+     * the string length) or a value less than 0 to indicate that the string
+     * is null terminated. The source code strings are not scanned or parsed
+     * at this time; they are simply copied into the specified shader object.
      *
      * @see http://docs.gl/gl2/glShaderSource
-     * @see http://docs.gl/gl3/glShaderSource
      * @see http://docs.gl/gl4/glShaderSource
      * @since 2.0
-     * @param int $shader
-     * @param int $count
+     * @param int|\FFI\CData|\FFI\CInt $shader
+     * @param int|\FFI\CData|\FFI\CInt $count
      * @param \FFI\CData|\FFI\CIntPtrPtr|null $string
      * @param \FFI\CData|\FFI\CIntPtr|null $length
      * @return void
      */
-    public static function glShaderSource(int $shader, int $count, ?\FFI\CData $string, ?\FFI\CData $length): void
+    public function glShaderSource($shader, $count, ?\FFI\CData $string, ?\FFI\CData $length): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($shader >= 0 && $shader <= 4_294_967_295, 'Argument $shader overflow: C type GLuint is required');
-        assert($count >= \PHP_INT_MIN && $count <= \PHP_INT_MAX, 'Argument $count overflow: C type GLsizei is required');
+        $shader = $shader instanceof \FFI\CData ? $shader->cdata : $shader;
+        $count = $count instanceof \FFI\CData ? $count->cdata : $count;
 
-        $proc = self::getProc('glShaderSource', 'void (*)(GLuint shader, GLsizei count, const GLchar *const*string, const GLint *length)');
+        assert(Assert::uint16($shader), 'Argument $shader must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Assert::int16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glShaderSource', 'void (*)(GLuint shader, GLsizei count, const GLchar *const*string, const GLint *length)');
         $proc($shader, $count, $string, $length);
     }
 
     /**
-     * Installs the program object specified by *`program`* as part of current rendering state. One or more
-     * executables are created in a program object by successfully attaching shader objects to it with
-     * {@see glAttachShader}, successfully compiling the shader objects with
-     * {@see glCompileShader}, and successfully linking the program object with
-     * {@see glLinkProgram}.
+     * {@see GL46::glUseProgram} installs the program object specified by
+     * $program as part of current rendering state. One or more executables
+     * are created in a program object by successfully attaching shader
+     * objects to it with {@see GL46::glAttachShader}, successfully compiling
+     * the shader objects with {@see GL46::glCompileShader}, and successfully
+     * linking the program object with {@see GL46::glLinkProgram}.
      *
-     * A program object will contain an executable that will run on the vertex processor if it contains one or more
-     * shader objects of type `GL_VERTEX_SHADER` that have been successfully compiled and linked. Similarly, a
-     * program object will contain an executable that will run on the fragment processor if it contains one or more
-     * shader objects of type `GL_FRAGMENT_SHADER` that have been successfully compiled and linked.
+     * A program object will contain an executable that will run on the
+     * vertex processor if it contains one or more shader objects of type
+     * {@see GL46::GL_VERTEX_SHADER} that have been successfully compiled and
+     * linked. A program object will contain an executable that will run on
+     * the geometry processor if it contains one or more shader objects of
+     * type {@see GL46::GL_GEOMETRY_SHADER} that have been successfully
+     * compiled and linked. Similarly, a program object will contain an
+     * executable that will run on the fragment processor if it contains one
+     * or more shader objects of type {@see GL46::GL_FRAGMENT_SHADER} that
+     * have been successfully compiled and linked.
      *
-     * Successfully installing an executable on a programmable processor will cause the corresponding fixed
-     * functionality of OpenGL to be disabled. Specifically, if an executable is installed on the vertex processor,
-     * the OpenGL fixed functionality will be disabled as follows.
+     * While a program object is in use, applications are free to modify
+     * attached shader objects, compile attached shader objects, attach
+     * additional shader objects, and detach or delete shader objects. None
+     * of these operations will affect the executables that are part of the
+     * current state. However, relinking the program object that is currently
+     * in use will install the program object as part of the current
+     * rendering state if the link operation was successful (see
+     * {@see GL46::glLinkProgram} ). If the program object currently in use
+     * is relinked unsuccessfully, its link status will be set to
+     * {@see GL46::GL_FALSE}, but the executables and associated state will
+     * remain part of the current state until a subsequent call to
+     * {@see GL46::glUseProgram} removes it from use. After it is removed
+     * from use, it cannot be made part of current state until it has been
+     * successfully relinked.
      *
-     * - The modelview matrix is not applied to vertex coordinates.
-     * - The projection matrix is not applied to vertex coordinates.
-     * - The texture matrices are not applied to texture coordinates.
-     * - Normals are not transformed to eye coordinates.
-     * - Normals are not rescaled or normalized.
-     * - Normalization of `GL_AUTO_NORMAL` evaluated normals is not performed.
-     * - Texture coordinates are not generated automatically.
-     * - Per-vertex lighting is not performed.
-     * - Color material computations are not performed.
-     * - Color index lighting is not performed.
-     * - This list also applies when setting the current raster position.
+     * If $program is zero, then the current rendering state refers to an
+     * invalid program object and the results of shader execution are
+     * undefined. However, this is not an error.
      *
-     * The executable that is installed on the vertex processor is expected to implement any or all of the desired
-     * functionality from the preceding list. Similarly, if an executable is installed on the fragment processor, the
-     * OpenGL fixed functionality will be disabled as follows.
-     *
-     * - Texture environment and texture functions are not applied.
-     * - Texture application is not applied.
-     * - Color sum is not applied.
-     * - Fog is not applied.
-     *
-     * Again, the fragment shader that is installed is expected to implement any or all of the desired functionality
-     * from the preceding list.
-     *
-     * While a program object is in use, applications are free to modify attached shader objects, compile attached
-     * shader objects, attach additional shader objects, and detach or delete shader objects. None of these
-     * operations will affect the executables that are part of the current state. However, relinking the program
-     * object that is currently in use will install the program object as part of the current rendering state if the
-     * link operation was successful (see {@see glLinkProgram} ). If the program object currently in use is
-     * relinked unsuccessfully, its link status will be set to `GL_FALSE`, but the executables and associated state
-     * will remain part of the current state until a subsequent call to `glUseProgram` removes it from use. After it
-     * is removed from use, it cannot be made part of current state until it has been successfully relinked.
-     *
-     * If *`program`* contains shader objects of type `GL_VERTEX_SHADER` but it does not contain shader objects of
-     * type `GL_FRAGMENT_SHADER`, an executable will be installed on the vertex processor, but fixed functionality
-     * will be used for fragment processing. Similarly, if *`program`* contains shader objects of type
-     * `GL_FRAGMENT_SHADER` but it does not contain shader objects of type `GL_VERTEX_SHADER`, an executable will be
-     * installed on the fragment processor, but fixed functionality will be used for vertex processing. If
-     * *`program`* is 0, the programmable processors will be disabled, and fixed functionality will be used for both
-     * vertex and fragment processing.
+     * If $program does not contain shader objects of type
+     * {@see GL46::GL_FRAGMENT_SHADER}, an executable will be installed on
+     * the vertex, and possibly geometry processors, but the results of
+     * fragment shader execution will be undefined.
      *
      * @see http://docs.gl/gl2/glUseProgram
-     * @see http://docs.gl/gl3/glUseProgram
      * @see http://docs.gl/gl4/glUseProgram
      * @since 2.0
-     * @param int $program
+     * @param int|\FFI\CData|\FFI\CInt $program
      * @return void
      */
-    public static function glUseProgram(int $program): void
+    public function glUseProgram($program): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($program >= 0 && $program <= 4_294_967_295, 'Argument $program overflow: C type GLuint is required');
+        $program = $program instanceof \FFI\CData ? $program->cdata : $program;
 
-        $proc = self::getProc('glUseProgram', 'void (*)(GLuint program)');
+        assert(Assert::uint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glUseProgram', 'void (*)(GLuint program)');
         $proc($program);
     }
 
     /**
-     * Modifies the value of a uniform variable or a uniform variable array. The location of the uniform variable to
-     * be modified is specified by *`location`*, which should be a value returned by
-     * {@see glGetUniformLocation}. `glUniform` operates on the program object that was made part of
-     * current state by calling {@see glUseProgram}.
+     * {@see GL46::glUniform} modifies the value of a uniform variable or a
+     * uniform variable array. The location of the uniform variable to be
+     * modified is specified by $location, which should be a value returned
+     * by {@see GL46::glGetUniformLocation}. {@see GL46::glUniform} operates
+     * on the program object that was made part of current state by calling
+     * {@see GL46::glUseProgram}.
      *
-     * The commands `glUniform{1|2|3|4}{f|i}` are used to change the value of the uniform variable specified by
-     * *`location`* using the values passed as arguments. The number specified in the command should match the number
-     * of components in the data type of the specified uniform variable (e.g., `1` for float, int, bool; `2` for
-     * vec2, ivec2, bvec2, etc.). The suffix `f` indicates that floating-point values are being passed; the suffix
-     * `i` indicates that integer values are being passed, and this type should also match the data type of the
-     * specified uniform variable. The `i` variants of this function should be used to provide values for uniform
-     * variables defined as int, ivec2, ivec3, ivec4, or arrays of these. The `f` variants should be used to provide
-     * values for uniform variables of type float, vec2, vec3, vec4, or arrays of these. Either the `i` or the `f`
-     * variants may be used to provide values for uniform variables of type bool, bvec2, bvec3, bvec4, or arrays of
-     * these. The uniform variable will be set to false if the input value is 0 or 0.0f, and it will be set to true
-     * otherwise.
+     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}} are used to
+     * change the value of the uniform variable specified by $location using
+     * the values passed as arguments. The number specified in the command
+     * should match the number of components in the data type of the
+     * specified uniform variable (e.g., {@see GL46::1} for `float`, `int`,
+     * `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`,
+     * `bvec2`, etc.). The suffix {@see GL46::f} indicates that
+     * floating-point values are being passed; the suffix {@see GL46::i}
+     * indicates that integer values are being passed; the suffix
+     * {@see GL46::ui} indicates that unsigned integer values are being
+     * passed, and this type should also match the data type of the specified
+     * uniform variable. The {@see GL46::i} variants of this function should
+     * be used to provide values for uniform variables defined as `int`,
+     * `ivec2`, `ivec3`, `ivec4`, or arrays of these. The {@see GL46::ui}
+     * variants of this function should be used to provide values for uniform
+     * variables defined as `unsigned int`, `uvec2`, `uvec3`, `uvec4`, or
+     * arrays of these. The {@see GL46::f} variants should be used to provide
+     * values for uniform variables of type `float`, `vec2`, `vec3`, `vec4`,
+     * or arrays of these. Either the {@see GL46::i}, {@see GL46::ui} or
+     * {@see GL46::f} variants may be used to provide values for uniform
+     * variables of type `bool`, `bvec2`, `bvec3`, `bvec4`, or arrays of
+     * these. The uniform variable will be set to `false` if the input value
+     * is 0 or 0.0f, and it will be set to `true` otherwise.
      *
-     * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to `glUniform ` until the next
-     * successful link operation occurs on the program object, when they are once again initialized to 0.
+     * All active uniform variables defined in a program object are
+     * initialized to 0 when the program object is linked successfully. They
+     * retain the values assigned to them by a call to {@see GL46::glUniform
+     * } until the next successful link operation occurs on the program
+     * object, when they are once again initialized to 0.
      *
-     * The commands `glUniform{1|2|3|4}{f|i}v` can be used to modify a single uniform variable or a uniform variable
-     * array. These commands pass a count and a pointer to the values to be loaded into a uniform variable or a
-     * uniform variable array. A count of 1 should be used if modifying the value of a single uniform variable, and a
-     * count of 1 or greater can be used to modify an entire array or part of an array. When loading *n* elements
-     * starting at an arbitrary position *m* in a uniform variable array, elements *m* + *n* - 1 in the array will be
-     * replaced with the new values. If *`m`* + *`n`* - 1 is larger than the size of the uniform variable array,
-     * values for all array elements beyond the end of the array will be ignored. The number specified in the name of
-     * the command indicates the number of components for each element in *`value`*, and it should match the number
-     * of components in the data type of the specified uniform variable (e.g., `1` for float, int, bool; `2` for
-     * vec2, ivec2, bvec2, etc.). The data type specified in the name of the command must match the data type for the
-     * specified uniform variable as described previously for `glUniform{1|2|3|4}{f|i}`.
+     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}v} can be used to
+     * modify a single uniform variable or a uniform variable array. These
+     * commands pass a count and a pointer to the values to be loaded into a
+     * uniform variable or a uniform variable array. A count of 1 should be
+     * used if modifying the value of a single uniform variable, and a count
+     * of 1 or greater can be used to modify an entire array or part of an
+     * array. When loading n elements starting at an arbitrary position m in
+     * a uniform variable array, elements m + n - 1 in the array will be
+     * replaced with the new values. If $m + $n - 1 is larger than the size
+     * of the uniform variable array, values for all array elements beyond
+     * the end of the array will be ignored. The number specified in the name
+     * of the command indicates the number of components for each element in
+     * $value, and it should match the number of components in the data type
+     * of the specified uniform variable (e.g., {@see GL46::1} for float,
+     * int, bool; {@see GL46::2} for vec2, ivec2, bvec2, etc.). The data type
+     * specified in the name of the command must match the data type for the
+     * specified uniform variable as described previously for
+     * {@see GL46::glUniform{1|2|3|4}{f|i|ui}}.
      *
-     * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., `glUniform3f` or `glUniform3fv` can be used to load a uniform variable array of type
-     * vec3). The number of elements of the uniform variable array to be modified is specified by *`count`*
+     * For uniform variable arrays, each element of the array is considered
+     * to be of the type indicated in the name of the command (e.g.,
+     * {@see GL46::glUniform3f} or {@see GL46::glUniform3fv} can be used to
+     * load a uniform variable array of type vec3). The number of elements of
+     * the uniform variable array to be modified is specified by $count
      *
-     * The commands `glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv` are used to modify a matrix or an array of
-     * matrices. The numbers in the command name are interpreted as the dimensionality of the matrix. The number `2`
-     * indicates a 2 × 2 matrix (i.e., 4 values), the number `3` indicates a 3 × 3 matrix (i.e., 9 values), and the
-     * number `4` indicates a 4 × 4 matrix (i.e., 16 values). Non-square matrix dimensionality is explicit, with the
-     * first number representing the number of columns and the second number representing the number of rows. For
-     * example, `2x4` indicates a 2 × 4 matrix with 2 columns and 4 rows (i.e., 8 values). If *`transpose`* is
-     * `GL_FALSE`, each matrix is assumed to be supplied in column major order. If *`transpose`* is `GL_TRUE`, each
-     * matrix is assumed to be supplied in row major order. The *`count`* argument indicates the number of matrices
-     * to be passed. A count of 1 should be used if modifying the value of a single matrix, and a count greater than
-     * 1 can be used to modify an array of matrices.
+     * The commands
+     * {@see GL46::glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used
+     * to modify a matrix or an array of matrices. The numbers in the command
+     * name are interpreted as the dimensionality of the matrix. The number
+     * {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number
+     * {@see GL46::3} indicates a 3 × 3 matrix (i.e., 9 values), and the
+     * number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values).
+     * Non-square matrix dimensionality is explicit, with the first number
+     * representing the number of columns and the second number representing
+     * the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4
+     * matrix with 2 columns and 4 rows (i.e., 8 values). If $transpose is
+     * {@see GL46::GL_FALSE}, each matrix is assumed to be supplied in column
+     * major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is
+     * assumed to be supplied in row major order. The $count argument
+     * indicates the number of matrices to be passed. A count of 1 should be
+     * used if modifying the value of a single matrix, and a count greater
+     * than 1 can be used to modify an array of matrices.
      *
      * @see http://docs.gl/gl2/glUniform
-     * @see http://docs.gl/gl3/glUniform
      * @see http://docs.gl/gl4/glUniform
      * @since 2.0
-     * @param int $location
-     * @param float $v0
+     * @param int|\FFI\CData|\FFI\CInt $location
+     * @param float|\FFI\CData|\FFI\CFloat $v0
      * @return void
      */
-    public static function glUniform1f(int $location, float $v0): void
+    public function glUniform1f($location, $v0): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($location >= \PHP_INT_MIN && $location <= \PHP_INT_MAX, 'Argument $location overflow: C type GLint is required');
-        assert($v0 >= -3.40282e38 && $v0 <= 3.40282e38, 'Argument $v0 overflow: C type GLfloat is required');
+        $location = $location instanceof \FFI\CData ? $location->cdata : $location;
+        $v0 = $v0 instanceof \FFI\CData ? $v0->cdata : $v0;
 
-        $proc = self::getProc('glUniform1f', 'void (*)(GLint location, GLfloat v0)');
+        assert(Assert::int16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
+        assert(Assert::float32($v0), 'Argument $v0 must be a C-like GLfloat, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glUniform1f', 'void (*)(GLint location, GLfloat v0)');
         $proc($location, $v0);
     }
 
     /**
-     * Modifies the value of a uniform variable or a uniform variable array. The location of the uniform variable to
-     * be modified is specified by *`location`*, which should be a value returned by
-     * {@see glGetUniformLocation}. `glUniform` operates on the program object that was made part of
-     * current state by calling {@see glUseProgram}.
+     * {@see GL46::glUniform} modifies the value of a uniform variable or a
+     * uniform variable array. The location of the uniform variable to be
+     * modified is specified by $location, which should be a value returned
+     * by {@see GL46::glGetUniformLocation}. {@see GL46::glUniform} operates
+     * on the program object that was made part of current state by calling
+     * {@see GL46::glUseProgram}.
      *
-     * The commands `glUniform{1|2|3|4}{f|i}` are used to change the value of the uniform variable specified by
-     * *`location`* using the values passed as arguments. The number specified in the command should match the number
-     * of components in the data type of the specified uniform variable (e.g., `1` for float, int, bool; `2` for
-     * vec2, ivec2, bvec2, etc.). The suffix `f` indicates that floating-point values are being passed; the suffix
-     * `i` indicates that integer values are being passed, and this type should also match the data type of the
-     * specified uniform variable. The `i` variants of this function should be used to provide values for uniform
-     * variables defined as int, ivec2, ivec3, ivec4, or arrays of these. The `f` variants should be used to provide
-     * values for uniform variables of type float, vec2, vec3, vec4, or arrays of these. Either the `i` or the `f`
-     * variants may be used to provide values for uniform variables of type bool, bvec2, bvec3, bvec4, or arrays of
-     * these. The uniform variable will be set to false if the input value is 0 or 0.0f, and it will be set to true
-     * otherwise.
+     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}} are used to
+     * change the value of the uniform variable specified by $location using
+     * the values passed as arguments. The number specified in the command
+     * should match the number of components in the data type of the
+     * specified uniform variable (e.g., {@see GL46::1} for `float`, `int`,
+     * `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`,
+     * `bvec2`, etc.). The suffix {@see GL46::f} indicates that
+     * floating-point values are being passed; the suffix {@see GL46::i}
+     * indicates that integer values are being passed; the suffix
+     * {@see GL46::ui} indicates that unsigned integer values are being
+     * passed, and this type should also match the data type of the specified
+     * uniform variable. The {@see GL46::i} variants of this function should
+     * be used to provide values for uniform variables defined as `int`,
+     * `ivec2`, `ivec3`, `ivec4`, or arrays of these. The {@see GL46::ui}
+     * variants of this function should be used to provide values for uniform
+     * variables defined as `unsigned int`, `uvec2`, `uvec3`, `uvec4`, or
+     * arrays of these. The {@see GL46::f} variants should be used to provide
+     * values for uniform variables of type `float`, `vec2`, `vec3`, `vec4`,
+     * or arrays of these. Either the {@see GL46::i}, {@see GL46::ui} or
+     * {@see GL46::f} variants may be used to provide values for uniform
+     * variables of type `bool`, `bvec2`, `bvec3`, `bvec4`, or arrays of
+     * these. The uniform variable will be set to `false` if the input value
+     * is 0 or 0.0f, and it will be set to `true` otherwise.
      *
-     * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to `glUniform ` until the next
-     * successful link operation occurs on the program object, when they are once again initialized to 0.
+     * All active uniform variables defined in a program object are
+     * initialized to 0 when the program object is linked successfully. They
+     * retain the values assigned to them by a call to {@see GL46::glUniform
+     * } until the next successful link operation occurs on the program
+     * object, when they are once again initialized to 0.
      *
-     * The commands `glUniform{1|2|3|4}{f|i}v` can be used to modify a single uniform variable or a uniform variable
-     * array. These commands pass a count and a pointer to the values to be loaded into a uniform variable or a
-     * uniform variable array. A count of 1 should be used if modifying the value of a single uniform variable, and a
-     * count of 1 or greater can be used to modify an entire array or part of an array. When loading *n* elements
-     * starting at an arbitrary position *m* in a uniform variable array, elements *m* + *n* - 1 in the array will be
-     * replaced with the new values. If *`m`* + *`n`* - 1 is larger than the size of the uniform variable array,
-     * values for all array elements beyond the end of the array will be ignored. The number specified in the name of
-     * the command indicates the number of components for each element in *`value`*, and it should match the number
-     * of components in the data type of the specified uniform variable (e.g., `1` for float, int, bool; `2` for
-     * vec2, ivec2, bvec2, etc.). The data type specified in the name of the command must match the data type for the
-     * specified uniform variable as described previously for `glUniform{1|2|3|4}{f|i}`.
+     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}v} can be used to
+     * modify a single uniform variable or a uniform variable array. These
+     * commands pass a count and a pointer to the values to be loaded into a
+     * uniform variable or a uniform variable array. A count of 1 should be
+     * used if modifying the value of a single uniform variable, and a count
+     * of 1 or greater can be used to modify an entire array or part of an
+     * array. When loading n elements starting at an arbitrary position m in
+     * a uniform variable array, elements m + n - 1 in the array will be
+     * replaced with the new values. If $m + $n - 1 is larger than the size
+     * of the uniform variable array, values for all array elements beyond
+     * the end of the array will be ignored. The number specified in the name
+     * of the command indicates the number of components for each element in
+     * $value, and it should match the number of components in the data type
+     * of the specified uniform variable (e.g., {@see GL46::1} for float,
+     * int, bool; {@see GL46::2} for vec2, ivec2, bvec2, etc.). The data type
+     * specified in the name of the command must match the data type for the
+     * specified uniform variable as described previously for
+     * {@see GL46::glUniform{1|2|3|4}{f|i|ui}}.
      *
-     * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., `glUniform3f` or `glUniform3fv` can be used to load a uniform variable array of type
-     * vec3). The number of elements of the uniform variable array to be modified is specified by *`count`*
+     * For uniform variable arrays, each element of the array is considered
+     * to be of the type indicated in the name of the command (e.g.,
+     * {@see GL46::glUniform3f} or {@see GL46::glUniform3fv} can be used to
+     * load a uniform variable array of type vec3). The number of elements of
+     * the uniform variable array to be modified is specified by $count
      *
-     * The commands `glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv` are used to modify a matrix or an array of
-     * matrices. The numbers in the command name are interpreted as the dimensionality of the matrix. The number `2`
-     * indicates a 2 × 2 matrix (i.e., 4 values), the number `3` indicates a 3 × 3 matrix (i.e., 9 values), and the
-     * number `4` indicates a 4 × 4 matrix (i.e., 16 values). Non-square matrix dimensionality is explicit, with the
-     * first number representing the number of columns and the second number representing the number of rows. For
-     * example, `2x4` indicates a 2 × 4 matrix with 2 columns and 4 rows (i.e., 8 values). If *`transpose`* is
-     * `GL_FALSE`, each matrix is assumed to be supplied in column major order. If *`transpose`* is `GL_TRUE`, each
-     * matrix is assumed to be supplied in row major order. The *`count`* argument indicates the number of matrices
-     * to be passed. A count of 1 should be used if modifying the value of a single matrix, and a count greater than
-     * 1 can be used to modify an array of matrices.
+     * The commands
+     * {@see GL46::glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used
+     * to modify a matrix or an array of matrices. The numbers in the command
+     * name are interpreted as the dimensionality of the matrix. The number
+     * {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number
+     * {@see GL46::3} indicates a 3 × 3 matrix (i.e., 9 values), and the
+     * number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values).
+     * Non-square matrix dimensionality is explicit, with the first number
+     * representing the number of columns and the second number representing
+     * the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4
+     * matrix with 2 columns and 4 rows (i.e., 8 values). If $transpose is
+     * {@see GL46::GL_FALSE}, each matrix is assumed to be supplied in column
+     * major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is
+     * assumed to be supplied in row major order. The $count argument
+     * indicates the number of matrices to be passed. A count of 1 should be
+     * used if modifying the value of a single matrix, and a count greater
+     * than 1 can be used to modify an array of matrices.
      *
      * @see http://docs.gl/gl2/glUniform
-     * @see http://docs.gl/gl3/glUniform
      * @see http://docs.gl/gl4/glUniform
      * @since 2.0
-     * @param int $location
-     * @param float $v0
-     * @param float $v1
+     * @param int|\FFI\CData|\FFI\CInt $location
+     * @param float|\FFI\CData|\FFI\CFloat $v0
+     * @param float|\FFI\CData|\FFI\CFloat $v1
      * @return void
      */
-    public static function glUniform2f(int $location, float $v0, float $v1): void
+    public function glUniform2f($location, $v0, $v1): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($location >= \PHP_INT_MIN && $location <= \PHP_INT_MAX, 'Argument $location overflow: C type GLint is required');
-        assert($v0 >= -3.40282e38 && $v0 <= 3.40282e38, 'Argument $v0 overflow: C type GLfloat is required');
-        assert($v1 >= -3.40282e38 && $v1 <= 3.40282e38, 'Argument $v1 overflow: C type GLfloat is required');
+        $location = $location instanceof \FFI\CData ? $location->cdata : $location;
+        $v0 = $v0 instanceof \FFI\CData ? $v0->cdata : $v0;
+        $v1 = $v1 instanceof \FFI\CData ? $v1->cdata : $v1;
 
-        $proc = self::getProc('glUniform2f', 'void (*)(GLint location, GLfloat v0, GLfloat v1)');
+        assert(Assert::int16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
+        assert(Assert::float32($v0), 'Argument $v0 must be a C-like GLfloat, but incompatible or overflow value given');
+        assert(Assert::float32($v1), 'Argument $v1 must be a C-like GLfloat, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glUniform2f', 'void (*)(GLint location, GLfloat v0, GLfloat v1)');
         $proc($location, $v0, $v1);
     }
 
     /**
-     * Modifies the value of a uniform variable or a uniform variable array. The location of the uniform variable to
-     * be modified is specified by *`location`*, which should be a value returned by
-     * {@see glGetUniformLocation}. `glUniform` operates on the program object that was made part of
-     * current state by calling {@see glUseProgram}.
+     * {@see GL46::glUniform} modifies the value of a uniform variable or a
+     * uniform variable array. The location of the uniform variable to be
+     * modified is specified by $location, which should be a value returned
+     * by {@see GL46::glGetUniformLocation}. {@see GL46::glUniform} operates
+     * on the program object that was made part of current state by calling
+     * {@see GL46::glUseProgram}.
      *
-     * The commands `glUniform{1|2|3|4}{f|i}` are used to change the value of the uniform variable specified by
-     * *`location`* using the values passed as arguments. The number specified in the command should match the number
-     * of components in the data type of the specified uniform variable (e.g., `1` for float, int, bool; `2` for
-     * vec2, ivec2, bvec2, etc.). The suffix `f` indicates that floating-point values are being passed; the suffix
-     * `i` indicates that integer values are being passed, and this type should also match the data type of the
-     * specified uniform variable. The `i` variants of this function should be used to provide values for uniform
-     * variables defined as int, ivec2, ivec3, ivec4, or arrays of these. The `f` variants should be used to provide
-     * values for uniform variables of type float, vec2, vec3, vec4, or arrays of these. Either the `i` or the `f`
-     * variants may be used to provide values for uniform variables of type bool, bvec2, bvec3, bvec4, or arrays of
-     * these. The uniform variable will be set to false if the input value is 0 or 0.0f, and it will be set to true
-     * otherwise.
+     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}} are used to
+     * change the value of the uniform variable specified by $location using
+     * the values passed as arguments. The number specified in the command
+     * should match the number of components in the data type of the
+     * specified uniform variable (e.g., {@see GL46::1} for `float`, `int`,
+     * `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`,
+     * `bvec2`, etc.). The suffix {@see GL46::f} indicates that
+     * floating-point values are being passed; the suffix {@see GL46::i}
+     * indicates that integer values are being passed; the suffix
+     * {@see GL46::ui} indicates that unsigned integer values are being
+     * passed, and this type should also match the data type of the specified
+     * uniform variable. The {@see GL46::i} variants of this function should
+     * be used to provide values for uniform variables defined as `int`,
+     * `ivec2`, `ivec3`, `ivec4`, or arrays of these. The {@see GL46::ui}
+     * variants of this function should be used to provide values for uniform
+     * variables defined as `unsigned int`, `uvec2`, `uvec3`, `uvec4`, or
+     * arrays of these. The {@see GL46::f} variants should be used to provide
+     * values for uniform variables of type `float`, `vec2`, `vec3`, `vec4`,
+     * or arrays of these. Either the {@see GL46::i}, {@see GL46::ui} or
+     * {@see GL46::f} variants may be used to provide values for uniform
+     * variables of type `bool`, `bvec2`, `bvec3`, `bvec4`, or arrays of
+     * these. The uniform variable will be set to `false` if the input value
+     * is 0 or 0.0f, and it will be set to `true` otherwise.
      *
-     * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to `glUniform ` until the next
-     * successful link operation occurs on the program object, when they are once again initialized to 0.
+     * All active uniform variables defined in a program object are
+     * initialized to 0 when the program object is linked successfully. They
+     * retain the values assigned to them by a call to {@see GL46::glUniform
+     * } until the next successful link operation occurs on the program
+     * object, when they are once again initialized to 0.
      *
-     * The commands `glUniform{1|2|3|4}{f|i}v` can be used to modify a single uniform variable or a uniform variable
-     * array. These commands pass a count and a pointer to the values to be loaded into a uniform variable or a
-     * uniform variable array. A count of 1 should be used if modifying the value of a single uniform variable, and a
-     * count of 1 or greater can be used to modify an entire array or part of an array. When loading *n* elements
-     * starting at an arbitrary position *m* in a uniform variable array, elements *m* + *n* - 1 in the array will be
-     * replaced with the new values. If *`m`* + *`n`* - 1 is larger than the size of the uniform variable array,
-     * values for all array elements beyond the end of the array will be ignored. The number specified in the name of
-     * the command indicates the number of components for each element in *`value`*, and it should match the number
-     * of components in the data type of the specified uniform variable (e.g., `1` for float, int, bool; `2` for
-     * vec2, ivec2, bvec2, etc.). The data type specified in the name of the command must match the data type for the
-     * specified uniform variable as described previously for `glUniform{1|2|3|4}{f|i}`.
+     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}v} can be used to
+     * modify a single uniform variable or a uniform variable array. These
+     * commands pass a count and a pointer to the values to be loaded into a
+     * uniform variable or a uniform variable array. A count of 1 should be
+     * used if modifying the value of a single uniform variable, and a count
+     * of 1 or greater can be used to modify an entire array or part of an
+     * array. When loading n elements starting at an arbitrary position m in
+     * a uniform variable array, elements m + n - 1 in the array will be
+     * replaced with the new values. If $m + $n - 1 is larger than the size
+     * of the uniform variable array, values for all array elements beyond
+     * the end of the array will be ignored. The number specified in the name
+     * of the command indicates the number of components for each element in
+     * $value, and it should match the number of components in the data type
+     * of the specified uniform variable (e.g., {@see GL46::1} for float,
+     * int, bool; {@see GL46::2} for vec2, ivec2, bvec2, etc.). The data type
+     * specified in the name of the command must match the data type for the
+     * specified uniform variable as described previously for
+     * {@see GL46::glUniform{1|2|3|4}{f|i|ui}}.
      *
-     * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., `glUniform3f` or `glUniform3fv` can be used to load a uniform variable array of type
-     * vec3). The number of elements of the uniform variable array to be modified is specified by *`count`*
+     * For uniform variable arrays, each element of the array is considered
+     * to be of the type indicated in the name of the command (e.g.,
+     * {@see GL46::glUniform3f} or {@see GL46::glUniform3fv} can be used to
+     * load a uniform variable array of type vec3). The number of elements of
+     * the uniform variable array to be modified is specified by $count
      *
-     * The commands `glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv` are used to modify a matrix or an array of
-     * matrices. The numbers in the command name are interpreted as the dimensionality of the matrix. The number `2`
-     * indicates a 2 × 2 matrix (i.e., 4 values), the number `3` indicates a 3 × 3 matrix (i.e., 9 values), and the
-     * number `4` indicates a 4 × 4 matrix (i.e., 16 values). Non-square matrix dimensionality is explicit, with the
-     * first number representing the number of columns and the second number representing the number of rows. For
-     * example, `2x4` indicates a 2 × 4 matrix with 2 columns and 4 rows (i.e., 8 values). If *`transpose`* is
-     * `GL_FALSE`, each matrix is assumed to be supplied in column major order. If *`transpose`* is `GL_TRUE`, each
-     * matrix is assumed to be supplied in row major order. The *`count`* argument indicates the number of matrices
-     * to be passed. A count of 1 should be used if modifying the value of a single matrix, and a count greater than
-     * 1 can be used to modify an array of matrices.
+     * The commands
+     * {@see GL46::glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used
+     * to modify a matrix or an array of matrices. The numbers in the command
+     * name are interpreted as the dimensionality of the matrix. The number
+     * {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number
+     * {@see GL46::3} indicates a 3 × 3 matrix (i.e., 9 values), and the
+     * number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values).
+     * Non-square matrix dimensionality is explicit, with the first number
+     * representing the number of columns and the second number representing
+     * the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4
+     * matrix with 2 columns and 4 rows (i.e., 8 values). If $transpose is
+     * {@see GL46::GL_FALSE}, each matrix is assumed to be supplied in column
+     * major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is
+     * assumed to be supplied in row major order. The $count argument
+     * indicates the number of matrices to be passed. A count of 1 should be
+     * used if modifying the value of a single matrix, and a count greater
+     * than 1 can be used to modify an array of matrices.
      *
      * @see http://docs.gl/gl2/glUniform
-     * @see http://docs.gl/gl3/glUniform
      * @see http://docs.gl/gl4/glUniform
      * @since 2.0
-     * @param int $location
-     * @param float $v0
-     * @param float $v1
-     * @param float $v2
+     * @param int|\FFI\CData|\FFI\CInt $location
+     * @param float|\FFI\CData|\FFI\CFloat $v0
+     * @param float|\FFI\CData|\FFI\CFloat $v1
+     * @param float|\FFI\CData|\FFI\CFloat $v2
      * @return void
      */
-    public static function glUniform3f(int $location, float $v0, float $v1, float $v2): void
+    public function glUniform3f($location, $v0, $v1, $v2): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($location >= \PHP_INT_MIN && $location <= \PHP_INT_MAX, 'Argument $location overflow: C type GLint is required');
-        assert($v0 >= -3.40282e38 && $v0 <= 3.40282e38, 'Argument $v0 overflow: C type GLfloat is required');
-        assert($v1 >= -3.40282e38 && $v1 <= 3.40282e38, 'Argument $v1 overflow: C type GLfloat is required');
-        assert($v2 >= -3.40282e38 && $v2 <= 3.40282e38, 'Argument $v2 overflow: C type GLfloat is required');
+        $location = $location instanceof \FFI\CData ? $location->cdata : $location;
+        $v0 = $v0 instanceof \FFI\CData ? $v0->cdata : $v0;
+        $v1 = $v1 instanceof \FFI\CData ? $v1->cdata : $v1;
+        $v2 = $v2 instanceof \FFI\CData ? $v2->cdata : $v2;
 
-        $proc = self::getProc('glUniform3f', 'void (*)(GLint location, GLfloat v0, GLfloat v1, GLfloat v2)');
+        assert(Assert::int16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
+        assert(Assert::float32($v0), 'Argument $v0 must be a C-like GLfloat, but incompatible or overflow value given');
+        assert(Assert::float32($v1), 'Argument $v1 must be a C-like GLfloat, but incompatible or overflow value given');
+        assert(Assert::float32($v2), 'Argument $v2 must be a C-like GLfloat, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glUniform3f', 'void (*)(GLint location, GLfloat v0, GLfloat v1, GLfloat v2)');
         $proc($location, $v0, $v1, $v2);
     }
 
     /**
-     * Modifies the value of a uniform variable or a uniform variable array. The location of the uniform variable to
-     * be modified is specified by *`location`*, which should be a value returned by
-     * {@see glGetUniformLocation}. `glUniform` operates on the program object that was made part of
-     * current state by calling {@see glUseProgram}.
+     * {@see GL46::glUniform} modifies the value of a uniform variable or a
+     * uniform variable array. The location of the uniform variable to be
+     * modified is specified by $location, which should be a value returned
+     * by {@see GL46::glGetUniformLocation}. {@see GL46::glUniform} operates
+     * on the program object that was made part of current state by calling
+     * {@see GL46::glUseProgram}.
      *
-     * The commands `glUniform{1|2|3|4}{f|i}` are used to change the value of the uniform variable specified by
-     * *`location`* using the values passed as arguments. The number specified in the command should match the number
-     * of components in the data type of the specified uniform variable (e.g., `1` for float, int, bool; `2` for
-     * vec2, ivec2, bvec2, etc.). The suffix `f` indicates that floating-point values are being passed; the suffix
-     * `i` indicates that integer values are being passed, and this type should also match the data type of the
-     * specified uniform variable. The `i` variants of this function should be used to provide values for uniform
-     * variables defined as int, ivec2, ivec3, ivec4, or arrays of these. The `f` variants should be used to provide
-     * values for uniform variables of type float, vec2, vec3, vec4, or arrays of these. Either the `i` or the `f`
-     * variants may be used to provide values for uniform variables of type bool, bvec2, bvec3, bvec4, or arrays of
-     * these. The uniform variable will be set to false if the input value is 0 or 0.0f, and it will be set to true
-     * otherwise.
+     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}} are used to
+     * change the value of the uniform variable specified by $location using
+     * the values passed as arguments. The number specified in the command
+     * should match the number of components in the data type of the
+     * specified uniform variable (e.g., {@see GL46::1} for `float`, `int`,
+     * `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`,
+     * `bvec2`, etc.). The suffix {@see GL46::f} indicates that
+     * floating-point values are being passed; the suffix {@see GL46::i}
+     * indicates that integer values are being passed; the suffix
+     * {@see GL46::ui} indicates that unsigned integer values are being
+     * passed, and this type should also match the data type of the specified
+     * uniform variable. The {@see GL46::i} variants of this function should
+     * be used to provide values for uniform variables defined as `int`,
+     * `ivec2`, `ivec3`, `ivec4`, or arrays of these. The {@see GL46::ui}
+     * variants of this function should be used to provide values for uniform
+     * variables defined as `unsigned int`, `uvec2`, `uvec3`, `uvec4`, or
+     * arrays of these. The {@see GL46::f} variants should be used to provide
+     * values for uniform variables of type `float`, `vec2`, `vec3`, `vec4`,
+     * or arrays of these. Either the {@see GL46::i}, {@see GL46::ui} or
+     * {@see GL46::f} variants may be used to provide values for uniform
+     * variables of type `bool`, `bvec2`, `bvec3`, `bvec4`, or arrays of
+     * these. The uniform variable will be set to `false` if the input value
+     * is 0 or 0.0f, and it will be set to `true` otherwise.
      *
-     * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to `glUniform ` until the next
-     * successful link operation occurs on the program object, when they are once again initialized to 0.
+     * All active uniform variables defined in a program object are
+     * initialized to 0 when the program object is linked successfully. They
+     * retain the values assigned to them by a call to {@see GL46::glUniform
+     * } until the next successful link operation occurs on the program
+     * object, when they are once again initialized to 0.
      *
-     * The commands `glUniform{1|2|3|4}{f|i}v` can be used to modify a single uniform variable or a uniform variable
-     * array. These commands pass a count and a pointer to the values to be loaded into a uniform variable or a
-     * uniform variable array. A count of 1 should be used if modifying the value of a single uniform variable, and a
-     * count of 1 or greater can be used to modify an entire array or part of an array. When loading *n* elements
-     * starting at an arbitrary position *m* in a uniform variable array, elements *m* + *n* - 1 in the array will be
-     * replaced with the new values. If *`m`* + *`n`* - 1 is larger than the size of the uniform variable array,
-     * values for all array elements beyond the end of the array will be ignored. The number specified in the name of
-     * the command indicates the number of components for each element in *`value`*, and it should match the number
-     * of components in the data type of the specified uniform variable (e.g., `1` for float, int, bool; `2` for
-     * vec2, ivec2, bvec2, etc.). The data type specified in the name of the command must match the data type for the
-     * specified uniform variable as described previously for `glUniform{1|2|3|4}{f|i}`.
+     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}v} can be used to
+     * modify a single uniform variable or a uniform variable array. These
+     * commands pass a count and a pointer to the values to be loaded into a
+     * uniform variable or a uniform variable array. A count of 1 should be
+     * used if modifying the value of a single uniform variable, and a count
+     * of 1 or greater can be used to modify an entire array or part of an
+     * array. When loading n elements starting at an arbitrary position m in
+     * a uniform variable array, elements m + n - 1 in the array will be
+     * replaced with the new values. If $m + $n - 1 is larger than the size
+     * of the uniform variable array, values for all array elements beyond
+     * the end of the array will be ignored. The number specified in the name
+     * of the command indicates the number of components for each element in
+     * $value, and it should match the number of components in the data type
+     * of the specified uniform variable (e.g., {@see GL46::1} for float,
+     * int, bool; {@see GL46::2} for vec2, ivec2, bvec2, etc.). The data type
+     * specified in the name of the command must match the data type for the
+     * specified uniform variable as described previously for
+     * {@see GL46::glUniform{1|2|3|4}{f|i|ui}}.
      *
-     * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., `glUniform3f` or `glUniform3fv` can be used to load a uniform variable array of type
-     * vec3). The number of elements of the uniform variable array to be modified is specified by *`count`*
+     * For uniform variable arrays, each element of the array is considered
+     * to be of the type indicated in the name of the command (e.g.,
+     * {@see GL46::glUniform3f} or {@see GL46::glUniform3fv} can be used to
+     * load a uniform variable array of type vec3). The number of elements of
+     * the uniform variable array to be modified is specified by $count
      *
-     * The commands `glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv` are used to modify a matrix or an array of
-     * matrices. The numbers in the command name are interpreted as the dimensionality of the matrix. The number `2`
-     * indicates a 2 × 2 matrix (i.e., 4 values), the number `3` indicates a 3 × 3 matrix (i.e., 9 values), and the
-     * number `4` indicates a 4 × 4 matrix (i.e., 16 values). Non-square matrix dimensionality is explicit, with the
-     * first number representing the number of columns and the second number representing the number of rows. For
-     * example, `2x4` indicates a 2 × 4 matrix with 2 columns and 4 rows (i.e., 8 values). If *`transpose`* is
-     * `GL_FALSE`, each matrix is assumed to be supplied in column major order. If *`transpose`* is `GL_TRUE`, each
-     * matrix is assumed to be supplied in row major order. The *`count`* argument indicates the number of matrices
-     * to be passed. A count of 1 should be used if modifying the value of a single matrix, and a count greater than
-     * 1 can be used to modify an array of matrices.
+     * The commands
+     * {@see GL46::glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used
+     * to modify a matrix or an array of matrices. The numbers in the command
+     * name are interpreted as the dimensionality of the matrix. The number
+     * {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number
+     * {@see GL46::3} indicates a 3 × 3 matrix (i.e., 9 values), and the
+     * number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values).
+     * Non-square matrix dimensionality is explicit, with the first number
+     * representing the number of columns and the second number representing
+     * the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4
+     * matrix with 2 columns and 4 rows (i.e., 8 values). If $transpose is
+     * {@see GL46::GL_FALSE}, each matrix is assumed to be supplied in column
+     * major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is
+     * assumed to be supplied in row major order. The $count argument
+     * indicates the number of matrices to be passed. A count of 1 should be
+     * used if modifying the value of a single matrix, and a count greater
+     * than 1 can be used to modify an array of matrices.
      *
      * @see http://docs.gl/gl2/glUniform
-     * @see http://docs.gl/gl3/glUniform
      * @see http://docs.gl/gl4/glUniform
      * @since 2.0
-     * @param int $location
-     * @param float $v0
-     * @param float $v1
-     * @param float $v2
-     * @param float $v3
+     * @param int|\FFI\CData|\FFI\CInt $location
+     * @param float|\FFI\CData|\FFI\CFloat $v0
+     * @param float|\FFI\CData|\FFI\CFloat $v1
+     * @param float|\FFI\CData|\FFI\CFloat $v2
+     * @param float|\FFI\CData|\FFI\CFloat $v3
      * @return void
      */
-    public static function glUniform4f(int $location, float $v0, float $v1, float $v2, float $v3): void
+    public function glUniform4f($location, $v0, $v1, $v2, $v3): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($location >= \PHP_INT_MIN && $location <= \PHP_INT_MAX, 'Argument $location overflow: C type GLint is required');
-        assert($v0 >= -3.40282e38 && $v0 <= 3.40282e38, 'Argument $v0 overflow: C type GLfloat is required');
-        assert($v1 >= -3.40282e38 && $v1 <= 3.40282e38, 'Argument $v1 overflow: C type GLfloat is required');
-        assert($v2 >= -3.40282e38 && $v2 <= 3.40282e38, 'Argument $v2 overflow: C type GLfloat is required');
-        assert($v3 >= -3.40282e38 && $v3 <= 3.40282e38, 'Argument $v3 overflow: C type GLfloat is required');
+        $location = $location instanceof \FFI\CData ? $location->cdata : $location;
+        $v0 = $v0 instanceof \FFI\CData ? $v0->cdata : $v0;
+        $v1 = $v1 instanceof \FFI\CData ? $v1->cdata : $v1;
+        $v2 = $v2 instanceof \FFI\CData ? $v2->cdata : $v2;
+        $v3 = $v3 instanceof \FFI\CData ? $v3->cdata : $v3;
 
-        $proc = self::getProc('glUniform4f', 'void (*)(GLint location, GLfloat v0, GLfloat v1, GLfloat v2, GLfloat v3)');
+        assert(Assert::int16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
+        assert(Assert::float32($v0), 'Argument $v0 must be a C-like GLfloat, but incompatible or overflow value given');
+        assert(Assert::float32($v1), 'Argument $v1 must be a C-like GLfloat, but incompatible or overflow value given');
+        assert(Assert::float32($v2), 'Argument $v2 must be a C-like GLfloat, but incompatible or overflow value given');
+        assert(Assert::float32($v3), 'Argument $v3 must be a C-like GLfloat, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glUniform4f', 'void (*)(GLint location, GLfloat v0, GLfloat v1, GLfloat v2, GLfloat v3)');
         $proc($location, $v0, $v1, $v2, $v3);
     }
 
     /**
-     * Modifies the value of a uniform variable or a uniform variable array. The location of the uniform variable to
-     * be modified is specified by *`location`*, which should be a value returned by
-     * {@see glGetUniformLocation}. `glUniform` operates on the program object that was made part of
-     * current state by calling {@see glUseProgram}.
+     * {@see GL46::glUniform} modifies the value of a uniform variable or a
+     * uniform variable array. The location of the uniform variable to be
+     * modified is specified by $location, which should be a value returned
+     * by {@see GL46::glGetUniformLocation}. {@see GL46::glUniform} operates
+     * on the program object that was made part of current state by calling
+     * {@see GL46::glUseProgram}.
      *
-     * The commands `glUniform{1|2|3|4}{f|i}` are used to change the value of the uniform variable specified by
-     * *`location`* using the values passed as arguments. The number specified in the command should match the number
-     * of components in the data type of the specified uniform variable (e.g., `1` for float, int, bool; `2` for
-     * vec2, ivec2, bvec2, etc.). The suffix `f` indicates that floating-point values are being passed; the suffix
-     * `i` indicates that integer values are being passed, and this type should also match the data type of the
-     * specified uniform variable. The `i` variants of this function should be used to provide values for uniform
-     * variables defined as int, ivec2, ivec3, ivec4, or arrays of these. The `f` variants should be used to provide
-     * values for uniform variables of type float, vec2, vec3, vec4, or arrays of these. Either the `i` or the `f`
-     * variants may be used to provide values for uniform variables of type bool, bvec2, bvec3, bvec4, or arrays of
-     * these. The uniform variable will be set to false if the input value is 0 or 0.0f, and it will be set to true
-     * otherwise.
+     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}} are used to
+     * change the value of the uniform variable specified by $location using
+     * the values passed as arguments. The number specified in the command
+     * should match the number of components in the data type of the
+     * specified uniform variable (e.g., {@see GL46::1} for `float`, `int`,
+     * `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`,
+     * `bvec2`, etc.). The suffix {@see GL46::f} indicates that
+     * floating-point values are being passed; the suffix {@see GL46::i}
+     * indicates that integer values are being passed; the suffix
+     * {@see GL46::ui} indicates that unsigned integer values are being
+     * passed, and this type should also match the data type of the specified
+     * uniform variable. The {@see GL46::i} variants of this function should
+     * be used to provide values for uniform variables defined as `int`,
+     * `ivec2`, `ivec3`, `ivec4`, or arrays of these. The {@see GL46::ui}
+     * variants of this function should be used to provide values for uniform
+     * variables defined as `unsigned int`, `uvec2`, `uvec3`, `uvec4`, or
+     * arrays of these. The {@see GL46::f} variants should be used to provide
+     * values for uniform variables of type `float`, `vec2`, `vec3`, `vec4`,
+     * or arrays of these. Either the {@see GL46::i}, {@see GL46::ui} or
+     * {@see GL46::f} variants may be used to provide values for uniform
+     * variables of type `bool`, `bvec2`, `bvec3`, `bvec4`, or arrays of
+     * these. The uniform variable will be set to `false` if the input value
+     * is 0 or 0.0f, and it will be set to `true` otherwise.
      *
-     * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to `glUniform ` until the next
-     * successful link operation occurs on the program object, when they are once again initialized to 0.
+     * All active uniform variables defined in a program object are
+     * initialized to 0 when the program object is linked successfully. They
+     * retain the values assigned to them by a call to {@see GL46::glUniform
+     * } until the next successful link operation occurs on the program
+     * object, when they are once again initialized to 0.
      *
-     * The commands `glUniform{1|2|3|4}{f|i}v` can be used to modify a single uniform variable or a uniform variable
-     * array. These commands pass a count and a pointer to the values to be loaded into a uniform variable or a
-     * uniform variable array. A count of 1 should be used if modifying the value of a single uniform variable, and a
-     * count of 1 or greater can be used to modify an entire array or part of an array. When loading *n* elements
-     * starting at an arbitrary position *m* in a uniform variable array, elements *m* + *n* - 1 in the array will be
-     * replaced with the new values. If *`m`* + *`n`* - 1 is larger than the size of the uniform variable array,
-     * values for all array elements beyond the end of the array will be ignored. The number specified in the name of
-     * the command indicates the number of components for each element in *`value`*, and it should match the number
-     * of components in the data type of the specified uniform variable (e.g., `1` for float, int, bool; `2` for
-     * vec2, ivec2, bvec2, etc.). The data type specified in the name of the command must match the data type for the
-     * specified uniform variable as described previously for `glUniform{1|2|3|4}{f|i}`.
+     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}v} can be used to
+     * modify a single uniform variable or a uniform variable array. These
+     * commands pass a count and a pointer to the values to be loaded into a
+     * uniform variable or a uniform variable array. A count of 1 should be
+     * used if modifying the value of a single uniform variable, and a count
+     * of 1 or greater can be used to modify an entire array or part of an
+     * array. When loading n elements starting at an arbitrary position m in
+     * a uniform variable array, elements m + n - 1 in the array will be
+     * replaced with the new values. If $m + $n - 1 is larger than the size
+     * of the uniform variable array, values for all array elements beyond
+     * the end of the array will be ignored. The number specified in the name
+     * of the command indicates the number of components for each element in
+     * $value, and it should match the number of components in the data type
+     * of the specified uniform variable (e.g., {@see GL46::1} for float,
+     * int, bool; {@see GL46::2} for vec2, ivec2, bvec2, etc.). The data type
+     * specified in the name of the command must match the data type for the
+     * specified uniform variable as described previously for
+     * {@see GL46::glUniform{1|2|3|4}{f|i|ui}}.
      *
-     * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., `glUniform3f` or `glUniform3fv` can be used to load a uniform variable array of type
-     * vec3). The number of elements of the uniform variable array to be modified is specified by *`count`*
+     * For uniform variable arrays, each element of the array is considered
+     * to be of the type indicated in the name of the command (e.g.,
+     * {@see GL46::glUniform3f} or {@see GL46::glUniform3fv} can be used to
+     * load a uniform variable array of type vec3). The number of elements of
+     * the uniform variable array to be modified is specified by $count
      *
-     * The commands `glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv` are used to modify a matrix or an array of
-     * matrices. The numbers in the command name are interpreted as the dimensionality of the matrix. The number `2`
-     * indicates a 2 × 2 matrix (i.e., 4 values), the number `3` indicates a 3 × 3 matrix (i.e., 9 values), and the
-     * number `4` indicates a 4 × 4 matrix (i.e., 16 values). Non-square matrix dimensionality is explicit, with the
-     * first number representing the number of columns and the second number representing the number of rows. For
-     * example, `2x4` indicates a 2 × 4 matrix with 2 columns and 4 rows (i.e., 8 values). If *`transpose`* is
-     * `GL_FALSE`, each matrix is assumed to be supplied in column major order. If *`transpose`* is `GL_TRUE`, each
-     * matrix is assumed to be supplied in row major order. The *`count`* argument indicates the number of matrices
-     * to be passed. A count of 1 should be used if modifying the value of a single matrix, and a count greater than
-     * 1 can be used to modify an array of matrices.
+     * The commands
+     * {@see GL46::glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used
+     * to modify a matrix or an array of matrices. The numbers in the command
+     * name are interpreted as the dimensionality of the matrix. The number
+     * {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number
+     * {@see GL46::3} indicates a 3 × 3 matrix (i.e., 9 values), and the
+     * number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values).
+     * Non-square matrix dimensionality is explicit, with the first number
+     * representing the number of columns and the second number representing
+     * the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4
+     * matrix with 2 columns and 4 rows (i.e., 8 values). If $transpose is
+     * {@see GL46::GL_FALSE}, each matrix is assumed to be supplied in column
+     * major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is
+     * assumed to be supplied in row major order. The $count argument
+     * indicates the number of matrices to be passed. A count of 1 should be
+     * used if modifying the value of a single matrix, and a count greater
+     * than 1 can be used to modify an array of matrices.
      *
      * @see http://docs.gl/gl2/glUniform
-     * @see http://docs.gl/gl3/glUniform
      * @see http://docs.gl/gl4/glUniform
      * @since 2.0
-     * @param int $location
-     * @param int $v0
+     * @param int|\FFI\CData|\FFI\CInt $location
+     * @param int|\FFI\CData|\FFI\CInt $v0
      * @return void
      */
-    public static function glUniform1i(int $location, int $v0): void
+    public function glUniform1i($location, $v0): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($location >= \PHP_INT_MIN && $location <= \PHP_INT_MAX, 'Argument $location overflow: C type GLint is required');
-        assert($v0 >= \PHP_INT_MIN && $v0 <= \PHP_INT_MAX, 'Argument $v0 overflow: C type GLint is required');
+        $location = $location instanceof \FFI\CData ? $location->cdata : $location;
+        $v0 = $v0 instanceof \FFI\CData ? $v0->cdata : $v0;
 
-        $proc = self::getProc('glUniform1i', 'void (*)(GLint location, GLint v0)');
+        assert(Assert::int16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
+        assert(Assert::int16($v0), 'Argument $v0 must be a C-like GLint, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glUniform1i', 'void (*)(GLint location, GLint v0)');
         $proc($location, $v0);
     }
 
     /**
-     * Modifies the value of a uniform variable or a uniform variable array. The location of the uniform variable to
-     * be modified is specified by *`location`*, which should be a value returned by
-     * {@see glGetUniformLocation}. `glUniform` operates on the program object that was made part of
-     * current state by calling {@see glUseProgram}.
+     * {@see GL46::glUniform} modifies the value of a uniform variable or a
+     * uniform variable array. The location of the uniform variable to be
+     * modified is specified by $location, which should be a value returned
+     * by {@see GL46::glGetUniformLocation}. {@see GL46::glUniform} operates
+     * on the program object that was made part of current state by calling
+     * {@see GL46::glUseProgram}.
      *
-     * The commands `glUniform{1|2|3|4}{f|i}` are used to change the value of the uniform variable specified by
-     * *`location`* using the values passed as arguments. The number specified in the command should match the number
-     * of components in the data type of the specified uniform variable (e.g., `1` for float, int, bool; `2` for
-     * vec2, ivec2, bvec2, etc.). The suffix `f` indicates that floating-point values are being passed; the suffix
-     * `i` indicates that integer values are being passed, and this type should also match the data type of the
-     * specified uniform variable. The `i` variants of this function should be used to provide values for uniform
-     * variables defined as int, ivec2, ivec3, ivec4, or arrays of these. The `f` variants should be used to provide
-     * values for uniform variables of type float, vec2, vec3, vec4, or arrays of these. Either the `i` or the `f`
-     * variants may be used to provide values for uniform variables of type bool, bvec2, bvec3, bvec4, or arrays of
-     * these. The uniform variable will be set to false if the input value is 0 or 0.0f, and it will be set to true
-     * otherwise.
+     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}} are used to
+     * change the value of the uniform variable specified by $location using
+     * the values passed as arguments. The number specified in the command
+     * should match the number of components in the data type of the
+     * specified uniform variable (e.g., {@see GL46::1} for `float`, `int`,
+     * `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`,
+     * `bvec2`, etc.). The suffix {@see GL46::f} indicates that
+     * floating-point values are being passed; the suffix {@see GL46::i}
+     * indicates that integer values are being passed; the suffix
+     * {@see GL46::ui} indicates that unsigned integer values are being
+     * passed, and this type should also match the data type of the specified
+     * uniform variable. The {@see GL46::i} variants of this function should
+     * be used to provide values for uniform variables defined as `int`,
+     * `ivec2`, `ivec3`, `ivec4`, or arrays of these. The {@see GL46::ui}
+     * variants of this function should be used to provide values for uniform
+     * variables defined as `unsigned int`, `uvec2`, `uvec3`, `uvec4`, or
+     * arrays of these. The {@see GL46::f} variants should be used to provide
+     * values for uniform variables of type `float`, `vec2`, `vec3`, `vec4`,
+     * or arrays of these. Either the {@see GL46::i}, {@see GL46::ui} or
+     * {@see GL46::f} variants may be used to provide values for uniform
+     * variables of type `bool`, `bvec2`, `bvec3`, `bvec4`, or arrays of
+     * these. The uniform variable will be set to `false` if the input value
+     * is 0 or 0.0f, and it will be set to `true` otherwise.
      *
-     * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to `glUniform ` until the next
-     * successful link operation occurs on the program object, when they are once again initialized to 0.
+     * All active uniform variables defined in a program object are
+     * initialized to 0 when the program object is linked successfully. They
+     * retain the values assigned to them by a call to {@see GL46::glUniform
+     * } until the next successful link operation occurs on the program
+     * object, when they are once again initialized to 0.
      *
-     * The commands `glUniform{1|2|3|4}{f|i}v` can be used to modify a single uniform variable or a uniform variable
-     * array. These commands pass a count and a pointer to the values to be loaded into a uniform variable or a
-     * uniform variable array. A count of 1 should be used if modifying the value of a single uniform variable, and a
-     * count of 1 or greater can be used to modify an entire array or part of an array. When loading *n* elements
-     * starting at an arbitrary position *m* in a uniform variable array, elements *m* + *n* - 1 in the array will be
-     * replaced with the new values. If *`m`* + *`n`* - 1 is larger than the size of the uniform variable array,
-     * values for all array elements beyond the end of the array will be ignored. The number specified in the name of
-     * the command indicates the number of components for each element in *`value`*, and it should match the number
-     * of components in the data type of the specified uniform variable (e.g., `1` for float, int, bool; `2` for
-     * vec2, ivec2, bvec2, etc.). The data type specified in the name of the command must match the data type for the
-     * specified uniform variable as described previously for `glUniform{1|2|3|4}{f|i}`.
+     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}v} can be used to
+     * modify a single uniform variable or a uniform variable array. These
+     * commands pass a count and a pointer to the values to be loaded into a
+     * uniform variable or a uniform variable array. A count of 1 should be
+     * used if modifying the value of a single uniform variable, and a count
+     * of 1 or greater can be used to modify an entire array or part of an
+     * array. When loading n elements starting at an arbitrary position m in
+     * a uniform variable array, elements m + n - 1 in the array will be
+     * replaced with the new values. If $m + $n - 1 is larger than the size
+     * of the uniform variable array, values for all array elements beyond
+     * the end of the array will be ignored. The number specified in the name
+     * of the command indicates the number of components for each element in
+     * $value, and it should match the number of components in the data type
+     * of the specified uniform variable (e.g., {@see GL46::1} for float,
+     * int, bool; {@see GL46::2} for vec2, ivec2, bvec2, etc.). The data type
+     * specified in the name of the command must match the data type for the
+     * specified uniform variable as described previously for
+     * {@see GL46::glUniform{1|2|3|4}{f|i|ui}}.
      *
-     * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., `glUniform3f` or `glUniform3fv` can be used to load a uniform variable array of type
-     * vec3). The number of elements of the uniform variable array to be modified is specified by *`count`*
+     * For uniform variable arrays, each element of the array is considered
+     * to be of the type indicated in the name of the command (e.g.,
+     * {@see GL46::glUniform3f} or {@see GL46::glUniform3fv} can be used to
+     * load a uniform variable array of type vec3). The number of elements of
+     * the uniform variable array to be modified is specified by $count
      *
-     * The commands `glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv` are used to modify a matrix or an array of
-     * matrices. The numbers in the command name are interpreted as the dimensionality of the matrix. The number `2`
-     * indicates a 2 × 2 matrix (i.e., 4 values), the number `3` indicates a 3 × 3 matrix (i.e., 9 values), and the
-     * number `4` indicates a 4 × 4 matrix (i.e., 16 values). Non-square matrix dimensionality is explicit, with the
-     * first number representing the number of columns and the second number representing the number of rows. For
-     * example, `2x4` indicates a 2 × 4 matrix with 2 columns and 4 rows (i.e., 8 values). If *`transpose`* is
-     * `GL_FALSE`, each matrix is assumed to be supplied in column major order. If *`transpose`* is `GL_TRUE`, each
-     * matrix is assumed to be supplied in row major order. The *`count`* argument indicates the number of matrices
-     * to be passed. A count of 1 should be used if modifying the value of a single matrix, and a count greater than
-     * 1 can be used to modify an array of matrices.
+     * The commands
+     * {@see GL46::glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used
+     * to modify a matrix or an array of matrices. The numbers in the command
+     * name are interpreted as the dimensionality of the matrix. The number
+     * {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number
+     * {@see GL46::3} indicates a 3 × 3 matrix (i.e., 9 values), and the
+     * number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values).
+     * Non-square matrix dimensionality is explicit, with the first number
+     * representing the number of columns and the second number representing
+     * the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4
+     * matrix with 2 columns and 4 rows (i.e., 8 values). If $transpose is
+     * {@see GL46::GL_FALSE}, each matrix is assumed to be supplied in column
+     * major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is
+     * assumed to be supplied in row major order. The $count argument
+     * indicates the number of matrices to be passed. A count of 1 should be
+     * used if modifying the value of a single matrix, and a count greater
+     * than 1 can be used to modify an array of matrices.
      *
      * @see http://docs.gl/gl2/glUniform
-     * @see http://docs.gl/gl3/glUniform
      * @see http://docs.gl/gl4/glUniform
      * @since 2.0
-     * @param int $location
-     * @param int $v0
-     * @param int $v1
+     * @param int|\FFI\CData|\FFI\CInt $location
+     * @param int|\FFI\CData|\FFI\CInt $v0
+     * @param int|\FFI\CData|\FFI\CInt $v1
      * @return void
      */
-    public static function glUniform2i(int $location, int $v0, int $v1): void
+    public function glUniform2i($location, $v0, $v1): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($location >= \PHP_INT_MIN && $location <= \PHP_INT_MAX, 'Argument $location overflow: C type GLint is required');
-        assert($v0 >= \PHP_INT_MIN && $v0 <= \PHP_INT_MAX, 'Argument $v0 overflow: C type GLint is required');
-        assert($v1 >= \PHP_INT_MIN && $v1 <= \PHP_INT_MAX, 'Argument $v1 overflow: C type GLint is required');
+        $location = $location instanceof \FFI\CData ? $location->cdata : $location;
+        $v0 = $v0 instanceof \FFI\CData ? $v0->cdata : $v0;
+        $v1 = $v1 instanceof \FFI\CData ? $v1->cdata : $v1;
 
-        $proc = self::getProc('glUniform2i', 'void (*)(GLint location, GLint v0, GLint v1)');
+        assert(Assert::int16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
+        assert(Assert::int16($v0), 'Argument $v0 must be a C-like GLint, but incompatible or overflow value given');
+        assert(Assert::int16($v1), 'Argument $v1 must be a C-like GLint, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glUniform2i', 'void (*)(GLint location, GLint v0, GLint v1)');
         $proc($location, $v0, $v1);
     }
 
     /**
-     * Modifies the value of a uniform variable or a uniform variable array. The location of the uniform variable to
-     * be modified is specified by *`location`*, which should be a value returned by
-     * {@see glGetUniformLocation}. `glUniform` operates on the program object that was made part of
-     * current state by calling {@see glUseProgram}.
+     * {@see GL46::glUniform} modifies the value of a uniform variable or a
+     * uniform variable array. The location of the uniform variable to be
+     * modified is specified by $location, which should be a value returned
+     * by {@see GL46::glGetUniformLocation}. {@see GL46::glUniform} operates
+     * on the program object that was made part of current state by calling
+     * {@see GL46::glUseProgram}.
      *
-     * The commands `glUniform{1|2|3|4}{f|i}` are used to change the value of the uniform variable specified by
-     * *`location`* using the values passed as arguments. The number specified in the command should match the number
-     * of components in the data type of the specified uniform variable (e.g., `1` for float, int, bool; `2` for
-     * vec2, ivec2, bvec2, etc.). The suffix `f` indicates that floating-point values are being passed; the suffix
-     * `i` indicates that integer values are being passed, and this type should also match the data type of the
-     * specified uniform variable. The `i` variants of this function should be used to provide values for uniform
-     * variables defined as int, ivec2, ivec3, ivec4, or arrays of these. The `f` variants should be used to provide
-     * values for uniform variables of type float, vec2, vec3, vec4, or arrays of these. Either the `i` or the `f`
-     * variants may be used to provide values for uniform variables of type bool, bvec2, bvec3, bvec4, or arrays of
-     * these. The uniform variable will be set to false if the input value is 0 or 0.0f, and it will be set to true
-     * otherwise.
+     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}} are used to
+     * change the value of the uniform variable specified by $location using
+     * the values passed as arguments. The number specified in the command
+     * should match the number of components in the data type of the
+     * specified uniform variable (e.g., {@see GL46::1} for `float`, `int`,
+     * `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`,
+     * `bvec2`, etc.). The suffix {@see GL46::f} indicates that
+     * floating-point values are being passed; the suffix {@see GL46::i}
+     * indicates that integer values are being passed; the suffix
+     * {@see GL46::ui} indicates that unsigned integer values are being
+     * passed, and this type should also match the data type of the specified
+     * uniform variable. The {@see GL46::i} variants of this function should
+     * be used to provide values for uniform variables defined as `int`,
+     * `ivec2`, `ivec3`, `ivec4`, or arrays of these. The {@see GL46::ui}
+     * variants of this function should be used to provide values for uniform
+     * variables defined as `unsigned int`, `uvec2`, `uvec3`, `uvec4`, or
+     * arrays of these. The {@see GL46::f} variants should be used to provide
+     * values for uniform variables of type `float`, `vec2`, `vec3`, `vec4`,
+     * or arrays of these. Either the {@see GL46::i}, {@see GL46::ui} or
+     * {@see GL46::f} variants may be used to provide values for uniform
+     * variables of type `bool`, `bvec2`, `bvec3`, `bvec4`, or arrays of
+     * these. The uniform variable will be set to `false` if the input value
+     * is 0 or 0.0f, and it will be set to `true` otherwise.
      *
-     * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to `glUniform ` until the next
-     * successful link operation occurs on the program object, when they are once again initialized to 0.
+     * All active uniform variables defined in a program object are
+     * initialized to 0 when the program object is linked successfully. They
+     * retain the values assigned to them by a call to {@see GL46::glUniform
+     * } until the next successful link operation occurs on the program
+     * object, when they are once again initialized to 0.
      *
-     * The commands `glUniform{1|2|3|4}{f|i}v` can be used to modify a single uniform variable or a uniform variable
-     * array. These commands pass a count and a pointer to the values to be loaded into a uniform variable or a
-     * uniform variable array. A count of 1 should be used if modifying the value of a single uniform variable, and a
-     * count of 1 or greater can be used to modify an entire array or part of an array. When loading *n* elements
-     * starting at an arbitrary position *m* in a uniform variable array, elements *m* + *n* - 1 in the array will be
-     * replaced with the new values. If *`m`* + *`n`* - 1 is larger than the size of the uniform variable array,
-     * values for all array elements beyond the end of the array will be ignored. The number specified in the name of
-     * the command indicates the number of components for each element in *`value`*, and it should match the number
-     * of components in the data type of the specified uniform variable (e.g., `1` for float, int, bool; `2` for
-     * vec2, ivec2, bvec2, etc.). The data type specified in the name of the command must match the data type for the
-     * specified uniform variable as described previously for `glUniform{1|2|3|4}{f|i}`.
+     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}v} can be used to
+     * modify a single uniform variable or a uniform variable array. These
+     * commands pass a count and a pointer to the values to be loaded into a
+     * uniform variable or a uniform variable array. A count of 1 should be
+     * used if modifying the value of a single uniform variable, and a count
+     * of 1 or greater can be used to modify an entire array or part of an
+     * array. When loading n elements starting at an arbitrary position m in
+     * a uniform variable array, elements m + n - 1 in the array will be
+     * replaced with the new values. If $m + $n - 1 is larger than the size
+     * of the uniform variable array, values for all array elements beyond
+     * the end of the array will be ignored. The number specified in the name
+     * of the command indicates the number of components for each element in
+     * $value, and it should match the number of components in the data type
+     * of the specified uniform variable (e.g., {@see GL46::1} for float,
+     * int, bool; {@see GL46::2} for vec2, ivec2, bvec2, etc.). The data type
+     * specified in the name of the command must match the data type for the
+     * specified uniform variable as described previously for
+     * {@see GL46::glUniform{1|2|3|4}{f|i|ui}}.
      *
-     * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., `glUniform3f` or `glUniform3fv` can be used to load a uniform variable array of type
-     * vec3). The number of elements of the uniform variable array to be modified is specified by *`count`*
+     * For uniform variable arrays, each element of the array is considered
+     * to be of the type indicated in the name of the command (e.g.,
+     * {@see GL46::glUniform3f} or {@see GL46::glUniform3fv} can be used to
+     * load a uniform variable array of type vec3). The number of elements of
+     * the uniform variable array to be modified is specified by $count
      *
-     * The commands `glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv` are used to modify a matrix or an array of
-     * matrices. The numbers in the command name are interpreted as the dimensionality of the matrix. The number `2`
-     * indicates a 2 × 2 matrix (i.e., 4 values), the number `3` indicates a 3 × 3 matrix (i.e., 9 values), and the
-     * number `4` indicates a 4 × 4 matrix (i.e., 16 values). Non-square matrix dimensionality is explicit, with the
-     * first number representing the number of columns and the second number representing the number of rows. For
-     * example, `2x4` indicates a 2 × 4 matrix with 2 columns and 4 rows (i.e., 8 values). If *`transpose`* is
-     * `GL_FALSE`, each matrix is assumed to be supplied in column major order. If *`transpose`* is `GL_TRUE`, each
-     * matrix is assumed to be supplied in row major order. The *`count`* argument indicates the number of matrices
-     * to be passed. A count of 1 should be used if modifying the value of a single matrix, and a count greater than
-     * 1 can be used to modify an array of matrices.
+     * The commands
+     * {@see GL46::glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used
+     * to modify a matrix or an array of matrices. The numbers in the command
+     * name are interpreted as the dimensionality of the matrix. The number
+     * {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number
+     * {@see GL46::3} indicates a 3 × 3 matrix (i.e., 9 values), and the
+     * number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values).
+     * Non-square matrix dimensionality is explicit, with the first number
+     * representing the number of columns and the second number representing
+     * the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4
+     * matrix with 2 columns and 4 rows (i.e., 8 values). If $transpose is
+     * {@see GL46::GL_FALSE}, each matrix is assumed to be supplied in column
+     * major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is
+     * assumed to be supplied in row major order. The $count argument
+     * indicates the number of matrices to be passed. A count of 1 should be
+     * used if modifying the value of a single matrix, and a count greater
+     * than 1 can be used to modify an array of matrices.
      *
      * @see http://docs.gl/gl2/glUniform
-     * @see http://docs.gl/gl3/glUniform
      * @see http://docs.gl/gl4/glUniform
      * @since 2.0
-     * @param int $location
-     * @param int $v0
-     * @param int $v1
-     * @param int $v2
+     * @param int|\FFI\CData|\FFI\CInt $location
+     * @param int|\FFI\CData|\FFI\CInt $v0
+     * @param int|\FFI\CData|\FFI\CInt $v1
+     * @param int|\FFI\CData|\FFI\CInt $v2
      * @return void
      */
-    public static function glUniform3i(int $location, int $v0, int $v1, int $v2): void
+    public function glUniform3i($location, $v0, $v1, $v2): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($location >= \PHP_INT_MIN && $location <= \PHP_INT_MAX, 'Argument $location overflow: C type GLint is required');
-        assert($v0 >= \PHP_INT_MIN && $v0 <= \PHP_INT_MAX, 'Argument $v0 overflow: C type GLint is required');
-        assert($v1 >= \PHP_INT_MIN && $v1 <= \PHP_INT_MAX, 'Argument $v1 overflow: C type GLint is required');
-        assert($v2 >= \PHP_INT_MIN && $v2 <= \PHP_INT_MAX, 'Argument $v2 overflow: C type GLint is required');
+        $location = $location instanceof \FFI\CData ? $location->cdata : $location;
+        $v0 = $v0 instanceof \FFI\CData ? $v0->cdata : $v0;
+        $v1 = $v1 instanceof \FFI\CData ? $v1->cdata : $v1;
+        $v2 = $v2 instanceof \FFI\CData ? $v2->cdata : $v2;
 
-        $proc = self::getProc('glUniform3i', 'void (*)(GLint location, GLint v0, GLint v1, GLint v2)');
+        assert(Assert::int16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
+        assert(Assert::int16($v0), 'Argument $v0 must be a C-like GLint, but incompatible or overflow value given');
+        assert(Assert::int16($v1), 'Argument $v1 must be a C-like GLint, but incompatible or overflow value given');
+        assert(Assert::int16($v2), 'Argument $v2 must be a C-like GLint, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glUniform3i', 'void (*)(GLint location, GLint v0, GLint v1, GLint v2)');
         $proc($location, $v0, $v1, $v2);
     }
 
     /**
-     * Modifies the value of a uniform variable or a uniform variable array. The location of the uniform variable to
-     * be modified is specified by *`location`*, which should be a value returned by
-     * {@see glGetUniformLocation}. `glUniform` operates on the program object that was made part of
-     * current state by calling {@see glUseProgram}.
+     * {@see GL46::glUniform} modifies the value of a uniform variable or a
+     * uniform variable array. The location of the uniform variable to be
+     * modified is specified by $location, which should be a value returned
+     * by {@see GL46::glGetUniformLocation}. {@see GL46::glUniform} operates
+     * on the program object that was made part of current state by calling
+     * {@see GL46::glUseProgram}.
      *
-     * The commands `glUniform{1|2|3|4}{f|i}` are used to change the value of the uniform variable specified by
-     * *`location`* using the values passed as arguments. The number specified in the command should match the number
-     * of components in the data type of the specified uniform variable (e.g., `1` for float, int, bool; `2` for
-     * vec2, ivec2, bvec2, etc.). The suffix `f` indicates that floating-point values are being passed; the suffix
-     * `i` indicates that integer values are being passed, and this type should also match the data type of the
-     * specified uniform variable. The `i` variants of this function should be used to provide values for uniform
-     * variables defined as int, ivec2, ivec3, ivec4, or arrays of these. The `f` variants should be used to provide
-     * values for uniform variables of type float, vec2, vec3, vec4, or arrays of these. Either the `i` or the `f`
-     * variants may be used to provide values for uniform variables of type bool, bvec2, bvec3, bvec4, or arrays of
-     * these. The uniform variable will be set to false if the input value is 0 or 0.0f, and it will be set to true
-     * otherwise.
+     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}} are used to
+     * change the value of the uniform variable specified by $location using
+     * the values passed as arguments. The number specified in the command
+     * should match the number of components in the data type of the
+     * specified uniform variable (e.g., {@see GL46::1} for `float`, `int`,
+     * `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`,
+     * `bvec2`, etc.). The suffix {@see GL46::f} indicates that
+     * floating-point values are being passed; the suffix {@see GL46::i}
+     * indicates that integer values are being passed; the suffix
+     * {@see GL46::ui} indicates that unsigned integer values are being
+     * passed, and this type should also match the data type of the specified
+     * uniform variable. The {@see GL46::i} variants of this function should
+     * be used to provide values for uniform variables defined as `int`,
+     * `ivec2`, `ivec3`, `ivec4`, or arrays of these. The {@see GL46::ui}
+     * variants of this function should be used to provide values for uniform
+     * variables defined as `unsigned int`, `uvec2`, `uvec3`, `uvec4`, or
+     * arrays of these. The {@see GL46::f} variants should be used to provide
+     * values for uniform variables of type `float`, `vec2`, `vec3`, `vec4`,
+     * or arrays of these. Either the {@see GL46::i}, {@see GL46::ui} or
+     * {@see GL46::f} variants may be used to provide values for uniform
+     * variables of type `bool`, `bvec2`, `bvec3`, `bvec4`, or arrays of
+     * these. The uniform variable will be set to `false` if the input value
+     * is 0 or 0.0f, and it will be set to `true` otherwise.
      *
-     * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to `glUniform ` until the next
-     * successful link operation occurs on the program object, when they are once again initialized to 0.
+     * All active uniform variables defined in a program object are
+     * initialized to 0 when the program object is linked successfully. They
+     * retain the values assigned to them by a call to {@see GL46::glUniform
+     * } until the next successful link operation occurs on the program
+     * object, when they are once again initialized to 0.
      *
-     * The commands `glUniform{1|2|3|4}{f|i}v` can be used to modify a single uniform variable or a uniform variable
-     * array. These commands pass a count and a pointer to the values to be loaded into a uniform variable or a
-     * uniform variable array. A count of 1 should be used if modifying the value of a single uniform variable, and a
-     * count of 1 or greater can be used to modify an entire array or part of an array. When loading *n* elements
-     * starting at an arbitrary position *m* in a uniform variable array, elements *m* + *n* - 1 in the array will be
-     * replaced with the new values. If *`m`* + *`n`* - 1 is larger than the size of the uniform variable array,
-     * values for all array elements beyond the end of the array will be ignored. The number specified in the name of
-     * the command indicates the number of components for each element in *`value`*, and it should match the number
-     * of components in the data type of the specified uniform variable (e.g., `1` for float, int, bool; `2` for
-     * vec2, ivec2, bvec2, etc.). The data type specified in the name of the command must match the data type for the
-     * specified uniform variable as described previously for `glUniform{1|2|3|4}{f|i}`.
+     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}v} can be used to
+     * modify a single uniform variable or a uniform variable array. These
+     * commands pass a count and a pointer to the values to be loaded into a
+     * uniform variable or a uniform variable array. A count of 1 should be
+     * used if modifying the value of a single uniform variable, and a count
+     * of 1 or greater can be used to modify an entire array or part of an
+     * array. When loading n elements starting at an arbitrary position m in
+     * a uniform variable array, elements m + n - 1 in the array will be
+     * replaced with the new values. If $m + $n - 1 is larger than the size
+     * of the uniform variable array, values for all array elements beyond
+     * the end of the array will be ignored. The number specified in the name
+     * of the command indicates the number of components for each element in
+     * $value, and it should match the number of components in the data type
+     * of the specified uniform variable (e.g., {@see GL46::1} for float,
+     * int, bool; {@see GL46::2} for vec2, ivec2, bvec2, etc.). The data type
+     * specified in the name of the command must match the data type for the
+     * specified uniform variable as described previously for
+     * {@see GL46::glUniform{1|2|3|4}{f|i|ui}}.
      *
-     * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., `glUniform3f` or `glUniform3fv` can be used to load a uniform variable array of type
-     * vec3). The number of elements of the uniform variable array to be modified is specified by *`count`*
+     * For uniform variable arrays, each element of the array is considered
+     * to be of the type indicated in the name of the command (e.g.,
+     * {@see GL46::glUniform3f} or {@see GL46::glUniform3fv} can be used to
+     * load a uniform variable array of type vec3). The number of elements of
+     * the uniform variable array to be modified is specified by $count
      *
-     * The commands `glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv` are used to modify a matrix or an array of
-     * matrices. The numbers in the command name are interpreted as the dimensionality of the matrix. The number `2`
-     * indicates a 2 × 2 matrix (i.e., 4 values), the number `3` indicates a 3 × 3 matrix (i.e., 9 values), and the
-     * number `4` indicates a 4 × 4 matrix (i.e., 16 values). Non-square matrix dimensionality is explicit, with the
-     * first number representing the number of columns and the second number representing the number of rows. For
-     * example, `2x4` indicates a 2 × 4 matrix with 2 columns and 4 rows (i.e., 8 values). If *`transpose`* is
-     * `GL_FALSE`, each matrix is assumed to be supplied in column major order. If *`transpose`* is `GL_TRUE`, each
-     * matrix is assumed to be supplied in row major order. The *`count`* argument indicates the number of matrices
-     * to be passed. A count of 1 should be used if modifying the value of a single matrix, and a count greater than
-     * 1 can be used to modify an array of matrices.
+     * The commands
+     * {@see GL46::glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used
+     * to modify a matrix or an array of matrices. The numbers in the command
+     * name are interpreted as the dimensionality of the matrix. The number
+     * {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number
+     * {@see GL46::3} indicates a 3 × 3 matrix (i.e., 9 values), and the
+     * number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values).
+     * Non-square matrix dimensionality is explicit, with the first number
+     * representing the number of columns and the second number representing
+     * the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4
+     * matrix with 2 columns and 4 rows (i.e., 8 values). If $transpose is
+     * {@see GL46::GL_FALSE}, each matrix is assumed to be supplied in column
+     * major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is
+     * assumed to be supplied in row major order. The $count argument
+     * indicates the number of matrices to be passed. A count of 1 should be
+     * used if modifying the value of a single matrix, and a count greater
+     * than 1 can be used to modify an array of matrices.
      *
      * @see http://docs.gl/gl2/glUniform
-     * @see http://docs.gl/gl3/glUniform
      * @see http://docs.gl/gl4/glUniform
      * @since 2.0
-     * @param int $location
-     * @param int $v0
-     * @param int $v1
-     * @param int $v2
-     * @param int $v3
+     * @param int|\FFI\CData|\FFI\CInt $location
+     * @param int|\FFI\CData|\FFI\CInt $v0
+     * @param int|\FFI\CData|\FFI\CInt $v1
+     * @param int|\FFI\CData|\FFI\CInt $v2
+     * @param int|\FFI\CData|\FFI\CInt $v3
      * @return void
      */
-    public static function glUniform4i(int $location, int $v0, int $v1, int $v2, int $v3): void
+    public function glUniform4i($location, $v0, $v1, $v2, $v3): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($location >= \PHP_INT_MIN && $location <= \PHP_INT_MAX, 'Argument $location overflow: C type GLint is required');
-        assert($v0 >= \PHP_INT_MIN && $v0 <= \PHP_INT_MAX, 'Argument $v0 overflow: C type GLint is required');
-        assert($v1 >= \PHP_INT_MIN && $v1 <= \PHP_INT_MAX, 'Argument $v1 overflow: C type GLint is required');
-        assert($v2 >= \PHP_INT_MIN && $v2 <= \PHP_INT_MAX, 'Argument $v2 overflow: C type GLint is required');
-        assert($v3 >= \PHP_INT_MIN && $v3 <= \PHP_INT_MAX, 'Argument $v3 overflow: C type GLint is required');
+        $location = $location instanceof \FFI\CData ? $location->cdata : $location;
+        $v0 = $v0 instanceof \FFI\CData ? $v0->cdata : $v0;
+        $v1 = $v1 instanceof \FFI\CData ? $v1->cdata : $v1;
+        $v2 = $v2 instanceof \FFI\CData ? $v2->cdata : $v2;
+        $v3 = $v3 instanceof \FFI\CData ? $v3->cdata : $v3;
 
-        $proc = self::getProc('glUniform4i', 'void (*)(GLint location, GLint v0, GLint v1, GLint v2, GLint v3)');
+        assert(Assert::int16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
+        assert(Assert::int16($v0), 'Argument $v0 must be a C-like GLint, but incompatible or overflow value given');
+        assert(Assert::int16($v1), 'Argument $v1 must be a C-like GLint, but incompatible or overflow value given');
+        assert(Assert::int16($v2), 'Argument $v2 must be a C-like GLint, but incompatible or overflow value given');
+        assert(Assert::int16($v3), 'Argument $v3 must be a C-like GLint, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glUniform4i', 'void (*)(GLint location, GLint v0, GLint v1, GLint v2, GLint v3)');
         $proc($location, $v0, $v1, $v2, $v3);
     }
 
     /**
-     * Modifies the value of a uniform variable or a uniform variable array. The location of the uniform variable to
-     * be modified is specified by *`location`*, which should be a value returned by
-     * {@see glGetUniformLocation}. `glUniform` operates on the program object that was made part of
-     * current state by calling {@see glUseProgram}.
+     * {@see GL46::glUniform} modifies the value of a uniform variable or a
+     * uniform variable array. The location of the uniform variable to be
+     * modified is specified by $location, which should be a value returned
+     * by {@see GL46::glGetUniformLocation}. {@see GL46::glUniform} operates
+     * on the program object that was made part of current state by calling
+     * {@see GL46::glUseProgram}.
      *
-     * The commands `glUniform{1|2|3|4}{f|i}` are used to change the value of the uniform variable specified by
-     * *`location`* using the values passed as arguments. The number specified in the command should match the number
-     * of components in the data type of the specified uniform variable (e.g., `1` for float, int, bool; `2` for
-     * vec2, ivec2, bvec2, etc.). The suffix `f` indicates that floating-point values are being passed; the suffix
-     * `i` indicates that integer values are being passed, and this type should also match the data type of the
-     * specified uniform variable. The `i` variants of this function should be used to provide values for uniform
-     * variables defined as int, ivec2, ivec3, ivec4, or arrays of these. The `f` variants should be used to provide
-     * values for uniform variables of type float, vec2, vec3, vec4, or arrays of these. Either the `i` or the `f`
-     * variants may be used to provide values for uniform variables of type bool, bvec2, bvec3, bvec4, or arrays of
-     * these. The uniform variable will be set to false if the input value is 0 or 0.0f, and it will be set to true
-     * otherwise.
+     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}} are used to
+     * change the value of the uniform variable specified by $location using
+     * the values passed as arguments. The number specified in the command
+     * should match the number of components in the data type of the
+     * specified uniform variable (e.g., {@see GL46::1} for `float`, `int`,
+     * `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`,
+     * `bvec2`, etc.). The suffix {@see GL46::f} indicates that
+     * floating-point values are being passed; the suffix {@see GL46::i}
+     * indicates that integer values are being passed; the suffix
+     * {@see GL46::ui} indicates that unsigned integer values are being
+     * passed, and this type should also match the data type of the specified
+     * uniform variable. The {@see GL46::i} variants of this function should
+     * be used to provide values for uniform variables defined as `int`,
+     * `ivec2`, `ivec3`, `ivec4`, or arrays of these. The {@see GL46::ui}
+     * variants of this function should be used to provide values for uniform
+     * variables defined as `unsigned int`, `uvec2`, `uvec3`, `uvec4`, or
+     * arrays of these. The {@see GL46::f} variants should be used to provide
+     * values for uniform variables of type `float`, `vec2`, `vec3`, `vec4`,
+     * or arrays of these. Either the {@see GL46::i}, {@see GL46::ui} or
+     * {@see GL46::f} variants may be used to provide values for uniform
+     * variables of type `bool`, `bvec2`, `bvec3`, `bvec4`, or arrays of
+     * these. The uniform variable will be set to `false` if the input value
+     * is 0 or 0.0f, and it will be set to `true` otherwise.
      *
-     * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to `glUniform ` until the next
-     * successful link operation occurs on the program object, when they are once again initialized to 0.
+     * All active uniform variables defined in a program object are
+     * initialized to 0 when the program object is linked successfully. They
+     * retain the values assigned to them by a call to {@see GL46::glUniform
+     * } until the next successful link operation occurs on the program
+     * object, when they are once again initialized to 0.
      *
-     * The commands `glUniform{1|2|3|4}{f|i}v` can be used to modify a single uniform variable or a uniform variable
-     * array. These commands pass a count and a pointer to the values to be loaded into a uniform variable or a
-     * uniform variable array. A count of 1 should be used if modifying the value of a single uniform variable, and a
-     * count of 1 or greater can be used to modify an entire array or part of an array. When loading *n* elements
-     * starting at an arbitrary position *m* in a uniform variable array, elements *m* + *n* - 1 in the array will be
-     * replaced with the new values. If *`m`* + *`n`* - 1 is larger than the size of the uniform variable array,
-     * values for all array elements beyond the end of the array will be ignored. The number specified in the name of
-     * the command indicates the number of components for each element in *`value`*, and it should match the number
-     * of components in the data type of the specified uniform variable (e.g., `1` for float, int, bool; `2` for
-     * vec2, ivec2, bvec2, etc.). The data type specified in the name of the command must match the data type for the
-     * specified uniform variable as described previously for `glUniform{1|2|3|4}{f|i}`.
+     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}v} can be used to
+     * modify a single uniform variable or a uniform variable array. These
+     * commands pass a count and a pointer to the values to be loaded into a
+     * uniform variable or a uniform variable array. A count of 1 should be
+     * used if modifying the value of a single uniform variable, and a count
+     * of 1 or greater can be used to modify an entire array or part of an
+     * array. When loading n elements starting at an arbitrary position m in
+     * a uniform variable array, elements m + n - 1 in the array will be
+     * replaced with the new values. If $m + $n - 1 is larger than the size
+     * of the uniform variable array, values for all array elements beyond
+     * the end of the array will be ignored. The number specified in the name
+     * of the command indicates the number of components for each element in
+     * $value, and it should match the number of components in the data type
+     * of the specified uniform variable (e.g., {@see GL46::1} for float,
+     * int, bool; {@see GL46::2} for vec2, ivec2, bvec2, etc.). The data type
+     * specified in the name of the command must match the data type for the
+     * specified uniform variable as described previously for
+     * {@see GL46::glUniform{1|2|3|4}{f|i|ui}}.
      *
-     * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., `glUniform3f` or `glUniform3fv` can be used to load a uniform variable array of type
-     * vec3). The number of elements of the uniform variable array to be modified is specified by *`count`*
+     * For uniform variable arrays, each element of the array is considered
+     * to be of the type indicated in the name of the command (e.g.,
+     * {@see GL46::glUniform3f} or {@see GL46::glUniform3fv} can be used to
+     * load a uniform variable array of type vec3). The number of elements of
+     * the uniform variable array to be modified is specified by $count
      *
-     * The commands `glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv` are used to modify a matrix or an array of
-     * matrices. The numbers in the command name are interpreted as the dimensionality of the matrix. The number `2`
-     * indicates a 2 × 2 matrix (i.e., 4 values), the number `3` indicates a 3 × 3 matrix (i.e., 9 values), and the
-     * number `4` indicates a 4 × 4 matrix (i.e., 16 values). Non-square matrix dimensionality is explicit, with the
-     * first number representing the number of columns and the second number representing the number of rows. For
-     * example, `2x4` indicates a 2 × 4 matrix with 2 columns and 4 rows (i.e., 8 values). If *`transpose`* is
-     * `GL_FALSE`, each matrix is assumed to be supplied in column major order. If *`transpose`* is `GL_TRUE`, each
-     * matrix is assumed to be supplied in row major order. The *`count`* argument indicates the number of matrices
-     * to be passed. A count of 1 should be used if modifying the value of a single matrix, and a count greater than
-     * 1 can be used to modify an array of matrices.
+     * The commands
+     * {@see GL46::glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used
+     * to modify a matrix or an array of matrices. The numbers in the command
+     * name are interpreted as the dimensionality of the matrix. The number
+     * {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number
+     * {@see GL46::3} indicates a 3 × 3 matrix (i.e., 9 values), and the
+     * number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values).
+     * Non-square matrix dimensionality is explicit, with the first number
+     * representing the number of columns and the second number representing
+     * the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4
+     * matrix with 2 columns and 4 rows (i.e., 8 values). If $transpose is
+     * {@see GL46::GL_FALSE}, each matrix is assumed to be supplied in column
+     * major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is
+     * assumed to be supplied in row major order. The $count argument
+     * indicates the number of matrices to be passed. A count of 1 should be
+     * used if modifying the value of a single matrix, and a count greater
+     * than 1 can be used to modify an array of matrices.
      *
      * @see http://docs.gl/gl2/glUniform
-     * @see http://docs.gl/gl3/glUniform
      * @see http://docs.gl/gl4/glUniform
      * @since 2.0
-     * @param int $location
-     * @param int $count
+     * @param int|\FFI\CData|\FFI\CInt $location
+     * @param int|\FFI\CData|\FFI\CInt $count
      * @param \FFI\CData|\FFI\CFloatPtr|null $value
      * @return void
      */
-    public static function glUniform1fv(int $location, int $count, ?\FFI\CData $value): void
+    public function glUniform1fv($location, $count, ?\FFI\CData $value): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($location >= \PHP_INT_MIN && $location <= \PHP_INT_MAX, 'Argument $location overflow: C type GLint is required');
-        assert($count >= \PHP_INT_MIN && $count <= \PHP_INT_MAX, 'Argument $count overflow: C type GLsizei is required');
+        $location = $location instanceof \FFI\CData ? $location->cdata : $location;
+        $count = $count instanceof \FFI\CData ? $count->cdata : $count;
 
-        $proc = self::getProc('glUniform1fv', 'void (*)(GLint location, GLsizei count, const GLfloat *value)');
+        assert(Assert::int16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
+        assert(Assert::int16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glUniform1fv', 'void (*)(GLint location, GLsizei count, const GLfloat *value)');
         $proc($location, $count, $value);
     }
 
     /**
-     * Modifies the value of a uniform variable or a uniform variable array. The location of the uniform variable to
-     * be modified is specified by *`location`*, which should be a value returned by
-     * {@see glGetUniformLocation}. `glUniform` operates on the program object that was made part of
-     * current state by calling {@see glUseProgram}.
+     * {@see GL46::glUniform} modifies the value of a uniform variable or a
+     * uniform variable array. The location of the uniform variable to be
+     * modified is specified by $location, which should be a value returned
+     * by {@see GL46::glGetUniformLocation}. {@see GL46::glUniform} operates
+     * on the program object that was made part of current state by calling
+     * {@see GL46::glUseProgram}.
      *
-     * The commands `glUniform{1|2|3|4}{f|i}` are used to change the value of the uniform variable specified by
-     * *`location`* using the values passed as arguments. The number specified in the command should match the number
-     * of components in the data type of the specified uniform variable (e.g., `1` for float, int, bool; `2` for
-     * vec2, ivec2, bvec2, etc.). The suffix `f` indicates that floating-point values are being passed; the suffix
-     * `i` indicates that integer values are being passed, and this type should also match the data type of the
-     * specified uniform variable. The `i` variants of this function should be used to provide values for uniform
-     * variables defined as int, ivec2, ivec3, ivec4, or arrays of these. The `f` variants should be used to provide
-     * values for uniform variables of type float, vec2, vec3, vec4, or arrays of these. Either the `i` or the `f`
-     * variants may be used to provide values for uniform variables of type bool, bvec2, bvec3, bvec4, or arrays of
-     * these. The uniform variable will be set to false if the input value is 0 or 0.0f, and it will be set to true
-     * otherwise.
+     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}} are used to
+     * change the value of the uniform variable specified by $location using
+     * the values passed as arguments. The number specified in the command
+     * should match the number of components in the data type of the
+     * specified uniform variable (e.g., {@see GL46::1} for `float`, `int`,
+     * `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`,
+     * `bvec2`, etc.). The suffix {@see GL46::f} indicates that
+     * floating-point values are being passed; the suffix {@see GL46::i}
+     * indicates that integer values are being passed; the suffix
+     * {@see GL46::ui} indicates that unsigned integer values are being
+     * passed, and this type should also match the data type of the specified
+     * uniform variable. The {@see GL46::i} variants of this function should
+     * be used to provide values for uniform variables defined as `int`,
+     * `ivec2`, `ivec3`, `ivec4`, or arrays of these. The {@see GL46::ui}
+     * variants of this function should be used to provide values for uniform
+     * variables defined as `unsigned int`, `uvec2`, `uvec3`, `uvec4`, or
+     * arrays of these. The {@see GL46::f} variants should be used to provide
+     * values for uniform variables of type `float`, `vec2`, `vec3`, `vec4`,
+     * or arrays of these. Either the {@see GL46::i}, {@see GL46::ui} or
+     * {@see GL46::f} variants may be used to provide values for uniform
+     * variables of type `bool`, `bvec2`, `bvec3`, `bvec4`, or arrays of
+     * these. The uniform variable will be set to `false` if the input value
+     * is 0 or 0.0f, and it will be set to `true` otherwise.
      *
-     * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to `glUniform ` until the next
-     * successful link operation occurs on the program object, when they are once again initialized to 0.
+     * All active uniform variables defined in a program object are
+     * initialized to 0 when the program object is linked successfully. They
+     * retain the values assigned to them by a call to {@see GL46::glUniform
+     * } until the next successful link operation occurs on the program
+     * object, when they are once again initialized to 0.
      *
-     * The commands `glUniform{1|2|3|4}{f|i}v` can be used to modify a single uniform variable or a uniform variable
-     * array. These commands pass a count and a pointer to the values to be loaded into a uniform variable or a
-     * uniform variable array. A count of 1 should be used if modifying the value of a single uniform variable, and a
-     * count of 1 or greater can be used to modify an entire array or part of an array. When loading *n* elements
-     * starting at an arbitrary position *m* in a uniform variable array, elements *m* + *n* - 1 in the array will be
-     * replaced with the new values. If *`m`* + *`n`* - 1 is larger than the size of the uniform variable array,
-     * values for all array elements beyond the end of the array will be ignored. The number specified in the name of
-     * the command indicates the number of components for each element in *`value`*, and it should match the number
-     * of components in the data type of the specified uniform variable (e.g., `1` for float, int, bool; `2` for
-     * vec2, ivec2, bvec2, etc.). The data type specified in the name of the command must match the data type for the
-     * specified uniform variable as described previously for `glUniform{1|2|3|4}{f|i}`.
+     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}v} can be used to
+     * modify a single uniform variable or a uniform variable array. These
+     * commands pass a count and a pointer to the values to be loaded into a
+     * uniform variable or a uniform variable array. A count of 1 should be
+     * used if modifying the value of a single uniform variable, and a count
+     * of 1 or greater can be used to modify an entire array or part of an
+     * array. When loading n elements starting at an arbitrary position m in
+     * a uniform variable array, elements m + n - 1 in the array will be
+     * replaced with the new values. If $m + $n - 1 is larger than the size
+     * of the uniform variable array, values for all array elements beyond
+     * the end of the array will be ignored. The number specified in the name
+     * of the command indicates the number of components for each element in
+     * $value, and it should match the number of components in the data type
+     * of the specified uniform variable (e.g., {@see GL46::1} for float,
+     * int, bool; {@see GL46::2} for vec2, ivec2, bvec2, etc.). The data type
+     * specified in the name of the command must match the data type for the
+     * specified uniform variable as described previously for
+     * {@see GL46::glUniform{1|2|3|4}{f|i|ui}}.
      *
-     * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., `glUniform3f` or `glUniform3fv` can be used to load a uniform variable array of type
-     * vec3). The number of elements of the uniform variable array to be modified is specified by *`count`*
+     * For uniform variable arrays, each element of the array is considered
+     * to be of the type indicated in the name of the command (e.g.,
+     * {@see GL46::glUniform3f} or {@see GL46::glUniform3fv} can be used to
+     * load a uniform variable array of type vec3). The number of elements of
+     * the uniform variable array to be modified is specified by $count
      *
-     * The commands `glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv` are used to modify a matrix or an array of
-     * matrices. The numbers in the command name are interpreted as the dimensionality of the matrix. The number `2`
-     * indicates a 2 × 2 matrix (i.e., 4 values), the number `3` indicates a 3 × 3 matrix (i.e., 9 values), and the
-     * number `4` indicates a 4 × 4 matrix (i.e., 16 values). Non-square matrix dimensionality is explicit, with the
-     * first number representing the number of columns and the second number representing the number of rows. For
-     * example, `2x4` indicates a 2 × 4 matrix with 2 columns and 4 rows (i.e., 8 values). If *`transpose`* is
-     * `GL_FALSE`, each matrix is assumed to be supplied in column major order. If *`transpose`* is `GL_TRUE`, each
-     * matrix is assumed to be supplied in row major order. The *`count`* argument indicates the number of matrices
-     * to be passed. A count of 1 should be used if modifying the value of a single matrix, and a count greater than
-     * 1 can be used to modify an array of matrices.
+     * The commands
+     * {@see GL46::glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used
+     * to modify a matrix or an array of matrices. The numbers in the command
+     * name are interpreted as the dimensionality of the matrix. The number
+     * {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number
+     * {@see GL46::3} indicates a 3 × 3 matrix (i.e., 9 values), and the
+     * number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values).
+     * Non-square matrix dimensionality is explicit, with the first number
+     * representing the number of columns and the second number representing
+     * the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4
+     * matrix with 2 columns and 4 rows (i.e., 8 values). If $transpose is
+     * {@see GL46::GL_FALSE}, each matrix is assumed to be supplied in column
+     * major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is
+     * assumed to be supplied in row major order. The $count argument
+     * indicates the number of matrices to be passed. A count of 1 should be
+     * used if modifying the value of a single matrix, and a count greater
+     * than 1 can be used to modify an array of matrices.
      *
      * @see http://docs.gl/gl2/glUniform
-     * @see http://docs.gl/gl3/glUniform
      * @see http://docs.gl/gl4/glUniform
      * @since 2.0
-     * @param int $location
-     * @param int $count
+     * @param int|\FFI\CData|\FFI\CInt $location
+     * @param int|\FFI\CData|\FFI\CInt $count
      * @param \FFI\CData|\FFI\CFloatPtr|null $value
      * @return void
      */
-    public static function glUniform2fv(int $location, int $count, ?\FFI\CData $value): void
+    public function glUniform2fv($location, $count, ?\FFI\CData $value): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($location >= \PHP_INT_MIN && $location <= \PHP_INT_MAX, 'Argument $location overflow: C type GLint is required');
-        assert($count >= \PHP_INT_MIN && $count <= \PHP_INT_MAX, 'Argument $count overflow: C type GLsizei is required');
+        $location = $location instanceof \FFI\CData ? $location->cdata : $location;
+        $count = $count instanceof \FFI\CData ? $count->cdata : $count;
 
-        $proc = self::getProc('glUniform2fv', 'void (*)(GLint location, GLsizei count, const GLfloat *value)');
+        assert(Assert::int16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
+        assert(Assert::int16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glUniform2fv', 'void (*)(GLint location, GLsizei count, const GLfloat *value)');
         $proc($location, $count, $value);
     }
 
     /**
-     * Modifies the value of a uniform variable or a uniform variable array. The location of the uniform variable to
-     * be modified is specified by *`location`*, which should be a value returned by
-     * {@see glGetUniformLocation}. `glUniform` operates on the program object that was made part of
-     * current state by calling {@see glUseProgram}.
+     * {@see GL46::glUniform} modifies the value of a uniform variable or a
+     * uniform variable array. The location of the uniform variable to be
+     * modified is specified by $location, which should be a value returned
+     * by {@see GL46::glGetUniformLocation}. {@see GL46::glUniform} operates
+     * on the program object that was made part of current state by calling
+     * {@see GL46::glUseProgram}.
      *
-     * The commands `glUniform{1|2|3|4}{f|i}` are used to change the value of the uniform variable specified by
-     * *`location`* using the values passed as arguments. The number specified in the command should match the number
-     * of components in the data type of the specified uniform variable (e.g., `1` for float, int, bool; `2` for
-     * vec2, ivec2, bvec2, etc.). The suffix `f` indicates that floating-point values are being passed; the suffix
-     * `i` indicates that integer values are being passed, and this type should also match the data type of the
-     * specified uniform variable. The `i` variants of this function should be used to provide values for uniform
-     * variables defined as int, ivec2, ivec3, ivec4, or arrays of these. The `f` variants should be used to provide
-     * values for uniform variables of type float, vec2, vec3, vec4, or arrays of these. Either the `i` or the `f`
-     * variants may be used to provide values for uniform variables of type bool, bvec2, bvec3, bvec4, or arrays of
-     * these. The uniform variable will be set to false if the input value is 0 or 0.0f, and it will be set to true
-     * otherwise.
+     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}} are used to
+     * change the value of the uniform variable specified by $location using
+     * the values passed as arguments. The number specified in the command
+     * should match the number of components in the data type of the
+     * specified uniform variable (e.g., {@see GL46::1} for `float`, `int`,
+     * `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`,
+     * `bvec2`, etc.). The suffix {@see GL46::f} indicates that
+     * floating-point values are being passed; the suffix {@see GL46::i}
+     * indicates that integer values are being passed; the suffix
+     * {@see GL46::ui} indicates that unsigned integer values are being
+     * passed, and this type should also match the data type of the specified
+     * uniform variable. The {@see GL46::i} variants of this function should
+     * be used to provide values for uniform variables defined as `int`,
+     * `ivec2`, `ivec3`, `ivec4`, or arrays of these. The {@see GL46::ui}
+     * variants of this function should be used to provide values for uniform
+     * variables defined as `unsigned int`, `uvec2`, `uvec3`, `uvec4`, or
+     * arrays of these. The {@see GL46::f} variants should be used to provide
+     * values for uniform variables of type `float`, `vec2`, `vec3`, `vec4`,
+     * or arrays of these. Either the {@see GL46::i}, {@see GL46::ui} or
+     * {@see GL46::f} variants may be used to provide values for uniform
+     * variables of type `bool`, `bvec2`, `bvec3`, `bvec4`, or arrays of
+     * these. The uniform variable will be set to `false` if the input value
+     * is 0 or 0.0f, and it will be set to `true` otherwise.
      *
-     * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to `glUniform ` until the next
-     * successful link operation occurs on the program object, when they are once again initialized to 0.
+     * All active uniform variables defined in a program object are
+     * initialized to 0 when the program object is linked successfully. They
+     * retain the values assigned to them by a call to {@see GL46::glUniform
+     * } until the next successful link operation occurs on the program
+     * object, when they are once again initialized to 0.
      *
-     * The commands `glUniform{1|2|3|4}{f|i}v` can be used to modify a single uniform variable or a uniform variable
-     * array. These commands pass a count and a pointer to the values to be loaded into a uniform variable or a
-     * uniform variable array. A count of 1 should be used if modifying the value of a single uniform variable, and a
-     * count of 1 or greater can be used to modify an entire array or part of an array. When loading *n* elements
-     * starting at an arbitrary position *m* in a uniform variable array, elements *m* + *n* - 1 in the array will be
-     * replaced with the new values. If *`m`* + *`n`* - 1 is larger than the size of the uniform variable array,
-     * values for all array elements beyond the end of the array will be ignored. The number specified in the name of
-     * the command indicates the number of components for each element in *`value`*, and it should match the number
-     * of components in the data type of the specified uniform variable (e.g., `1` for float, int, bool; `2` for
-     * vec2, ivec2, bvec2, etc.). The data type specified in the name of the command must match the data type for the
-     * specified uniform variable as described previously for `glUniform{1|2|3|4}{f|i}`.
+     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}v} can be used to
+     * modify a single uniform variable or a uniform variable array. These
+     * commands pass a count and a pointer to the values to be loaded into a
+     * uniform variable or a uniform variable array. A count of 1 should be
+     * used if modifying the value of a single uniform variable, and a count
+     * of 1 or greater can be used to modify an entire array or part of an
+     * array. When loading n elements starting at an arbitrary position m in
+     * a uniform variable array, elements m + n - 1 in the array will be
+     * replaced with the new values. If $m + $n - 1 is larger than the size
+     * of the uniform variable array, values for all array elements beyond
+     * the end of the array will be ignored. The number specified in the name
+     * of the command indicates the number of components for each element in
+     * $value, and it should match the number of components in the data type
+     * of the specified uniform variable (e.g., {@see GL46::1} for float,
+     * int, bool; {@see GL46::2} for vec2, ivec2, bvec2, etc.). The data type
+     * specified in the name of the command must match the data type for the
+     * specified uniform variable as described previously for
+     * {@see GL46::glUniform{1|2|3|4}{f|i|ui}}.
      *
-     * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., `glUniform3f` or `glUniform3fv` can be used to load a uniform variable array of type
-     * vec3). The number of elements of the uniform variable array to be modified is specified by *`count`*
+     * For uniform variable arrays, each element of the array is considered
+     * to be of the type indicated in the name of the command (e.g.,
+     * {@see GL46::glUniform3f} or {@see GL46::glUniform3fv} can be used to
+     * load a uniform variable array of type vec3). The number of elements of
+     * the uniform variable array to be modified is specified by $count
      *
-     * The commands `glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv` are used to modify a matrix or an array of
-     * matrices. The numbers in the command name are interpreted as the dimensionality of the matrix. The number `2`
-     * indicates a 2 × 2 matrix (i.e., 4 values), the number `3` indicates a 3 × 3 matrix (i.e., 9 values), and the
-     * number `4` indicates a 4 × 4 matrix (i.e., 16 values). Non-square matrix dimensionality is explicit, with the
-     * first number representing the number of columns and the second number representing the number of rows. For
-     * example, `2x4` indicates a 2 × 4 matrix with 2 columns and 4 rows (i.e., 8 values). If *`transpose`* is
-     * `GL_FALSE`, each matrix is assumed to be supplied in column major order. If *`transpose`* is `GL_TRUE`, each
-     * matrix is assumed to be supplied in row major order. The *`count`* argument indicates the number of matrices
-     * to be passed. A count of 1 should be used if modifying the value of a single matrix, and a count greater than
-     * 1 can be used to modify an array of matrices.
+     * The commands
+     * {@see GL46::glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used
+     * to modify a matrix or an array of matrices. The numbers in the command
+     * name are interpreted as the dimensionality of the matrix. The number
+     * {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number
+     * {@see GL46::3} indicates a 3 × 3 matrix (i.e., 9 values), and the
+     * number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values).
+     * Non-square matrix dimensionality is explicit, with the first number
+     * representing the number of columns and the second number representing
+     * the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4
+     * matrix with 2 columns and 4 rows (i.e., 8 values). If $transpose is
+     * {@see GL46::GL_FALSE}, each matrix is assumed to be supplied in column
+     * major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is
+     * assumed to be supplied in row major order. The $count argument
+     * indicates the number of matrices to be passed. A count of 1 should be
+     * used if modifying the value of a single matrix, and a count greater
+     * than 1 can be used to modify an array of matrices.
      *
      * @see http://docs.gl/gl2/glUniform
-     * @see http://docs.gl/gl3/glUniform
      * @see http://docs.gl/gl4/glUniform
      * @since 2.0
-     * @param int $location
-     * @param int $count
+     * @param int|\FFI\CData|\FFI\CInt $location
+     * @param int|\FFI\CData|\FFI\CInt $count
      * @param \FFI\CData|\FFI\CFloatPtr|null $value
      * @return void
      */
-    public static function glUniform3fv(int $location, int $count, ?\FFI\CData $value): void
+    public function glUniform3fv($location, $count, ?\FFI\CData $value): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($location >= \PHP_INT_MIN && $location <= \PHP_INT_MAX, 'Argument $location overflow: C type GLint is required');
-        assert($count >= \PHP_INT_MIN && $count <= \PHP_INT_MAX, 'Argument $count overflow: C type GLsizei is required');
+        $location = $location instanceof \FFI\CData ? $location->cdata : $location;
+        $count = $count instanceof \FFI\CData ? $count->cdata : $count;
 
-        $proc = self::getProc('glUniform3fv', 'void (*)(GLint location, GLsizei count, const GLfloat *value)');
+        assert(Assert::int16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
+        assert(Assert::int16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glUniform3fv', 'void (*)(GLint location, GLsizei count, const GLfloat *value)');
         $proc($location, $count, $value);
     }
 
     /**
-     * Modifies the value of a uniform variable or a uniform variable array. The location of the uniform variable to
-     * be modified is specified by *`location`*, which should be a value returned by
-     * {@see glGetUniformLocation}. `glUniform` operates on the program object that was made part of
-     * current state by calling {@see glUseProgram}.
+     * {@see GL46::glUniform} modifies the value of a uniform variable or a
+     * uniform variable array. The location of the uniform variable to be
+     * modified is specified by $location, which should be a value returned
+     * by {@see GL46::glGetUniformLocation}. {@see GL46::glUniform} operates
+     * on the program object that was made part of current state by calling
+     * {@see GL46::glUseProgram}.
      *
-     * The commands `glUniform{1|2|3|4}{f|i}` are used to change the value of the uniform variable specified by
-     * *`location`* using the values passed as arguments. The number specified in the command should match the number
-     * of components in the data type of the specified uniform variable (e.g., `1` for float, int, bool; `2` for
-     * vec2, ivec2, bvec2, etc.). The suffix `f` indicates that floating-point values are being passed; the suffix
-     * `i` indicates that integer values are being passed, and this type should also match the data type of the
-     * specified uniform variable. The `i` variants of this function should be used to provide values for uniform
-     * variables defined as int, ivec2, ivec3, ivec4, or arrays of these. The `f` variants should be used to provide
-     * values for uniform variables of type float, vec2, vec3, vec4, or arrays of these. Either the `i` or the `f`
-     * variants may be used to provide values for uniform variables of type bool, bvec2, bvec3, bvec4, or arrays of
-     * these. The uniform variable will be set to false if the input value is 0 or 0.0f, and it will be set to true
-     * otherwise.
+     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}} are used to
+     * change the value of the uniform variable specified by $location using
+     * the values passed as arguments. The number specified in the command
+     * should match the number of components in the data type of the
+     * specified uniform variable (e.g., {@see GL46::1} for `float`, `int`,
+     * `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`,
+     * `bvec2`, etc.). The suffix {@see GL46::f} indicates that
+     * floating-point values are being passed; the suffix {@see GL46::i}
+     * indicates that integer values are being passed; the suffix
+     * {@see GL46::ui} indicates that unsigned integer values are being
+     * passed, and this type should also match the data type of the specified
+     * uniform variable. The {@see GL46::i} variants of this function should
+     * be used to provide values for uniform variables defined as `int`,
+     * `ivec2`, `ivec3`, `ivec4`, or arrays of these. The {@see GL46::ui}
+     * variants of this function should be used to provide values for uniform
+     * variables defined as `unsigned int`, `uvec2`, `uvec3`, `uvec4`, or
+     * arrays of these. The {@see GL46::f} variants should be used to provide
+     * values for uniform variables of type `float`, `vec2`, `vec3`, `vec4`,
+     * or arrays of these. Either the {@see GL46::i}, {@see GL46::ui} or
+     * {@see GL46::f} variants may be used to provide values for uniform
+     * variables of type `bool`, `bvec2`, `bvec3`, `bvec4`, or arrays of
+     * these. The uniform variable will be set to `false` if the input value
+     * is 0 or 0.0f, and it will be set to `true` otherwise.
      *
-     * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to `glUniform ` until the next
-     * successful link operation occurs on the program object, when they are once again initialized to 0.
+     * All active uniform variables defined in a program object are
+     * initialized to 0 when the program object is linked successfully. They
+     * retain the values assigned to them by a call to {@see GL46::glUniform
+     * } until the next successful link operation occurs on the program
+     * object, when they are once again initialized to 0.
      *
-     * The commands `glUniform{1|2|3|4}{f|i}v` can be used to modify a single uniform variable or a uniform variable
-     * array. These commands pass a count and a pointer to the values to be loaded into a uniform variable or a
-     * uniform variable array. A count of 1 should be used if modifying the value of a single uniform variable, and a
-     * count of 1 or greater can be used to modify an entire array or part of an array. When loading *n* elements
-     * starting at an arbitrary position *m* in a uniform variable array, elements *m* + *n* - 1 in the array will be
-     * replaced with the new values. If *`m`* + *`n`* - 1 is larger than the size of the uniform variable array,
-     * values for all array elements beyond the end of the array will be ignored. The number specified in the name of
-     * the command indicates the number of components for each element in *`value`*, and it should match the number
-     * of components in the data type of the specified uniform variable (e.g., `1` for float, int, bool; `2` for
-     * vec2, ivec2, bvec2, etc.). The data type specified in the name of the command must match the data type for the
-     * specified uniform variable as described previously for `glUniform{1|2|3|4}{f|i}`.
+     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}v} can be used to
+     * modify a single uniform variable or a uniform variable array. These
+     * commands pass a count and a pointer to the values to be loaded into a
+     * uniform variable or a uniform variable array. A count of 1 should be
+     * used if modifying the value of a single uniform variable, and a count
+     * of 1 or greater can be used to modify an entire array or part of an
+     * array. When loading n elements starting at an arbitrary position m in
+     * a uniform variable array, elements m + n - 1 in the array will be
+     * replaced with the new values. If $m + $n - 1 is larger than the size
+     * of the uniform variable array, values for all array elements beyond
+     * the end of the array will be ignored. The number specified in the name
+     * of the command indicates the number of components for each element in
+     * $value, and it should match the number of components in the data type
+     * of the specified uniform variable (e.g., {@see GL46::1} for float,
+     * int, bool; {@see GL46::2} for vec2, ivec2, bvec2, etc.). The data type
+     * specified in the name of the command must match the data type for the
+     * specified uniform variable as described previously for
+     * {@see GL46::glUniform{1|2|3|4}{f|i|ui}}.
      *
-     * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., `glUniform3f` or `glUniform3fv` can be used to load a uniform variable array of type
-     * vec3). The number of elements of the uniform variable array to be modified is specified by *`count`*
+     * For uniform variable arrays, each element of the array is considered
+     * to be of the type indicated in the name of the command (e.g.,
+     * {@see GL46::glUniform3f} or {@see GL46::glUniform3fv} can be used to
+     * load a uniform variable array of type vec3). The number of elements of
+     * the uniform variable array to be modified is specified by $count
      *
-     * The commands `glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv` are used to modify a matrix or an array of
-     * matrices. The numbers in the command name are interpreted as the dimensionality of the matrix. The number `2`
-     * indicates a 2 × 2 matrix (i.e., 4 values), the number `3` indicates a 3 × 3 matrix (i.e., 9 values), and the
-     * number `4` indicates a 4 × 4 matrix (i.e., 16 values). Non-square matrix dimensionality is explicit, with the
-     * first number representing the number of columns and the second number representing the number of rows. For
-     * example, `2x4` indicates a 2 × 4 matrix with 2 columns and 4 rows (i.e., 8 values). If *`transpose`* is
-     * `GL_FALSE`, each matrix is assumed to be supplied in column major order. If *`transpose`* is `GL_TRUE`, each
-     * matrix is assumed to be supplied in row major order. The *`count`* argument indicates the number of matrices
-     * to be passed. A count of 1 should be used if modifying the value of a single matrix, and a count greater than
-     * 1 can be used to modify an array of matrices.
+     * The commands
+     * {@see GL46::glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used
+     * to modify a matrix or an array of matrices. The numbers in the command
+     * name are interpreted as the dimensionality of the matrix. The number
+     * {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number
+     * {@see GL46::3} indicates a 3 × 3 matrix (i.e., 9 values), and the
+     * number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values).
+     * Non-square matrix dimensionality is explicit, with the first number
+     * representing the number of columns and the second number representing
+     * the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4
+     * matrix with 2 columns and 4 rows (i.e., 8 values). If $transpose is
+     * {@see GL46::GL_FALSE}, each matrix is assumed to be supplied in column
+     * major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is
+     * assumed to be supplied in row major order. The $count argument
+     * indicates the number of matrices to be passed. A count of 1 should be
+     * used if modifying the value of a single matrix, and a count greater
+     * than 1 can be used to modify an array of matrices.
      *
      * @see http://docs.gl/gl2/glUniform
-     * @see http://docs.gl/gl3/glUniform
      * @see http://docs.gl/gl4/glUniform
      * @since 2.0
-     * @param int $location
-     * @param int $count
+     * @param int|\FFI\CData|\FFI\CInt $location
+     * @param int|\FFI\CData|\FFI\CInt $count
      * @param \FFI\CData|\FFI\CFloatPtr|null $value
      * @return void
      */
-    public static function glUniform4fv(int $location, int $count, ?\FFI\CData $value): void
+    public function glUniform4fv($location, $count, ?\FFI\CData $value): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($location >= \PHP_INT_MIN && $location <= \PHP_INT_MAX, 'Argument $location overflow: C type GLint is required');
-        assert($count >= \PHP_INT_MIN && $count <= \PHP_INT_MAX, 'Argument $count overflow: C type GLsizei is required');
+        $location = $location instanceof \FFI\CData ? $location->cdata : $location;
+        $count = $count instanceof \FFI\CData ? $count->cdata : $count;
 
-        $proc = self::getProc('glUniform4fv', 'void (*)(GLint location, GLsizei count, const GLfloat *value)');
+        assert(Assert::int16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
+        assert(Assert::int16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glUniform4fv', 'void (*)(GLint location, GLsizei count, const GLfloat *value)');
         $proc($location, $count, $value);
     }
 
     /**
-     * Modifies the value of a uniform variable or a uniform variable array. The location of the uniform variable to
-     * be modified is specified by *`location`*, which should be a value returned by
-     * {@see glGetUniformLocation}. `glUniform` operates on the program object that was made part of
-     * current state by calling {@see glUseProgram}.
+     * {@see GL46::glUniform} modifies the value of a uniform variable or a
+     * uniform variable array. The location of the uniform variable to be
+     * modified is specified by $location, which should be a value returned
+     * by {@see GL46::glGetUniformLocation}. {@see GL46::glUniform} operates
+     * on the program object that was made part of current state by calling
+     * {@see GL46::glUseProgram}.
      *
-     * The commands `glUniform{1|2|3|4}{f|i}` are used to change the value of the uniform variable specified by
-     * *`location`* using the values passed as arguments. The number specified in the command should match the number
-     * of components in the data type of the specified uniform variable (e.g., `1` for float, int, bool; `2` for
-     * vec2, ivec2, bvec2, etc.). The suffix `f` indicates that floating-point values are being passed; the suffix
-     * `i` indicates that integer values are being passed, and this type should also match the data type of the
-     * specified uniform variable. The `i` variants of this function should be used to provide values for uniform
-     * variables defined as int, ivec2, ivec3, ivec4, or arrays of these. The `f` variants should be used to provide
-     * values for uniform variables of type float, vec2, vec3, vec4, or arrays of these. Either the `i` or the `f`
-     * variants may be used to provide values for uniform variables of type bool, bvec2, bvec3, bvec4, or arrays of
-     * these. The uniform variable will be set to false if the input value is 0 or 0.0f, and it will be set to true
-     * otherwise.
+     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}} are used to
+     * change the value of the uniform variable specified by $location using
+     * the values passed as arguments. The number specified in the command
+     * should match the number of components in the data type of the
+     * specified uniform variable (e.g., {@see GL46::1} for `float`, `int`,
+     * `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`,
+     * `bvec2`, etc.). The suffix {@see GL46::f} indicates that
+     * floating-point values are being passed; the suffix {@see GL46::i}
+     * indicates that integer values are being passed; the suffix
+     * {@see GL46::ui} indicates that unsigned integer values are being
+     * passed, and this type should also match the data type of the specified
+     * uniform variable. The {@see GL46::i} variants of this function should
+     * be used to provide values for uniform variables defined as `int`,
+     * `ivec2`, `ivec3`, `ivec4`, or arrays of these. The {@see GL46::ui}
+     * variants of this function should be used to provide values for uniform
+     * variables defined as `unsigned int`, `uvec2`, `uvec3`, `uvec4`, or
+     * arrays of these. The {@see GL46::f} variants should be used to provide
+     * values for uniform variables of type `float`, `vec2`, `vec3`, `vec4`,
+     * or arrays of these. Either the {@see GL46::i}, {@see GL46::ui} or
+     * {@see GL46::f} variants may be used to provide values for uniform
+     * variables of type `bool`, `bvec2`, `bvec3`, `bvec4`, or arrays of
+     * these. The uniform variable will be set to `false` if the input value
+     * is 0 or 0.0f, and it will be set to `true` otherwise.
      *
-     * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to `glUniform ` until the next
-     * successful link operation occurs on the program object, when they are once again initialized to 0.
+     * All active uniform variables defined in a program object are
+     * initialized to 0 when the program object is linked successfully. They
+     * retain the values assigned to them by a call to {@see GL46::glUniform
+     * } until the next successful link operation occurs on the program
+     * object, when they are once again initialized to 0.
      *
-     * The commands `glUniform{1|2|3|4}{f|i}v` can be used to modify a single uniform variable or a uniform variable
-     * array. These commands pass a count and a pointer to the values to be loaded into a uniform variable or a
-     * uniform variable array. A count of 1 should be used if modifying the value of a single uniform variable, and a
-     * count of 1 or greater can be used to modify an entire array or part of an array. When loading *n* elements
-     * starting at an arbitrary position *m* in a uniform variable array, elements *m* + *n* - 1 in the array will be
-     * replaced with the new values. If *`m`* + *`n`* - 1 is larger than the size of the uniform variable array,
-     * values for all array elements beyond the end of the array will be ignored. The number specified in the name of
-     * the command indicates the number of components for each element in *`value`*, and it should match the number
-     * of components in the data type of the specified uniform variable (e.g., `1` for float, int, bool; `2` for
-     * vec2, ivec2, bvec2, etc.). The data type specified in the name of the command must match the data type for the
-     * specified uniform variable as described previously for `glUniform{1|2|3|4}{f|i}`.
+     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}v} can be used to
+     * modify a single uniform variable or a uniform variable array. These
+     * commands pass a count and a pointer to the values to be loaded into a
+     * uniform variable or a uniform variable array. A count of 1 should be
+     * used if modifying the value of a single uniform variable, and a count
+     * of 1 or greater can be used to modify an entire array or part of an
+     * array. When loading n elements starting at an arbitrary position m in
+     * a uniform variable array, elements m + n - 1 in the array will be
+     * replaced with the new values. If $m + $n - 1 is larger than the size
+     * of the uniform variable array, values for all array elements beyond
+     * the end of the array will be ignored. The number specified in the name
+     * of the command indicates the number of components for each element in
+     * $value, and it should match the number of components in the data type
+     * of the specified uniform variable (e.g., {@see GL46::1} for float,
+     * int, bool; {@see GL46::2} for vec2, ivec2, bvec2, etc.). The data type
+     * specified in the name of the command must match the data type for the
+     * specified uniform variable as described previously for
+     * {@see GL46::glUniform{1|2|3|4}{f|i|ui}}.
      *
-     * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., `glUniform3f` or `glUniform3fv` can be used to load a uniform variable array of type
-     * vec3). The number of elements of the uniform variable array to be modified is specified by *`count`*
+     * For uniform variable arrays, each element of the array is considered
+     * to be of the type indicated in the name of the command (e.g.,
+     * {@see GL46::glUniform3f} or {@see GL46::glUniform3fv} can be used to
+     * load a uniform variable array of type vec3). The number of elements of
+     * the uniform variable array to be modified is specified by $count
      *
-     * The commands `glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv` are used to modify a matrix or an array of
-     * matrices. The numbers in the command name are interpreted as the dimensionality of the matrix. The number `2`
-     * indicates a 2 × 2 matrix (i.e., 4 values), the number `3` indicates a 3 × 3 matrix (i.e., 9 values), and the
-     * number `4` indicates a 4 × 4 matrix (i.e., 16 values). Non-square matrix dimensionality is explicit, with the
-     * first number representing the number of columns and the second number representing the number of rows. For
-     * example, `2x4` indicates a 2 × 4 matrix with 2 columns and 4 rows (i.e., 8 values). If *`transpose`* is
-     * `GL_FALSE`, each matrix is assumed to be supplied in column major order. If *`transpose`* is `GL_TRUE`, each
-     * matrix is assumed to be supplied in row major order. The *`count`* argument indicates the number of matrices
-     * to be passed. A count of 1 should be used if modifying the value of a single matrix, and a count greater than
-     * 1 can be used to modify an array of matrices.
+     * The commands
+     * {@see GL46::glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used
+     * to modify a matrix or an array of matrices. The numbers in the command
+     * name are interpreted as the dimensionality of the matrix. The number
+     * {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number
+     * {@see GL46::3} indicates a 3 × 3 matrix (i.e., 9 values), and the
+     * number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values).
+     * Non-square matrix dimensionality is explicit, with the first number
+     * representing the number of columns and the second number representing
+     * the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4
+     * matrix with 2 columns and 4 rows (i.e., 8 values). If $transpose is
+     * {@see GL46::GL_FALSE}, each matrix is assumed to be supplied in column
+     * major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is
+     * assumed to be supplied in row major order. The $count argument
+     * indicates the number of matrices to be passed. A count of 1 should be
+     * used if modifying the value of a single matrix, and a count greater
+     * than 1 can be used to modify an array of matrices.
      *
      * @see http://docs.gl/gl2/glUniform
-     * @see http://docs.gl/gl3/glUniform
      * @see http://docs.gl/gl4/glUniform
      * @since 2.0
-     * @param int $location
-     * @param int $count
+     * @param int|\FFI\CData|\FFI\CInt $location
+     * @param int|\FFI\CData|\FFI\CInt $count
      * @param \FFI\CData|\FFI\CIntPtr|null $value
      * @return void
      */
-    public static function glUniform1iv(int $location, int $count, ?\FFI\CData $value): void
+    public function glUniform1iv($location, $count, ?\FFI\CData $value): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($location >= \PHP_INT_MIN && $location <= \PHP_INT_MAX, 'Argument $location overflow: C type GLint is required');
-        assert($count >= \PHP_INT_MIN && $count <= \PHP_INT_MAX, 'Argument $count overflow: C type GLsizei is required');
+        $location = $location instanceof \FFI\CData ? $location->cdata : $location;
+        $count = $count instanceof \FFI\CData ? $count->cdata : $count;
 
-        $proc = self::getProc('glUniform1iv', 'void (*)(GLint location, GLsizei count, const GLint *value)');
+        assert(Assert::int16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
+        assert(Assert::int16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glUniform1iv', 'void (*)(GLint location, GLsizei count, const GLint *value)');
         $proc($location, $count, $value);
     }
 
     /**
-     * Modifies the value of a uniform variable or a uniform variable array. The location of the uniform variable to
-     * be modified is specified by *`location`*, which should be a value returned by
-     * {@see glGetUniformLocation}. `glUniform` operates on the program object that was made part of
-     * current state by calling {@see glUseProgram}.
+     * {@see GL46::glUniform} modifies the value of a uniform variable or a
+     * uniform variable array. The location of the uniform variable to be
+     * modified is specified by $location, which should be a value returned
+     * by {@see GL46::glGetUniformLocation}. {@see GL46::glUniform} operates
+     * on the program object that was made part of current state by calling
+     * {@see GL46::glUseProgram}.
      *
-     * The commands `glUniform{1|2|3|4}{f|i}` are used to change the value of the uniform variable specified by
-     * *`location`* using the values passed as arguments. The number specified in the command should match the number
-     * of components in the data type of the specified uniform variable (e.g., `1` for float, int, bool; `2` for
-     * vec2, ivec2, bvec2, etc.). The suffix `f` indicates that floating-point values are being passed; the suffix
-     * `i` indicates that integer values are being passed, and this type should also match the data type of the
-     * specified uniform variable. The `i` variants of this function should be used to provide values for uniform
-     * variables defined as int, ivec2, ivec3, ivec4, or arrays of these. The `f` variants should be used to provide
-     * values for uniform variables of type float, vec2, vec3, vec4, or arrays of these. Either the `i` or the `f`
-     * variants may be used to provide values for uniform variables of type bool, bvec2, bvec3, bvec4, or arrays of
-     * these. The uniform variable will be set to false if the input value is 0 or 0.0f, and it will be set to true
-     * otherwise.
+     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}} are used to
+     * change the value of the uniform variable specified by $location using
+     * the values passed as arguments. The number specified in the command
+     * should match the number of components in the data type of the
+     * specified uniform variable (e.g., {@see GL46::1} for `float`, `int`,
+     * `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`,
+     * `bvec2`, etc.). The suffix {@see GL46::f} indicates that
+     * floating-point values are being passed; the suffix {@see GL46::i}
+     * indicates that integer values are being passed; the suffix
+     * {@see GL46::ui} indicates that unsigned integer values are being
+     * passed, and this type should also match the data type of the specified
+     * uniform variable. The {@see GL46::i} variants of this function should
+     * be used to provide values for uniform variables defined as `int`,
+     * `ivec2`, `ivec3`, `ivec4`, or arrays of these. The {@see GL46::ui}
+     * variants of this function should be used to provide values for uniform
+     * variables defined as `unsigned int`, `uvec2`, `uvec3`, `uvec4`, or
+     * arrays of these. The {@see GL46::f} variants should be used to provide
+     * values for uniform variables of type `float`, `vec2`, `vec3`, `vec4`,
+     * or arrays of these. Either the {@see GL46::i}, {@see GL46::ui} or
+     * {@see GL46::f} variants may be used to provide values for uniform
+     * variables of type `bool`, `bvec2`, `bvec3`, `bvec4`, or arrays of
+     * these. The uniform variable will be set to `false` if the input value
+     * is 0 or 0.0f, and it will be set to `true` otherwise.
      *
-     * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to `glUniform ` until the next
-     * successful link operation occurs on the program object, when they are once again initialized to 0.
+     * All active uniform variables defined in a program object are
+     * initialized to 0 when the program object is linked successfully. They
+     * retain the values assigned to them by a call to {@see GL46::glUniform
+     * } until the next successful link operation occurs on the program
+     * object, when they are once again initialized to 0.
      *
-     * The commands `glUniform{1|2|3|4}{f|i}v` can be used to modify a single uniform variable or a uniform variable
-     * array. These commands pass a count and a pointer to the values to be loaded into a uniform variable or a
-     * uniform variable array. A count of 1 should be used if modifying the value of a single uniform variable, and a
-     * count of 1 or greater can be used to modify an entire array or part of an array. When loading *n* elements
-     * starting at an arbitrary position *m* in a uniform variable array, elements *m* + *n* - 1 in the array will be
-     * replaced with the new values. If *`m`* + *`n`* - 1 is larger than the size of the uniform variable array,
-     * values for all array elements beyond the end of the array will be ignored. The number specified in the name of
-     * the command indicates the number of components for each element in *`value`*, and it should match the number
-     * of components in the data type of the specified uniform variable (e.g., `1` for float, int, bool; `2` for
-     * vec2, ivec2, bvec2, etc.). The data type specified in the name of the command must match the data type for the
-     * specified uniform variable as described previously for `glUniform{1|2|3|4}{f|i}`.
+     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}v} can be used to
+     * modify a single uniform variable or a uniform variable array. These
+     * commands pass a count and a pointer to the values to be loaded into a
+     * uniform variable or a uniform variable array. A count of 1 should be
+     * used if modifying the value of a single uniform variable, and a count
+     * of 1 or greater can be used to modify an entire array or part of an
+     * array. When loading n elements starting at an arbitrary position m in
+     * a uniform variable array, elements m + n - 1 in the array will be
+     * replaced with the new values. If $m + $n - 1 is larger than the size
+     * of the uniform variable array, values for all array elements beyond
+     * the end of the array will be ignored. The number specified in the name
+     * of the command indicates the number of components for each element in
+     * $value, and it should match the number of components in the data type
+     * of the specified uniform variable (e.g., {@see GL46::1} for float,
+     * int, bool; {@see GL46::2} for vec2, ivec2, bvec2, etc.). The data type
+     * specified in the name of the command must match the data type for the
+     * specified uniform variable as described previously for
+     * {@see GL46::glUniform{1|2|3|4}{f|i|ui}}.
      *
-     * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., `glUniform3f` or `glUniform3fv` can be used to load a uniform variable array of type
-     * vec3). The number of elements of the uniform variable array to be modified is specified by *`count`*
+     * For uniform variable arrays, each element of the array is considered
+     * to be of the type indicated in the name of the command (e.g.,
+     * {@see GL46::glUniform3f} or {@see GL46::glUniform3fv} can be used to
+     * load a uniform variable array of type vec3). The number of elements of
+     * the uniform variable array to be modified is specified by $count
      *
-     * The commands `glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv` are used to modify a matrix or an array of
-     * matrices. The numbers in the command name are interpreted as the dimensionality of the matrix. The number `2`
-     * indicates a 2 × 2 matrix (i.e., 4 values), the number `3` indicates a 3 × 3 matrix (i.e., 9 values), and the
-     * number `4` indicates a 4 × 4 matrix (i.e., 16 values). Non-square matrix dimensionality is explicit, with the
-     * first number representing the number of columns and the second number representing the number of rows. For
-     * example, `2x4` indicates a 2 × 4 matrix with 2 columns and 4 rows (i.e., 8 values). If *`transpose`* is
-     * `GL_FALSE`, each matrix is assumed to be supplied in column major order. If *`transpose`* is `GL_TRUE`, each
-     * matrix is assumed to be supplied in row major order. The *`count`* argument indicates the number of matrices
-     * to be passed. A count of 1 should be used if modifying the value of a single matrix, and a count greater than
-     * 1 can be used to modify an array of matrices.
+     * The commands
+     * {@see GL46::glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used
+     * to modify a matrix or an array of matrices. The numbers in the command
+     * name are interpreted as the dimensionality of the matrix. The number
+     * {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number
+     * {@see GL46::3} indicates a 3 × 3 matrix (i.e., 9 values), and the
+     * number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values).
+     * Non-square matrix dimensionality is explicit, with the first number
+     * representing the number of columns and the second number representing
+     * the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4
+     * matrix with 2 columns and 4 rows (i.e., 8 values). If $transpose is
+     * {@see GL46::GL_FALSE}, each matrix is assumed to be supplied in column
+     * major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is
+     * assumed to be supplied in row major order. The $count argument
+     * indicates the number of matrices to be passed. A count of 1 should be
+     * used if modifying the value of a single matrix, and a count greater
+     * than 1 can be used to modify an array of matrices.
      *
      * @see http://docs.gl/gl2/glUniform
-     * @see http://docs.gl/gl3/glUniform
      * @see http://docs.gl/gl4/glUniform
      * @since 2.0
-     * @param int $location
-     * @param int $count
+     * @param int|\FFI\CData|\FFI\CInt $location
+     * @param int|\FFI\CData|\FFI\CInt $count
      * @param \FFI\CData|\FFI\CIntPtr|null $value
      * @return void
      */
-    public static function glUniform2iv(int $location, int $count, ?\FFI\CData $value): void
+    public function glUniform2iv($location, $count, ?\FFI\CData $value): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($location >= \PHP_INT_MIN && $location <= \PHP_INT_MAX, 'Argument $location overflow: C type GLint is required');
-        assert($count >= \PHP_INT_MIN && $count <= \PHP_INT_MAX, 'Argument $count overflow: C type GLsizei is required');
+        $location = $location instanceof \FFI\CData ? $location->cdata : $location;
+        $count = $count instanceof \FFI\CData ? $count->cdata : $count;
 
-        $proc = self::getProc('glUniform2iv', 'void (*)(GLint location, GLsizei count, const GLint *value)');
+        assert(Assert::int16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
+        assert(Assert::int16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glUniform2iv', 'void (*)(GLint location, GLsizei count, const GLint *value)');
         $proc($location, $count, $value);
     }
 
     /**
-     * Modifies the value of a uniform variable or a uniform variable array. The location of the uniform variable to
-     * be modified is specified by *`location`*, which should be a value returned by
-     * {@see glGetUniformLocation}. `glUniform` operates on the program object that was made part of
-     * current state by calling {@see glUseProgram}.
+     * {@see GL46::glUniform} modifies the value of a uniform variable or a
+     * uniform variable array. The location of the uniform variable to be
+     * modified is specified by $location, which should be a value returned
+     * by {@see GL46::glGetUniformLocation}. {@see GL46::glUniform} operates
+     * on the program object that was made part of current state by calling
+     * {@see GL46::glUseProgram}.
      *
-     * The commands `glUniform{1|2|3|4}{f|i}` are used to change the value of the uniform variable specified by
-     * *`location`* using the values passed as arguments. The number specified in the command should match the number
-     * of components in the data type of the specified uniform variable (e.g., `1` for float, int, bool; `2` for
-     * vec2, ivec2, bvec2, etc.). The suffix `f` indicates that floating-point values are being passed; the suffix
-     * `i` indicates that integer values are being passed, and this type should also match the data type of the
-     * specified uniform variable. The `i` variants of this function should be used to provide values for uniform
-     * variables defined as int, ivec2, ivec3, ivec4, or arrays of these. The `f` variants should be used to provide
-     * values for uniform variables of type float, vec2, vec3, vec4, or arrays of these. Either the `i` or the `f`
-     * variants may be used to provide values for uniform variables of type bool, bvec2, bvec3, bvec4, or arrays of
-     * these. The uniform variable will be set to false if the input value is 0 or 0.0f, and it will be set to true
-     * otherwise.
+     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}} are used to
+     * change the value of the uniform variable specified by $location using
+     * the values passed as arguments. The number specified in the command
+     * should match the number of components in the data type of the
+     * specified uniform variable (e.g., {@see GL46::1} for `float`, `int`,
+     * `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`,
+     * `bvec2`, etc.). The suffix {@see GL46::f} indicates that
+     * floating-point values are being passed; the suffix {@see GL46::i}
+     * indicates that integer values are being passed; the suffix
+     * {@see GL46::ui} indicates that unsigned integer values are being
+     * passed, and this type should also match the data type of the specified
+     * uniform variable. The {@see GL46::i} variants of this function should
+     * be used to provide values for uniform variables defined as `int`,
+     * `ivec2`, `ivec3`, `ivec4`, or arrays of these. The {@see GL46::ui}
+     * variants of this function should be used to provide values for uniform
+     * variables defined as `unsigned int`, `uvec2`, `uvec3`, `uvec4`, or
+     * arrays of these. The {@see GL46::f} variants should be used to provide
+     * values for uniform variables of type `float`, `vec2`, `vec3`, `vec4`,
+     * or arrays of these. Either the {@see GL46::i}, {@see GL46::ui} or
+     * {@see GL46::f} variants may be used to provide values for uniform
+     * variables of type `bool`, `bvec2`, `bvec3`, `bvec4`, or arrays of
+     * these. The uniform variable will be set to `false` if the input value
+     * is 0 or 0.0f, and it will be set to `true` otherwise.
      *
-     * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to `glUniform ` until the next
-     * successful link operation occurs on the program object, when they are once again initialized to 0.
+     * All active uniform variables defined in a program object are
+     * initialized to 0 when the program object is linked successfully. They
+     * retain the values assigned to them by a call to {@see GL46::glUniform
+     * } until the next successful link operation occurs on the program
+     * object, when they are once again initialized to 0.
      *
-     * The commands `glUniform{1|2|3|4}{f|i}v` can be used to modify a single uniform variable or a uniform variable
-     * array. These commands pass a count and a pointer to the values to be loaded into a uniform variable or a
-     * uniform variable array. A count of 1 should be used if modifying the value of a single uniform variable, and a
-     * count of 1 or greater can be used to modify an entire array or part of an array. When loading *n* elements
-     * starting at an arbitrary position *m* in a uniform variable array, elements *m* + *n* - 1 in the array will be
-     * replaced with the new values. If *`m`* + *`n`* - 1 is larger than the size of the uniform variable array,
-     * values for all array elements beyond the end of the array will be ignored. The number specified in the name of
-     * the command indicates the number of components for each element in *`value`*, and it should match the number
-     * of components in the data type of the specified uniform variable (e.g., `1` for float, int, bool; `2` for
-     * vec2, ivec2, bvec2, etc.). The data type specified in the name of the command must match the data type for the
-     * specified uniform variable as described previously for `glUniform{1|2|3|4}{f|i}`.
+     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}v} can be used to
+     * modify a single uniform variable or a uniform variable array. These
+     * commands pass a count and a pointer to the values to be loaded into a
+     * uniform variable or a uniform variable array. A count of 1 should be
+     * used if modifying the value of a single uniform variable, and a count
+     * of 1 or greater can be used to modify an entire array or part of an
+     * array. When loading n elements starting at an arbitrary position m in
+     * a uniform variable array, elements m + n - 1 in the array will be
+     * replaced with the new values. If $m + $n - 1 is larger than the size
+     * of the uniform variable array, values for all array elements beyond
+     * the end of the array will be ignored. The number specified in the name
+     * of the command indicates the number of components for each element in
+     * $value, and it should match the number of components in the data type
+     * of the specified uniform variable (e.g., {@see GL46::1} for float,
+     * int, bool; {@see GL46::2} for vec2, ivec2, bvec2, etc.). The data type
+     * specified in the name of the command must match the data type for the
+     * specified uniform variable as described previously for
+     * {@see GL46::glUniform{1|2|3|4}{f|i|ui}}.
      *
-     * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., `glUniform3f` or `glUniform3fv` can be used to load a uniform variable array of type
-     * vec3). The number of elements of the uniform variable array to be modified is specified by *`count`*
+     * For uniform variable arrays, each element of the array is considered
+     * to be of the type indicated in the name of the command (e.g.,
+     * {@see GL46::glUniform3f} or {@see GL46::glUniform3fv} can be used to
+     * load a uniform variable array of type vec3). The number of elements of
+     * the uniform variable array to be modified is specified by $count
      *
-     * The commands `glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv` are used to modify a matrix or an array of
-     * matrices. The numbers in the command name are interpreted as the dimensionality of the matrix. The number `2`
-     * indicates a 2 × 2 matrix (i.e., 4 values), the number `3` indicates a 3 × 3 matrix (i.e., 9 values), and the
-     * number `4` indicates a 4 × 4 matrix (i.e., 16 values). Non-square matrix dimensionality is explicit, with the
-     * first number representing the number of columns and the second number representing the number of rows. For
-     * example, `2x4` indicates a 2 × 4 matrix with 2 columns and 4 rows (i.e., 8 values). If *`transpose`* is
-     * `GL_FALSE`, each matrix is assumed to be supplied in column major order. If *`transpose`* is `GL_TRUE`, each
-     * matrix is assumed to be supplied in row major order. The *`count`* argument indicates the number of matrices
-     * to be passed. A count of 1 should be used if modifying the value of a single matrix, and a count greater than
-     * 1 can be used to modify an array of matrices.
+     * The commands
+     * {@see GL46::glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used
+     * to modify a matrix or an array of matrices. The numbers in the command
+     * name are interpreted as the dimensionality of the matrix. The number
+     * {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number
+     * {@see GL46::3} indicates a 3 × 3 matrix (i.e., 9 values), and the
+     * number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values).
+     * Non-square matrix dimensionality is explicit, with the first number
+     * representing the number of columns and the second number representing
+     * the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4
+     * matrix with 2 columns and 4 rows (i.e., 8 values). If $transpose is
+     * {@see GL46::GL_FALSE}, each matrix is assumed to be supplied in column
+     * major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is
+     * assumed to be supplied in row major order. The $count argument
+     * indicates the number of matrices to be passed. A count of 1 should be
+     * used if modifying the value of a single matrix, and a count greater
+     * than 1 can be used to modify an array of matrices.
      *
      * @see http://docs.gl/gl2/glUniform
-     * @see http://docs.gl/gl3/glUniform
      * @see http://docs.gl/gl4/glUniform
      * @since 2.0
-     * @param int $location
-     * @param int $count
+     * @param int|\FFI\CData|\FFI\CInt $location
+     * @param int|\FFI\CData|\FFI\CInt $count
      * @param \FFI\CData|\FFI\CIntPtr|null $value
      * @return void
      */
-    public static function glUniform3iv(int $location, int $count, ?\FFI\CData $value): void
+    public function glUniform3iv($location, $count, ?\FFI\CData $value): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($location >= \PHP_INT_MIN && $location <= \PHP_INT_MAX, 'Argument $location overflow: C type GLint is required');
-        assert($count >= \PHP_INT_MIN && $count <= \PHP_INT_MAX, 'Argument $count overflow: C type GLsizei is required');
+        $location = $location instanceof \FFI\CData ? $location->cdata : $location;
+        $count = $count instanceof \FFI\CData ? $count->cdata : $count;
 
-        $proc = self::getProc('glUniform3iv', 'void (*)(GLint location, GLsizei count, const GLint *value)');
+        assert(Assert::int16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
+        assert(Assert::int16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glUniform3iv', 'void (*)(GLint location, GLsizei count, const GLint *value)');
         $proc($location, $count, $value);
     }
 
     /**
-     * Modifies the value of a uniform variable or a uniform variable array. The location of the uniform variable to
-     * be modified is specified by *`location`*, which should be a value returned by
-     * {@see glGetUniformLocation}. `glUniform` operates on the program object that was made part of
-     * current state by calling {@see glUseProgram}.
+     * {@see GL46::glUniform} modifies the value of a uniform variable or a
+     * uniform variable array. The location of the uniform variable to be
+     * modified is specified by $location, which should be a value returned
+     * by {@see GL46::glGetUniformLocation}. {@see GL46::glUniform} operates
+     * on the program object that was made part of current state by calling
+     * {@see GL46::glUseProgram}.
      *
-     * The commands `glUniform{1|2|3|4}{f|i}` are used to change the value of the uniform variable specified by
-     * *`location`* using the values passed as arguments. The number specified in the command should match the number
-     * of components in the data type of the specified uniform variable (e.g., `1` for float, int, bool; `2` for
-     * vec2, ivec2, bvec2, etc.). The suffix `f` indicates that floating-point values are being passed; the suffix
-     * `i` indicates that integer values are being passed, and this type should also match the data type of the
-     * specified uniform variable. The `i` variants of this function should be used to provide values for uniform
-     * variables defined as int, ivec2, ivec3, ivec4, or arrays of these. The `f` variants should be used to provide
-     * values for uniform variables of type float, vec2, vec3, vec4, or arrays of these. Either the `i` or the `f`
-     * variants may be used to provide values for uniform variables of type bool, bvec2, bvec3, bvec4, or arrays of
-     * these. The uniform variable will be set to false if the input value is 0 or 0.0f, and it will be set to true
-     * otherwise.
+     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}} are used to
+     * change the value of the uniform variable specified by $location using
+     * the values passed as arguments. The number specified in the command
+     * should match the number of components in the data type of the
+     * specified uniform variable (e.g., {@see GL46::1} for `float`, `int`,
+     * `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`,
+     * `bvec2`, etc.). The suffix {@see GL46::f} indicates that
+     * floating-point values are being passed; the suffix {@see GL46::i}
+     * indicates that integer values are being passed; the suffix
+     * {@see GL46::ui} indicates that unsigned integer values are being
+     * passed, and this type should also match the data type of the specified
+     * uniform variable. The {@see GL46::i} variants of this function should
+     * be used to provide values for uniform variables defined as `int`,
+     * `ivec2`, `ivec3`, `ivec4`, or arrays of these. The {@see GL46::ui}
+     * variants of this function should be used to provide values for uniform
+     * variables defined as `unsigned int`, `uvec2`, `uvec3`, `uvec4`, or
+     * arrays of these. The {@see GL46::f} variants should be used to provide
+     * values for uniform variables of type `float`, `vec2`, `vec3`, `vec4`,
+     * or arrays of these. Either the {@see GL46::i}, {@see GL46::ui} or
+     * {@see GL46::f} variants may be used to provide values for uniform
+     * variables of type `bool`, `bvec2`, `bvec3`, `bvec4`, or arrays of
+     * these. The uniform variable will be set to `false` if the input value
+     * is 0 or 0.0f, and it will be set to `true` otherwise.
      *
-     * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to `glUniform ` until the next
-     * successful link operation occurs on the program object, when they are once again initialized to 0.
+     * All active uniform variables defined in a program object are
+     * initialized to 0 when the program object is linked successfully. They
+     * retain the values assigned to them by a call to {@see GL46::glUniform
+     * } until the next successful link operation occurs on the program
+     * object, when they are once again initialized to 0.
      *
-     * The commands `glUniform{1|2|3|4}{f|i}v` can be used to modify a single uniform variable or a uniform variable
-     * array. These commands pass a count and a pointer to the values to be loaded into a uniform variable or a
-     * uniform variable array. A count of 1 should be used if modifying the value of a single uniform variable, and a
-     * count of 1 or greater can be used to modify an entire array or part of an array. When loading *n* elements
-     * starting at an arbitrary position *m* in a uniform variable array, elements *m* + *n* - 1 in the array will be
-     * replaced with the new values. If *`m`* + *`n`* - 1 is larger than the size of the uniform variable array,
-     * values for all array elements beyond the end of the array will be ignored. The number specified in the name of
-     * the command indicates the number of components for each element in *`value`*, and it should match the number
-     * of components in the data type of the specified uniform variable (e.g., `1` for float, int, bool; `2` for
-     * vec2, ivec2, bvec2, etc.). The data type specified in the name of the command must match the data type for the
-     * specified uniform variable as described previously for `glUniform{1|2|3|4}{f|i}`.
+     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}v} can be used to
+     * modify a single uniform variable or a uniform variable array. These
+     * commands pass a count and a pointer to the values to be loaded into a
+     * uniform variable or a uniform variable array. A count of 1 should be
+     * used if modifying the value of a single uniform variable, and a count
+     * of 1 or greater can be used to modify an entire array or part of an
+     * array. When loading n elements starting at an arbitrary position m in
+     * a uniform variable array, elements m + n - 1 in the array will be
+     * replaced with the new values. If $m + $n - 1 is larger than the size
+     * of the uniform variable array, values for all array elements beyond
+     * the end of the array will be ignored. The number specified in the name
+     * of the command indicates the number of components for each element in
+     * $value, and it should match the number of components in the data type
+     * of the specified uniform variable (e.g., {@see GL46::1} for float,
+     * int, bool; {@see GL46::2} for vec2, ivec2, bvec2, etc.). The data type
+     * specified in the name of the command must match the data type for the
+     * specified uniform variable as described previously for
+     * {@see GL46::glUniform{1|2|3|4}{f|i|ui}}.
      *
-     * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., `glUniform3f` or `glUniform3fv` can be used to load a uniform variable array of type
-     * vec3). The number of elements of the uniform variable array to be modified is specified by *`count`*
+     * For uniform variable arrays, each element of the array is considered
+     * to be of the type indicated in the name of the command (e.g.,
+     * {@see GL46::glUniform3f} or {@see GL46::glUniform3fv} can be used to
+     * load a uniform variable array of type vec3). The number of elements of
+     * the uniform variable array to be modified is specified by $count
      *
-     * The commands `glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv` are used to modify a matrix or an array of
-     * matrices. The numbers in the command name are interpreted as the dimensionality of the matrix. The number `2`
-     * indicates a 2 × 2 matrix (i.e., 4 values), the number `3` indicates a 3 × 3 matrix (i.e., 9 values), and the
-     * number `4` indicates a 4 × 4 matrix (i.e., 16 values). Non-square matrix dimensionality is explicit, with the
-     * first number representing the number of columns and the second number representing the number of rows. For
-     * example, `2x4` indicates a 2 × 4 matrix with 2 columns and 4 rows (i.e., 8 values). If *`transpose`* is
-     * `GL_FALSE`, each matrix is assumed to be supplied in column major order. If *`transpose`* is `GL_TRUE`, each
-     * matrix is assumed to be supplied in row major order. The *`count`* argument indicates the number of matrices
-     * to be passed. A count of 1 should be used if modifying the value of a single matrix, and a count greater than
-     * 1 can be used to modify an array of matrices.
+     * The commands
+     * {@see GL46::glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used
+     * to modify a matrix or an array of matrices. The numbers in the command
+     * name are interpreted as the dimensionality of the matrix. The number
+     * {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number
+     * {@see GL46::3} indicates a 3 × 3 matrix (i.e., 9 values), and the
+     * number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values).
+     * Non-square matrix dimensionality is explicit, with the first number
+     * representing the number of columns and the second number representing
+     * the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4
+     * matrix with 2 columns and 4 rows (i.e., 8 values). If $transpose is
+     * {@see GL46::GL_FALSE}, each matrix is assumed to be supplied in column
+     * major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is
+     * assumed to be supplied in row major order. The $count argument
+     * indicates the number of matrices to be passed. A count of 1 should be
+     * used if modifying the value of a single matrix, and a count greater
+     * than 1 can be used to modify an array of matrices.
      *
      * @see http://docs.gl/gl2/glUniform
-     * @see http://docs.gl/gl3/glUniform
      * @see http://docs.gl/gl4/glUniform
      * @since 2.0
-     * @param int $location
-     * @param int $count
+     * @param int|\FFI\CData|\FFI\CInt $location
+     * @param int|\FFI\CData|\FFI\CInt $count
      * @param \FFI\CData|\FFI\CIntPtr|null $value
      * @return void
      */
-    public static function glUniform4iv(int $location, int $count, ?\FFI\CData $value): void
+    public function glUniform4iv($location, $count, ?\FFI\CData $value): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($location >= \PHP_INT_MIN && $location <= \PHP_INT_MAX, 'Argument $location overflow: C type GLint is required');
-        assert($count >= \PHP_INT_MIN && $count <= \PHP_INT_MAX, 'Argument $count overflow: C type GLsizei is required');
+        $location = $location instanceof \FFI\CData ? $location->cdata : $location;
+        $count = $count instanceof \FFI\CData ? $count->cdata : $count;
 
-        $proc = self::getProc('glUniform4iv', 'void (*)(GLint location, GLsizei count, const GLint *value)');
+        assert(Assert::int16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
+        assert(Assert::int16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glUniform4iv', 'void (*)(GLint location, GLsizei count, const GLint *value)');
         $proc($location, $count, $value);
     }
 
     /**
+     * {@see GL46::glUniform} modifies the value of a uniform variable or a
+     * uniform variable array. The location of the uniform variable to be
+     * modified is specified by $location, which should be a value returned
+     * by {@see GL46::glGetUniformLocation}. {@see GL46::glUniform} operates
+     * on the program object that was made part of current state by calling
+     * {@see GL46::glUseProgram}.
+     *
+     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}} are used to
+     * change the value of the uniform variable specified by $location using
+     * the values passed as arguments. The number specified in the command
+     * should match the number of components in the data type of the
+     * specified uniform variable (e.g., {@see GL46::1} for `float`, `int`,
+     * `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`,
+     * `bvec2`, etc.). The suffix {@see GL46::f} indicates that
+     * floating-point values are being passed; the suffix {@see GL46::i}
+     * indicates that integer values are being passed; the suffix
+     * {@see GL46::ui} indicates that unsigned integer values are being
+     * passed, and this type should also match the data type of the specified
+     * uniform variable. The {@see GL46::i} variants of this function should
+     * be used to provide values for uniform variables defined as `int`,
+     * `ivec2`, `ivec3`, `ivec4`, or arrays of these. The {@see GL46::ui}
+     * variants of this function should be used to provide values for uniform
+     * variables defined as `unsigned int`, `uvec2`, `uvec3`, `uvec4`, or
+     * arrays of these. The {@see GL46::f} variants should be used to provide
+     * values for uniform variables of type `float`, `vec2`, `vec3`, `vec4`,
+     * or arrays of these. Either the {@see GL46::i}, {@see GL46::ui} or
+     * {@see GL46::f} variants may be used to provide values for uniform
+     * variables of type `bool`, `bvec2`, `bvec3`, `bvec4`, or arrays of
+     * these. The uniform variable will be set to `false` if the input value
+     * is 0 or 0.0f, and it will be set to `true` otherwise.
+     *
+     * All active uniform variables defined in a program object are
+     * initialized to 0 when the program object is linked successfully. They
+     * retain the values assigned to them by a call to {@see GL46::glUniform
+     * } until the next successful link operation occurs on the program
+     * object, when they are once again initialized to 0.
+     *
+     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}v} can be used to
+     * modify a single uniform variable or a uniform variable array. These
+     * commands pass a count and a pointer to the values to be loaded into a
+     * uniform variable or a uniform variable array. A count of 1 should be
+     * used if modifying the value of a single uniform variable, and a count
+     * of 1 or greater can be used to modify an entire array or part of an
+     * array. When loading n elements starting at an arbitrary position m in
+     * a uniform variable array, elements m + n - 1 in the array will be
+     * replaced with the new values. If $m + $n - 1 is larger than the size
+     * of the uniform variable array, values for all array elements beyond
+     * the end of the array will be ignored. The number specified in the name
+     * of the command indicates the number of components for each element in
+     * $value, and it should match the number of components in the data type
+     * of the specified uniform variable (e.g., {@see GL46::1} for float,
+     * int, bool; {@see GL46::2} for vec2, ivec2, bvec2, etc.). The data type
+     * specified in the name of the command must match the data type for the
+     * specified uniform variable as described previously for
+     * {@see GL46::glUniform{1|2|3|4}{f|i|ui}}.
+     *
+     * For uniform variable arrays, each element of the array is considered
+     * to be of the type indicated in the name of the command (e.g.,
+     * {@see GL46::glUniform3f} or {@see GL46::glUniform3fv} can be used to
+     * load a uniform variable array of type vec3). The number of elements of
+     * the uniform variable array to be modified is specified by $count
+     *
+     * The commands
+     * {@see GL46::glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used
+     * to modify a matrix or an array of matrices. The numbers in the command
+     * name are interpreted as the dimensionality of the matrix. The number
+     * {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number
+     * {@see GL46::3} indicates a 3 × 3 matrix (i.e., 9 values), and the
+     * number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values).
+     * Non-square matrix dimensionality is explicit, with the first number
+     * representing the number of columns and the second number representing
+     * the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4
+     * matrix with 2 columns and 4 rows (i.e., 8 values). If $transpose is
+     * {@see GL46::GL_FALSE}, each matrix is assumed to be supplied in column
+     * major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is
+     * assumed to be supplied in row major order. The $count argument
+     * indicates the number of matrices to be passed. A count of 1 should be
+     * used if modifying the value of a single matrix, and a count greater
+     * than 1 can be used to modify an array of matrices.
+     *
+     * @see http://docs.gl/gl2/glLoadMatrix
+     * @see http://docs.gl/gl2/glUniform
+     * @see http://docs.gl/gl2/gluPickMatrix
+     * @see http://docs.gl/gl4/glUniform
      * @since 2.0
-     * @param int $location
-     * @param int $count
-     * @param int $transpose
+     * @param int|\FFI\CData|\FFI\CInt $location
+     * @param int|\FFI\CData|\FFI\CInt $count
+     * @param int|\FFI\CData|\FFI\CInt $transpose
      * @param \FFI\CData|\FFI\CFloatPtr|null $value
      * @return void
      */
-    public static function glUniformMatrix2fv(int $location, int $count, int $transpose, ?\FFI\CData $value): void
+    public function glUniformMatrix2fv($location, $count, $transpose, ?\FFI\CData $value): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($location >= \PHP_INT_MIN && $location <= \PHP_INT_MAX, 'Argument $location overflow: C type GLint is required');
-        assert($count >= \PHP_INT_MIN && $count <= \PHP_INT_MAX, 'Argument $count overflow: C type GLsizei is required');
-        assert($transpose >= 0 && $transpose <= 255, 'Argument $transpose overflow: C type GLboolean is required');
+        $location = $location instanceof \FFI\CData ? $location->cdata : $location;
+        $count = $count instanceof \FFI\CData ? $count->cdata : $count;
+        $transpose = $transpose instanceof \FFI\CData ? $transpose->cdata : $transpose;
 
-        $proc = self::getProc('glUniformMatrix2fv', 'void (*)(GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)');
+        assert(Assert::int16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
+        assert(Assert::int16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Assert::uint8($transpose), 'Argument $transpose must be a C-like GLboolean, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glUniformMatrix2fv', 'void (*)(GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)');
         $proc($location, $count, $transpose, $value);
     }
 
     /**
+     * {@see GL46::glUniform} modifies the value of a uniform variable or a
+     * uniform variable array. The location of the uniform variable to be
+     * modified is specified by $location, which should be a value returned
+     * by {@see GL46::glGetUniformLocation}. {@see GL46::glUniform} operates
+     * on the program object that was made part of current state by calling
+     * {@see GL46::glUseProgram}.
+     *
+     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}} are used to
+     * change the value of the uniform variable specified by $location using
+     * the values passed as arguments. The number specified in the command
+     * should match the number of components in the data type of the
+     * specified uniform variable (e.g., {@see GL46::1} for `float`, `int`,
+     * `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`,
+     * `bvec2`, etc.). The suffix {@see GL46::f} indicates that
+     * floating-point values are being passed; the suffix {@see GL46::i}
+     * indicates that integer values are being passed; the suffix
+     * {@see GL46::ui} indicates that unsigned integer values are being
+     * passed, and this type should also match the data type of the specified
+     * uniform variable. The {@see GL46::i} variants of this function should
+     * be used to provide values for uniform variables defined as `int`,
+     * `ivec2`, `ivec3`, `ivec4`, or arrays of these. The {@see GL46::ui}
+     * variants of this function should be used to provide values for uniform
+     * variables defined as `unsigned int`, `uvec2`, `uvec3`, `uvec4`, or
+     * arrays of these. The {@see GL46::f} variants should be used to provide
+     * values for uniform variables of type `float`, `vec2`, `vec3`, `vec4`,
+     * or arrays of these. Either the {@see GL46::i}, {@see GL46::ui} or
+     * {@see GL46::f} variants may be used to provide values for uniform
+     * variables of type `bool`, `bvec2`, `bvec3`, `bvec4`, or arrays of
+     * these. The uniform variable will be set to `false` if the input value
+     * is 0 or 0.0f, and it will be set to `true` otherwise.
+     *
+     * All active uniform variables defined in a program object are
+     * initialized to 0 when the program object is linked successfully. They
+     * retain the values assigned to them by a call to {@see GL46::glUniform
+     * } until the next successful link operation occurs on the program
+     * object, when they are once again initialized to 0.
+     *
+     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}v} can be used to
+     * modify a single uniform variable or a uniform variable array. These
+     * commands pass a count and a pointer to the values to be loaded into a
+     * uniform variable or a uniform variable array. A count of 1 should be
+     * used if modifying the value of a single uniform variable, and a count
+     * of 1 or greater can be used to modify an entire array or part of an
+     * array. When loading n elements starting at an arbitrary position m in
+     * a uniform variable array, elements m + n - 1 in the array will be
+     * replaced with the new values. If $m + $n - 1 is larger than the size
+     * of the uniform variable array, values for all array elements beyond
+     * the end of the array will be ignored. The number specified in the name
+     * of the command indicates the number of components for each element in
+     * $value, and it should match the number of components in the data type
+     * of the specified uniform variable (e.g., {@see GL46::1} for float,
+     * int, bool; {@see GL46::2} for vec2, ivec2, bvec2, etc.). The data type
+     * specified in the name of the command must match the data type for the
+     * specified uniform variable as described previously for
+     * {@see GL46::glUniform{1|2|3|4}{f|i|ui}}.
+     *
+     * For uniform variable arrays, each element of the array is considered
+     * to be of the type indicated in the name of the command (e.g.,
+     * {@see GL46::glUniform3f} or {@see GL46::glUniform3fv} can be used to
+     * load a uniform variable array of type vec3). The number of elements of
+     * the uniform variable array to be modified is specified by $count
+     *
+     * The commands
+     * {@see GL46::glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used
+     * to modify a matrix or an array of matrices. The numbers in the command
+     * name are interpreted as the dimensionality of the matrix. The number
+     * {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number
+     * {@see GL46::3} indicates a 3 × 3 matrix (i.e., 9 values), and the
+     * number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values).
+     * Non-square matrix dimensionality is explicit, with the first number
+     * representing the number of columns and the second number representing
+     * the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4
+     * matrix with 2 columns and 4 rows (i.e., 8 values). If $transpose is
+     * {@see GL46::GL_FALSE}, each matrix is assumed to be supplied in column
+     * major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is
+     * assumed to be supplied in row major order. The $count argument
+     * indicates the number of matrices to be passed. A count of 1 should be
+     * used if modifying the value of a single matrix, and a count greater
+     * than 1 can be used to modify an array of matrices.
+     *
+     * @see http://docs.gl/gl2/glLoadMatrix
+     * @see http://docs.gl/gl2/glUniform
+     * @see http://docs.gl/gl2/gluPickMatrix
+     * @see http://docs.gl/gl4/glUniform
      * @since 2.0
-     * @param int $location
-     * @param int $count
-     * @param int $transpose
+     * @param int|\FFI\CData|\FFI\CInt $location
+     * @param int|\FFI\CData|\FFI\CInt $count
+     * @param int|\FFI\CData|\FFI\CInt $transpose
      * @param \FFI\CData|\FFI\CFloatPtr|null $value
      * @return void
      */
-    public static function glUniformMatrix3fv(int $location, int $count, int $transpose, ?\FFI\CData $value): void
+    public function glUniformMatrix3fv($location, $count, $transpose, ?\FFI\CData $value): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($location >= \PHP_INT_MIN && $location <= \PHP_INT_MAX, 'Argument $location overflow: C type GLint is required');
-        assert($count >= \PHP_INT_MIN && $count <= \PHP_INT_MAX, 'Argument $count overflow: C type GLsizei is required');
-        assert($transpose >= 0 && $transpose <= 255, 'Argument $transpose overflow: C type GLboolean is required');
+        $location = $location instanceof \FFI\CData ? $location->cdata : $location;
+        $count = $count instanceof \FFI\CData ? $count->cdata : $count;
+        $transpose = $transpose instanceof \FFI\CData ? $transpose->cdata : $transpose;
 
-        $proc = self::getProc('glUniformMatrix3fv', 'void (*)(GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)');
+        assert(Assert::int16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
+        assert(Assert::int16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Assert::uint8($transpose), 'Argument $transpose must be a C-like GLboolean, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glUniformMatrix3fv', 'void (*)(GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)');
         $proc($location, $count, $transpose, $value);
     }
 
     /**
+     * {@see GL46::glUniform} modifies the value of a uniform variable or a
+     * uniform variable array. The location of the uniform variable to be
+     * modified is specified by $location, which should be a value returned
+     * by {@see GL46::glGetUniformLocation}. {@see GL46::glUniform} operates
+     * on the program object that was made part of current state by calling
+     * {@see GL46::glUseProgram}.
+     *
+     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}} are used to
+     * change the value of the uniform variable specified by $location using
+     * the values passed as arguments. The number specified in the command
+     * should match the number of components in the data type of the
+     * specified uniform variable (e.g., {@see GL46::1} for `float`, `int`,
+     * `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`,
+     * `bvec2`, etc.). The suffix {@see GL46::f} indicates that
+     * floating-point values are being passed; the suffix {@see GL46::i}
+     * indicates that integer values are being passed; the suffix
+     * {@see GL46::ui} indicates that unsigned integer values are being
+     * passed, and this type should also match the data type of the specified
+     * uniform variable. The {@see GL46::i} variants of this function should
+     * be used to provide values for uniform variables defined as `int`,
+     * `ivec2`, `ivec3`, `ivec4`, or arrays of these. The {@see GL46::ui}
+     * variants of this function should be used to provide values for uniform
+     * variables defined as `unsigned int`, `uvec2`, `uvec3`, `uvec4`, or
+     * arrays of these. The {@see GL46::f} variants should be used to provide
+     * values for uniform variables of type `float`, `vec2`, `vec3`, `vec4`,
+     * or arrays of these. Either the {@see GL46::i}, {@see GL46::ui} or
+     * {@see GL46::f} variants may be used to provide values for uniform
+     * variables of type `bool`, `bvec2`, `bvec3`, `bvec4`, or arrays of
+     * these. The uniform variable will be set to `false` if the input value
+     * is 0 or 0.0f, and it will be set to `true` otherwise.
+     *
+     * All active uniform variables defined in a program object are
+     * initialized to 0 when the program object is linked successfully. They
+     * retain the values assigned to them by a call to {@see GL46::glUniform
+     * } until the next successful link operation occurs on the program
+     * object, when they are once again initialized to 0.
+     *
+     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}v} can be used to
+     * modify a single uniform variable or a uniform variable array. These
+     * commands pass a count and a pointer to the values to be loaded into a
+     * uniform variable or a uniform variable array. A count of 1 should be
+     * used if modifying the value of a single uniform variable, and a count
+     * of 1 or greater can be used to modify an entire array or part of an
+     * array. When loading n elements starting at an arbitrary position m in
+     * a uniform variable array, elements m + n - 1 in the array will be
+     * replaced with the new values. If $m + $n - 1 is larger than the size
+     * of the uniform variable array, values for all array elements beyond
+     * the end of the array will be ignored. The number specified in the name
+     * of the command indicates the number of components for each element in
+     * $value, and it should match the number of components in the data type
+     * of the specified uniform variable (e.g., {@see GL46::1} for float,
+     * int, bool; {@see GL46::2} for vec2, ivec2, bvec2, etc.). The data type
+     * specified in the name of the command must match the data type for the
+     * specified uniform variable as described previously for
+     * {@see GL46::glUniform{1|2|3|4}{f|i|ui}}.
+     *
+     * For uniform variable arrays, each element of the array is considered
+     * to be of the type indicated in the name of the command (e.g.,
+     * {@see GL46::glUniform3f} or {@see GL46::glUniform3fv} can be used to
+     * load a uniform variable array of type vec3). The number of elements of
+     * the uniform variable array to be modified is specified by $count
+     *
+     * The commands
+     * {@see GL46::glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used
+     * to modify a matrix or an array of matrices. The numbers in the command
+     * name are interpreted as the dimensionality of the matrix. The number
+     * {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number
+     * {@see GL46::3} indicates a 3 × 3 matrix (i.e., 9 values), and the
+     * number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values).
+     * Non-square matrix dimensionality is explicit, with the first number
+     * representing the number of columns and the second number representing
+     * the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4
+     * matrix with 2 columns and 4 rows (i.e., 8 values). If $transpose is
+     * {@see GL46::GL_FALSE}, each matrix is assumed to be supplied in column
+     * major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is
+     * assumed to be supplied in row major order. The $count argument
+     * indicates the number of matrices to be passed. A count of 1 should be
+     * used if modifying the value of a single matrix, and a count greater
+     * than 1 can be used to modify an array of matrices.
+     *
+     * @see http://docs.gl/gl2/glLoadMatrix
+     * @see http://docs.gl/gl2/glUniform
+     * @see http://docs.gl/gl2/gluPickMatrix
+     * @see http://docs.gl/gl4/glUniform
      * @since 2.0
-     * @param int $location
-     * @param int $count
-     * @param int $transpose
+     * @param int|\FFI\CData|\FFI\CInt $location
+     * @param int|\FFI\CData|\FFI\CInt $count
+     * @param int|\FFI\CData|\FFI\CInt $transpose
      * @param \FFI\CData|\FFI\CFloatPtr|null $value
      * @return void
      */
-    public static function glUniformMatrix4fv(int $location, int $count, int $transpose, ?\FFI\CData $value): void
+    public function glUniformMatrix4fv($location, $count, $transpose, ?\FFI\CData $value): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($location >= \PHP_INT_MIN && $location <= \PHP_INT_MAX, 'Argument $location overflow: C type GLint is required');
-        assert($count >= \PHP_INT_MIN && $count <= \PHP_INT_MAX, 'Argument $count overflow: C type GLsizei is required');
-        assert($transpose >= 0 && $transpose <= 255, 'Argument $transpose overflow: C type GLboolean is required');
+        $location = $location instanceof \FFI\CData ? $location->cdata : $location;
+        $count = $count instanceof \FFI\CData ? $count->cdata : $count;
+        $transpose = $transpose instanceof \FFI\CData ? $transpose->cdata : $transpose;
 
-        $proc = self::getProc('glUniformMatrix4fv', 'void (*)(GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)');
+        assert(Assert::int16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
+        assert(Assert::int16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Assert::uint8($transpose), 'Argument $transpose must be a C-like GLboolean, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glUniformMatrix4fv', 'void (*)(GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)');
         $proc($location, $count, $transpose, $value);
     }
 
     /**
-     * Checks to see whether the executables contained in *`program`* can execute given the current OpenGL state. The
-     * information generated by the validation process will be stored in *`program`*'s information log. The
-     * validation information may consist of an empty string, or it may be a string containing information about how
-     * the current program object interacts with the rest of current OpenGL state. This provides a way for OpenGL
-     * implementers to convey more information about why the current program is inefficient, suboptimal, failing to
-     * execute, and so on.
+     * {@see GL46::glValidateProgram} checks to see whether the executables
+     * contained in $program can execute given the current OpenGL state. The
+     * information generated by the validation process will be stored in
+     * $program's information log. The validation information may consist of
+     * an empty string, or it may be a string containing information about
+     * how the current program object interacts with the rest of current
+     * OpenGL state. This provides a way for OpenGL implementers to convey
+     * more information about why the current program is inefficient,
+     * suboptimal, failing to execute, and so on.
      *
-     * The status of the validation operation will be stored as part of the program object's state. This value will
-     * be set to `GL_TRUE` if the validation succeeded, and `GL_FALSE` otherwise. It can be queried by calling
-     * {@see glGetProgram} with arguments *`program`* and `GL_VALIDATE_STATUS`. If validation is successful,
-     * *`program`* is guaranteed to execute given the current state. Otherwise, *`program`* is guaranteed to not
-     * execute.
+     * The status of the validation operation will be stored as part of the
+     * program object's state. This value will be set to {@see GL46::GL_TRUE}
+     * if the validation succeeded, and {@see GL46::GL_FALSE} otherwise. It
+     * can be queried by calling {@see GL46::glGetProgram} with arguments
+     * $program and {@see GL46::GL_VALIDATE_STATUS}. If validation is
+     * successful, $program is guaranteed to execute given the current state.
+     * Otherwise, $program is guaranteed to not execute.
      *
-     * This function is typically useful only during application development. The informational string stored in the
-     * information log is completely implementation dependent; therefore, an application should not expect different
-     * OpenGL implementations to produce identical information strings.
+     * This function is typically useful only during application development.
+     * The informational string stored in the information log is completely
+     * implementation dependent; therefore, an application should not expect
+     * different OpenGL implementations to produce identical information
+     * strings.
      *
      * @see http://docs.gl/gl2/glValidateProgram
-     * @see http://docs.gl/gl3/glValidateProgram
      * @see http://docs.gl/gl4/glValidateProgram
      * @since 2.0
-     * @param int $program
+     * @param int|\FFI\CData|\FFI\CInt $program
      * @return void
      */
-    public static function glValidateProgram(int $program): void
+    public function glValidateProgram($program): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($program >= 0 && $program <= 4_294_967_295, 'Argument $program overflow: C type GLuint is required');
+        $program = $program instanceof \FFI\CData ? $program->cdata : $program;
 
-        $proc = self::getProc('glValidateProgram', 'void (*)(GLuint program)');
+        assert(Assert::uint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glValidateProgram', 'void (*)(GLuint program)');
         $proc($program);
     }
 
     /**
-     * OpenGL defines a number of standard vertex attributes that applications can modify with standard API entry
-     * points (color, normal, texture coordinates, etc.). The `glVertexAttrib` family of entry points allows an
+     * The {@see GL46::glVertexAttrib} family of entry points allows an
      * application to pass generic vertex attributes in numbered locations.
      *
-     * Generic attributes are defined as four-component values that are organized into an array. The first entry of
-     * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * `GL_MAX_VERTEX_ATTRIBS`. Individual elements of this array can be modified with a `glVertexAttrib` call that
-     * specifies the index of the element to be modified and a value for that element.
+     * Generic attributes are defined as four-component values that are
+     * organized into an array. The first entry of this array is numbered 0,
+     * and the size of the array is specified by the implementation-dependent
+     * constant {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of
+     * this array can be modified with a {@see GL46::glVertexAttrib} call
+     * that specifies the index of the element to be modified and a value for
+     * that element.
      *
-     * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
-     * specified by *`index`*. A `1` in the name of the command indicates that only one value is passed, and it will
-     * be used to modify the first component of the generic vertex attribute. The second and third components will be
-     * set to 0, and the fourth component will be set to 1. Similarly, a `2` in the name of the command indicates
-     * that values are provided for the first two components, the third component will be set to 0, and the fourth
-     * component will be set to 1. A `3` in the name of the command indicates that values are provided for the first
-     * three components and the fourth component will be set to 1, whereas a `4` in the name indicates that values
-     * are provided for all four components.
+     * These commands can be used to specify one, two, three, or all four
+     * components of the generic vertex attribute specified by $index. A
+     * {@see GL46::1} in the name of the command indicates that only one
+     * value is passed, and it will be used to modify the first component of
+     * the generic vertex attribute. The second and third components will be
+     * set to 0, and the fourth component will be set to 1. Similarly, a
+     * {@see GL46::2} in the name of the command indicates that values are
+     * provided for the first two components, the third component will be set
+     * to 0, and the fourth component will be set to 1. A {@see GL46::3} in
+     * the name of the command indicates that values are provided for the
+     * first three components and the fourth component will be set to 1,
+     * whereas a {@see GL46::4} in the name indicates that values are
+     * provided for all four components.
      *
-     * The letters `s`, `f`, `i`, `d`, `ub`, `us`, and `ui` indicate whether the arguments are of type short, float,
-     * int, double, unsigned byte, unsigned short, or unsigned int. When `v` is appended to the name, the commands
-     * can take a pointer to an array of such values. The commands containing `N` indicate that the arguments will be
-     * passed as fixed-point values that are scaled to a normalized range according to the component conversion rules
-     * defined by the OpenGL specification. Signed values are understood to represent fixed-point values in the range
-     * [-1,1], and unsigned values are understood to represent fixed-point values in the range [0,1].
+     * The letters {@see GL46::s}, {@see GL46::f}, {@see GL46::i},
+     * {@see GL46::d}, {@see GL46::ub}, {@see GL46::us}, and {@see GL46::ui}
+     * indicate whether the arguments are of type short, float, int, double,
+     * unsigned byte, unsigned short, or unsigned int. When {@see GL46::v} is
+     * appended to the name, the commands can take a pointer to an array of
+     * such values.
      *
-     * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the `glVertexAttrib` entry points. Matrices must be loaded into successive generic
-     * attribute slots in column major order, with one column of the matrix in each generic attribute slot.
+     * Additional capitalized letters can indicate further alterations to the
+     * default behavior of the glVertexAttrib function:
      *
-     * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see glBindAttribLocation}. This allows an application to use more descriptive
-     * variable names in a vertex shader. A subsequent change to the specified generic vertex attribute will be
-     * immediately reflected as a change to the corresponding attribute variable in the vertex shader.
+     * The commands containing {@see GL46::N} indicate that the arguments
+     * will be passed as fixed-point values that are scaled to a normalized
+     * range according to the component conversion rules defined by the
+     * OpenGL specification. Signed values are understood to represent
+     * fixed-point values in the range \[-1,1\], and unsigned values are
+     * understood to represent fixed-point values in the range \[0,1\].
      *
-     * The binding between a generic vertex attribute index and a user-defined attribute variable in a vertex shader
-     * is part of the state of a program object, but the current value of the generic vertex attribute is not. The
-     * value of each generic vertex attribute is part of current state, just like standard vertex attributes, and it
-     * is maintained even if a different program object is used.
+     * The commands containing {@see GL46::I} indicate that the arguments are
+     * extended to full signed or unsigned integers.
      *
-     * An application may freely modify generic vertex attributes that are not bound to a named vertex shader
-     * attribute variable. These values are simply maintained as part of current state and will not be accessed by
-     * the vertex shader. If a generic vertex attribute bound to an attribute variable in a vertex shader is not
-     * updated while the vertex shader is executing, the vertex shader will repeatedly use the current value for the
-     * generic vertex attribute.
+     * The commands containing {@see GL46::P} indicate that the arguments are
+     * stored as packed components within a larger natural type.
      *
-     * The generic vertex attribute with index 0 is the same as the vertex position attribute previously defined by
-     * OpenGL. A {@see glVertex2}, {@see glVertex3}, or {@see glVertex4} command is completely
-     * equivalent to the corresponding `glVertexAttrib` command with an index argument of 0. A vertex shader can
-     * access generic vertex attribute 0 by using the built-in attribute variable *`gl_Vertex`*. There are no current
-     * values for generic vertex attribute 0. This is the only generic vertex attribute with this property; calls to
-     * set other standard vertex attributes can be freely mixed with calls to set any of the other generic vertex
-     * attributes.
+     * The commands containing {@see GL46::L} indicate that the arguments are
+     * full 64-bit quantities and should be passed directly to shader inputs
+     * declared as 64-bit double precision types.
+     *
+     * OpenGL Shading Language attribute variables are allowed to be of type
+     * mat2, mat3, or mat4. Attributes of these types may be loaded using the
+     * {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * successive generic attribute slots in column major order, with one
+     * column of the matrix in each generic attribute slot.
+     *
+     * A user-defined attribute variable declared in a vertex shader can be
+     * bound to a generic attribute index by calling
+     * {@see GL46::glBindAttribLocation}. This allows an application to use
+     * more descriptive variable names in a vertex shader. A subsequent
+     * change to the specified generic vertex attribute will be immediately
+     * reflected as a change to the corresponding attribute variable in the
+     * vertex shader.
+     *
+     * The binding between a generic vertex attribute index and a
+     * user-defined attribute variable in a vertex shader is part of the
+     * state of a program object, but the current value of the generic vertex
+     * attribute is not. The value of each generic vertex attribute is part
+     * of current state, just like standard vertex attributes, and it is
+     * maintained even if a different program object is used.
+     *
+     * An application may freely modify generic vertex attributes that are
+     * not bound to a named vertex shader attribute variable. These values
+     * are simply maintained as part of current state and will not be
+     * accessed by the vertex shader. If a generic vertex attribute bound to
+     * an attribute variable in a vertex shader is not updated while the
+     * vertex shader is executing, the vertex shader will repeatedly use the
+     * current value for the generic vertex attribute.
      *
      * @see http://docs.gl/gl2/glVertexAttrib
-     * @see http://docs.gl/gl3/glVertexAttrib
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
-     * @param int $index
-     * @param float $x
+     * @param int|\FFI\CData|\FFI\CInt $index
+     * @param float|\FFI\CData|\FFI\CFloat $x
      * @return void
      */
-    public static function glVertexAttrib1d(int $index, float $x): void
+    public function glVertexAttrib1d($index, $x): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($index >= 0 && $index <= 4_294_967_295, 'Argument $index overflow: C type GLuint is required');
-        assert($x >= \PHP_FLOAT_MIN && $x <= \PHP_FLOAT_MAX, 'Argument $x overflow: C type GLdouble is required');
+        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
+        $x = $x instanceof \FFI\CData ? $x->cdata : $x;
 
-        $proc = self::getProc('glVertexAttrib1d', 'void (*)(GLuint index, GLdouble x)');
+        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Assert::float64($x), 'Argument $x must be a C-like GLdouble, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glVertexAttrib1d', 'void (*)(GLuint index, GLdouble x)');
         $proc($index, $x);
     }
 
     /**
-     * OpenGL defines a number of standard vertex attributes that applications can modify with standard API entry
-     * points (color, normal, texture coordinates, etc.). The `glVertexAttrib` family of entry points allows an
+     * The {@see GL46::glVertexAttrib} family of entry points allows an
      * application to pass generic vertex attributes in numbered locations.
      *
-     * Generic attributes are defined as four-component values that are organized into an array. The first entry of
-     * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * `GL_MAX_VERTEX_ATTRIBS`. Individual elements of this array can be modified with a `glVertexAttrib` call that
-     * specifies the index of the element to be modified and a value for that element.
+     * Generic attributes are defined as four-component values that are
+     * organized into an array. The first entry of this array is numbered 0,
+     * and the size of the array is specified by the implementation-dependent
+     * constant {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of
+     * this array can be modified with a {@see GL46::glVertexAttrib} call
+     * that specifies the index of the element to be modified and a value for
+     * that element.
      *
-     * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
-     * specified by *`index`*. A `1` in the name of the command indicates that only one value is passed, and it will
-     * be used to modify the first component of the generic vertex attribute. The second and third components will be
-     * set to 0, and the fourth component will be set to 1. Similarly, a `2` in the name of the command indicates
-     * that values are provided for the first two components, the third component will be set to 0, and the fourth
-     * component will be set to 1. A `3` in the name of the command indicates that values are provided for the first
-     * three components and the fourth component will be set to 1, whereas a `4` in the name indicates that values
-     * are provided for all four components.
+     * These commands can be used to specify one, two, three, or all four
+     * components of the generic vertex attribute specified by $index. A
+     * {@see GL46::1} in the name of the command indicates that only one
+     * value is passed, and it will be used to modify the first component of
+     * the generic vertex attribute. The second and third components will be
+     * set to 0, and the fourth component will be set to 1. Similarly, a
+     * {@see GL46::2} in the name of the command indicates that values are
+     * provided for the first two components, the third component will be set
+     * to 0, and the fourth component will be set to 1. A {@see GL46::3} in
+     * the name of the command indicates that values are provided for the
+     * first three components and the fourth component will be set to 1,
+     * whereas a {@see GL46::4} in the name indicates that values are
+     * provided for all four components.
      *
-     * The letters `s`, `f`, `i`, `d`, `ub`, `us`, and `ui` indicate whether the arguments are of type short, float,
-     * int, double, unsigned byte, unsigned short, or unsigned int. When `v` is appended to the name, the commands
-     * can take a pointer to an array of such values. The commands containing `N` indicate that the arguments will be
-     * passed as fixed-point values that are scaled to a normalized range according to the component conversion rules
-     * defined by the OpenGL specification. Signed values are understood to represent fixed-point values in the range
-     * [-1,1], and unsigned values are understood to represent fixed-point values in the range [0,1].
+     * The letters {@see GL46::s}, {@see GL46::f}, {@see GL46::i},
+     * {@see GL46::d}, {@see GL46::ub}, {@see GL46::us}, and {@see GL46::ui}
+     * indicate whether the arguments are of type short, float, int, double,
+     * unsigned byte, unsigned short, or unsigned int. When {@see GL46::v} is
+     * appended to the name, the commands can take a pointer to an array of
+     * such values.
      *
-     * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the `glVertexAttrib` entry points. Matrices must be loaded into successive generic
-     * attribute slots in column major order, with one column of the matrix in each generic attribute slot.
+     * Additional capitalized letters can indicate further alterations to the
+     * default behavior of the glVertexAttrib function:
      *
-     * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see glBindAttribLocation}. This allows an application to use more descriptive
-     * variable names in a vertex shader. A subsequent change to the specified generic vertex attribute will be
-     * immediately reflected as a change to the corresponding attribute variable in the vertex shader.
+     * The commands containing {@see GL46::N} indicate that the arguments
+     * will be passed as fixed-point values that are scaled to a normalized
+     * range according to the component conversion rules defined by the
+     * OpenGL specification. Signed values are understood to represent
+     * fixed-point values in the range \[-1,1\], and unsigned values are
+     * understood to represent fixed-point values in the range \[0,1\].
      *
-     * The binding between a generic vertex attribute index and a user-defined attribute variable in a vertex shader
-     * is part of the state of a program object, but the current value of the generic vertex attribute is not. The
-     * value of each generic vertex attribute is part of current state, just like standard vertex attributes, and it
-     * is maintained even if a different program object is used.
+     * The commands containing {@see GL46::I} indicate that the arguments are
+     * extended to full signed or unsigned integers.
      *
-     * An application may freely modify generic vertex attributes that are not bound to a named vertex shader
-     * attribute variable. These values are simply maintained as part of current state and will not be accessed by
-     * the vertex shader. If a generic vertex attribute bound to an attribute variable in a vertex shader is not
-     * updated while the vertex shader is executing, the vertex shader will repeatedly use the current value for the
-     * generic vertex attribute.
+     * The commands containing {@see GL46::P} indicate that the arguments are
+     * stored as packed components within a larger natural type.
      *
-     * The generic vertex attribute with index 0 is the same as the vertex position attribute previously defined by
-     * OpenGL. A {@see glVertex2}, {@see glVertex3}, or {@see glVertex4} command is completely
-     * equivalent to the corresponding `glVertexAttrib` command with an index argument of 0. A vertex shader can
-     * access generic vertex attribute 0 by using the built-in attribute variable *`gl_Vertex`*. There are no current
-     * values for generic vertex attribute 0. This is the only generic vertex attribute with this property; calls to
-     * set other standard vertex attributes can be freely mixed with calls to set any of the other generic vertex
-     * attributes.
+     * The commands containing {@see GL46::L} indicate that the arguments are
+     * full 64-bit quantities and should be passed directly to shader inputs
+     * declared as 64-bit double precision types.
+     *
+     * OpenGL Shading Language attribute variables are allowed to be of type
+     * mat2, mat3, or mat4. Attributes of these types may be loaded using the
+     * {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * successive generic attribute slots in column major order, with one
+     * column of the matrix in each generic attribute slot.
+     *
+     * A user-defined attribute variable declared in a vertex shader can be
+     * bound to a generic attribute index by calling
+     * {@see GL46::glBindAttribLocation}. This allows an application to use
+     * more descriptive variable names in a vertex shader. A subsequent
+     * change to the specified generic vertex attribute will be immediately
+     * reflected as a change to the corresponding attribute variable in the
+     * vertex shader.
+     *
+     * The binding between a generic vertex attribute index and a
+     * user-defined attribute variable in a vertex shader is part of the
+     * state of a program object, but the current value of the generic vertex
+     * attribute is not. The value of each generic vertex attribute is part
+     * of current state, just like standard vertex attributes, and it is
+     * maintained even if a different program object is used.
+     *
+     * An application may freely modify generic vertex attributes that are
+     * not bound to a named vertex shader attribute variable. These values
+     * are simply maintained as part of current state and will not be
+     * accessed by the vertex shader. If a generic vertex attribute bound to
+     * an attribute variable in a vertex shader is not updated while the
+     * vertex shader is executing, the vertex shader will repeatedly use the
+     * current value for the generic vertex attribute.
      *
      * @see http://docs.gl/gl2/glVertexAttrib
-     * @see http://docs.gl/gl3/glVertexAttrib
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
-     * @param int $index
+     * @param int|\FFI\CData|\FFI\CInt $index
      * @param \FFI\CData|\FFI\CFloatPtr|null $v
      * @return void
      */
-    public static function glVertexAttrib1dv(int $index, ?\FFI\CData $v): void
+    public function glVertexAttrib1dv($index, ?\FFI\CData $v): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($index >= 0 && $index <= 4_294_967_295, 'Argument $index overflow: C type GLuint is required');
+        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
 
-        $proc = self::getProc('glVertexAttrib1dv', 'void (*)(GLuint index, const GLdouble *v)');
+        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glVertexAttrib1dv', 'void (*)(GLuint index, const GLdouble *v)');
         $proc($index, $v);
     }
 
     /**
-     * OpenGL defines a number of standard vertex attributes that applications can modify with standard API entry
-     * points (color, normal, texture coordinates, etc.). The `glVertexAttrib` family of entry points allows an
+     * The {@see GL46::glVertexAttrib} family of entry points allows an
      * application to pass generic vertex attributes in numbered locations.
      *
-     * Generic attributes are defined as four-component values that are organized into an array. The first entry of
-     * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * `GL_MAX_VERTEX_ATTRIBS`. Individual elements of this array can be modified with a `glVertexAttrib` call that
-     * specifies the index of the element to be modified and a value for that element.
+     * Generic attributes are defined as four-component values that are
+     * organized into an array. The first entry of this array is numbered 0,
+     * and the size of the array is specified by the implementation-dependent
+     * constant {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of
+     * this array can be modified with a {@see GL46::glVertexAttrib} call
+     * that specifies the index of the element to be modified and a value for
+     * that element.
      *
-     * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
-     * specified by *`index`*. A `1` in the name of the command indicates that only one value is passed, and it will
-     * be used to modify the first component of the generic vertex attribute. The second and third components will be
-     * set to 0, and the fourth component will be set to 1. Similarly, a `2` in the name of the command indicates
-     * that values are provided for the first two components, the third component will be set to 0, and the fourth
-     * component will be set to 1. A `3` in the name of the command indicates that values are provided for the first
-     * three components and the fourth component will be set to 1, whereas a `4` in the name indicates that values
-     * are provided for all four components.
+     * These commands can be used to specify one, two, three, or all four
+     * components of the generic vertex attribute specified by $index. A
+     * {@see GL46::1} in the name of the command indicates that only one
+     * value is passed, and it will be used to modify the first component of
+     * the generic vertex attribute. The second and third components will be
+     * set to 0, and the fourth component will be set to 1. Similarly, a
+     * {@see GL46::2} in the name of the command indicates that values are
+     * provided for the first two components, the third component will be set
+     * to 0, and the fourth component will be set to 1. A {@see GL46::3} in
+     * the name of the command indicates that values are provided for the
+     * first three components and the fourth component will be set to 1,
+     * whereas a {@see GL46::4} in the name indicates that values are
+     * provided for all four components.
      *
-     * The letters `s`, `f`, `i`, `d`, `ub`, `us`, and `ui` indicate whether the arguments are of type short, float,
-     * int, double, unsigned byte, unsigned short, or unsigned int. When `v` is appended to the name, the commands
-     * can take a pointer to an array of such values. The commands containing `N` indicate that the arguments will be
-     * passed as fixed-point values that are scaled to a normalized range according to the component conversion rules
-     * defined by the OpenGL specification. Signed values are understood to represent fixed-point values in the range
-     * [-1,1], and unsigned values are understood to represent fixed-point values in the range [0,1].
+     * The letters {@see GL46::s}, {@see GL46::f}, {@see GL46::i},
+     * {@see GL46::d}, {@see GL46::ub}, {@see GL46::us}, and {@see GL46::ui}
+     * indicate whether the arguments are of type short, float, int, double,
+     * unsigned byte, unsigned short, or unsigned int. When {@see GL46::v} is
+     * appended to the name, the commands can take a pointer to an array of
+     * such values.
      *
-     * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the `glVertexAttrib` entry points. Matrices must be loaded into successive generic
-     * attribute slots in column major order, with one column of the matrix in each generic attribute slot.
+     * Additional capitalized letters can indicate further alterations to the
+     * default behavior of the glVertexAttrib function:
      *
-     * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see glBindAttribLocation}. This allows an application to use more descriptive
-     * variable names in a vertex shader. A subsequent change to the specified generic vertex attribute will be
-     * immediately reflected as a change to the corresponding attribute variable in the vertex shader.
+     * The commands containing {@see GL46::N} indicate that the arguments
+     * will be passed as fixed-point values that are scaled to a normalized
+     * range according to the component conversion rules defined by the
+     * OpenGL specification. Signed values are understood to represent
+     * fixed-point values in the range \[-1,1\], and unsigned values are
+     * understood to represent fixed-point values in the range \[0,1\].
      *
-     * The binding between a generic vertex attribute index and a user-defined attribute variable in a vertex shader
-     * is part of the state of a program object, but the current value of the generic vertex attribute is not. The
-     * value of each generic vertex attribute is part of current state, just like standard vertex attributes, and it
-     * is maintained even if a different program object is used.
+     * The commands containing {@see GL46::I} indicate that the arguments are
+     * extended to full signed or unsigned integers.
      *
-     * An application may freely modify generic vertex attributes that are not bound to a named vertex shader
-     * attribute variable. These values are simply maintained as part of current state and will not be accessed by
-     * the vertex shader. If a generic vertex attribute bound to an attribute variable in a vertex shader is not
-     * updated while the vertex shader is executing, the vertex shader will repeatedly use the current value for the
-     * generic vertex attribute.
+     * The commands containing {@see GL46::P} indicate that the arguments are
+     * stored as packed components within a larger natural type.
      *
-     * The generic vertex attribute with index 0 is the same as the vertex position attribute previously defined by
-     * OpenGL. A {@see glVertex2}, {@see glVertex3}, or {@see glVertex4} command is completely
-     * equivalent to the corresponding `glVertexAttrib` command with an index argument of 0. A vertex shader can
-     * access generic vertex attribute 0 by using the built-in attribute variable *`gl_Vertex`*. There are no current
-     * values for generic vertex attribute 0. This is the only generic vertex attribute with this property; calls to
-     * set other standard vertex attributes can be freely mixed with calls to set any of the other generic vertex
-     * attributes.
+     * The commands containing {@see GL46::L} indicate that the arguments are
+     * full 64-bit quantities and should be passed directly to shader inputs
+     * declared as 64-bit double precision types.
+     *
+     * OpenGL Shading Language attribute variables are allowed to be of type
+     * mat2, mat3, or mat4. Attributes of these types may be loaded using the
+     * {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * successive generic attribute slots in column major order, with one
+     * column of the matrix in each generic attribute slot.
+     *
+     * A user-defined attribute variable declared in a vertex shader can be
+     * bound to a generic attribute index by calling
+     * {@see GL46::glBindAttribLocation}. This allows an application to use
+     * more descriptive variable names in a vertex shader. A subsequent
+     * change to the specified generic vertex attribute will be immediately
+     * reflected as a change to the corresponding attribute variable in the
+     * vertex shader.
+     *
+     * The binding between a generic vertex attribute index and a
+     * user-defined attribute variable in a vertex shader is part of the
+     * state of a program object, but the current value of the generic vertex
+     * attribute is not. The value of each generic vertex attribute is part
+     * of current state, just like standard vertex attributes, and it is
+     * maintained even if a different program object is used.
+     *
+     * An application may freely modify generic vertex attributes that are
+     * not bound to a named vertex shader attribute variable. These values
+     * are simply maintained as part of current state and will not be
+     * accessed by the vertex shader. If a generic vertex attribute bound to
+     * an attribute variable in a vertex shader is not updated while the
+     * vertex shader is executing, the vertex shader will repeatedly use the
+     * current value for the generic vertex attribute.
      *
      * @see http://docs.gl/gl2/glVertexAttrib
-     * @see http://docs.gl/gl3/glVertexAttrib
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
-     * @param int $index
-     * @param float $x
+     * @param int|\FFI\CData|\FFI\CInt $index
+     * @param float|\FFI\CData|\FFI\CFloat $x
      * @return void
      */
-    public static function glVertexAttrib1f(int $index, float $x): void
+    public function glVertexAttrib1f($index, $x): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($index >= 0 && $index <= 4_294_967_295, 'Argument $index overflow: C type GLuint is required');
-        assert($x >= -3.40282e38 && $x <= 3.40282e38, 'Argument $x overflow: C type GLfloat is required');
+        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
+        $x = $x instanceof \FFI\CData ? $x->cdata : $x;
 
-        $proc = self::getProc('glVertexAttrib1f', 'void (*)(GLuint index, GLfloat x)');
+        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Assert::float32($x), 'Argument $x must be a C-like GLfloat, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glVertexAttrib1f', 'void (*)(GLuint index, GLfloat x)');
         $proc($index, $x);
     }
 
     /**
-     * OpenGL defines a number of standard vertex attributes that applications can modify with standard API entry
-     * points (color, normal, texture coordinates, etc.). The `glVertexAttrib` family of entry points allows an
+     * The {@see GL46::glVertexAttrib} family of entry points allows an
      * application to pass generic vertex attributes in numbered locations.
      *
-     * Generic attributes are defined as four-component values that are organized into an array. The first entry of
-     * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * `GL_MAX_VERTEX_ATTRIBS`. Individual elements of this array can be modified with a `glVertexAttrib` call that
-     * specifies the index of the element to be modified and a value for that element.
+     * Generic attributes are defined as four-component values that are
+     * organized into an array. The first entry of this array is numbered 0,
+     * and the size of the array is specified by the implementation-dependent
+     * constant {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of
+     * this array can be modified with a {@see GL46::glVertexAttrib} call
+     * that specifies the index of the element to be modified and a value for
+     * that element.
      *
-     * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
-     * specified by *`index`*. A `1` in the name of the command indicates that only one value is passed, and it will
-     * be used to modify the first component of the generic vertex attribute. The second and third components will be
-     * set to 0, and the fourth component will be set to 1. Similarly, a `2` in the name of the command indicates
-     * that values are provided for the first two components, the third component will be set to 0, and the fourth
-     * component will be set to 1. A `3` in the name of the command indicates that values are provided for the first
-     * three components and the fourth component will be set to 1, whereas a `4` in the name indicates that values
-     * are provided for all four components.
+     * These commands can be used to specify one, two, three, or all four
+     * components of the generic vertex attribute specified by $index. A
+     * {@see GL46::1} in the name of the command indicates that only one
+     * value is passed, and it will be used to modify the first component of
+     * the generic vertex attribute. The second and third components will be
+     * set to 0, and the fourth component will be set to 1. Similarly, a
+     * {@see GL46::2} in the name of the command indicates that values are
+     * provided for the first two components, the third component will be set
+     * to 0, and the fourth component will be set to 1. A {@see GL46::3} in
+     * the name of the command indicates that values are provided for the
+     * first three components and the fourth component will be set to 1,
+     * whereas a {@see GL46::4} in the name indicates that values are
+     * provided for all four components.
      *
-     * The letters `s`, `f`, `i`, `d`, `ub`, `us`, and `ui` indicate whether the arguments are of type short, float,
-     * int, double, unsigned byte, unsigned short, or unsigned int. When `v` is appended to the name, the commands
-     * can take a pointer to an array of such values. The commands containing `N` indicate that the arguments will be
-     * passed as fixed-point values that are scaled to a normalized range according to the component conversion rules
-     * defined by the OpenGL specification. Signed values are understood to represent fixed-point values in the range
-     * [-1,1], and unsigned values are understood to represent fixed-point values in the range [0,1].
+     * The letters {@see GL46::s}, {@see GL46::f}, {@see GL46::i},
+     * {@see GL46::d}, {@see GL46::ub}, {@see GL46::us}, and {@see GL46::ui}
+     * indicate whether the arguments are of type short, float, int, double,
+     * unsigned byte, unsigned short, or unsigned int. When {@see GL46::v} is
+     * appended to the name, the commands can take a pointer to an array of
+     * such values.
      *
-     * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the `glVertexAttrib` entry points. Matrices must be loaded into successive generic
-     * attribute slots in column major order, with one column of the matrix in each generic attribute slot.
+     * Additional capitalized letters can indicate further alterations to the
+     * default behavior of the glVertexAttrib function:
      *
-     * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see glBindAttribLocation}. This allows an application to use more descriptive
-     * variable names in a vertex shader. A subsequent change to the specified generic vertex attribute will be
-     * immediately reflected as a change to the corresponding attribute variable in the vertex shader.
+     * The commands containing {@see GL46::N} indicate that the arguments
+     * will be passed as fixed-point values that are scaled to a normalized
+     * range according to the component conversion rules defined by the
+     * OpenGL specification. Signed values are understood to represent
+     * fixed-point values in the range \[-1,1\], and unsigned values are
+     * understood to represent fixed-point values in the range \[0,1\].
      *
-     * The binding between a generic vertex attribute index and a user-defined attribute variable in a vertex shader
-     * is part of the state of a program object, but the current value of the generic vertex attribute is not. The
-     * value of each generic vertex attribute is part of current state, just like standard vertex attributes, and it
-     * is maintained even if a different program object is used.
+     * The commands containing {@see GL46::I} indicate that the arguments are
+     * extended to full signed or unsigned integers.
      *
-     * An application may freely modify generic vertex attributes that are not bound to a named vertex shader
-     * attribute variable. These values are simply maintained as part of current state and will not be accessed by
-     * the vertex shader. If a generic vertex attribute bound to an attribute variable in a vertex shader is not
-     * updated while the vertex shader is executing, the vertex shader will repeatedly use the current value for the
-     * generic vertex attribute.
+     * The commands containing {@see GL46::P} indicate that the arguments are
+     * stored as packed components within a larger natural type.
      *
-     * The generic vertex attribute with index 0 is the same as the vertex position attribute previously defined by
-     * OpenGL. A {@see glVertex2}, {@see glVertex3}, or {@see glVertex4} command is completely
-     * equivalent to the corresponding `glVertexAttrib` command with an index argument of 0. A vertex shader can
-     * access generic vertex attribute 0 by using the built-in attribute variable *`gl_Vertex`*. There are no current
-     * values for generic vertex attribute 0. This is the only generic vertex attribute with this property; calls to
-     * set other standard vertex attributes can be freely mixed with calls to set any of the other generic vertex
-     * attributes.
+     * The commands containing {@see GL46::L} indicate that the arguments are
+     * full 64-bit quantities and should be passed directly to shader inputs
+     * declared as 64-bit double precision types.
+     *
+     * OpenGL Shading Language attribute variables are allowed to be of type
+     * mat2, mat3, or mat4. Attributes of these types may be loaded using the
+     * {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * successive generic attribute slots in column major order, with one
+     * column of the matrix in each generic attribute slot.
+     *
+     * A user-defined attribute variable declared in a vertex shader can be
+     * bound to a generic attribute index by calling
+     * {@see GL46::glBindAttribLocation}. This allows an application to use
+     * more descriptive variable names in a vertex shader. A subsequent
+     * change to the specified generic vertex attribute will be immediately
+     * reflected as a change to the corresponding attribute variable in the
+     * vertex shader.
+     *
+     * The binding between a generic vertex attribute index and a
+     * user-defined attribute variable in a vertex shader is part of the
+     * state of a program object, but the current value of the generic vertex
+     * attribute is not. The value of each generic vertex attribute is part
+     * of current state, just like standard vertex attributes, and it is
+     * maintained even if a different program object is used.
+     *
+     * An application may freely modify generic vertex attributes that are
+     * not bound to a named vertex shader attribute variable. These values
+     * are simply maintained as part of current state and will not be
+     * accessed by the vertex shader. If a generic vertex attribute bound to
+     * an attribute variable in a vertex shader is not updated while the
+     * vertex shader is executing, the vertex shader will repeatedly use the
+     * current value for the generic vertex attribute.
      *
      * @see http://docs.gl/gl2/glVertexAttrib
-     * @see http://docs.gl/gl3/glVertexAttrib
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
-     * @param int $index
+     * @param int|\FFI\CData|\FFI\CInt $index
      * @param \FFI\CData|\FFI\CFloatPtr|null $v
      * @return void
      */
-    public static function glVertexAttrib1fv(int $index, ?\FFI\CData $v): void
+    public function glVertexAttrib1fv($index, ?\FFI\CData $v): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($index >= 0 && $index <= 4_294_967_295, 'Argument $index overflow: C type GLuint is required');
+        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
 
-        $proc = self::getProc('glVertexAttrib1fv', 'void (*)(GLuint index, const GLfloat *v)');
+        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glVertexAttrib1fv', 'void (*)(GLuint index, const GLfloat *v)');
         $proc($index, $v);
     }
 
     /**
-     * OpenGL defines a number of standard vertex attributes that applications can modify with standard API entry
-     * points (color, normal, texture coordinates, etc.). The `glVertexAttrib` family of entry points allows an
+     * The {@see GL46::glVertexAttrib} family of entry points allows an
      * application to pass generic vertex attributes in numbered locations.
      *
-     * Generic attributes are defined as four-component values that are organized into an array. The first entry of
-     * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * `GL_MAX_VERTEX_ATTRIBS`. Individual elements of this array can be modified with a `glVertexAttrib` call that
-     * specifies the index of the element to be modified and a value for that element.
+     * Generic attributes are defined as four-component values that are
+     * organized into an array. The first entry of this array is numbered 0,
+     * and the size of the array is specified by the implementation-dependent
+     * constant {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of
+     * this array can be modified with a {@see GL46::glVertexAttrib} call
+     * that specifies the index of the element to be modified and a value for
+     * that element.
      *
-     * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
-     * specified by *`index`*. A `1` in the name of the command indicates that only one value is passed, and it will
-     * be used to modify the first component of the generic vertex attribute. The second and third components will be
-     * set to 0, and the fourth component will be set to 1. Similarly, a `2` in the name of the command indicates
-     * that values are provided for the first two components, the third component will be set to 0, and the fourth
-     * component will be set to 1. A `3` in the name of the command indicates that values are provided for the first
-     * three components and the fourth component will be set to 1, whereas a `4` in the name indicates that values
-     * are provided for all four components.
+     * These commands can be used to specify one, two, three, or all four
+     * components of the generic vertex attribute specified by $index. A
+     * {@see GL46::1} in the name of the command indicates that only one
+     * value is passed, and it will be used to modify the first component of
+     * the generic vertex attribute. The second and third components will be
+     * set to 0, and the fourth component will be set to 1. Similarly, a
+     * {@see GL46::2} in the name of the command indicates that values are
+     * provided for the first two components, the third component will be set
+     * to 0, and the fourth component will be set to 1. A {@see GL46::3} in
+     * the name of the command indicates that values are provided for the
+     * first three components and the fourth component will be set to 1,
+     * whereas a {@see GL46::4} in the name indicates that values are
+     * provided for all four components.
      *
-     * The letters `s`, `f`, `i`, `d`, `ub`, `us`, and `ui` indicate whether the arguments are of type short, float,
-     * int, double, unsigned byte, unsigned short, or unsigned int. When `v` is appended to the name, the commands
-     * can take a pointer to an array of such values. The commands containing `N` indicate that the arguments will be
-     * passed as fixed-point values that are scaled to a normalized range according to the component conversion rules
-     * defined by the OpenGL specification. Signed values are understood to represent fixed-point values in the range
-     * [-1,1], and unsigned values are understood to represent fixed-point values in the range [0,1].
+     * The letters {@see GL46::s}, {@see GL46::f}, {@see GL46::i},
+     * {@see GL46::d}, {@see GL46::ub}, {@see GL46::us}, and {@see GL46::ui}
+     * indicate whether the arguments are of type short, float, int, double,
+     * unsigned byte, unsigned short, or unsigned int. When {@see GL46::v} is
+     * appended to the name, the commands can take a pointer to an array of
+     * such values.
      *
-     * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the `glVertexAttrib` entry points. Matrices must be loaded into successive generic
-     * attribute slots in column major order, with one column of the matrix in each generic attribute slot.
+     * Additional capitalized letters can indicate further alterations to the
+     * default behavior of the glVertexAttrib function:
      *
-     * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see glBindAttribLocation}. This allows an application to use more descriptive
-     * variable names in a vertex shader. A subsequent change to the specified generic vertex attribute will be
-     * immediately reflected as a change to the corresponding attribute variable in the vertex shader.
+     * The commands containing {@see GL46::N} indicate that the arguments
+     * will be passed as fixed-point values that are scaled to a normalized
+     * range according to the component conversion rules defined by the
+     * OpenGL specification. Signed values are understood to represent
+     * fixed-point values in the range \[-1,1\], and unsigned values are
+     * understood to represent fixed-point values in the range \[0,1\].
      *
-     * The binding between a generic vertex attribute index and a user-defined attribute variable in a vertex shader
-     * is part of the state of a program object, but the current value of the generic vertex attribute is not. The
-     * value of each generic vertex attribute is part of current state, just like standard vertex attributes, and it
-     * is maintained even if a different program object is used.
+     * The commands containing {@see GL46::I} indicate that the arguments are
+     * extended to full signed or unsigned integers.
      *
-     * An application may freely modify generic vertex attributes that are not bound to a named vertex shader
-     * attribute variable. These values are simply maintained as part of current state and will not be accessed by
-     * the vertex shader. If a generic vertex attribute bound to an attribute variable in a vertex shader is not
-     * updated while the vertex shader is executing, the vertex shader will repeatedly use the current value for the
-     * generic vertex attribute.
+     * The commands containing {@see GL46::P} indicate that the arguments are
+     * stored as packed components within a larger natural type.
      *
-     * The generic vertex attribute with index 0 is the same as the vertex position attribute previously defined by
-     * OpenGL. A {@see glVertex2}, {@see glVertex3}, or {@see glVertex4} command is completely
-     * equivalent to the corresponding `glVertexAttrib` command with an index argument of 0. A vertex shader can
-     * access generic vertex attribute 0 by using the built-in attribute variable *`gl_Vertex`*. There are no current
-     * values for generic vertex attribute 0. This is the only generic vertex attribute with this property; calls to
-     * set other standard vertex attributes can be freely mixed with calls to set any of the other generic vertex
-     * attributes.
+     * The commands containing {@see GL46::L} indicate that the arguments are
+     * full 64-bit quantities and should be passed directly to shader inputs
+     * declared as 64-bit double precision types.
+     *
+     * OpenGL Shading Language attribute variables are allowed to be of type
+     * mat2, mat3, or mat4. Attributes of these types may be loaded using the
+     * {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * successive generic attribute slots in column major order, with one
+     * column of the matrix in each generic attribute slot.
+     *
+     * A user-defined attribute variable declared in a vertex shader can be
+     * bound to a generic attribute index by calling
+     * {@see GL46::glBindAttribLocation}. This allows an application to use
+     * more descriptive variable names in a vertex shader. A subsequent
+     * change to the specified generic vertex attribute will be immediately
+     * reflected as a change to the corresponding attribute variable in the
+     * vertex shader.
+     *
+     * The binding between a generic vertex attribute index and a
+     * user-defined attribute variable in a vertex shader is part of the
+     * state of a program object, but the current value of the generic vertex
+     * attribute is not. The value of each generic vertex attribute is part
+     * of current state, just like standard vertex attributes, and it is
+     * maintained even if a different program object is used.
+     *
+     * An application may freely modify generic vertex attributes that are
+     * not bound to a named vertex shader attribute variable. These values
+     * are simply maintained as part of current state and will not be
+     * accessed by the vertex shader. If a generic vertex attribute bound to
+     * an attribute variable in a vertex shader is not updated while the
+     * vertex shader is executing, the vertex shader will repeatedly use the
+     * current value for the generic vertex attribute.
      *
      * @see http://docs.gl/gl2/glVertexAttrib
-     * @see http://docs.gl/gl3/glVertexAttrib
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
-     * @param int $index
-     * @param int $x
+     * @param int|\FFI\CData|\FFI\CInt $index
+     * @param int|\FFI\CData|\FFI\CInt $x
      * @return void
      */
-    public static function glVertexAttrib1s(int $index, int $x): void
+    public function glVertexAttrib1s($index, $x): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($index >= 0 && $index <= 4_294_967_295, 'Argument $index overflow: C type GLuint is required');
-        assert($x >= -32768 && $x <= 32767, 'Argument $x overflow: C type GLshort is required');
+        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
+        $x = $x instanceof \FFI\CData ? $x->cdata : $x;
 
-        $proc = self::getProc('glVertexAttrib1s', 'void (*)(GLuint index, GLshort x)');
+        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Assert::int16($x), 'Argument $x must be a C-like GLshort, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glVertexAttrib1s', 'void (*)(GLuint index, GLshort x)');
         $proc($index, $x);
     }
 
     /**
-     * OpenGL defines a number of standard vertex attributes that applications can modify with standard API entry
-     * points (color, normal, texture coordinates, etc.). The `glVertexAttrib` family of entry points allows an
+     * The {@see GL46::glVertexAttrib} family of entry points allows an
      * application to pass generic vertex attributes in numbered locations.
      *
-     * Generic attributes are defined as four-component values that are organized into an array. The first entry of
-     * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * `GL_MAX_VERTEX_ATTRIBS`. Individual elements of this array can be modified with a `glVertexAttrib` call that
-     * specifies the index of the element to be modified and a value for that element.
+     * Generic attributes are defined as four-component values that are
+     * organized into an array. The first entry of this array is numbered 0,
+     * and the size of the array is specified by the implementation-dependent
+     * constant {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of
+     * this array can be modified with a {@see GL46::glVertexAttrib} call
+     * that specifies the index of the element to be modified and a value for
+     * that element.
      *
-     * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
-     * specified by *`index`*. A `1` in the name of the command indicates that only one value is passed, and it will
-     * be used to modify the first component of the generic vertex attribute. The second and third components will be
-     * set to 0, and the fourth component will be set to 1. Similarly, a `2` in the name of the command indicates
-     * that values are provided for the first two components, the third component will be set to 0, and the fourth
-     * component will be set to 1. A `3` in the name of the command indicates that values are provided for the first
-     * three components and the fourth component will be set to 1, whereas a `4` in the name indicates that values
-     * are provided for all four components.
+     * These commands can be used to specify one, two, three, or all four
+     * components of the generic vertex attribute specified by $index. A
+     * {@see GL46::1} in the name of the command indicates that only one
+     * value is passed, and it will be used to modify the first component of
+     * the generic vertex attribute. The second and third components will be
+     * set to 0, and the fourth component will be set to 1. Similarly, a
+     * {@see GL46::2} in the name of the command indicates that values are
+     * provided for the first two components, the third component will be set
+     * to 0, and the fourth component will be set to 1. A {@see GL46::3} in
+     * the name of the command indicates that values are provided for the
+     * first three components and the fourth component will be set to 1,
+     * whereas a {@see GL46::4} in the name indicates that values are
+     * provided for all four components.
      *
-     * The letters `s`, `f`, `i`, `d`, `ub`, `us`, and `ui` indicate whether the arguments are of type short, float,
-     * int, double, unsigned byte, unsigned short, or unsigned int. When `v` is appended to the name, the commands
-     * can take a pointer to an array of such values. The commands containing `N` indicate that the arguments will be
-     * passed as fixed-point values that are scaled to a normalized range according to the component conversion rules
-     * defined by the OpenGL specification. Signed values are understood to represent fixed-point values in the range
-     * [-1,1], and unsigned values are understood to represent fixed-point values in the range [0,1].
+     * The letters {@see GL46::s}, {@see GL46::f}, {@see GL46::i},
+     * {@see GL46::d}, {@see GL46::ub}, {@see GL46::us}, and {@see GL46::ui}
+     * indicate whether the arguments are of type short, float, int, double,
+     * unsigned byte, unsigned short, or unsigned int. When {@see GL46::v} is
+     * appended to the name, the commands can take a pointer to an array of
+     * such values.
      *
-     * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the `glVertexAttrib` entry points. Matrices must be loaded into successive generic
-     * attribute slots in column major order, with one column of the matrix in each generic attribute slot.
+     * Additional capitalized letters can indicate further alterations to the
+     * default behavior of the glVertexAttrib function:
      *
-     * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see glBindAttribLocation}. This allows an application to use more descriptive
-     * variable names in a vertex shader. A subsequent change to the specified generic vertex attribute will be
-     * immediately reflected as a change to the corresponding attribute variable in the vertex shader.
+     * The commands containing {@see GL46::N} indicate that the arguments
+     * will be passed as fixed-point values that are scaled to a normalized
+     * range according to the component conversion rules defined by the
+     * OpenGL specification. Signed values are understood to represent
+     * fixed-point values in the range \[-1,1\], and unsigned values are
+     * understood to represent fixed-point values in the range \[0,1\].
      *
-     * The binding between a generic vertex attribute index and a user-defined attribute variable in a vertex shader
-     * is part of the state of a program object, but the current value of the generic vertex attribute is not. The
-     * value of each generic vertex attribute is part of current state, just like standard vertex attributes, and it
-     * is maintained even if a different program object is used.
+     * The commands containing {@see GL46::I} indicate that the arguments are
+     * extended to full signed or unsigned integers.
      *
-     * An application may freely modify generic vertex attributes that are not bound to a named vertex shader
-     * attribute variable. These values are simply maintained as part of current state and will not be accessed by
-     * the vertex shader. If a generic vertex attribute bound to an attribute variable in a vertex shader is not
-     * updated while the vertex shader is executing, the vertex shader will repeatedly use the current value for the
-     * generic vertex attribute.
+     * The commands containing {@see GL46::P} indicate that the arguments are
+     * stored as packed components within a larger natural type.
      *
-     * The generic vertex attribute with index 0 is the same as the vertex position attribute previously defined by
-     * OpenGL. A {@see glVertex2}, {@see glVertex3}, or {@see glVertex4} command is completely
-     * equivalent to the corresponding `glVertexAttrib` command with an index argument of 0. A vertex shader can
-     * access generic vertex attribute 0 by using the built-in attribute variable *`gl_Vertex`*. There are no current
-     * values for generic vertex attribute 0. This is the only generic vertex attribute with this property; calls to
-     * set other standard vertex attributes can be freely mixed with calls to set any of the other generic vertex
-     * attributes.
+     * The commands containing {@see GL46::L} indicate that the arguments are
+     * full 64-bit quantities and should be passed directly to shader inputs
+     * declared as 64-bit double precision types.
+     *
+     * OpenGL Shading Language attribute variables are allowed to be of type
+     * mat2, mat3, or mat4. Attributes of these types may be loaded using the
+     * {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * successive generic attribute slots in column major order, with one
+     * column of the matrix in each generic attribute slot.
+     *
+     * A user-defined attribute variable declared in a vertex shader can be
+     * bound to a generic attribute index by calling
+     * {@see GL46::glBindAttribLocation}. This allows an application to use
+     * more descriptive variable names in a vertex shader. A subsequent
+     * change to the specified generic vertex attribute will be immediately
+     * reflected as a change to the corresponding attribute variable in the
+     * vertex shader.
+     *
+     * The binding between a generic vertex attribute index and a
+     * user-defined attribute variable in a vertex shader is part of the
+     * state of a program object, but the current value of the generic vertex
+     * attribute is not. The value of each generic vertex attribute is part
+     * of current state, just like standard vertex attributes, and it is
+     * maintained even if a different program object is used.
+     *
+     * An application may freely modify generic vertex attributes that are
+     * not bound to a named vertex shader attribute variable. These values
+     * are simply maintained as part of current state and will not be
+     * accessed by the vertex shader. If a generic vertex attribute bound to
+     * an attribute variable in a vertex shader is not updated while the
+     * vertex shader is executing, the vertex shader will repeatedly use the
+     * current value for the generic vertex attribute.
      *
      * @see http://docs.gl/gl2/glVertexAttrib
-     * @see http://docs.gl/gl3/glVertexAttrib
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
-     * @param int $index
+     * @param int|\FFI\CData|\FFI\CInt $index
      * @param \FFI\CData|\FFI\CIntPtr|null $v
      * @return void
      */
-    public static function glVertexAttrib1sv(int $index, ?\FFI\CData $v): void
+    public function glVertexAttrib1sv($index, ?\FFI\CData $v): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($index >= 0 && $index <= 4_294_967_295, 'Argument $index overflow: C type GLuint is required');
+        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
 
-        $proc = self::getProc('glVertexAttrib1sv', 'void (*)(GLuint index, const GLshort *v)');
+        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glVertexAttrib1sv', 'void (*)(GLuint index, const GLshort *v)');
         $proc($index, $v);
     }
 
     /**
-     * OpenGL defines a number of standard vertex attributes that applications can modify with standard API entry
-     * points (color, normal, texture coordinates, etc.). The `glVertexAttrib` family of entry points allows an
+     * The {@see GL46::glVertexAttrib} family of entry points allows an
      * application to pass generic vertex attributes in numbered locations.
      *
-     * Generic attributes are defined as four-component values that are organized into an array. The first entry of
-     * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * `GL_MAX_VERTEX_ATTRIBS`. Individual elements of this array can be modified with a `glVertexAttrib` call that
-     * specifies the index of the element to be modified and a value for that element.
+     * Generic attributes are defined as four-component values that are
+     * organized into an array. The first entry of this array is numbered 0,
+     * and the size of the array is specified by the implementation-dependent
+     * constant {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of
+     * this array can be modified with a {@see GL46::glVertexAttrib} call
+     * that specifies the index of the element to be modified and a value for
+     * that element.
      *
-     * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
-     * specified by *`index`*. A `1` in the name of the command indicates that only one value is passed, and it will
-     * be used to modify the first component of the generic vertex attribute. The second and third components will be
-     * set to 0, and the fourth component will be set to 1. Similarly, a `2` in the name of the command indicates
-     * that values are provided for the first two components, the third component will be set to 0, and the fourth
-     * component will be set to 1. A `3` in the name of the command indicates that values are provided for the first
-     * three components and the fourth component will be set to 1, whereas a `4` in the name indicates that values
-     * are provided for all four components.
+     * These commands can be used to specify one, two, three, or all four
+     * components of the generic vertex attribute specified by $index. A
+     * {@see GL46::1} in the name of the command indicates that only one
+     * value is passed, and it will be used to modify the first component of
+     * the generic vertex attribute. The second and third components will be
+     * set to 0, and the fourth component will be set to 1. Similarly, a
+     * {@see GL46::2} in the name of the command indicates that values are
+     * provided for the first two components, the third component will be set
+     * to 0, and the fourth component will be set to 1. A {@see GL46::3} in
+     * the name of the command indicates that values are provided for the
+     * first three components and the fourth component will be set to 1,
+     * whereas a {@see GL46::4} in the name indicates that values are
+     * provided for all four components.
      *
-     * The letters `s`, `f`, `i`, `d`, `ub`, `us`, and `ui` indicate whether the arguments are of type short, float,
-     * int, double, unsigned byte, unsigned short, or unsigned int. When `v` is appended to the name, the commands
-     * can take a pointer to an array of such values. The commands containing `N` indicate that the arguments will be
-     * passed as fixed-point values that are scaled to a normalized range according to the component conversion rules
-     * defined by the OpenGL specification. Signed values are understood to represent fixed-point values in the range
-     * [-1,1], and unsigned values are understood to represent fixed-point values in the range [0,1].
+     * The letters {@see GL46::s}, {@see GL46::f}, {@see GL46::i},
+     * {@see GL46::d}, {@see GL46::ub}, {@see GL46::us}, and {@see GL46::ui}
+     * indicate whether the arguments are of type short, float, int, double,
+     * unsigned byte, unsigned short, or unsigned int. When {@see GL46::v} is
+     * appended to the name, the commands can take a pointer to an array of
+     * such values.
      *
-     * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the `glVertexAttrib` entry points. Matrices must be loaded into successive generic
-     * attribute slots in column major order, with one column of the matrix in each generic attribute slot.
+     * Additional capitalized letters can indicate further alterations to the
+     * default behavior of the glVertexAttrib function:
      *
-     * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see glBindAttribLocation}. This allows an application to use more descriptive
-     * variable names in a vertex shader. A subsequent change to the specified generic vertex attribute will be
-     * immediately reflected as a change to the corresponding attribute variable in the vertex shader.
+     * The commands containing {@see GL46::N} indicate that the arguments
+     * will be passed as fixed-point values that are scaled to a normalized
+     * range according to the component conversion rules defined by the
+     * OpenGL specification. Signed values are understood to represent
+     * fixed-point values in the range \[-1,1\], and unsigned values are
+     * understood to represent fixed-point values in the range \[0,1\].
      *
-     * The binding between a generic vertex attribute index and a user-defined attribute variable in a vertex shader
-     * is part of the state of a program object, but the current value of the generic vertex attribute is not. The
-     * value of each generic vertex attribute is part of current state, just like standard vertex attributes, and it
-     * is maintained even if a different program object is used.
+     * The commands containing {@see GL46::I} indicate that the arguments are
+     * extended to full signed or unsigned integers.
      *
-     * An application may freely modify generic vertex attributes that are not bound to a named vertex shader
-     * attribute variable. These values are simply maintained as part of current state and will not be accessed by
-     * the vertex shader. If a generic vertex attribute bound to an attribute variable in a vertex shader is not
-     * updated while the vertex shader is executing, the vertex shader will repeatedly use the current value for the
-     * generic vertex attribute.
+     * The commands containing {@see GL46::P} indicate that the arguments are
+     * stored as packed components within a larger natural type.
      *
-     * The generic vertex attribute with index 0 is the same as the vertex position attribute previously defined by
-     * OpenGL. A {@see glVertex2}, {@see glVertex3}, or {@see glVertex4} command is completely
-     * equivalent to the corresponding `glVertexAttrib` command with an index argument of 0. A vertex shader can
-     * access generic vertex attribute 0 by using the built-in attribute variable *`gl_Vertex`*. There are no current
-     * values for generic vertex attribute 0. This is the only generic vertex attribute with this property; calls to
-     * set other standard vertex attributes can be freely mixed with calls to set any of the other generic vertex
-     * attributes.
+     * The commands containing {@see GL46::L} indicate that the arguments are
+     * full 64-bit quantities and should be passed directly to shader inputs
+     * declared as 64-bit double precision types.
+     *
+     * OpenGL Shading Language attribute variables are allowed to be of type
+     * mat2, mat3, or mat4. Attributes of these types may be loaded using the
+     * {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * successive generic attribute slots in column major order, with one
+     * column of the matrix in each generic attribute slot.
+     *
+     * A user-defined attribute variable declared in a vertex shader can be
+     * bound to a generic attribute index by calling
+     * {@see GL46::glBindAttribLocation}. This allows an application to use
+     * more descriptive variable names in a vertex shader. A subsequent
+     * change to the specified generic vertex attribute will be immediately
+     * reflected as a change to the corresponding attribute variable in the
+     * vertex shader.
+     *
+     * The binding between a generic vertex attribute index and a
+     * user-defined attribute variable in a vertex shader is part of the
+     * state of a program object, but the current value of the generic vertex
+     * attribute is not. The value of each generic vertex attribute is part
+     * of current state, just like standard vertex attributes, and it is
+     * maintained even if a different program object is used.
+     *
+     * An application may freely modify generic vertex attributes that are
+     * not bound to a named vertex shader attribute variable. These values
+     * are simply maintained as part of current state and will not be
+     * accessed by the vertex shader. If a generic vertex attribute bound to
+     * an attribute variable in a vertex shader is not updated while the
+     * vertex shader is executing, the vertex shader will repeatedly use the
+     * current value for the generic vertex attribute.
      *
      * @see http://docs.gl/gl2/glVertexAttrib
-     * @see http://docs.gl/gl3/glVertexAttrib
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
-     * @param int $index
-     * @param float $x
-     * @param float $y
+     * @param int|\FFI\CData|\FFI\CInt $index
+     * @param float|\FFI\CData|\FFI\CFloat $x
+     * @param float|\FFI\CData|\FFI\CFloat $y
      * @return void
      */
-    public static function glVertexAttrib2d(int $index, float $x, float $y): void
+    public function glVertexAttrib2d($index, $x, $y): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($index >= 0 && $index <= 4_294_967_295, 'Argument $index overflow: C type GLuint is required');
-        assert($x >= \PHP_FLOAT_MIN && $x <= \PHP_FLOAT_MAX, 'Argument $x overflow: C type GLdouble is required');
-        assert($y >= \PHP_FLOAT_MIN && $y <= \PHP_FLOAT_MAX, 'Argument $y overflow: C type GLdouble is required');
+        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
+        $x = $x instanceof \FFI\CData ? $x->cdata : $x;
+        $y = $y instanceof \FFI\CData ? $y->cdata : $y;
 
-        $proc = self::getProc('glVertexAttrib2d', 'void (*)(GLuint index, GLdouble x, GLdouble y)');
+        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Assert::float64($x), 'Argument $x must be a C-like GLdouble, but incompatible or overflow value given');
+        assert(Assert::float64($y), 'Argument $y must be a C-like GLdouble, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glVertexAttrib2d', 'void (*)(GLuint index, GLdouble x, GLdouble y)');
         $proc($index, $x, $y);
     }
 
     /**
-     * OpenGL defines a number of standard vertex attributes that applications can modify with standard API entry
-     * points (color, normal, texture coordinates, etc.). The `glVertexAttrib` family of entry points allows an
+     * The {@see GL46::glVertexAttrib} family of entry points allows an
      * application to pass generic vertex attributes in numbered locations.
      *
-     * Generic attributes are defined as four-component values that are organized into an array. The first entry of
-     * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * `GL_MAX_VERTEX_ATTRIBS`. Individual elements of this array can be modified with a `glVertexAttrib` call that
-     * specifies the index of the element to be modified and a value for that element.
+     * Generic attributes are defined as four-component values that are
+     * organized into an array. The first entry of this array is numbered 0,
+     * and the size of the array is specified by the implementation-dependent
+     * constant {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of
+     * this array can be modified with a {@see GL46::glVertexAttrib} call
+     * that specifies the index of the element to be modified and a value for
+     * that element.
      *
-     * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
-     * specified by *`index`*. A `1` in the name of the command indicates that only one value is passed, and it will
-     * be used to modify the first component of the generic vertex attribute. The second and third components will be
-     * set to 0, and the fourth component will be set to 1. Similarly, a `2` in the name of the command indicates
-     * that values are provided for the first two components, the third component will be set to 0, and the fourth
-     * component will be set to 1. A `3` in the name of the command indicates that values are provided for the first
-     * three components and the fourth component will be set to 1, whereas a `4` in the name indicates that values
-     * are provided for all four components.
+     * These commands can be used to specify one, two, three, or all four
+     * components of the generic vertex attribute specified by $index. A
+     * {@see GL46::1} in the name of the command indicates that only one
+     * value is passed, and it will be used to modify the first component of
+     * the generic vertex attribute. The second and third components will be
+     * set to 0, and the fourth component will be set to 1. Similarly, a
+     * {@see GL46::2} in the name of the command indicates that values are
+     * provided for the first two components, the third component will be set
+     * to 0, and the fourth component will be set to 1. A {@see GL46::3} in
+     * the name of the command indicates that values are provided for the
+     * first three components and the fourth component will be set to 1,
+     * whereas a {@see GL46::4} in the name indicates that values are
+     * provided for all four components.
      *
-     * The letters `s`, `f`, `i`, `d`, `ub`, `us`, and `ui` indicate whether the arguments are of type short, float,
-     * int, double, unsigned byte, unsigned short, or unsigned int. When `v` is appended to the name, the commands
-     * can take a pointer to an array of such values. The commands containing `N` indicate that the arguments will be
-     * passed as fixed-point values that are scaled to a normalized range according to the component conversion rules
-     * defined by the OpenGL specification. Signed values are understood to represent fixed-point values in the range
-     * [-1,1], and unsigned values are understood to represent fixed-point values in the range [0,1].
+     * The letters {@see GL46::s}, {@see GL46::f}, {@see GL46::i},
+     * {@see GL46::d}, {@see GL46::ub}, {@see GL46::us}, and {@see GL46::ui}
+     * indicate whether the arguments are of type short, float, int, double,
+     * unsigned byte, unsigned short, or unsigned int. When {@see GL46::v} is
+     * appended to the name, the commands can take a pointer to an array of
+     * such values.
      *
-     * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the `glVertexAttrib` entry points. Matrices must be loaded into successive generic
-     * attribute slots in column major order, with one column of the matrix in each generic attribute slot.
+     * Additional capitalized letters can indicate further alterations to the
+     * default behavior of the glVertexAttrib function:
      *
-     * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see glBindAttribLocation}. This allows an application to use more descriptive
-     * variable names in a vertex shader. A subsequent change to the specified generic vertex attribute will be
-     * immediately reflected as a change to the corresponding attribute variable in the vertex shader.
+     * The commands containing {@see GL46::N} indicate that the arguments
+     * will be passed as fixed-point values that are scaled to a normalized
+     * range according to the component conversion rules defined by the
+     * OpenGL specification. Signed values are understood to represent
+     * fixed-point values in the range \[-1,1\], and unsigned values are
+     * understood to represent fixed-point values in the range \[0,1\].
      *
-     * The binding between a generic vertex attribute index and a user-defined attribute variable in a vertex shader
-     * is part of the state of a program object, but the current value of the generic vertex attribute is not. The
-     * value of each generic vertex attribute is part of current state, just like standard vertex attributes, and it
-     * is maintained even if a different program object is used.
+     * The commands containing {@see GL46::I} indicate that the arguments are
+     * extended to full signed or unsigned integers.
      *
-     * An application may freely modify generic vertex attributes that are not bound to a named vertex shader
-     * attribute variable. These values are simply maintained as part of current state and will not be accessed by
-     * the vertex shader. If a generic vertex attribute bound to an attribute variable in a vertex shader is not
-     * updated while the vertex shader is executing, the vertex shader will repeatedly use the current value for the
-     * generic vertex attribute.
+     * The commands containing {@see GL46::P} indicate that the arguments are
+     * stored as packed components within a larger natural type.
      *
-     * The generic vertex attribute with index 0 is the same as the vertex position attribute previously defined by
-     * OpenGL. A {@see glVertex2}, {@see glVertex3}, or {@see glVertex4} command is completely
-     * equivalent to the corresponding `glVertexAttrib` command with an index argument of 0. A vertex shader can
-     * access generic vertex attribute 0 by using the built-in attribute variable *`gl_Vertex`*. There are no current
-     * values for generic vertex attribute 0. This is the only generic vertex attribute with this property; calls to
-     * set other standard vertex attributes can be freely mixed with calls to set any of the other generic vertex
-     * attributes.
+     * The commands containing {@see GL46::L} indicate that the arguments are
+     * full 64-bit quantities and should be passed directly to shader inputs
+     * declared as 64-bit double precision types.
+     *
+     * OpenGL Shading Language attribute variables are allowed to be of type
+     * mat2, mat3, or mat4. Attributes of these types may be loaded using the
+     * {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * successive generic attribute slots in column major order, with one
+     * column of the matrix in each generic attribute slot.
+     *
+     * A user-defined attribute variable declared in a vertex shader can be
+     * bound to a generic attribute index by calling
+     * {@see GL46::glBindAttribLocation}. This allows an application to use
+     * more descriptive variable names in a vertex shader. A subsequent
+     * change to the specified generic vertex attribute will be immediately
+     * reflected as a change to the corresponding attribute variable in the
+     * vertex shader.
+     *
+     * The binding between a generic vertex attribute index and a
+     * user-defined attribute variable in a vertex shader is part of the
+     * state of a program object, but the current value of the generic vertex
+     * attribute is not. The value of each generic vertex attribute is part
+     * of current state, just like standard vertex attributes, and it is
+     * maintained even if a different program object is used.
+     *
+     * An application may freely modify generic vertex attributes that are
+     * not bound to a named vertex shader attribute variable. These values
+     * are simply maintained as part of current state and will not be
+     * accessed by the vertex shader. If a generic vertex attribute bound to
+     * an attribute variable in a vertex shader is not updated while the
+     * vertex shader is executing, the vertex shader will repeatedly use the
+     * current value for the generic vertex attribute.
      *
      * @see http://docs.gl/gl2/glVertexAttrib
-     * @see http://docs.gl/gl3/glVertexAttrib
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
-     * @param int $index
+     * @param int|\FFI\CData|\FFI\CInt $index
      * @param \FFI\CData|\FFI\CFloatPtr|null $v
      * @return void
      */
-    public static function glVertexAttrib2dv(int $index, ?\FFI\CData $v): void
+    public function glVertexAttrib2dv($index, ?\FFI\CData $v): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($index >= 0 && $index <= 4_294_967_295, 'Argument $index overflow: C type GLuint is required');
+        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
 
-        $proc = self::getProc('glVertexAttrib2dv', 'void (*)(GLuint index, const GLdouble *v)');
+        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glVertexAttrib2dv', 'void (*)(GLuint index, const GLdouble *v)');
         $proc($index, $v);
     }
 
     /**
-     * OpenGL defines a number of standard vertex attributes that applications can modify with standard API entry
-     * points (color, normal, texture coordinates, etc.). The `glVertexAttrib` family of entry points allows an
+     * The {@see GL46::glVertexAttrib} family of entry points allows an
      * application to pass generic vertex attributes in numbered locations.
      *
-     * Generic attributes are defined as four-component values that are organized into an array. The first entry of
-     * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * `GL_MAX_VERTEX_ATTRIBS`. Individual elements of this array can be modified with a `glVertexAttrib` call that
-     * specifies the index of the element to be modified and a value for that element.
+     * Generic attributes are defined as four-component values that are
+     * organized into an array. The first entry of this array is numbered 0,
+     * and the size of the array is specified by the implementation-dependent
+     * constant {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of
+     * this array can be modified with a {@see GL46::glVertexAttrib} call
+     * that specifies the index of the element to be modified and a value for
+     * that element.
      *
-     * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
-     * specified by *`index`*. A `1` in the name of the command indicates that only one value is passed, and it will
-     * be used to modify the first component of the generic vertex attribute. The second and third components will be
-     * set to 0, and the fourth component will be set to 1. Similarly, a `2` in the name of the command indicates
-     * that values are provided for the first two components, the third component will be set to 0, and the fourth
-     * component will be set to 1. A `3` in the name of the command indicates that values are provided for the first
-     * three components and the fourth component will be set to 1, whereas a `4` in the name indicates that values
-     * are provided for all four components.
+     * These commands can be used to specify one, two, three, or all four
+     * components of the generic vertex attribute specified by $index. A
+     * {@see GL46::1} in the name of the command indicates that only one
+     * value is passed, and it will be used to modify the first component of
+     * the generic vertex attribute. The second and third components will be
+     * set to 0, and the fourth component will be set to 1. Similarly, a
+     * {@see GL46::2} in the name of the command indicates that values are
+     * provided for the first two components, the third component will be set
+     * to 0, and the fourth component will be set to 1. A {@see GL46::3} in
+     * the name of the command indicates that values are provided for the
+     * first three components and the fourth component will be set to 1,
+     * whereas a {@see GL46::4} in the name indicates that values are
+     * provided for all four components.
      *
-     * The letters `s`, `f`, `i`, `d`, `ub`, `us`, and `ui` indicate whether the arguments are of type short, float,
-     * int, double, unsigned byte, unsigned short, or unsigned int. When `v` is appended to the name, the commands
-     * can take a pointer to an array of such values. The commands containing `N` indicate that the arguments will be
-     * passed as fixed-point values that are scaled to a normalized range according to the component conversion rules
-     * defined by the OpenGL specification. Signed values are understood to represent fixed-point values in the range
-     * [-1,1], and unsigned values are understood to represent fixed-point values in the range [0,1].
+     * The letters {@see GL46::s}, {@see GL46::f}, {@see GL46::i},
+     * {@see GL46::d}, {@see GL46::ub}, {@see GL46::us}, and {@see GL46::ui}
+     * indicate whether the arguments are of type short, float, int, double,
+     * unsigned byte, unsigned short, or unsigned int. When {@see GL46::v} is
+     * appended to the name, the commands can take a pointer to an array of
+     * such values.
      *
-     * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the `glVertexAttrib` entry points. Matrices must be loaded into successive generic
-     * attribute slots in column major order, with one column of the matrix in each generic attribute slot.
+     * Additional capitalized letters can indicate further alterations to the
+     * default behavior of the glVertexAttrib function:
      *
-     * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see glBindAttribLocation}. This allows an application to use more descriptive
-     * variable names in a vertex shader. A subsequent change to the specified generic vertex attribute will be
-     * immediately reflected as a change to the corresponding attribute variable in the vertex shader.
+     * The commands containing {@see GL46::N} indicate that the arguments
+     * will be passed as fixed-point values that are scaled to a normalized
+     * range according to the component conversion rules defined by the
+     * OpenGL specification. Signed values are understood to represent
+     * fixed-point values in the range \[-1,1\], and unsigned values are
+     * understood to represent fixed-point values in the range \[0,1\].
      *
-     * The binding between a generic vertex attribute index and a user-defined attribute variable in a vertex shader
-     * is part of the state of a program object, but the current value of the generic vertex attribute is not. The
-     * value of each generic vertex attribute is part of current state, just like standard vertex attributes, and it
-     * is maintained even if a different program object is used.
+     * The commands containing {@see GL46::I} indicate that the arguments are
+     * extended to full signed or unsigned integers.
      *
-     * An application may freely modify generic vertex attributes that are not bound to a named vertex shader
-     * attribute variable. These values are simply maintained as part of current state and will not be accessed by
-     * the vertex shader. If a generic vertex attribute bound to an attribute variable in a vertex shader is not
-     * updated while the vertex shader is executing, the vertex shader will repeatedly use the current value for the
-     * generic vertex attribute.
+     * The commands containing {@see GL46::P} indicate that the arguments are
+     * stored as packed components within a larger natural type.
      *
-     * The generic vertex attribute with index 0 is the same as the vertex position attribute previously defined by
-     * OpenGL. A {@see glVertex2}, {@see glVertex3}, or {@see glVertex4} command is completely
-     * equivalent to the corresponding `glVertexAttrib` command with an index argument of 0. A vertex shader can
-     * access generic vertex attribute 0 by using the built-in attribute variable *`gl_Vertex`*. There are no current
-     * values for generic vertex attribute 0. This is the only generic vertex attribute with this property; calls to
-     * set other standard vertex attributes can be freely mixed with calls to set any of the other generic vertex
-     * attributes.
+     * The commands containing {@see GL46::L} indicate that the arguments are
+     * full 64-bit quantities and should be passed directly to shader inputs
+     * declared as 64-bit double precision types.
+     *
+     * OpenGL Shading Language attribute variables are allowed to be of type
+     * mat2, mat3, or mat4. Attributes of these types may be loaded using the
+     * {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * successive generic attribute slots in column major order, with one
+     * column of the matrix in each generic attribute slot.
+     *
+     * A user-defined attribute variable declared in a vertex shader can be
+     * bound to a generic attribute index by calling
+     * {@see GL46::glBindAttribLocation}. This allows an application to use
+     * more descriptive variable names in a vertex shader. A subsequent
+     * change to the specified generic vertex attribute will be immediately
+     * reflected as a change to the corresponding attribute variable in the
+     * vertex shader.
+     *
+     * The binding between a generic vertex attribute index and a
+     * user-defined attribute variable in a vertex shader is part of the
+     * state of a program object, but the current value of the generic vertex
+     * attribute is not. The value of each generic vertex attribute is part
+     * of current state, just like standard vertex attributes, and it is
+     * maintained even if a different program object is used.
+     *
+     * An application may freely modify generic vertex attributes that are
+     * not bound to a named vertex shader attribute variable. These values
+     * are simply maintained as part of current state and will not be
+     * accessed by the vertex shader. If a generic vertex attribute bound to
+     * an attribute variable in a vertex shader is not updated while the
+     * vertex shader is executing, the vertex shader will repeatedly use the
+     * current value for the generic vertex attribute.
      *
      * @see http://docs.gl/gl2/glVertexAttrib
-     * @see http://docs.gl/gl3/glVertexAttrib
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
-     * @param int $index
-     * @param float $x
-     * @param float $y
+     * @param int|\FFI\CData|\FFI\CInt $index
+     * @param float|\FFI\CData|\FFI\CFloat $x
+     * @param float|\FFI\CData|\FFI\CFloat $y
      * @return void
      */
-    public static function glVertexAttrib2f(int $index, float $x, float $y): void
+    public function glVertexAttrib2f($index, $x, $y): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($index >= 0 && $index <= 4_294_967_295, 'Argument $index overflow: C type GLuint is required');
-        assert($x >= -3.40282e38 && $x <= 3.40282e38, 'Argument $x overflow: C type GLfloat is required');
-        assert($y >= -3.40282e38 && $y <= 3.40282e38, 'Argument $y overflow: C type GLfloat is required');
+        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
+        $x = $x instanceof \FFI\CData ? $x->cdata : $x;
+        $y = $y instanceof \FFI\CData ? $y->cdata : $y;
 
-        $proc = self::getProc('glVertexAttrib2f', 'void (*)(GLuint index, GLfloat x, GLfloat y)');
+        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Assert::float32($x), 'Argument $x must be a C-like GLfloat, but incompatible or overflow value given');
+        assert(Assert::float32($y), 'Argument $y must be a C-like GLfloat, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glVertexAttrib2f', 'void (*)(GLuint index, GLfloat x, GLfloat y)');
         $proc($index, $x, $y);
     }
 
     /**
-     * OpenGL defines a number of standard vertex attributes that applications can modify with standard API entry
-     * points (color, normal, texture coordinates, etc.). The `glVertexAttrib` family of entry points allows an
+     * The {@see GL46::glVertexAttrib} family of entry points allows an
      * application to pass generic vertex attributes in numbered locations.
      *
-     * Generic attributes are defined as four-component values that are organized into an array. The first entry of
-     * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * `GL_MAX_VERTEX_ATTRIBS`. Individual elements of this array can be modified with a `glVertexAttrib` call that
-     * specifies the index of the element to be modified and a value for that element.
+     * Generic attributes are defined as four-component values that are
+     * organized into an array. The first entry of this array is numbered 0,
+     * and the size of the array is specified by the implementation-dependent
+     * constant {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of
+     * this array can be modified with a {@see GL46::glVertexAttrib} call
+     * that specifies the index of the element to be modified and a value for
+     * that element.
      *
-     * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
-     * specified by *`index`*. A `1` in the name of the command indicates that only one value is passed, and it will
-     * be used to modify the first component of the generic vertex attribute. The second and third components will be
-     * set to 0, and the fourth component will be set to 1. Similarly, a `2` in the name of the command indicates
-     * that values are provided for the first two components, the third component will be set to 0, and the fourth
-     * component will be set to 1. A `3` in the name of the command indicates that values are provided for the first
-     * three components and the fourth component will be set to 1, whereas a `4` in the name indicates that values
-     * are provided for all four components.
+     * These commands can be used to specify one, two, three, or all four
+     * components of the generic vertex attribute specified by $index. A
+     * {@see GL46::1} in the name of the command indicates that only one
+     * value is passed, and it will be used to modify the first component of
+     * the generic vertex attribute. The second and third components will be
+     * set to 0, and the fourth component will be set to 1. Similarly, a
+     * {@see GL46::2} in the name of the command indicates that values are
+     * provided for the first two components, the third component will be set
+     * to 0, and the fourth component will be set to 1. A {@see GL46::3} in
+     * the name of the command indicates that values are provided for the
+     * first three components and the fourth component will be set to 1,
+     * whereas a {@see GL46::4} in the name indicates that values are
+     * provided for all four components.
      *
-     * The letters `s`, `f`, `i`, `d`, `ub`, `us`, and `ui` indicate whether the arguments are of type short, float,
-     * int, double, unsigned byte, unsigned short, or unsigned int. When `v` is appended to the name, the commands
-     * can take a pointer to an array of such values. The commands containing `N` indicate that the arguments will be
-     * passed as fixed-point values that are scaled to a normalized range according to the component conversion rules
-     * defined by the OpenGL specification. Signed values are understood to represent fixed-point values in the range
-     * [-1,1], and unsigned values are understood to represent fixed-point values in the range [0,1].
+     * The letters {@see GL46::s}, {@see GL46::f}, {@see GL46::i},
+     * {@see GL46::d}, {@see GL46::ub}, {@see GL46::us}, and {@see GL46::ui}
+     * indicate whether the arguments are of type short, float, int, double,
+     * unsigned byte, unsigned short, or unsigned int. When {@see GL46::v} is
+     * appended to the name, the commands can take a pointer to an array of
+     * such values.
      *
-     * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the `glVertexAttrib` entry points. Matrices must be loaded into successive generic
-     * attribute slots in column major order, with one column of the matrix in each generic attribute slot.
+     * Additional capitalized letters can indicate further alterations to the
+     * default behavior of the glVertexAttrib function:
      *
-     * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see glBindAttribLocation}. This allows an application to use more descriptive
-     * variable names in a vertex shader. A subsequent change to the specified generic vertex attribute will be
-     * immediately reflected as a change to the corresponding attribute variable in the vertex shader.
+     * The commands containing {@see GL46::N} indicate that the arguments
+     * will be passed as fixed-point values that are scaled to a normalized
+     * range according to the component conversion rules defined by the
+     * OpenGL specification. Signed values are understood to represent
+     * fixed-point values in the range \[-1,1\], and unsigned values are
+     * understood to represent fixed-point values in the range \[0,1\].
      *
-     * The binding between a generic vertex attribute index and a user-defined attribute variable in a vertex shader
-     * is part of the state of a program object, but the current value of the generic vertex attribute is not. The
-     * value of each generic vertex attribute is part of current state, just like standard vertex attributes, and it
-     * is maintained even if a different program object is used.
+     * The commands containing {@see GL46::I} indicate that the arguments are
+     * extended to full signed or unsigned integers.
      *
-     * An application may freely modify generic vertex attributes that are not bound to a named vertex shader
-     * attribute variable. These values are simply maintained as part of current state and will not be accessed by
-     * the vertex shader. If a generic vertex attribute bound to an attribute variable in a vertex shader is not
-     * updated while the vertex shader is executing, the vertex shader will repeatedly use the current value for the
-     * generic vertex attribute.
+     * The commands containing {@see GL46::P} indicate that the arguments are
+     * stored as packed components within a larger natural type.
      *
-     * The generic vertex attribute with index 0 is the same as the vertex position attribute previously defined by
-     * OpenGL. A {@see glVertex2}, {@see glVertex3}, or {@see glVertex4} command is completely
-     * equivalent to the corresponding `glVertexAttrib` command with an index argument of 0. A vertex shader can
-     * access generic vertex attribute 0 by using the built-in attribute variable *`gl_Vertex`*. There are no current
-     * values for generic vertex attribute 0. This is the only generic vertex attribute with this property; calls to
-     * set other standard vertex attributes can be freely mixed with calls to set any of the other generic vertex
-     * attributes.
+     * The commands containing {@see GL46::L} indicate that the arguments are
+     * full 64-bit quantities and should be passed directly to shader inputs
+     * declared as 64-bit double precision types.
+     *
+     * OpenGL Shading Language attribute variables are allowed to be of type
+     * mat2, mat3, or mat4. Attributes of these types may be loaded using the
+     * {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * successive generic attribute slots in column major order, with one
+     * column of the matrix in each generic attribute slot.
+     *
+     * A user-defined attribute variable declared in a vertex shader can be
+     * bound to a generic attribute index by calling
+     * {@see GL46::glBindAttribLocation}. This allows an application to use
+     * more descriptive variable names in a vertex shader. A subsequent
+     * change to the specified generic vertex attribute will be immediately
+     * reflected as a change to the corresponding attribute variable in the
+     * vertex shader.
+     *
+     * The binding between a generic vertex attribute index and a
+     * user-defined attribute variable in a vertex shader is part of the
+     * state of a program object, but the current value of the generic vertex
+     * attribute is not. The value of each generic vertex attribute is part
+     * of current state, just like standard vertex attributes, and it is
+     * maintained even if a different program object is used.
+     *
+     * An application may freely modify generic vertex attributes that are
+     * not bound to a named vertex shader attribute variable. These values
+     * are simply maintained as part of current state and will not be
+     * accessed by the vertex shader. If a generic vertex attribute bound to
+     * an attribute variable in a vertex shader is not updated while the
+     * vertex shader is executing, the vertex shader will repeatedly use the
+     * current value for the generic vertex attribute.
      *
      * @see http://docs.gl/gl2/glVertexAttrib
-     * @see http://docs.gl/gl3/glVertexAttrib
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
-     * @param int $index
+     * @param int|\FFI\CData|\FFI\CInt $index
      * @param \FFI\CData|\FFI\CFloatPtr|null $v
      * @return void
      */
-    public static function glVertexAttrib2fv(int $index, ?\FFI\CData $v): void
+    public function glVertexAttrib2fv($index, ?\FFI\CData $v): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($index >= 0 && $index <= 4_294_967_295, 'Argument $index overflow: C type GLuint is required');
+        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
 
-        $proc = self::getProc('glVertexAttrib2fv', 'void (*)(GLuint index, const GLfloat *v)');
+        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glVertexAttrib2fv', 'void (*)(GLuint index, const GLfloat *v)');
         $proc($index, $v);
     }
 
     /**
-     * OpenGL defines a number of standard vertex attributes that applications can modify with standard API entry
-     * points (color, normal, texture coordinates, etc.). The `glVertexAttrib` family of entry points allows an
+     * The {@see GL46::glVertexAttrib} family of entry points allows an
      * application to pass generic vertex attributes in numbered locations.
      *
-     * Generic attributes are defined as four-component values that are organized into an array. The first entry of
-     * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * `GL_MAX_VERTEX_ATTRIBS`. Individual elements of this array can be modified with a `glVertexAttrib` call that
-     * specifies the index of the element to be modified and a value for that element.
+     * Generic attributes are defined as four-component values that are
+     * organized into an array. The first entry of this array is numbered 0,
+     * and the size of the array is specified by the implementation-dependent
+     * constant {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of
+     * this array can be modified with a {@see GL46::glVertexAttrib} call
+     * that specifies the index of the element to be modified and a value for
+     * that element.
      *
-     * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
-     * specified by *`index`*. A `1` in the name of the command indicates that only one value is passed, and it will
-     * be used to modify the first component of the generic vertex attribute. The second and third components will be
-     * set to 0, and the fourth component will be set to 1. Similarly, a `2` in the name of the command indicates
-     * that values are provided for the first two components, the third component will be set to 0, and the fourth
-     * component will be set to 1. A `3` in the name of the command indicates that values are provided for the first
-     * three components and the fourth component will be set to 1, whereas a `4` in the name indicates that values
-     * are provided for all four components.
+     * These commands can be used to specify one, two, three, or all four
+     * components of the generic vertex attribute specified by $index. A
+     * {@see GL46::1} in the name of the command indicates that only one
+     * value is passed, and it will be used to modify the first component of
+     * the generic vertex attribute. The second and third components will be
+     * set to 0, and the fourth component will be set to 1. Similarly, a
+     * {@see GL46::2} in the name of the command indicates that values are
+     * provided for the first two components, the third component will be set
+     * to 0, and the fourth component will be set to 1. A {@see GL46::3} in
+     * the name of the command indicates that values are provided for the
+     * first three components and the fourth component will be set to 1,
+     * whereas a {@see GL46::4} in the name indicates that values are
+     * provided for all four components.
      *
-     * The letters `s`, `f`, `i`, `d`, `ub`, `us`, and `ui` indicate whether the arguments are of type short, float,
-     * int, double, unsigned byte, unsigned short, or unsigned int. When `v` is appended to the name, the commands
-     * can take a pointer to an array of such values. The commands containing `N` indicate that the arguments will be
-     * passed as fixed-point values that are scaled to a normalized range according to the component conversion rules
-     * defined by the OpenGL specification. Signed values are understood to represent fixed-point values in the range
-     * [-1,1], and unsigned values are understood to represent fixed-point values in the range [0,1].
+     * The letters {@see GL46::s}, {@see GL46::f}, {@see GL46::i},
+     * {@see GL46::d}, {@see GL46::ub}, {@see GL46::us}, and {@see GL46::ui}
+     * indicate whether the arguments are of type short, float, int, double,
+     * unsigned byte, unsigned short, or unsigned int. When {@see GL46::v} is
+     * appended to the name, the commands can take a pointer to an array of
+     * such values.
      *
-     * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the `glVertexAttrib` entry points. Matrices must be loaded into successive generic
-     * attribute slots in column major order, with one column of the matrix in each generic attribute slot.
+     * Additional capitalized letters can indicate further alterations to the
+     * default behavior of the glVertexAttrib function:
      *
-     * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see glBindAttribLocation}. This allows an application to use more descriptive
-     * variable names in a vertex shader. A subsequent change to the specified generic vertex attribute will be
-     * immediately reflected as a change to the corresponding attribute variable in the vertex shader.
+     * The commands containing {@see GL46::N} indicate that the arguments
+     * will be passed as fixed-point values that are scaled to a normalized
+     * range according to the component conversion rules defined by the
+     * OpenGL specification. Signed values are understood to represent
+     * fixed-point values in the range \[-1,1\], and unsigned values are
+     * understood to represent fixed-point values in the range \[0,1\].
      *
-     * The binding between a generic vertex attribute index and a user-defined attribute variable in a vertex shader
-     * is part of the state of a program object, but the current value of the generic vertex attribute is not. The
-     * value of each generic vertex attribute is part of current state, just like standard vertex attributes, and it
-     * is maintained even if a different program object is used.
+     * The commands containing {@see GL46::I} indicate that the arguments are
+     * extended to full signed or unsigned integers.
      *
-     * An application may freely modify generic vertex attributes that are not bound to a named vertex shader
-     * attribute variable. These values are simply maintained as part of current state and will not be accessed by
-     * the vertex shader. If a generic vertex attribute bound to an attribute variable in a vertex shader is not
-     * updated while the vertex shader is executing, the vertex shader will repeatedly use the current value for the
-     * generic vertex attribute.
+     * The commands containing {@see GL46::P} indicate that the arguments are
+     * stored as packed components within a larger natural type.
      *
-     * The generic vertex attribute with index 0 is the same as the vertex position attribute previously defined by
-     * OpenGL. A {@see glVertex2}, {@see glVertex3}, or {@see glVertex4} command is completely
-     * equivalent to the corresponding `glVertexAttrib` command with an index argument of 0. A vertex shader can
-     * access generic vertex attribute 0 by using the built-in attribute variable *`gl_Vertex`*. There are no current
-     * values for generic vertex attribute 0. This is the only generic vertex attribute with this property; calls to
-     * set other standard vertex attributes can be freely mixed with calls to set any of the other generic vertex
-     * attributes.
+     * The commands containing {@see GL46::L} indicate that the arguments are
+     * full 64-bit quantities and should be passed directly to shader inputs
+     * declared as 64-bit double precision types.
+     *
+     * OpenGL Shading Language attribute variables are allowed to be of type
+     * mat2, mat3, or mat4. Attributes of these types may be loaded using the
+     * {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * successive generic attribute slots in column major order, with one
+     * column of the matrix in each generic attribute slot.
+     *
+     * A user-defined attribute variable declared in a vertex shader can be
+     * bound to a generic attribute index by calling
+     * {@see GL46::glBindAttribLocation}. This allows an application to use
+     * more descriptive variable names in a vertex shader. A subsequent
+     * change to the specified generic vertex attribute will be immediately
+     * reflected as a change to the corresponding attribute variable in the
+     * vertex shader.
+     *
+     * The binding between a generic vertex attribute index and a
+     * user-defined attribute variable in a vertex shader is part of the
+     * state of a program object, but the current value of the generic vertex
+     * attribute is not. The value of each generic vertex attribute is part
+     * of current state, just like standard vertex attributes, and it is
+     * maintained even if a different program object is used.
+     *
+     * An application may freely modify generic vertex attributes that are
+     * not bound to a named vertex shader attribute variable. These values
+     * are simply maintained as part of current state and will not be
+     * accessed by the vertex shader. If a generic vertex attribute bound to
+     * an attribute variable in a vertex shader is not updated while the
+     * vertex shader is executing, the vertex shader will repeatedly use the
+     * current value for the generic vertex attribute.
      *
      * @see http://docs.gl/gl2/glVertexAttrib
-     * @see http://docs.gl/gl3/glVertexAttrib
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
-     * @param int $index
-     * @param int $x
-     * @param int $y
+     * @param int|\FFI\CData|\FFI\CInt $index
+     * @param int|\FFI\CData|\FFI\CInt $x
+     * @param int|\FFI\CData|\FFI\CInt $y
      * @return void
      */
-    public static function glVertexAttrib2s(int $index, int $x, int $y): void
+    public function glVertexAttrib2s($index, $x, $y): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($index >= 0 && $index <= 4_294_967_295, 'Argument $index overflow: C type GLuint is required');
-        assert($x >= -32768 && $x <= 32767, 'Argument $x overflow: C type GLshort is required');
-        assert($y >= -32768 && $y <= 32767, 'Argument $y overflow: C type GLshort is required');
+        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
+        $x = $x instanceof \FFI\CData ? $x->cdata : $x;
+        $y = $y instanceof \FFI\CData ? $y->cdata : $y;
 
-        $proc = self::getProc('glVertexAttrib2s', 'void (*)(GLuint index, GLshort x, GLshort y)');
+        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Assert::int16($x), 'Argument $x must be a C-like GLshort, but incompatible or overflow value given');
+        assert(Assert::int16($y), 'Argument $y must be a C-like GLshort, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glVertexAttrib2s', 'void (*)(GLuint index, GLshort x, GLshort y)');
         $proc($index, $x, $y);
     }
 
     /**
-     * OpenGL defines a number of standard vertex attributes that applications can modify with standard API entry
-     * points (color, normal, texture coordinates, etc.). The `glVertexAttrib` family of entry points allows an
+     * The {@see GL46::glVertexAttrib} family of entry points allows an
      * application to pass generic vertex attributes in numbered locations.
      *
-     * Generic attributes are defined as four-component values that are organized into an array. The first entry of
-     * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * `GL_MAX_VERTEX_ATTRIBS`. Individual elements of this array can be modified with a `glVertexAttrib` call that
-     * specifies the index of the element to be modified and a value for that element.
+     * Generic attributes are defined as four-component values that are
+     * organized into an array. The first entry of this array is numbered 0,
+     * and the size of the array is specified by the implementation-dependent
+     * constant {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of
+     * this array can be modified with a {@see GL46::glVertexAttrib} call
+     * that specifies the index of the element to be modified and a value for
+     * that element.
      *
-     * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
-     * specified by *`index`*. A `1` in the name of the command indicates that only one value is passed, and it will
-     * be used to modify the first component of the generic vertex attribute. The second and third components will be
-     * set to 0, and the fourth component will be set to 1. Similarly, a `2` in the name of the command indicates
-     * that values are provided for the first two components, the third component will be set to 0, and the fourth
-     * component will be set to 1. A `3` in the name of the command indicates that values are provided for the first
-     * three components and the fourth component will be set to 1, whereas a `4` in the name indicates that values
-     * are provided for all four components.
+     * These commands can be used to specify one, two, three, or all four
+     * components of the generic vertex attribute specified by $index. A
+     * {@see GL46::1} in the name of the command indicates that only one
+     * value is passed, and it will be used to modify the first component of
+     * the generic vertex attribute. The second and third components will be
+     * set to 0, and the fourth component will be set to 1. Similarly, a
+     * {@see GL46::2} in the name of the command indicates that values are
+     * provided for the first two components, the third component will be set
+     * to 0, and the fourth component will be set to 1. A {@see GL46::3} in
+     * the name of the command indicates that values are provided for the
+     * first three components and the fourth component will be set to 1,
+     * whereas a {@see GL46::4} in the name indicates that values are
+     * provided for all four components.
      *
-     * The letters `s`, `f`, `i`, `d`, `ub`, `us`, and `ui` indicate whether the arguments are of type short, float,
-     * int, double, unsigned byte, unsigned short, or unsigned int. When `v` is appended to the name, the commands
-     * can take a pointer to an array of such values. The commands containing `N` indicate that the arguments will be
-     * passed as fixed-point values that are scaled to a normalized range according to the component conversion rules
-     * defined by the OpenGL specification. Signed values are understood to represent fixed-point values in the range
-     * [-1,1], and unsigned values are understood to represent fixed-point values in the range [0,1].
+     * The letters {@see GL46::s}, {@see GL46::f}, {@see GL46::i},
+     * {@see GL46::d}, {@see GL46::ub}, {@see GL46::us}, and {@see GL46::ui}
+     * indicate whether the arguments are of type short, float, int, double,
+     * unsigned byte, unsigned short, or unsigned int. When {@see GL46::v} is
+     * appended to the name, the commands can take a pointer to an array of
+     * such values.
      *
-     * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the `glVertexAttrib` entry points. Matrices must be loaded into successive generic
-     * attribute slots in column major order, with one column of the matrix in each generic attribute slot.
+     * Additional capitalized letters can indicate further alterations to the
+     * default behavior of the glVertexAttrib function:
      *
-     * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see glBindAttribLocation}. This allows an application to use more descriptive
-     * variable names in a vertex shader. A subsequent change to the specified generic vertex attribute will be
-     * immediately reflected as a change to the corresponding attribute variable in the vertex shader.
+     * The commands containing {@see GL46::N} indicate that the arguments
+     * will be passed as fixed-point values that are scaled to a normalized
+     * range according to the component conversion rules defined by the
+     * OpenGL specification. Signed values are understood to represent
+     * fixed-point values in the range \[-1,1\], and unsigned values are
+     * understood to represent fixed-point values in the range \[0,1\].
      *
-     * The binding between a generic vertex attribute index and a user-defined attribute variable in a vertex shader
-     * is part of the state of a program object, but the current value of the generic vertex attribute is not. The
-     * value of each generic vertex attribute is part of current state, just like standard vertex attributes, and it
-     * is maintained even if a different program object is used.
+     * The commands containing {@see GL46::I} indicate that the arguments are
+     * extended to full signed or unsigned integers.
      *
-     * An application may freely modify generic vertex attributes that are not bound to a named vertex shader
-     * attribute variable. These values are simply maintained as part of current state and will not be accessed by
-     * the vertex shader. If a generic vertex attribute bound to an attribute variable in a vertex shader is not
-     * updated while the vertex shader is executing, the vertex shader will repeatedly use the current value for the
-     * generic vertex attribute.
+     * The commands containing {@see GL46::P} indicate that the arguments are
+     * stored as packed components within a larger natural type.
      *
-     * The generic vertex attribute with index 0 is the same as the vertex position attribute previously defined by
-     * OpenGL. A {@see glVertex2}, {@see glVertex3}, or {@see glVertex4} command is completely
-     * equivalent to the corresponding `glVertexAttrib` command with an index argument of 0. A vertex shader can
-     * access generic vertex attribute 0 by using the built-in attribute variable *`gl_Vertex`*. There are no current
-     * values for generic vertex attribute 0. This is the only generic vertex attribute with this property; calls to
-     * set other standard vertex attributes can be freely mixed with calls to set any of the other generic vertex
-     * attributes.
+     * The commands containing {@see GL46::L} indicate that the arguments are
+     * full 64-bit quantities and should be passed directly to shader inputs
+     * declared as 64-bit double precision types.
+     *
+     * OpenGL Shading Language attribute variables are allowed to be of type
+     * mat2, mat3, or mat4. Attributes of these types may be loaded using the
+     * {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * successive generic attribute slots in column major order, with one
+     * column of the matrix in each generic attribute slot.
+     *
+     * A user-defined attribute variable declared in a vertex shader can be
+     * bound to a generic attribute index by calling
+     * {@see GL46::glBindAttribLocation}. This allows an application to use
+     * more descriptive variable names in a vertex shader. A subsequent
+     * change to the specified generic vertex attribute will be immediately
+     * reflected as a change to the corresponding attribute variable in the
+     * vertex shader.
+     *
+     * The binding between a generic vertex attribute index and a
+     * user-defined attribute variable in a vertex shader is part of the
+     * state of a program object, but the current value of the generic vertex
+     * attribute is not. The value of each generic vertex attribute is part
+     * of current state, just like standard vertex attributes, and it is
+     * maintained even if a different program object is used.
+     *
+     * An application may freely modify generic vertex attributes that are
+     * not bound to a named vertex shader attribute variable. These values
+     * are simply maintained as part of current state and will not be
+     * accessed by the vertex shader. If a generic vertex attribute bound to
+     * an attribute variable in a vertex shader is not updated while the
+     * vertex shader is executing, the vertex shader will repeatedly use the
+     * current value for the generic vertex attribute.
      *
      * @see http://docs.gl/gl2/glVertexAttrib
-     * @see http://docs.gl/gl3/glVertexAttrib
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
-     * @param int $index
+     * @param int|\FFI\CData|\FFI\CInt $index
      * @param \FFI\CData|\FFI\CIntPtr|null $v
      * @return void
      */
-    public static function glVertexAttrib2sv(int $index, ?\FFI\CData $v): void
+    public function glVertexAttrib2sv($index, ?\FFI\CData $v): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($index >= 0 && $index <= 4_294_967_295, 'Argument $index overflow: C type GLuint is required');
+        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
 
-        $proc = self::getProc('glVertexAttrib2sv', 'void (*)(GLuint index, const GLshort *v)');
+        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glVertexAttrib2sv', 'void (*)(GLuint index, const GLshort *v)');
         $proc($index, $v);
     }
 
     /**
-     * OpenGL defines a number of standard vertex attributes that applications can modify with standard API entry
-     * points (color, normal, texture coordinates, etc.). The `glVertexAttrib` family of entry points allows an
+     * The {@see GL46::glVertexAttrib} family of entry points allows an
      * application to pass generic vertex attributes in numbered locations.
      *
-     * Generic attributes are defined as four-component values that are organized into an array. The first entry of
-     * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * `GL_MAX_VERTEX_ATTRIBS`. Individual elements of this array can be modified with a `glVertexAttrib` call that
-     * specifies the index of the element to be modified and a value for that element.
+     * Generic attributes are defined as four-component values that are
+     * organized into an array. The first entry of this array is numbered 0,
+     * and the size of the array is specified by the implementation-dependent
+     * constant {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of
+     * this array can be modified with a {@see GL46::glVertexAttrib} call
+     * that specifies the index of the element to be modified and a value for
+     * that element.
      *
-     * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
-     * specified by *`index`*. A `1` in the name of the command indicates that only one value is passed, and it will
-     * be used to modify the first component of the generic vertex attribute. The second and third components will be
-     * set to 0, and the fourth component will be set to 1. Similarly, a `2` in the name of the command indicates
-     * that values are provided for the first two components, the third component will be set to 0, and the fourth
-     * component will be set to 1. A `3` in the name of the command indicates that values are provided for the first
-     * three components and the fourth component will be set to 1, whereas a `4` in the name indicates that values
-     * are provided for all four components.
+     * These commands can be used to specify one, two, three, or all four
+     * components of the generic vertex attribute specified by $index. A
+     * {@see GL46::1} in the name of the command indicates that only one
+     * value is passed, and it will be used to modify the first component of
+     * the generic vertex attribute. The second and third components will be
+     * set to 0, and the fourth component will be set to 1. Similarly, a
+     * {@see GL46::2} in the name of the command indicates that values are
+     * provided for the first two components, the third component will be set
+     * to 0, and the fourth component will be set to 1. A {@see GL46::3} in
+     * the name of the command indicates that values are provided for the
+     * first three components and the fourth component will be set to 1,
+     * whereas a {@see GL46::4} in the name indicates that values are
+     * provided for all four components.
      *
-     * The letters `s`, `f`, `i`, `d`, `ub`, `us`, and `ui` indicate whether the arguments are of type short, float,
-     * int, double, unsigned byte, unsigned short, or unsigned int. When `v` is appended to the name, the commands
-     * can take a pointer to an array of such values. The commands containing `N` indicate that the arguments will be
-     * passed as fixed-point values that are scaled to a normalized range according to the component conversion rules
-     * defined by the OpenGL specification. Signed values are understood to represent fixed-point values in the range
-     * [-1,1], and unsigned values are understood to represent fixed-point values in the range [0,1].
+     * The letters {@see GL46::s}, {@see GL46::f}, {@see GL46::i},
+     * {@see GL46::d}, {@see GL46::ub}, {@see GL46::us}, and {@see GL46::ui}
+     * indicate whether the arguments are of type short, float, int, double,
+     * unsigned byte, unsigned short, or unsigned int. When {@see GL46::v} is
+     * appended to the name, the commands can take a pointer to an array of
+     * such values.
      *
-     * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the `glVertexAttrib` entry points. Matrices must be loaded into successive generic
-     * attribute slots in column major order, with one column of the matrix in each generic attribute slot.
+     * Additional capitalized letters can indicate further alterations to the
+     * default behavior of the glVertexAttrib function:
      *
-     * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see glBindAttribLocation}. This allows an application to use more descriptive
-     * variable names in a vertex shader. A subsequent change to the specified generic vertex attribute will be
-     * immediately reflected as a change to the corresponding attribute variable in the vertex shader.
+     * The commands containing {@see GL46::N} indicate that the arguments
+     * will be passed as fixed-point values that are scaled to a normalized
+     * range according to the component conversion rules defined by the
+     * OpenGL specification. Signed values are understood to represent
+     * fixed-point values in the range \[-1,1\], and unsigned values are
+     * understood to represent fixed-point values in the range \[0,1\].
      *
-     * The binding between a generic vertex attribute index and a user-defined attribute variable in a vertex shader
-     * is part of the state of a program object, but the current value of the generic vertex attribute is not. The
-     * value of each generic vertex attribute is part of current state, just like standard vertex attributes, and it
-     * is maintained even if a different program object is used.
+     * The commands containing {@see GL46::I} indicate that the arguments are
+     * extended to full signed or unsigned integers.
      *
-     * An application may freely modify generic vertex attributes that are not bound to a named vertex shader
-     * attribute variable. These values are simply maintained as part of current state and will not be accessed by
-     * the vertex shader. If a generic vertex attribute bound to an attribute variable in a vertex shader is not
-     * updated while the vertex shader is executing, the vertex shader will repeatedly use the current value for the
-     * generic vertex attribute.
+     * The commands containing {@see GL46::P} indicate that the arguments are
+     * stored as packed components within a larger natural type.
      *
-     * The generic vertex attribute with index 0 is the same as the vertex position attribute previously defined by
-     * OpenGL. A {@see glVertex2}, {@see glVertex3}, or {@see glVertex4} command is completely
-     * equivalent to the corresponding `glVertexAttrib` command with an index argument of 0. A vertex shader can
-     * access generic vertex attribute 0 by using the built-in attribute variable *`gl_Vertex`*. There are no current
-     * values for generic vertex attribute 0. This is the only generic vertex attribute with this property; calls to
-     * set other standard vertex attributes can be freely mixed with calls to set any of the other generic vertex
-     * attributes.
+     * The commands containing {@see GL46::L} indicate that the arguments are
+     * full 64-bit quantities and should be passed directly to shader inputs
+     * declared as 64-bit double precision types.
+     *
+     * OpenGL Shading Language attribute variables are allowed to be of type
+     * mat2, mat3, or mat4. Attributes of these types may be loaded using the
+     * {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * successive generic attribute slots in column major order, with one
+     * column of the matrix in each generic attribute slot.
+     *
+     * A user-defined attribute variable declared in a vertex shader can be
+     * bound to a generic attribute index by calling
+     * {@see GL46::glBindAttribLocation}. This allows an application to use
+     * more descriptive variable names in a vertex shader. A subsequent
+     * change to the specified generic vertex attribute will be immediately
+     * reflected as a change to the corresponding attribute variable in the
+     * vertex shader.
+     *
+     * The binding between a generic vertex attribute index and a
+     * user-defined attribute variable in a vertex shader is part of the
+     * state of a program object, but the current value of the generic vertex
+     * attribute is not. The value of each generic vertex attribute is part
+     * of current state, just like standard vertex attributes, and it is
+     * maintained even if a different program object is used.
+     *
+     * An application may freely modify generic vertex attributes that are
+     * not bound to a named vertex shader attribute variable. These values
+     * are simply maintained as part of current state and will not be
+     * accessed by the vertex shader. If a generic vertex attribute bound to
+     * an attribute variable in a vertex shader is not updated while the
+     * vertex shader is executing, the vertex shader will repeatedly use the
+     * current value for the generic vertex attribute.
      *
      * @see http://docs.gl/gl2/glVertexAttrib
-     * @see http://docs.gl/gl3/glVertexAttrib
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
-     * @param int $index
-     * @param float $x
-     * @param float $y
-     * @param float $z
+     * @param int|\FFI\CData|\FFI\CInt $index
+     * @param float|\FFI\CData|\FFI\CFloat $x
+     * @param float|\FFI\CData|\FFI\CFloat $y
+     * @param float|\FFI\CData|\FFI\CFloat $z
      * @return void
      */
-    public static function glVertexAttrib3d(int $index, float $x, float $y, float $z): void
+    public function glVertexAttrib3d($index, $x, $y, $z): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($index >= 0 && $index <= 4_294_967_295, 'Argument $index overflow: C type GLuint is required');
-        assert($x >= \PHP_FLOAT_MIN && $x <= \PHP_FLOAT_MAX, 'Argument $x overflow: C type GLdouble is required');
-        assert($y >= \PHP_FLOAT_MIN && $y <= \PHP_FLOAT_MAX, 'Argument $y overflow: C type GLdouble is required');
-        assert($z >= \PHP_FLOAT_MIN && $z <= \PHP_FLOAT_MAX, 'Argument $z overflow: C type GLdouble is required');
+        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
+        $x = $x instanceof \FFI\CData ? $x->cdata : $x;
+        $y = $y instanceof \FFI\CData ? $y->cdata : $y;
+        $z = $z instanceof \FFI\CData ? $z->cdata : $z;
 
-        $proc = self::getProc('glVertexAttrib3d', 'void (*)(GLuint index, GLdouble x, GLdouble y, GLdouble z)');
+        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Assert::float64($x), 'Argument $x must be a C-like GLdouble, but incompatible or overflow value given');
+        assert(Assert::float64($y), 'Argument $y must be a C-like GLdouble, but incompatible or overflow value given');
+        assert(Assert::float64($z), 'Argument $z must be a C-like GLdouble, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glVertexAttrib3d', 'void (*)(GLuint index, GLdouble x, GLdouble y, GLdouble z)');
         $proc($index, $x, $y, $z);
     }
 
     /**
-     * OpenGL defines a number of standard vertex attributes that applications can modify with standard API entry
-     * points (color, normal, texture coordinates, etc.). The `glVertexAttrib` family of entry points allows an
+     * The {@see GL46::glVertexAttrib} family of entry points allows an
      * application to pass generic vertex attributes in numbered locations.
      *
-     * Generic attributes are defined as four-component values that are organized into an array. The first entry of
-     * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * `GL_MAX_VERTEX_ATTRIBS`. Individual elements of this array can be modified with a `glVertexAttrib` call that
-     * specifies the index of the element to be modified and a value for that element.
+     * Generic attributes are defined as four-component values that are
+     * organized into an array. The first entry of this array is numbered 0,
+     * and the size of the array is specified by the implementation-dependent
+     * constant {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of
+     * this array can be modified with a {@see GL46::glVertexAttrib} call
+     * that specifies the index of the element to be modified and a value for
+     * that element.
      *
-     * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
-     * specified by *`index`*. A `1` in the name of the command indicates that only one value is passed, and it will
-     * be used to modify the first component of the generic vertex attribute. The second and third components will be
-     * set to 0, and the fourth component will be set to 1. Similarly, a `2` in the name of the command indicates
-     * that values are provided for the first two components, the third component will be set to 0, and the fourth
-     * component will be set to 1. A `3` in the name of the command indicates that values are provided for the first
-     * three components and the fourth component will be set to 1, whereas a `4` in the name indicates that values
-     * are provided for all four components.
+     * These commands can be used to specify one, two, three, or all four
+     * components of the generic vertex attribute specified by $index. A
+     * {@see GL46::1} in the name of the command indicates that only one
+     * value is passed, and it will be used to modify the first component of
+     * the generic vertex attribute. The second and third components will be
+     * set to 0, and the fourth component will be set to 1. Similarly, a
+     * {@see GL46::2} in the name of the command indicates that values are
+     * provided for the first two components, the third component will be set
+     * to 0, and the fourth component will be set to 1. A {@see GL46::3} in
+     * the name of the command indicates that values are provided for the
+     * first three components and the fourth component will be set to 1,
+     * whereas a {@see GL46::4} in the name indicates that values are
+     * provided for all four components.
      *
-     * The letters `s`, `f`, `i`, `d`, `ub`, `us`, and `ui` indicate whether the arguments are of type short, float,
-     * int, double, unsigned byte, unsigned short, or unsigned int. When `v` is appended to the name, the commands
-     * can take a pointer to an array of such values. The commands containing `N` indicate that the arguments will be
-     * passed as fixed-point values that are scaled to a normalized range according to the component conversion rules
-     * defined by the OpenGL specification. Signed values are understood to represent fixed-point values in the range
-     * [-1,1], and unsigned values are understood to represent fixed-point values in the range [0,1].
+     * The letters {@see GL46::s}, {@see GL46::f}, {@see GL46::i},
+     * {@see GL46::d}, {@see GL46::ub}, {@see GL46::us}, and {@see GL46::ui}
+     * indicate whether the arguments are of type short, float, int, double,
+     * unsigned byte, unsigned short, or unsigned int. When {@see GL46::v} is
+     * appended to the name, the commands can take a pointer to an array of
+     * such values.
      *
-     * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the `glVertexAttrib` entry points. Matrices must be loaded into successive generic
-     * attribute slots in column major order, with one column of the matrix in each generic attribute slot.
+     * Additional capitalized letters can indicate further alterations to the
+     * default behavior of the glVertexAttrib function:
      *
-     * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see glBindAttribLocation}. This allows an application to use more descriptive
-     * variable names in a vertex shader. A subsequent change to the specified generic vertex attribute will be
-     * immediately reflected as a change to the corresponding attribute variable in the vertex shader.
+     * The commands containing {@see GL46::N} indicate that the arguments
+     * will be passed as fixed-point values that are scaled to a normalized
+     * range according to the component conversion rules defined by the
+     * OpenGL specification. Signed values are understood to represent
+     * fixed-point values in the range \[-1,1\], and unsigned values are
+     * understood to represent fixed-point values in the range \[0,1\].
      *
-     * The binding between a generic vertex attribute index and a user-defined attribute variable in a vertex shader
-     * is part of the state of a program object, but the current value of the generic vertex attribute is not. The
-     * value of each generic vertex attribute is part of current state, just like standard vertex attributes, and it
-     * is maintained even if a different program object is used.
+     * The commands containing {@see GL46::I} indicate that the arguments are
+     * extended to full signed or unsigned integers.
      *
-     * An application may freely modify generic vertex attributes that are not bound to a named vertex shader
-     * attribute variable. These values are simply maintained as part of current state and will not be accessed by
-     * the vertex shader. If a generic vertex attribute bound to an attribute variable in a vertex shader is not
-     * updated while the vertex shader is executing, the vertex shader will repeatedly use the current value for the
-     * generic vertex attribute.
+     * The commands containing {@see GL46::P} indicate that the arguments are
+     * stored as packed components within a larger natural type.
      *
-     * The generic vertex attribute with index 0 is the same as the vertex position attribute previously defined by
-     * OpenGL. A {@see glVertex2}, {@see glVertex3}, or {@see glVertex4} command is completely
-     * equivalent to the corresponding `glVertexAttrib` command with an index argument of 0. A vertex shader can
-     * access generic vertex attribute 0 by using the built-in attribute variable *`gl_Vertex`*. There are no current
-     * values for generic vertex attribute 0. This is the only generic vertex attribute with this property; calls to
-     * set other standard vertex attributes can be freely mixed with calls to set any of the other generic vertex
-     * attributes.
+     * The commands containing {@see GL46::L} indicate that the arguments are
+     * full 64-bit quantities and should be passed directly to shader inputs
+     * declared as 64-bit double precision types.
+     *
+     * OpenGL Shading Language attribute variables are allowed to be of type
+     * mat2, mat3, or mat4. Attributes of these types may be loaded using the
+     * {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * successive generic attribute slots in column major order, with one
+     * column of the matrix in each generic attribute slot.
+     *
+     * A user-defined attribute variable declared in a vertex shader can be
+     * bound to a generic attribute index by calling
+     * {@see GL46::glBindAttribLocation}. This allows an application to use
+     * more descriptive variable names in a vertex shader. A subsequent
+     * change to the specified generic vertex attribute will be immediately
+     * reflected as a change to the corresponding attribute variable in the
+     * vertex shader.
+     *
+     * The binding between a generic vertex attribute index and a
+     * user-defined attribute variable in a vertex shader is part of the
+     * state of a program object, but the current value of the generic vertex
+     * attribute is not. The value of each generic vertex attribute is part
+     * of current state, just like standard vertex attributes, and it is
+     * maintained even if a different program object is used.
+     *
+     * An application may freely modify generic vertex attributes that are
+     * not bound to a named vertex shader attribute variable. These values
+     * are simply maintained as part of current state and will not be
+     * accessed by the vertex shader. If a generic vertex attribute bound to
+     * an attribute variable in a vertex shader is not updated while the
+     * vertex shader is executing, the vertex shader will repeatedly use the
+     * current value for the generic vertex attribute.
      *
      * @see http://docs.gl/gl2/glVertexAttrib
-     * @see http://docs.gl/gl3/glVertexAttrib
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
-     * @param int $index
+     * @param int|\FFI\CData|\FFI\CInt $index
      * @param \FFI\CData|\FFI\CFloatPtr|null $v
      * @return void
      */
-    public static function glVertexAttrib3dv(int $index, ?\FFI\CData $v): void
+    public function glVertexAttrib3dv($index, ?\FFI\CData $v): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($index >= 0 && $index <= 4_294_967_295, 'Argument $index overflow: C type GLuint is required');
+        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
 
-        $proc = self::getProc('glVertexAttrib3dv', 'void (*)(GLuint index, const GLdouble *v)');
+        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glVertexAttrib3dv', 'void (*)(GLuint index, const GLdouble *v)');
         $proc($index, $v);
     }
 
     /**
-     * OpenGL defines a number of standard vertex attributes that applications can modify with standard API entry
-     * points (color, normal, texture coordinates, etc.). The `glVertexAttrib` family of entry points allows an
+     * The {@see GL46::glVertexAttrib} family of entry points allows an
      * application to pass generic vertex attributes in numbered locations.
      *
-     * Generic attributes are defined as four-component values that are organized into an array. The first entry of
-     * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * `GL_MAX_VERTEX_ATTRIBS`. Individual elements of this array can be modified with a `glVertexAttrib` call that
-     * specifies the index of the element to be modified and a value for that element.
+     * Generic attributes are defined as four-component values that are
+     * organized into an array. The first entry of this array is numbered 0,
+     * and the size of the array is specified by the implementation-dependent
+     * constant {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of
+     * this array can be modified with a {@see GL46::glVertexAttrib} call
+     * that specifies the index of the element to be modified and a value for
+     * that element.
      *
-     * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
-     * specified by *`index`*. A `1` in the name of the command indicates that only one value is passed, and it will
-     * be used to modify the first component of the generic vertex attribute. The second and third components will be
-     * set to 0, and the fourth component will be set to 1. Similarly, a `2` in the name of the command indicates
-     * that values are provided for the first two components, the third component will be set to 0, and the fourth
-     * component will be set to 1. A `3` in the name of the command indicates that values are provided for the first
-     * three components and the fourth component will be set to 1, whereas a `4` in the name indicates that values
-     * are provided for all four components.
+     * These commands can be used to specify one, two, three, or all four
+     * components of the generic vertex attribute specified by $index. A
+     * {@see GL46::1} in the name of the command indicates that only one
+     * value is passed, and it will be used to modify the first component of
+     * the generic vertex attribute. The second and third components will be
+     * set to 0, and the fourth component will be set to 1. Similarly, a
+     * {@see GL46::2} in the name of the command indicates that values are
+     * provided for the first two components, the third component will be set
+     * to 0, and the fourth component will be set to 1. A {@see GL46::3} in
+     * the name of the command indicates that values are provided for the
+     * first three components and the fourth component will be set to 1,
+     * whereas a {@see GL46::4} in the name indicates that values are
+     * provided for all four components.
      *
-     * The letters `s`, `f`, `i`, `d`, `ub`, `us`, and `ui` indicate whether the arguments are of type short, float,
-     * int, double, unsigned byte, unsigned short, or unsigned int. When `v` is appended to the name, the commands
-     * can take a pointer to an array of such values. The commands containing `N` indicate that the arguments will be
-     * passed as fixed-point values that are scaled to a normalized range according to the component conversion rules
-     * defined by the OpenGL specification. Signed values are understood to represent fixed-point values in the range
-     * [-1,1], and unsigned values are understood to represent fixed-point values in the range [0,1].
+     * The letters {@see GL46::s}, {@see GL46::f}, {@see GL46::i},
+     * {@see GL46::d}, {@see GL46::ub}, {@see GL46::us}, and {@see GL46::ui}
+     * indicate whether the arguments are of type short, float, int, double,
+     * unsigned byte, unsigned short, or unsigned int. When {@see GL46::v} is
+     * appended to the name, the commands can take a pointer to an array of
+     * such values.
      *
-     * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the `glVertexAttrib` entry points. Matrices must be loaded into successive generic
-     * attribute slots in column major order, with one column of the matrix in each generic attribute slot.
+     * Additional capitalized letters can indicate further alterations to the
+     * default behavior of the glVertexAttrib function:
      *
-     * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see glBindAttribLocation}. This allows an application to use more descriptive
-     * variable names in a vertex shader. A subsequent change to the specified generic vertex attribute will be
-     * immediately reflected as a change to the corresponding attribute variable in the vertex shader.
+     * The commands containing {@see GL46::N} indicate that the arguments
+     * will be passed as fixed-point values that are scaled to a normalized
+     * range according to the component conversion rules defined by the
+     * OpenGL specification. Signed values are understood to represent
+     * fixed-point values in the range \[-1,1\], and unsigned values are
+     * understood to represent fixed-point values in the range \[0,1\].
      *
-     * The binding between a generic vertex attribute index and a user-defined attribute variable in a vertex shader
-     * is part of the state of a program object, but the current value of the generic vertex attribute is not. The
-     * value of each generic vertex attribute is part of current state, just like standard vertex attributes, and it
-     * is maintained even if a different program object is used.
+     * The commands containing {@see GL46::I} indicate that the arguments are
+     * extended to full signed or unsigned integers.
      *
-     * An application may freely modify generic vertex attributes that are not bound to a named vertex shader
-     * attribute variable. These values are simply maintained as part of current state and will not be accessed by
-     * the vertex shader. If a generic vertex attribute bound to an attribute variable in a vertex shader is not
-     * updated while the vertex shader is executing, the vertex shader will repeatedly use the current value for the
-     * generic vertex attribute.
+     * The commands containing {@see GL46::P} indicate that the arguments are
+     * stored as packed components within a larger natural type.
      *
-     * The generic vertex attribute with index 0 is the same as the vertex position attribute previously defined by
-     * OpenGL. A {@see glVertex2}, {@see glVertex3}, or {@see glVertex4} command is completely
-     * equivalent to the corresponding `glVertexAttrib` command with an index argument of 0. A vertex shader can
-     * access generic vertex attribute 0 by using the built-in attribute variable *`gl_Vertex`*. There are no current
-     * values for generic vertex attribute 0. This is the only generic vertex attribute with this property; calls to
-     * set other standard vertex attributes can be freely mixed with calls to set any of the other generic vertex
-     * attributes.
+     * The commands containing {@see GL46::L} indicate that the arguments are
+     * full 64-bit quantities and should be passed directly to shader inputs
+     * declared as 64-bit double precision types.
+     *
+     * OpenGL Shading Language attribute variables are allowed to be of type
+     * mat2, mat3, or mat4. Attributes of these types may be loaded using the
+     * {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * successive generic attribute slots in column major order, with one
+     * column of the matrix in each generic attribute slot.
+     *
+     * A user-defined attribute variable declared in a vertex shader can be
+     * bound to a generic attribute index by calling
+     * {@see GL46::glBindAttribLocation}. This allows an application to use
+     * more descriptive variable names in a vertex shader. A subsequent
+     * change to the specified generic vertex attribute will be immediately
+     * reflected as a change to the corresponding attribute variable in the
+     * vertex shader.
+     *
+     * The binding between a generic vertex attribute index and a
+     * user-defined attribute variable in a vertex shader is part of the
+     * state of a program object, but the current value of the generic vertex
+     * attribute is not. The value of each generic vertex attribute is part
+     * of current state, just like standard vertex attributes, and it is
+     * maintained even if a different program object is used.
+     *
+     * An application may freely modify generic vertex attributes that are
+     * not bound to a named vertex shader attribute variable. These values
+     * are simply maintained as part of current state and will not be
+     * accessed by the vertex shader. If a generic vertex attribute bound to
+     * an attribute variable in a vertex shader is not updated while the
+     * vertex shader is executing, the vertex shader will repeatedly use the
+     * current value for the generic vertex attribute.
      *
      * @see http://docs.gl/gl2/glVertexAttrib
-     * @see http://docs.gl/gl3/glVertexAttrib
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
-     * @param int $index
-     * @param float $x
-     * @param float $y
-     * @param float $z
+     * @param int|\FFI\CData|\FFI\CInt $index
+     * @param float|\FFI\CData|\FFI\CFloat $x
+     * @param float|\FFI\CData|\FFI\CFloat $y
+     * @param float|\FFI\CData|\FFI\CFloat $z
      * @return void
      */
-    public static function glVertexAttrib3f(int $index, float $x, float $y, float $z): void
+    public function glVertexAttrib3f($index, $x, $y, $z): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($index >= 0 && $index <= 4_294_967_295, 'Argument $index overflow: C type GLuint is required');
-        assert($x >= -3.40282e38 && $x <= 3.40282e38, 'Argument $x overflow: C type GLfloat is required');
-        assert($y >= -3.40282e38 && $y <= 3.40282e38, 'Argument $y overflow: C type GLfloat is required');
-        assert($z >= -3.40282e38 && $z <= 3.40282e38, 'Argument $z overflow: C type GLfloat is required');
+        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
+        $x = $x instanceof \FFI\CData ? $x->cdata : $x;
+        $y = $y instanceof \FFI\CData ? $y->cdata : $y;
+        $z = $z instanceof \FFI\CData ? $z->cdata : $z;
 
-        $proc = self::getProc('glVertexAttrib3f', 'void (*)(GLuint index, GLfloat x, GLfloat y, GLfloat z)');
+        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Assert::float32($x), 'Argument $x must be a C-like GLfloat, but incompatible or overflow value given');
+        assert(Assert::float32($y), 'Argument $y must be a C-like GLfloat, but incompatible or overflow value given');
+        assert(Assert::float32($z), 'Argument $z must be a C-like GLfloat, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glVertexAttrib3f', 'void (*)(GLuint index, GLfloat x, GLfloat y, GLfloat z)');
         $proc($index, $x, $y, $z);
     }
 
     /**
-     * OpenGL defines a number of standard vertex attributes that applications can modify with standard API entry
-     * points (color, normal, texture coordinates, etc.). The `glVertexAttrib` family of entry points allows an
+     * The {@see GL46::glVertexAttrib} family of entry points allows an
      * application to pass generic vertex attributes in numbered locations.
      *
-     * Generic attributes are defined as four-component values that are organized into an array. The first entry of
-     * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * `GL_MAX_VERTEX_ATTRIBS`. Individual elements of this array can be modified with a `glVertexAttrib` call that
-     * specifies the index of the element to be modified and a value for that element.
+     * Generic attributes are defined as four-component values that are
+     * organized into an array. The first entry of this array is numbered 0,
+     * and the size of the array is specified by the implementation-dependent
+     * constant {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of
+     * this array can be modified with a {@see GL46::glVertexAttrib} call
+     * that specifies the index of the element to be modified and a value for
+     * that element.
      *
-     * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
-     * specified by *`index`*. A `1` in the name of the command indicates that only one value is passed, and it will
-     * be used to modify the first component of the generic vertex attribute. The second and third components will be
-     * set to 0, and the fourth component will be set to 1. Similarly, a `2` in the name of the command indicates
-     * that values are provided for the first two components, the third component will be set to 0, and the fourth
-     * component will be set to 1. A `3` in the name of the command indicates that values are provided for the first
-     * three components and the fourth component will be set to 1, whereas a `4` in the name indicates that values
-     * are provided for all four components.
+     * These commands can be used to specify one, two, three, or all four
+     * components of the generic vertex attribute specified by $index. A
+     * {@see GL46::1} in the name of the command indicates that only one
+     * value is passed, and it will be used to modify the first component of
+     * the generic vertex attribute. The second and third components will be
+     * set to 0, and the fourth component will be set to 1. Similarly, a
+     * {@see GL46::2} in the name of the command indicates that values are
+     * provided for the first two components, the third component will be set
+     * to 0, and the fourth component will be set to 1. A {@see GL46::3} in
+     * the name of the command indicates that values are provided for the
+     * first three components and the fourth component will be set to 1,
+     * whereas a {@see GL46::4} in the name indicates that values are
+     * provided for all four components.
      *
-     * The letters `s`, `f`, `i`, `d`, `ub`, `us`, and `ui` indicate whether the arguments are of type short, float,
-     * int, double, unsigned byte, unsigned short, or unsigned int. When `v` is appended to the name, the commands
-     * can take a pointer to an array of such values. The commands containing `N` indicate that the arguments will be
-     * passed as fixed-point values that are scaled to a normalized range according to the component conversion rules
-     * defined by the OpenGL specification. Signed values are understood to represent fixed-point values in the range
-     * [-1,1], and unsigned values are understood to represent fixed-point values in the range [0,1].
+     * The letters {@see GL46::s}, {@see GL46::f}, {@see GL46::i},
+     * {@see GL46::d}, {@see GL46::ub}, {@see GL46::us}, and {@see GL46::ui}
+     * indicate whether the arguments are of type short, float, int, double,
+     * unsigned byte, unsigned short, or unsigned int. When {@see GL46::v} is
+     * appended to the name, the commands can take a pointer to an array of
+     * such values.
      *
-     * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the `glVertexAttrib` entry points. Matrices must be loaded into successive generic
-     * attribute slots in column major order, with one column of the matrix in each generic attribute slot.
+     * Additional capitalized letters can indicate further alterations to the
+     * default behavior of the glVertexAttrib function:
      *
-     * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see glBindAttribLocation}. This allows an application to use more descriptive
-     * variable names in a vertex shader. A subsequent change to the specified generic vertex attribute will be
-     * immediately reflected as a change to the corresponding attribute variable in the vertex shader.
+     * The commands containing {@see GL46::N} indicate that the arguments
+     * will be passed as fixed-point values that are scaled to a normalized
+     * range according to the component conversion rules defined by the
+     * OpenGL specification. Signed values are understood to represent
+     * fixed-point values in the range \[-1,1\], and unsigned values are
+     * understood to represent fixed-point values in the range \[0,1\].
      *
-     * The binding between a generic vertex attribute index and a user-defined attribute variable in a vertex shader
-     * is part of the state of a program object, but the current value of the generic vertex attribute is not. The
-     * value of each generic vertex attribute is part of current state, just like standard vertex attributes, and it
-     * is maintained even if a different program object is used.
+     * The commands containing {@see GL46::I} indicate that the arguments are
+     * extended to full signed or unsigned integers.
      *
-     * An application may freely modify generic vertex attributes that are not bound to a named vertex shader
-     * attribute variable. These values are simply maintained as part of current state and will not be accessed by
-     * the vertex shader. If a generic vertex attribute bound to an attribute variable in a vertex shader is not
-     * updated while the vertex shader is executing, the vertex shader will repeatedly use the current value for the
-     * generic vertex attribute.
+     * The commands containing {@see GL46::P} indicate that the arguments are
+     * stored as packed components within a larger natural type.
      *
-     * The generic vertex attribute with index 0 is the same as the vertex position attribute previously defined by
-     * OpenGL. A {@see glVertex2}, {@see glVertex3}, or {@see glVertex4} command is completely
-     * equivalent to the corresponding `glVertexAttrib` command with an index argument of 0. A vertex shader can
-     * access generic vertex attribute 0 by using the built-in attribute variable *`gl_Vertex`*. There are no current
-     * values for generic vertex attribute 0. This is the only generic vertex attribute with this property; calls to
-     * set other standard vertex attributes can be freely mixed with calls to set any of the other generic vertex
-     * attributes.
+     * The commands containing {@see GL46::L} indicate that the arguments are
+     * full 64-bit quantities and should be passed directly to shader inputs
+     * declared as 64-bit double precision types.
+     *
+     * OpenGL Shading Language attribute variables are allowed to be of type
+     * mat2, mat3, or mat4. Attributes of these types may be loaded using the
+     * {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * successive generic attribute slots in column major order, with one
+     * column of the matrix in each generic attribute slot.
+     *
+     * A user-defined attribute variable declared in a vertex shader can be
+     * bound to a generic attribute index by calling
+     * {@see GL46::glBindAttribLocation}. This allows an application to use
+     * more descriptive variable names in a vertex shader. A subsequent
+     * change to the specified generic vertex attribute will be immediately
+     * reflected as a change to the corresponding attribute variable in the
+     * vertex shader.
+     *
+     * The binding between a generic vertex attribute index and a
+     * user-defined attribute variable in a vertex shader is part of the
+     * state of a program object, but the current value of the generic vertex
+     * attribute is not. The value of each generic vertex attribute is part
+     * of current state, just like standard vertex attributes, and it is
+     * maintained even if a different program object is used.
+     *
+     * An application may freely modify generic vertex attributes that are
+     * not bound to a named vertex shader attribute variable. These values
+     * are simply maintained as part of current state and will not be
+     * accessed by the vertex shader. If a generic vertex attribute bound to
+     * an attribute variable in a vertex shader is not updated while the
+     * vertex shader is executing, the vertex shader will repeatedly use the
+     * current value for the generic vertex attribute.
      *
      * @see http://docs.gl/gl2/glVertexAttrib
-     * @see http://docs.gl/gl3/glVertexAttrib
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
-     * @param int $index
+     * @param int|\FFI\CData|\FFI\CInt $index
      * @param \FFI\CData|\FFI\CFloatPtr|null $v
      * @return void
      */
-    public static function glVertexAttrib3fv(int $index, ?\FFI\CData $v): void
+    public function glVertexAttrib3fv($index, ?\FFI\CData $v): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($index >= 0 && $index <= 4_294_967_295, 'Argument $index overflow: C type GLuint is required');
+        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
 
-        $proc = self::getProc('glVertexAttrib3fv', 'void (*)(GLuint index, const GLfloat *v)');
+        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glVertexAttrib3fv', 'void (*)(GLuint index, const GLfloat *v)');
         $proc($index, $v);
     }
 
     /**
-     * OpenGL defines a number of standard vertex attributes that applications can modify with standard API entry
-     * points (color, normal, texture coordinates, etc.). The `glVertexAttrib` family of entry points allows an
+     * The {@see GL46::glVertexAttrib} family of entry points allows an
      * application to pass generic vertex attributes in numbered locations.
      *
-     * Generic attributes are defined as four-component values that are organized into an array. The first entry of
-     * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * `GL_MAX_VERTEX_ATTRIBS`. Individual elements of this array can be modified with a `glVertexAttrib` call that
-     * specifies the index of the element to be modified and a value for that element.
+     * Generic attributes are defined as four-component values that are
+     * organized into an array. The first entry of this array is numbered 0,
+     * and the size of the array is specified by the implementation-dependent
+     * constant {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of
+     * this array can be modified with a {@see GL46::glVertexAttrib} call
+     * that specifies the index of the element to be modified and a value for
+     * that element.
      *
-     * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
-     * specified by *`index`*. A `1` in the name of the command indicates that only one value is passed, and it will
-     * be used to modify the first component of the generic vertex attribute. The second and third components will be
-     * set to 0, and the fourth component will be set to 1. Similarly, a `2` in the name of the command indicates
-     * that values are provided for the first two components, the third component will be set to 0, and the fourth
-     * component will be set to 1. A `3` in the name of the command indicates that values are provided for the first
-     * three components and the fourth component will be set to 1, whereas a `4` in the name indicates that values
-     * are provided for all four components.
+     * These commands can be used to specify one, two, three, or all four
+     * components of the generic vertex attribute specified by $index. A
+     * {@see GL46::1} in the name of the command indicates that only one
+     * value is passed, and it will be used to modify the first component of
+     * the generic vertex attribute. The second and third components will be
+     * set to 0, and the fourth component will be set to 1. Similarly, a
+     * {@see GL46::2} in the name of the command indicates that values are
+     * provided for the first two components, the third component will be set
+     * to 0, and the fourth component will be set to 1. A {@see GL46::3} in
+     * the name of the command indicates that values are provided for the
+     * first three components and the fourth component will be set to 1,
+     * whereas a {@see GL46::4} in the name indicates that values are
+     * provided for all four components.
      *
-     * The letters `s`, `f`, `i`, `d`, `ub`, `us`, and `ui` indicate whether the arguments are of type short, float,
-     * int, double, unsigned byte, unsigned short, or unsigned int. When `v` is appended to the name, the commands
-     * can take a pointer to an array of such values. The commands containing `N` indicate that the arguments will be
-     * passed as fixed-point values that are scaled to a normalized range according to the component conversion rules
-     * defined by the OpenGL specification. Signed values are understood to represent fixed-point values in the range
-     * [-1,1], and unsigned values are understood to represent fixed-point values in the range [0,1].
+     * The letters {@see GL46::s}, {@see GL46::f}, {@see GL46::i},
+     * {@see GL46::d}, {@see GL46::ub}, {@see GL46::us}, and {@see GL46::ui}
+     * indicate whether the arguments are of type short, float, int, double,
+     * unsigned byte, unsigned short, or unsigned int. When {@see GL46::v} is
+     * appended to the name, the commands can take a pointer to an array of
+     * such values.
      *
-     * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the `glVertexAttrib` entry points. Matrices must be loaded into successive generic
-     * attribute slots in column major order, with one column of the matrix in each generic attribute slot.
+     * Additional capitalized letters can indicate further alterations to the
+     * default behavior of the glVertexAttrib function:
      *
-     * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see glBindAttribLocation}. This allows an application to use more descriptive
-     * variable names in a vertex shader. A subsequent change to the specified generic vertex attribute will be
-     * immediately reflected as a change to the corresponding attribute variable in the vertex shader.
+     * The commands containing {@see GL46::N} indicate that the arguments
+     * will be passed as fixed-point values that are scaled to a normalized
+     * range according to the component conversion rules defined by the
+     * OpenGL specification. Signed values are understood to represent
+     * fixed-point values in the range \[-1,1\], and unsigned values are
+     * understood to represent fixed-point values in the range \[0,1\].
      *
-     * The binding between a generic vertex attribute index and a user-defined attribute variable in a vertex shader
-     * is part of the state of a program object, but the current value of the generic vertex attribute is not. The
-     * value of each generic vertex attribute is part of current state, just like standard vertex attributes, and it
-     * is maintained even if a different program object is used.
+     * The commands containing {@see GL46::I} indicate that the arguments are
+     * extended to full signed or unsigned integers.
      *
-     * An application may freely modify generic vertex attributes that are not bound to a named vertex shader
-     * attribute variable. These values are simply maintained as part of current state and will not be accessed by
-     * the vertex shader. If a generic vertex attribute bound to an attribute variable in a vertex shader is not
-     * updated while the vertex shader is executing, the vertex shader will repeatedly use the current value for the
-     * generic vertex attribute.
+     * The commands containing {@see GL46::P} indicate that the arguments are
+     * stored as packed components within a larger natural type.
      *
-     * The generic vertex attribute with index 0 is the same as the vertex position attribute previously defined by
-     * OpenGL. A {@see glVertex2}, {@see glVertex3}, or {@see glVertex4} command is completely
-     * equivalent to the corresponding `glVertexAttrib` command with an index argument of 0. A vertex shader can
-     * access generic vertex attribute 0 by using the built-in attribute variable *`gl_Vertex`*. There are no current
-     * values for generic vertex attribute 0. This is the only generic vertex attribute with this property; calls to
-     * set other standard vertex attributes can be freely mixed with calls to set any of the other generic vertex
-     * attributes.
+     * The commands containing {@see GL46::L} indicate that the arguments are
+     * full 64-bit quantities and should be passed directly to shader inputs
+     * declared as 64-bit double precision types.
+     *
+     * OpenGL Shading Language attribute variables are allowed to be of type
+     * mat2, mat3, or mat4. Attributes of these types may be loaded using the
+     * {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * successive generic attribute slots in column major order, with one
+     * column of the matrix in each generic attribute slot.
+     *
+     * A user-defined attribute variable declared in a vertex shader can be
+     * bound to a generic attribute index by calling
+     * {@see GL46::glBindAttribLocation}. This allows an application to use
+     * more descriptive variable names in a vertex shader. A subsequent
+     * change to the specified generic vertex attribute will be immediately
+     * reflected as a change to the corresponding attribute variable in the
+     * vertex shader.
+     *
+     * The binding between a generic vertex attribute index and a
+     * user-defined attribute variable in a vertex shader is part of the
+     * state of a program object, but the current value of the generic vertex
+     * attribute is not. The value of each generic vertex attribute is part
+     * of current state, just like standard vertex attributes, and it is
+     * maintained even if a different program object is used.
+     *
+     * An application may freely modify generic vertex attributes that are
+     * not bound to a named vertex shader attribute variable. These values
+     * are simply maintained as part of current state and will not be
+     * accessed by the vertex shader. If a generic vertex attribute bound to
+     * an attribute variable in a vertex shader is not updated while the
+     * vertex shader is executing, the vertex shader will repeatedly use the
+     * current value for the generic vertex attribute.
      *
      * @see http://docs.gl/gl2/glVertexAttrib
-     * @see http://docs.gl/gl3/glVertexAttrib
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
-     * @param int $index
-     * @param int $x
-     * @param int $y
-     * @param int $z
+     * @param int|\FFI\CData|\FFI\CInt $index
+     * @param int|\FFI\CData|\FFI\CInt $x
+     * @param int|\FFI\CData|\FFI\CInt $y
+     * @param int|\FFI\CData|\FFI\CInt $z
      * @return void
      */
-    public static function glVertexAttrib3s(int $index, int $x, int $y, int $z): void
+    public function glVertexAttrib3s($index, $x, $y, $z): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($index >= 0 && $index <= 4_294_967_295, 'Argument $index overflow: C type GLuint is required');
-        assert($x >= -32768 && $x <= 32767, 'Argument $x overflow: C type GLshort is required');
-        assert($y >= -32768 && $y <= 32767, 'Argument $y overflow: C type GLshort is required');
-        assert($z >= -32768 && $z <= 32767, 'Argument $z overflow: C type GLshort is required');
+        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
+        $x = $x instanceof \FFI\CData ? $x->cdata : $x;
+        $y = $y instanceof \FFI\CData ? $y->cdata : $y;
+        $z = $z instanceof \FFI\CData ? $z->cdata : $z;
 
-        $proc = self::getProc('glVertexAttrib3s', 'void (*)(GLuint index, GLshort x, GLshort y, GLshort z)');
+        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Assert::int16($x), 'Argument $x must be a C-like GLshort, but incompatible or overflow value given');
+        assert(Assert::int16($y), 'Argument $y must be a C-like GLshort, but incompatible or overflow value given');
+        assert(Assert::int16($z), 'Argument $z must be a C-like GLshort, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glVertexAttrib3s', 'void (*)(GLuint index, GLshort x, GLshort y, GLshort z)');
         $proc($index, $x, $y, $z);
     }
 
     /**
-     * OpenGL defines a number of standard vertex attributes that applications can modify with standard API entry
-     * points (color, normal, texture coordinates, etc.). The `glVertexAttrib` family of entry points allows an
+     * The {@see GL46::glVertexAttrib} family of entry points allows an
      * application to pass generic vertex attributes in numbered locations.
      *
-     * Generic attributes are defined as four-component values that are organized into an array. The first entry of
-     * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * `GL_MAX_VERTEX_ATTRIBS`. Individual elements of this array can be modified with a `glVertexAttrib` call that
-     * specifies the index of the element to be modified and a value for that element.
+     * Generic attributes are defined as four-component values that are
+     * organized into an array. The first entry of this array is numbered 0,
+     * and the size of the array is specified by the implementation-dependent
+     * constant {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of
+     * this array can be modified with a {@see GL46::glVertexAttrib} call
+     * that specifies the index of the element to be modified and a value for
+     * that element.
      *
-     * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
-     * specified by *`index`*. A `1` in the name of the command indicates that only one value is passed, and it will
-     * be used to modify the first component of the generic vertex attribute. The second and third components will be
-     * set to 0, and the fourth component will be set to 1. Similarly, a `2` in the name of the command indicates
-     * that values are provided for the first two components, the third component will be set to 0, and the fourth
-     * component will be set to 1. A `3` in the name of the command indicates that values are provided for the first
-     * three components and the fourth component will be set to 1, whereas a `4` in the name indicates that values
-     * are provided for all four components.
+     * These commands can be used to specify one, two, three, or all four
+     * components of the generic vertex attribute specified by $index. A
+     * {@see GL46::1} in the name of the command indicates that only one
+     * value is passed, and it will be used to modify the first component of
+     * the generic vertex attribute. The second and third components will be
+     * set to 0, and the fourth component will be set to 1. Similarly, a
+     * {@see GL46::2} in the name of the command indicates that values are
+     * provided for the first two components, the third component will be set
+     * to 0, and the fourth component will be set to 1. A {@see GL46::3} in
+     * the name of the command indicates that values are provided for the
+     * first three components and the fourth component will be set to 1,
+     * whereas a {@see GL46::4} in the name indicates that values are
+     * provided for all four components.
      *
-     * The letters `s`, `f`, `i`, `d`, `ub`, `us`, and `ui` indicate whether the arguments are of type short, float,
-     * int, double, unsigned byte, unsigned short, or unsigned int. When `v` is appended to the name, the commands
-     * can take a pointer to an array of such values. The commands containing `N` indicate that the arguments will be
-     * passed as fixed-point values that are scaled to a normalized range according to the component conversion rules
-     * defined by the OpenGL specification. Signed values are understood to represent fixed-point values in the range
-     * [-1,1], and unsigned values are understood to represent fixed-point values in the range [0,1].
+     * The letters {@see GL46::s}, {@see GL46::f}, {@see GL46::i},
+     * {@see GL46::d}, {@see GL46::ub}, {@see GL46::us}, and {@see GL46::ui}
+     * indicate whether the arguments are of type short, float, int, double,
+     * unsigned byte, unsigned short, or unsigned int. When {@see GL46::v} is
+     * appended to the name, the commands can take a pointer to an array of
+     * such values.
      *
-     * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the `glVertexAttrib` entry points. Matrices must be loaded into successive generic
-     * attribute slots in column major order, with one column of the matrix in each generic attribute slot.
+     * Additional capitalized letters can indicate further alterations to the
+     * default behavior of the glVertexAttrib function:
      *
-     * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see glBindAttribLocation}. This allows an application to use more descriptive
-     * variable names in a vertex shader. A subsequent change to the specified generic vertex attribute will be
-     * immediately reflected as a change to the corresponding attribute variable in the vertex shader.
+     * The commands containing {@see GL46::N} indicate that the arguments
+     * will be passed as fixed-point values that are scaled to a normalized
+     * range according to the component conversion rules defined by the
+     * OpenGL specification. Signed values are understood to represent
+     * fixed-point values in the range \[-1,1\], and unsigned values are
+     * understood to represent fixed-point values in the range \[0,1\].
      *
-     * The binding between a generic vertex attribute index and a user-defined attribute variable in a vertex shader
-     * is part of the state of a program object, but the current value of the generic vertex attribute is not. The
-     * value of each generic vertex attribute is part of current state, just like standard vertex attributes, and it
-     * is maintained even if a different program object is used.
+     * The commands containing {@see GL46::I} indicate that the arguments are
+     * extended to full signed or unsigned integers.
      *
-     * An application may freely modify generic vertex attributes that are not bound to a named vertex shader
-     * attribute variable. These values are simply maintained as part of current state and will not be accessed by
-     * the vertex shader. If a generic vertex attribute bound to an attribute variable in a vertex shader is not
-     * updated while the vertex shader is executing, the vertex shader will repeatedly use the current value for the
-     * generic vertex attribute.
+     * The commands containing {@see GL46::P} indicate that the arguments are
+     * stored as packed components within a larger natural type.
      *
-     * The generic vertex attribute with index 0 is the same as the vertex position attribute previously defined by
-     * OpenGL. A {@see glVertex2}, {@see glVertex3}, or {@see glVertex4} command is completely
-     * equivalent to the corresponding `glVertexAttrib` command with an index argument of 0. A vertex shader can
-     * access generic vertex attribute 0 by using the built-in attribute variable *`gl_Vertex`*. There are no current
-     * values for generic vertex attribute 0. This is the only generic vertex attribute with this property; calls to
-     * set other standard vertex attributes can be freely mixed with calls to set any of the other generic vertex
-     * attributes.
+     * The commands containing {@see GL46::L} indicate that the arguments are
+     * full 64-bit quantities and should be passed directly to shader inputs
+     * declared as 64-bit double precision types.
+     *
+     * OpenGL Shading Language attribute variables are allowed to be of type
+     * mat2, mat3, or mat4. Attributes of these types may be loaded using the
+     * {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * successive generic attribute slots in column major order, with one
+     * column of the matrix in each generic attribute slot.
+     *
+     * A user-defined attribute variable declared in a vertex shader can be
+     * bound to a generic attribute index by calling
+     * {@see GL46::glBindAttribLocation}. This allows an application to use
+     * more descriptive variable names in a vertex shader. A subsequent
+     * change to the specified generic vertex attribute will be immediately
+     * reflected as a change to the corresponding attribute variable in the
+     * vertex shader.
+     *
+     * The binding between a generic vertex attribute index and a
+     * user-defined attribute variable in a vertex shader is part of the
+     * state of a program object, but the current value of the generic vertex
+     * attribute is not. The value of each generic vertex attribute is part
+     * of current state, just like standard vertex attributes, and it is
+     * maintained even if a different program object is used.
+     *
+     * An application may freely modify generic vertex attributes that are
+     * not bound to a named vertex shader attribute variable. These values
+     * are simply maintained as part of current state and will not be
+     * accessed by the vertex shader. If a generic vertex attribute bound to
+     * an attribute variable in a vertex shader is not updated while the
+     * vertex shader is executing, the vertex shader will repeatedly use the
+     * current value for the generic vertex attribute.
      *
      * @see http://docs.gl/gl2/glVertexAttrib
-     * @see http://docs.gl/gl3/glVertexAttrib
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
-     * @param int $index
+     * @param int|\FFI\CData|\FFI\CInt $index
      * @param \FFI\CData|\FFI\CIntPtr|null $v
      * @return void
      */
-    public static function glVertexAttrib3sv(int $index, ?\FFI\CData $v): void
+    public function glVertexAttrib3sv($index, ?\FFI\CData $v): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($index >= 0 && $index <= 4_294_967_295, 'Argument $index overflow: C type GLuint is required');
+        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
 
-        $proc = self::getProc('glVertexAttrib3sv', 'void (*)(GLuint index, const GLshort *v)');
+        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glVertexAttrib3sv', 'void (*)(GLuint index, const GLshort *v)');
         $proc($index, $v);
     }
 
     /**
-     * OpenGL defines a number of standard vertex attributes that applications can modify with standard API entry
-     * points (color, normal, texture coordinates, etc.). The `glVertexAttrib` family of entry points allows an
+     * The {@see GL46::glVertexAttrib} family of entry points allows an
      * application to pass generic vertex attributes in numbered locations.
      *
-     * Generic attributes are defined as four-component values that are organized into an array. The first entry of
-     * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * `GL_MAX_VERTEX_ATTRIBS`. Individual elements of this array can be modified with a `glVertexAttrib` call that
-     * specifies the index of the element to be modified and a value for that element.
+     * Generic attributes are defined as four-component values that are
+     * organized into an array. The first entry of this array is numbered 0,
+     * and the size of the array is specified by the implementation-dependent
+     * constant {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of
+     * this array can be modified with a {@see GL46::glVertexAttrib} call
+     * that specifies the index of the element to be modified and a value for
+     * that element.
      *
-     * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
-     * specified by *`index`*. A `1` in the name of the command indicates that only one value is passed, and it will
-     * be used to modify the first component of the generic vertex attribute. The second and third components will be
-     * set to 0, and the fourth component will be set to 1. Similarly, a `2` in the name of the command indicates
-     * that values are provided for the first two components, the third component will be set to 0, and the fourth
-     * component will be set to 1. A `3` in the name of the command indicates that values are provided for the first
-     * three components and the fourth component will be set to 1, whereas a `4` in the name indicates that values
-     * are provided for all four components.
+     * These commands can be used to specify one, two, three, or all four
+     * components of the generic vertex attribute specified by $index. A
+     * {@see GL46::1} in the name of the command indicates that only one
+     * value is passed, and it will be used to modify the first component of
+     * the generic vertex attribute. The second and third components will be
+     * set to 0, and the fourth component will be set to 1. Similarly, a
+     * {@see GL46::2} in the name of the command indicates that values are
+     * provided for the first two components, the third component will be set
+     * to 0, and the fourth component will be set to 1. A {@see GL46::3} in
+     * the name of the command indicates that values are provided for the
+     * first three components and the fourth component will be set to 1,
+     * whereas a {@see GL46::4} in the name indicates that values are
+     * provided for all four components.
      *
-     * The letters `s`, `f`, `i`, `d`, `ub`, `us`, and `ui` indicate whether the arguments are of type short, float,
-     * int, double, unsigned byte, unsigned short, or unsigned int. When `v` is appended to the name, the commands
-     * can take a pointer to an array of such values. The commands containing `N` indicate that the arguments will be
-     * passed as fixed-point values that are scaled to a normalized range according to the component conversion rules
-     * defined by the OpenGL specification. Signed values are understood to represent fixed-point values in the range
-     * [-1,1], and unsigned values are understood to represent fixed-point values in the range [0,1].
+     * The letters {@see GL46::s}, {@see GL46::f}, {@see GL46::i},
+     * {@see GL46::d}, {@see GL46::ub}, {@see GL46::us}, and {@see GL46::ui}
+     * indicate whether the arguments are of type short, float, int, double,
+     * unsigned byte, unsigned short, or unsigned int. When {@see GL46::v} is
+     * appended to the name, the commands can take a pointer to an array of
+     * such values.
      *
-     * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the `glVertexAttrib` entry points. Matrices must be loaded into successive generic
-     * attribute slots in column major order, with one column of the matrix in each generic attribute slot.
+     * Additional capitalized letters can indicate further alterations to the
+     * default behavior of the glVertexAttrib function:
      *
-     * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see glBindAttribLocation}. This allows an application to use more descriptive
-     * variable names in a vertex shader. A subsequent change to the specified generic vertex attribute will be
-     * immediately reflected as a change to the corresponding attribute variable in the vertex shader.
+     * The commands containing {@see GL46::N} indicate that the arguments
+     * will be passed as fixed-point values that are scaled to a normalized
+     * range according to the component conversion rules defined by the
+     * OpenGL specification. Signed values are understood to represent
+     * fixed-point values in the range \[-1,1\], and unsigned values are
+     * understood to represent fixed-point values in the range \[0,1\].
      *
-     * The binding between a generic vertex attribute index and a user-defined attribute variable in a vertex shader
-     * is part of the state of a program object, but the current value of the generic vertex attribute is not. The
-     * value of each generic vertex attribute is part of current state, just like standard vertex attributes, and it
-     * is maintained even if a different program object is used.
+     * The commands containing {@see GL46::I} indicate that the arguments are
+     * extended to full signed or unsigned integers.
      *
-     * An application may freely modify generic vertex attributes that are not bound to a named vertex shader
-     * attribute variable. These values are simply maintained as part of current state and will not be accessed by
-     * the vertex shader. If a generic vertex attribute bound to an attribute variable in a vertex shader is not
-     * updated while the vertex shader is executing, the vertex shader will repeatedly use the current value for the
-     * generic vertex attribute.
+     * The commands containing {@see GL46::P} indicate that the arguments are
+     * stored as packed components within a larger natural type.
      *
-     * The generic vertex attribute with index 0 is the same as the vertex position attribute previously defined by
-     * OpenGL. A {@see glVertex2}, {@see glVertex3}, or {@see glVertex4} command is completely
-     * equivalent to the corresponding `glVertexAttrib` command with an index argument of 0. A vertex shader can
-     * access generic vertex attribute 0 by using the built-in attribute variable *`gl_Vertex`*. There are no current
-     * values for generic vertex attribute 0. This is the only generic vertex attribute with this property; calls to
-     * set other standard vertex attributes can be freely mixed with calls to set any of the other generic vertex
-     * attributes.
+     * The commands containing {@see GL46::L} indicate that the arguments are
+     * full 64-bit quantities and should be passed directly to shader inputs
+     * declared as 64-bit double precision types.
+     *
+     * OpenGL Shading Language attribute variables are allowed to be of type
+     * mat2, mat3, or mat4. Attributes of these types may be loaded using the
+     * {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * successive generic attribute slots in column major order, with one
+     * column of the matrix in each generic attribute slot.
+     *
+     * A user-defined attribute variable declared in a vertex shader can be
+     * bound to a generic attribute index by calling
+     * {@see GL46::glBindAttribLocation}. This allows an application to use
+     * more descriptive variable names in a vertex shader. A subsequent
+     * change to the specified generic vertex attribute will be immediately
+     * reflected as a change to the corresponding attribute variable in the
+     * vertex shader.
+     *
+     * The binding between a generic vertex attribute index and a
+     * user-defined attribute variable in a vertex shader is part of the
+     * state of a program object, but the current value of the generic vertex
+     * attribute is not. The value of each generic vertex attribute is part
+     * of current state, just like standard vertex attributes, and it is
+     * maintained even if a different program object is used.
+     *
+     * An application may freely modify generic vertex attributes that are
+     * not bound to a named vertex shader attribute variable. These values
+     * are simply maintained as part of current state and will not be
+     * accessed by the vertex shader. If a generic vertex attribute bound to
+     * an attribute variable in a vertex shader is not updated while the
+     * vertex shader is executing, the vertex shader will repeatedly use the
+     * current value for the generic vertex attribute.
      *
      * @see http://docs.gl/gl2/glVertexAttrib
-     * @see http://docs.gl/gl3/glVertexAttrib
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
-     * @param int $index
+     * @param int|\FFI\CData|\FFI\CInt $index
      * @param \FFI\CData|\FFI\CIntPtr|null $v
      * @return void
      */
-    public static function glVertexAttrib4Nbv(int $index, ?\FFI\CData $v): void
+    public function glVertexAttrib4Nbv($index, ?\FFI\CData $v): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($index >= 0 && $index <= 4_294_967_295, 'Argument $index overflow: C type GLuint is required');
+        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
 
-        $proc = self::getProc('glVertexAttrib4Nbv', 'void (*)(GLuint index, const GLbyte *v)');
+        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glVertexAttrib4Nbv', 'void (*)(GLuint index, const GLbyte *v)');
         $proc($index, $v);
     }
 
     /**
-     * OpenGL defines a number of standard vertex attributes that applications can modify with standard API entry
-     * points (color, normal, texture coordinates, etc.). The `glVertexAttrib` family of entry points allows an
+     * The {@see GL46::glVertexAttrib} family of entry points allows an
      * application to pass generic vertex attributes in numbered locations.
      *
-     * Generic attributes are defined as four-component values that are organized into an array. The first entry of
-     * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * `GL_MAX_VERTEX_ATTRIBS`. Individual elements of this array can be modified with a `glVertexAttrib` call that
-     * specifies the index of the element to be modified and a value for that element.
+     * Generic attributes are defined as four-component values that are
+     * organized into an array. The first entry of this array is numbered 0,
+     * and the size of the array is specified by the implementation-dependent
+     * constant {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of
+     * this array can be modified with a {@see GL46::glVertexAttrib} call
+     * that specifies the index of the element to be modified and a value for
+     * that element.
      *
-     * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
-     * specified by *`index`*. A `1` in the name of the command indicates that only one value is passed, and it will
-     * be used to modify the first component of the generic vertex attribute. The second and third components will be
-     * set to 0, and the fourth component will be set to 1. Similarly, a `2` in the name of the command indicates
-     * that values are provided for the first two components, the third component will be set to 0, and the fourth
-     * component will be set to 1. A `3` in the name of the command indicates that values are provided for the first
-     * three components and the fourth component will be set to 1, whereas a `4` in the name indicates that values
-     * are provided for all four components.
+     * These commands can be used to specify one, two, three, or all four
+     * components of the generic vertex attribute specified by $index. A
+     * {@see GL46::1} in the name of the command indicates that only one
+     * value is passed, and it will be used to modify the first component of
+     * the generic vertex attribute. The second and third components will be
+     * set to 0, and the fourth component will be set to 1. Similarly, a
+     * {@see GL46::2} in the name of the command indicates that values are
+     * provided for the first two components, the third component will be set
+     * to 0, and the fourth component will be set to 1. A {@see GL46::3} in
+     * the name of the command indicates that values are provided for the
+     * first three components and the fourth component will be set to 1,
+     * whereas a {@see GL46::4} in the name indicates that values are
+     * provided for all four components.
      *
-     * The letters `s`, `f`, `i`, `d`, `ub`, `us`, and `ui` indicate whether the arguments are of type short, float,
-     * int, double, unsigned byte, unsigned short, or unsigned int. When `v` is appended to the name, the commands
-     * can take a pointer to an array of such values. The commands containing `N` indicate that the arguments will be
-     * passed as fixed-point values that are scaled to a normalized range according to the component conversion rules
-     * defined by the OpenGL specification. Signed values are understood to represent fixed-point values in the range
-     * [-1,1], and unsigned values are understood to represent fixed-point values in the range [0,1].
+     * The letters {@see GL46::s}, {@see GL46::f}, {@see GL46::i},
+     * {@see GL46::d}, {@see GL46::ub}, {@see GL46::us}, and {@see GL46::ui}
+     * indicate whether the arguments are of type short, float, int, double,
+     * unsigned byte, unsigned short, or unsigned int. When {@see GL46::v} is
+     * appended to the name, the commands can take a pointer to an array of
+     * such values.
      *
-     * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the `glVertexAttrib` entry points. Matrices must be loaded into successive generic
-     * attribute slots in column major order, with one column of the matrix in each generic attribute slot.
+     * Additional capitalized letters can indicate further alterations to the
+     * default behavior of the glVertexAttrib function:
      *
-     * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see glBindAttribLocation}. This allows an application to use more descriptive
-     * variable names in a vertex shader. A subsequent change to the specified generic vertex attribute will be
-     * immediately reflected as a change to the corresponding attribute variable in the vertex shader.
+     * The commands containing {@see GL46::N} indicate that the arguments
+     * will be passed as fixed-point values that are scaled to a normalized
+     * range according to the component conversion rules defined by the
+     * OpenGL specification. Signed values are understood to represent
+     * fixed-point values in the range \[-1,1\], and unsigned values are
+     * understood to represent fixed-point values in the range \[0,1\].
      *
-     * The binding between a generic vertex attribute index and a user-defined attribute variable in a vertex shader
-     * is part of the state of a program object, but the current value of the generic vertex attribute is not. The
-     * value of each generic vertex attribute is part of current state, just like standard vertex attributes, and it
-     * is maintained even if a different program object is used.
+     * The commands containing {@see GL46::I} indicate that the arguments are
+     * extended to full signed or unsigned integers.
      *
-     * An application may freely modify generic vertex attributes that are not bound to a named vertex shader
-     * attribute variable. These values are simply maintained as part of current state and will not be accessed by
-     * the vertex shader. If a generic vertex attribute bound to an attribute variable in a vertex shader is not
-     * updated while the vertex shader is executing, the vertex shader will repeatedly use the current value for the
-     * generic vertex attribute.
+     * The commands containing {@see GL46::P} indicate that the arguments are
+     * stored as packed components within a larger natural type.
      *
-     * The generic vertex attribute with index 0 is the same as the vertex position attribute previously defined by
-     * OpenGL. A {@see glVertex2}, {@see glVertex3}, or {@see glVertex4} command is completely
-     * equivalent to the corresponding `glVertexAttrib` command with an index argument of 0. A vertex shader can
-     * access generic vertex attribute 0 by using the built-in attribute variable *`gl_Vertex`*. There are no current
-     * values for generic vertex attribute 0. This is the only generic vertex attribute with this property; calls to
-     * set other standard vertex attributes can be freely mixed with calls to set any of the other generic vertex
-     * attributes.
+     * The commands containing {@see GL46::L} indicate that the arguments are
+     * full 64-bit quantities and should be passed directly to shader inputs
+     * declared as 64-bit double precision types.
+     *
+     * OpenGL Shading Language attribute variables are allowed to be of type
+     * mat2, mat3, or mat4. Attributes of these types may be loaded using the
+     * {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * successive generic attribute slots in column major order, with one
+     * column of the matrix in each generic attribute slot.
+     *
+     * A user-defined attribute variable declared in a vertex shader can be
+     * bound to a generic attribute index by calling
+     * {@see GL46::glBindAttribLocation}. This allows an application to use
+     * more descriptive variable names in a vertex shader. A subsequent
+     * change to the specified generic vertex attribute will be immediately
+     * reflected as a change to the corresponding attribute variable in the
+     * vertex shader.
+     *
+     * The binding between a generic vertex attribute index and a
+     * user-defined attribute variable in a vertex shader is part of the
+     * state of a program object, but the current value of the generic vertex
+     * attribute is not. The value of each generic vertex attribute is part
+     * of current state, just like standard vertex attributes, and it is
+     * maintained even if a different program object is used.
+     *
+     * An application may freely modify generic vertex attributes that are
+     * not bound to a named vertex shader attribute variable. These values
+     * are simply maintained as part of current state and will not be
+     * accessed by the vertex shader. If a generic vertex attribute bound to
+     * an attribute variable in a vertex shader is not updated while the
+     * vertex shader is executing, the vertex shader will repeatedly use the
+     * current value for the generic vertex attribute.
      *
      * @see http://docs.gl/gl2/glVertexAttrib
-     * @see http://docs.gl/gl3/glVertexAttrib
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
-     * @param int $index
+     * @param int|\FFI\CData|\FFI\CInt $index
      * @param \FFI\CData|\FFI\CIntPtr|null $v
      * @return void
      */
-    public static function glVertexAttrib4Niv(int $index, ?\FFI\CData $v): void
+    public function glVertexAttrib4Niv($index, ?\FFI\CData $v): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($index >= 0 && $index <= 4_294_967_295, 'Argument $index overflow: C type GLuint is required');
+        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
 
-        $proc = self::getProc('glVertexAttrib4Niv', 'void (*)(GLuint index, const GLint *v)');
+        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glVertexAttrib4Niv', 'void (*)(GLuint index, const GLint *v)');
         $proc($index, $v);
     }
 
     /**
-     * OpenGL defines a number of standard vertex attributes that applications can modify with standard API entry
-     * points (color, normal, texture coordinates, etc.). The `glVertexAttrib` family of entry points allows an
+     * The {@see GL46::glVertexAttrib} family of entry points allows an
      * application to pass generic vertex attributes in numbered locations.
      *
-     * Generic attributes are defined as four-component values that are organized into an array. The first entry of
-     * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * `GL_MAX_VERTEX_ATTRIBS`. Individual elements of this array can be modified with a `glVertexAttrib` call that
-     * specifies the index of the element to be modified and a value for that element.
+     * Generic attributes are defined as four-component values that are
+     * organized into an array. The first entry of this array is numbered 0,
+     * and the size of the array is specified by the implementation-dependent
+     * constant {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of
+     * this array can be modified with a {@see GL46::glVertexAttrib} call
+     * that specifies the index of the element to be modified and a value for
+     * that element.
      *
-     * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
-     * specified by *`index`*. A `1` in the name of the command indicates that only one value is passed, and it will
-     * be used to modify the first component of the generic vertex attribute. The second and third components will be
-     * set to 0, and the fourth component will be set to 1. Similarly, a `2` in the name of the command indicates
-     * that values are provided for the first two components, the third component will be set to 0, and the fourth
-     * component will be set to 1. A `3` in the name of the command indicates that values are provided for the first
-     * three components and the fourth component will be set to 1, whereas a `4` in the name indicates that values
-     * are provided for all four components.
+     * These commands can be used to specify one, two, three, or all four
+     * components of the generic vertex attribute specified by $index. A
+     * {@see GL46::1} in the name of the command indicates that only one
+     * value is passed, and it will be used to modify the first component of
+     * the generic vertex attribute. The second and third components will be
+     * set to 0, and the fourth component will be set to 1. Similarly, a
+     * {@see GL46::2} in the name of the command indicates that values are
+     * provided for the first two components, the third component will be set
+     * to 0, and the fourth component will be set to 1. A {@see GL46::3} in
+     * the name of the command indicates that values are provided for the
+     * first three components and the fourth component will be set to 1,
+     * whereas a {@see GL46::4} in the name indicates that values are
+     * provided for all four components.
      *
-     * The letters `s`, `f`, `i`, `d`, `ub`, `us`, and `ui` indicate whether the arguments are of type short, float,
-     * int, double, unsigned byte, unsigned short, or unsigned int. When `v` is appended to the name, the commands
-     * can take a pointer to an array of such values. The commands containing `N` indicate that the arguments will be
-     * passed as fixed-point values that are scaled to a normalized range according to the component conversion rules
-     * defined by the OpenGL specification. Signed values are understood to represent fixed-point values in the range
-     * [-1,1], and unsigned values are understood to represent fixed-point values in the range [0,1].
+     * The letters {@see GL46::s}, {@see GL46::f}, {@see GL46::i},
+     * {@see GL46::d}, {@see GL46::ub}, {@see GL46::us}, and {@see GL46::ui}
+     * indicate whether the arguments are of type short, float, int, double,
+     * unsigned byte, unsigned short, or unsigned int. When {@see GL46::v} is
+     * appended to the name, the commands can take a pointer to an array of
+     * such values.
      *
-     * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the `glVertexAttrib` entry points. Matrices must be loaded into successive generic
-     * attribute slots in column major order, with one column of the matrix in each generic attribute slot.
+     * Additional capitalized letters can indicate further alterations to the
+     * default behavior of the glVertexAttrib function:
      *
-     * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see glBindAttribLocation}. This allows an application to use more descriptive
-     * variable names in a vertex shader. A subsequent change to the specified generic vertex attribute will be
-     * immediately reflected as a change to the corresponding attribute variable in the vertex shader.
+     * The commands containing {@see GL46::N} indicate that the arguments
+     * will be passed as fixed-point values that are scaled to a normalized
+     * range according to the component conversion rules defined by the
+     * OpenGL specification. Signed values are understood to represent
+     * fixed-point values in the range \[-1,1\], and unsigned values are
+     * understood to represent fixed-point values in the range \[0,1\].
      *
-     * The binding between a generic vertex attribute index and a user-defined attribute variable in a vertex shader
-     * is part of the state of a program object, but the current value of the generic vertex attribute is not. The
-     * value of each generic vertex attribute is part of current state, just like standard vertex attributes, and it
-     * is maintained even if a different program object is used.
+     * The commands containing {@see GL46::I} indicate that the arguments are
+     * extended to full signed or unsigned integers.
      *
-     * An application may freely modify generic vertex attributes that are not bound to a named vertex shader
-     * attribute variable. These values are simply maintained as part of current state and will not be accessed by
-     * the vertex shader. If a generic vertex attribute bound to an attribute variable in a vertex shader is not
-     * updated while the vertex shader is executing, the vertex shader will repeatedly use the current value for the
-     * generic vertex attribute.
+     * The commands containing {@see GL46::P} indicate that the arguments are
+     * stored as packed components within a larger natural type.
      *
-     * The generic vertex attribute with index 0 is the same as the vertex position attribute previously defined by
-     * OpenGL. A {@see glVertex2}, {@see glVertex3}, or {@see glVertex4} command is completely
-     * equivalent to the corresponding `glVertexAttrib` command with an index argument of 0. A vertex shader can
-     * access generic vertex attribute 0 by using the built-in attribute variable *`gl_Vertex`*. There are no current
-     * values for generic vertex attribute 0. This is the only generic vertex attribute with this property; calls to
-     * set other standard vertex attributes can be freely mixed with calls to set any of the other generic vertex
-     * attributes.
+     * The commands containing {@see GL46::L} indicate that the arguments are
+     * full 64-bit quantities and should be passed directly to shader inputs
+     * declared as 64-bit double precision types.
+     *
+     * OpenGL Shading Language attribute variables are allowed to be of type
+     * mat2, mat3, or mat4. Attributes of these types may be loaded using the
+     * {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * successive generic attribute slots in column major order, with one
+     * column of the matrix in each generic attribute slot.
+     *
+     * A user-defined attribute variable declared in a vertex shader can be
+     * bound to a generic attribute index by calling
+     * {@see GL46::glBindAttribLocation}. This allows an application to use
+     * more descriptive variable names in a vertex shader. A subsequent
+     * change to the specified generic vertex attribute will be immediately
+     * reflected as a change to the corresponding attribute variable in the
+     * vertex shader.
+     *
+     * The binding between a generic vertex attribute index and a
+     * user-defined attribute variable in a vertex shader is part of the
+     * state of a program object, but the current value of the generic vertex
+     * attribute is not. The value of each generic vertex attribute is part
+     * of current state, just like standard vertex attributes, and it is
+     * maintained even if a different program object is used.
+     *
+     * An application may freely modify generic vertex attributes that are
+     * not bound to a named vertex shader attribute variable. These values
+     * are simply maintained as part of current state and will not be
+     * accessed by the vertex shader. If a generic vertex attribute bound to
+     * an attribute variable in a vertex shader is not updated while the
+     * vertex shader is executing, the vertex shader will repeatedly use the
+     * current value for the generic vertex attribute.
      *
      * @see http://docs.gl/gl2/glVertexAttrib
-     * @see http://docs.gl/gl3/glVertexAttrib
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
-     * @param int $index
+     * @param int|\FFI\CData|\FFI\CInt $index
      * @param \FFI\CData|\FFI\CIntPtr|null $v
      * @return void
      */
-    public static function glVertexAttrib4Nsv(int $index, ?\FFI\CData $v): void
+    public function glVertexAttrib4Nsv($index, ?\FFI\CData $v): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($index >= 0 && $index <= 4_294_967_295, 'Argument $index overflow: C type GLuint is required');
+        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
 
-        $proc = self::getProc('glVertexAttrib4Nsv', 'void (*)(GLuint index, const GLshort *v)');
+        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glVertexAttrib4Nsv', 'void (*)(GLuint index, const GLshort *v)');
         $proc($index, $v);
     }
 
     /**
-     * OpenGL defines a number of standard vertex attributes that applications can modify with standard API entry
-     * points (color, normal, texture coordinates, etc.). The `glVertexAttrib` family of entry points allows an
+     * The {@see GL46::glVertexAttrib} family of entry points allows an
      * application to pass generic vertex attributes in numbered locations.
      *
-     * Generic attributes are defined as four-component values that are organized into an array. The first entry of
-     * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * `GL_MAX_VERTEX_ATTRIBS`. Individual elements of this array can be modified with a `glVertexAttrib` call that
-     * specifies the index of the element to be modified and a value for that element.
+     * Generic attributes are defined as four-component values that are
+     * organized into an array. The first entry of this array is numbered 0,
+     * and the size of the array is specified by the implementation-dependent
+     * constant {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of
+     * this array can be modified with a {@see GL46::glVertexAttrib} call
+     * that specifies the index of the element to be modified and a value for
+     * that element.
      *
-     * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
-     * specified by *`index`*. A `1` in the name of the command indicates that only one value is passed, and it will
-     * be used to modify the first component of the generic vertex attribute. The second and third components will be
-     * set to 0, and the fourth component will be set to 1. Similarly, a `2` in the name of the command indicates
-     * that values are provided for the first two components, the third component will be set to 0, and the fourth
-     * component will be set to 1. A `3` in the name of the command indicates that values are provided for the first
-     * three components and the fourth component will be set to 1, whereas a `4` in the name indicates that values
-     * are provided for all four components.
+     * These commands can be used to specify one, two, three, or all four
+     * components of the generic vertex attribute specified by $index. A
+     * {@see GL46::1} in the name of the command indicates that only one
+     * value is passed, and it will be used to modify the first component of
+     * the generic vertex attribute. The second and third components will be
+     * set to 0, and the fourth component will be set to 1. Similarly, a
+     * {@see GL46::2} in the name of the command indicates that values are
+     * provided for the first two components, the third component will be set
+     * to 0, and the fourth component will be set to 1. A {@see GL46::3} in
+     * the name of the command indicates that values are provided for the
+     * first three components and the fourth component will be set to 1,
+     * whereas a {@see GL46::4} in the name indicates that values are
+     * provided for all four components.
      *
-     * The letters `s`, `f`, `i`, `d`, `ub`, `us`, and `ui` indicate whether the arguments are of type short, float,
-     * int, double, unsigned byte, unsigned short, or unsigned int. When `v` is appended to the name, the commands
-     * can take a pointer to an array of such values. The commands containing `N` indicate that the arguments will be
-     * passed as fixed-point values that are scaled to a normalized range according to the component conversion rules
-     * defined by the OpenGL specification. Signed values are understood to represent fixed-point values in the range
-     * [-1,1], and unsigned values are understood to represent fixed-point values in the range [0,1].
+     * The letters {@see GL46::s}, {@see GL46::f}, {@see GL46::i},
+     * {@see GL46::d}, {@see GL46::ub}, {@see GL46::us}, and {@see GL46::ui}
+     * indicate whether the arguments are of type short, float, int, double,
+     * unsigned byte, unsigned short, or unsigned int. When {@see GL46::v} is
+     * appended to the name, the commands can take a pointer to an array of
+     * such values.
      *
-     * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the `glVertexAttrib` entry points. Matrices must be loaded into successive generic
-     * attribute slots in column major order, with one column of the matrix in each generic attribute slot.
+     * Additional capitalized letters can indicate further alterations to the
+     * default behavior of the glVertexAttrib function:
      *
-     * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see glBindAttribLocation}. This allows an application to use more descriptive
-     * variable names in a vertex shader. A subsequent change to the specified generic vertex attribute will be
-     * immediately reflected as a change to the corresponding attribute variable in the vertex shader.
+     * The commands containing {@see GL46::N} indicate that the arguments
+     * will be passed as fixed-point values that are scaled to a normalized
+     * range according to the component conversion rules defined by the
+     * OpenGL specification. Signed values are understood to represent
+     * fixed-point values in the range \[-1,1\], and unsigned values are
+     * understood to represent fixed-point values in the range \[0,1\].
      *
-     * The binding between a generic vertex attribute index and a user-defined attribute variable in a vertex shader
-     * is part of the state of a program object, but the current value of the generic vertex attribute is not. The
-     * value of each generic vertex attribute is part of current state, just like standard vertex attributes, and it
-     * is maintained even if a different program object is used.
+     * The commands containing {@see GL46::I} indicate that the arguments are
+     * extended to full signed or unsigned integers.
      *
-     * An application may freely modify generic vertex attributes that are not bound to a named vertex shader
-     * attribute variable. These values are simply maintained as part of current state and will not be accessed by
-     * the vertex shader. If a generic vertex attribute bound to an attribute variable in a vertex shader is not
-     * updated while the vertex shader is executing, the vertex shader will repeatedly use the current value for the
-     * generic vertex attribute.
+     * The commands containing {@see GL46::P} indicate that the arguments are
+     * stored as packed components within a larger natural type.
      *
-     * The generic vertex attribute with index 0 is the same as the vertex position attribute previously defined by
-     * OpenGL. A {@see glVertex2}, {@see glVertex3}, or {@see glVertex4} command is completely
-     * equivalent to the corresponding `glVertexAttrib` command with an index argument of 0. A vertex shader can
-     * access generic vertex attribute 0 by using the built-in attribute variable *`gl_Vertex`*. There are no current
-     * values for generic vertex attribute 0. This is the only generic vertex attribute with this property; calls to
-     * set other standard vertex attributes can be freely mixed with calls to set any of the other generic vertex
-     * attributes.
+     * The commands containing {@see GL46::L} indicate that the arguments are
+     * full 64-bit quantities and should be passed directly to shader inputs
+     * declared as 64-bit double precision types.
+     *
+     * OpenGL Shading Language attribute variables are allowed to be of type
+     * mat2, mat3, or mat4. Attributes of these types may be loaded using the
+     * {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * successive generic attribute slots in column major order, with one
+     * column of the matrix in each generic attribute slot.
+     *
+     * A user-defined attribute variable declared in a vertex shader can be
+     * bound to a generic attribute index by calling
+     * {@see GL46::glBindAttribLocation}. This allows an application to use
+     * more descriptive variable names in a vertex shader. A subsequent
+     * change to the specified generic vertex attribute will be immediately
+     * reflected as a change to the corresponding attribute variable in the
+     * vertex shader.
+     *
+     * The binding between a generic vertex attribute index and a
+     * user-defined attribute variable in a vertex shader is part of the
+     * state of a program object, but the current value of the generic vertex
+     * attribute is not. The value of each generic vertex attribute is part
+     * of current state, just like standard vertex attributes, and it is
+     * maintained even if a different program object is used.
+     *
+     * An application may freely modify generic vertex attributes that are
+     * not bound to a named vertex shader attribute variable. These values
+     * are simply maintained as part of current state and will not be
+     * accessed by the vertex shader. If a generic vertex attribute bound to
+     * an attribute variable in a vertex shader is not updated while the
+     * vertex shader is executing, the vertex shader will repeatedly use the
+     * current value for the generic vertex attribute.
      *
      * @see http://docs.gl/gl2/glVertexAttrib
-     * @see http://docs.gl/gl3/glVertexAttrib
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
-     * @param int $index
-     * @param int $x
-     * @param int $y
-     * @param int $z
-     * @param int $w
+     * @param int|\FFI\CData|\FFI\CInt $index
+     * @param int|\FFI\CData|\FFI\CInt $x
+     * @param int|\FFI\CData|\FFI\CInt $y
+     * @param int|\FFI\CData|\FFI\CInt $z
+     * @param int|\FFI\CData|\FFI\CInt $w
      * @return void
      */
-    public static function glVertexAttrib4Nub(int $index, int $x, int $y, int $z, int $w): void
+    public function glVertexAttrib4Nub($index, $x, $y, $z, $w): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($index >= 0 && $index <= 4_294_967_295, 'Argument $index overflow: C type GLuint is required');
-        assert($x >= 0 && $x <= 255, 'Argument $x overflow: C type GLubyte is required');
-        assert($y >= 0 && $y <= 255, 'Argument $y overflow: C type GLubyte is required');
-        assert($z >= 0 && $z <= 255, 'Argument $z overflow: C type GLubyte is required');
-        assert($w >= 0 && $w <= 255, 'Argument $w overflow: C type GLubyte is required');
+        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
+        $x = $x instanceof \FFI\CData ? $x->cdata : $x;
+        $y = $y instanceof \FFI\CData ? $y->cdata : $y;
+        $z = $z instanceof \FFI\CData ? $z->cdata : $z;
+        $w = $w instanceof \FFI\CData ? $w->cdata : $w;
 
-        $proc = self::getProc('glVertexAttrib4Nub', 'void (*)(GLuint index, GLubyte x, GLubyte y, GLubyte z, GLubyte w)');
+        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Assert::uint8($x), 'Argument $x must be a C-like GLubyte, but incompatible or overflow value given');
+        assert(Assert::uint8($y), 'Argument $y must be a C-like GLubyte, but incompatible or overflow value given');
+        assert(Assert::uint8($z), 'Argument $z must be a C-like GLubyte, but incompatible or overflow value given');
+        assert(Assert::uint8($w), 'Argument $w must be a C-like GLubyte, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glVertexAttrib4Nub', 'void (*)(GLuint index, GLubyte x, GLubyte y, GLubyte z, GLubyte w)');
         $proc($index, $x, $y, $z, $w);
     }
 
     /**
-     * OpenGL defines a number of standard vertex attributes that applications can modify with standard API entry
-     * points (color, normal, texture coordinates, etc.). The `glVertexAttrib` family of entry points allows an
+     * The {@see GL46::glVertexAttrib} family of entry points allows an
      * application to pass generic vertex attributes in numbered locations.
      *
-     * Generic attributes are defined as four-component values that are organized into an array. The first entry of
-     * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * `GL_MAX_VERTEX_ATTRIBS`. Individual elements of this array can be modified with a `glVertexAttrib` call that
-     * specifies the index of the element to be modified and a value for that element.
+     * Generic attributes are defined as four-component values that are
+     * organized into an array. The first entry of this array is numbered 0,
+     * and the size of the array is specified by the implementation-dependent
+     * constant {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of
+     * this array can be modified with a {@see GL46::glVertexAttrib} call
+     * that specifies the index of the element to be modified and a value for
+     * that element.
      *
-     * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
-     * specified by *`index`*. A `1` in the name of the command indicates that only one value is passed, and it will
-     * be used to modify the first component of the generic vertex attribute. The second and third components will be
-     * set to 0, and the fourth component will be set to 1. Similarly, a `2` in the name of the command indicates
-     * that values are provided for the first two components, the third component will be set to 0, and the fourth
-     * component will be set to 1. A `3` in the name of the command indicates that values are provided for the first
-     * three components and the fourth component will be set to 1, whereas a `4` in the name indicates that values
-     * are provided for all four components.
+     * These commands can be used to specify one, two, three, or all four
+     * components of the generic vertex attribute specified by $index. A
+     * {@see GL46::1} in the name of the command indicates that only one
+     * value is passed, and it will be used to modify the first component of
+     * the generic vertex attribute. The second and third components will be
+     * set to 0, and the fourth component will be set to 1. Similarly, a
+     * {@see GL46::2} in the name of the command indicates that values are
+     * provided for the first two components, the third component will be set
+     * to 0, and the fourth component will be set to 1. A {@see GL46::3} in
+     * the name of the command indicates that values are provided for the
+     * first three components and the fourth component will be set to 1,
+     * whereas a {@see GL46::4} in the name indicates that values are
+     * provided for all four components.
      *
-     * The letters `s`, `f`, `i`, `d`, `ub`, `us`, and `ui` indicate whether the arguments are of type short, float,
-     * int, double, unsigned byte, unsigned short, or unsigned int. When `v` is appended to the name, the commands
-     * can take a pointer to an array of such values. The commands containing `N` indicate that the arguments will be
-     * passed as fixed-point values that are scaled to a normalized range according to the component conversion rules
-     * defined by the OpenGL specification. Signed values are understood to represent fixed-point values in the range
-     * [-1,1], and unsigned values are understood to represent fixed-point values in the range [0,1].
+     * The letters {@see GL46::s}, {@see GL46::f}, {@see GL46::i},
+     * {@see GL46::d}, {@see GL46::ub}, {@see GL46::us}, and {@see GL46::ui}
+     * indicate whether the arguments are of type short, float, int, double,
+     * unsigned byte, unsigned short, or unsigned int. When {@see GL46::v} is
+     * appended to the name, the commands can take a pointer to an array of
+     * such values.
      *
-     * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the `glVertexAttrib` entry points. Matrices must be loaded into successive generic
-     * attribute slots in column major order, with one column of the matrix in each generic attribute slot.
+     * Additional capitalized letters can indicate further alterations to the
+     * default behavior of the glVertexAttrib function:
      *
-     * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see glBindAttribLocation}. This allows an application to use more descriptive
-     * variable names in a vertex shader. A subsequent change to the specified generic vertex attribute will be
-     * immediately reflected as a change to the corresponding attribute variable in the vertex shader.
+     * The commands containing {@see GL46::N} indicate that the arguments
+     * will be passed as fixed-point values that are scaled to a normalized
+     * range according to the component conversion rules defined by the
+     * OpenGL specification. Signed values are understood to represent
+     * fixed-point values in the range \[-1,1\], and unsigned values are
+     * understood to represent fixed-point values in the range \[0,1\].
      *
-     * The binding between a generic vertex attribute index and a user-defined attribute variable in a vertex shader
-     * is part of the state of a program object, but the current value of the generic vertex attribute is not. The
-     * value of each generic vertex attribute is part of current state, just like standard vertex attributes, and it
-     * is maintained even if a different program object is used.
+     * The commands containing {@see GL46::I} indicate that the arguments are
+     * extended to full signed or unsigned integers.
      *
-     * An application may freely modify generic vertex attributes that are not bound to a named vertex shader
-     * attribute variable. These values are simply maintained as part of current state and will not be accessed by
-     * the vertex shader. If a generic vertex attribute bound to an attribute variable in a vertex shader is not
-     * updated while the vertex shader is executing, the vertex shader will repeatedly use the current value for the
-     * generic vertex attribute.
+     * The commands containing {@see GL46::P} indicate that the arguments are
+     * stored as packed components within a larger natural type.
      *
-     * The generic vertex attribute with index 0 is the same as the vertex position attribute previously defined by
-     * OpenGL. A {@see glVertex2}, {@see glVertex3}, or {@see glVertex4} command is completely
-     * equivalent to the corresponding `glVertexAttrib` command with an index argument of 0. A vertex shader can
-     * access generic vertex attribute 0 by using the built-in attribute variable *`gl_Vertex`*. There are no current
-     * values for generic vertex attribute 0. This is the only generic vertex attribute with this property; calls to
-     * set other standard vertex attributes can be freely mixed with calls to set any of the other generic vertex
-     * attributes.
+     * The commands containing {@see GL46::L} indicate that the arguments are
+     * full 64-bit quantities and should be passed directly to shader inputs
+     * declared as 64-bit double precision types.
+     *
+     * OpenGL Shading Language attribute variables are allowed to be of type
+     * mat2, mat3, or mat4. Attributes of these types may be loaded using the
+     * {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * successive generic attribute slots in column major order, with one
+     * column of the matrix in each generic attribute slot.
+     *
+     * A user-defined attribute variable declared in a vertex shader can be
+     * bound to a generic attribute index by calling
+     * {@see GL46::glBindAttribLocation}. This allows an application to use
+     * more descriptive variable names in a vertex shader. A subsequent
+     * change to the specified generic vertex attribute will be immediately
+     * reflected as a change to the corresponding attribute variable in the
+     * vertex shader.
+     *
+     * The binding between a generic vertex attribute index and a
+     * user-defined attribute variable in a vertex shader is part of the
+     * state of a program object, but the current value of the generic vertex
+     * attribute is not. The value of each generic vertex attribute is part
+     * of current state, just like standard vertex attributes, and it is
+     * maintained even if a different program object is used.
+     *
+     * An application may freely modify generic vertex attributes that are
+     * not bound to a named vertex shader attribute variable. These values
+     * are simply maintained as part of current state and will not be
+     * accessed by the vertex shader. If a generic vertex attribute bound to
+     * an attribute variable in a vertex shader is not updated while the
+     * vertex shader is executing, the vertex shader will repeatedly use the
+     * current value for the generic vertex attribute.
      *
      * @see http://docs.gl/gl2/glVertexAttrib
-     * @see http://docs.gl/gl3/glVertexAttrib
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
-     * @param int $index
+     * @param int|\FFI\CData|\FFI\CInt $index
      * @param \FFI\CData|\FFI\CIntPtr|null $v
      * @return void
      */
-    public static function glVertexAttrib4Nubv(int $index, ?\FFI\CData $v): void
+    public function glVertexAttrib4Nubv($index, ?\FFI\CData $v): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($index >= 0 && $index <= 4_294_967_295, 'Argument $index overflow: C type GLuint is required');
+        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
 
-        $proc = self::getProc('glVertexAttrib4Nubv', 'void (*)(GLuint index, const GLubyte *v)');
+        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glVertexAttrib4Nubv', 'void (*)(GLuint index, const GLubyte *v)');
         $proc($index, $v);
     }
 
     /**
-     * OpenGL defines a number of standard vertex attributes that applications can modify with standard API entry
-     * points (color, normal, texture coordinates, etc.). The `glVertexAttrib` family of entry points allows an
+     * The {@see GL46::glVertexAttrib} family of entry points allows an
      * application to pass generic vertex attributes in numbered locations.
      *
-     * Generic attributes are defined as four-component values that are organized into an array. The first entry of
-     * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * `GL_MAX_VERTEX_ATTRIBS`. Individual elements of this array can be modified with a `glVertexAttrib` call that
-     * specifies the index of the element to be modified and a value for that element.
+     * Generic attributes are defined as four-component values that are
+     * organized into an array. The first entry of this array is numbered 0,
+     * and the size of the array is specified by the implementation-dependent
+     * constant {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of
+     * this array can be modified with a {@see GL46::glVertexAttrib} call
+     * that specifies the index of the element to be modified and a value for
+     * that element.
      *
-     * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
-     * specified by *`index`*. A `1` in the name of the command indicates that only one value is passed, and it will
-     * be used to modify the first component of the generic vertex attribute. The second and third components will be
-     * set to 0, and the fourth component will be set to 1. Similarly, a `2` in the name of the command indicates
-     * that values are provided for the first two components, the third component will be set to 0, and the fourth
-     * component will be set to 1. A `3` in the name of the command indicates that values are provided for the first
-     * three components and the fourth component will be set to 1, whereas a `4` in the name indicates that values
-     * are provided for all four components.
+     * These commands can be used to specify one, two, three, or all four
+     * components of the generic vertex attribute specified by $index. A
+     * {@see GL46::1} in the name of the command indicates that only one
+     * value is passed, and it will be used to modify the first component of
+     * the generic vertex attribute. The second and third components will be
+     * set to 0, and the fourth component will be set to 1. Similarly, a
+     * {@see GL46::2} in the name of the command indicates that values are
+     * provided for the first two components, the third component will be set
+     * to 0, and the fourth component will be set to 1. A {@see GL46::3} in
+     * the name of the command indicates that values are provided for the
+     * first three components and the fourth component will be set to 1,
+     * whereas a {@see GL46::4} in the name indicates that values are
+     * provided for all four components.
      *
-     * The letters `s`, `f`, `i`, `d`, `ub`, `us`, and `ui` indicate whether the arguments are of type short, float,
-     * int, double, unsigned byte, unsigned short, or unsigned int. When `v` is appended to the name, the commands
-     * can take a pointer to an array of such values. The commands containing `N` indicate that the arguments will be
-     * passed as fixed-point values that are scaled to a normalized range according to the component conversion rules
-     * defined by the OpenGL specification. Signed values are understood to represent fixed-point values in the range
-     * [-1,1], and unsigned values are understood to represent fixed-point values in the range [0,1].
+     * The letters {@see GL46::s}, {@see GL46::f}, {@see GL46::i},
+     * {@see GL46::d}, {@see GL46::ub}, {@see GL46::us}, and {@see GL46::ui}
+     * indicate whether the arguments are of type short, float, int, double,
+     * unsigned byte, unsigned short, or unsigned int. When {@see GL46::v} is
+     * appended to the name, the commands can take a pointer to an array of
+     * such values.
      *
-     * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the `glVertexAttrib` entry points. Matrices must be loaded into successive generic
-     * attribute slots in column major order, with one column of the matrix in each generic attribute slot.
+     * Additional capitalized letters can indicate further alterations to the
+     * default behavior of the glVertexAttrib function:
      *
-     * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see glBindAttribLocation}. This allows an application to use more descriptive
-     * variable names in a vertex shader. A subsequent change to the specified generic vertex attribute will be
-     * immediately reflected as a change to the corresponding attribute variable in the vertex shader.
+     * The commands containing {@see GL46::N} indicate that the arguments
+     * will be passed as fixed-point values that are scaled to a normalized
+     * range according to the component conversion rules defined by the
+     * OpenGL specification. Signed values are understood to represent
+     * fixed-point values in the range \[-1,1\], and unsigned values are
+     * understood to represent fixed-point values in the range \[0,1\].
      *
-     * The binding between a generic vertex attribute index and a user-defined attribute variable in a vertex shader
-     * is part of the state of a program object, but the current value of the generic vertex attribute is not. The
-     * value of each generic vertex attribute is part of current state, just like standard vertex attributes, and it
-     * is maintained even if a different program object is used.
+     * The commands containing {@see GL46::I} indicate that the arguments are
+     * extended to full signed or unsigned integers.
      *
-     * An application may freely modify generic vertex attributes that are not bound to a named vertex shader
-     * attribute variable. These values are simply maintained as part of current state and will not be accessed by
-     * the vertex shader. If a generic vertex attribute bound to an attribute variable in a vertex shader is not
-     * updated while the vertex shader is executing, the vertex shader will repeatedly use the current value for the
-     * generic vertex attribute.
+     * The commands containing {@see GL46::P} indicate that the arguments are
+     * stored as packed components within a larger natural type.
      *
-     * The generic vertex attribute with index 0 is the same as the vertex position attribute previously defined by
-     * OpenGL. A {@see glVertex2}, {@see glVertex3}, or {@see glVertex4} command is completely
-     * equivalent to the corresponding `glVertexAttrib` command with an index argument of 0. A vertex shader can
-     * access generic vertex attribute 0 by using the built-in attribute variable *`gl_Vertex`*. There are no current
-     * values for generic vertex attribute 0. This is the only generic vertex attribute with this property; calls to
-     * set other standard vertex attributes can be freely mixed with calls to set any of the other generic vertex
-     * attributes.
+     * The commands containing {@see GL46::L} indicate that the arguments are
+     * full 64-bit quantities and should be passed directly to shader inputs
+     * declared as 64-bit double precision types.
+     *
+     * OpenGL Shading Language attribute variables are allowed to be of type
+     * mat2, mat3, or mat4. Attributes of these types may be loaded using the
+     * {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * successive generic attribute slots in column major order, with one
+     * column of the matrix in each generic attribute slot.
+     *
+     * A user-defined attribute variable declared in a vertex shader can be
+     * bound to a generic attribute index by calling
+     * {@see GL46::glBindAttribLocation}. This allows an application to use
+     * more descriptive variable names in a vertex shader. A subsequent
+     * change to the specified generic vertex attribute will be immediately
+     * reflected as a change to the corresponding attribute variable in the
+     * vertex shader.
+     *
+     * The binding between a generic vertex attribute index and a
+     * user-defined attribute variable in a vertex shader is part of the
+     * state of a program object, but the current value of the generic vertex
+     * attribute is not. The value of each generic vertex attribute is part
+     * of current state, just like standard vertex attributes, and it is
+     * maintained even if a different program object is used.
+     *
+     * An application may freely modify generic vertex attributes that are
+     * not bound to a named vertex shader attribute variable. These values
+     * are simply maintained as part of current state and will not be
+     * accessed by the vertex shader. If a generic vertex attribute bound to
+     * an attribute variable in a vertex shader is not updated while the
+     * vertex shader is executing, the vertex shader will repeatedly use the
+     * current value for the generic vertex attribute.
      *
      * @see http://docs.gl/gl2/glVertexAttrib
-     * @see http://docs.gl/gl3/glVertexAttrib
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
-     * @param int $index
+     * @param int|\FFI\CData|\FFI\CInt $index
      * @param \FFI\CData|\FFI\CIntPtr|null $v
      * @return void
      */
-    public static function glVertexAttrib4Nuiv(int $index, ?\FFI\CData $v): void
+    public function glVertexAttrib4Nuiv($index, ?\FFI\CData $v): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($index >= 0 && $index <= 4_294_967_295, 'Argument $index overflow: C type GLuint is required');
+        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
 
-        $proc = self::getProc('glVertexAttrib4Nuiv', 'void (*)(GLuint index, const GLuint *v)');
+        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glVertexAttrib4Nuiv', 'void (*)(GLuint index, const GLuint *v)');
         $proc($index, $v);
     }
 
     /**
-     * OpenGL defines a number of standard vertex attributes that applications can modify with standard API entry
-     * points (color, normal, texture coordinates, etc.). The `glVertexAttrib` family of entry points allows an
+     * The {@see GL46::glVertexAttrib} family of entry points allows an
      * application to pass generic vertex attributes in numbered locations.
      *
-     * Generic attributes are defined as four-component values that are organized into an array. The first entry of
-     * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * `GL_MAX_VERTEX_ATTRIBS`. Individual elements of this array can be modified with a `glVertexAttrib` call that
-     * specifies the index of the element to be modified and a value for that element.
+     * Generic attributes are defined as four-component values that are
+     * organized into an array. The first entry of this array is numbered 0,
+     * and the size of the array is specified by the implementation-dependent
+     * constant {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of
+     * this array can be modified with a {@see GL46::glVertexAttrib} call
+     * that specifies the index of the element to be modified and a value for
+     * that element.
      *
-     * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
-     * specified by *`index`*. A `1` in the name of the command indicates that only one value is passed, and it will
-     * be used to modify the first component of the generic vertex attribute. The second and third components will be
-     * set to 0, and the fourth component will be set to 1. Similarly, a `2` in the name of the command indicates
-     * that values are provided for the first two components, the third component will be set to 0, and the fourth
-     * component will be set to 1. A `3` in the name of the command indicates that values are provided for the first
-     * three components and the fourth component will be set to 1, whereas a `4` in the name indicates that values
-     * are provided for all four components.
+     * These commands can be used to specify one, two, three, or all four
+     * components of the generic vertex attribute specified by $index. A
+     * {@see GL46::1} in the name of the command indicates that only one
+     * value is passed, and it will be used to modify the first component of
+     * the generic vertex attribute. The second and third components will be
+     * set to 0, and the fourth component will be set to 1. Similarly, a
+     * {@see GL46::2} in the name of the command indicates that values are
+     * provided for the first two components, the third component will be set
+     * to 0, and the fourth component will be set to 1. A {@see GL46::3} in
+     * the name of the command indicates that values are provided for the
+     * first three components and the fourth component will be set to 1,
+     * whereas a {@see GL46::4} in the name indicates that values are
+     * provided for all four components.
      *
-     * The letters `s`, `f`, `i`, `d`, `ub`, `us`, and `ui` indicate whether the arguments are of type short, float,
-     * int, double, unsigned byte, unsigned short, or unsigned int. When `v` is appended to the name, the commands
-     * can take a pointer to an array of such values. The commands containing `N` indicate that the arguments will be
-     * passed as fixed-point values that are scaled to a normalized range according to the component conversion rules
-     * defined by the OpenGL specification. Signed values are understood to represent fixed-point values in the range
-     * [-1,1], and unsigned values are understood to represent fixed-point values in the range [0,1].
+     * The letters {@see GL46::s}, {@see GL46::f}, {@see GL46::i},
+     * {@see GL46::d}, {@see GL46::ub}, {@see GL46::us}, and {@see GL46::ui}
+     * indicate whether the arguments are of type short, float, int, double,
+     * unsigned byte, unsigned short, or unsigned int. When {@see GL46::v} is
+     * appended to the name, the commands can take a pointer to an array of
+     * such values.
      *
-     * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the `glVertexAttrib` entry points. Matrices must be loaded into successive generic
-     * attribute slots in column major order, with one column of the matrix in each generic attribute slot.
+     * Additional capitalized letters can indicate further alterations to the
+     * default behavior of the glVertexAttrib function:
      *
-     * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see glBindAttribLocation}. This allows an application to use more descriptive
-     * variable names in a vertex shader. A subsequent change to the specified generic vertex attribute will be
-     * immediately reflected as a change to the corresponding attribute variable in the vertex shader.
+     * The commands containing {@see GL46::N} indicate that the arguments
+     * will be passed as fixed-point values that are scaled to a normalized
+     * range according to the component conversion rules defined by the
+     * OpenGL specification. Signed values are understood to represent
+     * fixed-point values in the range \[-1,1\], and unsigned values are
+     * understood to represent fixed-point values in the range \[0,1\].
      *
-     * The binding between a generic vertex attribute index and a user-defined attribute variable in a vertex shader
-     * is part of the state of a program object, but the current value of the generic vertex attribute is not. The
-     * value of each generic vertex attribute is part of current state, just like standard vertex attributes, and it
-     * is maintained even if a different program object is used.
+     * The commands containing {@see GL46::I} indicate that the arguments are
+     * extended to full signed or unsigned integers.
      *
-     * An application may freely modify generic vertex attributes that are not bound to a named vertex shader
-     * attribute variable. These values are simply maintained as part of current state and will not be accessed by
-     * the vertex shader. If a generic vertex attribute bound to an attribute variable in a vertex shader is not
-     * updated while the vertex shader is executing, the vertex shader will repeatedly use the current value for the
-     * generic vertex attribute.
+     * The commands containing {@see GL46::P} indicate that the arguments are
+     * stored as packed components within a larger natural type.
      *
-     * The generic vertex attribute with index 0 is the same as the vertex position attribute previously defined by
-     * OpenGL. A {@see glVertex2}, {@see glVertex3}, or {@see glVertex4} command is completely
-     * equivalent to the corresponding `glVertexAttrib` command with an index argument of 0. A vertex shader can
-     * access generic vertex attribute 0 by using the built-in attribute variable *`gl_Vertex`*. There are no current
-     * values for generic vertex attribute 0. This is the only generic vertex attribute with this property; calls to
-     * set other standard vertex attributes can be freely mixed with calls to set any of the other generic vertex
-     * attributes.
+     * The commands containing {@see GL46::L} indicate that the arguments are
+     * full 64-bit quantities and should be passed directly to shader inputs
+     * declared as 64-bit double precision types.
+     *
+     * OpenGL Shading Language attribute variables are allowed to be of type
+     * mat2, mat3, or mat4. Attributes of these types may be loaded using the
+     * {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * successive generic attribute slots in column major order, with one
+     * column of the matrix in each generic attribute slot.
+     *
+     * A user-defined attribute variable declared in a vertex shader can be
+     * bound to a generic attribute index by calling
+     * {@see GL46::glBindAttribLocation}. This allows an application to use
+     * more descriptive variable names in a vertex shader. A subsequent
+     * change to the specified generic vertex attribute will be immediately
+     * reflected as a change to the corresponding attribute variable in the
+     * vertex shader.
+     *
+     * The binding between a generic vertex attribute index and a
+     * user-defined attribute variable in a vertex shader is part of the
+     * state of a program object, but the current value of the generic vertex
+     * attribute is not. The value of each generic vertex attribute is part
+     * of current state, just like standard vertex attributes, and it is
+     * maintained even if a different program object is used.
+     *
+     * An application may freely modify generic vertex attributes that are
+     * not bound to a named vertex shader attribute variable. These values
+     * are simply maintained as part of current state and will not be
+     * accessed by the vertex shader. If a generic vertex attribute bound to
+     * an attribute variable in a vertex shader is not updated while the
+     * vertex shader is executing, the vertex shader will repeatedly use the
+     * current value for the generic vertex attribute.
      *
      * @see http://docs.gl/gl2/glVertexAttrib
-     * @see http://docs.gl/gl3/glVertexAttrib
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
-     * @param int $index
+     * @param int|\FFI\CData|\FFI\CInt $index
      * @param \FFI\CData|\FFI\CIntPtr|null $v
      * @return void
      */
-    public static function glVertexAttrib4Nusv(int $index, ?\FFI\CData $v): void
+    public function glVertexAttrib4Nusv($index, ?\FFI\CData $v): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($index >= 0 && $index <= 4_294_967_295, 'Argument $index overflow: C type GLuint is required');
+        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
 
-        $proc = self::getProc('glVertexAttrib4Nusv', 'void (*)(GLuint index, const GLushort *v)');
+        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glVertexAttrib4Nusv', 'void (*)(GLuint index, const GLushort *v)');
         $proc($index, $v);
     }
 
     /**
-     * OpenGL defines a number of standard vertex attributes that applications can modify with standard API entry
-     * points (color, normal, texture coordinates, etc.). The `glVertexAttrib` family of entry points allows an
+     * The {@see GL46::glVertexAttrib} family of entry points allows an
      * application to pass generic vertex attributes in numbered locations.
      *
-     * Generic attributes are defined as four-component values that are organized into an array. The first entry of
-     * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * `GL_MAX_VERTEX_ATTRIBS`. Individual elements of this array can be modified with a `glVertexAttrib` call that
-     * specifies the index of the element to be modified and a value for that element.
+     * Generic attributes are defined as four-component values that are
+     * organized into an array. The first entry of this array is numbered 0,
+     * and the size of the array is specified by the implementation-dependent
+     * constant {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of
+     * this array can be modified with a {@see GL46::glVertexAttrib} call
+     * that specifies the index of the element to be modified and a value for
+     * that element.
      *
-     * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
-     * specified by *`index`*. A `1` in the name of the command indicates that only one value is passed, and it will
-     * be used to modify the first component of the generic vertex attribute. The second and third components will be
-     * set to 0, and the fourth component will be set to 1. Similarly, a `2` in the name of the command indicates
-     * that values are provided for the first two components, the third component will be set to 0, and the fourth
-     * component will be set to 1. A `3` in the name of the command indicates that values are provided for the first
-     * three components and the fourth component will be set to 1, whereas a `4` in the name indicates that values
-     * are provided for all four components.
+     * These commands can be used to specify one, two, three, or all four
+     * components of the generic vertex attribute specified by $index. A
+     * {@see GL46::1} in the name of the command indicates that only one
+     * value is passed, and it will be used to modify the first component of
+     * the generic vertex attribute. The second and third components will be
+     * set to 0, and the fourth component will be set to 1. Similarly, a
+     * {@see GL46::2} in the name of the command indicates that values are
+     * provided for the first two components, the third component will be set
+     * to 0, and the fourth component will be set to 1. A {@see GL46::3} in
+     * the name of the command indicates that values are provided for the
+     * first three components and the fourth component will be set to 1,
+     * whereas a {@see GL46::4} in the name indicates that values are
+     * provided for all four components.
      *
-     * The letters `s`, `f`, `i`, `d`, `ub`, `us`, and `ui` indicate whether the arguments are of type short, float,
-     * int, double, unsigned byte, unsigned short, or unsigned int. When `v` is appended to the name, the commands
-     * can take a pointer to an array of such values. The commands containing `N` indicate that the arguments will be
-     * passed as fixed-point values that are scaled to a normalized range according to the component conversion rules
-     * defined by the OpenGL specification. Signed values are understood to represent fixed-point values in the range
-     * [-1,1], and unsigned values are understood to represent fixed-point values in the range [0,1].
+     * The letters {@see GL46::s}, {@see GL46::f}, {@see GL46::i},
+     * {@see GL46::d}, {@see GL46::ub}, {@see GL46::us}, and {@see GL46::ui}
+     * indicate whether the arguments are of type short, float, int, double,
+     * unsigned byte, unsigned short, or unsigned int. When {@see GL46::v} is
+     * appended to the name, the commands can take a pointer to an array of
+     * such values.
      *
-     * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the `glVertexAttrib` entry points. Matrices must be loaded into successive generic
-     * attribute slots in column major order, with one column of the matrix in each generic attribute slot.
+     * Additional capitalized letters can indicate further alterations to the
+     * default behavior of the glVertexAttrib function:
      *
-     * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see glBindAttribLocation}. This allows an application to use more descriptive
-     * variable names in a vertex shader. A subsequent change to the specified generic vertex attribute will be
-     * immediately reflected as a change to the corresponding attribute variable in the vertex shader.
+     * The commands containing {@see GL46::N} indicate that the arguments
+     * will be passed as fixed-point values that are scaled to a normalized
+     * range according to the component conversion rules defined by the
+     * OpenGL specification. Signed values are understood to represent
+     * fixed-point values in the range \[-1,1\], and unsigned values are
+     * understood to represent fixed-point values in the range \[0,1\].
      *
-     * The binding between a generic vertex attribute index and a user-defined attribute variable in a vertex shader
-     * is part of the state of a program object, but the current value of the generic vertex attribute is not. The
-     * value of each generic vertex attribute is part of current state, just like standard vertex attributes, and it
-     * is maintained even if a different program object is used.
+     * The commands containing {@see GL46::I} indicate that the arguments are
+     * extended to full signed or unsigned integers.
      *
-     * An application may freely modify generic vertex attributes that are not bound to a named vertex shader
-     * attribute variable. These values are simply maintained as part of current state and will not be accessed by
-     * the vertex shader. If a generic vertex attribute bound to an attribute variable in a vertex shader is not
-     * updated while the vertex shader is executing, the vertex shader will repeatedly use the current value for the
-     * generic vertex attribute.
+     * The commands containing {@see GL46::P} indicate that the arguments are
+     * stored as packed components within a larger natural type.
      *
-     * The generic vertex attribute with index 0 is the same as the vertex position attribute previously defined by
-     * OpenGL. A {@see glVertex2}, {@see glVertex3}, or {@see glVertex4} command is completely
-     * equivalent to the corresponding `glVertexAttrib` command with an index argument of 0. A vertex shader can
-     * access generic vertex attribute 0 by using the built-in attribute variable *`gl_Vertex`*. There are no current
-     * values for generic vertex attribute 0. This is the only generic vertex attribute with this property; calls to
-     * set other standard vertex attributes can be freely mixed with calls to set any of the other generic vertex
-     * attributes.
+     * The commands containing {@see GL46::L} indicate that the arguments are
+     * full 64-bit quantities and should be passed directly to shader inputs
+     * declared as 64-bit double precision types.
+     *
+     * OpenGL Shading Language attribute variables are allowed to be of type
+     * mat2, mat3, or mat4. Attributes of these types may be loaded using the
+     * {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * successive generic attribute slots in column major order, with one
+     * column of the matrix in each generic attribute slot.
+     *
+     * A user-defined attribute variable declared in a vertex shader can be
+     * bound to a generic attribute index by calling
+     * {@see GL46::glBindAttribLocation}. This allows an application to use
+     * more descriptive variable names in a vertex shader. A subsequent
+     * change to the specified generic vertex attribute will be immediately
+     * reflected as a change to the corresponding attribute variable in the
+     * vertex shader.
+     *
+     * The binding between a generic vertex attribute index and a
+     * user-defined attribute variable in a vertex shader is part of the
+     * state of a program object, but the current value of the generic vertex
+     * attribute is not. The value of each generic vertex attribute is part
+     * of current state, just like standard vertex attributes, and it is
+     * maintained even if a different program object is used.
+     *
+     * An application may freely modify generic vertex attributes that are
+     * not bound to a named vertex shader attribute variable. These values
+     * are simply maintained as part of current state and will not be
+     * accessed by the vertex shader. If a generic vertex attribute bound to
+     * an attribute variable in a vertex shader is not updated while the
+     * vertex shader is executing, the vertex shader will repeatedly use the
+     * current value for the generic vertex attribute.
      *
      * @see http://docs.gl/gl2/glVertexAttrib
-     * @see http://docs.gl/gl3/glVertexAttrib
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
-     * @param int $index
+     * @param int|\FFI\CData|\FFI\CInt $index
      * @param \FFI\CData|\FFI\CIntPtr|null $v
      * @return void
      */
-    public static function glVertexAttrib4bv(int $index, ?\FFI\CData $v): void
+    public function glVertexAttrib4bv($index, ?\FFI\CData $v): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($index >= 0 && $index <= 4_294_967_295, 'Argument $index overflow: C type GLuint is required');
+        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
 
-        $proc = self::getProc('glVertexAttrib4bv', 'void (*)(GLuint index, const GLbyte *v)');
+        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glVertexAttrib4bv', 'void (*)(GLuint index, const GLbyte *v)');
         $proc($index, $v);
     }
 
     /**
-     * OpenGL defines a number of standard vertex attributes that applications can modify with standard API entry
-     * points (color, normal, texture coordinates, etc.). The `glVertexAttrib` family of entry points allows an
+     * The {@see GL46::glVertexAttrib} family of entry points allows an
      * application to pass generic vertex attributes in numbered locations.
      *
-     * Generic attributes are defined as four-component values that are organized into an array. The first entry of
-     * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * `GL_MAX_VERTEX_ATTRIBS`. Individual elements of this array can be modified with a `glVertexAttrib` call that
-     * specifies the index of the element to be modified and a value for that element.
+     * Generic attributes are defined as four-component values that are
+     * organized into an array. The first entry of this array is numbered 0,
+     * and the size of the array is specified by the implementation-dependent
+     * constant {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of
+     * this array can be modified with a {@see GL46::glVertexAttrib} call
+     * that specifies the index of the element to be modified and a value for
+     * that element.
      *
-     * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
-     * specified by *`index`*. A `1` in the name of the command indicates that only one value is passed, and it will
-     * be used to modify the first component of the generic vertex attribute. The second and third components will be
-     * set to 0, and the fourth component will be set to 1. Similarly, a `2` in the name of the command indicates
-     * that values are provided for the first two components, the third component will be set to 0, and the fourth
-     * component will be set to 1. A `3` in the name of the command indicates that values are provided for the first
-     * three components and the fourth component will be set to 1, whereas a `4` in the name indicates that values
-     * are provided for all four components.
+     * These commands can be used to specify one, two, three, or all four
+     * components of the generic vertex attribute specified by $index. A
+     * {@see GL46::1} in the name of the command indicates that only one
+     * value is passed, and it will be used to modify the first component of
+     * the generic vertex attribute. The second and third components will be
+     * set to 0, and the fourth component will be set to 1. Similarly, a
+     * {@see GL46::2} in the name of the command indicates that values are
+     * provided for the first two components, the third component will be set
+     * to 0, and the fourth component will be set to 1. A {@see GL46::3} in
+     * the name of the command indicates that values are provided for the
+     * first three components and the fourth component will be set to 1,
+     * whereas a {@see GL46::4} in the name indicates that values are
+     * provided for all four components.
      *
-     * The letters `s`, `f`, `i`, `d`, `ub`, `us`, and `ui` indicate whether the arguments are of type short, float,
-     * int, double, unsigned byte, unsigned short, or unsigned int. When `v` is appended to the name, the commands
-     * can take a pointer to an array of such values. The commands containing `N` indicate that the arguments will be
-     * passed as fixed-point values that are scaled to a normalized range according to the component conversion rules
-     * defined by the OpenGL specification. Signed values are understood to represent fixed-point values in the range
-     * [-1,1], and unsigned values are understood to represent fixed-point values in the range [0,1].
+     * The letters {@see GL46::s}, {@see GL46::f}, {@see GL46::i},
+     * {@see GL46::d}, {@see GL46::ub}, {@see GL46::us}, and {@see GL46::ui}
+     * indicate whether the arguments are of type short, float, int, double,
+     * unsigned byte, unsigned short, or unsigned int. When {@see GL46::v} is
+     * appended to the name, the commands can take a pointer to an array of
+     * such values.
      *
-     * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the `glVertexAttrib` entry points. Matrices must be loaded into successive generic
-     * attribute slots in column major order, with one column of the matrix in each generic attribute slot.
+     * Additional capitalized letters can indicate further alterations to the
+     * default behavior of the glVertexAttrib function:
      *
-     * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see glBindAttribLocation}. This allows an application to use more descriptive
-     * variable names in a vertex shader. A subsequent change to the specified generic vertex attribute will be
-     * immediately reflected as a change to the corresponding attribute variable in the vertex shader.
+     * The commands containing {@see GL46::N} indicate that the arguments
+     * will be passed as fixed-point values that are scaled to a normalized
+     * range according to the component conversion rules defined by the
+     * OpenGL specification. Signed values are understood to represent
+     * fixed-point values in the range \[-1,1\], and unsigned values are
+     * understood to represent fixed-point values in the range \[0,1\].
      *
-     * The binding between a generic vertex attribute index and a user-defined attribute variable in a vertex shader
-     * is part of the state of a program object, but the current value of the generic vertex attribute is not. The
-     * value of each generic vertex attribute is part of current state, just like standard vertex attributes, and it
-     * is maintained even if a different program object is used.
+     * The commands containing {@see GL46::I} indicate that the arguments are
+     * extended to full signed or unsigned integers.
      *
-     * An application may freely modify generic vertex attributes that are not bound to a named vertex shader
-     * attribute variable. These values are simply maintained as part of current state and will not be accessed by
-     * the vertex shader. If a generic vertex attribute bound to an attribute variable in a vertex shader is not
-     * updated while the vertex shader is executing, the vertex shader will repeatedly use the current value for the
-     * generic vertex attribute.
+     * The commands containing {@see GL46::P} indicate that the arguments are
+     * stored as packed components within a larger natural type.
      *
-     * The generic vertex attribute with index 0 is the same as the vertex position attribute previously defined by
-     * OpenGL. A {@see glVertex2}, {@see glVertex3}, or {@see glVertex4} command is completely
-     * equivalent to the corresponding `glVertexAttrib` command with an index argument of 0. A vertex shader can
-     * access generic vertex attribute 0 by using the built-in attribute variable *`gl_Vertex`*. There are no current
-     * values for generic vertex attribute 0. This is the only generic vertex attribute with this property; calls to
-     * set other standard vertex attributes can be freely mixed with calls to set any of the other generic vertex
-     * attributes.
+     * The commands containing {@see GL46::L} indicate that the arguments are
+     * full 64-bit quantities and should be passed directly to shader inputs
+     * declared as 64-bit double precision types.
+     *
+     * OpenGL Shading Language attribute variables are allowed to be of type
+     * mat2, mat3, or mat4. Attributes of these types may be loaded using the
+     * {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * successive generic attribute slots in column major order, with one
+     * column of the matrix in each generic attribute slot.
+     *
+     * A user-defined attribute variable declared in a vertex shader can be
+     * bound to a generic attribute index by calling
+     * {@see GL46::glBindAttribLocation}. This allows an application to use
+     * more descriptive variable names in a vertex shader. A subsequent
+     * change to the specified generic vertex attribute will be immediately
+     * reflected as a change to the corresponding attribute variable in the
+     * vertex shader.
+     *
+     * The binding between a generic vertex attribute index and a
+     * user-defined attribute variable in a vertex shader is part of the
+     * state of a program object, but the current value of the generic vertex
+     * attribute is not. The value of each generic vertex attribute is part
+     * of current state, just like standard vertex attributes, and it is
+     * maintained even if a different program object is used.
+     *
+     * An application may freely modify generic vertex attributes that are
+     * not bound to a named vertex shader attribute variable. These values
+     * are simply maintained as part of current state and will not be
+     * accessed by the vertex shader. If a generic vertex attribute bound to
+     * an attribute variable in a vertex shader is not updated while the
+     * vertex shader is executing, the vertex shader will repeatedly use the
+     * current value for the generic vertex attribute.
      *
      * @see http://docs.gl/gl2/glVertexAttrib
-     * @see http://docs.gl/gl3/glVertexAttrib
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
-     * @param int $index
-     * @param float $x
-     * @param float $y
-     * @param float $z
-     * @param float $w
+     * @param int|\FFI\CData|\FFI\CInt $index
+     * @param float|\FFI\CData|\FFI\CFloat $x
+     * @param float|\FFI\CData|\FFI\CFloat $y
+     * @param float|\FFI\CData|\FFI\CFloat $z
+     * @param float|\FFI\CData|\FFI\CFloat $w
      * @return void
      */
-    public static function glVertexAttrib4d(int $index, float $x, float $y, float $z, float $w): void
+    public function glVertexAttrib4d($index, $x, $y, $z, $w): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($index >= 0 && $index <= 4_294_967_295, 'Argument $index overflow: C type GLuint is required');
-        assert($x >= \PHP_FLOAT_MIN && $x <= \PHP_FLOAT_MAX, 'Argument $x overflow: C type GLdouble is required');
-        assert($y >= \PHP_FLOAT_MIN && $y <= \PHP_FLOAT_MAX, 'Argument $y overflow: C type GLdouble is required');
-        assert($z >= \PHP_FLOAT_MIN && $z <= \PHP_FLOAT_MAX, 'Argument $z overflow: C type GLdouble is required');
-        assert($w >= \PHP_FLOAT_MIN && $w <= \PHP_FLOAT_MAX, 'Argument $w overflow: C type GLdouble is required');
+        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
+        $x = $x instanceof \FFI\CData ? $x->cdata : $x;
+        $y = $y instanceof \FFI\CData ? $y->cdata : $y;
+        $z = $z instanceof \FFI\CData ? $z->cdata : $z;
+        $w = $w instanceof \FFI\CData ? $w->cdata : $w;
 
-        $proc = self::getProc('glVertexAttrib4d', 'void (*)(GLuint index, GLdouble x, GLdouble y, GLdouble z, GLdouble w)');
+        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Assert::float64($x), 'Argument $x must be a C-like GLdouble, but incompatible or overflow value given');
+        assert(Assert::float64($y), 'Argument $y must be a C-like GLdouble, but incompatible or overflow value given');
+        assert(Assert::float64($z), 'Argument $z must be a C-like GLdouble, but incompatible or overflow value given');
+        assert(Assert::float64($w), 'Argument $w must be a C-like GLdouble, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glVertexAttrib4d', 'void (*)(GLuint index, GLdouble x, GLdouble y, GLdouble z, GLdouble w)');
         $proc($index, $x, $y, $z, $w);
     }
 
     /**
-     * OpenGL defines a number of standard vertex attributes that applications can modify with standard API entry
-     * points (color, normal, texture coordinates, etc.). The `glVertexAttrib` family of entry points allows an
+     * The {@see GL46::glVertexAttrib} family of entry points allows an
      * application to pass generic vertex attributes in numbered locations.
      *
-     * Generic attributes are defined as four-component values that are organized into an array. The first entry of
-     * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * `GL_MAX_VERTEX_ATTRIBS`. Individual elements of this array can be modified with a `glVertexAttrib` call that
-     * specifies the index of the element to be modified and a value for that element.
+     * Generic attributes are defined as four-component values that are
+     * organized into an array. The first entry of this array is numbered 0,
+     * and the size of the array is specified by the implementation-dependent
+     * constant {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of
+     * this array can be modified with a {@see GL46::glVertexAttrib} call
+     * that specifies the index of the element to be modified and a value for
+     * that element.
      *
-     * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
-     * specified by *`index`*. A `1` in the name of the command indicates that only one value is passed, and it will
-     * be used to modify the first component of the generic vertex attribute. The second and third components will be
-     * set to 0, and the fourth component will be set to 1. Similarly, a `2` in the name of the command indicates
-     * that values are provided for the first two components, the third component will be set to 0, and the fourth
-     * component will be set to 1. A `3` in the name of the command indicates that values are provided for the first
-     * three components and the fourth component will be set to 1, whereas a `4` in the name indicates that values
-     * are provided for all four components.
+     * These commands can be used to specify one, two, three, or all four
+     * components of the generic vertex attribute specified by $index. A
+     * {@see GL46::1} in the name of the command indicates that only one
+     * value is passed, and it will be used to modify the first component of
+     * the generic vertex attribute. The second and third components will be
+     * set to 0, and the fourth component will be set to 1. Similarly, a
+     * {@see GL46::2} in the name of the command indicates that values are
+     * provided for the first two components, the third component will be set
+     * to 0, and the fourth component will be set to 1. A {@see GL46::3} in
+     * the name of the command indicates that values are provided for the
+     * first three components and the fourth component will be set to 1,
+     * whereas a {@see GL46::4} in the name indicates that values are
+     * provided for all four components.
      *
-     * The letters `s`, `f`, `i`, `d`, `ub`, `us`, and `ui` indicate whether the arguments are of type short, float,
-     * int, double, unsigned byte, unsigned short, or unsigned int. When `v` is appended to the name, the commands
-     * can take a pointer to an array of such values. The commands containing `N` indicate that the arguments will be
-     * passed as fixed-point values that are scaled to a normalized range according to the component conversion rules
-     * defined by the OpenGL specification. Signed values are understood to represent fixed-point values in the range
-     * [-1,1], and unsigned values are understood to represent fixed-point values in the range [0,1].
+     * The letters {@see GL46::s}, {@see GL46::f}, {@see GL46::i},
+     * {@see GL46::d}, {@see GL46::ub}, {@see GL46::us}, and {@see GL46::ui}
+     * indicate whether the arguments are of type short, float, int, double,
+     * unsigned byte, unsigned short, or unsigned int. When {@see GL46::v} is
+     * appended to the name, the commands can take a pointer to an array of
+     * such values.
      *
-     * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the `glVertexAttrib` entry points. Matrices must be loaded into successive generic
-     * attribute slots in column major order, with one column of the matrix in each generic attribute slot.
+     * Additional capitalized letters can indicate further alterations to the
+     * default behavior of the glVertexAttrib function:
      *
-     * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see glBindAttribLocation}. This allows an application to use more descriptive
-     * variable names in a vertex shader. A subsequent change to the specified generic vertex attribute will be
-     * immediately reflected as a change to the corresponding attribute variable in the vertex shader.
+     * The commands containing {@see GL46::N} indicate that the arguments
+     * will be passed as fixed-point values that are scaled to a normalized
+     * range according to the component conversion rules defined by the
+     * OpenGL specification. Signed values are understood to represent
+     * fixed-point values in the range \[-1,1\], and unsigned values are
+     * understood to represent fixed-point values in the range \[0,1\].
      *
-     * The binding between a generic vertex attribute index and a user-defined attribute variable in a vertex shader
-     * is part of the state of a program object, but the current value of the generic vertex attribute is not. The
-     * value of each generic vertex attribute is part of current state, just like standard vertex attributes, and it
-     * is maintained even if a different program object is used.
+     * The commands containing {@see GL46::I} indicate that the arguments are
+     * extended to full signed or unsigned integers.
      *
-     * An application may freely modify generic vertex attributes that are not bound to a named vertex shader
-     * attribute variable. These values are simply maintained as part of current state and will not be accessed by
-     * the vertex shader. If a generic vertex attribute bound to an attribute variable in a vertex shader is not
-     * updated while the vertex shader is executing, the vertex shader will repeatedly use the current value for the
-     * generic vertex attribute.
+     * The commands containing {@see GL46::P} indicate that the arguments are
+     * stored as packed components within a larger natural type.
      *
-     * The generic vertex attribute with index 0 is the same as the vertex position attribute previously defined by
-     * OpenGL. A {@see glVertex2}, {@see glVertex3}, or {@see glVertex4} command is completely
-     * equivalent to the corresponding `glVertexAttrib` command with an index argument of 0. A vertex shader can
-     * access generic vertex attribute 0 by using the built-in attribute variable *`gl_Vertex`*. There are no current
-     * values for generic vertex attribute 0. This is the only generic vertex attribute with this property; calls to
-     * set other standard vertex attributes can be freely mixed with calls to set any of the other generic vertex
-     * attributes.
+     * The commands containing {@see GL46::L} indicate that the arguments are
+     * full 64-bit quantities and should be passed directly to shader inputs
+     * declared as 64-bit double precision types.
+     *
+     * OpenGL Shading Language attribute variables are allowed to be of type
+     * mat2, mat3, or mat4. Attributes of these types may be loaded using the
+     * {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * successive generic attribute slots in column major order, with one
+     * column of the matrix in each generic attribute slot.
+     *
+     * A user-defined attribute variable declared in a vertex shader can be
+     * bound to a generic attribute index by calling
+     * {@see GL46::glBindAttribLocation}. This allows an application to use
+     * more descriptive variable names in a vertex shader. A subsequent
+     * change to the specified generic vertex attribute will be immediately
+     * reflected as a change to the corresponding attribute variable in the
+     * vertex shader.
+     *
+     * The binding between a generic vertex attribute index and a
+     * user-defined attribute variable in a vertex shader is part of the
+     * state of a program object, but the current value of the generic vertex
+     * attribute is not. The value of each generic vertex attribute is part
+     * of current state, just like standard vertex attributes, and it is
+     * maintained even if a different program object is used.
+     *
+     * An application may freely modify generic vertex attributes that are
+     * not bound to a named vertex shader attribute variable. These values
+     * are simply maintained as part of current state and will not be
+     * accessed by the vertex shader. If a generic vertex attribute bound to
+     * an attribute variable in a vertex shader is not updated while the
+     * vertex shader is executing, the vertex shader will repeatedly use the
+     * current value for the generic vertex attribute.
      *
      * @see http://docs.gl/gl2/glVertexAttrib
-     * @see http://docs.gl/gl3/glVertexAttrib
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
-     * @param int $index
+     * @param int|\FFI\CData|\FFI\CInt $index
      * @param \FFI\CData|\FFI\CFloatPtr|null $v
      * @return void
      */
-    public static function glVertexAttrib4dv(int $index, ?\FFI\CData $v): void
+    public function glVertexAttrib4dv($index, ?\FFI\CData $v): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($index >= 0 && $index <= 4_294_967_295, 'Argument $index overflow: C type GLuint is required');
+        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
 
-        $proc = self::getProc('glVertexAttrib4dv', 'void (*)(GLuint index, const GLdouble *v)');
+        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glVertexAttrib4dv', 'void (*)(GLuint index, const GLdouble *v)');
         $proc($index, $v);
     }
 
     /**
-     * OpenGL defines a number of standard vertex attributes that applications can modify with standard API entry
-     * points (color, normal, texture coordinates, etc.). The `glVertexAttrib` family of entry points allows an
+     * The {@see GL46::glVertexAttrib} family of entry points allows an
      * application to pass generic vertex attributes in numbered locations.
      *
-     * Generic attributes are defined as four-component values that are organized into an array. The first entry of
-     * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * `GL_MAX_VERTEX_ATTRIBS`. Individual elements of this array can be modified with a `glVertexAttrib` call that
-     * specifies the index of the element to be modified and a value for that element.
+     * Generic attributes are defined as four-component values that are
+     * organized into an array. The first entry of this array is numbered 0,
+     * and the size of the array is specified by the implementation-dependent
+     * constant {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of
+     * this array can be modified with a {@see GL46::glVertexAttrib} call
+     * that specifies the index of the element to be modified and a value for
+     * that element.
      *
-     * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
-     * specified by *`index`*. A `1` in the name of the command indicates that only one value is passed, and it will
-     * be used to modify the first component of the generic vertex attribute. The second and third components will be
-     * set to 0, and the fourth component will be set to 1. Similarly, a `2` in the name of the command indicates
-     * that values are provided for the first two components, the third component will be set to 0, and the fourth
-     * component will be set to 1. A `3` in the name of the command indicates that values are provided for the first
-     * three components and the fourth component will be set to 1, whereas a `4` in the name indicates that values
-     * are provided for all four components.
+     * These commands can be used to specify one, two, three, or all four
+     * components of the generic vertex attribute specified by $index. A
+     * {@see GL46::1} in the name of the command indicates that only one
+     * value is passed, and it will be used to modify the first component of
+     * the generic vertex attribute. The second and third components will be
+     * set to 0, and the fourth component will be set to 1. Similarly, a
+     * {@see GL46::2} in the name of the command indicates that values are
+     * provided for the first two components, the third component will be set
+     * to 0, and the fourth component will be set to 1. A {@see GL46::3} in
+     * the name of the command indicates that values are provided for the
+     * first three components and the fourth component will be set to 1,
+     * whereas a {@see GL46::4} in the name indicates that values are
+     * provided for all four components.
      *
-     * The letters `s`, `f`, `i`, `d`, `ub`, `us`, and `ui` indicate whether the arguments are of type short, float,
-     * int, double, unsigned byte, unsigned short, or unsigned int. When `v` is appended to the name, the commands
-     * can take a pointer to an array of such values. The commands containing `N` indicate that the arguments will be
-     * passed as fixed-point values that are scaled to a normalized range according to the component conversion rules
-     * defined by the OpenGL specification. Signed values are understood to represent fixed-point values in the range
-     * [-1,1], and unsigned values are understood to represent fixed-point values in the range [0,1].
+     * The letters {@see GL46::s}, {@see GL46::f}, {@see GL46::i},
+     * {@see GL46::d}, {@see GL46::ub}, {@see GL46::us}, and {@see GL46::ui}
+     * indicate whether the arguments are of type short, float, int, double,
+     * unsigned byte, unsigned short, or unsigned int. When {@see GL46::v} is
+     * appended to the name, the commands can take a pointer to an array of
+     * such values.
      *
-     * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the `glVertexAttrib` entry points. Matrices must be loaded into successive generic
-     * attribute slots in column major order, with one column of the matrix in each generic attribute slot.
+     * Additional capitalized letters can indicate further alterations to the
+     * default behavior of the glVertexAttrib function:
      *
-     * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see glBindAttribLocation}. This allows an application to use more descriptive
-     * variable names in a vertex shader. A subsequent change to the specified generic vertex attribute will be
-     * immediately reflected as a change to the corresponding attribute variable in the vertex shader.
+     * The commands containing {@see GL46::N} indicate that the arguments
+     * will be passed as fixed-point values that are scaled to a normalized
+     * range according to the component conversion rules defined by the
+     * OpenGL specification. Signed values are understood to represent
+     * fixed-point values in the range \[-1,1\], and unsigned values are
+     * understood to represent fixed-point values in the range \[0,1\].
      *
-     * The binding between a generic vertex attribute index and a user-defined attribute variable in a vertex shader
-     * is part of the state of a program object, but the current value of the generic vertex attribute is not. The
-     * value of each generic vertex attribute is part of current state, just like standard vertex attributes, and it
-     * is maintained even if a different program object is used.
+     * The commands containing {@see GL46::I} indicate that the arguments are
+     * extended to full signed or unsigned integers.
      *
-     * An application may freely modify generic vertex attributes that are not bound to a named vertex shader
-     * attribute variable. These values are simply maintained as part of current state and will not be accessed by
-     * the vertex shader. If a generic vertex attribute bound to an attribute variable in a vertex shader is not
-     * updated while the vertex shader is executing, the vertex shader will repeatedly use the current value for the
-     * generic vertex attribute.
+     * The commands containing {@see GL46::P} indicate that the arguments are
+     * stored as packed components within a larger natural type.
      *
-     * The generic vertex attribute with index 0 is the same as the vertex position attribute previously defined by
-     * OpenGL. A {@see glVertex2}, {@see glVertex3}, or {@see glVertex4} command is completely
-     * equivalent to the corresponding `glVertexAttrib` command with an index argument of 0. A vertex shader can
-     * access generic vertex attribute 0 by using the built-in attribute variable *`gl_Vertex`*. There are no current
-     * values for generic vertex attribute 0. This is the only generic vertex attribute with this property; calls to
-     * set other standard vertex attributes can be freely mixed with calls to set any of the other generic vertex
-     * attributes.
+     * The commands containing {@see GL46::L} indicate that the arguments are
+     * full 64-bit quantities and should be passed directly to shader inputs
+     * declared as 64-bit double precision types.
+     *
+     * OpenGL Shading Language attribute variables are allowed to be of type
+     * mat2, mat3, or mat4. Attributes of these types may be loaded using the
+     * {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * successive generic attribute slots in column major order, with one
+     * column of the matrix in each generic attribute slot.
+     *
+     * A user-defined attribute variable declared in a vertex shader can be
+     * bound to a generic attribute index by calling
+     * {@see GL46::glBindAttribLocation}. This allows an application to use
+     * more descriptive variable names in a vertex shader. A subsequent
+     * change to the specified generic vertex attribute will be immediately
+     * reflected as a change to the corresponding attribute variable in the
+     * vertex shader.
+     *
+     * The binding between a generic vertex attribute index and a
+     * user-defined attribute variable in a vertex shader is part of the
+     * state of a program object, but the current value of the generic vertex
+     * attribute is not. The value of each generic vertex attribute is part
+     * of current state, just like standard vertex attributes, and it is
+     * maintained even if a different program object is used.
+     *
+     * An application may freely modify generic vertex attributes that are
+     * not bound to a named vertex shader attribute variable. These values
+     * are simply maintained as part of current state and will not be
+     * accessed by the vertex shader. If a generic vertex attribute bound to
+     * an attribute variable in a vertex shader is not updated while the
+     * vertex shader is executing, the vertex shader will repeatedly use the
+     * current value for the generic vertex attribute.
      *
      * @see http://docs.gl/gl2/glVertexAttrib
-     * @see http://docs.gl/gl3/glVertexAttrib
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
-     * @param int $index
-     * @param float $x
-     * @param float $y
-     * @param float $z
-     * @param float $w
+     * @param int|\FFI\CData|\FFI\CInt $index
+     * @param float|\FFI\CData|\FFI\CFloat $x
+     * @param float|\FFI\CData|\FFI\CFloat $y
+     * @param float|\FFI\CData|\FFI\CFloat $z
+     * @param float|\FFI\CData|\FFI\CFloat $w
      * @return void
      */
-    public static function glVertexAttrib4f(int $index, float $x, float $y, float $z, float $w): void
+    public function glVertexAttrib4f($index, $x, $y, $z, $w): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($index >= 0 && $index <= 4_294_967_295, 'Argument $index overflow: C type GLuint is required');
-        assert($x >= -3.40282e38 && $x <= 3.40282e38, 'Argument $x overflow: C type GLfloat is required');
-        assert($y >= -3.40282e38 && $y <= 3.40282e38, 'Argument $y overflow: C type GLfloat is required');
-        assert($z >= -3.40282e38 && $z <= 3.40282e38, 'Argument $z overflow: C type GLfloat is required');
-        assert($w >= -3.40282e38 && $w <= 3.40282e38, 'Argument $w overflow: C type GLfloat is required');
+        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
+        $x = $x instanceof \FFI\CData ? $x->cdata : $x;
+        $y = $y instanceof \FFI\CData ? $y->cdata : $y;
+        $z = $z instanceof \FFI\CData ? $z->cdata : $z;
+        $w = $w instanceof \FFI\CData ? $w->cdata : $w;
 
-        $proc = self::getProc('glVertexAttrib4f', 'void (*)(GLuint index, GLfloat x, GLfloat y, GLfloat z, GLfloat w)');
+        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Assert::float32($x), 'Argument $x must be a C-like GLfloat, but incompatible or overflow value given');
+        assert(Assert::float32($y), 'Argument $y must be a C-like GLfloat, but incompatible or overflow value given');
+        assert(Assert::float32($z), 'Argument $z must be a C-like GLfloat, but incompatible or overflow value given');
+        assert(Assert::float32($w), 'Argument $w must be a C-like GLfloat, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glVertexAttrib4f', 'void (*)(GLuint index, GLfloat x, GLfloat y, GLfloat z, GLfloat w)');
         $proc($index, $x, $y, $z, $w);
     }
 
     /**
-     * OpenGL defines a number of standard vertex attributes that applications can modify with standard API entry
-     * points (color, normal, texture coordinates, etc.). The `glVertexAttrib` family of entry points allows an
+     * The {@see GL46::glVertexAttrib} family of entry points allows an
      * application to pass generic vertex attributes in numbered locations.
      *
-     * Generic attributes are defined as four-component values that are organized into an array. The first entry of
-     * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * `GL_MAX_VERTEX_ATTRIBS`. Individual elements of this array can be modified with a `glVertexAttrib` call that
-     * specifies the index of the element to be modified and a value for that element.
+     * Generic attributes are defined as four-component values that are
+     * organized into an array. The first entry of this array is numbered 0,
+     * and the size of the array is specified by the implementation-dependent
+     * constant {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of
+     * this array can be modified with a {@see GL46::glVertexAttrib} call
+     * that specifies the index of the element to be modified and a value for
+     * that element.
      *
-     * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
-     * specified by *`index`*. A `1` in the name of the command indicates that only one value is passed, and it will
-     * be used to modify the first component of the generic vertex attribute. The second and third components will be
-     * set to 0, and the fourth component will be set to 1. Similarly, a `2` in the name of the command indicates
-     * that values are provided for the first two components, the third component will be set to 0, and the fourth
-     * component will be set to 1. A `3` in the name of the command indicates that values are provided for the first
-     * three components and the fourth component will be set to 1, whereas a `4` in the name indicates that values
-     * are provided for all four components.
+     * These commands can be used to specify one, two, three, or all four
+     * components of the generic vertex attribute specified by $index. A
+     * {@see GL46::1} in the name of the command indicates that only one
+     * value is passed, and it will be used to modify the first component of
+     * the generic vertex attribute. The second and third components will be
+     * set to 0, and the fourth component will be set to 1. Similarly, a
+     * {@see GL46::2} in the name of the command indicates that values are
+     * provided for the first two components, the third component will be set
+     * to 0, and the fourth component will be set to 1. A {@see GL46::3} in
+     * the name of the command indicates that values are provided for the
+     * first three components and the fourth component will be set to 1,
+     * whereas a {@see GL46::4} in the name indicates that values are
+     * provided for all four components.
      *
-     * The letters `s`, `f`, `i`, `d`, `ub`, `us`, and `ui` indicate whether the arguments are of type short, float,
-     * int, double, unsigned byte, unsigned short, or unsigned int. When `v` is appended to the name, the commands
-     * can take a pointer to an array of such values. The commands containing `N` indicate that the arguments will be
-     * passed as fixed-point values that are scaled to a normalized range according to the component conversion rules
-     * defined by the OpenGL specification. Signed values are understood to represent fixed-point values in the range
-     * [-1,1], and unsigned values are understood to represent fixed-point values in the range [0,1].
+     * The letters {@see GL46::s}, {@see GL46::f}, {@see GL46::i},
+     * {@see GL46::d}, {@see GL46::ub}, {@see GL46::us}, and {@see GL46::ui}
+     * indicate whether the arguments are of type short, float, int, double,
+     * unsigned byte, unsigned short, or unsigned int. When {@see GL46::v} is
+     * appended to the name, the commands can take a pointer to an array of
+     * such values.
      *
-     * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the `glVertexAttrib` entry points. Matrices must be loaded into successive generic
-     * attribute slots in column major order, with one column of the matrix in each generic attribute slot.
+     * Additional capitalized letters can indicate further alterations to the
+     * default behavior of the glVertexAttrib function:
      *
-     * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see glBindAttribLocation}. This allows an application to use more descriptive
-     * variable names in a vertex shader. A subsequent change to the specified generic vertex attribute will be
-     * immediately reflected as a change to the corresponding attribute variable in the vertex shader.
+     * The commands containing {@see GL46::N} indicate that the arguments
+     * will be passed as fixed-point values that are scaled to a normalized
+     * range according to the component conversion rules defined by the
+     * OpenGL specification. Signed values are understood to represent
+     * fixed-point values in the range \[-1,1\], and unsigned values are
+     * understood to represent fixed-point values in the range \[0,1\].
      *
-     * The binding between a generic vertex attribute index and a user-defined attribute variable in a vertex shader
-     * is part of the state of a program object, but the current value of the generic vertex attribute is not. The
-     * value of each generic vertex attribute is part of current state, just like standard vertex attributes, and it
-     * is maintained even if a different program object is used.
+     * The commands containing {@see GL46::I} indicate that the arguments are
+     * extended to full signed or unsigned integers.
      *
-     * An application may freely modify generic vertex attributes that are not bound to a named vertex shader
-     * attribute variable. These values are simply maintained as part of current state and will not be accessed by
-     * the vertex shader. If a generic vertex attribute bound to an attribute variable in a vertex shader is not
-     * updated while the vertex shader is executing, the vertex shader will repeatedly use the current value for the
-     * generic vertex attribute.
+     * The commands containing {@see GL46::P} indicate that the arguments are
+     * stored as packed components within a larger natural type.
      *
-     * The generic vertex attribute with index 0 is the same as the vertex position attribute previously defined by
-     * OpenGL. A {@see glVertex2}, {@see glVertex3}, or {@see glVertex4} command is completely
-     * equivalent to the corresponding `glVertexAttrib` command with an index argument of 0. A vertex shader can
-     * access generic vertex attribute 0 by using the built-in attribute variable *`gl_Vertex`*. There are no current
-     * values for generic vertex attribute 0. This is the only generic vertex attribute with this property; calls to
-     * set other standard vertex attributes can be freely mixed with calls to set any of the other generic vertex
-     * attributes.
+     * The commands containing {@see GL46::L} indicate that the arguments are
+     * full 64-bit quantities and should be passed directly to shader inputs
+     * declared as 64-bit double precision types.
+     *
+     * OpenGL Shading Language attribute variables are allowed to be of type
+     * mat2, mat3, or mat4. Attributes of these types may be loaded using the
+     * {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * successive generic attribute slots in column major order, with one
+     * column of the matrix in each generic attribute slot.
+     *
+     * A user-defined attribute variable declared in a vertex shader can be
+     * bound to a generic attribute index by calling
+     * {@see GL46::glBindAttribLocation}. This allows an application to use
+     * more descriptive variable names in a vertex shader. A subsequent
+     * change to the specified generic vertex attribute will be immediately
+     * reflected as a change to the corresponding attribute variable in the
+     * vertex shader.
+     *
+     * The binding between a generic vertex attribute index and a
+     * user-defined attribute variable in a vertex shader is part of the
+     * state of a program object, but the current value of the generic vertex
+     * attribute is not. The value of each generic vertex attribute is part
+     * of current state, just like standard vertex attributes, and it is
+     * maintained even if a different program object is used.
+     *
+     * An application may freely modify generic vertex attributes that are
+     * not bound to a named vertex shader attribute variable. These values
+     * are simply maintained as part of current state and will not be
+     * accessed by the vertex shader. If a generic vertex attribute bound to
+     * an attribute variable in a vertex shader is not updated while the
+     * vertex shader is executing, the vertex shader will repeatedly use the
+     * current value for the generic vertex attribute.
      *
      * @see http://docs.gl/gl2/glVertexAttrib
-     * @see http://docs.gl/gl3/glVertexAttrib
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
-     * @param int $index
+     * @param int|\FFI\CData|\FFI\CInt $index
      * @param \FFI\CData|\FFI\CFloatPtr|null $v
      * @return void
      */
-    public static function glVertexAttrib4fv(int $index, ?\FFI\CData $v): void
+    public function glVertexAttrib4fv($index, ?\FFI\CData $v): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($index >= 0 && $index <= 4_294_967_295, 'Argument $index overflow: C type GLuint is required');
+        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
 
-        $proc = self::getProc('glVertexAttrib4fv', 'void (*)(GLuint index, const GLfloat *v)');
+        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glVertexAttrib4fv', 'void (*)(GLuint index, const GLfloat *v)');
         $proc($index, $v);
     }
 
     /**
-     * OpenGL defines a number of standard vertex attributes that applications can modify with standard API entry
-     * points (color, normal, texture coordinates, etc.). The `glVertexAttrib` family of entry points allows an
+     * The {@see GL46::glVertexAttrib} family of entry points allows an
      * application to pass generic vertex attributes in numbered locations.
      *
-     * Generic attributes are defined as four-component values that are organized into an array. The first entry of
-     * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * `GL_MAX_VERTEX_ATTRIBS`. Individual elements of this array can be modified with a `glVertexAttrib` call that
-     * specifies the index of the element to be modified and a value for that element.
+     * Generic attributes are defined as four-component values that are
+     * organized into an array. The first entry of this array is numbered 0,
+     * and the size of the array is specified by the implementation-dependent
+     * constant {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of
+     * this array can be modified with a {@see GL46::glVertexAttrib} call
+     * that specifies the index of the element to be modified and a value for
+     * that element.
      *
-     * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
-     * specified by *`index`*. A `1` in the name of the command indicates that only one value is passed, and it will
-     * be used to modify the first component of the generic vertex attribute. The second and third components will be
-     * set to 0, and the fourth component will be set to 1. Similarly, a `2` in the name of the command indicates
-     * that values are provided for the first two components, the third component will be set to 0, and the fourth
-     * component will be set to 1. A `3` in the name of the command indicates that values are provided for the first
-     * three components and the fourth component will be set to 1, whereas a `4` in the name indicates that values
-     * are provided for all four components.
+     * These commands can be used to specify one, two, three, or all four
+     * components of the generic vertex attribute specified by $index. A
+     * {@see GL46::1} in the name of the command indicates that only one
+     * value is passed, and it will be used to modify the first component of
+     * the generic vertex attribute. The second and third components will be
+     * set to 0, and the fourth component will be set to 1. Similarly, a
+     * {@see GL46::2} in the name of the command indicates that values are
+     * provided for the first two components, the third component will be set
+     * to 0, and the fourth component will be set to 1. A {@see GL46::3} in
+     * the name of the command indicates that values are provided for the
+     * first three components and the fourth component will be set to 1,
+     * whereas a {@see GL46::4} in the name indicates that values are
+     * provided for all four components.
      *
-     * The letters `s`, `f`, `i`, `d`, `ub`, `us`, and `ui` indicate whether the arguments are of type short, float,
-     * int, double, unsigned byte, unsigned short, or unsigned int. When `v` is appended to the name, the commands
-     * can take a pointer to an array of such values. The commands containing `N` indicate that the arguments will be
-     * passed as fixed-point values that are scaled to a normalized range according to the component conversion rules
-     * defined by the OpenGL specification. Signed values are understood to represent fixed-point values in the range
-     * [-1,1], and unsigned values are understood to represent fixed-point values in the range [0,1].
+     * The letters {@see GL46::s}, {@see GL46::f}, {@see GL46::i},
+     * {@see GL46::d}, {@see GL46::ub}, {@see GL46::us}, and {@see GL46::ui}
+     * indicate whether the arguments are of type short, float, int, double,
+     * unsigned byte, unsigned short, or unsigned int. When {@see GL46::v} is
+     * appended to the name, the commands can take a pointer to an array of
+     * such values.
      *
-     * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the `glVertexAttrib` entry points. Matrices must be loaded into successive generic
-     * attribute slots in column major order, with one column of the matrix in each generic attribute slot.
+     * Additional capitalized letters can indicate further alterations to the
+     * default behavior of the glVertexAttrib function:
      *
-     * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see glBindAttribLocation}. This allows an application to use more descriptive
-     * variable names in a vertex shader. A subsequent change to the specified generic vertex attribute will be
-     * immediately reflected as a change to the corresponding attribute variable in the vertex shader.
+     * The commands containing {@see GL46::N} indicate that the arguments
+     * will be passed as fixed-point values that are scaled to a normalized
+     * range according to the component conversion rules defined by the
+     * OpenGL specification. Signed values are understood to represent
+     * fixed-point values in the range \[-1,1\], and unsigned values are
+     * understood to represent fixed-point values in the range \[0,1\].
      *
-     * The binding between a generic vertex attribute index and a user-defined attribute variable in a vertex shader
-     * is part of the state of a program object, but the current value of the generic vertex attribute is not. The
-     * value of each generic vertex attribute is part of current state, just like standard vertex attributes, and it
-     * is maintained even if a different program object is used.
+     * The commands containing {@see GL46::I} indicate that the arguments are
+     * extended to full signed or unsigned integers.
      *
-     * An application may freely modify generic vertex attributes that are not bound to a named vertex shader
-     * attribute variable. These values are simply maintained as part of current state and will not be accessed by
-     * the vertex shader. If a generic vertex attribute bound to an attribute variable in a vertex shader is not
-     * updated while the vertex shader is executing, the vertex shader will repeatedly use the current value for the
-     * generic vertex attribute.
+     * The commands containing {@see GL46::P} indicate that the arguments are
+     * stored as packed components within a larger natural type.
      *
-     * The generic vertex attribute with index 0 is the same as the vertex position attribute previously defined by
-     * OpenGL. A {@see glVertex2}, {@see glVertex3}, or {@see glVertex4} command is completely
-     * equivalent to the corresponding `glVertexAttrib` command with an index argument of 0. A vertex shader can
-     * access generic vertex attribute 0 by using the built-in attribute variable *`gl_Vertex`*. There are no current
-     * values for generic vertex attribute 0. This is the only generic vertex attribute with this property; calls to
-     * set other standard vertex attributes can be freely mixed with calls to set any of the other generic vertex
-     * attributes.
+     * The commands containing {@see GL46::L} indicate that the arguments are
+     * full 64-bit quantities and should be passed directly to shader inputs
+     * declared as 64-bit double precision types.
+     *
+     * OpenGL Shading Language attribute variables are allowed to be of type
+     * mat2, mat3, or mat4. Attributes of these types may be loaded using the
+     * {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * successive generic attribute slots in column major order, with one
+     * column of the matrix in each generic attribute slot.
+     *
+     * A user-defined attribute variable declared in a vertex shader can be
+     * bound to a generic attribute index by calling
+     * {@see GL46::glBindAttribLocation}. This allows an application to use
+     * more descriptive variable names in a vertex shader. A subsequent
+     * change to the specified generic vertex attribute will be immediately
+     * reflected as a change to the corresponding attribute variable in the
+     * vertex shader.
+     *
+     * The binding between a generic vertex attribute index and a
+     * user-defined attribute variable in a vertex shader is part of the
+     * state of a program object, but the current value of the generic vertex
+     * attribute is not. The value of each generic vertex attribute is part
+     * of current state, just like standard vertex attributes, and it is
+     * maintained even if a different program object is used.
+     *
+     * An application may freely modify generic vertex attributes that are
+     * not bound to a named vertex shader attribute variable. These values
+     * are simply maintained as part of current state and will not be
+     * accessed by the vertex shader. If a generic vertex attribute bound to
+     * an attribute variable in a vertex shader is not updated while the
+     * vertex shader is executing, the vertex shader will repeatedly use the
+     * current value for the generic vertex attribute.
      *
      * @see http://docs.gl/gl2/glVertexAttrib
-     * @see http://docs.gl/gl3/glVertexAttrib
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
-     * @param int $index
+     * @param int|\FFI\CData|\FFI\CInt $index
      * @param \FFI\CData|\FFI\CIntPtr|null $v
      * @return void
      */
-    public static function glVertexAttrib4iv(int $index, ?\FFI\CData $v): void
+    public function glVertexAttrib4iv($index, ?\FFI\CData $v): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($index >= 0 && $index <= 4_294_967_295, 'Argument $index overflow: C type GLuint is required');
+        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
 
-        $proc = self::getProc('glVertexAttrib4iv', 'void (*)(GLuint index, const GLint *v)');
+        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glVertexAttrib4iv', 'void (*)(GLuint index, const GLint *v)');
         $proc($index, $v);
     }
 
     /**
-     * OpenGL defines a number of standard vertex attributes that applications can modify with standard API entry
-     * points (color, normal, texture coordinates, etc.). The `glVertexAttrib` family of entry points allows an
+     * The {@see GL46::glVertexAttrib} family of entry points allows an
      * application to pass generic vertex attributes in numbered locations.
      *
-     * Generic attributes are defined as four-component values that are organized into an array. The first entry of
-     * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * `GL_MAX_VERTEX_ATTRIBS`. Individual elements of this array can be modified with a `glVertexAttrib` call that
-     * specifies the index of the element to be modified and a value for that element.
+     * Generic attributes are defined as four-component values that are
+     * organized into an array. The first entry of this array is numbered 0,
+     * and the size of the array is specified by the implementation-dependent
+     * constant {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of
+     * this array can be modified with a {@see GL46::glVertexAttrib} call
+     * that specifies the index of the element to be modified and a value for
+     * that element.
      *
-     * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
-     * specified by *`index`*. A `1` in the name of the command indicates that only one value is passed, and it will
-     * be used to modify the first component of the generic vertex attribute. The second and third components will be
-     * set to 0, and the fourth component will be set to 1. Similarly, a `2` in the name of the command indicates
-     * that values are provided for the first two components, the third component will be set to 0, and the fourth
-     * component will be set to 1. A `3` in the name of the command indicates that values are provided for the first
-     * three components and the fourth component will be set to 1, whereas a `4` in the name indicates that values
-     * are provided for all four components.
+     * These commands can be used to specify one, two, three, or all four
+     * components of the generic vertex attribute specified by $index. A
+     * {@see GL46::1} in the name of the command indicates that only one
+     * value is passed, and it will be used to modify the first component of
+     * the generic vertex attribute. The second and third components will be
+     * set to 0, and the fourth component will be set to 1. Similarly, a
+     * {@see GL46::2} in the name of the command indicates that values are
+     * provided for the first two components, the third component will be set
+     * to 0, and the fourth component will be set to 1. A {@see GL46::3} in
+     * the name of the command indicates that values are provided for the
+     * first three components and the fourth component will be set to 1,
+     * whereas a {@see GL46::4} in the name indicates that values are
+     * provided for all four components.
      *
-     * The letters `s`, `f`, `i`, `d`, `ub`, `us`, and `ui` indicate whether the arguments are of type short, float,
-     * int, double, unsigned byte, unsigned short, or unsigned int. When `v` is appended to the name, the commands
-     * can take a pointer to an array of such values. The commands containing `N` indicate that the arguments will be
-     * passed as fixed-point values that are scaled to a normalized range according to the component conversion rules
-     * defined by the OpenGL specification. Signed values are understood to represent fixed-point values in the range
-     * [-1,1], and unsigned values are understood to represent fixed-point values in the range [0,1].
+     * The letters {@see GL46::s}, {@see GL46::f}, {@see GL46::i},
+     * {@see GL46::d}, {@see GL46::ub}, {@see GL46::us}, and {@see GL46::ui}
+     * indicate whether the arguments are of type short, float, int, double,
+     * unsigned byte, unsigned short, or unsigned int. When {@see GL46::v} is
+     * appended to the name, the commands can take a pointer to an array of
+     * such values.
      *
-     * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the `glVertexAttrib` entry points. Matrices must be loaded into successive generic
-     * attribute slots in column major order, with one column of the matrix in each generic attribute slot.
+     * Additional capitalized letters can indicate further alterations to the
+     * default behavior of the glVertexAttrib function:
      *
-     * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see glBindAttribLocation}. This allows an application to use more descriptive
-     * variable names in a vertex shader. A subsequent change to the specified generic vertex attribute will be
-     * immediately reflected as a change to the corresponding attribute variable in the vertex shader.
+     * The commands containing {@see GL46::N} indicate that the arguments
+     * will be passed as fixed-point values that are scaled to a normalized
+     * range according to the component conversion rules defined by the
+     * OpenGL specification. Signed values are understood to represent
+     * fixed-point values in the range \[-1,1\], and unsigned values are
+     * understood to represent fixed-point values in the range \[0,1\].
      *
-     * The binding between a generic vertex attribute index and a user-defined attribute variable in a vertex shader
-     * is part of the state of a program object, but the current value of the generic vertex attribute is not. The
-     * value of each generic vertex attribute is part of current state, just like standard vertex attributes, and it
-     * is maintained even if a different program object is used.
+     * The commands containing {@see GL46::I} indicate that the arguments are
+     * extended to full signed or unsigned integers.
      *
-     * An application may freely modify generic vertex attributes that are not bound to a named vertex shader
-     * attribute variable. These values are simply maintained as part of current state and will not be accessed by
-     * the vertex shader. If a generic vertex attribute bound to an attribute variable in a vertex shader is not
-     * updated while the vertex shader is executing, the vertex shader will repeatedly use the current value for the
-     * generic vertex attribute.
+     * The commands containing {@see GL46::P} indicate that the arguments are
+     * stored as packed components within a larger natural type.
      *
-     * The generic vertex attribute with index 0 is the same as the vertex position attribute previously defined by
-     * OpenGL. A {@see glVertex2}, {@see glVertex3}, or {@see glVertex4} command is completely
-     * equivalent to the corresponding `glVertexAttrib` command with an index argument of 0. A vertex shader can
-     * access generic vertex attribute 0 by using the built-in attribute variable *`gl_Vertex`*. There are no current
-     * values for generic vertex attribute 0. This is the only generic vertex attribute with this property; calls to
-     * set other standard vertex attributes can be freely mixed with calls to set any of the other generic vertex
-     * attributes.
+     * The commands containing {@see GL46::L} indicate that the arguments are
+     * full 64-bit quantities and should be passed directly to shader inputs
+     * declared as 64-bit double precision types.
+     *
+     * OpenGL Shading Language attribute variables are allowed to be of type
+     * mat2, mat3, or mat4. Attributes of these types may be loaded using the
+     * {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * successive generic attribute slots in column major order, with one
+     * column of the matrix in each generic attribute slot.
+     *
+     * A user-defined attribute variable declared in a vertex shader can be
+     * bound to a generic attribute index by calling
+     * {@see GL46::glBindAttribLocation}. This allows an application to use
+     * more descriptive variable names in a vertex shader. A subsequent
+     * change to the specified generic vertex attribute will be immediately
+     * reflected as a change to the corresponding attribute variable in the
+     * vertex shader.
+     *
+     * The binding between a generic vertex attribute index and a
+     * user-defined attribute variable in a vertex shader is part of the
+     * state of a program object, but the current value of the generic vertex
+     * attribute is not. The value of each generic vertex attribute is part
+     * of current state, just like standard vertex attributes, and it is
+     * maintained even if a different program object is used.
+     *
+     * An application may freely modify generic vertex attributes that are
+     * not bound to a named vertex shader attribute variable. These values
+     * are simply maintained as part of current state and will not be
+     * accessed by the vertex shader. If a generic vertex attribute bound to
+     * an attribute variable in a vertex shader is not updated while the
+     * vertex shader is executing, the vertex shader will repeatedly use the
+     * current value for the generic vertex attribute.
      *
      * @see http://docs.gl/gl2/glVertexAttrib
-     * @see http://docs.gl/gl3/glVertexAttrib
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
-     * @param int $index
-     * @param int $x
-     * @param int $y
-     * @param int $z
-     * @param int $w
+     * @param int|\FFI\CData|\FFI\CInt $index
+     * @param int|\FFI\CData|\FFI\CInt $x
+     * @param int|\FFI\CData|\FFI\CInt $y
+     * @param int|\FFI\CData|\FFI\CInt $z
+     * @param int|\FFI\CData|\FFI\CInt $w
      * @return void
      */
-    public static function glVertexAttrib4s(int $index, int $x, int $y, int $z, int $w): void
+    public function glVertexAttrib4s($index, $x, $y, $z, $w): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($index >= 0 && $index <= 4_294_967_295, 'Argument $index overflow: C type GLuint is required');
-        assert($x >= -32768 && $x <= 32767, 'Argument $x overflow: C type GLshort is required');
-        assert($y >= -32768 && $y <= 32767, 'Argument $y overflow: C type GLshort is required');
-        assert($z >= -32768 && $z <= 32767, 'Argument $z overflow: C type GLshort is required');
-        assert($w >= -32768 && $w <= 32767, 'Argument $w overflow: C type GLshort is required');
+        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
+        $x = $x instanceof \FFI\CData ? $x->cdata : $x;
+        $y = $y instanceof \FFI\CData ? $y->cdata : $y;
+        $z = $z instanceof \FFI\CData ? $z->cdata : $z;
+        $w = $w instanceof \FFI\CData ? $w->cdata : $w;
 
-        $proc = self::getProc('glVertexAttrib4s', 'void (*)(GLuint index, GLshort x, GLshort y, GLshort z, GLshort w)');
+        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Assert::int16($x), 'Argument $x must be a C-like GLshort, but incompatible or overflow value given');
+        assert(Assert::int16($y), 'Argument $y must be a C-like GLshort, but incompatible or overflow value given');
+        assert(Assert::int16($z), 'Argument $z must be a C-like GLshort, but incompatible or overflow value given');
+        assert(Assert::int16($w), 'Argument $w must be a C-like GLshort, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glVertexAttrib4s', 'void (*)(GLuint index, GLshort x, GLshort y, GLshort z, GLshort w)');
         $proc($index, $x, $y, $z, $w);
     }
 
     /**
-     * OpenGL defines a number of standard vertex attributes that applications can modify with standard API entry
-     * points (color, normal, texture coordinates, etc.). The `glVertexAttrib` family of entry points allows an
+     * The {@see GL46::glVertexAttrib} family of entry points allows an
      * application to pass generic vertex attributes in numbered locations.
      *
-     * Generic attributes are defined as four-component values that are organized into an array. The first entry of
-     * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * `GL_MAX_VERTEX_ATTRIBS`. Individual elements of this array can be modified with a `glVertexAttrib` call that
-     * specifies the index of the element to be modified and a value for that element.
+     * Generic attributes are defined as four-component values that are
+     * organized into an array. The first entry of this array is numbered 0,
+     * and the size of the array is specified by the implementation-dependent
+     * constant {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of
+     * this array can be modified with a {@see GL46::glVertexAttrib} call
+     * that specifies the index of the element to be modified and a value for
+     * that element.
      *
-     * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
-     * specified by *`index`*. A `1` in the name of the command indicates that only one value is passed, and it will
-     * be used to modify the first component of the generic vertex attribute. The second and third components will be
-     * set to 0, and the fourth component will be set to 1. Similarly, a `2` in the name of the command indicates
-     * that values are provided for the first two components, the third component will be set to 0, and the fourth
-     * component will be set to 1. A `3` in the name of the command indicates that values are provided for the first
-     * three components and the fourth component will be set to 1, whereas a `4` in the name indicates that values
-     * are provided for all four components.
+     * These commands can be used to specify one, two, three, or all four
+     * components of the generic vertex attribute specified by $index. A
+     * {@see GL46::1} in the name of the command indicates that only one
+     * value is passed, and it will be used to modify the first component of
+     * the generic vertex attribute. The second and third components will be
+     * set to 0, and the fourth component will be set to 1. Similarly, a
+     * {@see GL46::2} in the name of the command indicates that values are
+     * provided for the first two components, the third component will be set
+     * to 0, and the fourth component will be set to 1. A {@see GL46::3} in
+     * the name of the command indicates that values are provided for the
+     * first three components and the fourth component will be set to 1,
+     * whereas a {@see GL46::4} in the name indicates that values are
+     * provided for all four components.
      *
-     * The letters `s`, `f`, `i`, `d`, `ub`, `us`, and `ui` indicate whether the arguments are of type short, float,
-     * int, double, unsigned byte, unsigned short, or unsigned int. When `v` is appended to the name, the commands
-     * can take a pointer to an array of such values. The commands containing `N` indicate that the arguments will be
-     * passed as fixed-point values that are scaled to a normalized range according to the component conversion rules
-     * defined by the OpenGL specification. Signed values are understood to represent fixed-point values in the range
-     * [-1,1], and unsigned values are understood to represent fixed-point values in the range [0,1].
+     * The letters {@see GL46::s}, {@see GL46::f}, {@see GL46::i},
+     * {@see GL46::d}, {@see GL46::ub}, {@see GL46::us}, and {@see GL46::ui}
+     * indicate whether the arguments are of type short, float, int, double,
+     * unsigned byte, unsigned short, or unsigned int. When {@see GL46::v} is
+     * appended to the name, the commands can take a pointer to an array of
+     * such values.
      *
-     * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the `glVertexAttrib` entry points. Matrices must be loaded into successive generic
-     * attribute slots in column major order, with one column of the matrix in each generic attribute slot.
+     * Additional capitalized letters can indicate further alterations to the
+     * default behavior of the glVertexAttrib function:
      *
-     * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see glBindAttribLocation}. This allows an application to use more descriptive
-     * variable names in a vertex shader. A subsequent change to the specified generic vertex attribute will be
-     * immediately reflected as a change to the corresponding attribute variable in the vertex shader.
+     * The commands containing {@see GL46::N} indicate that the arguments
+     * will be passed as fixed-point values that are scaled to a normalized
+     * range according to the component conversion rules defined by the
+     * OpenGL specification. Signed values are understood to represent
+     * fixed-point values in the range \[-1,1\], and unsigned values are
+     * understood to represent fixed-point values in the range \[0,1\].
      *
-     * The binding between a generic vertex attribute index and a user-defined attribute variable in a vertex shader
-     * is part of the state of a program object, but the current value of the generic vertex attribute is not. The
-     * value of each generic vertex attribute is part of current state, just like standard vertex attributes, and it
-     * is maintained even if a different program object is used.
+     * The commands containing {@see GL46::I} indicate that the arguments are
+     * extended to full signed or unsigned integers.
      *
-     * An application may freely modify generic vertex attributes that are not bound to a named vertex shader
-     * attribute variable. These values are simply maintained as part of current state and will not be accessed by
-     * the vertex shader. If a generic vertex attribute bound to an attribute variable in a vertex shader is not
-     * updated while the vertex shader is executing, the vertex shader will repeatedly use the current value for the
-     * generic vertex attribute.
+     * The commands containing {@see GL46::P} indicate that the arguments are
+     * stored as packed components within a larger natural type.
      *
-     * The generic vertex attribute with index 0 is the same as the vertex position attribute previously defined by
-     * OpenGL. A {@see glVertex2}, {@see glVertex3}, or {@see glVertex4} command is completely
-     * equivalent to the corresponding `glVertexAttrib` command with an index argument of 0. A vertex shader can
-     * access generic vertex attribute 0 by using the built-in attribute variable *`gl_Vertex`*. There are no current
-     * values for generic vertex attribute 0. This is the only generic vertex attribute with this property; calls to
-     * set other standard vertex attributes can be freely mixed with calls to set any of the other generic vertex
-     * attributes.
+     * The commands containing {@see GL46::L} indicate that the arguments are
+     * full 64-bit quantities and should be passed directly to shader inputs
+     * declared as 64-bit double precision types.
+     *
+     * OpenGL Shading Language attribute variables are allowed to be of type
+     * mat2, mat3, or mat4. Attributes of these types may be loaded using the
+     * {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * successive generic attribute slots in column major order, with one
+     * column of the matrix in each generic attribute slot.
+     *
+     * A user-defined attribute variable declared in a vertex shader can be
+     * bound to a generic attribute index by calling
+     * {@see GL46::glBindAttribLocation}. This allows an application to use
+     * more descriptive variable names in a vertex shader. A subsequent
+     * change to the specified generic vertex attribute will be immediately
+     * reflected as a change to the corresponding attribute variable in the
+     * vertex shader.
+     *
+     * The binding between a generic vertex attribute index and a
+     * user-defined attribute variable in a vertex shader is part of the
+     * state of a program object, but the current value of the generic vertex
+     * attribute is not. The value of each generic vertex attribute is part
+     * of current state, just like standard vertex attributes, and it is
+     * maintained even if a different program object is used.
+     *
+     * An application may freely modify generic vertex attributes that are
+     * not bound to a named vertex shader attribute variable. These values
+     * are simply maintained as part of current state and will not be
+     * accessed by the vertex shader. If a generic vertex attribute bound to
+     * an attribute variable in a vertex shader is not updated while the
+     * vertex shader is executing, the vertex shader will repeatedly use the
+     * current value for the generic vertex attribute.
      *
      * @see http://docs.gl/gl2/glVertexAttrib
-     * @see http://docs.gl/gl3/glVertexAttrib
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
-     * @param int $index
+     * @param int|\FFI\CData|\FFI\CInt $index
      * @param \FFI\CData|\FFI\CIntPtr|null $v
      * @return void
      */
-    public static function glVertexAttrib4sv(int $index, ?\FFI\CData $v): void
+    public function glVertexAttrib4sv($index, ?\FFI\CData $v): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($index >= 0 && $index <= 4_294_967_295, 'Argument $index overflow: C type GLuint is required');
+        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
 
-        $proc = self::getProc('glVertexAttrib4sv', 'void (*)(GLuint index, const GLshort *v)');
+        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glVertexAttrib4sv', 'void (*)(GLuint index, const GLshort *v)');
         $proc($index, $v);
     }
 
     /**
-     * OpenGL defines a number of standard vertex attributes that applications can modify with standard API entry
-     * points (color, normal, texture coordinates, etc.). The `glVertexAttrib` family of entry points allows an
+     * The {@see GL46::glVertexAttrib} family of entry points allows an
      * application to pass generic vertex attributes in numbered locations.
      *
-     * Generic attributes are defined as four-component values that are organized into an array. The first entry of
-     * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * `GL_MAX_VERTEX_ATTRIBS`. Individual elements of this array can be modified with a `glVertexAttrib` call that
-     * specifies the index of the element to be modified and a value for that element.
+     * Generic attributes are defined as four-component values that are
+     * organized into an array. The first entry of this array is numbered 0,
+     * and the size of the array is specified by the implementation-dependent
+     * constant {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of
+     * this array can be modified with a {@see GL46::glVertexAttrib} call
+     * that specifies the index of the element to be modified and a value for
+     * that element.
      *
-     * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
-     * specified by *`index`*. A `1` in the name of the command indicates that only one value is passed, and it will
-     * be used to modify the first component of the generic vertex attribute. The second and third components will be
-     * set to 0, and the fourth component will be set to 1. Similarly, a `2` in the name of the command indicates
-     * that values are provided for the first two components, the third component will be set to 0, and the fourth
-     * component will be set to 1. A `3` in the name of the command indicates that values are provided for the first
-     * three components and the fourth component will be set to 1, whereas a `4` in the name indicates that values
-     * are provided for all four components.
+     * These commands can be used to specify one, two, three, or all four
+     * components of the generic vertex attribute specified by $index. A
+     * {@see GL46::1} in the name of the command indicates that only one
+     * value is passed, and it will be used to modify the first component of
+     * the generic vertex attribute. The second and third components will be
+     * set to 0, and the fourth component will be set to 1. Similarly, a
+     * {@see GL46::2} in the name of the command indicates that values are
+     * provided for the first two components, the third component will be set
+     * to 0, and the fourth component will be set to 1. A {@see GL46::3} in
+     * the name of the command indicates that values are provided for the
+     * first three components and the fourth component will be set to 1,
+     * whereas a {@see GL46::4} in the name indicates that values are
+     * provided for all four components.
      *
-     * The letters `s`, `f`, `i`, `d`, `ub`, `us`, and `ui` indicate whether the arguments are of type short, float,
-     * int, double, unsigned byte, unsigned short, or unsigned int. When `v` is appended to the name, the commands
-     * can take a pointer to an array of such values. The commands containing `N` indicate that the arguments will be
-     * passed as fixed-point values that are scaled to a normalized range according to the component conversion rules
-     * defined by the OpenGL specification. Signed values are understood to represent fixed-point values in the range
-     * [-1,1], and unsigned values are understood to represent fixed-point values in the range [0,1].
+     * The letters {@see GL46::s}, {@see GL46::f}, {@see GL46::i},
+     * {@see GL46::d}, {@see GL46::ub}, {@see GL46::us}, and {@see GL46::ui}
+     * indicate whether the arguments are of type short, float, int, double,
+     * unsigned byte, unsigned short, or unsigned int. When {@see GL46::v} is
+     * appended to the name, the commands can take a pointer to an array of
+     * such values.
      *
-     * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the `glVertexAttrib` entry points. Matrices must be loaded into successive generic
-     * attribute slots in column major order, with one column of the matrix in each generic attribute slot.
+     * Additional capitalized letters can indicate further alterations to the
+     * default behavior of the glVertexAttrib function:
      *
-     * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see glBindAttribLocation}. This allows an application to use more descriptive
-     * variable names in a vertex shader. A subsequent change to the specified generic vertex attribute will be
-     * immediately reflected as a change to the corresponding attribute variable in the vertex shader.
+     * The commands containing {@see GL46::N} indicate that the arguments
+     * will be passed as fixed-point values that are scaled to a normalized
+     * range according to the component conversion rules defined by the
+     * OpenGL specification. Signed values are understood to represent
+     * fixed-point values in the range \[-1,1\], and unsigned values are
+     * understood to represent fixed-point values in the range \[0,1\].
      *
-     * The binding between a generic vertex attribute index and a user-defined attribute variable in a vertex shader
-     * is part of the state of a program object, but the current value of the generic vertex attribute is not. The
-     * value of each generic vertex attribute is part of current state, just like standard vertex attributes, and it
-     * is maintained even if a different program object is used.
+     * The commands containing {@see GL46::I} indicate that the arguments are
+     * extended to full signed or unsigned integers.
      *
-     * An application may freely modify generic vertex attributes that are not bound to a named vertex shader
-     * attribute variable. These values are simply maintained as part of current state and will not be accessed by
-     * the vertex shader. If a generic vertex attribute bound to an attribute variable in a vertex shader is not
-     * updated while the vertex shader is executing, the vertex shader will repeatedly use the current value for the
-     * generic vertex attribute.
+     * The commands containing {@see GL46::P} indicate that the arguments are
+     * stored as packed components within a larger natural type.
      *
-     * The generic vertex attribute with index 0 is the same as the vertex position attribute previously defined by
-     * OpenGL. A {@see glVertex2}, {@see glVertex3}, or {@see glVertex4} command is completely
-     * equivalent to the corresponding `glVertexAttrib` command with an index argument of 0. A vertex shader can
-     * access generic vertex attribute 0 by using the built-in attribute variable *`gl_Vertex`*. There are no current
-     * values for generic vertex attribute 0. This is the only generic vertex attribute with this property; calls to
-     * set other standard vertex attributes can be freely mixed with calls to set any of the other generic vertex
-     * attributes.
+     * The commands containing {@see GL46::L} indicate that the arguments are
+     * full 64-bit quantities and should be passed directly to shader inputs
+     * declared as 64-bit double precision types.
+     *
+     * OpenGL Shading Language attribute variables are allowed to be of type
+     * mat2, mat3, or mat4. Attributes of these types may be loaded using the
+     * {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * successive generic attribute slots in column major order, with one
+     * column of the matrix in each generic attribute slot.
+     *
+     * A user-defined attribute variable declared in a vertex shader can be
+     * bound to a generic attribute index by calling
+     * {@see GL46::glBindAttribLocation}. This allows an application to use
+     * more descriptive variable names in a vertex shader. A subsequent
+     * change to the specified generic vertex attribute will be immediately
+     * reflected as a change to the corresponding attribute variable in the
+     * vertex shader.
+     *
+     * The binding between a generic vertex attribute index and a
+     * user-defined attribute variable in a vertex shader is part of the
+     * state of a program object, but the current value of the generic vertex
+     * attribute is not. The value of each generic vertex attribute is part
+     * of current state, just like standard vertex attributes, and it is
+     * maintained even if a different program object is used.
+     *
+     * An application may freely modify generic vertex attributes that are
+     * not bound to a named vertex shader attribute variable. These values
+     * are simply maintained as part of current state and will not be
+     * accessed by the vertex shader. If a generic vertex attribute bound to
+     * an attribute variable in a vertex shader is not updated while the
+     * vertex shader is executing, the vertex shader will repeatedly use the
+     * current value for the generic vertex attribute.
      *
      * @see http://docs.gl/gl2/glVertexAttrib
-     * @see http://docs.gl/gl3/glVertexAttrib
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
-     * @param int $index
+     * @param int|\FFI\CData|\FFI\CInt $index
      * @param \FFI\CData|\FFI\CIntPtr|null $v
      * @return void
      */
-    public static function glVertexAttrib4ubv(int $index, ?\FFI\CData $v): void
+    public function glVertexAttrib4ubv($index, ?\FFI\CData $v): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($index >= 0 && $index <= 4_294_967_295, 'Argument $index overflow: C type GLuint is required');
+        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
 
-        $proc = self::getProc('glVertexAttrib4ubv', 'void (*)(GLuint index, const GLubyte *v)');
+        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glVertexAttrib4ubv', 'void (*)(GLuint index, const GLubyte *v)');
         $proc($index, $v);
     }
 
     /**
-     * OpenGL defines a number of standard vertex attributes that applications can modify with standard API entry
-     * points (color, normal, texture coordinates, etc.). The `glVertexAttrib` family of entry points allows an
+     * The {@see GL46::glVertexAttrib} family of entry points allows an
      * application to pass generic vertex attributes in numbered locations.
      *
-     * Generic attributes are defined as four-component values that are organized into an array. The first entry of
-     * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * `GL_MAX_VERTEX_ATTRIBS`. Individual elements of this array can be modified with a `glVertexAttrib` call that
-     * specifies the index of the element to be modified and a value for that element.
+     * Generic attributes are defined as four-component values that are
+     * organized into an array. The first entry of this array is numbered 0,
+     * and the size of the array is specified by the implementation-dependent
+     * constant {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of
+     * this array can be modified with a {@see GL46::glVertexAttrib} call
+     * that specifies the index of the element to be modified and a value for
+     * that element.
      *
-     * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
-     * specified by *`index`*. A `1` in the name of the command indicates that only one value is passed, and it will
-     * be used to modify the first component of the generic vertex attribute. The second and third components will be
-     * set to 0, and the fourth component will be set to 1. Similarly, a `2` in the name of the command indicates
-     * that values are provided for the first two components, the third component will be set to 0, and the fourth
-     * component will be set to 1. A `3` in the name of the command indicates that values are provided for the first
-     * three components and the fourth component will be set to 1, whereas a `4` in the name indicates that values
-     * are provided for all four components.
+     * These commands can be used to specify one, two, three, or all four
+     * components of the generic vertex attribute specified by $index. A
+     * {@see GL46::1} in the name of the command indicates that only one
+     * value is passed, and it will be used to modify the first component of
+     * the generic vertex attribute. The second and third components will be
+     * set to 0, and the fourth component will be set to 1. Similarly, a
+     * {@see GL46::2} in the name of the command indicates that values are
+     * provided for the first two components, the third component will be set
+     * to 0, and the fourth component will be set to 1. A {@see GL46::3} in
+     * the name of the command indicates that values are provided for the
+     * first three components and the fourth component will be set to 1,
+     * whereas a {@see GL46::4} in the name indicates that values are
+     * provided for all four components.
      *
-     * The letters `s`, `f`, `i`, `d`, `ub`, `us`, and `ui` indicate whether the arguments are of type short, float,
-     * int, double, unsigned byte, unsigned short, or unsigned int. When `v` is appended to the name, the commands
-     * can take a pointer to an array of such values. The commands containing `N` indicate that the arguments will be
-     * passed as fixed-point values that are scaled to a normalized range according to the component conversion rules
-     * defined by the OpenGL specification. Signed values are understood to represent fixed-point values in the range
-     * [-1,1], and unsigned values are understood to represent fixed-point values in the range [0,1].
+     * The letters {@see GL46::s}, {@see GL46::f}, {@see GL46::i},
+     * {@see GL46::d}, {@see GL46::ub}, {@see GL46::us}, and {@see GL46::ui}
+     * indicate whether the arguments are of type short, float, int, double,
+     * unsigned byte, unsigned short, or unsigned int. When {@see GL46::v} is
+     * appended to the name, the commands can take a pointer to an array of
+     * such values.
      *
-     * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the `glVertexAttrib` entry points. Matrices must be loaded into successive generic
-     * attribute slots in column major order, with one column of the matrix in each generic attribute slot.
+     * Additional capitalized letters can indicate further alterations to the
+     * default behavior of the glVertexAttrib function:
      *
-     * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see glBindAttribLocation}. This allows an application to use more descriptive
-     * variable names in a vertex shader. A subsequent change to the specified generic vertex attribute will be
-     * immediately reflected as a change to the corresponding attribute variable in the vertex shader.
+     * The commands containing {@see GL46::N} indicate that the arguments
+     * will be passed as fixed-point values that are scaled to a normalized
+     * range according to the component conversion rules defined by the
+     * OpenGL specification. Signed values are understood to represent
+     * fixed-point values in the range \[-1,1\], and unsigned values are
+     * understood to represent fixed-point values in the range \[0,1\].
      *
-     * The binding between a generic vertex attribute index and a user-defined attribute variable in a vertex shader
-     * is part of the state of a program object, but the current value of the generic vertex attribute is not. The
-     * value of each generic vertex attribute is part of current state, just like standard vertex attributes, and it
-     * is maintained even if a different program object is used.
+     * The commands containing {@see GL46::I} indicate that the arguments are
+     * extended to full signed or unsigned integers.
      *
-     * An application may freely modify generic vertex attributes that are not bound to a named vertex shader
-     * attribute variable. These values are simply maintained as part of current state and will not be accessed by
-     * the vertex shader. If a generic vertex attribute bound to an attribute variable in a vertex shader is not
-     * updated while the vertex shader is executing, the vertex shader will repeatedly use the current value for the
-     * generic vertex attribute.
+     * The commands containing {@see GL46::P} indicate that the arguments are
+     * stored as packed components within a larger natural type.
      *
-     * The generic vertex attribute with index 0 is the same as the vertex position attribute previously defined by
-     * OpenGL. A {@see glVertex2}, {@see glVertex3}, or {@see glVertex4} command is completely
-     * equivalent to the corresponding `glVertexAttrib` command with an index argument of 0. A vertex shader can
-     * access generic vertex attribute 0 by using the built-in attribute variable *`gl_Vertex`*. There are no current
-     * values for generic vertex attribute 0. This is the only generic vertex attribute with this property; calls to
-     * set other standard vertex attributes can be freely mixed with calls to set any of the other generic vertex
-     * attributes.
+     * The commands containing {@see GL46::L} indicate that the arguments are
+     * full 64-bit quantities and should be passed directly to shader inputs
+     * declared as 64-bit double precision types.
+     *
+     * OpenGL Shading Language attribute variables are allowed to be of type
+     * mat2, mat3, or mat4. Attributes of these types may be loaded using the
+     * {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * successive generic attribute slots in column major order, with one
+     * column of the matrix in each generic attribute slot.
+     *
+     * A user-defined attribute variable declared in a vertex shader can be
+     * bound to a generic attribute index by calling
+     * {@see GL46::glBindAttribLocation}. This allows an application to use
+     * more descriptive variable names in a vertex shader. A subsequent
+     * change to the specified generic vertex attribute will be immediately
+     * reflected as a change to the corresponding attribute variable in the
+     * vertex shader.
+     *
+     * The binding between a generic vertex attribute index and a
+     * user-defined attribute variable in a vertex shader is part of the
+     * state of a program object, but the current value of the generic vertex
+     * attribute is not. The value of each generic vertex attribute is part
+     * of current state, just like standard vertex attributes, and it is
+     * maintained even if a different program object is used.
+     *
+     * An application may freely modify generic vertex attributes that are
+     * not bound to a named vertex shader attribute variable. These values
+     * are simply maintained as part of current state and will not be
+     * accessed by the vertex shader. If a generic vertex attribute bound to
+     * an attribute variable in a vertex shader is not updated while the
+     * vertex shader is executing, the vertex shader will repeatedly use the
+     * current value for the generic vertex attribute.
      *
      * @see http://docs.gl/gl2/glVertexAttrib
-     * @see http://docs.gl/gl3/glVertexAttrib
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
-     * @param int $index
+     * @param int|\FFI\CData|\FFI\CInt $index
      * @param \FFI\CData|\FFI\CIntPtr|null $v
      * @return void
      */
-    public static function glVertexAttrib4uiv(int $index, ?\FFI\CData $v): void
+    public function glVertexAttrib4uiv($index, ?\FFI\CData $v): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($index >= 0 && $index <= 4_294_967_295, 'Argument $index overflow: C type GLuint is required');
+        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
 
-        $proc = self::getProc('glVertexAttrib4uiv', 'void (*)(GLuint index, const GLuint *v)');
+        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glVertexAttrib4uiv', 'void (*)(GLuint index, const GLuint *v)');
         $proc($index, $v);
     }
 
     /**
-     * OpenGL defines a number of standard vertex attributes that applications can modify with standard API entry
-     * points (color, normal, texture coordinates, etc.). The `glVertexAttrib` family of entry points allows an
+     * The {@see GL46::glVertexAttrib} family of entry points allows an
      * application to pass generic vertex attributes in numbered locations.
      *
-     * Generic attributes are defined as four-component values that are organized into an array. The first entry of
-     * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * `GL_MAX_VERTEX_ATTRIBS`. Individual elements of this array can be modified with a `glVertexAttrib` call that
-     * specifies the index of the element to be modified and a value for that element.
+     * Generic attributes are defined as four-component values that are
+     * organized into an array. The first entry of this array is numbered 0,
+     * and the size of the array is specified by the implementation-dependent
+     * constant {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of
+     * this array can be modified with a {@see GL46::glVertexAttrib} call
+     * that specifies the index of the element to be modified and a value for
+     * that element.
      *
-     * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
-     * specified by *`index`*. A `1` in the name of the command indicates that only one value is passed, and it will
-     * be used to modify the first component of the generic vertex attribute. The second and third components will be
-     * set to 0, and the fourth component will be set to 1. Similarly, a `2` in the name of the command indicates
-     * that values are provided for the first two components, the third component will be set to 0, and the fourth
-     * component will be set to 1. A `3` in the name of the command indicates that values are provided for the first
-     * three components and the fourth component will be set to 1, whereas a `4` in the name indicates that values
-     * are provided for all four components.
+     * These commands can be used to specify one, two, three, or all four
+     * components of the generic vertex attribute specified by $index. A
+     * {@see GL46::1} in the name of the command indicates that only one
+     * value is passed, and it will be used to modify the first component of
+     * the generic vertex attribute. The second and third components will be
+     * set to 0, and the fourth component will be set to 1. Similarly, a
+     * {@see GL46::2} in the name of the command indicates that values are
+     * provided for the first two components, the third component will be set
+     * to 0, and the fourth component will be set to 1. A {@see GL46::3} in
+     * the name of the command indicates that values are provided for the
+     * first three components and the fourth component will be set to 1,
+     * whereas a {@see GL46::4} in the name indicates that values are
+     * provided for all four components.
      *
-     * The letters `s`, `f`, `i`, `d`, `ub`, `us`, and `ui` indicate whether the arguments are of type short, float,
-     * int, double, unsigned byte, unsigned short, or unsigned int. When `v` is appended to the name, the commands
-     * can take a pointer to an array of such values. The commands containing `N` indicate that the arguments will be
-     * passed as fixed-point values that are scaled to a normalized range according to the component conversion rules
-     * defined by the OpenGL specification. Signed values are understood to represent fixed-point values in the range
-     * [-1,1], and unsigned values are understood to represent fixed-point values in the range [0,1].
+     * The letters {@see GL46::s}, {@see GL46::f}, {@see GL46::i},
+     * {@see GL46::d}, {@see GL46::ub}, {@see GL46::us}, and {@see GL46::ui}
+     * indicate whether the arguments are of type short, float, int, double,
+     * unsigned byte, unsigned short, or unsigned int. When {@see GL46::v} is
+     * appended to the name, the commands can take a pointer to an array of
+     * such values.
      *
-     * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the `glVertexAttrib` entry points. Matrices must be loaded into successive generic
-     * attribute slots in column major order, with one column of the matrix in each generic attribute slot.
+     * Additional capitalized letters can indicate further alterations to the
+     * default behavior of the glVertexAttrib function:
      *
-     * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see glBindAttribLocation}. This allows an application to use more descriptive
-     * variable names in a vertex shader. A subsequent change to the specified generic vertex attribute will be
-     * immediately reflected as a change to the corresponding attribute variable in the vertex shader.
+     * The commands containing {@see GL46::N} indicate that the arguments
+     * will be passed as fixed-point values that are scaled to a normalized
+     * range according to the component conversion rules defined by the
+     * OpenGL specification. Signed values are understood to represent
+     * fixed-point values in the range \[-1,1\], and unsigned values are
+     * understood to represent fixed-point values in the range \[0,1\].
      *
-     * The binding between a generic vertex attribute index and a user-defined attribute variable in a vertex shader
-     * is part of the state of a program object, but the current value of the generic vertex attribute is not. The
-     * value of each generic vertex attribute is part of current state, just like standard vertex attributes, and it
-     * is maintained even if a different program object is used.
+     * The commands containing {@see GL46::I} indicate that the arguments are
+     * extended to full signed or unsigned integers.
      *
-     * An application may freely modify generic vertex attributes that are not bound to a named vertex shader
-     * attribute variable. These values are simply maintained as part of current state and will not be accessed by
-     * the vertex shader. If a generic vertex attribute bound to an attribute variable in a vertex shader is not
-     * updated while the vertex shader is executing, the vertex shader will repeatedly use the current value for the
-     * generic vertex attribute.
+     * The commands containing {@see GL46::P} indicate that the arguments are
+     * stored as packed components within a larger natural type.
      *
-     * The generic vertex attribute with index 0 is the same as the vertex position attribute previously defined by
-     * OpenGL. A {@see glVertex2}, {@see glVertex3}, or {@see glVertex4} command is completely
-     * equivalent to the corresponding `glVertexAttrib` command with an index argument of 0. A vertex shader can
-     * access generic vertex attribute 0 by using the built-in attribute variable *`gl_Vertex`*. There are no current
-     * values for generic vertex attribute 0. This is the only generic vertex attribute with this property; calls to
-     * set other standard vertex attributes can be freely mixed with calls to set any of the other generic vertex
-     * attributes.
+     * The commands containing {@see GL46::L} indicate that the arguments are
+     * full 64-bit quantities and should be passed directly to shader inputs
+     * declared as 64-bit double precision types.
+     *
+     * OpenGL Shading Language attribute variables are allowed to be of type
+     * mat2, mat3, or mat4. Attributes of these types may be loaded using the
+     * {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * successive generic attribute slots in column major order, with one
+     * column of the matrix in each generic attribute slot.
+     *
+     * A user-defined attribute variable declared in a vertex shader can be
+     * bound to a generic attribute index by calling
+     * {@see GL46::glBindAttribLocation}. This allows an application to use
+     * more descriptive variable names in a vertex shader. A subsequent
+     * change to the specified generic vertex attribute will be immediately
+     * reflected as a change to the corresponding attribute variable in the
+     * vertex shader.
+     *
+     * The binding between a generic vertex attribute index and a
+     * user-defined attribute variable in a vertex shader is part of the
+     * state of a program object, but the current value of the generic vertex
+     * attribute is not. The value of each generic vertex attribute is part
+     * of current state, just like standard vertex attributes, and it is
+     * maintained even if a different program object is used.
+     *
+     * An application may freely modify generic vertex attributes that are
+     * not bound to a named vertex shader attribute variable. These values
+     * are simply maintained as part of current state and will not be
+     * accessed by the vertex shader. If a generic vertex attribute bound to
+     * an attribute variable in a vertex shader is not updated while the
+     * vertex shader is executing, the vertex shader will repeatedly use the
+     * current value for the generic vertex attribute.
      *
      * @see http://docs.gl/gl2/glVertexAttrib
-     * @see http://docs.gl/gl3/glVertexAttrib
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
-     * @param int $index
+     * @param int|\FFI\CData|\FFI\CInt $index
      * @param \FFI\CData|\FFI\CIntPtr|null $v
      * @return void
      */
-    public static function glVertexAttrib4usv(int $index, ?\FFI\CData $v): void
+    public function glVertexAttrib4usv($index, ?\FFI\CData $v): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($index >= 0 && $index <= 4_294_967_295, 'Argument $index overflow: C type GLuint is required');
+        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
 
-        $proc = self::getProc('glVertexAttrib4usv', 'void (*)(GLuint index, const GLushort *v)');
+        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glVertexAttrib4usv', 'void (*)(GLuint index, const GLushort *v)');
         $proc($index, $v);
     }
 
     /**
-     * Specifies the location and data format of the array of generic vertex attributes at index *`index`* to use
-     * when rendering. *`size`* specifies the number of components per attribute and must be 1, 2, 3, or 4. *`type`*
-     * specifies the data type of each component, and *`stride`* specifies the byte stride from one attribute to the
-     * next, allowing vertices and attributes to be packed into a single array or stored in separate arrays. If set
-     * to `GL_TRUE`, *`normalized`* indicates that values stored in an integer format are to be mapped to the range
-     * [-1,1] (for signed values) or [0,1] (for unsigned values) when they are accessed and converted to floating
-     * point. Otherwise, values will be converted to floats directly without normalization.
+     * {@see GL46::glVertexAttribPointer},
+     * {@see GL46::glVertexAttribIPointer} and
+     * {@see GL46::glVertexAttribLPointer} specify the location and data
+     * format of the array of generic vertex attributes at index $index to
+     * use when rendering. $size specifies the number of components per
+     * attribute and must be 1, 2, 3, 4, or {@see GL46::GL_BGRA}. $type
+     * specifies the data type of each component, and $stride specifies the
+     * byte stride from one attribute to the next, allowing vertices and
+     * attributes to be packed into a single array or stored in separate
+     * arrays.
      *
-     * If a non-zero named buffer object is bound to the `GL_ARRAY_BUFFER` target (see {@see glBindBuffer})
-     * while a generic vertex attribute array is specified, *`pointer`* is treated as a byte offset into the buffer
-     * object's data store. Also, the buffer object binding (`GL_ARRAY_BUFFER_BINDING`) is saved as generic vertex
-     * attribute array client-side state (`GL_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING`) for index *`index`*.
+     * For {@see GL46::glVertexAttribPointer}, if $normalized is set to
+     * {@see GL46::GL_TRUE}, it indicates that values stored in an integer
+     * format are to be mapped to the range \[-1,1\] (for signed values) or
+     * \[0,1\] (for unsigned values) when they are accessed and converted to
+     * floating point. Otherwise, values will be converted to floats directly
+     * without normalization.
      *
-     * When a generic vertex attribute array is specified, *`size`*, *`type`*, *`normalized`*, *`stride`*, and
-     * *`pointer`* are saved as client-side state, in addition to the current vertex array buffer object binding.
+     * For {@see GL46::glVertexAttribIPointer}, only the integer types
+     * {@see GL46::GL_BYTE}, {@see GL46::GL_UNSIGNED_BYTE},
+     * {@see GL46::GL_SHORT}, {@see GL46::GL_UNSIGNED_SHORT},
+     * {@see GL46::GL_INT}, {@see GL46::GL_UNSIGNED_INT} are accepted. Values
+     * are always left as integer values.
+     *
+     * {@see GL46::glVertexAttribLPointer} specifies state for a generic
+     * vertex attribute array associated with a shader attribute variable
+     * declared with 64-bit double precision components. $type must be
+     * {@see GL46::GL_DOUBLE}. $index, $size, and $stride behave as described
+     * for {@see GL46::glVertexAttribPointer} and
+     * {@see GL46::glVertexAttribIPointer}.
+     *
+     * If $pointer is not `NULL`, a non-zero named buffer object must be
+     * bound to the {@see GL46::GL_ARRAY_BUFFER} target (see
+     * {@see GL46::glBindBuffer}), otherwise an error is generated. $pointer
+     * is treated as a byte offset into the buffer object's data store. The
+     * buffer object binding ({@see GL46::GL_ARRAY_BUFFER_BINDING}) is saved
+     * as generic vertex attribute array state
+     * ({@see GL46::GL_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING}) for index $index.
+     *
+     * When a generic vertex attribute array is specified, $size, $type,
+     * $normalized, $stride, and $pointer are saved as vertex array state, in
+     * addition to the current vertex array buffer object binding.
      *
      * To enable and disable a generic vertex attribute array, call
-     * {@see glEnableVertexAttribArray} and
-     * {@see glDisableVertexAttribArray} with *`index`*. If enabled, the generic vertex
-     * attribute array is used when {@see glArrayElement}, {@see glDrawArrays},
-     * {@see glMultiDrawArrays}, {@see glDrawElements},
-     * {@see glMultiDrawElements}, or {@see glDrawRangeElements} is called.
+     * {@see GL46::glEnableVertexAttribArray} and
+     * {@see GL46::glDisableVertexAttribArray} with $index. If enabled, the
+     * generic vertex attribute array is used when {@see GL46::glDrawArrays},
+     * {@see GL46::glMultiDrawArrays}, {@see GL46::glDrawElements},
+     * {@see GL46::glMultiDrawElements}, or {@see GL46::glDrawRangeElements}
+     * is called.
      *
      * @see http://docs.gl/gl2/glVertexAttribPointer
-     * @see http://docs.gl/gl3/glVertexAttribPointer
      * @see http://docs.gl/gl4/glVertexAttribPointer
      * @since 2.0
-     * @param int $index
-     * @param int $size
-     * @param int $type
-     * @param int $normalized
-     * @param int $stride
+     * @param int|\FFI\CData|\FFI\CInt $index
+     * @param int|\FFI\CData|\FFI\CInt $size
+     * @param int|\FFI\CData|\FFI\CInt $type
+     * @param int|\FFI\CData|\FFI\CInt $normalized
+     * @param int|\FFI\CData|\FFI\CInt $stride
      * @param \FFI\CData|\FFI\CPtr|null $pointer
      * @return void
      */
-    public static function glVertexAttribPointer(int $index, int $size, int $type, int $normalized, int $stride, ?\FFI\CData $pointer): void
+    public function glVertexAttribPointer($index, $size, $type, $normalized, $stride, ?\FFI\CData $pointer): void
     {
-        assert(version_compare(self::$info->version, '2.0') >= 0, __FUNCTION__ . ' is available since OpenGL 2.0, but only OpenGL '. self::$info->version . ' is available');
-        assert($index >= 0 && $index <= 4_294_967_295, 'Argument $index overflow: C type GLuint is required');
-        assert($size >= \PHP_INT_MIN && $size <= \PHP_INT_MAX, 'Argument $size overflow: C type GLint is required');
-        assert($type >= 0 && $type <= 4_294_967_295, 'Argument $type overflow: C type GLenum is required');
-        assert($normalized >= 0 && $normalized <= 255, 'Argument $normalized overflow: C type GLboolean is required');
-        assert($stride >= \PHP_INT_MIN && $stride <= \PHP_INT_MAX, 'Argument $stride overflow: C type GLsizei is required');
+        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
+        $size = $size instanceof \FFI\CData ? $size->cdata : $size;
+        $type = $type instanceof \FFI\CData ? $type->cdata : $type;
+        $normalized = $normalized instanceof \FFI\CData ? $normalized->cdata : $normalized;
+        $stride = $stride instanceof \FFI\CData ? $stride->cdata : $stride;
 
-        $proc = self::getProc('glVertexAttribPointer', 'void (*)(GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const void *pointer)');
+        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Assert::int16($size), 'Argument $size must be a C-like GLint, but incompatible or overflow value given');
+        assert(Assert::uint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Assert::uint8($normalized), 'Argument $normalized must be a C-like GLboolean, but incompatible or overflow value given');
+        assert(Assert::int16($stride), 'Argument $stride must be a C-like GLsizei, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glVertexAttribPointer', 'void (*)(GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const void *pointer)');
         $proc($index, $size, $type, $normalized, $stride, $pointer);
     }
 }

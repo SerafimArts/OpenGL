@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Serafim\OpenGL;
 
+use Serafim\OpenGL\Support\Assert;
+
 /**
  * The OpenGL functionality up to version 2.1. Includes the deprecated symbols of the Compatibility Profile.
  *
@@ -107,116 +109,194 @@ class GL21 extends GL20
     public const GL_COMPRESSED_SRGB_ALPHA = 0x8c49;
 
     /**
+     * {@see GL46::glUniformSubroutines} loads all active subroutine uniforms
+     * for shader stage $shadertype of the current program with subroutine
+     * indices from $indices, storing $indices\[i\] into the uniform at
+     * location $i. $count must be equal to the value of
+     * {@see GL46::GL_ACTIVE_SUBROUTINE_UNIFORM_LOCATIONS} for the program
+     * currently in use at shader stage $shadertype. Furthermore, all values
+     * in $indices must be less than the value of
+     * {@see GL46::GL_ACTIVE_SUBROUTINES} for the shader stage.
+     *
+     * @see http://docs.gl/gl4/glUniformSubroutines
      * @since 2.1
-     * @param int $location
-     * @param int $count
-     * @param int $transpose
+     * @param int|\FFI\CData|\FFI\CInt $location
+     * @param int|\FFI\CData|\FFI\CInt $count
+     * @param int|\FFI\CData|\FFI\CInt $transpose
      * @param \FFI\CData|\FFI\CFloatPtr|null $value
      * @return void
      */
-    public static function glUniformMatrix2x3fv(int $location, int $count, int $transpose, ?\FFI\CData $value): void
+    public function glUniformMatrix2x3fv($location, $count, $transpose, ?\FFI\CData $value): void
     {
-        assert(version_compare(self::$info->version, '2.1') >= 0, __FUNCTION__ . ' is available since OpenGL 2.1, but only OpenGL '. self::$info->version . ' is available');
-        assert($location >= \PHP_INT_MIN && $location <= \PHP_INT_MAX, 'Argument $location overflow: C type GLint is required');
-        assert($count >= \PHP_INT_MIN && $count <= \PHP_INT_MAX, 'Argument $count overflow: C type GLsizei is required');
-        assert($transpose >= 0 && $transpose <= 255, 'Argument $transpose overflow: C type GLboolean is required');
+        $location = $location instanceof \FFI\CData ? $location->cdata : $location;
+        $count = $count instanceof \FFI\CData ? $count->cdata : $count;
+        $transpose = $transpose instanceof \FFI\CData ? $transpose->cdata : $transpose;
 
-        $proc = self::getProc('glUniformMatrix2x3fv', 'void (*)(GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)');
+        assert(Assert::int16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
+        assert(Assert::int16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Assert::uint8($transpose), 'Argument $transpose must be a C-like GLboolean, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glUniformMatrix2x3fv', 'void (*)(GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)');
         $proc($location, $count, $transpose, $value);
     }
 
     /**
+     * {@see GL46::glUniformSubroutines} loads all active subroutine uniforms
+     * for shader stage $shadertype of the current program with subroutine
+     * indices from $indices, storing $indices\[i\] into the uniform at
+     * location $i. $count must be equal to the value of
+     * {@see GL46::GL_ACTIVE_SUBROUTINE_UNIFORM_LOCATIONS} for the program
+     * currently in use at shader stage $shadertype. Furthermore, all values
+     * in $indices must be less than the value of
+     * {@see GL46::GL_ACTIVE_SUBROUTINES} for the shader stage.
+     *
+     * @see http://docs.gl/gl4/glUniformSubroutines
      * @since 2.1
-     * @param int $location
-     * @param int $count
-     * @param int $transpose
+     * @param int|\FFI\CData|\FFI\CInt $location
+     * @param int|\FFI\CData|\FFI\CInt $count
+     * @param int|\FFI\CData|\FFI\CInt $transpose
      * @param \FFI\CData|\FFI\CFloatPtr|null $value
      * @return void
      */
-    public static function glUniformMatrix3x2fv(int $location, int $count, int $transpose, ?\FFI\CData $value): void
+    public function glUniformMatrix3x2fv($location, $count, $transpose, ?\FFI\CData $value): void
     {
-        assert(version_compare(self::$info->version, '2.1') >= 0, __FUNCTION__ . ' is available since OpenGL 2.1, but only OpenGL '. self::$info->version . ' is available');
-        assert($location >= \PHP_INT_MIN && $location <= \PHP_INT_MAX, 'Argument $location overflow: C type GLint is required');
-        assert($count >= \PHP_INT_MIN && $count <= \PHP_INT_MAX, 'Argument $count overflow: C type GLsizei is required');
-        assert($transpose >= 0 && $transpose <= 255, 'Argument $transpose overflow: C type GLboolean is required');
+        $location = $location instanceof \FFI\CData ? $location->cdata : $location;
+        $count = $count instanceof \FFI\CData ? $count->cdata : $count;
+        $transpose = $transpose instanceof \FFI\CData ? $transpose->cdata : $transpose;
 
-        $proc = self::getProc('glUniformMatrix3x2fv', 'void (*)(GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)');
+        assert(Assert::int16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
+        assert(Assert::int16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Assert::uint8($transpose), 'Argument $transpose must be a C-like GLboolean, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glUniformMatrix3x2fv', 'void (*)(GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)');
         $proc($location, $count, $transpose, $value);
     }
 
     /**
+     * {@see GL46::glUniformSubroutines} loads all active subroutine uniforms
+     * for shader stage $shadertype of the current program with subroutine
+     * indices from $indices, storing $indices\[i\] into the uniform at
+     * location $i. $count must be equal to the value of
+     * {@see GL46::GL_ACTIVE_SUBROUTINE_UNIFORM_LOCATIONS} for the program
+     * currently in use at shader stage $shadertype. Furthermore, all values
+     * in $indices must be less than the value of
+     * {@see GL46::GL_ACTIVE_SUBROUTINES} for the shader stage.
+     *
+     * @see http://docs.gl/gl4/glUniformSubroutines
      * @since 2.1
-     * @param int $location
-     * @param int $count
-     * @param int $transpose
+     * @param int|\FFI\CData|\FFI\CInt $location
+     * @param int|\FFI\CData|\FFI\CInt $count
+     * @param int|\FFI\CData|\FFI\CInt $transpose
      * @param \FFI\CData|\FFI\CFloatPtr|null $value
      * @return void
      */
-    public static function glUniformMatrix2x4fv(int $location, int $count, int $transpose, ?\FFI\CData $value): void
+    public function glUniformMatrix2x4fv($location, $count, $transpose, ?\FFI\CData $value): void
     {
-        assert(version_compare(self::$info->version, '2.1') >= 0, __FUNCTION__ . ' is available since OpenGL 2.1, but only OpenGL '. self::$info->version . ' is available');
-        assert($location >= \PHP_INT_MIN && $location <= \PHP_INT_MAX, 'Argument $location overflow: C type GLint is required');
-        assert($count >= \PHP_INT_MIN && $count <= \PHP_INT_MAX, 'Argument $count overflow: C type GLsizei is required');
-        assert($transpose >= 0 && $transpose <= 255, 'Argument $transpose overflow: C type GLboolean is required');
+        $location = $location instanceof \FFI\CData ? $location->cdata : $location;
+        $count = $count instanceof \FFI\CData ? $count->cdata : $count;
+        $transpose = $transpose instanceof \FFI\CData ? $transpose->cdata : $transpose;
 
-        $proc = self::getProc('glUniformMatrix2x4fv', 'void (*)(GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)');
+        assert(Assert::int16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
+        assert(Assert::int16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Assert::uint8($transpose), 'Argument $transpose must be a C-like GLboolean, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glUniformMatrix2x4fv', 'void (*)(GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)');
         $proc($location, $count, $transpose, $value);
     }
 
     /**
+     * {@see GL46::glUniformSubroutines} loads all active subroutine uniforms
+     * for shader stage $shadertype of the current program with subroutine
+     * indices from $indices, storing $indices\[i\] into the uniform at
+     * location $i. $count must be equal to the value of
+     * {@see GL46::GL_ACTIVE_SUBROUTINE_UNIFORM_LOCATIONS} for the program
+     * currently in use at shader stage $shadertype. Furthermore, all values
+     * in $indices must be less than the value of
+     * {@see GL46::GL_ACTIVE_SUBROUTINES} for the shader stage.
+     *
+     * @see http://docs.gl/gl4/glUniformSubroutines
      * @since 2.1
-     * @param int $location
-     * @param int $count
-     * @param int $transpose
+     * @param int|\FFI\CData|\FFI\CInt $location
+     * @param int|\FFI\CData|\FFI\CInt $count
+     * @param int|\FFI\CData|\FFI\CInt $transpose
      * @param \FFI\CData|\FFI\CFloatPtr|null $value
      * @return void
      */
-    public static function glUniformMatrix4x2fv(int $location, int $count, int $transpose, ?\FFI\CData $value): void
+    public function glUniformMatrix4x2fv($location, $count, $transpose, ?\FFI\CData $value): void
     {
-        assert(version_compare(self::$info->version, '2.1') >= 0, __FUNCTION__ . ' is available since OpenGL 2.1, but only OpenGL '. self::$info->version . ' is available');
-        assert($location >= \PHP_INT_MIN && $location <= \PHP_INT_MAX, 'Argument $location overflow: C type GLint is required');
-        assert($count >= \PHP_INT_MIN && $count <= \PHP_INT_MAX, 'Argument $count overflow: C type GLsizei is required');
-        assert($transpose >= 0 && $transpose <= 255, 'Argument $transpose overflow: C type GLboolean is required');
+        $location = $location instanceof \FFI\CData ? $location->cdata : $location;
+        $count = $count instanceof \FFI\CData ? $count->cdata : $count;
+        $transpose = $transpose instanceof \FFI\CData ? $transpose->cdata : $transpose;
 
-        $proc = self::getProc('glUniformMatrix4x2fv', 'void (*)(GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)');
+        assert(Assert::int16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
+        assert(Assert::int16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Assert::uint8($transpose), 'Argument $transpose must be a C-like GLboolean, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glUniformMatrix4x2fv', 'void (*)(GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)');
         $proc($location, $count, $transpose, $value);
     }
 
     /**
+     * {@see GL46::glUniformSubroutines} loads all active subroutine uniforms
+     * for shader stage $shadertype of the current program with subroutine
+     * indices from $indices, storing $indices\[i\] into the uniform at
+     * location $i. $count must be equal to the value of
+     * {@see GL46::GL_ACTIVE_SUBROUTINE_UNIFORM_LOCATIONS} for the program
+     * currently in use at shader stage $shadertype. Furthermore, all values
+     * in $indices must be less than the value of
+     * {@see GL46::GL_ACTIVE_SUBROUTINES} for the shader stage.
+     *
+     * @see http://docs.gl/gl4/glUniformSubroutines
      * @since 2.1
-     * @param int $location
-     * @param int $count
-     * @param int $transpose
+     * @param int|\FFI\CData|\FFI\CInt $location
+     * @param int|\FFI\CData|\FFI\CInt $count
+     * @param int|\FFI\CData|\FFI\CInt $transpose
      * @param \FFI\CData|\FFI\CFloatPtr|null $value
      * @return void
      */
-    public static function glUniformMatrix3x4fv(int $location, int $count, int $transpose, ?\FFI\CData $value): void
+    public function glUniformMatrix3x4fv($location, $count, $transpose, ?\FFI\CData $value): void
     {
-        assert(version_compare(self::$info->version, '2.1') >= 0, __FUNCTION__ . ' is available since OpenGL 2.1, but only OpenGL '. self::$info->version . ' is available');
-        assert($location >= \PHP_INT_MIN && $location <= \PHP_INT_MAX, 'Argument $location overflow: C type GLint is required');
-        assert($count >= \PHP_INT_MIN && $count <= \PHP_INT_MAX, 'Argument $count overflow: C type GLsizei is required');
-        assert($transpose >= 0 && $transpose <= 255, 'Argument $transpose overflow: C type GLboolean is required');
+        $location = $location instanceof \FFI\CData ? $location->cdata : $location;
+        $count = $count instanceof \FFI\CData ? $count->cdata : $count;
+        $transpose = $transpose instanceof \FFI\CData ? $transpose->cdata : $transpose;
 
-        $proc = self::getProc('glUniformMatrix3x4fv', 'void (*)(GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)');
+        assert(Assert::int16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
+        assert(Assert::int16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Assert::uint8($transpose), 'Argument $transpose must be a C-like GLboolean, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glUniformMatrix3x4fv', 'void (*)(GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)');
         $proc($location, $count, $transpose, $value);
     }
 
     /**
+     * {@see GL46::glUniformSubroutines} loads all active subroutine uniforms
+     * for shader stage $shadertype of the current program with subroutine
+     * indices from $indices, storing $indices\[i\] into the uniform at
+     * location $i. $count must be equal to the value of
+     * {@see GL46::GL_ACTIVE_SUBROUTINE_UNIFORM_LOCATIONS} for the program
+     * currently in use at shader stage $shadertype. Furthermore, all values
+     * in $indices must be less than the value of
+     * {@see GL46::GL_ACTIVE_SUBROUTINES} for the shader stage.
+     *
+     * @see http://docs.gl/gl4/glUniformSubroutines
      * @since 2.1
-     * @param int $location
-     * @param int $count
-     * @param int $transpose
+     * @param int|\FFI\CData|\FFI\CInt $location
+     * @param int|\FFI\CData|\FFI\CInt $count
+     * @param int|\FFI\CData|\FFI\CInt $transpose
      * @param \FFI\CData|\FFI\CFloatPtr|null $value
      * @return void
      */
-    public static function glUniformMatrix4x3fv(int $location, int $count, int $transpose, ?\FFI\CData $value): void
+    public function glUniformMatrix4x3fv($location, $count, $transpose, ?\FFI\CData $value): void
     {
-        assert(version_compare(self::$info->version, '2.1') >= 0, __FUNCTION__ . ' is available since OpenGL 2.1, but only OpenGL '. self::$info->version . ' is available');
-        assert($location >= \PHP_INT_MIN && $location <= \PHP_INT_MAX, 'Argument $location overflow: C type GLint is required');
-        assert($count >= \PHP_INT_MIN && $count <= \PHP_INT_MAX, 'Argument $count overflow: C type GLsizei is required');
-        assert($transpose >= 0 && $transpose <= 255, 'Argument $transpose overflow: C type GLboolean is required');
+        $location = $location instanceof \FFI\CData ? $location->cdata : $location;
+        $count = $count instanceof \FFI\CData ? $count->cdata : $count;
+        $transpose = $transpose instanceof \FFI\CData ? $transpose->cdata : $transpose;
 
-        $proc = self::getProc('glUniformMatrix4x3fv', 'void (*)(GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)');
+        assert(Assert::int16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
+        assert(Assert::int16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Assert::uint8($transpose), 'Argument $transpose must be a C-like GLboolean, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glUniformMatrix4x3fv', 'void (*)(GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)');
         $proc($location, $count, $transpose, $value);
     }
 }

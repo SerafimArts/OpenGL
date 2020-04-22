@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Serafim\OpenGL;
 
+use Serafim\OpenGL\Support\Assert;
+
 /**
  * The OpenGL functionality up to version 1.4. Includes the deprecated symbols of the Compatibility Profile.
  *
@@ -162,315 +164,415 @@ class GL14 extends GL13
     public const GL_ONE_MINUS_CONSTANT_ALPHA = 0x8004;
 
     /**
-     * In RGBA mode, pixels can be drawn using a function that blends the incoming (source) RGBA values with the RGBA
-     * values that are already in the frame buffer (the destination values). Blending is initially disabled. Use
-     * {@see glEnable} and {@see glDisable} with argument `GL_BLEND` to enable and disable blending.
+     * Pixels can be drawn using a function that blends the incoming (source)
+     * RGBA values with the RGBA values that are already in the frame buffer
+     * (the destination values). Blending is initially disabled. Use
+     * {@see GL46::glEnable} and  {@see GL46::glDisable} with argument
+     * {@see GL46::GL_BLEND} to enable and disable blending.
      *
-     *  - `glBlendFuncSeparate` defines the operation of blending when it is enabled. *`srcRGB`* specifies which
-     * method is used to scale the source RGB-color components. *`dstRGB`* specifies which method is used to scale
-     * the destination RGB-color components. Likewise, *`srcAlpha`* specifies which method is used to scale the
-     * source alpha color component, and *`dstAlpha`* specifies which method is used to scale the destination alpha
-     * component. The possible methods are described in the following table. Each method defines four scale factors,
-     * one each for red, green, blue, and alpha.
+     * {@see GL46::glBlendFuncSeparate} defines the operation of blending for
+     * all draw buffers when it is enabled. {@see GL46::glBlendFuncSeparatei}
+     * defines the operation of blending for a single draw buffer specified
+     * by $buf when enabled for that draw buffer. $srcRGB specifies which
+     * method is used to scale the source RGB-color components. $dstRGB
+     * specifies which method is used to scale the destination RGB-color
+     * components. Likewise, $srcAlpha specifies which method is used to
+     * scale the source alpha color component, and $dstAlpha specifies which
+     * method is used to scale the destination alpha component. The possible
+     * methods are described in the following table. Each method defines four
+     * scale factors, one each for red, green, blue, and alpha.
      *
-     * In the table and in subsequent equations, source and destination color components are referred to as R s G s B
-     * s A s and R d G d B d A d . The color specified by {@see glBlendColor} is referred to as R c G c B c
-     * A c . They are understood to have integer values between 0 and k R k G k B k A , where
+     * In the table and in subsequent equations, first source, second source
+     * and destination color components are referred to as    R s0  G s0  B
+     * s0  A s0   ,    R s1  G s1  B s1  A s1   , and    R d  G d  B d  A d
+     * , respectively. The color specified by {@see GL46::glBlendColor} is
+     * referred to as    R c  G c  B c  A c   . They are understood to have
+     * integer values between 0 and    k R  k G  k B  k A   , where
      *
-     * k c = 2 m c - 1
+     *    k c  =  2  m c    - 1
      *
-     * and m R m G m B m A is the number of red, green, blue, and alpha bitplanes.
+     * and    m R  m G  m B  m A    is the number of red, green, blue, and
+     * alpha bitplanes.
      *
-     * Source and destination scale factors are referred to as s R s G s B s A and d R d G d B d A . All scale
-     * factors have range 0 1 .
+     * Source and destination scale factors are referred to as    s R  s G  s
+     * B  s A    and    d R  d G  d B  d A   . All scale factors have range
+     *  0 1  .
      *
-     * **Parameter** **RGB Factor** **Alpha Factor** `GL_ZERO` 0 0 0 0 `GL_ONE` 1 1 1 1 `GL_SRC_COLOR` R s k R G s k
-     * G B s k B A s k A `GL_ONE_MINUS_SRC_COLOR` 1 1 1 1 - R s k R G s k G B s k B 1 - A s k A `GL_DST_COLOR` R d k
-     * R G d k G B d k B A d k A `GL_ONE_MINUS_DST_COLOR` 1 1 1 - R d k R G d k G B d k B 1 - A d k A `GL_SRC_ALPHA`
-     * A s k A A s k A A s k A A s k A `GL_ONE_MINUS_SRC_ALPHA` 1 1 1 - A s k A A s k A A s k A 1 - A s k A
-     * `GL_DST_ALPHA` A d k A A d k A A d k A A d k A `GL_ONE_MINUS_DST_ALPHA` 1 1 1 - A d k A A d k A A d k A 1 - A
-     * d k A `GL_CONSTANT_COLOR` R c G c B c A c `GL_ONE_MINUS_CONSTANT_COLOR` 1 1 1 - R c G c B c 1 - A c
-     * `GL_CONSTANT_ALPHA` A c A c A c A c `GL_ONE_MINUS_CONSTANT_ALPHA` 1 1 1 - A c A c A c 1 - A c
-     * `GL_SRC_ALPHA_SATURATE` i i i 1
-     *
+     * | {@see GL46::GL_ZERO}                     |    0 0 0                                             |   0               |
+     * | {@see GL46::GL_ONE}                      |    1 1 1                                             |   1               |
+     * | {@see GL46::GL_SRC_COLOR}                |     R s0  k R    G s0  k G    B s0  k B              |    A s0  k A      |
+     * | {@see GL46::GL_ONE_MINUS_SRC_COLOR}      |     1 1 1  -   R s0  k R    G s0  k G    B s0  k B   |    1 -  A s0  k A |
+     * | {@see GL46::GL_DST_COLOR}                |     R d  k R    G d  k G    B d  k B                 |    A d  k A       |
+     * | {@see GL46::GL_ONE_MINUS_DST_COLOR}      |     1 1 1  -   R d  k R    G d  k G    B d  k B      |    1 -  A d  k A  |
+     * | {@see GL46::GL_SRC_ALPHA}                |     A s0  k A    A s0  k A    A s0  k A              |    A s0  k A      |
+     * | {@see GL46::GL_ONE_MINUS_SRC_ALPHA}      |     1 1 1  -   A s0  k A    A s0  k A    A s0  k A   |    1 -  A s0  k A |
+     * | {@see GL46::GL_DST_ALPHA}                |     A d  k A    A d  k A    A d  k A                 |    A d  k A       |
+     * | {@see GL46::GL_ONE_MINUS_DST_ALPHA}      |     1 1 1  -   A d  k A    A d  k A    A d  k A      |    1 -  A d  k A  |
+     * | {@see GL46::GL_CONSTANT_COLOR}           |    R c  G c  B c                                     |   A c             |
+     * | {@see GL46::GL_ONE_MINUS_CONSTANT_COLOR} |     1 1 1  -  R c  G c  B c                          |    1 - A c        |
+     * | {@see GL46::GL_CONSTANT_ALPHA}           |    A c  A c  A c                                     |   A c             |
+     * | {@see GL46::GL_ONE_MINUS_CONSTANT_ALPHA} |     1 1 1  -  A c  A c  A c                          |    1 - A c        |
+     * | {@see GL46::GL_SRC_ALPHA_SATURATE}       |    i i i                                             |   1               |
+     * | {@see GL46::GL_SRC1_COLOR}               |     R s1  k R    G s1  k G    B s1  k B              |    A s1  k A      |
+     * | {@see GL46::GL_ONE_MINUS_SRC1_COLOR}     |     1 1 1 1  -   R s1  k R    G s1  k G    B s1  k B |    1 -  A s1  k A |
+     * | {@see GL46::GL_SRC1_ALPHA}               |     A s1  k A    A s1  k A    A s1  k A              |    A s1  k A      |
+     * | {@see GL46::GL_ONE_MINUS_SRC1_ALPHA}     |     1 1 1  -   A s1  k A    A s1  k A    A s1  k A   |    1 -  A s1  k A |
      * In the table,
      *
-     * i = min ⁡ A s 1 - A d
+     *    i =  min &amp;af;  A s   1 -  A d
      *
-     * To determine the blended RGBA values of a pixel when drawing in RGBA mode, the system uses the following
-     * equations:
+     * To determine the blended RGBA values of a pixel, the system uses the
+     * following equations:
      *
-     * R d = min ⁡ k R R s ⁢ s R + R d ⁢ d R G d = min ⁡ k G G s ⁢ s G + G d ⁢ d G B d = min ⁡ k B B s
-     * ⁢ s B + B d ⁢ d B A d = min ⁡ k A A s ⁢ s A + A d ⁢ d A
+     *    R d  =  min &amp;af;  k R   R s  &amp;it; s R  + R d  &amp;it; d R
+     *         G d  =  min &amp;af;  k G   G s  &amp;it; s G  + G d  &amp;it;
+     * d G          B d  =  min &amp;af;  k B   B s  &amp;it; s B  + B d
+     * &amp;it; d B          A d  =  min &amp;af;  k A   A s  &amp;it; s A  +
+     * A d  &amp;it; d A
      *
-     * Despite the apparent precision of the above equations, blending arithmetic is not exactly specified, because
-     * blending operates with imprecise integer color values. However, a blend factor that should be equal to 1 is
-     * guaranteed not to modify its multiplicand, and a blend factor equal to 0 reduces its multiplicand to 0. For
-     * example, when *`srcRGB`* is `GL_SRC_ALPHA`, *`dstRGB`* is `GL_ONE_MINUS_SRC_ALPHA`, and A s is equal to k A ,
+     * Despite the apparent precision of the above equations, blending
+     * arithmetic is not exactly specified, because blending operates with
+     * imprecise integer color values. However, a blend factor that should be
+     * equal to 1 is guaranteed not to modify its multiplicand, and a blend
+     * factor equal to 0 reduces its multiplicand to 0. For example, when
+     * $srcRGB is {@see GL46::GL_SRC_ALPHA}, $dstRGB is
+     * {@see GL46::GL_ONE_MINUS_SRC_ALPHA}, and   A s   is equal to   k A  ,
      * the equations reduce to simple replacement:
      *
-     * R d = R s G d = G s B d = B s A d = A s
+     *    R d  = R s       G d  = G s       B d  = B s       A d  = A s
      *
      * @see http://docs.gl/gl2/glBlendFuncSeparate
-     * @see http://docs.gl/gl3/glBlendFuncSeparate
      * @see http://docs.gl/gl4/glBlendFuncSeparate
      * @since 1.4
-     * @param int $sfactorRGB
-     * @param int $dfactorRGB
-     * @param int $sfactorAlpha
-     * @param int $dfactorAlpha
+     * @param int|\FFI\CData|\FFI\CInt $sfactorRGB
+     * @param int|\FFI\CData|\FFI\CInt $dfactorRGB
+     * @param int|\FFI\CData|\FFI\CInt $sfactorAlpha
+     * @param int|\FFI\CData|\FFI\CInt $dfactorAlpha
      * @return void
      */
-    public static function glBlendFuncSeparate(int $sfactorRGB, int $dfactorRGB, int $sfactorAlpha, int $dfactorAlpha): void
+    public function glBlendFuncSeparate($sfactorRGB, $dfactorRGB, $sfactorAlpha, $dfactorAlpha): void
     {
-        assert(version_compare(self::$info->version, '1.4') >= 0, __FUNCTION__ . ' is available since OpenGL 1.4, but only OpenGL '. self::$info->version . ' is available');
-        assert($sfactorRGB >= 0 && $sfactorRGB <= 4_294_967_295, 'Argument $sfactorRGB overflow: C type GLenum is required');
-        assert($dfactorRGB >= 0 && $dfactorRGB <= 4_294_967_295, 'Argument $dfactorRGB overflow: C type GLenum is required');
-        assert($sfactorAlpha >= 0 && $sfactorAlpha <= 4_294_967_295, 'Argument $sfactorAlpha overflow: C type GLenum is required');
-        assert($dfactorAlpha >= 0 && $dfactorAlpha <= 4_294_967_295, 'Argument $dfactorAlpha overflow: C type GLenum is required');
+        $sfactorRGB = $sfactorRGB instanceof \FFI\CData ? $sfactorRGB->cdata : $sfactorRGB;
+        $dfactorRGB = $dfactorRGB instanceof \FFI\CData ? $dfactorRGB->cdata : $dfactorRGB;
+        $sfactorAlpha = $sfactorAlpha instanceof \FFI\CData ? $sfactorAlpha->cdata : $sfactorAlpha;
+        $dfactorAlpha = $dfactorAlpha instanceof \FFI\CData ? $dfactorAlpha->cdata : $dfactorAlpha;
 
-        $proc = self::getProc('glBlendFuncSeparate', 'void (*)(GLenum sfactorRGB, GLenum dfactorRGB, GLenum sfactorAlpha, GLenum dfactorAlpha)');
+        assert(Assert::uint16($sfactorRGB), 'Argument $sfactorRGB must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Assert::uint16($dfactorRGB), 'Argument $dfactorRGB must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Assert::uint16($sfactorAlpha), 'Argument $sfactorAlpha must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Assert::uint16($dfactorAlpha), 'Argument $dfactorAlpha must be a C-like GLenum, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glBlendFuncSeparate', 'void (*)(GLenum sfactorRGB, GLenum dfactorRGB, GLenum sfactorAlpha, GLenum dfactorAlpha)');
         $proc($sfactorRGB, $dfactorRGB, $sfactorAlpha, $dfactorAlpha);
     }
 
     /**
-     * Specifies multiple sets of geometric primitives with very few subroutine calls. Instead of calling a GL
-     * procedure to pass each individual vertex, normal, texture coordinate, edge flag, or color, you can prespecify
-     * separate arrays of vertices, normals, and colors and use them to construct a sequence of primitives with a
-     * single call to `glMultiDrawArrays`.
+     * {@see GL46::glMultiDrawArrays} specifies multiple sets of geometric
+     * primitives with very few subroutine calls. Instead of calling a GL
+     * procedure to pass each individual vertex, normal, texture coordinate,
+     * edge flag, or color, you can prespecify separate arrays of vertices,
+     * normals, and colors and use them to construct a sequence of primitives
+     * with a single call to {@see GL46::glMultiDrawArrays}.
      *
-     *  - `glMultiDrawArrays` behaves identically to {@see glDrawArrays} except that *`primcount`* separate
-     * ranges of elements are specified instead.
+     * {@see GL46::glMultiDrawArrays} behaves identically to
+     * {@see GL46::glDrawArrays} except that $drawcount separate ranges of
+     * elements are specified instead.
      *
-     * When `glMultiDrawArrays` is called, it uses *`count`* sequential elements from each enabled array to construct
-     * a sequence of geometric primitives, beginning with element *`first`*. *`mode`* specifies what kind of
-     * primitives are constructed, and how the array elements construct those primitives. If `GL_VERTEX_ARRAY` is not
-     * enabled, no geometric primitives are generated.
+     * When {@see GL46::glMultiDrawArrays} is called, it uses $count
+     * sequential elements from each enabled array to construct a sequence of
+     * geometric primitives, beginning with element $first. $mode specifies
+     * what kind of primitives are constructed, and how the array elements
+     * construct those primitives.
      *
-     * Vertex attributes that are modified by `glMultiDrawArrays` have an unspecified value after `glMultiDrawArrays`
-     * returns. For example, if `GL_COLOR_ARRAY` is enabled, the value of the current color is undefined after
-     * `glMultiDrawArrays` executes. Attributes that aren't modified remain well defined.
+     * Vertex attributes that are modified by {@see GL46::glMultiDrawArrays}
+     * have an unspecified value after {@see GL46::glMultiDrawArrays}
+     * returns. Attributes that aren't modified remain well defined.
      *
      * @see http://docs.gl/gl2/glMultiDrawArrays
-     * @see http://docs.gl/gl3/glMultiDrawArrays
      * @see http://docs.gl/gl4/glMultiDrawArrays
      * @since 1.4
-     * @param int $mode
+     * @param int|\FFI\CData|\FFI\CInt $mode
      * @param \FFI\CData|\FFI\CIntPtr|null $first
      * @param \FFI\CData|\FFI\CIntPtr|null $count
-     * @param int $drawcount
+     * @param int|\FFI\CData|\FFI\CInt $drawcount
      * @return void
      */
-    public static function glMultiDrawArrays(int $mode, ?\FFI\CData $first, ?\FFI\CData $count, int $drawcount): void
+    public function glMultiDrawArrays($mode, ?\FFI\CData $first, ?\FFI\CData $count, $drawcount): void
     {
-        assert(version_compare(self::$info->version, '1.4') >= 0, __FUNCTION__ . ' is available since OpenGL 1.4, but only OpenGL '. self::$info->version . ' is available');
-        assert($mode >= 0 && $mode <= 4_294_967_295, 'Argument $mode overflow: C type GLenum is required');
-        assert($drawcount >= \PHP_INT_MIN && $drawcount <= \PHP_INT_MAX, 'Argument $drawcount overflow: C type GLsizei is required');
+        $mode = $mode instanceof \FFI\CData ? $mode->cdata : $mode;
+        $drawcount = $drawcount instanceof \FFI\CData ? $drawcount->cdata : $drawcount;
 
-        $proc = self::getProc('glMultiDrawArrays', 'void (*)(GLenum mode, const GLint *first, const GLsizei *count, GLsizei drawcount)');
+        assert(Assert::uint16($mode), 'Argument $mode must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Assert::int16($drawcount), 'Argument $drawcount must be a C-like GLsizei, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glMultiDrawArrays', 'void (*)(GLenum mode, const GLint *first, const GLsizei *count, GLsizei drawcount)');
         $proc($mode, $first, $count, $drawcount);
     }
 
     /**
-     * Specifies multiple sets of geometric primitives with very few subroutine calls. Instead of calling a GL
-     * function to pass each individual vertex, normal, texture coordinate, edge flag, or color, you can prespecify
-     * separate arrays of vertices, normals, and so on, and use them to construct a sequence of primitives with a
-     * single call to `glMultiDrawElements`.
+     * {@see GL46::glMultiDrawElements} specifies multiple sets of geometric
+     * primitives with very few subroutine calls. Instead of calling a GL
+     * function to pass each individual vertex, normal, texture coordinate,
+     * edge flag, or color, you can prespecify separate arrays of vertices,
+     * normals, and so on, and use them to construct a sequence of primitives
+     * with a single call to {@see GL46::glMultiDrawElements}.
      *
-     *  - `glMultiDrawElements` is identical in operation to {@see glDrawElements} except that
-     * *`primcount`* separate lists of elements are specified.
+     * {@see GL46::glMultiDrawElements} is identical in operation to
+     * {@see GL46::glDrawElements} except that $drawcount separate lists of
+     * elements are specified.
      *
-     * Vertex attributes that are modified by `glMultiDrawElements` have an unspecified value after
-     * `glMultiDrawElements` returns. For example, if `GL_COLOR_ARRAY` is enabled, the value of the current color is
-     * undefined after `glMultiDrawElements` executes. Attributes that aren't modified maintain their previous
-     * values.
+     * Vertex attributes that are modified by
+     * {@see GL46::glMultiDrawElements} have an unspecified value after
+     * {@see GL46::glMultiDrawElements} returns. Attributes that aren't
+     * modified maintain their previous values.
      *
      * @see http://docs.gl/gl2/glMultiDrawElements
-     * @see http://docs.gl/gl3/glMultiDrawElements
      * @see http://docs.gl/gl4/glMultiDrawElements
      * @since 1.4
-     * @param int $mode
+     * @param int|\FFI\CData|\FFI\CInt $mode
      * @param \FFI\CData|\FFI\CIntPtr|null $count
-     * @param int $type
+     * @param int|\FFI\CData|\FFI\CInt $type
      * @param \FFI\CData|\FFI\CPtrPtr|null $indices
-     * @param int $drawcount
+     * @param int|\FFI\CData|\FFI\CInt $drawcount
      * @return void
      */
-    public static function glMultiDrawElements(int $mode, ?\FFI\CData $count, int $type, ?\FFI\CData $indices, int $drawcount): void
+    public function glMultiDrawElements($mode, ?\FFI\CData $count, $type, ?\FFI\CData $indices, $drawcount): void
     {
-        assert(version_compare(self::$info->version, '1.4') >= 0, __FUNCTION__ . ' is available since OpenGL 1.4, but only OpenGL '. self::$info->version . ' is available');
-        assert($mode >= 0 && $mode <= 4_294_967_295, 'Argument $mode overflow: C type GLenum is required');
-        assert($type >= 0 && $type <= 4_294_967_295, 'Argument $type overflow: C type GLenum is required');
-        assert($drawcount >= \PHP_INT_MIN && $drawcount <= \PHP_INT_MAX, 'Argument $drawcount overflow: C type GLsizei is required');
+        $mode = $mode instanceof \FFI\CData ? $mode->cdata : $mode;
+        $type = $type instanceof \FFI\CData ? $type->cdata : $type;
+        $drawcount = $drawcount instanceof \FFI\CData ? $drawcount->cdata : $drawcount;
 
-        $proc = self::getProc('glMultiDrawElements', 'void (*)(GLenum mode, const GLsizei *count, GLenum type, const void *const*indices, GLsizei drawcount)');
+        assert(Assert::uint16($mode), 'Argument $mode must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Assert::uint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Assert::int16($drawcount), 'Argument $drawcount must be a C-like GLsizei, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glMultiDrawElements', 'void (*)(GLenum mode, const GLsizei *count, GLenum type, const void *const*indices, GLsizei drawcount)');
         $proc($mode, $count, $type, $indices, $drawcount);
     }
 
     /**
+     * The following values are accepted for $pname:
+     *
+     *  - {@see GL46::GL_POINT_FADE_THRESHOLD_SIZE}: $params is a single
+     *    floating-point value that specifies the
+     *    threshold value to which point sizes are clamped if they exceed the
+     *    specified value. The default value is 1.0.
+     *
+     *  - {@see GL46::GL_POINT_SPRITE_COORD_ORIGIN}: $params is a single enum
+     *    specifying the point sprite texture
+     *    coordinate origin, either {@see GL46::GL_LOWER_LEFT} or
+     *    {@see GL46::GL_UPPER_LEFT}. The default value is
+     *    {@see GL46::GL_UPPER_LEFT}.
+     *
+     * @see http://docs.gl/gl2/glPointParameter
+     * @see http://docs.gl/gl4/glPointParameter
      * @since 1.4
-     * @param int $pname
-     * @param float $param
+     * @param int|\FFI\CData|\FFI\CInt $pname
+     * @param float|\FFI\CData|\FFI\CFloat $param
      * @return void
      */
-    public static function glPointParameterf(int $pname, float $param): void
+    public function glPointParameterf($pname, $param): void
     {
-        assert(version_compare(self::$info->version, '1.4') >= 0, __FUNCTION__ . ' is available since OpenGL 1.4, but only OpenGL '. self::$info->version . ' is available');
-        assert($pname >= 0 && $pname <= 4_294_967_295, 'Argument $pname overflow: C type GLenum is required');
-        assert($param >= -3.40282e38 && $param <= 3.40282e38, 'Argument $param overflow: C type GLfloat is required');
+        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
+        $param = $param instanceof \FFI\CData ? $param->cdata : $param;
 
-        $proc = self::getProc('glPointParameterf', 'void (*)(GLenum pname, GLfloat param)');
+        assert(Assert::uint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Assert::float32($param), 'Argument $param must be a C-like GLfloat, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glPointParameterf', 'void (*)(GLenum pname, GLfloat param)');
         $proc($pname, $param);
     }
 
     /**
+     * The following values are accepted for $pname:
+     *
+     *  - {@see GL46::GL_POINT_FADE_THRESHOLD_SIZE}: $params is a single
+     *    floating-point value that specifies the
+     *    threshold value to which point sizes are clamped if they exceed the
+     *    specified value. The default value is 1.0.
+     *
+     *  - {@see GL46::GL_POINT_SPRITE_COORD_ORIGIN}: $params is a single enum
+     *    specifying the point sprite texture
+     *    coordinate origin, either {@see GL46::GL_LOWER_LEFT} or
+     *    {@see GL46::GL_UPPER_LEFT}. The default value is
+     *    {@see GL46::GL_UPPER_LEFT}.
+     *
+     * @see http://docs.gl/gl2/glPointParameter
+     * @see http://docs.gl/gl4/glPointParameter
      * @since 1.4
-     * @param int $pname
+     * @param int|\FFI\CData|\FFI\CInt $pname
      * @param \FFI\CData|\FFI\CFloatPtr|null $params
      * @return void
      */
-    public static function glPointParameterfv(int $pname, ?\FFI\CData $params): void
+    public function glPointParameterfv($pname, ?\FFI\CData $params): void
     {
-        assert(version_compare(self::$info->version, '1.4') >= 0, __FUNCTION__ . ' is available since OpenGL 1.4, but only OpenGL '. self::$info->version . ' is available');
-        assert($pname >= 0 && $pname <= 4_294_967_295, 'Argument $pname overflow: C type GLenum is required');
+        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
 
-        $proc = self::getProc('glPointParameterfv', 'void (*)(GLenum pname, const GLfloat *params)');
+        assert(Assert::uint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glPointParameterfv', 'void (*)(GLenum pname, const GLfloat *params)');
         $proc($pname, $params);
     }
 
     /**
+     * The following values are accepted for $pname:
+     *
+     *  - {@see GL46::GL_POINT_FADE_THRESHOLD_SIZE}: $params is a single
+     *    floating-point value that specifies the
+     *    threshold value to which point sizes are clamped if they exceed the
+     *    specified value. The default value is 1.0.
+     *
+     *  - {@see GL46::GL_POINT_SPRITE_COORD_ORIGIN}: $params is a single enum
+     *    specifying the point sprite texture
+     *    coordinate origin, either {@see GL46::GL_LOWER_LEFT} or
+     *    {@see GL46::GL_UPPER_LEFT}. The default value is
+     *    {@see GL46::GL_UPPER_LEFT}.
+     *
+     * @see http://docs.gl/gl2/glPointParameter
+     * @see http://docs.gl/gl4/glPointParameter
      * @since 1.4
-     * @param int $pname
-     * @param int $param
+     * @param int|\FFI\CData|\FFI\CInt $pname
+     * @param int|\FFI\CData|\FFI\CInt $param
      * @return void
      */
-    public static function glPointParameteri(int $pname, int $param): void
+    public function glPointParameteri($pname, $param): void
     {
-        assert(version_compare(self::$info->version, '1.4') >= 0, __FUNCTION__ . ' is available since OpenGL 1.4, but only OpenGL '. self::$info->version . ' is available');
-        assert($pname >= 0 && $pname <= 4_294_967_295, 'Argument $pname overflow: C type GLenum is required');
-        assert($param >= \PHP_INT_MIN && $param <= \PHP_INT_MAX, 'Argument $param overflow: C type GLint is required');
+        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
+        $param = $param instanceof \FFI\CData ? $param->cdata : $param;
 
-        $proc = self::getProc('glPointParameteri', 'void (*)(GLenum pname, GLint param)');
+        assert(Assert::uint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Assert::int16($param), 'Argument $param must be a C-like GLint, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glPointParameteri', 'void (*)(GLenum pname, GLint param)');
         $proc($pname, $param);
     }
 
     /**
+     * The following values are accepted for $pname:
+     *
+     *  - {@see GL46::GL_POINT_FADE_THRESHOLD_SIZE}: $params is a single
+     *    floating-point value that specifies the
+     *    threshold value to which point sizes are clamped if they exceed the
+     *    specified value. The default value is 1.0.
+     *
+     *  - {@see GL46::GL_POINT_SPRITE_COORD_ORIGIN}: $params is a single enum
+     *    specifying the point sprite texture
+     *    coordinate origin, either {@see GL46::GL_LOWER_LEFT} or
+     *    {@see GL46::GL_UPPER_LEFT}. The default value is
+     *    {@see GL46::GL_UPPER_LEFT}.
+     *
+     * @see http://docs.gl/gl2/glPointParameter
+     * @see http://docs.gl/gl4/glPointParameter
      * @since 1.4
-     * @param int $pname
+     * @param int|\FFI\CData|\FFI\CInt $pname
      * @param \FFI\CData|\FFI\CIntPtr|null $params
      * @return void
      */
-    public static function glPointParameteriv(int $pname, ?\FFI\CData $params): void
+    public function glPointParameteriv($pname, ?\FFI\CData $params): void
     {
-        assert(version_compare(self::$info->version, '1.4') >= 0, __FUNCTION__ . ' is available since OpenGL 1.4, but only OpenGL '. self::$info->version . ' is available');
-        assert($pname >= 0 && $pname <= 4_294_967_295, 'Argument $pname overflow: C type GLenum is required');
+        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
 
-        $proc = self::getProc('glPointParameteriv', 'void (*)(GLenum pname, const GLint *params)');
+        assert(Assert::uint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glPointParameteriv', 'void (*)(GLenum pname, const GLint *params)');
         $proc($pname, $params);
     }
 
     /**
-     * The `GL_BLEND_COLOR` may be used to calculate the source and destination blending factors. The color
-     * components are clamped to the range 0 1 before being stored. See {@see glBlendFunc} for a complete
-     * description of the blending operations. Initially the `GL_BLEND_COLOR` is set to (0, 0, 0, 0).
+     * The {@see GL46::GL_BLEND_COLOR} may be used to calculate the source
+     * and destination blending factors. The color components are clamped to
+     * the range    0 1   before being stored. See {@see GL46::glBlendFunc}
+     * for a complete description of the blending operations. Initially the
+     * {@see GL46::GL_BLEND_COLOR} is set to (0, 0, 0, 0).
      *
      * @see http://docs.gl/gl2/glBlendColor
-     * @see http://docs.gl/gl3/glBlendColor
      * @see http://docs.gl/gl4/glBlendColor
      * @since 1.4
-     * @param float $red
-     * @param float $green
-     * @param float $blue
-     * @param float $alpha
+     * @param float|\FFI\CData|\FFI\CFloat $red
+     * @param float|\FFI\CData|\FFI\CFloat $green
+     * @param float|\FFI\CData|\FFI\CFloat $blue
+     * @param float|\FFI\CData|\FFI\CFloat $alpha
      * @return void
      */
-    public static function glBlendColor(float $red, float $green, float $blue, float $alpha): void
+    public function glBlendColor($red, $green, $blue, $alpha): void
     {
-        assert(version_compare(self::$info->version, '1.4') >= 0, __FUNCTION__ . ' is available since OpenGL 1.4, but only OpenGL '. self::$info->version . ' is available');
-        assert($red >= -3.40282e38 && $red <= 3.40282e38, 'Argument $red overflow: C type GLfloat is required');
-        assert($green >= -3.40282e38 && $green <= 3.40282e38, 'Argument $green overflow: C type GLfloat is required');
-        assert($blue >= -3.40282e38 && $blue <= 3.40282e38, 'Argument $blue overflow: C type GLfloat is required');
-        assert($alpha >= -3.40282e38 && $alpha <= 3.40282e38, 'Argument $alpha overflow: C type GLfloat is required');
+        $red = $red instanceof \FFI\CData ? $red->cdata : $red;
+        $green = $green instanceof \FFI\CData ? $green->cdata : $green;
+        $blue = $blue instanceof \FFI\CData ? $blue->cdata : $blue;
+        $alpha = $alpha instanceof \FFI\CData ? $alpha->cdata : $alpha;
 
-        $proc = self::getProc('glBlendColor', 'void (*)(GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha)');
+        assert(Assert::float32($red), 'Argument $red must be a C-like GLfloat, but incompatible or overflow value given');
+        assert(Assert::float32($green), 'Argument $green must be a C-like GLfloat, but incompatible or overflow value given');
+        assert(Assert::float32($blue), 'Argument $blue must be a C-like GLfloat, but incompatible or overflow value given');
+        assert(Assert::float32($alpha), 'Argument $alpha must be a C-like GLfloat, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glBlendColor', 'void (*)(GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha)');
         $proc($red, $green, $blue, $alpha);
     }
 
     /**
-     * The blend equations determine how a new pixel (the ''source'' color) is combined with a pixel already in the
-     * framebuffer (the ''destination'' color). This function sets both the RGB blend equation and the alpha blend
-     * equation to a single equation.
+     * The blend equations determine how a new pixel (the ''source'' color)
+     * is combined with a pixel already in the framebuffer (the
+     * ''destination'' color). This function sets both the RGB blend equation
+     * and the alpha blend equation to a single equation.
+     * {@see GL46::glBlendEquationi} specifies the blend equation for a
+     * single draw buffer whereas {@see GL46::glBlendEquation} sets the blend
+     * equation for all draw buffers.
      *
-     * These equations use the source and destination blend factors specified by either {@see glBlendFunc} or
-     * {@see glBlendFuncSeparate}. See {@see glBlendFunc} or
-     * {@see glBlendFuncSeparate} for a description of the various blend factors.
+     * These equations use the source and destination blend factors specified
+     * by either {@see GL46::glBlendFunc} or
+     * {@see GL46::glBlendFuncSeparate}. See {@see GL46::glBlendFunc} or
+     * {@see GL46::glBlendFuncSeparate} for a description of the various
+     * blend factors.
      *
-     * In the equations that follow, source and destination color components are referred to as R s G s B s A s and R
-     * d G d B d A d , respectively. The result color is referred to as R r G r B r A r . The source and destination
-     * blend factors are denoted s R s G s B s A and d R d G d B d A , respectively. For these equations all color
-     * components are understood to have values in the range 0 1 .
+     * In the equations that follow, source and destination color components
+     * are referred to as    R s  G s  B s  A s    and    R d  G d  B d  A d
+     *  , respectively. The result color is referred to as    R r  G r  B r
+     * A r   . The source and destination blend factors are denoted    s R  s
+     * G  s B  s A    and    d R  d G  d B  d A   , respectively. For these
+     * equations all color components are understood to have values in the
+     * range    0 1  .          Mode     RGB Components     Alpha Component
+     *      {@see GL46::GL_FUNC_ADD}      Rr =  R s  &amp;it; s R  + R d
+     * &amp;it; d R        Gr =  G s  &amp;it; s G  + G d  &amp;it; d G
+     *  Br =  B s  &amp;it; s B  + B d  &amp;it; d B          Ar =  A s
+     * &amp;it; s A  + A d  &amp;it; d A
+     * {@see GL46::GL_FUNC_SUBTRACT}      Rr =  R s  &amp;it; s R  - R d
+     * &amp;it; d R        Gr =  G s  &amp;it; s G  - G d  &amp;it; d G
+     *  Br =  B s  &amp;it; s B  - B d  &amp;it; d B          Ar =  A s
+     * &amp;it; s A  - A d  &amp;it; d A
+     * {@see GL46::GL_FUNC_REVERSE_SUBTRACT}      Rr =  R d  &amp;it; d R  -
+     * R s  &amp;it; s R        Gr =  G d  &amp;it; d G  - G s  &amp;it; s G
+     *       Br =  B d  &amp;it; d B  - B s  &amp;it; s B          Ar =  A d
+     * &amp;it; d A  - A s  &amp;it; s A         {@see GL46::GL_MIN}      Rr
+     * =  min &amp;af;   R s    R d          Gr =  min &amp;af;   G s    G d
+     *         Br =  min &amp;af;   B s    B d            Ar =  min &amp;af;
+     *  A s    A d           {@see GL46::GL_MAX}      Rr =  max &amp;af;   R
+     * s    R d          Gr =  max &amp;af;   G s    G d          Br =  max
+     * &amp;af;   B s    B d            Ar =  max &amp;af;   A s    A d
      *
-     * **Mode** **RGB Components** **Alpha Component** `GL_FUNC_ADD` Rr = R s ⁢ s R + R d ⁢ d R
+     * The results of these equations are clamped to the range    0 1  .
      *
-     * Gr = G s ⁢ s G + G d ⁢ d G
+     * The {@see GL46::GL_MIN} and {@see GL46::GL_MAX} equations are useful
+     * for applications that analyze image data (image thresholding against a
+     * constant color, for example). The {@see GL46::GL_FUNC_ADD} equation is
+     * useful for antialiasing and transparency, among other things.
      *
-     * Br = B s ⁢ s B + B d ⁢ d B
-     *
-     * Ar = A s ⁢ s A + A d ⁢ d A
-     *
-     *  - `GL_FUNC_SUBTRACT` Rr = R s ⁢ s R - R d ⁢ d R
-     *
-     * Gr = G s ⁢ s G - G d ⁢ d G
-     *
-     * Br = B s ⁢ s B - B d ⁢ d B
-     *
-     * Ar = A s ⁢ s A - A d ⁢ d A
-     *
-     *  - `GL_FUNC_REVERSE_SUBTRACT` Rr = R d ⁢ d R - R s ⁢ s R
-     *
-     * Gr = G d ⁢ d G - G s ⁢ s G
-     *
-     * Br = B d ⁢ d B - B s ⁢ s B
-     *
-     * Ar = A d ⁢ d A - A s ⁢ s A
-     *
-     *  - `GL_MIN` Rr = min ⁡ R s R d
-     *
-     * Gr = min ⁡ G s G d
-     *
-     * Br = min ⁡ B s B d
-     *
-     * Ar = min ⁡ A s A d
-     *
-     *  - `GL_MAX` Rr = max ⁡ R s R d
-     *
-     * Gr = max ⁡ G s G d
-     *
-     * Br = max ⁡ B s B d
-     *
-     * Ar = max ⁡ A s A d
-     *
-     * The results of these equations are clamped to the range 0 1 .
-     *
-     * The `GL_MIN` and `GL_MAX` equations are useful for applications that analyze image data (image thresholding
-     * against a constant color, for example). The `GL_FUNC_ADD` equation is useful for antialiasing and
-     * transparency, among other things.
-     *
-     * Initially, both the RGB blend equation and the alpha blend equation are set to `GL_FUNC_ADD`.
+     * Initially, both the RGB blend equation and the alpha blend equation
+     * are set to {@see GL46::GL_FUNC_ADD}.
      *
      * @see http://docs.gl/gl2/glBlendEquation
-     * @see http://docs.gl/gl3/glBlendEquation
      * @see http://docs.gl/gl4/glBlendEquation
      * @since 1.4
-     * @param int $mode
+     * @param int|\FFI\CData|\FFI\CInt $mode
      * @return void
      */
-    public static function glBlendEquation(int $mode): void
+    public function glBlendEquation($mode): void
     {
-        assert(version_compare(self::$info->version, '1.4') >= 0, __FUNCTION__ . ' is available since OpenGL 1.4, but only OpenGL '. self::$info->version . ' is available');
-        assert($mode >= 0 && $mode <= 4_294_967_295, 'Argument $mode overflow: C type GLenum is required');
+        $mode = $mode instanceof \FFI\CData ? $mode->cdata : $mode;
 
-        $proc = self::getProc('glBlendEquation', 'void (*)(GLenum mode)');
+        assert(Assert::uint16($mode), 'Argument $mode must be a C-like GLenum, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glBlendEquation', 'void (*)(GLenum mode)');
         $proc($mode);
     }
 }

@@ -75,7 +75,7 @@ final class GLLibrary extends BaseLibrary
      */
     public function getHeaders(): string
     {
-        return __DIR__ . '/../../resources/gl.h';
+        return __DIR__ . '/../../resources/headers/gl.h';
     }
 
     /**

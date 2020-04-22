@@ -14,7 +14,7 @@ $sdl = SDL::getInstance();
 $sdl->SDL_Init(SDL::SDL_INIT_VIDEO);
 
 $mid = SDL::SDL_WINDOWPOS_CENTERED;
-$window = $sdl->SDL_CreateWindow('Window', $mid, $mid, 3440, 1440, SDL::SDL_WINDOW_OPENGL | SDL::SDL_WINDOW_SHOWN | SDL::SDL_WINDOW_FULLSCREEN);
+$window = $sdl->SDL_CreateWindow('Window', $mid, $mid, 1920, 1080, SDL::SDL_WINDOW_OPENGL | SDL::SDL_WINDOW_SHOWN);
 
 $sdl->SDL_GL_SetAttribute(SDL::SDL_GL_CONTEXT_MAJOR_VERSION, 3);
 $sdl->SDL_GL_SetAttribute(SDL::SDL_GL_CONTEXT_MINOR_VERSION, 3);
@@ -22,36 +22,37 @@ $sdl->SDL_GL_SetAttribute(SDL::SDL_GL_CONTEXT_PROFILE_MASK, SDL::SDL_GL_CONTEXT_
 
 $context = $sdl->SDL_GL_CreateContext($window);
 
-GL::init(new GLLibrary());
-GL::getProc('wglSwapIntervalEXT', 'int (*)(int interval)')(0);
+$gl = new GL();
 
-echo 'Renderer: ' . FFI::string(GL::cast('char*', GL::glGetString(GL::GL_RENDERER))) . "\n";
-echo 'Version: ' . FFI::string(GL::cast('char*', GL::glGetString(GL::GL_VERSION))) . "\n";
+$gl->getProcAddress('wglSwapIntervalEXT', 'int (*)(int interval)')(0);
 
-GL::glEnable(GL::GL_DEPTH_TEST);
-GL::glEnable(GL::GL_LESS);
+echo 'Renderer: ' . FFI::string($gl->cast('char*', $gl->glGetString(GL::GL_RENDERER))) . "\n";
+echo 'Version: ' . FFI::string($gl->cast('char*', $gl->glGetString(GL::GL_VERSION))) . "\n";
 
-//enable_logger();
+$gl->glEnable(GL::GL_DEPTH_TEST);
+$gl->glEnable(GL::GL_LESS);
 
-$program = load_shaders(__DIR__ . '/shader.vert', __DIR__ . '/shader.frag');
+enable_logger($gl);
 
-$vertices = GL::arrayOf('GLfloat', [
+$program = load_shaders($gl, __DIR__ . '/shader.vert', __DIR__ . '/shader.frag');
+
+$vertices = $gl->array('GLfloat', [
      0.0,  0.5,  0.0,
      0.5, -0.5,  0.0,
     -0.5, -0.5,  0.0,
 ]);
 
-$vbo = GL::new('GLuint');
-GL::glGenBuffers(1, \FFI::addr($vbo));
-GL::glBindBuffer(GL::GL_ARRAY_BUFFER, $vbo->cdata);
-GL::glBufferData(GL::GL_ARRAY_BUFFER, FFI::sizeof($vertices), $vertices, GL::GL_STATIC_DRAW);
+$vbo = $gl->new('GLuint');
+$gl->glGenBuffers(1, \FFI::addr($vbo));
+$gl->glBindBuffer(GL::GL_ARRAY_BUFFER, $vbo->cdata);
+$gl->glBufferData(GL::GL_ARRAY_BUFFER, FFI::sizeof($vertices), $vertices, GL::GL_STATIC_DRAW);
 
-$vao = GL::new('GLuint');
-GL::glGenVertexArrays(1, \FFI::addr($vao));
-GL::glBindVertexArray($vao->cdata);
-GL::glEnableVertexAttribArray(0);
-GL::glBindBuffer(GL::GL_ARRAY_BUFFER, $vbo->cdata);
-GL::glVertexAttribPointer(0, 3, GL::GL_FLOAT, GL::GL_FALSE, 0, null);
+$vao = $gl->new('GLuint');
+$gl->glGenVertexArrays(1, \FFI::addr($vao));
+$gl->glBindVertexArray($vao->cdata);
+$gl->glEnableVertexAttribArray(0);
+$gl->glBindBuffer(GL::GL_ARRAY_BUFFER, $vbo->cdata);
+$gl->glVertexAttribPointer(0, 3, GL::GL_FLOAT, GL::GL_FALSE, 0, null);
 
 $event = $sdl->new(Event::class);
 while ($running ??= true) {
@@ -60,10 +61,10 @@ while ($running ??= true) {
         $running = false;
     }
 
-    GL::glClear(GL::GL_COLOR_BUFFER_BIT | GL::GL_DEPTH_BUFFER_BIT);
-    GL::glUseProgram($program);
-    GL::glBindVertexArray($vao->cdata);
-    GL::glDrawArrays(GL::GL_TRIANGLES, 0, 3);
+    $gl->glClear(GL::GL_COLOR_BUFFER_BIT | GL::GL_DEPTH_BUFFER_BIT);
+    $gl->glUseProgram($program);
+    $gl->glBindVertexArray($vao->cdata);
+    $gl->glDrawArrays(GL::GL_TRIANGLES, 0, 3);
 
     $sdl->SDL_GL_SwapWindow($window);
 }

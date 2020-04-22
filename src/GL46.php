@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Serafim\OpenGL;
 
+use Serafim\OpenGL\Support\Assert;
+
 /**
  * The OpenGL functionality up to version 4.6. Includes the deprecated symbols of the Compatibility Profile.
  *
@@ -146,88 +148,262 @@ class GL46 extends GL45
     public const GL_TRANSFORM_FEEDBACK_STREAM_OVERFLOW = 0x82ed;
 
     /**
+     * {@see GL46::glDeleteShader} frees the memory and invalidates the name
+     * associated with the shader object specified by $shader. This command
+     * effectively undoes the effects of a call to
+     * {@see GL46::glCreateShader}.
+     *
+     * If a shader object to be deleted is attached to a program object, it
+     * will be flagged for deletion, but it will not be deleted until it is
+     * no longer attached to any program object, for any rendering context
+     * (i.e., it must be detached from wherever it was attached before it
+     * will be deleted). A value of 0 for $shader will be silently ignored.
+     *
+     * To determine whether an object has been flagged for deletion, call
+     * {@see GL46::glGetShader} with arguments $shader and
+     * {@see GL46::GL_DELETE_STATUS}.
+     *
+     * @see http://docs.gl/gl2/glCompileShader
+     * @see http://docs.gl/gl2/glCreateShader
+     * @see http://docs.gl/gl2/glDeleteShader
+     * @see http://docs.gl/gl4/glCompileShader
+     * @see http://docs.gl/gl4/glCreateShader
+     * @see http://docs.gl/gl4/glDeleteShader
      * @since 4.6
-     * @param int $shader
+     * @param int|\FFI\CData|\FFI\CInt $shader
      * @param \FFI\CData|\FFI\CIntPtr|null $pEntryPoint
-     * @param int $numSpecializationConstants
+     * @param int|\FFI\CData|\FFI\CInt $numSpecializationConstants
      * @param \FFI\CData|\FFI\CIntPtr|null $pConstantIndex
      * @param \FFI\CData|\FFI\CIntPtr|null $pConstantValue
      * @return void
      */
-    public static function glSpecializeShader(
-        int $shader,
-        ?\FFI\CData $pEntryPoint,
-        int $numSpecializationConstants,
-        ?\FFI\CData $pConstantIndex,
-        ?\FFI\CData $pConstantValue
-    ): void {
-        assert(version_compare(self::$info->version, '4.6') >= 0, __FUNCTION__ . ' is available since OpenGL 4.6, but only OpenGL '. self::$info->version . ' is available');
-        assert($shader >= 0 && $shader <= 4_294_967_295, 'Argument $shader overflow: C type GLuint is required');
-        assert($numSpecializationConstants >= 0 && $numSpecializationConstants <= 4_294_967_295, 'Argument $numSpecializationConstants overflow: C type GLuint is required');
+    public function glSpecializeShader($shader, ?\FFI\CData $pEntryPoint, $numSpecializationConstants, ?\FFI\CData $pConstantIndex, ?\FFI\CData $pConstantValue): void
+    {
+        $shader = $shader instanceof \FFI\CData ? $shader->cdata : $shader;
+        $numSpecializationConstants = $numSpecializationConstants instanceof \FFI\CData ? $numSpecializationConstants->cdata : $numSpecializationConstants;
 
-        $proc = self::getProc('glSpecializeShader', 'void (*)(GLuint shader, const GLchar *pEntryPoint, GLuint numSpecializationConstants, const GLuint *pConstantIndex, const GLuint *pConstantValue)');
+        assert(Assert::uint16($shader), 'Argument $shader must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Assert::uint16($numSpecializationConstants), 'Argument $numSpecializationConstants must be a C-like GLuint, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glSpecializeShader', 'void (*)(GLuint shader, const GLchar *pEntryPoint, GLuint numSpecializationConstants, const GLuint *pConstantIndex, const GLuint *pConstantValue)');
         $proc($shader, $pEntryPoint, $numSpecializationConstants, $pConstantIndex, $pConstantValue);
     }
 
     /**
+     * {@see GL46::glMultiDrawArraysIndirect} specifies multiple geometric
+     * primitives with very few subroutine calls.
+     * {@see GL46::glMultiDrawArraysIndirect} behaves similarly to a
+     * multitude of calls to {@see GL46::glDrawArraysInstancedBaseInstance},
+     * execept that the parameters to each call to
+     * {@see GL46::glDrawArraysInstancedBaseInstance} are stored in an array
+     * in memory at the address given by $indirect, separated by the stride,
+     * in basic machine units, specified by $stride. If $stride is zero, then
+     * the array is assumed to be tightly packed in memory.
+     *
+     * The parameters addressed by $indirect are packed into an array of
+     * structures, each element of which takes the form (in C):
+     *
+     * <code>
+     *     typedef  struct {
+     *         uint  count;
+     *         uint  instanceCount;
+     *         uint  first;
+     *         uint  baseInstance;
+     *     } DrawArraysIndirectCommand;
+     * </code>
+     *
+     * A single call to {@see GL46::glMultiDrawArraysIndirect} is equivalent,
+     * assuming no errors are generated to:
+     *
+     * <code>
+     *     GLsizei n;
+     *     for (n = 0; n < drawcount; n++) {
+     *         const DrawArraysIndirectCommand *cmd;
+     *         if (stride != 0) {
+     *             cmd = (const DrawArraysIndirectCommand
+     * *)((uintptr)indirect + n * stride);
+     *         } else  {
+     *             cmd = (const DrawArraysIndirectCommand  *)indirect + n;
+     *         }
+     *
+     *         glDrawArraysInstancedBaseInstance(mode, cmd->first,
+     * cmd->count, cmd->instanceCount, cmd->baseInstance);
+     *     }
+     * </code>
+     *
+     * If a buffer is bound to the {@see GL46::GL_DRAW_INDIRECT_BUFFER}
+     * binding at the time of a call to
+     * {@see GL46::glMultiDrawArraysIndirect}, $indirect is interpreted as an
+     * offset, in basic machine units, into that buffer and the parameter
+     * data is read from the buffer rather than from client memory.
+     *
+     * In contrast to {@see GL46::glDrawArraysInstancedBaseInstance}, the
+     * `first` member of the parameter structure is unsigned, and
+     * out-of-range indices do not generate an error.
+     *
+     * Vertex attributes that are modified by
+     * {@see GL46::glMultiDrawArraysIndirect} have an unspecified value after
+     * {@see GL46::glMultiDrawArraysIndirect} returns. Attributes that aren't
+     * modified remain well defined.
+     *
+     * @see http://docs.gl/gl4/glMultiDrawArraysIndirect
      * @since 4.6
-     * @param int $mode
+     * @param int|\FFI\CData|\FFI\CInt $mode
      * @param \FFI\CData|\FFI\CPtr|null $indirect
-     * @param int $drawcount
-     * @param int $maxdrawcount
-     * @param int $stride
+     * @param mixed|float|string|int|\FFI\CData|\FFI\CInt $drawcount
+     * @param int|\FFI\CData|\FFI\CInt $maxdrawcount
+     * @param int|\FFI\CData|\FFI\CInt $stride
      * @return void
      */
-    public static function glMultiDrawArraysIndirectCount(int $mode, ?\FFI\CData $indirect, int $drawcount, int $maxdrawcount, int $stride): void
+    public function glMultiDrawArraysIndirectCount($mode, ?\FFI\CData $indirect, $drawcount, $maxdrawcount, $stride): void
     {
-        assert(version_compare(self::$info->version, '4.6') >= 0, __FUNCTION__ . ' is available since OpenGL 4.6, but only OpenGL '. self::$info->version . ' is available');
-        assert($mode >= 0 && $mode <= 4_294_967_295, 'Argument $mode overflow: C type GLenum is required');
-        assert($drawcount >= 0 && $drawcount <= \PHP_INT_MAX, 'Argument $drawcount overflow: C type GLintptr is required');
-        assert($maxdrawcount >= \PHP_INT_MIN && $maxdrawcount <= \PHP_INT_MAX, 'Argument $maxdrawcount overflow: C type GLsizei is required');
-        assert($stride >= \PHP_INT_MIN && $stride <= \PHP_INT_MAX, 'Argument $stride overflow: C type GLsizei is required');
+        $mode = $mode instanceof \FFI\CData ? $mode->cdata : $mode;
+        $maxdrawcount = $maxdrawcount instanceof \FFI\CData ? $maxdrawcount->cdata : $maxdrawcount;
+        $stride = $stride instanceof \FFI\CData ? $stride->cdata : $stride;
 
-        $proc = self::getProc('glMultiDrawArraysIndirectCount', 'void (*)(GLenum mode, const void *indirect, GLintptr drawcount, GLsizei maxdrawcount, GLsizei stride)');
+        assert(Assert::uint16($mode), 'Argument $mode must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Assert::int64($drawcount), 'Argument $drawcount must be a C-like GLintptr, but incompatible or overflow value given');
+        assert(Assert::int16($maxdrawcount), 'Argument $maxdrawcount must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Assert::int16($stride), 'Argument $stride must be a C-like GLsizei, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glMultiDrawArraysIndirectCount', 'void (*)(GLenum mode, const void *indirect, GLintptr drawcount, GLsizei maxdrawcount, GLsizei stride)');
         $proc($mode, $indirect, $drawcount, $maxdrawcount, $stride);
     }
 
     /**
+     * {@see GL46::glMultiDrawElementsIndirect} specifies multiple indexed
+     * geometric primitives with very few subroutine calls.
+     * {@see GL46::glMultiDrawElementsIndirect} behaves similarly to a
+     * multitude of calls to
+     * {@see GL46::glDrawElementsInstancedBaseVertexBaseInstance}, execpt
+     * that the parameters to
+     * {@see GL46::glDrawElementsInstancedBaseVertexBaseInstance} are stored
+     * in an array in memory at the address given by $indirect, separated by
+     * the stride, in basic machine units, specified by $stride. If $stride
+     * is zero, then the array is assumed to be tightly packed in memory.
+     *
+     * The parameters addressed by $indirect are packed into a structure that
+     * takes the form (in C):
+     *
+     * <code>
+     *     typedef  struct {
+     *         uint  count;
+     *         uint  instanceCount;
+     *         uint  firstIndex;
+     *         uint  baseVertex;
+     *         uint  baseInstance;
+     *     } DrawElementsIndirectCommand;
+     * </code>
+     *
+     * A single call to {@see GL46::glMultiDrawElementsIndirect} is
+     * equivalent, assuming no errors are generated to:
+     *
+     * <code>
+     *     GLsizei n;
+     *     for (n = 0; n < drawcount; n++) {
+     *         const DrawElementsIndirectCommand *cmd;
+     *         if (stride != 0) {
+     *             cmd = (const DrawElementsIndirectCommand
+     * *)((uintptr)indirect + n * stride);
+     *         } else {
+     *             cmd = (const DrawElementsIndirectCommand  *)indirect + n;
+     *         }
+     *
+     *         glDrawElementsInstancedBaseVertexBaseInstance(mode,
+     *                                                       cmd->count,
+     *                                                       type,
+     *                                                       cmd->firstIndex
+     * * size-of-type,
+     *
+     * cmd->instanceCount,
+     *
+     * cmd->baseVertex,
+     *
+     * cmd->baseInstance);
+     *     }
+     * </code>
+     *
+     * If a buffer is bound to the {@see GL46::GL_DRAW_INDIRECT_BUFFER}
+     * binding at the time of a call to {@see GL46::glDrawElementsIndirect},
+     * $indirect is interpreted as an offset, in basic machine units, into
+     * that buffer and the parameter data is read from the buffer rather than
+     * from client memory.
+     *
+     * Note that indices stored in client memory are not supported. If no
+     * buffer is bound to the {@see GL46::GL_ELEMENT_ARRAY_BUFFER} binding,
+     * an error will be generated.
+     *
+     * The results of the operation are undefined if the `reservedMustBeZero`
+     * member of the parameter structure is non-zero. However, no error is
+     * generated in this case.
+     *
+     * Vertex attributes that are modified by
+     * {@see GL46::glDrawElementsIndirect} have an unspecified value after
+     * {@see GL46::glDrawElementsIndirect} returns. Attributes that aren't
+     * modified remain well defined.
+     *
+     * @see http://docs.gl/gl4/glMultiDrawElementsIndirect
      * @since 4.6
-     * @param int $mode
-     * @param int $type
+     * @param int|\FFI\CData|\FFI\CInt $mode
+     * @param int|\FFI\CData|\FFI\CInt $type
      * @param \FFI\CData|\FFI\CPtr|null $indirect
-     * @param int $drawcount
-     * @param int $maxdrawcount
-     * @param int $stride
+     * @param mixed|float|string|int|\FFI\CData|\FFI\CInt $drawcount
+     * @param int|\FFI\CData|\FFI\CInt $maxdrawcount
+     * @param int|\FFI\CData|\FFI\CInt $stride
      * @return void
      */
-    public static function glMultiDrawElementsIndirectCount(int $mode, int $type, ?\FFI\CData $indirect, int $drawcount, int $maxdrawcount, int $stride): void
+    public function glMultiDrawElementsIndirectCount($mode, $type, ?\FFI\CData $indirect, $drawcount, $maxdrawcount, $stride): void
     {
-        assert(version_compare(self::$info->version, '4.6') >= 0, __FUNCTION__ . ' is available since OpenGL 4.6, but only OpenGL '. self::$info->version . ' is available');
-        assert($mode >= 0 && $mode <= 4_294_967_295, 'Argument $mode overflow: C type GLenum is required');
-        assert($type >= 0 && $type <= 4_294_967_295, 'Argument $type overflow: C type GLenum is required');
-        assert($drawcount >= 0 && $drawcount <= \PHP_INT_MAX, 'Argument $drawcount overflow: C type GLintptr is required');
-        assert($maxdrawcount >= \PHP_INT_MIN && $maxdrawcount <= \PHP_INT_MAX, 'Argument $maxdrawcount overflow: C type GLsizei is required');
-        assert($stride >= \PHP_INT_MIN && $stride <= \PHP_INT_MAX, 'Argument $stride overflow: C type GLsizei is required');
+        $mode = $mode instanceof \FFI\CData ? $mode->cdata : $mode;
+        $type = $type instanceof \FFI\CData ? $type->cdata : $type;
+        $maxdrawcount = $maxdrawcount instanceof \FFI\CData ? $maxdrawcount->cdata : $maxdrawcount;
+        $stride = $stride instanceof \FFI\CData ? $stride->cdata : $stride;
 
-        $proc = self::getProc('glMultiDrawElementsIndirectCount', 'void (*)(GLenum mode, GLenum type, const void *indirect, GLintptr drawcount, GLsizei maxdrawcount, GLsizei stride)');
+        assert(Assert::uint16($mode), 'Argument $mode must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Assert::uint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Assert::int64($drawcount), 'Argument $drawcount must be a C-like GLintptr, but incompatible or overflow value given');
+        assert(Assert::int16($maxdrawcount), 'Argument $maxdrawcount must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Assert::int16($stride), 'Argument $stride must be a C-like GLsizei, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glMultiDrawElementsIndirectCount', 'void (*)(GLenum mode, GLenum type, const void *indirect, GLintptr drawcount, GLsizei maxdrawcount, GLsizei stride)');
         $proc($mode, $type, $indirect, $drawcount, $maxdrawcount, $stride);
     }
 
     /**
+     * When {@see GL46::GL_POLYGON_OFFSET_FILL},
+     * {@see GL46::GL_POLYGON_OFFSET_LINE}, or
+     * {@see GL46::GL_POLYGON_OFFSET_POINT} is enabled, each fragment's depth
+     * value will be offset after it is interpolated from the depth values of
+     * the appropriate vertices. The value of the offset is     factor × DZ
+     * +  r × units   , where   DZ  is a measurement of the change in depth
+     * relative to the screen area of the polygon, and r is the smallest
+     * value that is guaranteed to produce a resolvable offset for a given
+     * implementation. The offset is added before the depth test is performed
+     * and before the value is written into the depth buffer.
+     *
+     * {@see GL46::glPolygonOffset} is useful for rendering hidden-line
+     * images, for applying decals to surfaces, and for rendering solids with
+     * highlighted edges.
+     *
+     * @see http://docs.gl/gl2/glPolygonOffset
+     * @see http://docs.gl/gl4/glPolygonOffset
      * @since 4.6
-     * @param float $factor
-     * @param float $units
-     * @param float $clamp
+     * @param float|\FFI\CData|\FFI\CFloat $factor
+     * @param float|\FFI\CData|\FFI\CFloat $units
+     * @param float|\FFI\CData|\FFI\CFloat $clamp
      * @return void
      */
-    public static function glPolygonOffsetClamp(float $factor, float $units, float $clamp): void
+    public function glPolygonOffsetClamp($factor, $units, $clamp): void
     {
-        assert(version_compare(self::$info->version, '4.6') >= 0, __FUNCTION__ . ' is available since OpenGL 4.6, but only OpenGL '. self::$info->version . ' is available');
-        assert($factor >= -3.40282e38 && $factor <= 3.40282e38, 'Argument $factor overflow: C type GLfloat is required');
-        assert($units >= -3.40282e38 && $units <= 3.40282e38, 'Argument $units overflow: C type GLfloat is required');
-        assert($clamp >= -3.40282e38 && $clamp <= 3.40282e38, 'Argument $clamp overflow: C type GLfloat is required');
+        $factor = $factor instanceof \FFI\CData ? $factor->cdata : $factor;
+        $units = $units instanceof \FFI\CData ? $units->cdata : $units;
+        $clamp = $clamp instanceof \FFI\CData ? $clamp->cdata : $clamp;
 
-        $proc = self::getProc('glPolygonOffsetClamp', 'void (*)(GLfloat factor, GLfloat units, GLfloat clamp)');
+        assert(Assert::float32($factor), 'Argument $factor must be a C-like GLfloat, but incompatible or overflow value given');
+        assert(Assert::float32($units), 'Argument $units must be a C-like GLfloat, but incompatible or overflow value given');
+        assert(Assert::float32($clamp), 'Argument $clamp must be a C-like GLfloat, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glPolygonOffsetClamp', 'void (*)(GLfloat factor, GLfloat units, GLfloat clamp)');
         $proc($factor, $units, $clamp);
     }
 }

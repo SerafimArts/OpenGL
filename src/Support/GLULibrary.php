@@ -14,6 +14,7 @@ namespace Serafim\OpenGL\Support;
 use Serafim\FFILoader\BitDepth;
 use Serafim\FFILoader\Library as BaseLibrary;
 use Serafim\FFILoader\OperatingSystem;
+use Serafim\OpenGL\GL;
 
 /**
  * Class Library
@@ -27,12 +28,10 @@ final class GLULibrary extends BaseLibrary
 
     /**
      * GLULibrary constructor.
-     *
-     * @param string $version
      */
-    public function __construct(string $version)
+    public function __construct()
     {
-        $this->version = $version;
+        $this->version = GL::getInstance()->info->version;
     }
 
     /**
@@ -57,7 +56,7 @@ final class GLULibrary extends BaseLibrary
      */
     public function getHeaders(): string
     {
-        return __DIR__ . '/../../resources/glu.h';
+        return __DIR__ . '/../../resources/headers/glu.h';
     }
 
     /**

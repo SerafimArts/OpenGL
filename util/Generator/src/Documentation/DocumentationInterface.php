@@ -9,12 +9,12 @@
 
 declare(strict_types=1);
 
-namespace Serafim\OpenGL\Support;
+namespace CodeGenerator\Documentation;
 
 /**
- * Interface DocsGeneratorInterface
+ * Interface DocumentationInterface
  */
-interface DocsGeneratorInterface
+interface DocumentationInterface
 {
     /**
      * @param string $name

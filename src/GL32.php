@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Serafim\OpenGL;
 
+use Serafim\OpenGL\Support\Assert;
+
 /**
  * The OpenGL functionality up to version 3.2. Includes the deprecated symbols of the Compatibility Profile.
  *
@@ -354,570 +356,817 @@ class GL32 extends GL31
     public const GL_MAX_INTEGER_SAMPLES = 0x9110;
 
     /**
-     * Behaves identically to {@see glDrawElements} except that the *i*th element transferred by the
-     * corresponding draw call will be taken from element *`indices`*[i] + *`basevertex`* of each enabled array. If
-     * the resulting value is larger than the maximum value representable by *`type`*, it is as if the calculation
-     * were upconverted to 32-bit unsigned integers (with wrapping on overflow conditions). The operation is
-     * undefined if the sum would be negative.
+     * {@see GL46::glDrawElementsBaseVertex} behaves identically to
+     * {@see GL46::glDrawElements} except that the ith element transferred by
+     * the corresponding draw call will be taken from element $indices\[i\] +
+     * $basevertex of each enabled array. If the resulting value is larger
+     * than the maximum value representable by $type, it is as if the
+     * calculation were upconverted to 32-bit unsigned integers (with
+     * wrapping on overflow conditions). The operation is undefined if the
+     * sum would be negative.
      *
-     * @see http://docs.gl/gl3/glDrawElementsBaseVertex
      * @see http://docs.gl/gl4/glDrawElementsBaseVertex
      * @since 3.2
-     * @param int $mode
-     * @param int $count
-     * @param int $type
+     * @param int|\FFI\CData|\FFI\CInt $mode
+     * @param int|\FFI\CData|\FFI\CInt $count
+     * @param int|\FFI\CData|\FFI\CInt $type
      * @param \FFI\CData|\FFI\CPtr|null $indices
-     * @param int $basevertex
+     * @param int|\FFI\CData|\FFI\CInt $basevertex
      * @return void
      */
-    public static function glDrawElementsBaseVertex(int $mode, int $count, int $type, ?\FFI\CData $indices, int $basevertex): void
+    public function glDrawElementsBaseVertex($mode, $count, $type, ?\FFI\CData $indices, $basevertex): void
     {
-        assert(version_compare(self::$info->version, '3.2') >= 0, __FUNCTION__ . ' is available since OpenGL 3.2, but only OpenGL '. self::$info->version . ' is available');
-        assert($mode >= 0 && $mode <= 4_294_967_295, 'Argument $mode overflow: C type GLenum is required');
-        assert($count >= \PHP_INT_MIN && $count <= \PHP_INT_MAX, 'Argument $count overflow: C type GLsizei is required');
-        assert($type >= 0 && $type <= 4_294_967_295, 'Argument $type overflow: C type GLenum is required');
-        assert($basevertex >= \PHP_INT_MIN && $basevertex <= \PHP_INT_MAX, 'Argument $basevertex overflow: C type GLint is required');
+        $mode = $mode instanceof \FFI\CData ? $mode->cdata : $mode;
+        $count = $count instanceof \FFI\CData ? $count->cdata : $count;
+        $type = $type instanceof \FFI\CData ? $type->cdata : $type;
+        $basevertex = $basevertex instanceof \FFI\CData ? $basevertex->cdata : $basevertex;
 
-        $proc = self::getProc('glDrawElementsBaseVertex', 'void (*)(GLenum mode, GLsizei count, GLenum type, const void *indices, GLint basevertex)');
+        assert(Assert::uint16($mode), 'Argument $mode must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Assert::int16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Assert::uint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Assert::int16($basevertex), 'Argument $basevertex must be a C-like GLint, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glDrawElementsBaseVertex', 'void (*)(GLenum mode, GLsizei count, GLenum type, const void *indices, GLint basevertex)');
         $proc($mode, $count, $type, $indices, $basevertex);
     }
 
     /**
-     * Is a restricted form of {@see glDrawElementsBaseVertex}. *`mode`*, *`start`*, *`end`*,
-     * *`count`* and *`basevertex`* match the corresponding arguments to
-     * {@see glDrawElementsBaseVertex}, with the additional constraint that all values in the
-     * array *`indices`* must lie between *`start`* and *`end`*, inclusive, prior to adding *`basevertex`*. Index
-     * values lying outside the range [*`start`*, *`end`*] are treated in the same way as
-     * {@see glDrawElementsBaseVertex}. The *i*th element transferred by the corresponding draw
-     * call will be taken from element *`indices`*[i] + *`basevertex`* of each enabled array. If the resulting value
-     * is larger than the maximum value representable by *`type`*, it is as if the calculation were upconverted to
-     * 32-bit unsigned integers (with wrapping on overflow conditions). The operation is undefined if the sum would
-     * be negative.
+     * {@see GL46::glDrawRangeElementsBaseVertex} is a restricted form of
+     * {@see GL46::glDrawElementsBaseVertex}. $mode, $count and $basevertex
+     * match the corresponding arguments to
+     * {@see GL46::glDrawElementsBaseVertex}, with the additional constraint
+     * that all values in the array $indices must lie between $start and
+     * $end, inclusive, prior to adding $basevertex. Index values lying
+     * outside the range \[$start, $end\] are treated in the same way as
+     * {@see GL46::glDrawElementsBaseVertex}. The ith element transferred by
+     * the corresponding draw call will be taken from element $indices\[i\] +
+     * $basevertex of each enabled array. If the resulting value is larger
+     * than the maximum value representable by $type, it is as if the
+     * calculation were upconverted to 32-bit unsigned integers (with
+     * wrapping on overflow conditions). The operation is undefined if the
+     * sum would be negative.
      *
-     * @see http://docs.gl/gl3/glDrawRangeElementsBaseVertex
      * @see http://docs.gl/gl4/glDrawRangeElementsBaseVertex
      * @since 3.2
-     * @param int $mode
-     * @param int $start
-     * @param int $end
-     * @param int $count
-     * @param int $type
+     * @param int|\FFI\CData|\FFI\CInt $mode
+     * @param int|\FFI\CData|\FFI\CInt $start
+     * @param int|\FFI\CData|\FFI\CInt $end
+     * @param int|\FFI\CData|\FFI\CInt $count
+     * @param int|\FFI\CData|\FFI\CInt $type
      * @param \FFI\CData|\FFI\CPtr|null $indices
-     * @param int $basevertex
+     * @param int|\FFI\CData|\FFI\CInt $basevertex
      * @return void
      */
-    public static function glDrawRangeElementsBaseVertex(int $mode, int $start, int $end, int $count, int $type, ?\FFI\CData $indices, int $basevertex): void
+    public function glDrawRangeElementsBaseVertex($mode, $start, $end, $count, $type, ?\FFI\CData $indices, $basevertex): void
     {
-        assert(version_compare(self::$info->version, '3.2') >= 0, __FUNCTION__ . ' is available since OpenGL 3.2, but only OpenGL '. self::$info->version . ' is available');
-        assert($mode >= 0 && $mode <= 4_294_967_295, 'Argument $mode overflow: C type GLenum is required');
-        assert($start >= 0 && $start <= 4_294_967_295, 'Argument $start overflow: C type GLuint is required');
-        assert($end >= 0 && $end <= 4_294_967_295, 'Argument $end overflow: C type GLuint is required');
-        assert($count >= \PHP_INT_MIN && $count <= \PHP_INT_MAX, 'Argument $count overflow: C type GLsizei is required');
-        assert($type >= 0 && $type <= 4_294_967_295, 'Argument $type overflow: C type GLenum is required');
-        assert($basevertex >= \PHP_INT_MIN && $basevertex <= \PHP_INT_MAX, 'Argument $basevertex overflow: C type GLint is required');
+        $mode = $mode instanceof \FFI\CData ? $mode->cdata : $mode;
+        $start = $start instanceof \FFI\CData ? $start->cdata : $start;
+        $end = $end instanceof \FFI\CData ? $end->cdata : $end;
+        $count = $count instanceof \FFI\CData ? $count->cdata : $count;
+        $type = $type instanceof \FFI\CData ? $type->cdata : $type;
+        $basevertex = $basevertex instanceof \FFI\CData ? $basevertex->cdata : $basevertex;
 
-        $proc = self::getProc('glDrawRangeElementsBaseVertex', 'void (*)(GLenum mode, GLuint start, GLuint end, GLsizei count, GLenum type, const void *indices, GLint basevertex)');
+        assert(Assert::uint16($mode), 'Argument $mode must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Assert::uint16($start), 'Argument $start must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Assert::uint16($end), 'Argument $end must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Assert::int16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Assert::uint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Assert::int16($basevertex), 'Argument $basevertex must be a C-like GLint, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glDrawRangeElementsBaseVertex', 'void (*)(GLenum mode, GLuint start, GLuint end, GLsizei count, GLenum type, const void *indices, GLint basevertex)');
         $proc($mode, $start, $end, $count, $type, $indices, $basevertex);
     }
 
     /**
-     * Behaves identically to {@see glDrawElementsInstanced} except that the *i*th element
-     * transferred by the corresponding draw call will be taken from element *`indices`*[i] + *`basevertex`* of each
-     * enabled array. If the resulting value is larger than the maximum value representable by *`type`*, it is as if
-     * the calculation were upconverted to 32-bit unsigned integers (with wrapping on overflow conditions). The
-     * operation is undefined if the sum would be negative.
+     * {@see GL46::glDrawElementsInstancedBaseVertex} behaves identically to
+     * {@see GL46::glDrawElementsInstanced} except that the ith element
+     * transferred by the corresponding draw call will be taken from element
+     * $indices\[i\] + $basevertex of each enabled array. If the resulting
+     * value is larger than the maximum value representable by $type, it is
+     * as if the calculation were upconverted to 32-bit unsigned integers
+     * (with wrapping on overflow conditions). The operation is undefined if
+     * the sum would be negative.
      *
-     * @see http://docs.gl/gl3/glDrawElementsInstancedBaseVertex
      * @see http://docs.gl/gl4/glDrawElementsInstancedBaseVertex
      * @since 3.2
-     * @param int $mode
-     * @param int $count
-     * @param int $type
+     * @param int|\FFI\CData|\FFI\CInt $mode
+     * @param int|\FFI\CData|\FFI\CInt $count
+     * @param int|\FFI\CData|\FFI\CInt $type
      * @param \FFI\CData|\FFI\CPtr|null $indices
-     * @param int $instancecount
-     * @param int $basevertex
+     * @param int|\FFI\CData|\FFI\CInt $instancecount
+     * @param int|\FFI\CData|\FFI\CInt $basevertex
      * @return void
      */
-    public static function glDrawElementsInstancedBaseVertex(int $mode, int $count, int $type, ?\FFI\CData $indices, int $instancecount, int $basevertex): void
+    public function glDrawElementsInstancedBaseVertex($mode, $count, $type, ?\FFI\CData $indices, $instancecount, $basevertex): void
     {
-        assert(version_compare(self::$info->version, '3.2') >= 0, __FUNCTION__ . ' is available since OpenGL 3.2, but only OpenGL '. self::$info->version . ' is available');
-        assert($mode >= 0 && $mode <= 4_294_967_295, 'Argument $mode overflow: C type GLenum is required');
-        assert($count >= \PHP_INT_MIN && $count <= \PHP_INT_MAX, 'Argument $count overflow: C type GLsizei is required');
-        assert($type >= 0 && $type <= 4_294_967_295, 'Argument $type overflow: C type GLenum is required');
-        assert($instancecount >= \PHP_INT_MIN && $instancecount <= \PHP_INT_MAX, 'Argument $instancecount overflow: C type GLsizei is required');
-        assert($basevertex >= \PHP_INT_MIN && $basevertex <= \PHP_INT_MAX, 'Argument $basevertex overflow: C type GLint is required');
+        $mode = $mode instanceof \FFI\CData ? $mode->cdata : $mode;
+        $count = $count instanceof \FFI\CData ? $count->cdata : $count;
+        $type = $type instanceof \FFI\CData ? $type->cdata : $type;
+        $instancecount = $instancecount instanceof \FFI\CData ? $instancecount->cdata : $instancecount;
+        $basevertex = $basevertex instanceof \FFI\CData ? $basevertex->cdata : $basevertex;
 
-        $proc = self::getProc('glDrawElementsInstancedBaseVertex', 'void (*)(GLenum mode, GLsizei count, GLenum type, const void *indices, GLsizei instancecount, GLint basevertex)');
+        assert(Assert::uint16($mode), 'Argument $mode must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Assert::int16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Assert::uint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Assert::int16($instancecount), 'Argument $instancecount must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Assert::int16($basevertex), 'Argument $basevertex must be a C-like GLint, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glDrawElementsInstancedBaseVertex', 'void (*)(GLenum mode, GLsizei count, GLenum type, const void *indices, GLsizei instancecount, GLint basevertex)');
         $proc($mode, $count, $type, $indices, $instancecount, $basevertex);
     }
 
     /**
-     * Behaves identically to {@see glDrawElementsBaseVertex}, except that *`primcount`*
-     * separate lists of elements are specifried instead.
+     * {@see GL46::glMultiDrawElementsBaseVertex} behaves identically to
+     * {@see GL46::glDrawElementsBaseVertex}, except that $drawcount separate
+     * lists of elements are specifried instead.
      *
-     * It has the same effect as:
+     * <code>
+     *     for (int i = 0; i < <parameter>drawcount</parameter>; i++)
+     *         if (<parameter>count</parameter>[i] > 0)
+     *             glDrawElementsBaseVertex(<parameter>mode</parameter>,
+     *                                      <parameter>count</parameter>[i],
+     *                                      <parameter>type</parameter>,
+     *                                      <parameter>indices[i]</parameter>,
+     *                                      <parameter>basevertex[i]</parameter>);
+     * </code>
      *
-     *  - ```
-     * for (int i = 0; i < primcount; i++)
-     * if (count[i] > 0)
-     * glDrawElementsBaseVertex(mode,
-     * count[i],
-     * type,
-     * indices[i],
-     * basevertex[i]);
-     *  - ```
-     *
-     * @see http://docs.gl/gl3/glMultiDrawElementsBaseVertex
      * @see http://docs.gl/gl4/glMultiDrawElementsBaseVertex
      * @since 3.2
-     * @param int $mode
+     * @param int|\FFI\CData|\FFI\CInt $mode
      * @param \FFI\CData|\FFI\CIntPtr|null $count
-     * @param int $type
+     * @param int|\FFI\CData|\FFI\CInt $type
      * @param \FFI\CData|\FFI\CPtrPtr|null $indices
-     * @param int $drawcount
+     * @param int|\FFI\CData|\FFI\CInt $drawcount
      * @param \FFI\CData|\FFI\CIntPtr|null $basevertex
      * @return void
      */
-    public static function glMultiDrawElementsBaseVertex(int $mode, ?\FFI\CData $count, int $type, ?\FFI\CData $indices, int $drawcount, ?\FFI\CData $basevertex): void
+    public function glMultiDrawElementsBaseVertex($mode, ?\FFI\CData $count, $type, ?\FFI\CData $indices, $drawcount, ?\FFI\CData $basevertex): void
     {
-        assert(version_compare(self::$info->version, '3.2') >= 0, __FUNCTION__ . ' is available since OpenGL 3.2, but only OpenGL '. self::$info->version . ' is available');
-        assert($mode >= 0 && $mode <= 4_294_967_295, 'Argument $mode overflow: C type GLenum is required');
-        assert($type >= 0 && $type <= 4_294_967_295, 'Argument $type overflow: C type GLenum is required');
-        assert($drawcount >= \PHP_INT_MIN && $drawcount <= \PHP_INT_MAX, 'Argument $drawcount overflow: C type GLsizei is required');
+        $mode = $mode instanceof \FFI\CData ? $mode->cdata : $mode;
+        $type = $type instanceof \FFI\CData ? $type->cdata : $type;
+        $drawcount = $drawcount instanceof \FFI\CData ? $drawcount->cdata : $drawcount;
 
-        $proc = self::getProc('glMultiDrawElementsBaseVertex', 'void (*)(GLenum mode, const GLsizei *count, GLenum type, const void *const*indices, GLsizei drawcount, const GLint *basevertex)');
+        assert(Assert::uint16($mode), 'Argument $mode must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Assert::uint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Assert::int16($drawcount), 'Argument $drawcount must be a C-like GLsizei, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glMultiDrawElementsBaseVertex', 'void (*)(GLenum mode, const GLsizei *count, GLenum type, const void *const*indices, GLsizei drawcount, const GLint *basevertex)');
         $proc($mode, $count, $type, $indices, $drawcount, $basevertex);
     }
 
     /**
-     * *Flatshading* a vertex shader varying output means to assign all vetices of the primitive the same value for
-     * that output. The vertex from which these values is derived is known as the *provoking vertex* and
-     * `glProvokingVertex` specifies which vertex is to be used as the source of data for flat shaded varyings.
+     * Flatshading a vertex shader varying output means to assign all vetices
+     * of the primitive the same value for that output. The vertex from which
+     * these values is derived is known as the provoking vertex and
+     * {@see GL46::glProvokingVertex} specifies which vertex is to be used as
+     * the source of data for flat shaded varyings.
      *
-     * *`provokeMode`* must be either `GL_FIRST_VERTEX_CONVENTION` or `GL_LAST_VERTEX_CONVENTION`, and controls the
-     * selection of the vertex whose values are assigned to flatshaded varying outputs. The interpretation of these
-     * values for the supported primitive types is:
+     * $provokeMode must be either {@see GL46::GL_FIRST_VERTEX_CONVENTION} or
+     * {@see GL46::GL_LAST_VERTEX_CONVENTION}, and controls the selection of
+     * the vertex whose values are assigned to flatshaded varying outputs.
+     * The interpretation of these values for the supported primitive types
+     * is:          Primitive Type of Polygon i    First Vertex Convention
+     *  Last Vertex Convention        point   i   i     independent line   2i
+     * - 1   2i     line loop   i    i + 1, if i &lt; n   1, if i = n
+     * line strip   i   i + 1     independent triangle   3i - 2   3i
+     * triangle strip   i   i + 2     triangle fan   i + 1   i + 2     line
+     * adjacency   4i - 2   4i - 1     line strip adjacency   i + 1   i + 2
+     *   triangle adjacency   6i - 5   6i - 1     triangle strip adjacency
+     * 2i - 1   2i + 3
      *
-     * **Primitive Type of Polygon *i*** **First Vertex Convention** **Last Vertex Convention** point *i* *i*
-     * independent line 2*i* - 1 2*i* line loop *i* *i* + 1, if *i* &lt; *n*
+     * If a vertex or geometry shader is active, user-defined varying outputs
+     * may be flatshaded by using the `flat` qualifier when declaring the
+     * output.
      *
-     * 1, if *i* = *n*
-     *
-     * line strip *i* *i* + 1 independent triangle 3*i* - 2 3*i* triangle strip *i* *i* + 2 triangle fan *i* + 1 *i*
-     * + 2 line adjacency 4*i* - 2 4*i* - 1 line strip adjacency *i* + 1 *i* + 2 triangle adjacency 6*i* - 5 6*i* - 1
-     * triangle strip adjacency 2*i* - 1 2*i* + 3
-     *
-     * If a vertex or geometry shader is active, user-defined varying outputs may be flatshaded by using the `flat`
-     * qualifier when declaring the output.
-     *
-     * @see http://docs.gl/gl3/glProvokingVertex
      * @see http://docs.gl/gl4/glProvokingVertex
      * @since 3.2
-     * @param int $mode
+     * @param int|\FFI\CData|\FFI\CInt $mode
      * @return void
      */
-    public static function glProvokingVertex(int $mode): void
+    public function glProvokingVertex($mode): void
     {
-        assert(version_compare(self::$info->version, '3.2') >= 0, __FUNCTION__ . ' is available since OpenGL 3.2, but only OpenGL '. self::$info->version . ' is available');
-        assert($mode >= 0 && $mode <= 4_294_967_295, 'Argument $mode overflow: C type GLenum is required');
+        $mode = $mode instanceof \FFI\CData ? $mode->cdata : $mode;
 
-        $proc = self::getProc('glProvokingVertex', 'void (*)(GLenum mode)');
+        assert(Assert::uint16($mode), 'Argument $mode must be a C-like GLenum, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glProvokingVertex', 'void (*)(GLenum mode)');
         $proc($mode);
     }
 
     /**
-     * Creates a new fence sync object, inserts a fence command into the GL command stream and associates it with
-     * that sync object, and returns a non-zero name corresponding to the sync object.
+     * {@see GL46::glFenceSync} creates a new fence sync object, inserts a
+     * fence command into the GL command stream and associates it with that
+     * sync object, and returns a non-zero name corresponding to the sync
+     * object.
      *
-     * When the specified *`condition`* of the sync object is satisfied by the fence command, the sync object is
-     * signaled by the GL, causing any {@see glWaitSync}, {@see glClientWaitSync} commands
-     * blocking in *`sync`* to *unblock*. No other state is affected by `glFenceSync` or by the execution of the
-     * associated fence command.
+     * When the specified $condition of the sync object is satisfied by the
+     * fence command, the sync object is signaled by the GL, causing any
+     * {@see GL46::glWaitSync}, {@see GL46::glClientWaitSync} commands
+     * blocking in $sync to unblock. No other state is affected by
+     * {@see GL46::glFenceSync} or by the execution of the associated fence
+     * command.
      *
-     * *`condition`* must be `GL_SYNC_GPU_COMMANDS_COMPLETE`. This condition is satisfied by completion of the fence
-     * command corresponding to the sync object and all preceding commands in the same command stream. The sync
-     * object will not be signaled until all effects from these commands on GL client and server state and the
-     * framebuffer are fully realized. Note that completion of the fence command occurs once the state of the
-     * corresponding sync object has been changed, but commands waiting on that sync object may not be unblocked
-     * until after the fence command completes.
+     * $condition must be {@see GL46::GL_SYNC_GPU_COMMANDS_COMPLETE}. This
+     * condition is satisfied by completion of the fence command
+     * corresponding to the sync object and all preceding commands in the
+     * same command stream. The sync object will not be signaled until all
+     * effects from these commands on GL client and server state and the
+     * framebuffer are fully realized. Note that completion of the fence
+     * command occurs once the state of the corresponding sync object has
+     * been changed, but commands waiting on that sync object may not be
+     * unblocked until after the fence command completes.
      *
-     * @see http://docs.gl/gl3/glFenceSync
      * @see http://docs.gl/gl4/glFenceSync
      * @since 3.2
-     * @param int $condition
-     * @param int $flags
+     * @param int|\FFI\CData|\FFI\CInt $condition
+     * @param int|\FFI\CData|\FFI\CInt $flags
      * @return \FFI\CData|\FFI\CStruct|GLsync|null
      */
-    public static function glFenceSync(int $condition, int $flags): \FFI\CData
+    public function glFenceSync($condition, $flags): \FFI\CData
     {
-        assert(version_compare(self::$info->version, '3.2') >= 0, __FUNCTION__ . ' is available since OpenGL 3.2, but only OpenGL '. self::$info->version . ' is available');
-        assert($condition >= 0 && $condition <= 4_294_967_295, 'Argument $condition overflow: C type GLenum is required');
-        assert($flags >= 0 && $flags <= 4_294_967_295, 'Argument $flags overflow: C type GLbitfield is required');
+        $condition = $condition instanceof \FFI\CData ? $condition->cdata : $condition;
+        $flags = $flags instanceof \FFI\CData ? $flags->cdata : $flags;
 
-        $proc = self::getProc('glFenceSync', 'GLsync (*)(GLenum condition, GLbitfield flags)');
+        assert(Assert::uint16($condition), 'Argument $condition must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Assert::uint16($flags), 'Argument $flags must be a C-like GLbitfield, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glFenceSync', 'GLsync (*)(GLenum condition, GLbitfield flags)');
         return $proc($condition, $flags);
     }
 
     /**
-     * Returns `GL_TRUE` if *`sync`* is currently the name of a sync object. If *`sync`* is not the name of a sync
-     * object, or if an error occurs, `glIsSync` returns `GL_FALSE`. Note that zero is not the name of a sync object.
+     * {@see GL46::glIsSync} returns {@see GL46::GL_TRUE} if $sync is
+     * currently the name of a sync object. If $sync is not the name of a
+     * sync object, or if an error occurs, {@see GL46::glIsSync} returns
+     * {@see GL46::GL_FALSE}. Note that zero is not the name of a sync
+     * object.
      *
-     * @see http://docs.gl/gl3/glIsSync
      * @see http://docs.gl/gl4/glIsSync
      * @since 3.2
      * @param \FFI\CData|\FFI\CStruct|GLsync|null $sync
-     * @return int
+     * @return int|\FFI\CData|\FFI\CInt
      */
-    public static function glIsSync(\FFI\CData $sync): int
+    public function glIsSync(\FFI\CData $sync): int
     {
-        assert(version_compare(self::$info->version, '3.2') >= 0, __FUNCTION__ . ' is available since OpenGL 3.2, but only OpenGL '. self::$info->version . ' is available');
-
-        $proc = self::getProc('glIsSync', 'GLboolean (*)(GLsync sync)');
+        $proc = $this->getProcAddress('glIsSync', 'GLboolean (*)(GLsync sync)');
         return $proc($sync);
     }
 
     /**
-     * Deletes the sync object specified by *`sync`*. If the fence command corresponding to the specified sync object
-     * has completed, or if no {@see glWaitSync} or {@see glClientWaitSync} commands are blocking
-     * on *`sync`*, the object is deleted immediately. Otherwise, *`sync`* is flagged for deletion and will be
-     * deleted when it is no longer associated with any fence command and is no longer blocking any
-     * {@see glWaitSync} or {@see glClientWaitSync} command. In either case, after `glDeleteSync`
-     * returns, the name *`sync`* is invalid and can no longer be used to refer to the sync object.
+     * {@see GL46::glDeleteSync} deletes the sync object specified by $sync.
+     * If the fence command corresponding to the specified sync object has
+     * completed, or if no {@see GL46::glWaitSync} or
+     * {@see GL46::glClientWaitSync} commands are blocking on $sync, the
+     * object is deleted immediately. Otherwise, $sync is flagged for
+     * deletion and will be deleted when it is no longer associated with any
+     * fence command and is no longer blocking any {@see GL46::glWaitSync} or
+     * {@see GL46::glClientWaitSync} command. In either case, after
+     * {@see GL46::glDeleteSync} returns, the name $sync is invalid and can
+     * no longer be used to refer to the sync object.
      *
-     *  - `glDeleteSync` will silently ignore a *`sync`* value of zero.
+     * {@see GL46::glDeleteSync} will silently ignore a $sync value of zero.
      *
-     * @see http://docs.gl/gl3/glDeleteSync
      * @see http://docs.gl/gl4/glDeleteSync
      * @since 3.2
      * @param \FFI\CData|\FFI\CStruct|GLsync|null $sync
      * @return void
      */
-    public static function glDeleteSync(\FFI\CData $sync): void
+    public function glDeleteSync(\FFI\CData $sync): void
     {
-        assert(version_compare(self::$info->version, '3.2') >= 0, __FUNCTION__ . ' is available since OpenGL 3.2, but only OpenGL '. self::$info->version . ' is available');
-
-        $proc = self::getProc('glDeleteSync', 'void (*)(GLsync sync)');
+        $proc = $this->getProcAddress('glDeleteSync', 'void (*)(GLsync sync)');
         $proc($sync);
     }
 
     /**
-     * Causes the client to block and wait for the sync object specified by *`sync`* to become signaled. If *`sync`*
-     * is signaled when `glClientWaitSync` is called, `glClientWaitSync` returns immediately, otherwise it will block
-     * and wait for up to *`timeout`* nanoseconds for *`sync`* to become signaled.
+     * {@see GL46::glClientWaitSync} causes the client to block and wait for
+     * the sync object specified by $sync to become signaled. If $sync is
+     * signaled when {@see GL46::glClientWaitSync} is called,
+     * {@see GL46::glClientWaitSync} returns immediately, otherwise it will
+     * block and wait for up to $timeout nanoseconds for $sync to become
+     * signaled.
      *
      * The return value is one of four status values:
+     * {@see GL46::GL_ALREADY_SIGNALED} indicates that $sync was signaled at
+     * the time that {@see GL46::glClientWaitSync} was called.
+     * {@see GL46::GL_TIMEOUT_EXPIRED} indicates that at least $timeout
+     * nanoseconds passed and $sync did not become signaled.
+     * {@see GL46::GL_CONDITION_SATISFIED} indicates that $sync was signaled
+     * before the timeout expired.     {@see GL46::GL_WAIT_FAILED} indicates
+     * that an error occurred. Additionally, an OpenGL error will be
+     * generated.
      *
-     * - `GL_ALREADY_SIGNALED` indicates that *`sync`* was signaled at the time that `glClientWaitSync` was called.
-     * - `GL_TIMEOUT_EXPIRED` indicates that at least *`timeout`* nanoseconds passed and *`sync`* did not become
-     * signaled.
-     * - `GL_CONDITION_SATISFIED` indicates that *`sync`* was signaled before the timeout expired.
-     * - `GL_WAIT_FAILED` indicates that an error occurred. Additionally, an OpenGL error will be generated.
-     *
-     * @see http://docs.gl/gl3/glClientWaitSync
      * @see http://docs.gl/gl4/glClientWaitSync
      * @since 3.2
      * @param \FFI\CData|\FFI\CStruct|GLsync|null $sync
-     * @param int $flags
-     * @param int $timeout
-     * @return int
+     * @param int|\FFI\CData|\FFI\CInt $flags
+     * @param mixed|float|string|int|\FFI\CData|\FFI\CInt $timeout
+     * @return int|\FFI\CData|\FFI\CInt
      */
-    public static function glClientWaitSync(\FFI\CData $sync, int $flags, int $timeout): int
+    public function glClientWaitSync(\FFI\CData $sync, $flags, $timeout): int
     {
-        assert(version_compare(self::$info->version, '3.2') >= 0, __FUNCTION__ . ' is available since OpenGL 3.2, but only OpenGL '. self::$info->version . ' is available');
-        assert($flags >= 0 && $flags <= 4_294_967_295, 'Argument $flags overflow: C type GLbitfield is required');
-        assert($timeout >= 0 && $timeout <= 18_446_744_073_709_551_615, 'Argument $timeout overflow: C type GLuint64 is required');
+        $flags = $flags instanceof \FFI\CData ? $flags->cdata : $flags;
 
-        $proc = self::getProc('glClientWaitSync', 'GLenum (*)(GLsync sync, GLbitfield flags, GLuint64 timeout)');
+        assert(Assert::uint16($flags), 'Argument $flags must be a C-like GLbitfield, but incompatible or overflow value given');
+        assert(Assert::uint64($timeout), 'Argument $timeout must be a C-like GLuint64, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glClientWaitSync', 'GLenum (*)(GLsync sync, GLbitfield flags, GLuint64 timeout)');
         return $proc($sync, $flags, $timeout);
     }
 
     /**
-     * Causes the GL server to block and wait until *`sync`* becomes signaled. *`sync`* is the name of an existing
-     * sync object upon which to wait. *`flags`* and *`timeout`* are currently not used and must be set to zero and
-     * the special value `GL_TIMEOUT_IGNORED`, respectively{@see [1]}. `glWaitSync` will always wait no
-     * longer than an implementation-dependent timeout. The duration of this timeout in nanoseconds may be queried by
-     * calling {@see glGet} with the parameter `GL_MAX_SERVER_WAIT_TIMEOUT`. There is currently no way to determine
-     * whether `glWaitSync` unblocked because the timeout expired or because the sync object being waited on was
+     * {@see GL46::glWaitSync} causes the GL server to block and wait until
+     * $sync becomes signaled. $sync is the name of an existing sync object
+     * upon which to wait. $flags and $timeout are currently not used and
+     * must be set to zero and the special value
+     * {@see GL46::GL_TIMEOUT_IGNORED}, respectively$flags and $timeout are
+     * placeholders for anticipated future extensions of sync object
+     * capabilities. They must have these reserved values in order that
+     * existing code calling {@see GL46::glWaitSync} operate properly in the
+     * presence of such extensions.. {@see GL46::glWaitSync} will always wait
+     * no longer than an implementation-dependent timeout. The duration of
+     * this timeout in nanoseconds may be queried by calling
+     * {@see GL46::glGet} with the parameter
+     * {@see GL46::GL_MAX_SERVER_WAIT_TIMEOUT}. There is currently no way to
+     * determine whether {@see GL46::glWaitSync} unblocked because the
+     * timeout expired or because the sync object being waited on was
      * signaled.
      *
-     * If an error occurs, `glWaitSync` does not cause the GL server to block.
+     * If an error occurs, {@see GL46::glWaitSync} does not cause the GL
+     * server to block.
      *
-     * @see http://docs.gl/gl3/glWaitSync
      * @see http://docs.gl/gl4/glWaitSync
      * @since 3.2
      * @param \FFI\CData|\FFI\CStruct|GLsync|null $sync
-     * @param int $flags
-     * @param int $timeout
+     * @param int|\FFI\CData|\FFI\CInt $flags
+     * @param mixed|float|string|int|\FFI\CData|\FFI\CInt $timeout
      * @return void
      */
-    public static function glWaitSync(\FFI\CData $sync, int $flags, int $timeout): void
+    public function glWaitSync(\FFI\CData $sync, $flags, $timeout): void
     {
-        assert(version_compare(self::$info->version, '3.2') >= 0, __FUNCTION__ . ' is available since OpenGL 3.2, but only OpenGL '. self::$info->version . ' is available');
-        assert($flags >= 0 && $flags <= 4_294_967_295, 'Argument $flags overflow: C type GLbitfield is required');
-        assert($timeout >= 0 && $timeout <= 18_446_744_073_709_551_615, 'Argument $timeout overflow: C type GLuint64 is required');
+        $flags = $flags instanceof \FFI\CData ? $flags->cdata : $flags;
 
-        $proc = self::getProc('glWaitSync', 'void (*)(GLsync sync, GLbitfield flags, GLuint64 timeout)');
+        assert(Assert::uint16($flags), 'Argument $flags must be a C-like GLbitfield, but incompatible or overflow value given');
+        assert(Assert::uint64($timeout), 'Argument $timeout must be a C-like GLuint64, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glWaitSync', 'void (*)(GLsync sync, GLbitfield flags, GLuint64 timeout)');
         $proc($sync, $flags, $timeout);
     }
 
     /**
+     * {@see GL46::glGetQueryiv} returns in $params a selected parameter of
+     * the query object target specified by $target.
+     *
+     * $pname names a specific query object target parameter. When $pname is
+     * {@see GL46::GL_CURRENT_QUERY}, the name of the currently active query
+     * for $target, or zero if no query is active, will be placed in $params.
+     * If $pname is {@see GL46::GL_QUERY_COUNTER_BITS}, the
+     * implementation-dependent number of bits used to hold the result of
+     * queries for $target is returned in $params.
+     *
+     * @see http://docs.gl/gl2/glGetMaterial
+     * @see http://docs.gl/gl2/glGetPointerv
+     * @see http://docs.gl/gl2/glGetQueryiv
+     * @see http://docs.gl/gl4/glGetPointerv
+     * @see http://docs.gl/gl4/glGetQueryiv
      * @since 3.2
-     * @param int $pname
+     * @param int|\FFI\CData|\FFI\CInt $pname
      * @param \FFI\CData|\FFI\CIntPtr|null $data
      * @return void
      */
-    public static function glGetInteger64v(int $pname, ?\FFI\CData $data): void
+    public function glGetInteger64v($pname, ?\FFI\CData $data): void
     {
-        assert(version_compare(self::$info->version, '3.2') >= 0, __FUNCTION__ . ' is available since OpenGL 3.2, but only OpenGL '. self::$info->version . ' is available');
-        assert($pname >= 0 && $pname <= 4_294_967_295, 'Argument $pname overflow: C type GLenum is required');
+        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
 
-        $proc = self::getProc('glGetInteger64v', 'void (*)(GLenum pname, GLint64 *data)');
+        assert(Assert::uint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glGetInteger64v', 'void (*)(GLenum pname, GLint64 *data)');
         $proc($pname, $data);
     }
 
     /**
+     * {@see GL46::glGetSynciv} retrieves properties of a sync object. $sync
+     * specifies the name of the sync object whose properties to retrieve.
+     *
+     * On success, {@see GL46::glGetSynciv} replaces up to $bufSize integers
+     * in $values with the corresponding property values of the object being
+     * queried. The actual number of integers replaced is returned in the
+     * variable whose address is specified in $length. If $length is `NULL`,
+     * no length is returned.
+     *
+     * If $pname is {@see GL46::GL_OBJECT_TYPE}, a single value representing
+     * the specific type of the sync object is placed in $values. The only
+     * type supported is {@see GL46::GL_SYNC_FENCE}.
+     *
+     * If $pname is {@see GL46::GL_SYNC_STATUS}, a single value representing
+     * the status of the sync object ({@see GL46::GL_SIGNALED} or
+     * {@see GL46::GL_UNSIGNALED}) is placed in $values.
+     *
+     * If $pname is {@see GL46::GL_SYNC_CONDITION}, a single value
+     * representing the condition of the sync object is placed in $values.
+     * The only condition supported is
+     * {@see GL46::GL_SYNC_GPU_COMMANDS_COMPLETE}.
+     *
+     * If $pname is {@see GL46::GL_SYNC_FLAGS}, a single value representing
+     * the flags with which the sync object was created is placed in $values.
+     * No flags are currently supported$flags is expected to be used in
+     * future extensions to the sync objects..
+     *
+     * If an error occurs, nothing will be written to $values or $length.
+     *
+     * @see http://docs.gl/gl4/glGetSync
      * @since 3.2
      * @param \FFI\CData|\FFI\CStruct|GLsync|null $sync
-     * @param int $pname
-     * @param int $bufSize
+     * @param int|\FFI\CData|\FFI\CInt $pname
+     * @param int|\FFI\CData|\FFI\CInt $bufSize
      * @param \FFI\CData|\FFI\CIntPtr|null $length
      * @param \FFI\CData|\FFI\CIntPtr|null $values
      * @return void
      */
-    public static function glGetSynciv(\FFI\CData $sync, int $pname, int $bufSize, ?\FFI\CData $length, ?\FFI\CData $values): void
+    public function glGetSynciv(\FFI\CData $sync, $pname, $bufSize, ?\FFI\CData $length, ?\FFI\CData $values): void
     {
-        assert(version_compare(self::$info->version, '3.2') >= 0, __FUNCTION__ . ' is available since OpenGL 3.2, but only OpenGL '. self::$info->version . ' is available');
-        assert($pname >= 0 && $pname <= 4_294_967_295, 'Argument $pname overflow: C type GLenum is required');
-        assert($bufSize >= \PHP_INT_MIN && $bufSize <= \PHP_INT_MAX, 'Argument $bufSize overflow: C type GLsizei is required');
+        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
+        $bufSize = $bufSize instanceof \FFI\CData ? $bufSize->cdata : $bufSize;
 
-        $proc = self::getProc('glGetSynciv', 'void (*)(GLsync sync, GLenum pname, GLsizei bufSize, GLsizei *length, GLint *values)');
+        assert(Assert::uint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Assert::int16($bufSize), 'Argument $bufSize must be a C-like GLsizei, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glGetSynciv', 'void (*)(GLsync sync, GLenum pname, GLsizei bufSize, GLsizei *length, GLint *values)');
         $proc($sync, $pname, $bufSize, $length, $values);
     }
 
     /**
+     * {@see GL46::glGetQueryiv} returns in $params a selected parameter of
+     * the query object target specified by $target.
+     *
+     * $pname names a specific query object target parameter. When $pname is
+     * {@see GL46::GL_CURRENT_QUERY}, the name of the currently active query
+     * for $target, or zero if no query is active, will be placed in $params.
+     * If $pname is {@see GL46::GL_QUERY_COUNTER_BITS}, the
+     * implementation-dependent number of bits used to hold the result of
+     * queries for $target is returned in $params.
+     *
+     * @see http://docs.gl/gl2/glGetMaterial
+     * @see http://docs.gl/gl2/glGetQueryiv
+     * @see http://docs.gl/gl4/glGetQueryiv
      * @since 3.2
-     * @param int $target
-     * @param int $index
+     * @param int|\FFI\CData|\FFI\CInt $target
+     * @param int|\FFI\CData|\FFI\CInt $index
      * @param \FFI\CData|\FFI\CIntPtr|null $data
      * @return void
      */
-    public static function glGetInteger64i_v(int $target, int $index, ?\FFI\CData $data): void
+    public function glGetInteger64i_v($target, $index, ?\FFI\CData $data): void
     {
-        assert(version_compare(self::$info->version, '3.2') >= 0, __FUNCTION__ . ' is available since OpenGL 3.2, but only OpenGL '. self::$info->version . ' is available');
-        assert($target >= 0 && $target <= 4_294_967_295, 'Argument $target overflow: C type GLenum is required');
-        assert($index >= 0 && $index <= 4_294_967_295, 'Argument $index overflow: C type GLuint is required');
+        $target = $target instanceof \FFI\CData ? $target->cdata : $target;
+        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
 
-        $proc = self::getProc('glGetInteger64i_v', 'void (*)(GLenum target, GLuint index, GLint64 *data)');
+        assert(Assert::uint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glGetInteger64i_v', 'void (*)(GLenum target, GLuint index, GLint64 *data)');
         $proc($target, $index, $data);
     }
 
     /**
+     * {@see GL46::glGetBufferParameteriv} returns in $data a selected
+     * parameter of the buffer object specified by $target.
+     *
+     * $value names a specific buffer object parameter, as follows:
+     *
+     *  - {@see GL46::GL_BUFFER_ACCESS}: $params returns the access policy set
+     *    while mapping the buffer
+     *    object. The initial value is {@see GL46::GL_READ_WRITE}.
+     *
+     *  - {@see GL46::GL_BUFFER_MAPPED}: $params returns a flag indicating
+     *    whether the buffer object is
+     *    currently mapped. The initial value is {@see GL46::GL_FALSE}.
+     *
+     *  - {@see GL46::GL_BUFFER_SIZE}: $params returns the size of the buffer
+     *    object, measured in bytes. The
+     *    initial value is 0.
+     *
+     *  - {@see GL46::GL_BUFFER_USAGE}: $params returns the buffer object's
+     *    usage pattern. The initial value
+     *    is {@see GL46::GL_STATIC_DRAW}.
+     *
+     * @see http://docs.gl/gl2/glGetBufferParameteriv
      * @since 3.2
-     * @param int $target
-     * @param int $pname
+     * @param int|\FFI\CData|\FFI\CInt $target
+     * @param int|\FFI\CData|\FFI\CInt $pname
      * @param \FFI\CData|\FFI\CIntPtr|null $params
      * @return void
      */
-    public static function glGetBufferParameteri64v(int $target, int $pname, ?\FFI\CData $params): void
+    public function glGetBufferParameteri64v($target, $pname, ?\FFI\CData $params): void
     {
-        assert(version_compare(self::$info->version, '3.2') >= 0, __FUNCTION__ . ' is available since OpenGL 3.2, but only OpenGL '. self::$info->version . ' is available');
-        assert($target >= 0 && $target <= 4_294_967_295, 'Argument $target overflow: C type GLenum is required');
-        assert($pname >= 0 && $pname <= 4_294_967_295, 'Argument $pname overflow: C type GLenum is required');
+        $target = $target instanceof \FFI\CData ? $target->cdata : $target;
+        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
 
-        $proc = self::getProc('glGetBufferParameteri64v', 'void (*)(GLenum target, GLenum pname, GLint64 *params)');
+        assert(Assert::uint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Assert::uint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glGetBufferParameteri64v', 'void (*)(GLenum target, GLenum pname, GLint64 *params)');
         $proc($target, $pname, $params);
     }
 
     /**
-     * - `glFramebufferTexture`, `glFramebufferTexture1D`, `glFramebufferTexture2D`, and `glFramebufferTexture`
-     * attach a selected mipmap level or image of a texture object as one of the logical buffers of the framebuffer
-     * object currently bound to *`target`*. *`target`* must be `GL_DRAW_FRAMEBUFFER`, `GL_READ_FRAMEBUFFER`, or
-     * `GL_FRAMEBUFFER`. `GL_FRAMEBUFFER` is equivalent to `GL_DRAW_FRAMEBUFFER`.
+     * These commands attach a selected mipmap level or image of a texture
+     * object as one of the logical buffers of the specified framebuffer
+     * object. Textures cannot be attached to the default draw and read
+     * framebuffer, so they are not valid targets of these commands.
      *
-     * *`attachment`* specifies the logical attachment of the framebuffer and must be `GL_COLOR_ATTACHMENTi`,
-     * `GL_DEPTH_ATTACHMENT`, `GL_STENCIL_ATTACHMENT` or `GL_DEPTH_STENCIL_ATTACHMENT`. *i* in `GL_COLOR_ATTACHMENTi`
-     * may range from zero to the value of `GL_MAX_COLOR_ATTACHMENTS` - 1. Attaching a level of a texture to
-     * `GL_DEPTH_STENCIL_ATTACHMENT` is equivalent to attaching that level to both the `GL_DEPTH_ATTACHMENT` *and*
-     * the `GL_STENCIL_ATTACHMENT` attachment points simultaneously.
+     * For all commands except {@see GL46::glNamedFramebufferTexture}, the
+     * framebuffer object is that bound to $target, which must be
+     * {@see GL46::GL_DRAW_FRAMEBUFFER}, {@see GL46::GL_READ_FRAMEBUFFER}, or
+     * {@see GL46::GL_FRAMEBUFFER}. {@see GL46::GL_FRAMEBUFFER} is equivalent
+     * to {@see GL46::GL_DRAW_FRAMEBUFFER}.
      *
-     * *`textarget`* specifies what type of texture is named by *`texture`*, and for cube map textures, specifies the
-     * face that is to be attached. If *`texture`* is not zero, it must be the name of an existing texture with type
-     * *`textarget`*, unless it is a cube map texture, in which case *`textarget`* must be
-     * `GL_TEXTURE_CUBE_MAP_POSITIVE_X` `GL_TEXTURE_CUBE_MAP_NEGATIVE_X`, `GL_TEXTURE_CUBE_MAP_POSITIVE_Y`,
-     * `GL_TEXTURE_CUBE_MAP_NEGATIVE_Y`, `GL_TEXTURE_CUBE_MAP_POSITIVE_Z`, or `GL_TEXTURE_CUBE_MAP_NEGATIVE_Z`.
+     * For {@see GL46::glNamedFramebufferTexture}, $framebuffer is the name
+     * of the framebuffer object.
      *
-     * If *`texture`* is non-zero, the specified *`level`* of the texture object named *`texture`* is attached to the
-     * framebfufer attachment point named by *`attachment`*. For `glFramebufferTexture1D`, `glFramebufferTexture2D`,
-     * and `glFramebufferTexture3D`, *`texture`* must be zero or the name of an existing texture with a target of
-     * *`textarget`*, or *`texture`* must be the name of an existing cube-map texture and *`textarget`* must be one
-     * of `GL_TEXTURE_CUBE_MAP_POSITIVE_X`, `GL_TEXTURE_CUBE_MAP_POSITIVE_Y`, `GL_TEXTURE_CUBE_MAP_POSITIVE_Z`,
-     * `GL_TEXTURE_CUBE_MAP_NEGATIVE_X`, `GL_TEXTURE_CUBE_MAP_NEGATIVE_Y`, or `GL_TEXTURE_CUBE_MAP_NEGATIVE_Z`.
+     * $attachment specifies the logical attachment of the framebuffer and
+     * must be {@see GL46::GL_COLOR_ATTACHMENT}i,
+     * {@see GL46::GL_DEPTH_ATTACHMENT}, {@see GL46::GL_STENCIL_ATTACHMENT}
+     * or {@see GL46::GL_DEPTH_STENCIL_ATTACHMENT}. i in
+     * {@see GL46::GL_COLOR_ATTACHMENT}i may range from zero to the value of
+     * {@see GL46::GL_MAX_COLOR_ATTACHMENTS} minus one. Attaching a level of
+     * a texture to {@see GL46::GL_DEPTH_STENCIL_ATTACHMENT} is equivalent to
+     * attaching that level to both the {@see GL46::GL_DEPTH_ATTACHMENT} and
+     * the {@see GL46::GL_STENCIL_ATTACHMENT} attachment points
+     * simultaneously.
      *
-     * If *`textarget`* is `GL_TEXTURE_RECTANGLE`, `GL_TEXTURE_2D_MULTISAMPLE`, or `GL_TEXTURE_2D_MULTISAMPLE_ARRAY`,
-     * then *`level`* must be zero. If *`textarget`* is `GL_TEXTURE_3D`, then level must be greater than or equal to
-     * zero and less than or equal to log2 of the value of `GL_MAX_3D_TEXTURE_SIZE`. If *`textarget`* is one of
-     * `GL_TEXTURE_CUBE_MAP_POSITIVE_X`, `GL_TEXTURE_CUBE_MAP_POSITIVE_Y`, `GL_TEXTURE_CUBE_MAP_POSITIVE_Z`,
-     * `GL_TEXTURE_CUBE_MAP_NEGATIVE_X`, `GL_TEXTURE_CUBE_MAP_NEGATIVE_Y`, or `GL_TEXTURE_CUBE_MAP_NEGATIVE_Z`, then
-     * *`level`* must be greater than or equal to zero and less than or equal to log2 of the value of
-     * `GL_MAX_CUBE_MAP_TEXTURE_SIZE`. For all other values of *`textarget`*, *`level`* must be greater than or equal
-     * to zero and no larger than log2 of the value of `GL_MAX_TEXTURE_SIZE`.
+     * For {@see GL46::glFramebufferTexture1D},
+     * {@see GL46::glFramebufferTexture2D} and
+     * {@see GL46::glFramebufferTexture3D}, $textarget specifies what type of
+     * texture is named by $texture, and for cube map textures, specifies the
+     * face that is to be attached. If $texture is not zero, it must be the
+     * name of an existing texture object with effective target $textarget
+     * unless it is a cube map texture, in which case $textarget must be
+     * {@see GL46::GL_TEXTURE_CUBE_MAP_POSITIVE_X}
+     * {@see GL46::GL_TEXTURE_CUBE_MAP_NEGATIVE_X},
+     * {@see GL46::GL_TEXTURE_CUBE_MAP_POSITIVE_Y},
+     * {@see GL46::GL_TEXTURE_CUBE_MAP_NEGATIVE_Y},
+     * {@see GL46::GL_TEXTURE_CUBE_MAP_POSITIVE_Z}, or
+     * {@see GL46::GL_TEXTURE_CUBE_MAP_NEGATIVE_Z}.
      *
-     * *`layer`* specifies the layer of a 2-dimensional image within a 3-dimensional texture.
+     * If $texture is non-zero, the specified $level of the texture object
+     * named $texture is attached to the framebfufer attachment point named
+     * by $attachment. For {@see GL46::glFramebufferTexture1D},
+     * {@see GL46::glFramebufferTexture2D}, and
+     * {@see GL46::glFramebufferTexture3D}, $texture must be zero or the name
+     * of an existing texture with an effective target of $textarget, or
+     * $texture must be the name of an existing cube-map texture and
+     * $textarget must be one of {@see GL46::GL_TEXTURE_CUBE_MAP_POSITIVE_X},
+     * {@see GL46::GL_TEXTURE_CUBE_MAP_POSITIVE_Y},
+     * {@see GL46::GL_TEXTURE_CUBE_MAP_POSITIVE_Z},
+     * {@see GL46::GL_TEXTURE_CUBE_MAP_NEGATIVE_X},
+     * {@see GL46::GL_TEXTURE_CUBE_MAP_NEGATIVE_Y}, or
+     * {@see GL46::GL_TEXTURE_CUBE_MAP_NEGATIVE_Z}.
      *
-     * For `glFramebufferTexture1D`, if *`texture`* is not zero, then *`textarget`* must be `GL_TEXTURE_1D`. For
-     * `glFramebufferTexture2D`, if *`texture`* is not zero, *`textarget`* must be one of `GL_TEXTURE_2D`,
-     * `GL_TEXTURE_RECTANGLE`, `GL_TEXTURE_CUBE_MAP_POSITIVE_X`, `GL_TEXTURE_CUBE_MAP_POSITIVE_Y`,
-     * `GL_TEXTURE_CUBE_MAP_POSITIVE_Z`, `GL_TEXTURE_CUBE_MAP_NEGATIVE_X`, `GL_TEXTURE_CUBE_MAP_NEGATIVE_Y`,
-     * `GL_TEXTURE_CUBE_MAP_NEGATIVE_Z`, or `GL_TEXTURE_2D_MULTISAMPLE`. For `glFramebufferTexture3D`, if *`texture`*
-     * is not zero, then *`textarget`* must be `GL_TEXTURE_3D`.
+     * If $textarget is {@see GL46::GL_TEXTURE_RECTANGLE},
+     * {@see GL46::GL_TEXTURE_2D_MULTISAMPLE}, or
+     * {@see GL46::GL_TEXTURE_2D_MULTISAMPLE_ARRAY}, then $level must be
+     * zero.
      *
-     * @see http://docs.gl/gl3/glFramebufferTexture
+     * If $textarget is {@see GL46::GL_TEXTURE_3D}, then $level must be
+     * greater than or equal to zero and less than or equal to $log_2$ of the
+     * value of {@see GL46::GL_MAX_3D_TEXTURE_SIZE}.
+     *
+     * If $textarget is one of {@see GL46::GL_TEXTURE_CUBE_MAP_POSITIVE_X},
+     * {@see GL46::GL_TEXTURE_CUBE_MAP_POSITIVE_Y},
+     * {@see GL46::GL_TEXTURE_CUBE_MAP_POSITIVE_Z},
+     * {@see GL46::GL_TEXTURE_CUBE_MAP_NEGATIVE_X},
+     * {@see GL46::GL_TEXTURE_CUBE_MAP_NEGATIVE_Y}, or
+     * {@see GL46::GL_TEXTURE_CUBE_MAP_NEGATIVE_Z}, then $level must be
+     * greater than or equal to zero and less than or equal to $log_2$ of the
+     * value of {@see GL46::GL_MAX_CUBE_MAP_TEXTURE_SIZE}.
+     *
+     * For all other values of $textarget, $level must be greater than or
+     * equal to zero and less than or equal to $log_2$ of the value of
+     * {@see GL46::GL_MAX_TEXTURE_SIZE}.
+     *
+     * $layer specifies the layer of a 2-dimensional image within a
+     * 3-dimensional texture.
+     *
+     * For {@see GL46::glFramebufferTexture1D}, if $texture is not zero, then
+     * $textarget must be {@see GL46::GL_TEXTURE_1D}. For
+     * {@see GL46::glFramebufferTexture2D}, if $texture is not zero,
+     * $textarget must be one of {@see GL46::GL_TEXTURE_2D},
+     * {@see GL46::GL_TEXTURE_RECTANGLE},
+     * {@see GL46::GL_TEXTURE_CUBE_MAP_POSITIVE_X},
+     * {@see GL46::GL_TEXTURE_CUBE_MAP_POSITIVE_Y},
+     * {@see GL46::GL_TEXTURE_CUBE_MAP_POSITIVE_Z},
+     * {@see GL46::GL_TEXTURE_CUBE_MAP_NEGATIVE_X},
+     * {@see GL46::GL_TEXTURE_CUBE_MAP_NEGATIVE_Y},
+     * {@see GL46::GL_TEXTURE_CUBE_MAP_NEGATIVE_Z}, or
+     * {@see GL46::GL_TEXTURE_2D_MULTISAMPLE}. For
+     * {@see GL46::glFramebufferTexture3D}, if $texture is not zero, then
+     * $textarget must be {@see GL46::GL_TEXTURE_3D}.
+     *
+     * For {@see GL46::glFramebufferTexture} and
+     * {@see GL46::glNamedFramebufferTexture}, if $texture is the name of a
+     * three-dimensional, cube map array, cube map, one- or two-dimensional
+     * array, or two-dimensional multisample array texture, the specified
+     * texture level is an array of images, and the framebuffer attachment is
+     * considered to be layered.
+     *
      * @see http://docs.gl/gl4/glFramebufferTexture
      * @since 3.2
-     * @param int $target
-     * @param int $attachment
-     * @param int $texture
-     * @param int $level
+     * @param int|\FFI\CData|\FFI\CInt $target
+     * @param int|\FFI\CData|\FFI\CInt $attachment
+     * @param int|\FFI\CData|\FFI\CInt $texture
+     * @param int|\FFI\CData|\FFI\CInt $level
      * @return void
      */
-    public static function glFramebufferTexture(int $target, int $attachment, int $texture, int $level): void
+    public function glFramebufferTexture($target, $attachment, $texture, $level): void
     {
-        assert(version_compare(self::$info->version, '3.2') >= 0, __FUNCTION__ . ' is available since OpenGL 3.2, but only OpenGL '. self::$info->version . ' is available');
-        assert($target >= 0 && $target <= 4_294_967_295, 'Argument $target overflow: C type GLenum is required');
-        assert($attachment >= 0 && $attachment <= 4_294_967_295, 'Argument $attachment overflow: C type GLenum is required');
-        assert($texture >= 0 && $texture <= 4_294_967_295, 'Argument $texture overflow: C type GLuint is required');
-        assert($level >= \PHP_INT_MIN && $level <= \PHP_INT_MAX, 'Argument $level overflow: C type GLint is required');
+        $target = $target instanceof \FFI\CData ? $target->cdata : $target;
+        $attachment = $attachment instanceof \FFI\CData ? $attachment->cdata : $attachment;
+        $texture = $texture instanceof \FFI\CData ? $texture->cdata : $texture;
+        $level = $level instanceof \FFI\CData ? $level->cdata : $level;
 
-        $proc = self::getProc('glFramebufferTexture', 'void (*)(GLenum target, GLenum attachment, GLuint texture, GLint level)');
+        assert(Assert::uint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Assert::uint16($attachment), 'Argument $attachment must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Assert::uint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Assert::int16($level), 'Argument $level must be a C-like GLint, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glFramebufferTexture', 'void (*)(GLenum target, GLenum attachment, GLuint texture, GLint level)');
         $proc($target, $attachment, $texture, $level);
     }
 
     /**
-     * Establishes the data storage, format, dimensions and number of samples of a multisample texture's image.
+     * {@see GL46::glTexImage2DMultisample} establishes the data storage,
+     * format, dimensions and number of samples of a multisample texture's
+     * image.
      *
-     * *`target`* must be `GL_TEXTURE_2D_MULTISAMPLE` or `GL_PROXY_TEXTURE_2D_MULTISAMPLE`. *`width`* and *`height`*
-     * are the dimensions in texels of the texture, and must be in the range zero to `GL_MAX_TEXTURE_SIZE` - 1.
-     * *`samples`* specifies the number of samples in the image and must be in the range zero to `GL_MAX_SAMPLES` -
-     * 1.
+     * $target must be {@see GL46::GL_TEXTURE_2D_MULTISAMPLE} or
+     * {@see GL46::GL_PROXY_TEXTURE_2D_MULTISAMPLE}. $width and $height are
+     * the dimensions in texels of the texture, and must be in the range zero
+     * to the value of {@see GL46::GL_MAX_TEXTURE_SIZE} minus one. $samples
+     * specifies the number of samples in the image and must be in the range
+     * zero to the value of {@see GL46::GL_MAX_SAMPLES} minus one.
      *
-     * *`internalformat`* must be a color-renderable, depth-renderable, or stencil-renderable format.
+     * $internalformat must be a color-renderable, depth-renderable, or
+     * stencil-renderable format.
      *
-     * If *`fixedsamplelocations`* is `GL_TRUE`, the image will use identical sample locations and the same number of
-     * samples for all texels in the image, and the sample locations will not depend on the internal format or size
-     * of the image.
+     * If $fixedsamplelocations is {@see GL46::GL_TRUE}, the image will use
+     * identical sample locations and the same number of samples for all
+     * texels in the image, and the sample locations will not depend on the
+     * internal format or size of the image.
      *
-     * When a multisample texture is accessed in a shader, the access takes one vector of integers describing which
-     * texel to fetch and an integer corresponding to the sample numbers describing which sample within the texel to
-     * fetch. No standard sampling instructions are allowed on the multisample texture targets.
+     * When a multisample texture is accessed in a shader, the access takes
+     * one vector of integers describing which texel to fetch and an integer
+     * corresponding to the sample numbers describing which sample within the
+     * texel to fetch. No standard sampling instructions are allowed on the
+     * multisample texture targets.
      *
-     * @see http://docs.gl/gl3/glTexImage2DMultisample
      * @see http://docs.gl/gl4/glTexImage2DMultisample
      * @since 3.2
-     * @param int $target
-     * @param int $samples
-     * @param int $internalformat
-     * @param int $width
-     * @param int $height
-     * @param int $fixedsamplelocations
+     * @param int|\FFI\CData|\FFI\CInt $target
+     * @param int|\FFI\CData|\FFI\CInt $samples
+     * @param int|\FFI\CData|\FFI\CInt $internalformat
+     * @param int|\FFI\CData|\FFI\CInt $width
+     * @param int|\FFI\CData|\FFI\CInt $height
+     * @param int|\FFI\CData|\FFI\CInt $fixedsamplelocations
      * @return void
      */
-    public static function glTexImage2DMultisample(int $target, int $samples, int $internalformat, int $width, int $height, int $fixedsamplelocations): void
+    public function glTexImage2DMultisample($target, $samples, $internalformat, $width, $height, $fixedsamplelocations): void
     {
-        assert(version_compare(self::$info->version, '3.2') >= 0, __FUNCTION__ . ' is available since OpenGL 3.2, but only OpenGL '. self::$info->version . ' is available');
-        assert($target >= 0 && $target <= 4_294_967_295, 'Argument $target overflow: C type GLenum is required');
-        assert($samples >= \PHP_INT_MIN && $samples <= \PHP_INT_MAX, 'Argument $samples overflow: C type GLsizei is required');
-        assert($internalformat >= 0 && $internalformat <= 4_294_967_295, 'Argument $internalformat overflow: C type GLenum is required');
-        assert($width >= \PHP_INT_MIN && $width <= \PHP_INT_MAX, 'Argument $width overflow: C type GLsizei is required');
-        assert($height >= \PHP_INT_MIN && $height <= \PHP_INT_MAX, 'Argument $height overflow: C type GLsizei is required');
-        assert($fixedsamplelocations >= 0 && $fixedsamplelocations <= 255, 'Argument $fixedsamplelocations overflow: C type GLboolean is required');
+        $target = $target instanceof \FFI\CData ? $target->cdata : $target;
+        $samples = $samples instanceof \FFI\CData ? $samples->cdata : $samples;
+        $internalformat = $internalformat instanceof \FFI\CData ? $internalformat->cdata : $internalformat;
+        $width = $width instanceof \FFI\CData ? $width->cdata : $width;
+        $height = $height instanceof \FFI\CData ? $height->cdata : $height;
+        $fixedsamplelocations = $fixedsamplelocations instanceof \FFI\CData ? $fixedsamplelocations->cdata : $fixedsamplelocations;
 
-        $proc = self::getProc('glTexImage2DMultisample', 'void (*)(GLenum target, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height, GLboolean fixedsamplelocations)');
+        assert(Assert::uint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Assert::int16($samples), 'Argument $samples must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Assert::uint16($internalformat), 'Argument $internalformat must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Assert::int16($width), 'Argument $width must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Assert::int16($height), 'Argument $height must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Assert::uint8($fixedsamplelocations), 'Argument $fixedsamplelocations must be a C-like GLboolean, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glTexImage2DMultisample', 'void (*)(GLenum target, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height, GLboolean fixedsamplelocations)');
         $proc($target, $samples, $internalformat, $width, $height, $fixedsamplelocations);
     }
 
     /**
-     * Establishes the data storage, format, dimensions and number of samples of a multisample texture's image.
+     * {@see GL46::glTexImage3DMultisample} establishes the data storage,
+     * format, dimensions and number of samples of a multisample texture's
+     * image.
      *
-     * *`target`* must be `GL_TEXTURE_2D_MULTISAMPLE_ARRAY` or `GL_PROXY_TEXTURE_2D_MULTISAMPLE_ARRAY`. *`width`* and
-     * *`height`*are the dimensions in texels of the texture, and must be in the range zero to `GL_MAX_TEXTURE_SIZE`
-     * - 1. *`depth`* is the number of array slices in the array texture's image. *`samples`* specifies the number of
-     * samples in the image and must be in the range zero to `GL_MAX_SAMPLES` - 1.
+     * $target must be {@see GL46::GL_TEXTURE_2D_MULTISAMPLE_ARRAY} or
+     * {@see GL46::GL_PROXY_TEXTURE_2D_MULTISAMPLE_ARRAY}. $width and
+     * $heightare the dimensions in texels of the texture, and must be in the
+     * range zero to the value of {@see GL46::GL_MAX_TEXTURE_SIZE} minus one.
+     * $depth is the number of array slices in the array texture's image.
+     * $samples specifies the number of samples in the image and must be in
+     * the range zero to the value of {@see GL46::GL_MAX_SAMPLES} minus one.
      *
-     * *`internalformat`* must be a color-renderable, depth-renderable, or stencil-renderable format.
+     * $internalformat must be a color-renderable, depth-renderable, or
+     * stencil-renderable format.
      *
-     * If *`fixedsamplelocations`* is `GL_TRUE`, the image will use identical sample locations and the same number of
-     * samples for all texels in the image, and the sample locations will not depend on the internal format or size
-     * of the image.
+     * If $fixedsamplelocations is {@see GL46::GL_TRUE}, the image will use
+     * identical sample locations and the same number of samples for all
+     * texels in the image, and the sample locations will not depend on the
+     * internal format or size of the image.
      *
-     * When a multisample texture is accessed in a shader, the access takes one vector of integers describing which
-     * texel to fetch and an integer corresponding to the sample numbers describing which sample within the texel to
-     * fetch. No standard sampling instructions are allowed on the multisample texture targets.
+     * When a multisample texture is accessed in a shader, the access takes
+     * one vector of integers describing which texel to fetch and an integer
+     * corresponding to the sample numbers describing which sample within the
+     * texel to fetch. No standard sampling instructions are allowed on the
+     * multisample texture targets.
      *
-     * @see http://docs.gl/gl3/glTexImage3DMultisample
      * @see http://docs.gl/gl4/glTexImage3DMultisample
      * @since 3.2
-     * @param int $target
-     * @param int $samples
-     * @param int $internalformat
-     * @param int $width
-     * @param int $height
-     * @param int $depth
-     * @param int $fixedsamplelocations
+     * @param int|\FFI\CData|\FFI\CInt $target
+     * @param int|\FFI\CData|\FFI\CInt $samples
+     * @param int|\FFI\CData|\FFI\CInt $internalformat
+     * @param int|\FFI\CData|\FFI\CInt $width
+     * @param int|\FFI\CData|\FFI\CInt $height
+     * @param int|\FFI\CData|\FFI\CInt $depth
+     * @param int|\FFI\CData|\FFI\CInt $fixedsamplelocations
      * @return void
      */
-    public static function glTexImage3DMultisample(int $target, int $samples, int $internalformat, int $width, int $height, int $depth, int $fixedsamplelocations): void
+    public function glTexImage3DMultisample($target, $samples, $internalformat, $width, $height, $depth, $fixedsamplelocations): void
     {
-        assert(version_compare(self::$info->version, '3.2') >= 0, __FUNCTION__ . ' is available since OpenGL 3.2, but only OpenGL '. self::$info->version . ' is available');
-        assert($target >= 0 && $target <= 4_294_967_295, 'Argument $target overflow: C type GLenum is required');
-        assert($samples >= \PHP_INT_MIN && $samples <= \PHP_INT_MAX, 'Argument $samples overflow: C type GLsizei is required');
-        assert($internalformat >= 0 && $internalformat <= 4_294_967_295, 'Argument $internalformat overflow: C type GLenum is required');
-        assert($width >= \PHP_INT_MIN && $width <= \PHP_INT_MAX, 'Argument $width overflow: C type GLsizei is required');
-        assert($height >= \PHP_INT_MIN && $height <= \PHP_INT_MAX, 'Argument $height overflow: C type GLsizei is required');
-        assert($depth >= \PHP_INT_MIN && $depth <= \PHP_INT_MAX, 'Argument $depth overflow: C type GLsizei is required');
-        assert($fixedsamplelocations >= 0 && $fixedsamplelocations <= 255, 'Argument $fixedsamplelocations overflow: C type GLboolean is required');
+        $target = $target instanceof \FFI\CData ? $target->cdata : $target;
+        $samples = $samples instanceof \FFI\CData ? $samples->cdata : $samples;
+        $internalformat = $internalformat instanceof \FFI\CData ? $internalformat->cdata : $internalformat;
+        $width = $width instanceof \FFI\CData ? $width->cdata : $width;
+        $height = $height instanceof \FFI\CData ? $height->cdata : $height;
+        $depth = $depth instanceof \FFI\CData ? $depth->cdata : $depth;
+        $fixedsamplelocations = $fixedsamplelocations instanceof \FFI\CData ? $fixedsamplelocations->cdata : $fixedsamplelocations;
 
-        $proc = self::getProc('glTexImage3DMultisample', 'void (*)(GLenum target, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height, GLsizei depth, GLboolean fixedsamplelocations)');
+        assert(Assert::uint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Assert::int16($samples), 'Argument $samples must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Assert::uint16($internalformat), 'Argument $internalformat must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Assert::int16($width), 'Argument $width must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Assert::int16($height), 'Argument $height must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Assert::int16($depth), 'Argument $depth must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Assert::uint8($fixedsamplelocations), 'Argument $fixedsamplelocations must be a C-like GLboolean, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glTexImage3DMultisample', 'void (*)(GLenum target, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height, GLsizei depth, GLboolean fixedsamplelocations)');
         $proc($target, $samples, $internalformat, $width, $height, $depth, $fixedsamplelocations);
     }
 
     /**
+     * {@see GL46::glGetMultisamplefv} queries the location of a given
+     * sample. $pname specifies the sample parameter to retrieve and must be
+     * {@see GL46::GL_SAMPLE_POSITION}. $index corresponds to the sample for
+     * which the location should be returned. The sample location is returned
+     * as two floating-point values in $val\[0\] and $val\[1\], each between
+     * 0 and 1, corresponding to the $x and $y locations respectively in the
+     * GL pixel space of that sample. (0.5, 0.5) this corresponds to the
+     * pixel center. $index must be between zero and the value of
+     * {@see GL46::GL_SAMPLES} minus one.
+     *
+     * If the multisample mode does not have fixed sample locations, the
+     * returned values may only reflect the locations of samples within some
+     * pixels.
+     *
+     * @see http://docs.gl/gl4/glGetMultisample
      * @since 3.2
-     * @param int $pname
-     * @param int $index
+     * @param int|\FFI\CData|\FFI\CInt $pname
+     * @param int|\FFI\CData|\FFI\CInt $index
      * @param \FFI\CData|\FFI\CFloatPtr|null $val
      * @return void
      */
-    public static function glGetMultisamplefv(int $pname, int $index, ?\FFI\CData $val): void
+    public function glGetMultisamplefv($pname, $index, ?\FFI\CData $val): void
     {
-        assert(version_compare(self::$info->version, '3.2') >= 0, __FUNCTION__ . ' is available since OpenGL 3.2, but only OpenGL '. self::$info->version . ' is available');
-        assert($pname >= 0 && $pname <= 4_294_967_295, 'Argument $pname overflow: C type GLenum is required');
-        assert($index >= 0 && $index <= 4_294_967_295, 'Argument $index overflow: C type GLuint is required');
+        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
+        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
 
-        $proc = self::getProc('glGetMultisamplefv', 'void (*)(GLenum pname, GLuint index, GLfloat *val)');
+        assert(Assert::uint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glGetMultisamplefv', 'void (*)(GLenum pname, GLuint index, GLfloat *val)');
         $proc($pname, $index, $val);
     }
 
     /**
-     * Sets one 32-bit sub-word of the multi-word sample mask, `GL_SAMPLE_MASK_VALUE`.
+     * {@see GL46::glSampleMaski} sets one 32-bit sub-word of the multi-word
+     * sample mask, {@see GL46::GL_SAMPLE_MASK_VALUE}.
      *
-     * *`maskIndex`* specifies which 32-bit sub-word of the sample mask to update, and *`mask`* specifies the new
-     * value to use for that sub-word. *`maskIndex`* must be less than the value of `GL_MAX_SAMPLE_MASK_WORDS`. Bit
-     * *B* of mask word *M* corresponds to sample 32 x *M* + *B*.
+     * $maskIndex specifies which 32-bit sub-word of the sample mask to
+     * update, and $mask specifies the new value to use for that sub-word.
+     * $maskIndex must be less than the value of
+     * {@see GL46::GL_MAX_SAMPLE_MASK_WORDS}. Bit B of mask word M
+     * corresponds to sample 32 x M + B.
      *
-     * @see http://docs.gl/gl3/glSampleMaski
      * @see http://docs.gl/gl4/glSampleMaski
      * @since 3.2
-     * @param int $maskNumber
-     * @param int $mask
+     * @param int|\FFI\CData|\FFI\CInt $maskNumber
+     * @param int|\FFI\CData|\FFI\CInt $mask
      * @return void
      */
-    public static function glSampleMaski(int $maskNumber, int $mask): void
+    public function glSampleMaski($maskNumber, $mask): void
     {
-        assert(version_compare(self::$info->version, '3.2') >= 0, __FUNCTION__ . ' is available since OpenGL 3.2, but only OpenGL '. self::$info->version . ' is available');
-        assert($maskNumber >= 0 && $maskNumber <= 4_294_967_295, 'Argument $maskNumber overflow: C type GLuint is required');
-        assert($mask >= 0 && $mask <= 4_294_967_295, 'Argument $mask overflow: C type GLbitfield is required');
+        $maskNumber = $maskNumber instanceof \FFI\CData ? $maskNumber->cdata : $maskNumber;
+        $mask = $mask instanceof \FFI\CData ? $mask->cdata : $mask;
 
-        $proc = self::getProc('glSampleMaski', 'void (*)(GLuint maskNumber, GLbitfield mask)');
+        assert(Assert::uint16($maskNumber), 'Argument $maskNumber must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Assert::uint16($mask), 'Argument $mask must be a C-like GLbitfield, but incompatible or overflow value given');
+
+        $proc = $this->getProcAddress('glSampleMaski', 'void (*)(GLuint maskNumber, GLbitfield mask)');
         $proc($maskNumber, $mask);
     }
 }

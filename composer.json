@@ -1,7 +1,7 @@
 {
-    "name": "serafim/ffi-angle",
+    "name": "serafim/ffi-opengl",
     "type": "library",
-    "description": "OpenGL and Vulkan FFI bindings using Angle",
+    "description": "OpenGL and Vulkan FFI bindings",
     "license": "MIT",
     "require": {
         "php": ">=7.4",
@@ -15,11 +15,7 @@
     },
     "require-dev": {
         "ext-json": "*",
-        "ext-simplexml": "*",
         "serafim/ffi-sdl": "^1.0",
-        "illuminate/support": "~7.6",
-        "league/html-to-markdown": "~4.9",
-        "nette/php-generator": "~3.3",
         "serafim/ffi-ide-helper": "^1.0",
         "phpunit/phpunit": "~9.0",
         "symfony/var-dumper": "~5.0"
