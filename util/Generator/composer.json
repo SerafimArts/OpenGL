@@ -1,0 +1,22 @@
+{
+    "require": {
+        "php": ">=7.4",
+        "illuminate/support": "~7.6",
+        "league/html-to-markdown": "~4.9",
+        "nette/php-generator": "~3.3",
+        "symfony/dom-crawler": "~5.0",
+        "symfony/css-selector": "~5.0",
+        "symfony/finder": "~5.0"
+    },
+    "require-dev": {
+        "roave/security-advisories": "dev-master",
+        "symfony/var-dumper": "~5.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "CodeGenerator\\": "src"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
