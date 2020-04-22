@@ -105,45 +105,6 @@ class KhronosRenderer
     }
 
     /**
-     * @param Crawler $el
-     * @param int $wrap
-     * @return string
-     */
-    private function renderItemizedList(Crawler $el, int $wrap = 70): string
-    {
-        $result = [];
-
-        $el->children()->each(function (Crawler $item) use (&$result, $wrap) {
-            $result[] = ' - ' . $this->wrap($this->renderParagraphNode($item), $wrap, '   ');
-        });
-
-        return \implode("\n", $result);
-    }
-
-    /**
-     * @param Crawler $el
-     * @param int $wrap
-     * @return string
-     */
-    private function renderGlossList(Crawler $el, int $wrap = 70): string
-    {
-        $result = [];
-
-        $el->children()->each(function (Crawler $item) use (&$result, $wrap) {
-            $line = [];
-
-            $item->children()->each(function (Crawler $item) use (&$line) {
-                $line[] = $this->renderParagraphNode($item);
-            });
-
-            $result[] = ' - ' . \reset($line) . "\n   " .
-                $this->wrap(\end($line), $wrap, '   ') . "\n";
-        });
-
-        return \implode("\n", $result);
-    }
-
-    /**
      * @param Crawler $para
      * @param int $wrap
      * @return string
@@ -164,6 +125,52 @@ class KhronosRenderer
         $html = \preg_replace('/({@\w+)_/um', '$1 ', $html);
 
         return $html;
+    }
+
+    /**
+     * @param Crawler $el
+     * @return string
+     */
+    private function renderProgramListing(Crawler $el): string
+    {
+        $html = $this->formatCode($el->html());
+
+        return $this->htmlToText($html);
+    }
+
+    /**
+     * @param string $code
+     * @return string
+     */
+    private function formatCode(string $code): string
+    {
+        $code = \preg_replace('/>\s+</um', '><', $code);
+
+        return '<pre><code>' . $code . '</code></pre>';
+    }
+
+    /**
+     * @param string $html
+     * @return string
+     */
+    private function htmlToText(string $html): string
+    {
+        $text = $this->html->convert($html);
+
+        $replacements = [
+            '\\_' => '_',
+            '\\*' => '*',
+            '\\-' => '-',
+            '*/'  => '*\\/',
+            '\\[' => '[',
+            '\\]' => ']',
+        ];
+
+        $text = \str_replace(\array_keys($replacements), \array_values($replacements), $text);
+
+        $text = \preg_replace('/```(.+?)```/sum', '<code>$1</code>', $text);
+
+        return $text;
     }
 
     /**
@@ -188,34 +195,6 @@ class KhronosRenderer
     }
 
     /**
-     * @param Crawler $el
-     * @return string
-     */
-    private function renderProgramListing(Crawler $el): string
-    {
-        $html = $this->formatCode($el->html());
-
-        return $this->htmlToText($html);
-    }
-
-    /**
-     * @param string $html
-     * @return string
-     */
-    private function htmlToText(string $html): string
-    {
-        $text = $this->html->convert($html);
-
-        $replacements = ['\\_' => '_', '\\*' => '*', '\\-' => '-', '*/' => '*\\/'];
-
-        $text = \str_replace(\array_keys($replacements), \array_values($replacements), $text);
-
-        $text = \preg_replace('/```(.+?)```/sum', '<code>$1</code>', $text);
-
-        return $text;
-    }
-
-    /**
      * @param string $html
      * @param string $tag
      * @param \Closure $replacement
@@ -233,14 +212,46 @@ class KhronosRenderer
     }
 
     /**
-     * @param string $code
+     * @param string $text
+     * @param int $wrap
+     * @param string $depth
      * @return string
      */
-    private function formatCode(string $code): string
+    private function wrap(string $text, int $wrap, string $depth = ''): string
     {
-        $code = \preg_replace('/>\s+</um', '><', $code);
+        $text = \wordwrap($text, $wrap);
 
-        return '<pre><code>' . $code . '</code></pre>';
+        return \str_replace("\n", "\n$depth", $text);
+    }
+
+    /**
+     * @param Crawler $el
+     * @return string
+     */
+    private function renderVariablesList(Crawler $el): string
+    {
+        $result = [];
+
+        $el->children()->each(function (Crawler $el) use (&$result) {
+            $result[] = $this->renderVariablesListEntry($el);
+        });
+
+        return \implode("\n", $result);
+    }
+
+    /**
+     * @param Crawler $el
+     * @param int $wrap
+     * @return string
+     */
+    private function renderVariablesListEntry(Crawler $el, int $wrap = 70): string
+    {
+        $title = $el->filter('term')->first()->text();
+        $description = \trim($this->renderParagraphNode($el->filter('listitem')->first()));
+
+        $text = "{@see $this->gl::$title}: " . \trim($description);
+
+        return ' - ' . $this->wrap($text, $wrap, '   ') . "\n";
     }
 
     /**
@@ -285,39 +296,35 @@ class KhronosRenderer
      * @param int $wrap
      * @return string
      */
-    private function renderVariablesListEntry(Crawler $el, int $wrap = 70): string
+    private function renderItemizedList(Crawler $el, int $wrap = 70): string
     {
-        $title = $el->filter('term')->first()->text();
-        $description = \trim($this->renderParagraphNode($el->filter('listitem')->first()));
+        $result = [];
 
-        $text = "{@see $this->gl::$title}: " . \trim($description);
+        $el->children()->each(function (Crawler $item) use (&$result, $wrap) {
+            $result[] = ' - ' . $this->wrap($this->renderParagraphNode($item), $wrap, '   ');
+        });
 
-        return ' - ' . $this->wrap($text, $wrap, '   ') . "\n";
-    }
-
-    /**
-     * @param string $text
-     * @param int $wrap
-     * @param string $depth
-     * @return string
-     */
-    private function wrap(string $text, int $wrap, string $depth = ''): string
-    {
-        $text = \wordwrap($text, $wrap);
-
-        return \str_replace("\n", "\n$depth", $text);
+        return \implode("\n", $result);
     }
 
     /**
      * @param Crawler $el
+     * @param int $wrap
      * @return string
      */
-    private function renderVariablesList(Crawler $el): string
+    private function renderGlossList(Crawler $el, int $wrap = 70): string
     {
         $result = [];
 
-        $el->children()->each(function (Crawler $el) use (&$result) {
-            $result[] = $this->renderVariablesListEntry($el);
+        $el->children()->each(function (Crawler $item) use (&$result, $wrap) {
+            $line = [];
+
+            $item->children()->each(function (Crawler $item) use (&$line) {
+                $line[] = $this->renderParagraphNode($item);
+            });
+
+            $result[] = ' - ' . \reset($line) . "\n   " .
+                $this->wrap(\end($line), $wrap, '   ') . "\n";
         });
 
         return \implode("\n", $result);

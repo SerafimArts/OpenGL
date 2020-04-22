@@ -1929,8 +1929,8 @@ class GL33 extends GL32
      * will be passed as fixed-point values that are scaled to a normalized
      * range according to the component conversion rules defined by the
      * OpenGL specification. Signed values are understood to represent
-     * fixed-point values in the range \[-1,1\], and unsigned values are
-     * understood to represent fixed-point values in the range \[0,1\].
+     * fixed-point values in the range [-1,1], and unsigned values are
+     * understood to represent fixed-point values in the range [0,1].
      *
      * The commands containing {@see GL46::I} indicate that the arguments are
      * extended to full signed or unsigned integers.
@@ -2036,8 +2036,8 @@ class GL33 extends GL32
      * will be passed as fixed-point values that are scaled to a normalized
      * range according to the component conversion rules defined by the
      * OpenGL specification. Signed values are understood to represent
-     * fixed-point values in the range \[-1,1\], and unsigned values are
-     * understood to represent fixed-point values in the range \[0,1\].
+     * fixed-point values in the range [-1,1], and unsigned values are
+     * understood to represent fixed-point values in the range [0,1].
      *
      * The commands containing {@see GL46::I} indicate that the arguments are
      * extended to full signed or unsigned integers.
@@ -2141,8 +2141,8 @@ class GL33 extends GL32
      * will be passed as fixed-point values that are scaled to a normalized
      * range according to the component conversion rules defined by the
      * OpenGL specification. Signed values are understood to represent
-     * fixed-point values in the range \[-1,1\], and unsigned values are
-     * understood to represent fixed-point values in the range \[0,1\].
+     * fixed-point values in the range [-1,1], and unsigned values are
+     * understood to represent fixed-point values in the range [0,1].
      *
      * The commands containing {@see GL46::I} indicate that the arguments are
      * extended to full signed or unsigned integers.
@@ -2248,8 +2248,8 @@ class GL33 extends GL32
      * will be passed as fixed-point values that are scaled to a normalized
      * range according to the component conversion rules defined by the
      * OpenGL specification. Signed values are understood to represent
-     * fixed-point values in the range \[-1,1\], and unsigned values are
-     * understood to represent fixed-point values in the range \[0,1\].
+     * fixed-point values in the range [-1,1], and unsigned values are
+     * understood to represent fixed-point values in the range [0,1].
      *
      * The commands containing {@see GL46::I} indicate that the arguments are
      * extended to full signed or unsigned integers.
@@ -2353,8 +2353,8 @@ class GL33 extends GL32
      * will be passed as fixed-point values that are scaled to a normalized
      * range according to the component conversion rules defined by the
      * OpenGL specification. Signed values are understood to represent
-     * fixed-point values in the range \[-1,1\], and unsigned values are
-     * understood to represent fixed-point values in the range \[0,1\].
+     * fixed-point values in the range [-1,1], and unsigned values are
+     * understood to represent fixed-point values in the range [0,1].
      *
      * The commands containing {@see GL46::I} indicate that the arguments are
      * extended to full signed or unsigned integers.
@@ -2460,8 +2460,8 @@ class GL33 extends GL32
      * will be passed as fixed-point values that are scaled to a normalized
      * range according to the component conversion rules defined by the
      * OpenGL specification. Signed values are understood to represent
-     * fixed-point values in the range \[-1,1\], and unsigned values are
-     * understood to represent fixed-point values in the range \[0,1\].
+     * fixed-point values in the range [-1,1], and unsigned values are
+     * understood to represent fixed-point values in the range [0,1].
      *
      * The commands containing {@see GL46::I} indicate that the arguments are
      * extended to full signed or unsigned integers.
@@ -2565,8 +2565,8 @@ class GL33 extends GL32
      * will be passed as fixed-point values that are scaled to a normalized
      * range according to the component conversion rules defined by the
      * OpenGL specification. Signed values are understood to represent
-     * fixed-point values in the range \[-1,1\], and unsigned values are
-     * understood to represent fixed-point values in the range \[0,1\].
+     * fixed-point values in the range [-1,1], and unsigned values are
+     * understood to represent fixed-point values in the range [0,1].
      *
      * The commands containing {@see GL46::I} indicate that the arguments are
      * extended to full signed or unsigned integers.
@@ -2672,8 +2672,8 @@ class GL33 extends GL32
      * will be passed as fixed-point values that are scaled to a normalized
      * range according to the component conversion rules defined by the
      * OpenGL specification. Signed values are understood to represent
-     * fixed-point values in the range \[-1,1\], and unsigned values are
-     * understood to represent fixed-point values in the range \[0,1\].
+     * fixed-point values in the range [-1,1], and unsigned values are
+     * understood to represent fixed-point values in the range [0,1].
      *
      * The commands containing {@see GL46::I} indicate that the arguments are
      * extended to full signed or unsigned integers.

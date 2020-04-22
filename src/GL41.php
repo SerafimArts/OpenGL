@@ -280,8 +280,7 @@ class GL41 extends GL40
      * $range points to an array of two integers into which the format's
      * numeric range will be returned. If min and max are the smallest values
      * representable in the format, then the values returned are defined to
-     * be: $range\[0\] = floor(log2(|min|)) and $range\[1\] =
-     * floor(log2(|max|)).
+     * be: $range[0] = floor(log2(|min|)) and $range[1] = floor(log2(|max|)).
      *
      * $precision specifies the address of an integer into which will be
      * written the log2 value of the number of bits of precision of the
@@ -6302,8 +6301,8 @@ class GL41 extends GL40
      * will be passed as fixed-point values that are scaled to a normalized
      * range according to the component conversion rules defined by the
      * OpenGL specification. Signed values are understood to represent
-     * fixed-point values in the range \[-1,1\], and unsigned values are
-     * understood to represent fixed-point values in the range \[0,1\].
+     * fixed-point values in the range [-1,1], and unsigned values are
+     * understood to represent fixed-point values in the range [0,1].
      *
      * The commands containing {@see GL46::I} indicate that the arguments are
      * extended to full signed or unsigned integers.
@@ -6403,8 +6402,8 @@ class GL41 extends GL40
      * will be passed as fixed-point values that are scaled to a normalized
      * range according to the component conversion rules defined by the
      * OpenGL specification. Signed values are understood to represent
-     * fixed-point values in the range \[-1,1\], and unsigned values are
-     * understood to represent fixed-point values in the range \[0,1\].
+     * fixed-point values in the range [-1,1], and unsigned values are
+     * understood to represent fixed-point values in the range [0,1].
      *
      * The commands containing {@see GL46::I} indicate that the arguments are
      * extended to full signed or unsigned integers.
@@ -6507,8 +6506,8 @@ class GL41 extends GL40
      * will be passed as fixed-point values that are scaled to a normalized
      * range according to the component conversion rules defined by the
      * OpenGL specification. Signed values are understood to represent
-     * fixed-point values in the range \[-1,1\], and unsigned values are
-     * understood to represent fixed-point values in the range \[0,1\].
+     * fixed-point values in the range [-1,1], and unsigned values are
+     * understood to represent fixed-point values in the range [0,1].
      *
      * The commands containing {@see GL46::I} indicate that the arguments are
      * extended to full signed or unsigned integers.
@@ -6614,8 +6613,8 @@ class GL41 extends GL40
      * will be passed as fixed-point values that are scaled to a normalized
      * range according to the component conversion rules defined by the
      * OpenGL specification. Signed values are understood to represent
-     * fixed-point values in the range \[-1,1\], and unsigned values are
-     * understood to represent fixed-point values in the range \[0,1\].
+     * fixed-point values in the range [-1,1], and unsigned values are
+     * understood to represent fixed-point values in the range [0,1].
      *
      * The commands containing {@see GL46::I} indicate that the arguments are
      * extended to full signed or unsigned integers.
@@ -6724,8 +6723,8 @@ class GL41 extends GL40
      * will be passed as fixed-point values that are scaled to a normalized
      * range according to the component conversion rules defined by the
      * OpenGL specification. Signed values are understood to represent
-     * fixed-point values in the range \[-1,1\], and unsigned values are
-     * understood to represent fixed-point values in the range \[0,1\].
+     * fixed-point values in the range [-1,1], and unsigned values are
+     * understood to represent fixed-point values in the range [0,1].
      *
      * The commands containing {@see GL46::I} indicate that the arguments are
      * extended to full signed or unsigned integers.
@@ -6823,8 +6822,8 @@ class GL41 extends GL40
      * will be passed as fixed-point values that are scaled to a normalized
      * range according to the component conversion rules defined by the
      * OpenGL specification. Signed values are understood to represent
-     * fixed-point values in the range \[-1,1\], and unsigned values are
-     * understood to represent fixed-point values in the range \[0,1\].
+     * fixed-point values in the range [-1,1], and unsigned values are
+     * understood to represent fixed-point values in the range [0,1].
      *
      * The commands containing {@see GL46::I} indicate that the arguments are
      * extended to full signed or unsigned integers.
@@ -6922,8 +6921,8 @@ class GL41 extends GL40
      * will be passed as fixed-point values that are scaled to a normalized
      * range according to the component conversion rules defined by the
      * OpenGL specification. Signed values are understood to represent
-     * fixed-point values in the range \[-1,1\], and unsigned values are
-     * understood to represent fixed-point values in the range \[0,1\].
+     * fixed-point values in the range [-1,1], and unsigned values are
+     * understood to represent fixed-point values in the range [0,1].
      *
      * The commands containing {@see GL46::I} indicate that the arguments are
      * extended to full signed or unsigned integers.
@@ -7021,8 +7020,8 @@ class GL41 extends GL40
      * will be passed as fixed-point values that are scaled to a normalized
      * range according to the component conversion rules defined by the
      * OpenGL specification. Signed values are understood to represent
-     * fixed-point values in the range \[-1,1\], and unsigned values are
-     * understood to represent fixed-point values in the range \[0,1\].
+     * fixed-point values in the range [-1,1], and unsigned values are
+     * understood to represent fixed-point values in the range [0,1].
      *
      * The commands containing {@see GL46::I} indicate that the arguments are
      * extended to full signed or unsigned integers.
@@ -7094,8 +7093,8 @@ class GL41 extends GL40
      *
      * For {@see GL46::glVertexAttribPointer}, if $normalized is set to
      * {@see GL46::GL_TRUE}, it indicates that values stored in an integer
-     * format are to be mapped to the range \[-1,1\] (for signed values) or
-     * \[0,1\] (for unsigned values) when they are accessed and converted to
+     * format are to be mapped to the range [-1,1] (for signed values) or
+     * [0,1] (for unsigned values) when they are accessed and converted to
      * floating point. Otherwise, values will be converted to floats directly
      * without normalization.
      *
@@ -7275,7 +7274,7 @@ class GL41 extends GL40
      * modify. $first must be less than the value of
      * {@see GL46::GL_MAX_VIEWPORTS}, and $first + $count must be less than
      * or equal to the value of {@see GL46::GL_MAX_VIEWPORTS}. Viewports
-     * whose indices lie outside the range \[$first, $first + $count) are not
+     * whose indices lie outside the range [$first, $first + $count) are not
      * modified. $v contains the address of an array of floating point values
      * specifying the left (x), bottom (y), width (w), and height (h) of each
      * viewport, in that order. x and y give the location of the viewport's
@@ -7291,7 +7290,7 @@ class GL41 extends GL40
      *
      * The location of the viewport's bottom left corner, given by (x, y) is
      * clamped to be within the implementaiton-dependent viewport bounds
-     * range. The viewport bounds range \[min, max\] can be determined by
+     * range. The viewport bounds range [min, max] can be determined by
      * calling {@see GL46::glGet} with argument
      * {@see GL46::GL_VIEWPORT_BOUNDS_RANGE}. Viewport width and height are
      * silently clamped to a range that depends on the implementation. To
@@ -7345,7 +7344,7 @@ class GL41 extends GL40
      *
      * The location of the viewport's bottom left corner, given by (x, y) is
      * clamped to be within the implementaiton-dependent viewport bounds
-     * range. The viewport bounds range \[min, max\] can be determined by
+     * range. The viewport bounds range [min, max] can be determined by
      * calling {@see GL46::glGet} with argument
      * {@see GL46::GL_VIEWPORT_BOUNDS_RANGE}. Viewport width and height are
      * silently clamped to a range that depends on the implementation. To
@@ -7418,7 +7417,7 @@ class GL41 extends GL40
      *
      * The location of the viewport's bottom left corner, given by (x, y) is
      * clamped to be within the implementaiton-dependent viewport bounds
-     * range. The viewport bounds range \[min, max\] can be determined by
+     * range. The viewport bounds range [min, max] can be determined by
      * calling {@see GL46::glGet} with argument
      * {@see GL46::GL_VIEWPORT_BOUNDS_RANGE}. Viewport width and height are
      * silently clamped to a range that depends on the implementation. To
@@ -7601,7 +7600,7 @@ class GL41 extends GL40
      * through 1 (like color components). {@see GL46::glDepthRangeArray}
      * specifies a linear mapping of the normalized depth coordinates in this
      * range to window depth coordinates for each viewport in the range
-     * \[$first, $first + $count). Thus, the values accepted by
+     * [$first, $first + $count). Thus, the values accepted by
      * {@see GL46::glDepthRangeArray} are both clamped to this range before
      * they are accepted.
      *

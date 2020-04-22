@@ -2908,7 +2908,7 @@ class GL43 extends GL42
      * If $name exactly matches the name string of one of the active
      * resources for $programInterface, the index of the matched resource is
      * returned. Additionally, if $name would exactly match the name string
-     * of an active resource if "\[0\]" were appended to $name, the index of
+     * of an active resource if "[0]" were appended to $name, the index of
      * the matched resource is returned. Otherwise, $name is considered not
      * to be the name of an active resource, and
      * {@see GL46::GL_INVALID_INDEX} is returned.
@@ -3361,11 +3361,11 @@ class GL43 extends GL42
      *  -  the string exactly matches the name of the active variable
      *  -  if the string identifies the base name of an active array, where the
      *    string would exactly match the name of the variable if the suffix
-     *    "\[0\]" were appended to the string
+     *    "[0]" were appended to the string
      *  -  if the string identifies an active element of the array, where the
-     *    string ends with the concatenation of the "\[" character, an integer
+     *    string ends with the concatenation of the "[" character, an integer
      *    with no "+" sign, extra leading zeroes, or whitespace identifying an
-     *    array element, and the "\]" character, the integer is less than the
+     *    array element, and the "]" character, the integer is less than the
      *    number of active elements of the array variable, and where the string
      *    would exactly match the enumerated name of the array if the decimal
      *    integer were replaced with zero.
@@ -3417,11 +3417,11 @@ class GL43 extends GL42
      *  -  the string exactly matches the name of the active variable
      *  -  if the string identifies the base name of an active array, where the
      *    string would exactly match the name of the variable if the suffix
-     *    "\[0\]" were appended to the string
+     *    "[0]" were appended to the string
      *  -  if the string identifies an active element of the array, where the
-     *    string ends with the concatenation of the "\[" character, an integer
+     *    string ends with the concatenation of the "[" character, an integer
      *    with no "+" sign, extra leading zeroes, or whitespace identifying an
-     *    array element, and the "\]" character, the integer is less than the
+     *    array element, and the "]" character, the integer is less than the
      *    number of active elements of the array variable, and where the string
      *    would exactly match the enumerated name of the array if the decimal
      *    integer were replaced with zero.
@@ -3917,7 +3917,7 @@ class GL43 extends GL42
      * For {@see GL46::glVertexAttribFormat} and
      * {@see GL46::glVertexArrayAttribFormat}, if $normalized is
      * {@see GL46::GL_TRUE}, then integer data is normalized to the range
-     * \[-1, 1\] or \[0, 1\] if it is signed or unsigned, respectively. If
+     * [-1, 1] or [0, 1] if it is signed or unsigned, respectively. If
      * $normalized is {@see GL46::GL_FALSE} then integer data is directly
      * converted to floating point.
      *
@@ -4010,7 +4010,7 @@ class GL43 extends GL42
      * For {@see GL46::glVertexAttribFormat} and
      * {@see GL46::glVertexArrayAttribFormat}, if $normalized is
      * {@see GL46::GL_TRUE}, then integer data is normalized to the range
-     * \[-1, 1\] or \[0, 1\] if it is signed or unsigned, respectively. If
+     * [-1, 1] or [0, 1] if it is signed or unsigned, respectively. If
      * $normalized is {@see GL46::GL_FALSE} then integer data is directly
      * converted to floating point.
      *
@@ -4100,7 +4100,7 @@ class GL43 extends GL42
      * For {@see GL46::glVertexAttribFormat} and
      * {@see GL46::glVertexArrayAttribFormat}, if $normalized is
      * {@see GL46::GL_TRUE}, then integer data is normalized to the range
-     * \[-1, 1\] or \[0, 1\] if it is signed or unsigned, respectively. If
+     * [-1, 1] or [0, 1] if it is signed or unsigned, respectively. If
      * $normalized is {@see GL46::GL_FALSE} then integer data is directly
      * converted to floating point.
      *

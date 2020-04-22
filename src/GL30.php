@@ -2208,8 +2208,8 @@ class GL30 extends GL21
      *
      * For {@see GL46::glVertexAttribPointer}, if $normalized is set to
      * {@see GL46::GL_TRUE}, it indicates that values stored in an integer
-     * format are to be mapped to the range \[-1,1\] (for signed values) or
-     * \[0,1\] (for unsigned values) when they are accessed and converted to
+     * format are to be mapped to the range [-1,1] (for signed values) or
+     * [0,1] (for unsigned values) when they are accessed and converted to
      * floating point. Otherwise, values will be converted to floats directly
      * without normalization.
      *
@@ -2532,8 +2532,8 @@ class GL30 extends GL21
      * will be passed as fixed-point values that are scaled to a normalized
      * range according to the component conversion rules defined by the
      * OpenGL specification. Signed values are understood to represent
-     * fixed-point values in the range \[-1,1\], and unsigned values are
-     * understood to represent fixed-point values in the range \[0,1\].
+     * fixed-point values in the range [-1,1], and unsigned values are
+     * understood to represent fixed-point values in the range [0,1].
      *
      * The commands containing {@see GL46::I} indicate that the arguments are
      * extended to full signed or unsigned integers.
@@ -2633,8 +2633,8 @@ class GL30 extends GL21
      * will be passed as fixed-point values that are scaled to a normalized
      * range according to the component conversion rules defined by the
      * OpenGL specification. Signed values are understood to represent
-     * fixed-point values in the range \[-1,1\], and unsigned values are
-     * understood to represent fixed-point values in the range \[0,1\].
+     * fixed-point values in the range [-1,1], and unsigned values are
+     * understood to represent fixed-point values in the range [0,1].
      *
      * The commands containing {@see GL46::I} indicate that the arguments are
      * extended to full signed or unsigned integers.
@@ -2737,8 +2737,8 @@ class GL30 extends GL21
      * will be passed as fixed-point values that are scaled to a normalized
      * range according to the component conversion rules defined by the
      * OpenGL specification. Signed values are understood to represent
-     * fixed-point values in the range \[-1,1\], and unsigned values are
-     * understood to represent fixed-point values in the range \[0,1\].
+     * fixed-point values in the range [-1,1], and unsigned values are
+     * understood to represent fixed-point values in the range [0,1].
      *
      * The commands containing {@see GL46::I} indicate that the arguments are
      * extended to full signed or unsigned integers.
@@ -2844,8 +2844,8 @@ class GL30 extends GL21
      * will be passed as fixed-point values that are scaled to a normalized
      * range according to the component conversion rules defined by the
      * OpenGL specification. Signed values are understood to represent
-     * fixed-point values in the range \[-1,1\], and unsigned values are
-     * understood to represent fixed-point values in the range \[0,1\].
+     * fixed-point values in the range [-1,1], and unsigned values are
+     * understood to represent fixed-point values in the range [0,1].
      *
      * The commands containing {@see GL46::I} indicate that the arguments are
      * extended to full signed or unsigned integers.
@@ -2954,8 +2954,8 @@ class GL30 extends GL21
      * will be passed as fixed-point values that are scaled to a normalized
      * range according to the component conversion rules defined by the
      * OpenGL specification. Signed values are understood to represent
-     * fixed-point values in the range \[-1,1\], and unsigned values are
-     * understood to represent fixed-point values in the range \[0,1\].
+     * fixed-point values in the range [-1,1], and unsigned values are
+     * understood to represent fixed-point values in the range [0,1].
      *
      * The commands containing {@see GL46::I} indicate that the arguments are
      * extended to full signed or unsigned integers.
@@ -3055,8 +3055,8 @@ class GL30 extends GL21
      * will be passed as fixed-point values that are scaled to a normalized
      * range according to the component conversion rules defined by the
      * OpenGL specification. Signed values are understood to represent
-     * fixed-point values in the range \[-1,1\], and unsigned values are
-     * understood to represent fixed-point values in the range \[0,1\].
+     * fixed-point values in the range [-1,1], and unsigned values are
+     * understood to represent fixed-point values in the range [0,1].
      *
      * The commands containing {@see GL46::I} indicate that the arguments are
      * extended to full signed or unsigned integers.
@@ -3159,8 +3159,8 @@ class GL30 extends GL21
      * will be passed as fixed-point values that are scaled to a normalized
      * range according to the component conversion rules defined by the
      * OpenGL specification. Signed values are understood to represent
-     * fixed-point values in the range \[-1,1\], and unsigned values are
-     * understood to represent fixed-point values in the range \[0,1\].
+     * fixed-point values in the range [-1,1], and unsigned values are
+     * understood to represent fixed-point values in the range [0,1].
      *
      * The commands containing {@see GL46::I} indicate that the arguments are
      * extended to full signed or unsigned integers.
@@ -3266,8 +3266,8 @@ class GL30 extends GL21
      * will be passed as fixed-point values that are scaled to a normalized
      * range according to the component conversion rules defined by the
      * OpenGL specification. Signed values are understood to represent
-     * fixed-point values in the range \[-1,1\], and unsigned values are
-     * understood to represent fixed-point values in the range \[0,1\].
+     * fixed-point values in the range [-1,1], and unsigned values are
+     * understood to represent fixed-point values in the range [0,1].
      *
      * The commands containing {@see GL46::I} indicate that the arguments are
      * extended to full signed or unsigned integers.
@@ -3376,8 +3376,8 @@ class GL30 extends GL21
      * will be passed as fixed-point values that are scaled to a normalized
      * range according to the component conversion rules defined by the
      * OpenGL specification. Signed values are understood to represent
-     * fixed-point values in the range \[-1,1\], and unsigned values are
-     * understood to represent fixed-point values in the range \[0,1\].
+     * fixed-point values in the range [-1,1], and unsigned values are
+     * understood to represent fixed-point values in the range [0,1].
      *
      * The commands containing {@see GL46::I} indicate that the arguments are
      * extended to full signed or unsigned integers.
@@ -3475,8 +3475,8 @@ class GL30 extends GL21
      * will be passed as fixed-point values that are scaled to a normalized
      * range according to the component conversion rules defined by the
      * OpenGL specification. Signed values are understood to represent
-     * fixed-point values in the range \[-1,1\], and unsigned values are
-     * understood to represent fixed-point values in the range \[0,1\].
+     * fixed-point values in the range [-1,1], and unsigned values are
+     * understood to represent fixed-point values in the range [0,1].
      *
      * The commands containing {@see GL46::I} indicate that the arguments are
      * extended to full signed or unsigned integers.
@@ -3574,8 +3574,8 @@ class GL30 extends GL21
      * will be passed as fixed-point values that are scaled to a normalized
      * range according to the component conversion rules defined by the
      * OpenGL specification. Signed values are understood to represent
-     * fixed-point values in the range \[-1,1\], and unsigned values are
-     * understood to represent fixed-point values in the range \[0,1\].
+     * fixed-point values in the range [-1,1], and unsigned values are
+     * understood to represent fixed-point values in the range [0,1].
      *
      * The commands containing {@see GL46::I} indicate that the arguments are
      * extended to full signed or unsigned integers.
@@ -3673,8 +3673,8 @@ class GL30 extends GL21
      * will be passed as fixed-point values that are scaled to a normalized
      * range according to the component conversion rules defined by the
      * OpenGL specification. Signed values are understood to represent
-     * fixed-point values in the range \[-1,1\], and unsigned values are
-     * understood to represent fixed-point values in the range \[0,1\].
+     * fixed-point values in the range [-1,1], and unsigned values are
+     * understood to represent fixed-point values in the range [0,1].
      *
      * The commands containing {@see GL46::I} indicate that the arguments are
      * extended to full signed or unsigned integers.
@@ -3772,8 +3772,8 @@ class GL30 extends GL21
      * will be passed as fixed-point values that are scaled to a normalized
      * range according to the component conversion rules defined by the
      * OpenGL specification. Signed values are understood to represent
-     * fixed-point values in the range \[-1,1\], and unsigned values are
-     * understood to represent fixed-point values in the range \[0,1\].
+     * fixed-point values in the range [-1,1], and unsigned values are
+     * understood to represent fixed-point values in the range [0,1].
      *
      * The commands containing {@see GL46::I} indicate that the arguments are
      * extended to full signed or unsigned integers.
@@ -3871,8 +3871,8 @@ class GL30 extends GL21
      * will be passed as fixed-point values that are scaled to a normalized
      * range according to the component conversion rules defined by the
      * OpenGL specification. Signed values are understood to represent
-     * fixed-point values in the range \[-1,1\], and unsigned values are
-     * understood to represent fixed-point values in the range \[0,1\].
+     * fixed-point values in the range [-1,1], and unsigned values are
+     * understood to represent fixed-point values in the range [0,1].
      *
      * The commands containing {@see GL46::I} indicate that the arguments are
      * extended to full signed or unsigned integers.
@@ -3970,8 +3970,8 @@ class GL30 extends GL21
      * will be passed as fixed-point values that are scaled to a normalized
      * range according to the component conversion rules defined by the
      * OpenGL specification. Signed values are understood to represent
-     * fixed-point values in the range \[-1,1\], and unsigned values are
-     * understood to represent fixed-point values in the range \[0,1\].
+     * fixed-point values in the range [-1,1], and unsigned values are
+     * understood to represent fixed-point values in the range [0,1].
      *
      * The commands containing {@see GL46::I} indicate that the arguments are
      * extended to full signed or unsigned integers.
@@ -4069,8 +4069,8 @@ class GL30 extends GL21
      * will be passed as fixed-point values that are scaled to a normalized
      * range according to the component conversion rules defined by the
      * OpenGL specification. Signed values are understood to represent
-     * fixed-point values in the range \[-1,1\], and unsigned values are
-     * understood to represent fixed-point values in the range \[0,1\].
+     * fixed-point values in the range [-1,1], and unsigned values are
+     * understood to represent fixed-point values in the range [0,1].
      *
      * The commands containing {@see GL46::I} indicate that the arguments are
      * extended to full signed or unsigned integers.
@@ -4168,8 +4168,8 @@ class GL30 extends GL21
      * will be passed as fixed-point values that are scaled to a normalized
      * range according to the component conversion rules defined by the
      * OpenGL specification. Signed values are understood to represent
-     * fixed-point values in the range \[-1,1\], and unsigned values are
-     * understood to represent fixed-point values in the range \[0,1\].
+     * fixed-point values in the range [-1,1], and unsigned values are
+     * understood to represent fixed-point values in the range [0,1].
      *
      * The commands containing {@see GL46::I} indicate that the arguments are
      * extended to full signed or unsigned integers.
@@ -4267,8 +4267,8 @@ class GL30 extends GL21
      * will be passed as fixed-point values that are scaled to a normalized
      * range according to the component conversion rules defined by the
      * OpenGL specification. Signed values are understood to represent
-     * fixed-point values in the range \[-1,1\], and unsigned values are
-     * understood to represent fixed-point values in the range \[0,1\].
+     * fixed-point values in the range [-1,1], and unsigned values are
+     * understood to represent fixed-point values in the range [0,1].
      *
      * The commands containing {@see GL46::I} indicate that the arguments are
      * extended to full signed or unsigned integers.
@@ -4366,8 +4366,8 @@ class GL30 extends GL21
      * will be passed as fixed-point values that are scaled to a normalized
      * range according to the component conversion rules defined by the
      * OpenGL specification. Signed values are understood to represent
-     * fixed-point values in the range \[-1,1\], and unsigned values are
-     * understood to represent fixed-point values in the range \[0,1\].
+     * fixed-point values in the range [-1,1], and unsigned values are
+     * understood to represent fixed-point values in the range [0,1].
      *
      * The commands containing {@see GL46::I} indicate that the arguments are
      * extended to full signed or unsigned integers.
@@ -4465,8 +4465,8 @@ class GL30 extends GL21
      * will be passed as fixed-point values that are scaled to a normalized
      * range according to the component conversion rules defined by the
      * OpenGL specification. Signed values are understood to represent
-     * fixed-point values in the range \[-1,1\], and unsigned values are
-     * understood to represent fixed-point values in the range \[0,1\].
+     * fixed-point values in the range [-1,1], and unsigned values are
+     * understood to represent fixed-point values in the range [0,1].
      *
      * The commands containing {@see GL46::I} indicate that the arguments are
      * extended to full signed or unsigned integers.

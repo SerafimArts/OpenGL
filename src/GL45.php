@@ -3729,7 +3729,7 @@ class GL45 extends GL44
      * The pixels in the rectangle are processed exactly as if
      * {@see GL46::glReadPixels} had been called, but the process stops just
      * before final conversion. At this point, all pixel component values are
-     * clamped to the range $\[0,1\]$ and then converted to the texture's
+     * clamped to the range $[0,1]$ and then converted to the texture's
      * internal format for storage in the texel array.
      *
      * The destination rectangle in the texture array may not include any
@@ -6986,7 +6986,7 @@ class GL45 extends GL44
      * For {@see GL46::glVertexAttribFormat} and
      * {@see GL46::glVertexArrayAttribFormat}, if $normalized is
      * {@see GL46::GL_TRUE}, then integer data is normalized to the range
-     * \[-1, 1\] or \[0, 1\] if it is signed or unsigned, respectively. If
+     * [-1, 1] or [0, 1] if it is signed or unsigned, respectively. If
      * $normalized is {@see GL46::GL_FALSE} then integer data is directly
      * converted to floating point.
      *
@@ -7082,7 +7082,7 @@ class GL45 extends GL44
      * For {@see GL46::glVertexAttribFormat} and
      * {@see GL46::glVertexArrayAttribFormat}, if $normalized is
      * {@see GL46::GL_TRUE}, then integer data is normalized to the range
-     * \[-1, 1\] or \[0, 1\] if it is signed or unsigned, respectively. If
+     * [-1, 1] or [0, 1] if it is signed or unsigned, respectively. If
      * $normalized is {@see GL46::GL_FALSE} then integer data is directly
      * converted to floating point.
      *
@@ -7175,7 +7175,7 @@ class GL45 extends GL44
      * For {@see GL46::glVertexAttribFormat} and
      * {@see GL46::glVertexArrayAttribFormat}, if $normalized is
      * {@see GL46::GL_TRUE}, then integer data is normalized to the range
-     * \[-1, 1\] or \[0, 1\] if it is signed or unsigned, respectively. If
+     * [-1, 1] or [0, 1] if it is signed or unsigned, respectively. If
      * $normalized is {@see GL46::GL_FALSE} then integer data is directly
      * converted to floating point.
      *

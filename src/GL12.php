@@ -355,22 +355,22 @@ class GL12 extends GL11
      *    converts it to
      *    floating point and assembles it into an RGBA element by attaching 0
      *    for green and blue, and 1 for alpha. Each component is clamped to the
-     *    range \[0,1\].
+     *    range [0,1].
      *
      *  - {@see GL46::GL_RG}: Each element is a red and green pair. The GL
      *    converts each to
      *    floating point and assembles it into an RGBA element by attaching 0
      *    for blue, and 1 for alpha. Each component is clamped to the range
-     *    \[0,1\].
+     *    [0,1].
      *
      *  - {@see GL46::GL_RGB}: Each element is an RGB triple. The GL converts it
      *    to floating point
      *    and assembles it into an RGBA element by attaching 1 for alpha. Each
-     *    component is clamped to the range \[0,1\].
+     *    component is clamped to the range [0,1].
      *
      *  - {@see GL46::GL_RGBA}: Each element contains all four components. Each
      *    component is clamped
-     *    to the range \[0,1\].
+     *    to the range [0,1].
      *
      * If an application wants to store the texture at a certain resolution
      * or in a certain format, it can request the resolution and format with
@@ -409,7 +409,7 @@ class GL12 extends GL11
      *    c l  =  {      c s  12.92      if    c s  ≤ 0.04045       (    c
      * s  + 0.055  1.055  )  2.4      if    c s  &gt; 0.04045
      *
-     * Assume  c s   is the sRGB component in the range \[0,1\].
+     * Assume  c s   is the sRGB component in the range [0,1].
      *
      * Use the {@see GL46::GL_PROXY_TEXTURE_3D} target to try out a
      * resolution and format. The implementation will update and recompute

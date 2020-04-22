@@ -111,7 +111,7 @@ class GL21 extends GL20
     /**
      * {@see GL46::glUniformSubroutines} loads all active subroutine uniforms
      * for shader stage $shadertype of the current program with subroutine
-     * indices from $indices, storing $indices\[i\] into the uniform at
+     * indices from $indices, storing $indices[i] into the uniform at
      * location $i. $count must be equal to the value of
      * {@see GL46::GL_ACTIVE_SUBROUTINE_UNIFORM_LOCATIONS} for the program
      * currently in use at shader stage $shadertype. Furthermore, all values
@@ -143,7 +143,7 @@ class GL21 extends GL20
     /**
      * {@see GL46::glUniformSubroutines} loads all active subroutine uniforms
      * for shader stage $shadertype of the current program with subroutine
-     * indices from $indices, storing $indices\[i\] into the uniform at
+     * indices from $indices, storing $indices[i] into the uniform at
      * location $i. $count must be equal to the value of
      * {@see GL46::GL_ACTIVE_SUBROUTINE_UNIFORM_LOCATIONS} for the program
      * currently in use at shader stage $shadertype. Furthermore, all values
@@ -175,7 +175,7 @@ class GL21 extends GL20
     /**
      * {@see GL46::glUniformSubroutines} loads all active subroutine uniforms
      * for shader stage $shadertype of the current program with subroutine
-     * indices from $indices, storing $indices\[i\] into the uniform at
+     * indices from $indices, storing $indices[i] into the uniform at
      * location $i. $count must be equal to the value of
      * {@see GL46::GL_ACTIVE_SUBROUTINE_UNIFORM_LOCATIONS} for the program
      * currently in use at shader stage $shadertype. Furthermore, all values
@@ -207,7 +207,7 @@ class GL21 extends GL20
     /**
      * {@see GL46::glUniformSubroutines} loads all active subroutine uniforms
      * for shader stage $shadertype of the current program with subroutine
-     * indices from $indices, storing $indices\[i\] into the uniform at
+     * indices from $indices, storing $indices[i] into the uniform at
      * location $i. $count must be equal to the value of
      * {@see GL46::GL_ACTIVE_SUBROUTINE_UNIFORM_LOCATIONS} for the program
      * currently in use at shader stage $shadertype. Furthermore, all values
@@ -239,7 +239,7 @@ class GL21 extends GL20
     /**
      * {@see GL46::glUniformSubroutines} loads all active subroutine uniforms
      * for shader stage $shadertype of the current program with subroutine
-     * indices from $indices, storing $indices\[i\] into the uniform at
+     * indices from $indices, storing $indices[i] into the uniform at
      * location $i. $count must be equal to the value of
      * {@see GL46::GL_ACTIVE_SUBROUTINE_UNIFORM_LOCATIONS} for the program
      * currently in use at shader stage $shadertype. Furthermore, all values
@@ -271,7 +271,7 @@ class GL21 extends GL20
     /**
      * {@see GL46::glUniformSubroutines} loads all active subroutine uniforms
      * for shader stage $shadertype of the current program with subroutine
-     * indices from $indices, storing $indices\[i\] into the uniform at
+     * indices from $indices, storing $indices[i] into the uniform at
      * location $i. $count must be equal to the value of
      * {@see GL46::GL_ACTIVE_SUBROUTINE_UNIFORM_LOCATIONS} for the program
      * currently in use at shader stage $shadertype. Furthermore, all values

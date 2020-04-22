@@ -717,7 +717,7 @@ class GL42 extends GL41
      * {@see GL46::glDrawElementsInstancedBaseVertexBaseInstance} behaves
      * identically to {@see GL46::glDrawElementsInstanced} except that the
      * ith element transferred by the corresponding draw call will be taken
-     * from element $indices\[i\] + $basevertex of each enabled array. If the
+     * from element $indices[i] + $basevertex of each enabled array. If the
      * resulting value is larger than the maximum value representable by
      * $type, it is as if the calculation were upconverted to 32-bit unsigned
      * integers (with wrapping on overflow conditions). The operation is

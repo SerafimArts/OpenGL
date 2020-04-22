@@ -358,7 +358,7 @@ class GL32 extends GL31
     /**
      * {@see GL46::glDrawElementsBaseVertex} behaves identically to
      * {@see GL46::glDrawElements} except that the ith element transferred by
-     * the corresponding draw call will be taken from element $indices\[i\] +
+     * the corresponding draw call will be taken from element $indices[i] +
      * $basevertex of each enabled array. If the resulting value is larger
      * than the maximum value representable by $type, it is as if the
      * calculation were upconverted to 32-bit unsigned integers (with
@@ -397,9 +397,9 @@ class GL32 extends GL31
      * {@see GL46::glDrawElementsBaseVertex}, with the additional constraint
      * that all values in the array $indices must lie between $start and
      * $end, inclusive, prior to adding $basevertex. Index values lying
-     * outside the range \[$start, $end\] are treated in the same way as
+     * outside the range [$start, $end] are treated in the same way as
      * {@see GL46::glDrawElementsBaseVertex}. The ith element transferred by
-     * the corresponding draw call will be taken from element $indices\[i\] +
+     * the corresponding draw call will be taken from element $indices[i] +
      * $basevertex of each enabled array. If the resulting value is larger
      * than the maximum value representable by $type, it is as if the
      * calculation were upconverted to 32-bit unsigned integers (with
@@ -441,7 +441,7 @@ class GL32 extends GL31
      * {@see GL46::glDrawElementsInstancedBaseVertex} behaves identically to
      * {@see GL46::glDrawElementsInstanced} except that the ith element
      * transferred by the corresponding draw call will be taken from element
-     * $indices\[i\] + $basevertex of each enabled array. If the resulting
+     * $indices[i] + $basevertex of each enabled array. If the resulting
      * value is larger than the maximum value representable by $type, it is
      * as if the calculation were upconverted to 32-bit unsigned integers
      * (with wrapping on overflow conditions). The operation is undefined if
@@ -1113,10 +1113,10 @@ class GL32 extends GL31
      * sample. $pname specifies the sample parameter to retrieve and must be
      * {@see GL46::GL_SAMPLE_POSITION}. $index corresponds to the sample for
      * which the location should be returned. The sample location is returned
-     * as two floating-point values in $val\[0\] and $val\[1\], each between
-     * 0 and 1, corresponding to the $x and $y locations respectively in the
-     * GL pixel space of that sample. (0.5, 0.5) this corresponds to the
-     * pixel center. $index must be between zero and the value of
+     * as two floating-point values in $val[0] and $val[1], each between 0
+     * and 1, corresponding to the $x and $y locations respectively in the GL
+     * pixel space of that sample. (0.5, 0.5) this corresponds to the pixel
+     * center. $index must be between zero and the value of
      * {@see GL46::GL_SAMPLES} minus one.
      *
      * If the multisample mode does not have fixed sample locations, the

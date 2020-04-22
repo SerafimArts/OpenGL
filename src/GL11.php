@@ -5458,7 +5458,7 @@ class GL11 extends GL
      *    multiplied by {@see GL46::GL_c_SCALE} and added to
      *    {@see GL46::GL_c_BIAS}, where c is RED, GREEN, BLUE, and ALPHA for the
      *    respective color components. The results are clamped to the range
-     *    \[0,1\]. If {@see GL46::GL_MAP_COLOR} is true, each color component is
+     *    [0,1]. If {@see GL46::GL_MAP_COLOR} is true, each color component is
      *    scaled by the size of lookup table {@see GL46::GL_PIXEL_MAP_c_TO_c},
      *    then replaced by the value that it references in that table. c is R,
      *    G, B, or A.   If the `ARB_imaging` extension is supported, the color
@@ -5479,7 +5479,7 @@ class GL11 extends GL
      *    an internal floating-point format with unspecified precision. The
      *    resulting floating-point depth value is then multiplied by
      *    {@see GL46::GL_DEPTH_SCALE} and added to {@see GL46::GL_DEPTH_BIAS}.
-     *    The result is clamped to the range \[0,1\].   The GL then converts the
+     *    The result is clamped to the range [0,1].   The GL then converts the
      *    resulting depth components to fragments by attaching the current
      *    raster position color or color index and texture coordinates to each
      *    pixel, then assigning window coordinates     x r  + i   y r  + j   ,
@@ -5762,7 +5762,7 @@ class GL11 extends GL
      * The pixels in the rectangle are processed exactly as if
      * {@see GL46::glReadPixels} had been called, but the process stops just
      * before final conversion. At this point, all pixel component values are
-     * clamped to the range $\[0,1\]$ and then converted to the texture's
+     * clamped to the range $[0,1]$ and then converted to the texture's
      * internal format for storage in the texel array.
      *
      * The destination rectangle in the texture array may not include any
@@ -9780,7 +9780,7 @@ class GL11 extends GL
      * internal fixed or floating-point representation such that 1.0 maps to
      * the largest representable integer value, and 0.0 maps to 0. Return
      * unsigned integer values are undefined if the map value was not in the
-     * range \[0,1\].
+     * range [0,1].
      *
      * To determine the required size of $map, call {@see GL46::glGet} with
      * the appropriate symbolic constant.
@@ -9824,7 +9824,7 @@ class GL11 extends GL
      * internal fixed or floating-point representation such that 1.0 maps to
      * the largest representable integer value, and 0.0 maps to 0. Return
      * unsigned integer values are undefined if the map value was not in the
-     * range \[0,1\].
+     * range [0,1].
      *
      * To determine the required size of $map, call {@see GL46::glGet} with
      * the appropriate symbolic constant.
@@ -9868,7 +9868,7 @@ class GL11 extends GL
      * internal fixed or floating-point representation such that 1.0 maps to
      * the largest representable integer value, and 0.0 maps to 0. Return
      * unsigned integer values are undefined if the map value was not in the
-     * range \[0,1\].
+     * range [0,1].
      *
      * To determine the required size of $map, call {@see GL46::glGet} with
      * the appropriate symbolic constant.
@@ -14523,11 +14523,10 @@ class GL11 extends GL
      * retain their values in floating-point format, with unspecified
      * mantissa and exponent sizes. Floating-point values specified by
      * {@see GL46::glPixelMapfv} are converted directly to the internal
-     * floating-point format of these maps, then clamped to the range
-     * \[0,1\]. Unsigned integer values specified by
-     * {@see GL46::glPixelMapusv} and {@see GL46::glPixelMapuiv} are
-     * converted linearly such that the largest representable integer maps to
-     * 1.0, and 0 maps to 0.0.
+     * floating-point format of these maps, then clamped to the range [0,1].
+     * Unsigned integer values specified by {@see GL46::glPixelMapusv} and
+     * {@see GL46::glPixelMapuiv} are converted linearly such that the
+     * largest representable integer maps to 1.0, and 0 maps to 0.0.
      *
      * Maps that store indices, {@see GL46::GL_PIXEL_MAP_I_TO_I} and
      * {@see GL46::GL_PIXEL_MAP_S_TO_S}, retain their values in fixed-point
@@ -14641,11 +14640,10 @@ class GL11 extends GL
      * retain their values in floating-point format, with unspecified
      * mantissa and exponent sizes. Floating-point values specified by
      * {@see GL46::glPixelMapfv} are converted directly to the internal
-     * floating-point format of these maps, then clamped to the range
-     * \[0,1\]. Unsigned integer values specified by
-     * {@see GL46::glPixelMapusv} and {@see GL46::glPixelMapuiv} are
-     * converted linearly such that the largest representable integer maps to
-     * 1.0, and 0 maps to 0.0.
+     * floating-point format of these maps, then clamped to the range [0,1].
+     * Unsigned integer values specified by {@see GL46::glPixelMapusv} and
+     * {@see GL46::glPixelMapuiv} are converted linearly such that the
+     * largest representable integer maps to 1.0, and 0 maps to 0.0.
      *
      * Maps that store indices, {@see GL46::GL_PIXEL_MAP_I_TO_I} and
      * {@see GL46::GL_PIXEL_MAP_S_TO_S}, retain their values in fixed-point
@@ -14759,11 +14757,10 @@ class GL11 extends GL
      * retain their values in floating-point format, with unspecified
      * mantissa and exponent sizes. Floating-point values specified by
      * {@see GL46::glPixelMapfv} are converted directly to the internal
-     * floating-point format of these maps, then clamped to the range
-     * \[0,1\]. Unsigned integer values specified by
-     * {@see GL46::glPixelMapusv} and {@see GL46::glPixelMapuiv} are
-     * converted linearly such that the largest representable integer maps to
-     * 1.0, and 0 maps to 0.0.
+     * floating-point format of these maps, then clamped to the range [0,1].
+     * Unsigned integer values specified by {@see GL46::glPixelMapusv} and
+     * {@see GL46::glPixelMapuiv} are converted linearly such that the
+     * largest representable integer maps to 1.0, and 0 maps to 0.0.
      *
      * Maps that store indices, {@see GL46::GL_PIXEL_MAP_I_TO_I} and
      * {@see GL46::GL_PIXEL_MAP_S_TO_S}, retain their values in fixed-point
@@ -18900,8 +18897,8 @@ class GL11 extends GL
      * vertices that hit since the previous event, followed by the name stack
      * contents, bottom name first.
      *
-     * Depth values (which are in the range \[0,1\]) are multiplied by    2
-     * 32  - 1  , before being placed in the hit record.
+     * Depth values (which are in the range [0,1]) are multiplied by    2 32
+     * - 1  , before being placed in the hit record.
      *
      * An internal index into $buffer is reset to 0 whenever selection mode
      * is entered. Each time a hit record is copied into $buffer, the index
@@ -20145,7 +20142,7 @@ class GL11 extends GL
      * fragment. The following table shows how the RGBA color is produced for
      * each of the first five texture functions that can be chosen. C is a
      * triple of color values (RGB) and A is the associated alpha value. RGBA
-     * values extracted from a texture image are in the range \[0,1\]. The
+     * values extracted from a texture image are in the range [0,1]. The
      * subscript p refers to the color computed from the previous texture
      * stage (or the incoming fragment if processing texture stage 0), the
      * subscript s to the texture source color, the subscript c to the
@@ -20269,7 +20266,7 @@ class GL11 extends GL
      * to an array that holds an RGBA color consisting of four values.
      * Integer color components are interpreted linearly such that the most
      * positive integer maps to 1.0, and the most negative integer maps to
-     * -1.0. The values are clamped to the range \[0,1\] when they are
+     * -1.0. The values are clamped to the range [0,1] when they are
      * specified.   C c   takes these four values.
      *
      * If $pname is {@see GL46::GL_TEXTURE_LOD_BIAS}, the value specified is
@@ -20341,7 +20338,7 @@ class GL11 extends GL
      * fragment. The following table shows how the RGBA color is produced for
      * each of the first five texture functions that can be chosen. C is a
      * triple of color values (RGB) and A is the associated alpha value. RGBA
-     * values extracted from a texture image are in the range \[0,1\]. The
+     * values extracted from a texture image are in the range [0,1]. The
      * subscript p refers to the color computed from the previous texture
      * stage (or the incoming fragment if processing texture stage 0), the
      * subscript s to the texture source color, the subscript c to the
@@ -20465,7 +20462,7 @@ class GL11 extends GL
      * to an array that holds an RGBA color consisting of four values.
      * Integer color components are interpreted linearly such that the most
      * positive integer maps to 1.0, and the most negative integer maps to
-     * -1.0. The values are clamped to the range \[0,1\] when they are
+     * -1.0. The values are clamped to the range [0,1] when they are
      * specified.   C c   takes these four values.
      *
      * If $pname is {@see GL46::GL_TEXTURE_LOD_BIAS}, the value specified is
@@ -20535,7 +20532,7 @@ class GL11 extends GL
      * fragment. The following table shows how the RGBA color is produced for
      * each of the first five texture functions that can be chosen. C is a
      * triple of color values (RGB) and A is the associated alpha value. RGBA
-     * values extracted from a texture image are in the range \[0,1\]. The
+     * values extracted from a texture image are in the range [0,1]. The
      * subscript p refers to the color computed from the previous texture
      * stage (or the incoming fragment if processing texture stage 0), the
      * subscript s to the texture source color, the subscript c to the
@@ -20659,7 +20656,7 @@ class GL11 extends GL
      * to an array that holds an RGBA color consisting of four values.
      * Integer color components are interpreted linearly such that the most
      * positive integer maps to 1.0, and the most negative integer maps to
-     * -1.0. The values are clamped to the range \[0,1\] when they are
+     * -1.0. The values are clamped to the range [0,1] when they are
      * specified.   C c   takes these four values.
      *
      * If $pname is {@see GL46::GL_TEXTURE_LOD_BIAS}, the value specified is
@@ -20731,7 +20728,7 @@ class GL11 extends GL
      * fragment. The following table shows how the RGBA color is produced for
      * each of the first five texture functions that can be chosen. C is a
      * triple of color values (RGB) and A is the associated alpha value. RGBA
-     * values extracted from a texture image are in the range \[0,1\]. The
+     * values extracted from a texture image are in the range [0,1]. The
      * subscript p refers to the color computed from the previous texture
      * stage (or the incoming fragment if processing texture stage 0), the
      * subscript s to the texture source color, the subscript c to the
@@ -20855,7 +20852,7 @@ class GL11 extends GL
      * to an array that holds an RGBA color consisting of four values.
      * Integer color components are interpreted linearly such that the most
      * positive integer maps to 1.0, and the most negative integer maps to
-     * -1.0. The values are clamped to the range \[0,1\] when they are
+     * -1.0. The values are clamped to the range [0,1] when they are
      * specified.   C c   takes these four values.
      *
      * If $pname is {@see GL46::GL_TEXTURE_LOD_BIAS}, the value specified is
@@ -21625,26 +21622,26 @@ class GL11 extends GL
      *    converts it to
      *    floating point and assembles it into an RGBA element by attaching 0
      *    for green and blue, and 1 for alpha. Each component is clamped to the
-     *    range \[0,1\].
+     *    range [0,1].
      *
      *  - {@see GL46::GL_RG}: Each element is a single red/green double The GL
      *    converts it to
      *    floating point and assembles it into an RGBA element by attaching 0
      *    for blue, and 1 for alpha. Each component is clamped to the range
-     *    \[0,1\].
+     *    [0,1].
      *
      *  - {@see GL46::GL_RGB}: Each element is an RGB triple. The GL converts it
      *    to floating point
      *    and assembles it into an RGBA element by attaching 1 for alpha. Each
-     *    component is clamped to the range \[0,1\].
+     *    component is clamped to the range [0,1].
      *
      *  - {@see GL46::GL_RGBA}: Each element contains all four components. Each
      *    component clamped to
-     *    the range \[0,1\].
+     *    the range [0,1].
      *
      *  - {@see GL46::GL_DEPTH_COMPONENT}: Each element is a single depth value.
      *    The GL converts it to floating
-     *    point and clamps to the range \[0,1\].
+     *    point and clamps to the range [0,1].
      *
      * If an application wants to store the texture at a certain resolution
      * or in a certain format, it can request the resolution and format with
@@ -21683,7 +21680,7 @@ class GL11 extends GL
      *    c l  =  {      c s  12.92      if    c s  ≤ 0.04045       (    c
      * s  + 0.055  1.055  )  2.4      if    c s  &gt; 0.04045
      *
-     * Assume  c s   is the sRGB component in the range \[0,1\].
+     * Assume  c s   is the sRGB component in the range [0,1].
      *
      * Use the {@see GL46::GL_PROXY_TEXTURE_1D} target to try out a
      * resolution and format. The implementation will update and recompute
@@ -21786,25 +21783,25 @@ class GL11 extends GL
      *    converts it to
      *    floating point and assembles it into an RGBA element by attaching 0
      *    for green and blue, and 1 for alpha. Each component is clamped to the
-     *    range \[0,1\].
+     *    range [0,1].
      *
      *  - {@see GL46::GL_RG}: Each element is a red/green double. The GL
      *    converts it to floating
      *    point and assembles it into an RGBA element by attaching 0 for blue,
-     *    and 1 for alpha. Each component is clamped to the range \[0,1\].
+     *    and 1 for alpha. Each component is clamped to the range [0,1].
      *
      *  - {@see GL46::GL_RGB}: Each element is an RGB triple. The GL converts it
      *    to floating point
      *    and assembles it into an RGBA element by attaching 1 for alpha. Each
-     *    component is clamped to the range \[0,1\].
+     *    component is clamped to the range [0,1].
      *
      *  - {@see GL46::GL_RGBA}: Each element contains all four components. Each
      *    component is clamped
-     *    to the range \[0,1\].
+     *    to the range [0,1].
      *
      *  - {@see GL46::GL_DEPTH_COMPONENT}: Each element is a single depth value.
      *    The GL converts it to floating
-     *    point and clamps to the range \[0,1\].
+     *    point and clamps to the range [0,1].
      *
      *  - {@see GL46::GL_DEPTH_STENCIL}: Each element is a pair of depth and
      *    stencil values. The depth
@@ -21849,7 +21846,7 @@ class GL11 extends GL
      *    c l  =  {      c s  12.92      if    c s  ≤ 0.04045       (    c
      * s  + 0.055  1.055  )  2.4      if    c s  &gt; 0.04045
      *
-     * Assume  c s   is the sRGB component in the range \[0,1\].
+     * Assume  c s   is the sRGB component in the range [0,1].
      *
      * Use the {@see GL46::GL_PROXY_TEXTURE_2D},
      * {@see GL46::GL_PROXY_TEXTURE_1D_ARRAY},
