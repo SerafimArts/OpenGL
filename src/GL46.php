@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Serafim\OpenGL;
 
-use Serafim\OpenGL\Support\Assert;
+use Serafim\OpenGL\Type\Type;
 
 /**
  * The OpenGL functionality up to version 4.6. Includes the deprecated symbols of the Compatibility Profile.
@@ -173,13 +173,13 @@ class GL46 extends GL45
      * @param \FFI\CData|\FFI\CIntPtr|null $pConstantValue
      * @return void
      */
-    public function glSpecializeShader($shader, ?\FFI\CData $pEntryPoint, $numSpecializationConstants, ?\FFI\CData $pConstantIndex, ?\FFI\CData $pConstantValue): void
+    public function specializeShader($shader, ?\FFI\CData $pEntryPoint, $numSpecializationConstants, ?\FFI\CData $pConstantIndex, ?\FFI\CData $pConstantValue): void
     {
         $shader = $shader instanceof \FFI\CData ? $shader->cdata : $shader;
         $numSpecializationConstants = $numSpecializationConstants instanceof \FFI\CData ? $numSpecializationConstants->cdata : $numSpecializationConstants;
 
-        assert(Assert::uint16($shader), 'Argument $shader must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($numSpecializationConstants), 'Argument $numSpecializationConstants must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($shader), 'Argument $shader must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($numSpecializationConstants), 'Argument $numSpecializationConstants must be a C-like GLuint, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glSpecializeShader', 'void (*)(GLuint shader, const GLchar *pEntryPoint, GLuint numSpecializationConstants, const GLuint *pConstantIndex, const GLuint *pConstantValue)');
         $proc($shader, $pEntryPoint, $numSpecializationConstants, $pConstantIndex, $pConstantValue);
@@ -241,16 +241,16 @@ class GL46 extends GL45
      * @param int|\FFI\CData|\FFI\CInt $stride
      * @return void
      */
-    public function glMultiDrawArraysIndirectCount($mode, ?\FFI\CData $indirect, $drawcount, $maxdrawcount, $stride): void
+    public function multiDrawArraysIndirectCount($mode, ?\FFI\CData $indirect, $drawcount, $maxdrawcount, $stride): void
     {
         $mode = $mode instanceof \FFI\CData ? $mode->cdata : $mode;
         $maxdrawcount = $maxdrawcount instanceof \FFI\CData ? $maxdrawcount->cdata : $maxdrawcount;
         $stride = $stride instanceof \FFI\CData ? $stride->cdata : $stride;
 
-        assert(Assert::uint16($mode), 'Argument $mode must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::int64($drawcount), 'Argument $drawcount must be a C-like GLintptr, but incompatible or overflow value given');
-        assert(Assert::int16($maxdrawcount), 'Argument $maxdrawcount must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Assert::int16($stride), 'Argument $stride must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isUint16($mode), 'Argument $mode must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isInt64($drawcount), 'Argument $drawcount must be a C-like GLintptr, but incompatible or overflow value given');
+        assert(Type::isInt16($maxdrawcount), 'Argument $maxdrawcount must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isInt16($stride), 'Argument $stride must be a C-like GLsizei, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glMultiDrawArraysIndirectCount', 'void (*)(GLenum mode, const void *indirect, GLintptr drawcount, GLsizei maxdrawcount, GLsizei stride)');
         $proc($mode, $indirect, $drawcount, $maxdrawcount, $stride);
@@ -321,18 +321,18 @@ class GL46 extends GL45
      * @param int|\FFI\CData|\FFI\CInt $stride
      * @return void
      */
-    public function glMultiDrawElementsIndirectCount($mode, $type, ?\FFI\CData $indirect, $drawcount, $maxdrawcount, $stride): void
+    public function multiDrawElementsIndirectCount($mode, $type, ?\FFI\CData $indirect, $drawcount, $maxdrawcount, $stride): void
     {
         $mode = $mode instanceof \FFI\CData ? $mode->cdata : $mode;
         $type = $type instanceof \FFI\CData ? $type->cdata : $type;
         $maxdrawcount = $maxdrawcount instanceof \FFI\CData ? $maxdrawcount->cdata : $maxdrawcount;
         $stride = $stride instanceof \FFI\CData ? $stride->cdata : $stride;
 
-        assert(Assert::uint16($mode), 'Argument $mode must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::uint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::int64($drawcount), 'Argument $drawcount must be a C-like GLintptr, but incompatible or overflow value given');
-        assert(Assert::int16($maxdrawcount), 'Argument $maxdrawcount must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Assert::int16($stride), 'Argument $stride must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isUint16($mode), 'Argument $mode must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isInt64($drawcount), 'Argument $drawcount must be a C-like GLintptr, but incompatible or overflow value given');
+        assert(Type::isInt16($maxdrawcount), 'Argument $maxdrawcount must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isInt16($stride), 'Argument $stride must be a C-like GLsizei, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glMultiDrawElementsIndirectCount', 'void (*)(GLenum mode, GLenum type, const void *indirect, GLintptr drawcount, GLsizei maxdrawcount, GLsizei stride)');
         $proc($mode, $type, $indirect, $drawcount, $maxdrawcount, $stride);
@@ -358,15 +358,15 @@ class GL46 extends GL45
      * @param float|\FFI\CData|\FFI\CFloat $clamp
      * @return void
      */
-    public function glPolygonOffsetClamp($factor, $units, $clamp): void
+    public function polygonOffsetClamp($factor, $units, $clamp): void
     {
         $factor = $factor instanceof \FFI\CData ? $factor->cdata : $factor;
         $units = $units instanceof \FFI\CData ? $units->cdata : $units;
         $clamp = $clamp instanceof \FFI\CData ? $clamp->cdata : $clamp;
 
-        assert(Assert::float32($factor), 'Argument $factor must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Assert::float32($units), 'Argument $units must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Assert::float32($clamp), 'Argument $clamp must be a C-like GLfloat, but incompatible or overflow value given');
+        assert(Type::isFloat32($factor), 'Argument $factor must be a C-like GLfloat, but incompatible or overflow value given');
+        assert(Type::isFloat32($units), 'Argument $units must be a C-like GLfloat, but incompatible or overflow value given');
+        assert(Type::isFloat32($clamp), 'Argument $clamp must be a C-like GLfloat, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glPolygonOffsetClamp', 'void (*)(GLfloat factor, GLfloat units, GLfloat clamp)');
         $proc($factor, $units, $clamp);
