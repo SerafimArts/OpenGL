@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Serafim\OpenGL;
 
-use Serafim\OpenGL\Support\Assert;
+use Serafim\OpenGL\Type\Type;
 
 /**
  * The OpenGL functionality up to version 1.4. Includes the deprecated symbols of the Compatibility Profile.
@@ -235,17 +235,17 @@ class GL14 extends GL13
      * @param int|\FFI\CData|\FFI\CInt $dfactorAlpha
      * @return void
      */
-    public function glBlendFuncSeparate($sfactorRGB, $dfactorRGB, $sfactorAlpha, $dfactorAlpha): void
+    public function blendFuncSeparate($sfactorRGB, $dfactorRGB, $sfactorAlpha, $dfactorAlpha): void
     {
         $sfactorRGB = $sfactorRGB instanceof \FFI\CData ? $sfactorRGB->cdata : $sfactorRGB;
         $dfactorRGB = $dfactorRGB instanceof \FFI\CData ? $dfactorRGB->cdata : $dfactorRGB;
         $sfactorAlpha = $sfactorAlpha instanceof \FFI\CData ? $sfactorAlpha->cdata : $sfactorAlpha;
         $dfactorAlpha = $dfactorAlpha instanceof \FFI\CData ? $dfactorAlpha->cdata : $dfactorAlpha;
 
-        assert(Assert::uint16($sfactorRGB), 'Argument $sfactorRGB must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::uint16($dfactorRGB), 'Argument $dfactorRGB must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::uint16($sfactorAlpha), 'Argument $sfactorAlpha must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::uint16($dfactorAlpha), 'Argument $dfactorAlpha must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($sfactorRGB), 'Argument $sfactorRGB must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($dfactorRGB), 'Argument $dfactorRGB must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($sfactorAlpha), 'Argument $sfactorAlpha must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($dfactorAlpha), 'Argument $dfactorAlpha must be a C-like GLenum, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glBlendFuncSeparate', 'void (*)(GLenum sfactorRGB, GLenum dfactorRGB, GLenum sfactorAlpha, GLenum dfactorAlpha)');
         $proc($sfactorRGB, $dfactorRGB, $sfactorAlpha, $dfactorAlpha);
@@ -276,13 +276,13 @@ class GL14 extends GL13
      * @param int|\FFI\CData|\FFI\CInt $drawcount
      * @return void
      */
-    public function glMultiDrawArrays($mode, ?\FFI\CData $first, ?\FFI\CData $count, $drawcount): void
+    public function multiDrawArrays($mode, ?\FFI\CData $first, ?\FFI\CData $count, $drawcount): void
     {
         $mode = $mode instanceof \FFI\CData ? $mode->cdata : $mode;
         $drawcount = $drawcount instanceof \FFI\CData ? $drawcount->cdata : $drawcount;
 
-        assert(Assert::uint16($mode), 'Argument $mode must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::int16($drawcount), 'Argument $drawcount must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isUint16($mode), 'Argument $mode must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isInt16($drawcount), 'Argument $drawcount must be a C-like GLsizei, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glMultiDrawArrays', 'void (*)(GLenum mode, const GLint *first, const GLsizei *count, GLsizei drawcount)');
         $proc($mode, $first, $count, $drawcount);
@@ -310,15 +310,15 @@ class GL14 extends GL13
      * @param int|\FFI\CData|\FFI\CInt $drawcount
      * @return void
      */
-    public function glMultiDrawElements($mode, ?\FFI\CData $count, $type, ?\FFI\CData $indices, $drawcount): void
+    public function multiDrawElements($mode, ?\FFI\CData $count, $type, ?\FFI\CData $indices, $drawcount): void
     {
         $mode = $mode instanceof \FFI\CData ? $mode->cdata : $mode;
         $type = $type instanceof \FFI\CData ? $type->cdata : $type;
         $drawcount = $drawcount instanceof \FFI\CData ? $drawcount->cdata : $drawcount;
 
-        assert(Assert::uint16($mode), 'Argument $mode must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::uint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::int16($drawcount), 'Argument $drawcount must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isUint16($mode), 'Argument $mode must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isInt16($drawcount), 'Argument $drawcount must be a C-like GLsizei, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glMultiDrawElements', 'void (*)(GLenum mode, const GLsizei *count, GLenum type, const void *const*indices, GLsizei drawcount)');
         $proc($mode, $count, $type, $indices, $drawcount);
@@ -344,13 +344,13 @@ class GL14 extends GL13
      * @param float|\FFI\CData|\FFI\CFloat $param
      * @return void
      */
-    public function glPointParameterf($pname, $param): void
+    public function pointParameterf($pname, $param): void
     {
         $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
         $param = $param instanceof \FFI\CData ? $param->cdata : $param;
 
-        assert(Assert::uint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::float32($param), 'Argument $param must be a C-like GLfloat, but incompatible or overflow value given');
+        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isFloat32($param), 'Argument $param must be a C-like GLfloat, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glPointParameterf', 'void (*)(GLenum pname, GLfloat param)');
         $proc($pname, $param);
@@ -376,11 +376,11 @@ class GL14 extends GL13
      * @param \FFI\CData|\FFI\CFloatPtr|null $params
      * @return void
      */
-    public function glPointParameterfv($pname, ?\FFI\CData $params): void
+    public function pointParameterfv($pname, ?\FFI\CData $params): void
     {
         $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
 
-        assert(Assert::uint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glPointParameterfv', 'void (*)(GLenum pname, const GLfloat *params)');
         $proc($pname, $params);
@@ -406,13 +406,13 @@ class GL14 extends GL13
      * @param int|\FFI\CData|\FFI\CInt $param
      * @return void
      */
-    public function glPointParameteri($pname, $param): void
+    public function pointParameteri($pname, $param): void
     {
         $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
         $param = $param instanceof \FFI\CData ? $param->cdata : $param;
 
-        assert(Assert::uint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::int16($param), 'Argument $param must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isInt16($param), 'Argument $param must be a C-like GLint, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glPointParameteri', 'void (*)(GLenum pname, GLint param)');
         $proc($pname, $param);
@@ -438,11 +438,11 @@ class GL14 extends GL13
      * @param \FFI\CData|\FFI\CIntPtr|null $params
      * @return void
      */
-    public function glPointParameteriv($pname, ?\FFI\CData $params): void
+    public function pointParameteriv($pname, ?\FFI\CData $params): void
     {
         $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
 
-        assert(Assert::uint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glPointParameteriv', 'void (*)(GLenum pname, const GLint *params)');
         $proc($pname, $params);
@@ -463,17 +463,17 @@ class GL14 extends GL13
      * @param float|\FFI\CData|\FFI\CFloat $alpha
      * @return void
      */
-    public function glBlendColor($red, $green, $blue, $alpha): void
+    public function blendColor($red, $green, $blue, $alpha): void
     {
         $red = $red instanceof \FFI\CData ? $red->cdata : $red;
         $green = $green instanceof \FFI\CData ? $green->cdata : $green;
         $blue = $blue instanceof \FFI\CData ? $blue->cdata : $blue;
         $alpha = $alpha instanceof \FFI\CData ? $alpha->cdata : $alpha;
 
-        assert(Assert::float32($red), 'Argument $red must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Assert::float32($green), 'Argument $green must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Assert::float32($blue), 'Argument $blue must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Assert::float32($alpha), 'Argument $alpha must be a C-like GLfloat, but incompatible or overflow value given');
+        assert(Type::isFloat32($red), 'Argument $red must be a C-like GLfloat, but incompatible or overflow value given');
+        assert(Type::isFloat32($green), 'Argument $green must be a C-like GLfloat, but incompatible or overflow value given');
+        assert(Type::isFloat32($blue), 'Argument $blue must be a C-like GLfloat, but incompatible or overflow value given');
+        assert(Type::isFloat32($alpha), 'Argument $alpha must be a C-like GLfloat, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glBlendColor', 'void (*)(GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha)');
         $proc($red, $green, $blue, $alpha);
@@ -519,11 +519,11 @@ class GL14 extends GL13
      * @param int|\FFI\CData|\FFI\CInt $mode
      * @return void
      */
-    public function glBlendEquation($mode): void
+    public function blendEquation($mode): void
     {
         $mode = $mode instanceof \FFI\CData ? $mode->cdata : $mode;
 
-        assert(Assert::uint16($mode), 'Argument $mode must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($mode), 'Argument $mode must be a C-like GLenum, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glBlendEquation', 'void (*)(GLenum mode)');
         $proc($mode);

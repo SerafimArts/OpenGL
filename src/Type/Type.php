@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace Serafim\OpenGL\Support;
+namespace Serafim\OpenGL\Type;
 
 use FFI\CData;
 use Serafim\OpenGL\Util;
@@ -29,7 +29,7 @@ use Serafim\OpenGL\Util;
  *  unsigned long long  = [0 ... UINT64_MAX]
  * </code>
  */
-final class Assert
+final class Type
 {
     /**
      * @var int
@@ -94,7 +94,7 @@ final class Assert
     /**
      * @var float
      */
-    public const FLT_MIN = 1.175494e-38;
+    public const FLT_MIN = -1.175494e38;
 
     /**
      * @var float
@@ -104,7 +104,7 @@ final class Assert
     /**
      * @var float
      */
-    public const DBL_MIN = 2.225074e-308;
+    public const DBL_MIN = -2.225074e308;
 
     /**
      * @var float
@@ -114,7 +114,7 @@ final class Assert
     /**
      * @var float
      */
-    public const LDBL_MIN = 3.362103e-4932;
+    public const LDBL_MIN = -3.362103e4932;
 
     /**
      * @var float
@@ -125,7 +125,7 @@ final class Assert
      * @param int $value
      * @return bool
      */
-    public static function int8($value): bool
+    public static function isInt8($value): bool
     {
         return \is_int($value) && $value >= self::INT8_MIN && $value <= self::INT8_MAX;
     }
@@ -134,7 +134,7 @@ final class Assert
      * @param int $value
      * @return bool
      */
-    public static function uint8($value): bool
+    public static function isUint8($value): bool
     {
         return \is_int($value) && $value >= 0 && $value <= self::UINT8_MAX;
     }
@@ -143,7 +143,7 @@ final class Assert
      * @param int $value
      * @return bool
      */
-    public static function int16($value): bool
+    public static function isInt16($value): bool
     {
         return \is_int($value) && $value >= self::INT16_MIN && $value <= self::INT16_MAX;
     }
@@ -152,7 +152,7 @@ final class Assert
      * @param int $value
      * @return bool
      */
-    public static function uint16($value): bool
+    public static function isUint16($value): bool
     {
         return \is_int($value) && $value >= 0 && $value <= self::UINT16_MAX;
     }
@@ -161,7 +161,7 @@ final class Assert
      * @param int $value
      * @return bool
      */
-    public static function int32($value): bool
+    public static function isInt32($value): bool
     {
         return \is_int($value) && $value >= self::INT32_MIN && $value <= self::INT32_MAX;
     }
@@ -170,7 +170,7 @@ final class Assert
      * @param int $value
      * @return bool
      */
-    public static function uint32($value): bool
+    public static function isUint32($value): bool
     {
         return \is_int($value) && $value >= 0 && $value <= self::UINT32_MAX;
     }
@@ -179,7 +179,7 @@ final class Assert
      * @param int|float|string $value
      * @return bool
      */
-    public static function int64($value): bool
+    public static function isInt64($value): bool
     {
         return \is_numeric($value) && $value >= self::INT64_MIN && $value <= self::INT64_MAX;
     }
@@ -188,7 +188,7 @@ final class Assert
      * @param int|float|string $value
      * @return bool
      */
-    public static function uint64($value): bool
+    public static function isUint64($value): bool
     {
         return \is_numeric($value) && $value >= 0 && $value <= self::UINT64_MAX;
     }
@@ -197,7 +197,7 @@ final class Assert
      * @param float $value
      * @return bool
      */
-    public static function float32($value): bool
+    public static function isFloat32($value): bool
     {
         return \is_float($value) && $value >= self::FLT_MIN && $value <= self::FLT_MAX;
     }
@@ -206,7 +206,7 @@ final class Assert
      * @param float $value
      * @return bool
      */
-    public static function float64($value): bool
+    public static function isFloat64($value): bool
     {
         return \is_float($value) && $value >= self::DBL_MIN && $value <= self::DBL_MAX;
     }
@@ -215,7 +215,7 @@ final class Assert
      * @param float $value
      * @return bool
      */
-    public static function float80($value): bool
+    public static function isFloat80($value): bool
     {
         return \is_float($value) && $value >= self::LDBL_MIN && $value <= self::LDBL_MAX;
     }
@@ -228,5 +228,22 @@ final class Assert
     public static function typeOf(CData $type, string $name): bool
     {
         return Util::typeName($type) === $name;
+    }
+
+    /**
+     * @param mixed $value
+     * @return mixed
+     */
+    public static function unwrap($value)
+    {
+        if ($value instanceof CTypeInterface) {
+            return $value->getCData()->cdata;
+        }
+
+        if ($value instanceof CData) {
+            return $value->cdata;
+        }
+
+        return $value;
     }
 }

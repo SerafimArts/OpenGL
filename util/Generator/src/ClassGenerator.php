@@ -16,7 +16,7 @@ use CodeGenerator\Dependency\MethodGenerator;
 use CodeGenerator\Documentation\DocumentationInterface;
 use Nette\PhpGenerator\PhpFile;
 use Nette\PhpGenerator\PsrPrinter;
-use Serafim\OpenGL\Support\Assert;
+use Serafim\OpenGL\Type\Type;
 
 /**
  * Class ClassGenerator
@@ -72,7 +72,7 @@ class ClassGenerator extends Generator
         }
 
         $namespace = $file->addNamespace($this->getNamespaceName());
-        $namespace->addUse(Assert::class);
+        $namespace->addUse(Type::class);
 
         foreach ($this->info->data['use'] ?? [] as $use) {
             $namespace->addUse($use);

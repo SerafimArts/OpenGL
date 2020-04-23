@@ -14,6 +14,7 @@ namespace CodeGenerator\Dependency;
 use CodeGenerator\GeneratedInterface;
 use CodeGenerator\Generator;
 use CodeGenerator\Info;
+use Illuminate\Support\Str;
 use Nette\PhpGenerator\ClassType;
 
 /**
@@ -21,11 +22,6 @@ use Nette\PhpGenerator\ClassType;
  */
 class MethodGenerator extends Generator implements GeneratedInterface
 {
-    /**
-     * @var string
-     */
-    private const ASSERTION_FORMAT = 'Argument %s must be a C-like %s, but incompatible or overflow value given';
-
     /**
      * @var string
      */
@@ -69,7 +65,11 @@ class MethodGenerator extends Generator implements GeneratedInterface
         $return = $this->getNativeTypeName($this->api['return'] ?? 'void') ?? 'void';
         $arguments = [];
 
-        $method = $class->addMethod($this->name);
+        $name = Str::startsWith($this->name, 'gl')
+            ? \lcfirst(Str::substr($this->name, 2))
+            : $this->name;
+
+        $method = $class->addMethod($name);
         $method->setReturnType($return);
 
         foreach ($this->getMethodArguments() as $arg) {
@@ -206,7 +206,7 @@ class MethodGenerator extends Generator implements GeneratedInterface
         }
 
         foreach ($this->getMethodArguments() as $arg) {
-            if ($assertion = $this->getAssertionCodeForArgument($arg)) {
+            if ($assertion = $arg->getAssertionCode()) {
                 $lines[] = $assertion;
             }
         }
@@ -229,20 +229,4 @@ class MethodGenerator extends Generator implements GeneratedInterface
         return null;
     }
 
-    /**
-     * @param ArgumentInfo $arg
-     * @return string|null
-     */
-    private function getAssertionCodeForArgument(ArgumentInfo $arg): ?string
-    {
-        // Other
-        if ($assertion = $this->getAssertionByTypeName($arg->normal)) {
-            $assertion = \sprintf($assertion, $arg->def);
-            $message = \sprintf(self::ASSERTION_FORMAT, $arg->def, $arg->normal);
-
-            return \sprintf('assert(%s, \'%s\');', $assertion, $message);
-        }
-
-        return null;
-    }
 }

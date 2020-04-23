@@ -22,6 +22,11 @@ class ArgumentInfo extends Generator
     /**
      * @var string
      */
+    private const ASSERTION_FORMAT = 'Argument %s must be a C-like %s, but incompatible or overflow value given';
+
+    /**
+     * @var string
+     */
     public string $type;
 
     /**
@@ -80,6 +85,21 @@ class ArgumentInfo extends Generator
         if (\count($types)) {
             $this->phpType = \reset($types);
         }
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getAssertionCode(): ?string
+    {
+        if ($assertion = $this->getAssertionByTypeName($this->normal)) {
+            $assertion = \sprintf($assertion, $this->def);
+            $message = \sprintf(self::ASSERTION_FORMAT, $this->def, $this->normal);
+
+            return \sprintf('assert(%s, \'%s\');', $assertion, $message);
+        }
+
+        return null;
     }
 
     /**

@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Serafim\OpenGL;
 
-use Serafim\OpenGL\Support\Assert;
+use Serafim\OpenGL\Type\Type;
 
 /**
  * The OpenGL functionality up to version 1.2. Includes the deprecated symbols of the Compatibility Profile.
@@ -280,7 +280,7 @@ class GL12 extends GL11
      * @param \FFI\CData|\FFI\CPtr|null $indices
      * @return void
      */
-    public function glDrawRangeElements($mode, $start, $end, $count, $type, ?\FFI\CData $indices): void
+    public function drawRangeElements($mode, $start, $end, $count, $type, ?\FFI\CData $indices): void
     {
         $mode = $mode instanceof \FFI\CData ? $mode->cdata : $mode;
         $start = $start instanceof \FFI\CData ? $start->cdata : $start;
@@ -288,11 +288,11 @@ class GL12 extends GL11
         $count = $count instanceof \FFI\CData ? $count->cdata : $count;
         $type = $type instanceof \FFI\CData ? $type->cdata : $type;
 
-        assert(Assert::uint16($mode), 'Argument $mode must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::uint16($start), 'Argument $start must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($end), 'Argument $end must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::int16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Assert::uint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($mode), 'Argument $mode must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($start), 'Argument $start must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($end), 'Argument $end must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isInt16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isUint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glDrawRangeElements', 'void (*)(GLenum mode, GLuint start, GLuint end, GLsizei count, GLenum type, const void *indices)');
         $proc($mode, $start, $end, $count, $type, $indices);
@@ -398,7 +398,7 @@ class GL12 extends GL11
      * @param \FFI\CData|\FFI\CPtr|null $pixels
      * @return void
      */
-    public function glTexImage3D($target, $level, $internalformat, $width, $height, $depth, $border, $format, $type, ?\FFI\CData $pixels): void
+    public function texImage3D($target, $level, $internalformat, $width, $height, $depth, $border, $format, $type, ?\FFI\CData $pixels): void
     {
         $target = $target instanceof \FFI\CData ? $target->cdata : $target;
         $level = $level instanceof \FFI\CData ? $level->cdata : $level;
@@ -410,15 +410,15 @@ class GL12 extends GL11
         $format = $format instanceof \FFI\CData ? $format->cdata : $format;
         $type = $type instanceof \FFI\CData ? $type->cdata : $type;
 
-        assert(Assert::uint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::int16($level), 'Argument $level must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($internalformat), 'Argument $internalformat must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($width), 'Argument $width must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Assert::int16($height), 'Argument $height must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Assert::int16($depth), 'Argument $depth must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Assert::int16($border), 'Argument $border must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::uint16($format), 'Argument $format must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::uint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isInt16($level), 'Argument $level must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($internalformat), 'Argument $internalformat must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($width), 'Argument $width must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isInt16($height), 'Argument $height must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isInt16($depth), 'Argument $depth must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isInt16($border), 'Argument $border must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isUint16($format), 'Argument $format must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glTexImage3D', 'void (*)(GLenum target, GLint level, GLint internalformat, GLsizei width, GLsizei height, GLsizei depth, GLint border, GLenum format, GLenum type, const void *pixels)');
         $proc($target, $level, $internalformat, $width, $height, $depth, $border, $format, $type, $pixels);
@@ -457,7 +457,7 @@ class GL12 extends GL11
      * @param \FFI\CData|\FFI\CPtr|null $pixels
      * @return void
      */
-    public function glTexSubImage3D($target, $level, $xoffset, $yoffset, $zoffset, $width, $height, $depth, $format, $type, ?\FFI\CData $pixels): void
+    public function texSubImage3D($target, $level, $xoffset, $yoffset, $zoffset, $width, $height, $depth, $format, $type, ?\FFI\CData $pixels): void
     {
         $target = $target instanceof \FFI\CData ? $target->cdata : $target;
         $level = $level instanceof \FFI\CData ? $level->cdata : $level;
@@ -470,16 +470,16 @@ class GL12 extends GL11
         $format = $format instanceof \FFI\CData ? $format->cdata : $format;
         $type = $type instanceof \FFI\CData ? $type->cdata : $type;
 
-        assert(Assert::uint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::int16($level), 'Argument $level must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($xoffset), 'Argument $xoffset must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($yoffset), 'Argument $yoffset must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($zoffset), 'Argument $zoffset must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($width), 'Argument $width must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Assert::int16($height), 'Argument $height must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Assert::int16($depth), 'Argument $depth must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Assert::uint16($format), 'Argument $format must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::uint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isInt16($level), 'Argument $level must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($xoffset), 'Argument $xoffset must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($yoffset), 'Argument $yoffset must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($zoffset), 'Argument $zoffset must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($width), 'Argument $width must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isInt16($height), 'Argument $height must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isInt16($depth), 'Argument $depth must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isUint16($format), 'Argument $format must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glTexSubImage3D', 'void (*)(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLenum type, const void *pixels)');
         $proc($target, $level, $xoffset, $yoffset, $zoffset, $width, $height, $depth, $format, $type, $pixels);
@@ -524,7 +524,7 @@ class GL12 extends GL11
      * @param int|\FFI\CData|\FFI\CInt $height
      * @return void
      */
-    public function glCopyTexSubImage3D($target, $level, $xoffset, $yoffset, $zoffset, $x, $y, $width, $height): void
+    public function copyTexSubImage3D($target, $level, $xoffset, $yoffset, $zoffset, $x, $y, $width, $height): void
     {
         $target = $target instanceof \FFI\CData ? $target->cdata : $target;
         $level = $level instanceof \FFI\CData ? $level->cdata : $level;
@@ -536,15 +536,15 @@ class GL12 extends GL11
         $width = $width instanceof \FFI\CData ? $width->cdata : $width;
         $height = $height instanceof \FFI\CData ? $height->cdata : $height;
 
-        assert(Assert::uint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::int16($level), 'Argument $level must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($xoffset), 'Argument $xoffset must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($yoffset), 'Argument $yoffset must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($zoffset), 'Argument $zoffset must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($x), 'Argument $x must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($y), 'Argument $y must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($width), 'Argument $width must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Assert::int16($height), 'Argument $height must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isUint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isInt16($level), 'Argument $level must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($xoffset), 'Argument $xoffset must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($yoffset), 'Argument $yoffset must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($zoffset), 'Argument $zoffset must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($x), 'Argument $x must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($y), 'Argument $y must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($width), 'Argument $width must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isInt16($height), 'Argument $height must be a C-like GLsizei, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glCopyTexSubImage3D', 'void (*)(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLint x, GLint y, GLsizei width, GLsizei height)');
         $proc($target, $level, $xoffset, $yoffset, $zoffset, $x, $y, $width, $height);

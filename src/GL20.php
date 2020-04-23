@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Serafim\OpenGL;
 
-use Serafim\OpenGL\Support\Assert;
+use Serafim\OpenGL\Type\Type;
 
 /**
  * The OpenGL functionality up to version 2.0. Includes the deprecated symbols of the Compatibility Profile.
@@ -475,13 +475,13 @@ class GL20 extends GL15
      * @param int|\FFI\CData|\FFI\CInt $modeAlpha
      * @return void
      */
-    public function glBlendEquationSeparate($modeRGB, $modeAlpha): void
+    public function blendEquationSeparate($modeRGB, $modeAlpha): void
     {
         $modeRGB = $modeRGB instanceof \FFI\CData ? $modeRGB->cdata : $modeRGB;
         $modeAlpha = $modeAlpha instanceof \FFI\CData ? $modeAlpha->cdata : $modeAlpha;
 
-        assert(Assert::uint16($modeRGB), 'Argument $modeRGB must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::uint16($modeAlpha), 'Argument $modeAlpha must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($modeRGB), 'Argument $modeRGB must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($modeAlpha), 'Argument $modeAlpha must be a C-like GLenum, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glBlendEquationSeparate', 'void (*)(GLenum modeRGB, GLenum modeAlpha)');
         $proc($modeRGB, $modeAlpha);
@@ -532,11 +532,11 @@ class GL20 extends GL15
      * @param \FFI\CData|\FFI\CIntPtr|null $bufs
      * @return void
      */
-    public function glDrawBuffers($n, ?\FFI\CData $bufs): void
+    public function drawBuffers($n, ?\FFI\CData $bufs): void
     {
         $n = $n instanceof \FFI\CData ? $n->cdata : $n;
 
-        assert(Assert::int16($n), 'Argument $n must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isInt16($n), 'Argument $n must be a C-like GLsizei, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glDrawBuffers', 'void (*)(GLsizei n, const GLenum *bufs)');
         $proc($n, $bufs);
@@ -607,17 +607,17 @@ class GL20 extends GL15
      * @param int|\FFI\CData|\FFI\CInt $dppass
      * @return void
      */
-    public function glStencilOpSeparate($face, $sfail, $dpfail, $dppass): void
+    public function stencilOpSeparate($face, $sfail, $dpfail, $dppass): void
     {
         $face = $face instanceof \FFI\CData ? $face->cdata : $face;
         $sfail = $sfail instanceof \FFI\CData ? $sfail->cdata : $sfail;
         $dpfail = $dpfail instanceof \FFI\CData ? $dpfail->cdata : $dpfail;
         $dppass = $dppass instanceof \FFI\CData ? $dppass->cdata : $dppass;
 
-        assert(Assert::uint16($face), 'Argument $face must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::uint16($sfail), 'Argument $sfail must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::uint16($dpfail), 'Argument $dpfail must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::uint16($dppass), 'Argument $dppass must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($face), 'Argument $face must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($sfail), 'Argument $sfail must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($dpfail), 'Argument $dpfail must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($dppass), 'Argument $dppass must be a C-like GLenum, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glStencilOpSeparate', 'void (*)(GLenum face, GLenum sfail, GLenum dpfail, GLenum dppass)');
         $proc($face, $sfail, $dpfail, $dppass);
@@ -684,17 +684,17 @@ class GL20 extends GL15
      * @param int|\FFI\CData|\FFI\CInt $mask
      * @return void
      */
-    public function glStencilFuncSeparate($face, $func, $ref, $mask): void
+    public function stencilFuncSeparate($face, $func, $ref, $mask): void
     {
         $face = $face instanceof \FFI\CData ? $face->cdata : $face;
         $func = $func instanceof \FFI\CData ? $func->cdata : $func;
         $ref = $ref instanceof \FFI\CData ? $ref->cdata : $ref;
         $mask = $mask instanceof \FFI\CData ? $mask->cdata : $mask;
 
-        assert(Assert::uint16($face), 'Argument $face must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::uint16($func), 'Argument $func must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::int16($ref), 'Argument $ref must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::uint16($mask), 'Argument $mask must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($face), 'Argument $face must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($func), 'Argument $func must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isInt16($ref), 'Argument $ref must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isUint16($mask), 'Argument $mask must be a C-like GLuint, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glStencilFuncSeparate', 'void (*)(GLenum face, GLenum func, GLint ref, GLuint mask)');
         $proc($face, $func, $ref, $mask);
@@ -718,13 +718,13 @@ class GL20 extends GL15
      * @param int|\FFI\CData|\FFI\CInt $mask
      * @return void
      */
-    public function glStencilMaskSeparate($face, $mask): void
+    public function stencilMaskSeparate($face, $mask): void
     {
         $face = $face instanceof \FFI\CData ? $face->cdata : $face;
         $mask = $mask instanceof \FFI\CData ? $mask->cdata : $mask;
 
-        assert(Assert::uint16($face), 'Argument $face must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::uint16($mask), 'Argument $mask must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($face), 'Argument $face must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($mask), 'Argument $mask must be a C-like GLuint, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glStencilMaskSeparate', 'void (*)(GLenum face, GLuint mask)');
         $proc($face, $mask);
@@ -752,13 +752,13 @@ class GL20 extends GL15
      * @param int|\FFI\CData|\FFI\CInt $shader
      * @return void
      */
-    public function glAttachShader($program, $shader): void
+    public function attachShader($program, $shader): void
     {
         $program = $program instanceof \FFI\CData ? $program->cdata : $program;
         $shader = $shader instanceof \FFI\CData ? $shader->cdata : $shader;
 
-        assert(Assert::uint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($shader), 'Argument $shader must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($shader), 'Argument $shader must be a C-like GLuint, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glAttachShader', 'void (*)(GLuint program, GLuint shader)');
         $proc($program, $shader);
@@ -798,13 +798,13 @@ class GL20 extends GL15
      * @param \FFI\CData|\FFI\CIntPtr|null $name
      * @return void
      */
-    public function glBindAttribLocation($program, $index, ?\FFI\CData $name): void
+    public function bindAttribLocation($program, $index, ?\FFI\CData $name): void
     {
         $program = $program instanceof \FFI\CData ? $program->cdata : $program;
         $index = $index instanceof \FFI\CData ? $index->cdata : $index;
 
-        assert(Assert::uint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glBindAttribLocation', 'void (*)(GLuint program, GLuint index, const GLchar *name)');
         $proc($program, $index, $name);
@@ -829,11 +829,11 @@ class GL20 extends GL15
      * @param int|\FFI\CData|\FFI\CInt $shader
      * @return void
      */
-    public function glCompileShader($shader): void
+    public function compileShader($shader): void
     {
         $shader = $shader instanceof \FFI\CData ? $shader->cdata : $shader;
 
-        assert(Assert::uint16($shader), 'Argument $shader must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($shader), 'Argument $shader must be a C-like GLuint, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glCompileShader', 'void (*)(GLuint shader)');
         $proc($shader);
@@ -859,7 +859,7 @@ class GL20 extends GL15
      * @since 2.0
      * @return int|\FFI\CData|\FFI\CInt
      */
-    public function glCreateProgram(): int
+    public function createProgram(): int
     {
         $proc = $this->getProcAddress('glCreateProgram', 'GLuint (*)(void)');
         return $proc();
@@ -889,11 +889,11 @@ class GL20 extends GL15
      * @param int|\FFI\CData|\FFI\CInt $type
      * @return int|\FFI\CData|\FFI\CInt
      */
-    public function glCreateShader($type): int
+    public function createShader($type): int
     {
         $type = $type instanceof \FFI\CData ? $type->cdata : $type;
 
-        assert(Assert::uint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glCreateShader', 'GLuint (*)(GLenum type)');
         return $proc($type);
@@ -918,11 +918,11 @@ class GL20 extends GL15
      * @param int|\FFI\CData|\FFI\CInt $program
      * @return void
      */
-    public function glDeleteProgram($program): void
+    public function deleteProgram($program): void
     {
         $program = $program instanceof \FFI\CData ? $program->cdata : $program;
 
-        assert(Assert::uint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glDeleteProgram', 'void (*)(GLuint program)');
         $proc($program);
@@ -946,11 +946,11 @@ class GL20 extends GL15
      * @param int|\FFI\CData|\FFI\CInt $shader
      * @return void
      */
-    public function glDeleteShader($shader): void
+    public function deleteShader($shader): void
     {
         $shader = $shader instanceof \FFI\CData ? $shader->cdata : $shader;
 
-        assert(Assert::uint16($shader), 'Argument $shader must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($shader), 'Argument $shader must be a C-like GLuint, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glDeleteShader', 'void (*)(GLuint shader)');
         $proc($shader);
@@ -970,13 +970,13 @@ class GL20 extends GL15
      * @param int|\FFI\CData|\FFI\CInt $shader
      * @return void
      */
-    public function glDetachShader($program, $shader): void
+    public function detachShader($program, $shader): void
     {
         $program = $program instanceof \FFI\CData ? $program->cdata : $program;
         $shader = $shader instanceof \FFI\CData ? $shader->cdata : $shader;
 
-        assert(Assert::uint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($shader), 'Argument $shader must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($shader), 'Argument $shader must be a C-like GLuint, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glDetachShader', 'void (*)(GLuint program, GLuint shader)');
         $proc($program, $shader);
@@ -1004,11 +1004,11 @@ class GL20 extends GL15
      * @param int|\FFI\CData|\FFI\CInt $index
      * @return void
      */
-    public function glDisableVertexAttribArray($index): void
+    public function disableVertexAttribArray($index): void
     {
         $index = $index instanceof \FFI\CData ? $index->cdata : $index;
 
-        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glDisableVertexAttribArray', 'void (*)(GLuint index)');
         $proc($index);
@@ -1036,11 +1036,11 @@ class GL20 extends GL15
      * @param int|\FFI\CData|\FFI\CInt $index
      * @return void
      */
-    public function glEnableVertexAttribArray($index): void
+    public function enableVertexAttribArray($index): void
     {
         $index = $index instanceof \FFI\CData ? $index->cdata : $index;
 
-        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glEnableVertexAttribArray', 'void (*)(GLuint index)');
         $proc($index);
@@ -1106,15 +1106,15 @@ class GL20 extends GL15
      * @param \FFI\CData|\FFI\CIntPtr|null $name
      * @return void
      */
-    public function glGetActiveAttrib($program, $index, $bufSize, ?\FFI\CData $length, ?\FFI\CData $size, ?\FFI\CData $type, ?\FFI\CData $name): void
+    public function getActiveAttrib($program, $index, $bufSize, ?\FFI\CData $length, ?\FFI\CData $size, ?\FFI\CData $type, ?\FFI\CData $name): void
     {
         $program = $program instanceof \FFI\CData ? $program->cdata : $program;
         $index = $index instanceof \FFI\CData ? $index->cdata : $index;
         $bufSize = $bufSize instanceof \FFI\CData ? $bufSize->cdata : $bufSize;
 
-        assert(Assert::uint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::int16($bufSize), 'Argument $bufSize must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isUint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isInt16($bufSize), 'Argument $bufSize must be a C-like GLsizei, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glGetActiveAttrib', 'void (*)(GLuint program, GLuint index, GLsizei bufSize, GLsizei *length, GLint *size, GLenum *type, GLchar *name)');
         $proc($program, $index, $bufSize, $length, $size, $type, $name);
@@ -1258,15 +1258,15 @@ class GL20 extends GL15
      * @param \FFI\CData|\FFI\CIntPtr|null $name
      * @return void
      */
-    public function glGetActiveUniform($program, $index, $bufSize, ?\FFI\CData $length, ?\FFI\CData $size, ?\FFI\CData $type, ?\FFI\CData $name): void
+    public function getActiveUniform($program, $index, $bufSize, ?\FFI\CData $length, ?\FFI\CData $size, ?\FFI\CData $type, ?\FFI\CData $name): void
     {
         $program = $program instanceof \FFI\CData ? $program->cdata : $program;
         $index = $index instanceof \FFI\CData ? $index->cdata : $index;
         $bufSize = $bufSize instanceof \FFI\CData ? $bufSize->cdata : $bufSize;
 
-        assert(Assert::uint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::int16($bufSize), 'Argument $bufSize must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isUint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isInt16($bufSize), 'Argument $bufSize must be a C-like GLsizei, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glGetActiveUniform', 'void (*)(GLuint program, GLuint index, GLsizei bufSize, GLsizei *length, GLint *size, GLenum *type, GLchar *name)');
         $proc($program, $index, $bufSize, $length, $size, $type, $name);
@@ -1292,13 +1292,13 @@ class GL20 extends GL15
      * @param \FFI\CData|\FFI\CIntPtr|null $shaders
      * @return void
      */
-    public function glGetAttachedShaders($program, $maxCount, ?\FFI\CData $count, ?\FFI\CData $shaders): void
+    public function getAttachedShaders($program, $maxCount, ?\FFI\CData $count, ?\FFI\CData $shaders): void
     {
         $program = $program instanceof \FFI\CData ? $program->cdata : $program;
         $maxCount = $maxCount instanceof \FFI\CData ? $maxCount->cdata : $maxCount;
 
-        assert(Assert::uint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::int16($maxCount), 'Argument $maxCount must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isUint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isInt16($maxCount), 'Argument $maxCount must be a C-like GLsizei, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glGetAttachedShaders', 'void (*)(GLuint program, GLsizei maxCount, GLsizei *count, GLuint *shaders)');
         $proc($program, $maxCount, $count, $shaders);
@@ -1327,11 +1327,11 @@ class GL20 extends GL15
      * @param \FFI\CData|\FFI\CIntPtr|null $name
      * @return int|\FFI\CData|\FFI\CInt
      */
-    public function glGetAttribLocation($program, ?\FFI\CData $name): int
+    public function getAttribLocation($program, ?\FFI\CData $name): int
     {
         $program = $program instanceof \FFI\CData ? $program->cdata : $program;
 
-        assert(Assert::uint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glGetAttribLocation', 'GLint (*)(GLuint program, const GLchar *name)');
         return $proc($program, $name);
@@ -1436,13 +1436,13 @@ class GL20 extends GL15
      * @param \FFI\CData|\FFI\CIntPtr|null $params
      * @return void
      */
-    public function glGetProgramiv($program, $pname, ?\FFI\CData $params): void
+    public function getProgramiv($program, $pname, ?\FFI\CData $params): void
     {
         $program = $program instanceof \FFI\CData ? $program->cdata : $program;
         $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
 
-        assert(Assert::uint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glGetProgramiv', 'void (*)(GLuint program, GLenum pname, GLint *params)');
         $proc($program, $pname, $params);
@@ -1474,13 +1474,13 @@ class GL20 extends GL15
      * @param \FFI\CData|\FFI\CIntPtr|null $infoLog
      * @return void
      */
-    public function glGetProgramInfoLog($program, $bufSize, ?\FFI\CData $length, ?\FFI\CData $infoLog): void
+    public function getProgramInfoLog($program, $bufSize, ?\FFI\CData $length, ?\FFI\CData $infoLog): void
     {
         $program = $program instanceof \FFI\CData ? $program->cdata : $program;
         $bufSize = $bufSize instanceof \FFI\CData ? $bufSize->cdata : $bufSize;
 
-        assert(Assert::uint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::int16($bufSize), 'Argument $bufSize must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isUint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isInt16($bufSize), 'Argument $bufSize must be a C-like GLsizei, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glGetProgramInfoLog', 'void (*)(GLuint program, GLsizei bufSize, GLsizei *length, GLchar *infoLog)');
         $proc($program, $bufSize, $length, $infoLog);
@@ -1526,13 +1526,13 @@ class GL20 extends GL15
      * @param \FFI\CData|\FFI\CIntPtr|null $params
      * @return void
      */
-    public function glGetShaderiv($shader, $pname, ?\FFI\CData $params): void
+    public function getShaderiv($shader, $pname, ?\FFI\CData $params): void
     {
         $shader = $shader instanceof \FFI\CData ? $shader->cdata : $shader;
         $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
 
-        assert(Assert::uint16($shader), 'Argument $shader must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($shader), 'Argument $shader must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glGetShaderiv', 'void (*)(GLuint shader, GLenum pname, GLint *params)');
         $proc($shader, $pname, $params);
@@ -1563,13 +1563,13 @@ class GL20 extends GL15
      * @param \FFI\CData|\FFI\CIntPtr|null $infoLog
      * @return void
      */
-    public function glGetShaderInfoLog($shader, $bufSize, ?\FFI\CData $length, ?\FFI\CData $infoLog): void
+    public function getShaderInfoLog($shader, $bufSize, ?\FFI\CData $length, ?\FFI\CData $infoLog): void
     {
         $shader = $shader instanceof \FFI\CData ? $shader->cdata : $shader;
         $bufSize = $bufSize instanceof \FFI\CData ? $bufSize->cdata : $bufSize;
 
-        assert(Assert::uint16($shader), 'Argument $shader must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::int16($bufSize), 'Argument $bufSize must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isUint16($shader), 'Argument $shader must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isInt16($bufSize), 'Argument $bufSize must be a C-like GLsizei, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glGetShaderInfoLog', 'void (*)(GLuint shader, GLsizei bufSize, GLsizei *length, GLchar *infoLog)');
         $proc($shader, $bufSize, $length, $infoLog);
@@ -1596,13 +1596,13 @@ class GL20 extends GL15
      * @param \FFI\CData|\FFI\CIntPtr|null $source
      * @return void
      */
-    public function glGetShaderSource($shader, $bufSize, ?\FFI\CData $length, ?\FFI\CData $source): void
+    public function getShaderSource($shader, $bufSize, ?\FFI\CData $length, ?\FFI\CData $source): void
     {
         $shader = $shader instanceof \FFI\CData ? $shader->cdata : $shader;
         $bufSize = $bufSize instanceof \FFI\CData ? $bufSize->cdata : $bufSize;
 
-        assert(Assert::uint16($shader), 'Argument $shader must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::int16($bufSize), 'Argument $bufSize must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isUint16($shader), 'Argument $shader must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isInt16($bufSize), 'Argument $bufSize must be a C-like GLsizei, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glGetShaderSource', 'void (*)(GLuint shader, GLsizei bufSize, GLsizei *length, GLchar *source)');
         $proc($shader, $bufSize, $length, $source);
@@ -1639,11 +1639,11 @@ class GL20 extends GL15
      * @param \FFI\CData|\FFI\CIntPtr|null $name
      * @return int|\FFI\CData|\FFI\CInt
      */
-    public function glGetUniformLocation($program, ?\FFI\CData $name): int
+    public function getUniformLocation($program, ?\FFI\CData $name): int
     {
         $program = $program instanceof \FFI\CData ? $program->cdata : $program;
 
-        assert(Assert::uint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glGetUniformLocation', 'GLint (*)(GLuint program, const GLchar *name)');
         return $proc($program, $name);
@@ -1678,13 +1678,13 @@ class GL20 extends GL15
      * @param \FFI\CData|\FFI\CFloatPtr|null $params
      * @return void
      */
-    public function glGetUniformfv($program, $location, ?\FFI\CData $params): void
+    public function getUniformfv($program, $location, ?\FFI\CData $params): void
     {
         $program = $program instanceof \FFI\CData ? $program->cdata : $program;
         $location = $location instanceof \FFI\CData ? $location->cdata : $location;
 
-        assert(Assert::uint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::int16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isUint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isInt16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glGetUniformfv', 'void (*)(GLuint program, GLint location, GLfloat *params)');
         $proc($program, $location, $params);
@@ -1719,13 +1719,13 @@ class GL20 extends GL15
      * @param \FFI\CData|\FFI\CIntPtr|null $params
      * @return void
      */
-    public function glGetUniformiv($program, $location, ?\FFI\CData $params): void
+    public function getUniformiv($program, $location, ?\FFI\CData $params): void
     {
         $program = $program instanceof \FFI\CData ? $program->cdata : $program;
         $location = $location instanceof \FFI\CData ? $location->cdata : $location;
 
-        assert(Assert::uint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::int16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isUint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isInt16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glGetUniformiv', 'void (*)(GLuint program, GLint location, GLint *params)');
         $proc($program, $location, $params);
@@ -1837,13 +1837,13 @@ class GL20 extends GL15
      * @param \FFI\CData|\FFI\CFloatPtr|null $params
      * @return void
      */
-    public function glGetVertexAttribdv($index, $pname, ?\FFI\CData $params): void
+    public function getVertexAttribdv($index, $pname, ?\FFI\CData $params): void
     {
         $index = $index instanceof \FFI\CData ? $index->cdata : $index;
         $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
 
-        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glGetVertexAttribdv', 'void (*)(GLuint index, GLenum pname, GLdouble *params)');
         $proc($index, $pname, $params);
@@ -1955,13 +1955,13 @@ class GL20 extends GL15
      * @param \FFI\CData|\FFI\CFloatPtr|null $params
      * @return void
      */
-    public function glGetVertexAttribfv($index, $pname, ?\FFI\CData $params): void
+    public function getVertexAttribfv($index, $pname, ?\FFI\CData $params): void
     {
         $index = $index instanceof \FFI\CData ? $index->cdata : $index;
         $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
 
-        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glGetVertexAttribfv', 'void (*)(GLuint index, GLenum pname, GLfloat *params)');
         $proc($index, $pname, $params);
@@ -2073,13 +2073,13 @@ class GL20 extends GL15
      * @param \FFI\CData|\FFI\CIntPtr|null $params
      * @return void
      */
-    public function glGetVertexAttribiv($index, $pname, ?\FFI\CData $params): void
+    public function getVertexAttribiv($index, $pname, ?\FFI\CData $params): void
     {
         $index = $index instanceof \FFI\CData ? $index->cdata : $index;
         $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
 
-        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glGetVertexAttribiv', 'void (*)(GLuint index, GLenum pname, GLint *params)');
         $proc($index, $pname, $params);
@@ -2102,13 +2102,13 @@ class GL20 extends GL15
      * @param \FFI\CData|\FFI\CPtrPtr|null $pointer
      * @return void
      */
-    public function glGetVertexAttribPointerv($index, $pname, ?\FFI\CData $pointer): void
+    public function getVertexAttribPointerv($index, $pname, ?\FFI\CData $pointer): void
     {
         $index = $index instanceof \FFI\CData ? $index->cdata : $index;
         $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
 
-        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glGetVertexAttribPointerv', 'void (*)(GLuint index, GLenum pname, void **pointer)');
         $proc($index, $pname, $pointer);
@@ -2126,11 +2126,11 @@ class GL20 extends GL15
      * @param int|\FFI\CData|\FFI\CInt $program
      * @return int|\FFI\CData|\FFI\CInt
      */
-    public function glIsProgram($program): int
+    public function isProgram($program): int
     {
         $program = $program instanceof \FFI\CData ? $program->cdata : $program;
 
-        assert(Assert::uint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glIsProgram', 'GLboolean (*)(GLuint program)');
         return $proc($program);
@@ -2148,11 +2148,11 @@ class GL20 extends GL15
      * @param int|\FFI\CData|\FFI\CInt $shader
      * @return int|\FFI\CData|\FFI\CInt
      */
-    public function glIsShader($shader): int
+    public function isShader($shader): int
     {
         $shader = $shader instanceof \FFI\CData ? $shader->cdata : $shader;
 
-        assert(Assert::uint16($shader), 'Argument $shader must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($shader), 'Argument $shader must be a C-like GLuint, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glIsShader', 'GLboolean (*)(GLuint shader)');
         return $proc($shader);
@@ -2249,11 +2249,11 @@ class GL20 extends GL15
      * @param int|\FFI\CData|\FFI\CInt $program
      * @return void
      */
-    public function glLinkProgram($program): void
+    public function linkProgram($program): void
     {
         $program = $program instanceof \FFI\CData ? $program->cdata : $program;
 
-        assert(Assert::uint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glLinkProgram', 'void (*)(GLuint program)');
         $proc($program);
@@ -2278,13 +2278,13 @@ class GL20 extends GL15
      * @param \FFI\CData|\FFI\CIntPtr|null $length
      * @return void
      */
-    public function glShaderSource($shader, $count, ?\FFI\CData $string, ?\FFI\CData $length): void
+    public function shaderSource($shader, $count, ?\FFI\CData $string, ?\FFI\CData $length): void
     {
         $shader = $shader instanceof \FFI\CData ? $shader->cdata : $shader;
         $count = $count instanceof \FFI\CData ? $count->cdata : $count;
 
-        assert(Assert::uint16($shader), 'Argument $shader must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::int16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isUint16($shader), 'Argument $shader must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isInt16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glShaderSource', 'void (*)(GLuint shader, GLsizei count, const GLchar *const*string, const GLint *length)');
         $proc($shader, $count, $string, $length);
@@ -2327,11 +2327,11 @@ class GL20 extends GL15
      * @param int|\FFI\CData|\FFI\CInt $program
      * @return void
      */
-    public function glUseProgram($program): void
+    public function useProgram($program): void
     {
         $program = $program instanceof \FFI\CData ? $program->cdata : $program;
 
-        assert(Assert::uint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glUseProgram', 'void (*)(GLuint program)');
         $proc($program);
@@ -2399,13 +2399,13 @@ class GL20 extends GL15
      * @param float|\FFI\CData|\FFI\CFloat $v0
      * @return void
      */
-    public function glUniform1f($location, $v0): void
+    public function uniform1f($location, $v0): void
     {
         $location = $location instanceof \FFI\CData ? $location->cdata : $location;
         $v0 = $v0 instanceof \FFI\CData ? $v0->cdata : $v0;
 
-        assert(Assert::int16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::float32($v0), 'Argument $v0 must be a C-like GLfloat, but incompatible or overflow value given');
+        assert(Type::isInt16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isFloat32($v0), 'Argument $v0 must be a C-like GLfloat, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glUniform1f', 'void (*)(GLint location, GLfloat v0)');
         $proc($location, $v0);
@@ -2474,15 +2474,15 @@ class GL20 extends GL15
      * @param float|\FFI\CData|\FFI\CFloat $v1
      * @return void
      */
-    public function glUniform2f($location, $v0, $v1): void
+    public function uniform2f($location, $v0, $v1): void
     {
         $location = $location instanceof \FFI\CData ? $location->cdata : $location;
         $v0 = $v0 instanceof \FFI\CData ? $v0->cdata : $v0;
         $v1 = $v1 instanceof \FFI\CData ? $v1->cdata : $v1;
 
-        assert(Assert::int16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::float32($v0), 'Argument $v0 must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Assert::float32($v1), 'Argument $v1 must be a C-like GLfloat, but incompatible or overflow value given');
+        assert(Type::isInt16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isFloat32($v0), 'Argument $v0 must be a C-like GLfloat, but incompatible or overflow value given');
+        assert(Type::isFloat32($v1), 'Argument $v1 must be a C-like GLfloat, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glUniform2f', 'void (*)(GLint location, GLfloat v0, GLfloat v1)');
         $proc($location, $v0, $v1);
@@ -2552,17 +2552,17 @@ class GL20 extends GL15
      * @param float|\FFI\CData|\FFI\CFloat $v2
      * @return void
      */
-    public function glUniform3f($location, $v0, $v1, $v2): void
+    public function uniform3f($location, $v0, $v1, $v2): void
     {
         $location = $location instanceof \FFI\CData ? $location->cdata : $location;
         $v0 = $v0 instanceof \FFI\CData ? $v0->cdata : $v0;
         $v1 = $v1 instanceof \FFI\CData ? $v1->cdata : $v1;
         $v2 = $v2 instanceof \FFI\CData ? $v2->cdata : $v2;
 
-        assert(Assert::int16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::float32($v0), 'Argument $v0 must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Assert::float32($v1), 'Argument $v1 must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Assert::float32($v2), 'Argument $v2 must be a C-like GLfloat, but incompatible or overflow value given');
+        assert(Type::isInt16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isFloat32($v0), 'Argument $v0 must be a C-like GLfloat, but incompatible or overflow value given');
+        assert(Type::isFloat32($v1), 'Argument $v1 must be a C-like GLfloat, but incompatible or overflow value given');
+        assert(Type::isFloat32($v2), 'Argument $v2 must be a C-like GLfloat, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glUniform3f', 'void (*)(GLint location, GLfloat v0, GLfloat v1, GLfloat v2)');
         $proc($location, $v0, $v1, $v2);
@@ -2633,7 +2633,7 @@ class GL20 extends GL15
      * @param float|\FFI\CData|\FFI\CFloat $v3
      * @return void
      */
-    public function glUniform4f($location, $v0, $v1, $v2, $v3): void
+    public function uniform4f($location, $v0, $v1, $v2, $v3): void
     {
         $location = $location instanceof \FFI\CData ? $location->cdata : $location;
         $v0 = $v0 instanceof \FFI\CData ? $v0->cdata : $v0;
@@ -2641,11 +2641,11 @@ class GL20 extends GL15
         $v2 = $v2 instanceof \FFI\CData ? $v2->cdata : $v2;
         $v3 = $v3 instanceof \FFI\CData ? $v3->cdata : $v3;
 
-        assert(Assert::int16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::float32($v0), 'Argument $v0 must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Assert::float32($v1), 'Argument $v1 must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Assert::float32($v2), 'Argument $v2 must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Assert::float32($v3), 'Argument $v3 must be a C-like GLfloat, but incompatible or overflow value given');
+        assert(Type::isInt16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isFloat32($v0), 'Argument $v0 must be a C-like GLfloat, but incompatible or overflow value given');
+        assert(Type::isFloat32($v1), 'Argument $v1 must be a C-like GLfloat, but incompatible or overflow value given');
+        assert(Type::isFloat32($v2), 'Argument $v2 must be a C-like GLfloat, but incompatible or overflow value given');
+        assert(Type::isFloat32($v3), 'Argument $v3 must be a C-like GLfloat, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glUniform4f', 'void (*)(GLint location, GLfloat v0, GLfloat v1, GLfloat v2, GLfloat v3)');
         $proc($location, $v0, $v1, $v2, $v3);
@@ -2713,13 +2713,13 @@ class GL20 extends GL15
      * @param int|\FFI\CData|\FFI\CInt $v0
      * @return void
      */
-    public function glUniform1i($location, $v0): void
+    public function uniform1i($location, $v0): void
     {
         $location = $location instanceof \FFI\CData ? $location->cdata : $location;
         $v0 = $v0 instanceof \FFI\CData ? $v0->cdata : $v0;
 
-        assert(Assert::int16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($v0), 'Argument $v0 must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($v0), 'Argument $v0 must be a C-like GLint, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glUniform1i', 'void (*)(GLint location, GLint v0)');
         $proc($location, $v0);
@@ -2788,15 +2788,15 @@ class GL20 extends GL15
      * @param int|\FFI\CData|\FFI\CInt $v1
      * @return void
      */
-    public function glUniform2i($location, $v0, $v1): void
+    public function uniform2i($location, $v0, $v1): void
     {
         $location = $location instanceof \FFI\CData ? $location->cdata : $location;
         $v0 = $v0 instanceof \FFI\CData ? $v0->cdata : $v0;
         $v1 = $v1 instanceof \FFI\CData ? $v1->cdata : $v1;
 
-        assert(Assert::int16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($v0), 'Argument $v0 must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($v1), 'Argument $v1 must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($v0), 'Argument $v0 must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($v1), 'Argument $v1 must be a C-like GLint, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glUniform2i', 'void (*)(GLint location, GLint v0, GLint v1)');
         $proc($location, $v0, $v1);
@@ -2866,17 +2866,17 @@ class GL20 extends GL15
      * @param int|\FFI\CData|\FFI\CInt $v2
      * @return void
      */
-    public function glUniform3i($location, $v0, $v1, $v2): void
+    public function uniform3i($location, $v0, $v1, $v2): void
     {
         $location = $location instanceof \FFI\CData ? $location->cdata : $location;
         $v0 = $v0 instanceof \FFI\CData ? $v0->cdata : $v0;
         $v1 = $v1 instanceof \FFI\CData ? $v1->cdata : $v1;
         $v2 = $v2 instanceof \FFI\CData ? $v2->cdata : $v2;
 
-        assert(Assert::int16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($v0), 'Argument $v0 must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($v1), 'Argument $v1 must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($v2), 'Argument $v2 must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($v0), 'Argument $v0 must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($v1), 'Argument $v1 must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($v2), 'Argument $v2 must be a C-like GLint, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glUniform3i', 'void (*)(GLint location, GLint v0, GLint v1, GLint v2)');
         $proc($location, $v0, $v1, $v2);
@@ -2947,7 +2947,7 @@ class GL20 extends GL15
      * @param int|\FFI\CData|\FFI\CInt $v3
      * @return void
      */
-    public function glUniform4i($location, $v0, $v1, $v2, $v3): void
+    public function uniform4i($location, $v0, $v1, $v2, $v3): void
     {
         $location = $location instanceof \FFI\CData ? $location->cdata : $location;
         $v0 = $v0 instanceof \FFI\CData ? $v0->cdata : $v0;
@@ -2955,11 +2955,11 @@ class GL20 extends GL15
         $v2 = $v2 instanceof \FFI\CData ? $v2->cdata : $v2;
         $v3 = $v3 instanceof \FFI\CData ? $v3->cdata : $v3;
 
-        assert(Assert::int16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($v0), 'Argument $v0 must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($v1), 'Argument $v1 must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($v2), 'Argument $v2 must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($v3), 'Argument $v3 must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($v0), 'Argument $v0 must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($v1), 'Argument $v1 must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($v2), 'Argument $v2 must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($v3), 'Argument $v3 must be a C-like GLint, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glUniform4i', 'void (*)(GLint location, GLint v0, GLint v1, GLint v2, GLint v3)');
         $proc($location, $v0, $v1, $v2, $v3);
@@ -3028,13 +3028,13 @@ class GL20 extends GL15
      * @param \FFI\CData|\FFI\CFloatPtr|null $value
      * @return void
      */
-    public function glUniform1fv($location, $count, ?\FFI\CData $value): void
+    public function uniform1fv($location, $count, ?\FFI\CData $value): void
     {
         $location = $location instanceof \FFI\CData ? $location->cdata : $location;
         $count = $count instanceof \FFI\CData ? $count->cdata : $count;
 
-        assert(Assert::int16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isInt16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glUniform1fv', 'void (*)(GLint location, GLsizei count, const GLfloat *value)');
         $proc($location, $count, $value);
@@ -3103,13 +3103,13 @@ class GL20 extends GL15
      * @param \FFI\CData|\FFI\CFloatPtr|null $value
      * @return void
      */
-    public function glUniform2fv($location, $count, ?\FFI\CData $value): void
+    public function uniform2fv($location, $count, ?\FFI\CData $value): void
     {
         $location = $location instanceof \FFI\CData ? $location->cdata : $location;
         $count = $count instanceof \FFI\CData ? $count->cdata : $count;
 
-        assert(Assert::int16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isInt16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glUniform2fv', 'void (*)(GLint location, GLsizei count, const GLfloat *value)');
         $proc($location, $count, $value);
@@ -3178,13 +3178,13 @@ class GL20 extends GL15
      * @param \FFI\CData|\FFI\CFloatPtr|null $value
      * @return void
      */
-    public function glUniform3fv($location, $count, ?\FFI\CData $value): void
+    public function uniform3fv($location, $count, ?\FFI\CData $value): void
     {
         $location = $location instanceof \FFI\CData ? $location->cdata : $location;
         $count = $count instanceof \FFI\CData ? $count->cdata : $count;
 
-        assert(Assert::int16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isInt16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glUniform3fv', 'void (*)(GLint location, GLsizei count, const GLfloat *value)');
         $proc($location, $count, $value);
@@ -3253,13 +3253,13 @@ class GL20 extends GL15
      * @param \FFI\CData|\FFI\CFloatPtr|null $value
      * @return void
      */
-    public function glUniform4fv($location, $count, ?\FFI\CData $value): void
+    public function uniform4fv($location, $count, ?\FFI\CData $value): void
     {
         $location = $location instanceof \FFI\CData ? $location->cdata : $location;
         $count = $count instanceof \FFI\CData ? $count->cdata : $count;
 
-        assert(Assert::int16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isInt16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glUniform4fv', 'void (*)(GLint location, GLsizei count, const GLfloat *value)');
         $proc($location, $count, $value);
@@ -3328,13 +3328,13 @@ class GL20 extends GL15
      * @param \FFI\CData|\FFI\CIntPtr|null $value
      * @return void
      */
-    public function glUniform1iv($location, $count, ?\FFI\CData $value): void
+    public function uniform1iv($location, $count, ?\FFI\CData $value): void
     {
         $location = $location instanceof \FFI\CData ? $location->cdata : $location;
         $count = $count instanceof \FFI\CData ? $count->cdata : $count;
 
-        assert(Assert::int16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isInt16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glUniform1iv', 'void (*)(GLint location, GLsizei count, const GLint *value)');
         $proc($location, $count, $value);
@@ -3403,13 +3403,13 @@ class GL20 extends GL15
      * @param \FFI\CData|\FFI\CIntPtr|null $value
      * @return void
      */
-    public function glUniform2iv($location, $count, ?\FFI\CData $value): void
+    public function uniform2iv($location, $count, ?\FFI\CData $value): void
     {
         $location = $location instanceof \FFI\CData ? $location->cdata : $location;
         $count = $count instanceof \FFI\CData ? $count->cdata : $count;
 
-        assert(Assert::int16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isInt16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glUniform2iv', 'void (*)(GLint location, GLsizei count, const GLint *value)');
         $proc($location, $count, $value);
@@ -3478,13 +3478,13 @@ class GL20 extends GL15
      * @param \FFI\CData|\FFI\CIntPtr|null $value
      * @return void
      */
-    public function glUniform3iv($location, $count, ?\FFI\CData $value): void
+    public function uniform3iv($location, $count, ?\FFI\CData $value): void
     {
         $location = $location instanceof \FFI\CData ? $location->cdata : $location;
         $count = $count instanceof \FFI\CData ? $count->cdata : $count;
 
-        assert(Assert::int16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isInt16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glUniform3iv', 'void (*)(GLint location, GLsizei count, const GLint *value)');
         $proc($location, $count, $value);
@@ -3553,13 +3553,13 @@ class GL20 extends GL15
      * @param \FFI\CData|\FFI\CIntPtr|null $value
      * @return void
      */
-    public function glUniform4iv($location, $count, ?\FFI\CData $value): void
+    public function uniform4iv($location, $count, ?\FFI\CData $value): void
     {
         $location = $location instanceof \FFI\CData ? $location->cdata : $location;
         $count = $count instanceof \FFI\CData ? $count->cdata : $count;
 
-        assert(Assert::int16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isInt16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glUniform4iv', 'void (*)(GLint location, GLsizei count, const GLint *value)');
         $proc($location, $count, $value);
@@ -3631,15 +3631,15 @@ class GL20 extends GL15
      * @param \FFI\CData|\FFI\CFloatPtr|null $value
      * @return void
      */
-    public function glUniformMatrix2fv($location, $count, $transpose, ?\FFI\CData $value): void
+    public function uniformMatrix2fv($location, $count, $transpose, ?\FFI\CData $value): void
     {
         $location = $location instanceof \FFI\CData ? $location->cdata : $location;
         $count = $count instanceof \FFI\CData ? $count->cdata : $count;
         $transpose = $transpose instanceof \FFI\CData ? $transpose->cdata : $transpose;
 
-        assert(Assert::int16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Assert::uint8($transpose), 'Argument $transpose must be a C-like GLboolean, but incompatible or overflow value given');
+        assert(Type::isInt16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isUint8($transpose), 'Argument $transpose must be a C-like GLboolean, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glUniformMatrix2fv', 'void (*)(GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)');
         $proc($location, $count, $transpose, $value);
@@ -3711,15 +3711,15 @@ class GL20 extends GL15
      * @param \FFI\CData|\FFI\CFloatPtr|null $value
      * @return void
      */
-    public function glUniformMatrix3fv($location, $count, $transpose, ?\FFI\CData $value): void
+    public function uniformMatrix3fv($location, $count, $transpose, ?\FFI\CData $value): void
     {
         $location = $location instanceof \FFI\CData ? $location->cdata : $location;
         $count = $count instanceof \FFI\CData ? $count->cdata : $count;
         $transpose = $transpose instanceof \FFI\CData ? $transpose->cdata : $transpose;
 
-        assert(Assert::int16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Assert::uint8($transpose), 'Argument $transpose must be a C-like GLboolean, but incompatible or overflow value given');
+        assert(Type::isInt16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isUint8($transpose), 'Argument $transpose must be a C-like GLboolean, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glUniformMatrix3fv', 'void (*)(GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)');
         $proc($location, $count, $transpose, $value);
@@ -3791,15 +3791,15 @@ class GL20 extends GL15
      * @param \FFI\CData|\FFI\CFloatPtr|null $value
      * @return void
      */
-    public function glUniformMatrix4fv($location, $count, $transpose, ?\FFI\CData $value): void
+    public function uniformMatrix4fv($location, $count, $transpose, ?\FFI\CData $value): void
     {
         $location = $location instanceof \FFI\CData ? $location->cdata : $location;
         $count = $count instanceof \FFI\CData ? $count->cdata : $count;
         $transpose = $transpose instanceof \FFI\CData ? $transpose->cdata : $transpose;
 
-        assert(Assert::int16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Assert::uint8($transpose), 'Argument $transpose must be a C-like GLboolean, but incompatible or overflow value given');
+        assert(Type::isInt16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isUint8($transpose), 'Argument $transpose must be a C-like GLboolean, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glUniformMatrix4fv', 'void (*)(GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)');
         $proc($location, $count, $transpose, $value);
@@ -3829,11 +3829,11 @@ class GL20 extends GL15
      * @param int|\FFI\CData|\FFI\CInt $program
      * @return void
      */
-    public function glValidateProgram($program): void
+    public function validateProgram($program): void
     {
         $program = $program instanceof \FFI\CData ? $program->cdata : $program;
 
-        assert(Assert::uint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glValidateProgram', 'void (*)(GLuint program)');
         $proc($program);
@@ -3908,13 +3908,13 @@ class GL20 extends GL15
      * @param float|\FFI\CData|\FFI\CFloat $x
      * @return void
      */
-    public function glVertexAttrib1d($index, $x): void
+    public function vertexAttrib1d($index, $x): void
     {
         $index = $index instanceof \FFI\CData ? $index->cdata : $index;
         $x = $x instanceof \FFI\CData ? $x->cdata : $x;
 
-        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::float64($x), 'Argument $x must be a C-like GLdouble, but incompatible or overflow value given');
+        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isFloat64($x), 'Argument $x must be a C-like GLdouble, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glVertexAttrib1d', 'void (*)(GLuint index, GLdouble x)');
         $proc($index, $x);
@@ -3989,11 +3989,11 @@ class GL20 extends GL15
      * @param \FFI\CData|\FFI\CFloatPtr|null $v
      * @return void
      */
-    public function glVertexAttrib1dv($index, ?\FFI\CData $v): void
+    public function vertexAttrib1dv($index, ?\FFI\CData $v): void
     {
         $index = $index instanceof \FFI\CData ? $index->cdata : $index;
 
-        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glVertexAttrib1dv', 'void (*)(GLuint index, const GLdouble *v)');
         $proc($index, $v);
@@ -4068,13 +4068,13 @@ class GL20 extends GL15
      * @param float|\FFI\CData|\FFI\CFloat $x
      * @return void
      */
-    public function glVertexAttrib1f($index, $x): void
+    public function vertexAttrib1f($index, $x): void
     {
         $index = $index instanceof \FFI\CData ? $index->cdata : $index;
         $x = $x instanceof \FFI\CData ? $x->cdata : $x;
 
-        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::float32($x), 'Argument $x must be a C-like GLfloat, but incompatible or overflow value given');
+        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isFloat32($x), 'Argument $x must be a C-like GLfloat, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glVertexAttrib1f', 'void (*)(GLuint index, GLfloat x)');
         $proc($index, $x);
@@ -4149,11 +4149,11 @@ class GL20 extends GL15
      * @param \FFI\CData|\FFI\CFloatPtr|null $v
      * @return void
      */
-    public function glVertexAttrib1fv($index, ?\FFI\CData $v): void
+    public function vertexAttrib1fv($index, ?\FFI\CData $v): void
     {
         $index = $index instanceof \FFI\CData ? $index->cdata : $index;
 
-        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glVertexAttrib1fv', 'void (*)(GLuint index, const GLfloat *v)');
         $proc($index, $v);
@@ -4228,13 +4228,13 @@ class GL20 extends GL15
      * @param int|\FFI\CData|\FFI\CInt $x
      * @return void
      */
-    public function glVertexAttrib1s($index, $x): void
+    public function vertexAttrib1s($index, $x): void
     {
         $index = $index instanceof \FFI\CData ? $index->cdata : $index;
         $x = $x instanceof \FFI\CData ? $x->cdata : $x;
 
-        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::int16($x), 'Argument $x must be a C-like GLshort, but incompatible or overflow value given');
+        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isInt16($x), 'Argument $x must be a C-like GLshort, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glVertexAttrib1s', 'void (*)(GLuint index, GLshort x)');
         $proc($index, $x);
@@ -4309,11 +4309,11 @@ class GL20 extends GL15
      * @param \FFI\CData|\FFI\CIntPtr|null $v
      * @return void
      */
-    public function glVertexAttrib1sv($index, ?\FFI\CData $v): void
+    public function vertexAttrib1sv($index, ?\FFI\CData $v): void
     {
         $index = $index instanceof \FFI\CData ? $index->cdata : $index;
 
-        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glVertexAttrib1sv', 'void (*)(GLuint index, const GLshort *v)');
         $proc($index, $v);
@@ -4389,15 +4389,15 @@ class GL20 extends GL15
      * @param float|\FFI\CData|\FFI\CFloat $y
      * @return void
      */
-    public function glVertexAttrib2d($index, $x, $y): void
+    public function vertexAttrib2d($index, $x, $y): void
     {
         $index = $index instanceof \FFI\CData ? $index->cdata : $index;
         $x = $x instanceof \FFI\CData ? $x->cdata : $x;
         $y = $y instanceof \FFI\CData ? $y->cdata : $y;
 
-        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::float64($x), 'Argument $x must be a C-like GLdouble, but incompatible or overflow value given');
-        assert(Assert::float64($y), 'Argument $y must be a C-like GLdouble, but incompatible or overflow value given');
+        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isFloat64($x), 'Argument $x must be a C-like GLdouble, but incompatible or overflow value given');
+        assert(Type::isFloat64($y), 'Argument $y must be a C-like GLdouble, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glVertexAttrib2d', 'void (*)(GLuint index, GLdouble x, GLdouble y)');
         $proc($index, $x, $y);
@@ -4472,11 +4472,11 @@ class GL20 extends GL15
      * @param \FFI\CData|\FFI\CFloatPtr|null $v
      * @return void
      */
-    public function glVertexAttrib2dv($index, ?\FFI\CData $v): void
+    public function vertexAttrib2dv($index, ?\FFI\CData $v): void
     {
         $index = $index instanceof \FFI\CData ? $index->cdata : $index;
 
-        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glVertexAttrib2dv', 'void (*)(GLuint index, const GLdouble *v)');
         $proc($index, $v);
@@ -4552,15 +4552,15 @@ class GL20 extends GL15
      * @param float|\FFI\CData|\FFI\CFloat $y
      * @return void
      */
-    public function glVertexAttrib2f($index, $x, $y): void
+    public function vertexAttrib2f($index, $x, $y): void
     {
         $index = $index instanceof \FFI\CData ? $index->cdata : $index;
         $x = $x instanceof \FFI\CData ? $x->cdata : $x;
         $y = $y instanceof \FFI\CData ? $y->cdata : $y;
 
-        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::float32($x), 'Argument $x must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Assert::float32($y), 'Argument $y must be a C-like GLfloat, but incompatible or overflow value given');
+        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isFloat32($x), 'Argument $x must be a C-like GLfloat, but incompatible or overflow value given');
+        assert(Type::isFloat32($y), 'Argument $y must be a C-like GLfloat, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glVertexAttrib2f', 'void (*)(GLuint index, GLfloat x, GLfloat y)');
         $proc($index, $x, $y);
@@ -4635,11 +4635,11 @@ class GL20 extends GL15
      * @param \FFI\CData|\FFI\CFloatPtr|null $v
      * @return void
      */
-    public function glVertexAttrib2fv($index, ?\FFI\CData $v): void
+    public function vertexAttrib2fv($index, ?\FFI\CData $v): void
     {
         $index = $index instanceof \FFI\CData ? $index->cdata : $index;
 
-        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glVertexAttrib2fv', 'void (*)(GLuint index, const GLfloat *v)');
         $proc($index, $v);
@@ -4715,15 +4715,15 @@ class GL20 extends GL15
      * @param int|\FFI\CData|\FFI\CInt $y
      * @return void
      */
-    public function glVertexAttrib2s($index, $x, $y): void
+    public function vertexAttrib2s($index, $x, $y): void
     {
         $index = $index instanceof \FFI\CData ? $index->cdata : $index;
         $x = $x instanceof \FFI\CData ? $x->cdata : $x;
         $y = $y instanceof \FFI\CData ? $y->cdata : $y;
 
-        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::int16($x), 'Argument $x must be a C-like GLshort, but incompatible or overflow value given');
-        assert(Assert::int16($y), 'Argument $y must be a C-like GLshort, but incompatible or overflow value given');
+        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isInt16($x), 'Argument $x must be a C-like GLshort, but incompatible or overflow value given');
+        assert(Type::isInt16($y), 'Argument $y must be a C-like GLshort, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glVertexAttrib2s', 'void (*)(GLuint index, GLshort x, GLshort y)');
         $proc($index, $x, $y);
@@ -4798,11 +4798,11 @@ class GL20 extends GL15
      * @param \FFI\CData|\FFI\CIntPtr|null $v
      * @return void
      */
-    public function glVertexAttrib2sv($index, ?\FFI\CData $v): void
+    public function vertexAttrib2sv($index, ?\FFI\CData $v): void
     {
         $index = $index instanceof \FFI\CData ? $index->cdata : $index;
 
-        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glVertexAttrib2sv', 'void (*)(GLuint index, const GLshort *v)');
         $proc($index, $v);
@@ -4879,17 +4879,17 @@ class GL20 extends GL15
      * @param float|\FFI\CData|\FFI\CFloat $z
      * @return void
      */
-    public function glVertexAttrib3d($index, $x, $y, $z): void
+    public function vertexAttrib3d($index, $x, $y, $z): void
     {
         $index = $index instanceof \FFI\CData ? $index->cdata : $index;
         $x = $x instanceof \FFI\CData ? $x->cdata : $x;
         $y = $y instanceof \FFI\CData ? $y->cdata : $y;
         $z = $z instanceof \FFI\CData ? $z->cdata : $z;
 
-        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::float64($x), 'Argument $x must be a C-like GLdouble, but incompatible or overflow value given');
-        assert(Assert::float64($y), 'Argument $y must be a C-like GLdouble, but incompatible or overflow value given');
-        assert(Assert::float64($z), 'Argument $z must be a C-like GLdouble, but incompatible or overflow value given');
+        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isFloat64($x), 'Argument $x must be a C-like GLdouble, but incompatible or overflow value given');
+        assert(Type::isFloat64($y), 'Argument $y must be a C-like GLdouble, but incompatible or overflow value given');
+        assert(Type::isFloat64($z), 'Argument $z must be a C-like GLdouble, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glVertexAttrib3d', 'void (*)(GLuint index, GLdouble x, GLdouble y, GLdouble z)');
         $proc($index, $x, $y, $z);
@@ -4964,11 +4964,11 @@ class GL20 extends GL15
      * @param \FFI\CData|\FFI\CFloatPtr|null $v
      * @return void
      */
-    public function glVertexAttrib3dv($index, ?\FFI\CData $v): void
+    public function vertexAttrib3dv($index, ?\FFI\CData $v): void
     {
         $index = $index instanceof \FFI\CData ? $index->cdata : $index;
 
-        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glVertexAttrib3dv', 'void (*)(GLuint index, const GLdouble *v)');
         $proc($index, $v);
@@ -5045,17 +5045,17 @@ class GL20 extends GL15
      * @param float|\FFI\CData|\FFI\CFloat $z
      * @return void
      */
-    public function glVertexAttrib3f($index, $x, $y, $z): void
+    public function vertexAttrib3f($index, $x, $y, $z): void
     {
         $index = $index instanceof \FFI\CData ? $index->cdata : $index;
         $x = $x instanceof \FFI\CData ? $x->cdata : $x;
         $y = $y instanceof \FFI\CData ? $y->cdata : $y;
         $z = $z instanceof \FFI\CData ? $z->cdata : $z;
 
-        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::float32($x), 'Argument $x must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Assert::float32($y), 'Argument $y must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Assert::float32($z), 'Argument $z must be a C-like GLfloat, but incompatible or overflow value given');
+        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isFloat32($x), 'Argument $x must be a C-like GLfloat, but incompatible or overflow value given');
+        assert(Type::isFloat32($y), 'Argument $y must be a C-like GLfloat, but incompatible or overflow value given');
+        assert(Type::isFloat32($z), 'Argument $z must be a C-like GLfloat, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glVertexAttrib3f', 'void (*)(GLuint index, GLfloat x, GLfloat y, GLfloat z)');
         $proc($index, $x, $y, $z);
@@ -5130,11 +5130,11 @@ class GL20 extends GL15
      * @param \FFI\CData|\FFI\CFloatPtr|null $v
      * @return void
      */
-    public function glVertexAttrib3fv($index, ?\FFI\CData $v): void
+    public function vertexAttrib3fv($index, ?\FFI\CData $v): void
     {
         $index = $index instanceof \FFI\CData ? $index->cdata : $index;
 
-        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glVertexAttrib3fv', 'void (*)(GLuint index, const GLfloat *v)');
         $proc($index, $v);
@@ -5211,17 +5211,17 @@ class GL20 extends GL15
      * @param int|\FFI\CData|\FFI\CInt $z
      * @return void
      */
-    public function glVertexAttrib3s($index, $x, $y, $z): void
+    public function vertexAttrib3s($index, $x, $y, $z): void
     {
         $index = $index instanceof \FFI\CData ? $index->cdata : $index;
         $x = $x instanceof \FFI\CData ? $x->cdata : $x;
         $y = $y instanceof \FFI\CData ? $y->cdata : $y;
         $z = $z instanceof \FFI\CData ? $z->cdata : $z;
 
-        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::int16($x), 'Argument $x must be a C-like GLshort, but incompatible or overflow value given');
-        assert(Assert::int16($y), 'Argument $y must be a C-like GLshort, but incompatible or overflow value given');
-        assert(Assert::int16($z), 'Argument $z must be a C-like GLshort, but incompatible or overflow value given');
+        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isInt16($x), 'Argument $x must be a C-like GLshort, but incompatible or overflow value given');
+        assert(Type::isInt16($y), 'Argument $y must be a C-like GLshort, but incompatible or overflow value given');
+        assert(Type::isInt16($z), 'Argument $z must be a C-like GLshort, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glVertexAttrib3s', 'void (*)(GLuint index, GLshort x, GLshort y, GLshort z)');
         $proc($index, $x, $y, $z);
@@ -5296,11 +5296,11 @@ class GL20 extends GL15
      * @param \FFI\CData|\FFI\CIntPtr|null $v
      * @return void
      */
-    public function glVertexAttrib3sv($index, ?\FFI\CData $v): void
+    public function vertexAttrib3sv($index, ?\FFI\CData $v): void
     {
         $index = $index instanceof \FFI\CData ? $index->cdata : $index;
 
-        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glVertexAttrib3sv', 'void (*)(GLuint index, const GLshort *v)');
         $proc($index, $v);
@@ -5375,11 +5375,11 @@ class GL20 extends GL15
      * @param \FFI\CData|\FFI\CIntPtr|null $v
      * @return void
      */
-    public function glVertexAttrib4Nbv($index, ?\FFI\CData $v): void
+    public function vertexAttrib4Nbv($index, ?\FFI\CData $v): void
     {
         $index = $index instanceof \FFI\CData ? $index->cdata : $index;
 
-        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glVertexAttrib4Nbv', 'void (*)(GLuint index, const GLbyte *v)');
         $proc($index, $v);
@@ -5454,11 +5454,11 @@ class GL20 extends GL15
      * @param \FFI\CData|\FFI\CIntPtr|null $v
      * @return void
      */
-    public function glVertexAttrib4Niv($index, ?\FFI\CData $v): void
+    public function vertexAttrib4Niv($index, ?\FFI\CData $v): void
     {
         $index = $index instanceof \FFI\CData ? $index->cdata : $index;
 
-        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glVertexAttrib4Niv', 'void (*)(GLuint index, const GLint *v)');
         $proc($index, $v);
@@ -5533,11 +5533,11 @@ class GL20 extends GL15
      * @param \FFI\CData|\FFI\CIntPtr|null $v
      * @return void
      */
-    public function glVertexAttrib4Nsv($index, ?\FFI\CData $v): void
+    public function vertexAttrib4Nsv($index, ?\FFI\CData $v): void
     {
         $index = $index instanceof \FFI\CData ? $index->cdata : $index;
 
-        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glVertexAttrib4Nsv', 'void (*)(GLuint index, const GLshort *v)');
         $proc($index, $v);
@@ -5615,7 +5615,7 @@ class GL20 extends GL15
      * @param int|\FFI\CData|\FFI\CInt $w
      * @return void
      */
-    public function glVertexAttrib4Nub($index, $x, $y, $z, $w): void
+    public function vertexAttrib4Nub($index, $x, $y, $z, $w): void
     {
         $index = $index instanceof \FFI\CData ? $index->cdata : $index;
         $x = $x instanceof \FFI\CData ? $x->cdata : $x;
@@ -5623,11 +5623,11 @@ class GL20 extends GL15
         $z = $z instanceof \FFI\CData ? $z->cdata : $z;
         $w = $w instanceof \FFI\CData ? $w->cdata : $w;
 
-        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint8($x), 'Argument $x must be a C-like GLubyte, but incompatible or overflow value given');
-        assert(Assert::uint8($y), 'Argument $y must be a C-like GLubyte, but incompatible or overflow value given');
-        assert(Assert::uint8($z), 'Argument $z must be a C-like GLubyte, but incompatible or overflow value given');
-        assert(Assert::uint8($w), 'Argument $w must be a C-like GLubyte, but incompatible or overflow value given');
+        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint8($x), 'Argument $x must be a C-like GLubyte, but incompatible or overflow value given');
+        assert(Type::isUint8($y), 'Argument $y must be a C-like GLubyte, but incompatible or overflow value given');
+        assert(Type::isUint8($z), 'Argument $z must be a C-like GLubyte, but incompatible or overflow value given');
+        assert(Type::isUint8($w), 'Argument $w must be a C-like GLubyte, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glVertexAttrib4Nub', 'void (*)(GLuint index, GLubyte x, GLubyte y, GLubyte z, GLubyte w)');
         $proc($index, $x, $y, $z, $w);
@@ -5702,11 +5702,11 @@ class GL20 extends GL15
      * @param \FFI\CData|\FFI\CIntPtr|null $v
      * @return void
      */
-    public function glVertexAttrib4Nubv($index, ?\FFI\CData $v): void
+    public function vertexAttrib4Nubv($index, ?\FFI\CData $v): void
     {
         $index = $index instanceof \FFI\CData ? $index->cdata : $index;
 
-        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glVertexAttrib4Nubv', 'void (*)(GLuint index, const GLubyte *v)');
         $proc($index, $v);
@@ -5781,11 +5781,11 @@ class GL20 extends GL15
      * @param \FFI\CData|\FFI\CIntPtr|null $v
      * @return void
      */
-    public function glVertexAttrib4Nuiv($index, ?\FFI\CData $v): void
+    public function vertexAttrib4Nuiv($index, ?\FFI\CData $v): void
     {
         $index = $index instanceof \FFI\CData ? $index->cdata : $index;
 
-        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glVertexAttrib4Nuiv', 'void (*)(GLuint index, const GLuint *v)');
         $proc($index, $v);
@@ -5860,11 +5860,11 @@ class GL20 extends GL15
      * @param \FFI\CData|\FFI\CIntPtr|null $v
      * @return void
      */
-    public function glVertexAttrib4Nusv($index, ?\FFI\CData $v): void
+    public function vertexAttrib4Nusv($index, ?\FFI\CData $v): void
     {
         $index = $index instanceof \FFI\CData ? $index->cdata : $index;
 
-        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glVertexAttrib4Nusv', 'void (*)(GLuint index, const GLushort *v)');
         $proc($index, $v);
@@ -5939,11 +5939,11 @@ class GL20 extends GL15
      * @param \FFI\CData|\FFI\CIntPtr|null $v
      * @return void
      */
-    public function glVertexAttrib4bv($index, ?\FFI\CData $v): void
+    public function vertexAttrib4bv($index, ?\FFI\CData $v): void
     {
         $index = $index instanceof \FFI\CData ? $index->cdata : $index;
 
-        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glVertexAttrib4bv', 'void (*)(GLuint index, const GLbyte *v)');
         $proc($index, $v);
@@ -6021,7 +6021,7 @@ class GL20 extends GL15
      * @param float|\FFI\CData|\FFI\CFloat $w
      * @return void
      */
-    public function glVertexAttrib4d($index, $x, $y, $z, $w): void
+    public function vertexAttrib4d($index, $x, $y, $z, $w): void
     {
         $index = $index instanceof \FFI\CData ? $index->cdata : $index;
         $x = $x instanceof \FFI\CData ? $x->cdata : $x;
@@ -6029,11 +6029,11 @@ class GL20 extends GL15
         $z = $z instanceof \FFI\CData ? $z->cdata : $z;
         $w = $w instanceof \FFI\CData ? $w->cdata : $w;
 
-        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::float64($x), 'Argument $x must be a C-like GLdouble, but incompatible or overflow value given');
-        assert(Assert::float64($y), 'Argument $y must be a C-like GLdouble, but incompatible or overflow value given');
-        assert(Assert::float64($z), 'Argument $z must be a C-like GLdouble, but incompatible or overflow value given');
-        assert(Assert::float64($w), 'Argument $w must be a C-like GLdouble, but incompatible or overflow value given');
+        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isFloat64($x), 'Argument $x must be a C-like GLdouble, but incompatible or overflow value given');
+        assert(Type::isFloat64($y), 'Argument $y must be a C-like GLdouble, but incompatible or overflow value given');
+        assert(Type::isFloat64($z), 'Argument $z must be a C-like GLdouble, but incompatible or overflow value given');
+        assert(Type::isFloat64($w), 'Argument $w must be a C-like GLdouble, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glVertexAttrib4d', 'void (*)(GLuint index, GLdouble x, GLdouble y, GLdouble z, GLdouble w)');
         $proc($index, $x, $y, $z, $w);
@@ -6108,11 +6108,11 @@ class GL20 extends GL15
      * @param \FFI\CData|\FFI\CFloatPtr|null $v
      * @return void
      */
-    public function glVertexAttrib4dv($index, ?\FFI\CData $v): void
+    public function vertexAttrib4dv($index, ?\FFI\CData $v): void
     {
         $index = $index instanceof \FFI\CData ? $index->cdata : $index;
 
-        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glVertexAttrib4dv', 'void (*)(GLuint index, const GLdouble *v)');
         $proc($index, $v);
@@ -6190,7 +6190,7 @@ class GL20 extends GL15
      * @param float|\FFI\CData|\FFI\CFloat $w
      * @return void
      */
-    public function glVertexAttrib4f($index, $x, $y, $z, $w): void
+    public function vertexAttrib4f($index, $x, $y, $z, $w): void
     {
         $index = $index instanceof \FFI\CData ? $index->cdata : $index;
         $x = $x instanceof \FFI\CData ? $x->cdata : $x;
@@ -6198,11 +6198,11 @@ class GL20 extends GL15
         $z = $z instanceof \FFI\CData ? $z->cdata : $z;
         $w = $w instanceof \FFI\CData ? $w->cdata : $w;
 
-        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::float32($x), 'Argument $x must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Assert::float32($y), 'Argument $y must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Assert::float32($z), 'Argument $z must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Assert::float32($w), 'Argument $w must be a C-like GLfloat, but incompatible or overflow value given');
+        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isFloat32($x), 'Argument $x must be a C-like GLfloat, but incompatible or overflow value given');
+        assert(Type::isFloat32($y), 'Argument $y must be a C-like GLfloat, but incompatible or overflow value given');
+        assert(Type::isFloat32($z), 'Argument $z must be a C-like GLfloat, but incompatible or overflow value given');
+        assert(Type::isFloat32($w), 'Argument $w must be a C-like GLfloat, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glVertexAttrib4f', 'void (*)(GLuint index, GLfloat x, GLfloat y, GLfloat z, GLfloat w)');
         $proc($index, $x, $y, $z, $w);
@@ -6277,11 +6277,11 @@ class GL20 extends GL15
      * @param \FFI\CData|\FFI\CFloatPtr|null $v
      * @return void
      */
-    public function glVertexAttrib4fv($index, ?\FFI\CData $v): void
+    public function vertexAttrib4fv($index, ?\FFI\CData $v): void
     {
         $index = $index instanceof \FFI\CData ? $index->cdata : $index;
 
-        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glVertexAttrib4fv', 'void (*)(GLuint index, const GLfloat *v)');
         $proc($index, $v);
@@ -6356,11 +6356,11 @@ class GL20 extends GL15
      * @param \FFI\CData|\FFI\CIntPtr|null $v
      * @return void
      */
-    public function glVertexAttrib4iv($index, ?\FFI\CData $v): void
+    public function vertexAttrib4iv($index, ?\FFI\CData $v): void
     {
         $index = $index instanceof \FFI\CData ? $index->cdata : $index;
 
-        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glVertexAttrib4iv', 'void (*)(GLuint index, const GLint *v)');
         $proc($index, $v);
@@ -6438,7 +6438,7 @@ class GL20 extends GL15
      * @param int|\FFI\CData|\FFI\CInt $w
      * @return void
      */
-    public function glVertexAttrib4s($index, $x, $y, $z, $w): void
+    public function vertexAttrib4s($index, $x, $y, $z, $w): void
     {
         $index = $index instanceof \FFI\CData ? $index->cdata : $index;
         $x = $x instanceof \FFI\CData ? $x->cdata : $x;
@@ -6446,11 +6446,11 @@ class GL20 extends GL15
         $z = $z instanceof \FFI\CData ? $z->cdata : $z;
         $w = $w instanceof \FFI\CData ? $w->cdata : $w;
 
-        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::int16($x), 'Argument $x must be a C-like GLshort, but incompatible or overflow value given');
-        assert(Assert::int16($y), 'Argument $y must be a C-like GLshort, but incompatible or overflow value given');
-        assert(Assert::int16($z), 'Argument $z must be a C-like GLshort, but incompatible or overflow value given');
-        assert(Assert::int16($w), 'Argument $w must be a C-like GLshort, but incompatible or overflow value given');
+        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isInt16($x), 'Argument $x must be a C-like GLshort, but incompatible or overflow value given');
+        assert(Type::isInt16($y), 'Argument $y must be a C-like GLshort, but incompatible or overflow value given');
+        assert(Type::isInt16($z), 'Argument $z must be a C-like GLshort, but incompatible or overflow value given');
+        assert(Type::isInt16($w), 'Argument $w must be a C-like GLshort, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glVertexAttrib4s', 'void (*)(GLuint index, GLshort x, GLshort y, GLshort z, GLshort w)');
         $proc($index, $x, $y, $z, $w);
@@ -6525,11 +6525,11 @@ class GL20 extends GL15
      * @param \FFI\CData|\FFI\CIntPtr|null $v
      * @return void
      */
-    public function glVertexAttrib4sv($index, ?\FFI\CData $v): void
+    public function vertexAttrib4sv($index, ?\FFI\CData $v): void
     {
         $index = $index instanceof \FFI\CData ? $index->cdata : $index;
 
-        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glVertexAttrib4sv', 'void (*)(GLuint index, const GLshort *v)');
         $proc($index, $v);
@@ -6604,11 +6604,11 @@ class GL20 extends GL15
      * @param \FFI\CData|\FFI\CIntPtr|null $v
      * @return void
      */
-    public function glVertexAttrib4ubv($index, ?\FFI\CData $v): void
+    public function vertexAttrib4ubv($index, ?\FFI\CData $v): void
     {
         $index = $index instanceof \FFI\CData ? $index->cdata : $index;
 
-        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glVertexAttrib4ubv', 'void (*)(GLuint index, const GLubyte *v)');
         $proc($index, $v);
@@ -6683,11 +6683,11 @@ class GL20 extends GL15
      * @param \FFI\CData|\FFI\CIntPtr|null $v
      * @return void
      */
-    public function glVertexAttrib4uiv($index, ?\FFI\CData $v): void
+    public function vertexAttrib4uiv($index, ?\FFI\CData $v): void
     {
         $index = $index instanceof \FFI\CData ? $index->cdata : $index;
 
-        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glVertexAttrib4uiv', 'void (*)(GLuint index, const GLuint *v)');
         $proc($index, $v);
@@ -6762,11 +6762,11 @@ class GL20 extends GL15
      * @param \FFI\CData|\FFI\CIntPtr|null $v
      * @return void
      */
-    public function glVertexAttrib4usv($index, ?\FFI\CData $v): void
+    public function vertexAttrib4usv($index, ?\FFI\CData $v): void
     {
         $index = $index instanceof \FFI\CData ? $index->cdata : $index;
 
-        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glVertexAttrib4usv', 'void (*)(GLuint index, const GLushort *v)');
         $proc($index, $v);
@@ -6818,7 +6818,7 @@ class GL20 extends GL15
      * @param \FFI\CData|\FFI\CPtr|null $pointer
      * @return void
      */
-    public function glVertexAttribPointer($index, $size, $type, $normalized, $stride, ?\FFI\CData $pointer): void
+    public function vertexAttribPointer($index, $size, $type, $normalized, $stride, ?\FFI\CData $pointer): void
     {
         $index = $index instanceof \FFI\CData ? $index->cdata : $index;
         $size = $size instanceof \FFI\CData ? $size->cdata : $size;
@@ -6826,11 +6826,11 @@ class GL20 extends GL15
         $normalized = $normalized instanceof \FFI\CData ? $normalized->cdata : $normalized;
         $stride = $stride instanceof \FFI\CData ? $stride->cdata : $stride;
 
-        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::int16($size), 'Argument $size must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::uint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::uint8($normalized), 'Argument $normalized must be a C-like GLboolean, but incompatible or overflow value given');
-        assert(Assert::int16($stride), 'Argument $stride must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isInt16($size), 'Argument $size must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isUint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint8($normalized), 'Argument $normalized must be a C-like GLboolean, but incompatible or overflow value given');
+        assert(Type::isInt16($stride), 'Argument $stride must be a C-like GLsizei, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glVertexAttribPointer', 'void (*)(GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const void *pointer)');
         $proc($index, $size, $type, $normalized, $stride, $pointer);

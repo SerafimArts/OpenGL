@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Serafim\OpenGL;
 
-use Serafim\OpenGL\Support\Assert;
+use Serafim\OpenGL\Type\Type;
 
 /**
  * The OpenGL functionality up to version 3.1. Includes the deprecated symbols of the Compatibility Profile.
@@ -365,17 +365,17 @@ class GL31 extends GL30
      * @param int|\FFI\CData|\FFI\CInt $instancecount
      * @return void
      */
-    public function glDrawArraysInstanced($mode, $first, $count, $instancecount): void
+    public function drawArraysInstanced($mode, $first, $count, $instancecount): void
     {
         $mode = $mode instanceof \FFI\CData ? $mode->cdata : $mode;
         $first = $first instanceof \FFI\CData ? $first->cdata : $first;
         $count = $count instanceof \FFI\CData ? $count->cdata : $count;
         $instancecount = $instancecount instanceof \FFI\CData ? $instancecount->cdata : $instancecount;
 
-        assert(Assert::uint16($mode), 'Argument $mode must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::int16($first), 'Argument $first must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Assert::int16($instancecount), 'Argument $instancecount must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isUint16($mode), 'Argument $mode must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isInt16($first), 'Argument $first must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isInt16($instancecount), 'Argument $instancecount must be a C-like GLsizei, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glDrawArraysInstanced', 'void (*)(GLenum mode, GLint first, GLsizei count, GLsizei instancecount)');
         $proc($mode, $first, $count, $instancecount);
@@ -410,17 +410,17 @@ class GL31 extends GL30
      * @param int|\FFI\CData|\FFI\CInt $instancecount
      * @return void
      */
-    public function glDrawElementsInstanced($mode, $count, $type, ?\FFI\CData $indices, $instancecount): void
+    public function drawElementsInstanced($mode, $count, $type, ?\FFI\CData $indices, $instancecount): void
     {
         $mode = $mode instanceof \FFI\CData ? $mode->cdata : $mode;
         $count = $count instanceof \FFI\CData ? $count->cdata : $count;
         $type = $type instanceof \FFI\CData ? $type->cdata : $type;
         $instancecount = $instancecount instanceof \FFI\CData ? $instancecount->cdata : $instancecount;
 
-        assert(Assert::uint16($mode), 'Argument $mode must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::int16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Assert::uint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::int16($instancecount), 'Argument $instancecount must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isUint16($mode), 'Argument $mode must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isInt16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isUint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isInt16($instancecount), 'Argument $instancecount must be a C-like GLsizei, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glDrawElementsInstanced', 'void (*)(GLenum mode, GLsizei count, GLenum type, const void *indices, GLsizei instancecount)');
         $proc($mode, $count, $type, $indices, $instancecount);
@@ -489,15 +489,15 @@ class GL31 extends GL30
      * @param int|\FFI\CData|\FFI\CInt $buffer
      * @return void
      */
-    public function glTexBuffer($target, $internalformat, $buffer): void
+    public function texBuffer($target, $internalformat, $buffer): void
     {
         $target = $target instanceof \FFI\CData ? $target->cdata : $target;
         $internalformat = $internalformat instanceof \FFI\CData ? $internalformat->cdata : $internalformat;
         $buffer = $buffer instanceof \FFI\CData ? $buffer->cdata : $buffer;
 
-        assert(Assert::uint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::uint16($internalformat), 'Argument $internalformat must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::uint16($buffer), 'Argument $buffer must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($internalformat), 'Argument $internalformat must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($buffer), 'Argument $buffer must be a C-like GLuint, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glTexBuffer', 'void (*)(GLenum target, GLenum internalformat, GLuint buffer)');
         $proc($target, $internalformat, $buffer);
@@ -522,11 +522,11 @@ class GL31 extends GL30
      * @param int|\FFI\CData|\FFI\CInt $index
      * @return void
      */
-    public function glPrimitiveRestartIndex($index): void
+    public function primitiveRestartIndex($index): void
     {
         $index = $index instanceof \FFI\CData ? $index->cdata : $index;
 
-        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glPrimitiveRestartIndex', 'void (*)(GLuint index)');
         $proc($index);
@@ -575,16 +575,16 @@ class GL31 extends GL30
      * @param mixed|float|string|int|\FFI\CData|\FFI\CInt $size
      * @return void
      */
-    public function glCopyBufferSubData($readTarget, $writeTarget, $readOffset, $writeOffset, $size): void
+    public function copyBufferSubData($readTarget, $writeTarget, $readOffset, $writeOffset, $size): void
     {
         $readTarget = $readTarget instanceof \FFI\CData ? $readTarget->cdata : $readTarget;
         $writeTarget = $writeTarget instanceof \FFI\CData ? $writeTarget->cdata : $writeTarget;
 
-        assert(Assert::uint16($readTarget), 'Argument $readTarget must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::uint16($writeTarget), 'Argument $writeTarget must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::int64($readOffset), 'Argument $readOffset must be a C-like GLintptr, but incompatible or overflow value given');
-        assert(Assert::int64($writeOffset), 'Argument $writeOffset must be a C-like GLintptr, but incompatible or overflow value given');
-        assert(Assert::int64($size), 'Argument $size must be a C-like GLsizeiptr, but incompatible or overflow value given');
+        assert(Type::isUint16($readTarget), 'Argument $readTarget must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($writeTarget), 'Argument $writeTarget must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isInt64($readOffset), 'Argument $readOffset must be a C-like GLintptr, but incompatible or overflow value given');
+        assert(Type::isInt64($writeOffset), 'Argument $writeOffset must be a C-like GLintptr, but incompatible or overflow value given');
+        assert(Type::isInt64($size), 'Argument $size must be a C-like GLsizeiptr, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glCopyBufferSubData', 'void (*)(GLenum readTarget, GLenum writeTarget, GLintptr readOffset, GLintptr writeOffset, GLsizeiptr size)');
         $proc($readTarget, $writeTarget, $readOffset, $writeOffset, $size);
@@ -616,13 +616,13 @@ class GL31 extends GL30
      * @param \FFI\CData|\FFI\CIntPtr|null $uniformIndices
      * @return void
      */
-    public function glGetUniformIndices($program, $uniformCount, ?\FFI\CData $uniformNames, ?\FFI\CData $uniformIndices): void
+    public function getUniformIndices($program, $uniformCount, ?\FFI\CData $uniformNames, ?\FFI\CData $uniformIndices): void
     {
         $program = $program instanceof \FFI\CData ? $program->cdata : $program;
         $uniformCount = $uniformCount instanceof \FFI\CData ? $uniformCount->cdata : $uniformCount;
 
-        assert(Assert::uint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::int16($uniformCount), 'Argument $uniformCount must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isUint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isInt16($uniformCount), 'Argument $uniformCount must be a C-like GLsizei, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glGetUniformIndices', 'void (*)(GLuint program, GLsizei uniformCount, const GLchar *const*uniformNames, GLuint *uniformIndices)');
         $proc($program, $uniformCount, $uniformNames, $uniformIndices);
@@ -737,15 +737,15 @@ class GL31 extends GL30
      * @param \FFI\CData|\FFI\CIntPtr|null $params
      * @return void
      */
-    public function glGetActiveUniformsiv($program, $uniformCount, ?\FFI\CData $uniformIndices, $pname, ?\FFI\CData $params): void
+    public function getActiveUniformsiv($program, $uniformCount, ?\FFI\CData $uniformIndices, $pname, ?\FFI\CData $params): void
     {
         $program = $program instanceof \FFI\CData ? $program->cdata : $program;
         $uniformCount = $uniformCount instanceof \FFI\CData ? $uniformCount->cdata : $uniformCount;
         $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
 
-        assert(Assert::uint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::int16($uniformCount), 'Argument $uniformCount must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Assert::uint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isInt16($uniformCount), 'Argument $uniformCount must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glGetActiveUniformsiv', 'void (*)(GLuint program, GLsizei uniformCount, const GLuint *uniformIndices, GLenum pname, GLint *params)');
         $proc($program, $uniformCount, $uniformIndices, $pname, $params);
@@ -779,15 +779,15 @@ class GL31 extends GL30
      * @param \FFI\CData|\FFI\CIntPtr|null $uniformName
      * @return void
      */
-    public function glGetActiveUniformName($program, $uniformIndex, $bufSize, ?\FFI\CData $length, ?\FFI\CData $uniformName): void
+    public function getActiveUniformName($program, $uniformIndex, $bufSize, ?\FFI\CData $length, ?\FFI\CData $uniformName): void
     {
         $program = $program instanceof \FFI\CData ? $program->cdata : $program;
         $uniformIndex = $uniformIndex instanceof \FFI\CData ? $uniformIndex->cdata : $uniformIndex;
         $bufSize = $bufSize instanceof \FFI\CData ? $bufSize->cdata : $bufSize;
 
-        assert(Assert::uint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($uniformIndex), 'Argument $uniformIndex must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::int16($bufSize), 'Argument $bufSize must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isUint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($uniformIndex), 'Argument $uniformIndex must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isInt16($bufSize), 'Argument $bufSize must be a C-like GLsizei, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glGetActiveUniformName', 'void (*)(GLuint program, GLuint uniformIndex, GLsizei bufSize, GLsizei *length, GLchar *uniformName)');
         $proc($program, $uniformIndex, $bufSize, $length, $uniformName);
@@ -813,11 +813,11 @@ class GL31 extends GL30
      * @param \FFI\CData|\FFI\CIntPtr|null $uniformBlockName
      * @return int|\FFI\CData|\FFI\CInt
      */
-    public function glGetUniformBlockIndex($program, ?\FFI\CData $uniformBlockName): int
+    public function getUniformBlockIndex($program, ?\FFI\CData $uniformBlockName): int
     {
         $program = $program instanceof \FFI\CData ? $program->cdata : $program;
 
-        assert(Assert::uint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glGetUniformBlockIndex', 'GLuint (*)(GLuint program, const GLchar *uniformBlockName)');
         return $proc($program, $uniformBlockName);
@@ -875,15 +875,15 @@ class GL31 extends GL30
      * @param \FFI\CData|\FFI\CIntPtr|null $params
      * @return void
      */
-    public function glGetActiveUniformBlockiv($program, $uniformBlockIndex, $pname, ?\FFI\CData $params): void
+    public function getActiveUniformBlockiv($program, $uniformBlockIndex, $pname, ?\FFI\CData $params): void
     {
         $program = $program instanceof \FFI\CData ? $program->cdata : $program;
         $uniformBlockIndex = $uniformBlockIndex instanceof \FFI\CData ? $uniformBlockIndex->cdata : $uniformBlockIndex;
         $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
 
-        assert(Assert::uint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($uniformBlockIndex), 'Argument $uniformBlockIndex must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($uniformBlockIndex), 'Argument $uniformBlockIndex must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glGetActiveUniformBlockiv', 'void (*)(GLuint program, GLuint uniformBlockIndex, GLenum pname, GLint *params)');
         $proc($program, $uniformBlockIndex, $pname, $params);
@@ -918,15 +918,15 @@ class GL31 extends GL30
      * @param \FFI\CData|\FFI\CIntPtr|null $uniformBlockName
      * @return void
      */
-    public function glGetActiveUniformBlockName($program, $uniformBlockIndex, $bufSize, ?\FFI\CData $length, ?\FFI\CData $uniformBlockName): void
+    public function getActiveUniformBlockName($program, $uniformBlockIndex, $bufSize, ?\FFI\CData $length, ?\FFI\CData $uniformBlockName): void
     {
         $program = $program instanceof \FFI\CData ? $program->cdata : $program;
         $uniformBlockIndex = $uniformBlockIndex instanceof \FFI\CData ? $uniformBlockIndex->cdata : $uniformBlockIndex;
         $bufSize = $bufSize instanceof \FFI\CData ? $bufSize->cdata : $bufSize;
 
-        assert(Assert::uint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($uniformBlockIndex), 'Argument $uniformBlockIndex must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::int16($bufSize), 'Argument $bufSize must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isUint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($uniformBlockIndex), 'Argument $uniformBlockIndex must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isInt16($bufSize), 'Argument $bufSize must be a C-like GLsizei, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glGetActiveUniformBlockName', 'void (*)(GLuint program, GLuint uniformBlockIndex, GLsizei bufSize, GLsizei *length, GLchar *uniformBlockName)');
         $proc($program, $uniformBlockIndex, $bufSize, $length, $uniformBlockName);
@@ -951,15 +951,15 @@ class GL31 extends GL30
      * @param int|\FFI\CData|\FFI\CInt $uniformBlockBinding
      * @return void
      */
-    public function glUniformBlockBinding($program, $uniformBlockIndex, $uniformBlockBinding): void
+    public function uniformBlockBinding($program, $uniformBlockIndex, $uniformBlockBinding): void
     {
         $program = $program instanceof \FFI\CData ? $program->cdata : $program;
         $uniformBlockIndex = $uniformBlockIndex instanceof \FFI\CData ? $uniformBlockIndex->cdata : $uniformBlockIndex;
         $uniformBlockBinding = $uniformBlockBinding instanceof \FFI\CData ? $uniformBlockBinding->cdata : $uniformBlockBinding;
 
-        assert(Assert::uint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($uniformBlockIndex), 'Argument $uniformBlockIndex must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($uniformBlockBinding), 'Argument $uniformBlockBinding must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($uniformBlockIndex), 'Argument $uniformBlockIndex must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($uniformBlockBinding), 'Argument $uniformBlockBinding must be a C-like GLuint, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glUniformBlockBinding', 'void (*)(GLuint program, GLuint uniformBlockIndex, GLuint uniformBlockBinding)');
         $proc($program, $uniformBlockIndex, $uniformBlockBinding);

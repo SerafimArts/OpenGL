@@ -26,33 +26,33 @@ $gl = new GL();
 
 $gl->getProcAddress('wglSwapIntervalEXT', 'int (*)(int interval)')(0);
 
-echo 'Renderer: ' . FFI::string($gl->cast('char*', $gl->glGetString(GL::GL_RENDERER))) . "\n";
-echo 'Version: ' . FFI::string($gl->cast('char*', $gl->glGetString(GL::GL_VERSION))) . "\n";
+echo 'Renderer: ' . FFI::string($gl->cast('char*', $gl->getString(GL::GL_RENDERER))) . "\n";
+echo 'Version: ' . FFI::string($gl->cast('char*', $gl->getString(GL::GL_VERSION))) . "\n";
 
-$gl->glEnable(GL::GL_DEPTH_TEST);
-$gl->glEnable(GL::GL_LESS);
+$gl->enable(GL::GL_DEPTH_TEST);
+$gl->enable(GL::GL_LESS);
 
 enable_logger($gl);
 
 $program = load_shaders($gl, __DIR__ . '/shader.vert', __DIR__ . '/shader.frag');
 
-$vertices = $gl->array('GLfloat', [
+$vertices = new \Serafim\OpenGL\Type\Float32Array(
      0.0,  0.5,  0.0,
      0.5, -0.5,  0.0,
     -0.5, -0.5,  0.0,
-]);
+);
 
 $vbo = $gl->new('GLuint');
-$gl->glGenBuffers(1, \FFI::addr($vbo));
-$gl->glBindBuffer(GL::GL_ARRAY_BUFFER, $vbo->cdata);
-$gl->glBufferData(GL::GL_ARRAY_BUFFER, FFI::sizeof($vertices), $vertices, GL::GL_STATIC_DRAW);
+$gl->genBuffers(1, \FFI::addr($vbo));
+$gl->bindBuffer(GL::GL_ARRAY_BUFFER, $vbo);
+$gl->bufferData(GL::GL_ARRAY_BUFFER, $vertices->sizeOf(), $vertices->cdata, GL::GL_STATIC_DRAW);
 
 $vao = $gl->new('GLuint');
-$gl->glGenVertexArrays(1, \FFI::addr($vao));
-$gl->glBindVertexArray($vao->cdata);
-$gl->glEnableVertexAttribArray(0);
-$gl->glBindBuffer(GL::GL_ARRAY_BUFFER, $vbo->cdata);
-$gl->glVertexAttribPointer(0, 3, GL::GL_FLOAT, GL::GL_FALSE, 0, null);
+$gl->genVertexArrays(1, \FFI::addr($vao));
+$gl->bindVertexArray($vao);
+$gl->enableVertexAttribArray(0);
+$gl->bindBuffer(GL::GL_ARRAY_BUFFER, $vbo);
+$gl->vertexAttribPointer(0, 3, GL::GL_FLOAT, GL::GL_FALSE, 0, null);
 
 $event = $sdl->new(Event::class);
 while ($running ??= true) {
@@ -61,10 +61,10 @@ while ($running ??= true) {
         $running = false;
     }
 
-    $gl->glClear(GL::GL_COLOR_BUFFER_BIT | GL::GL_DEPTH_BUFFER_BIT);
-    $gl->glUseProgram($program);
-    $gl->glBindVertexArray($vao->cdata);
-    $gl->glDrawArrays(GL::GL_TRIANGLES, 0, 3);
+    $gl->clear(GL::GL_COLOR_BUFFER_BIT | GL::GL_DEPTH_BUFFER_BIT);
+    $gl->useProgram($program);
+    $gl->bindVertexArray($vao);
+    $gl->drawArrays(GL::GL_TRIANGLES, 0, 3);
 
     $sdl->SDL_GL_SwapWindow($window);
 }

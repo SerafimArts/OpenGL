@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Serafim\OpenGL;
 
-use Serafim\OpenGL\Support\Assert;
+use Serafim\OpenGL\Type\Type;
 
 /**
  * The OpenGL functionality up to version 2.1. Includes the deprecated symbols of the Compatibility Profile.
@@ -123,15 +123,15 @@ class GL21 extends GL20
      * @param \FFI\CData|\FFI\CFloatPtr|null $value
      * @return void
      */
-    public function glUniformMatrix2x3fv($location, $count, $transpose, ?\FFI\CData $value): void
+    public function uniformMatrix2x3fv($location, $count, $transpose, ?\FFI\CData $value): void
     {
         $location = $location instanceof \FFI\CData ? $location->cdata : $location;
         $count = $count instanceof \FFI\CData ? $count->cdata : $count;
         $transpose = $transpose instanceof \FFI\CData ? $transpose->cdata : $transpose;
 
-        assert(Assert::int16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Assert::uint8($transpose), 'Argument $transpose must be a C-like GLboolean, but incompatible or overflow value given');
+        assert(Type::isInt16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isUint8($transpose), 'Argument $transpose must be a C-like GLboolean, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glUniformMatrix2x3fv', 'void (*)(GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)');
         $proc($location, $count, $transpose, $value);
@@ -152,15 +152,15 @@ class GL21 extends GL20
      * @param \FFI\CData|\FFI\CFloatPtr|null $value
      * @return void
      */
-    public function glUniformMatrix3x2fv($location, $count, $transpose, ?\FFI\CData $value): void
+    public function uniformMatrix3x2fv($location, $count, $transpose, ?\FFI\CData $value): void
     {
         $location = $location instanceof \FFI\CData ? $location->cdata : $location;
         $count = $count instanceof \FFI\CData ? $count->cdata : $count;
         $transpose = $transpose instanceof \FFI\CData ? $transpose->cdata : $transpose;
 
-        assert(Assert::int16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Assert::uint8($transpose), 'Argument $transpose must be a C-like GLboolean, but incompatible or overflow value given');
+        assert(Type::isInt16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isUint8($transpose), 'Argument $transpose must be a C-like GLboolean, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glUniformMatrix3x2fv', 'void (*)(GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)');
         $proc($location, $count, $transpose, $value);
@@ -181,15 +181,15 @@ class GL21 extends GL20
      * @param \FFI\CData|\FFI\CFloatPtr|null $value
      * @return void
      */
-    public function glUniformMatrix2x4fv($location, $count, $transpose, ?\FFI\CData $value): void
+    public function uniformMatrix2x4fv($location, $count, $transpose, ?\FFI\CData $value): void
     {
         $location = $location instanceof \FFI\CData ? $location->cdata : $location;
         $count = $count instanceof \FFI\CData ? $count->cdata : $count;
         $transpose = $transpose instanceof \FFI\CData ? $transpose->cdata : $transpose;
 
-        assert(Assert::int16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Assert::uint8($transpose), 'Argument $transpose must be a C-like GLboolean, but incompatible or overflow value given');
+        assert(Type::isInt16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isUint8($transpose), 'Argument $transpose must be a C-like GLboolean, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glUniformMatrix2x4fv', 'void (*)(GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)');
         $proc($location, $count, $transpose, $value);
@@ -210,15 +210,15 @@ class GL21 extends GL20
      * @param \FFI\CData|\FFI\CFloatPtr|null $value
      * @return void
      */
-    public function glUniformMatrix4x2fv($location, $count, $transpose, ?\FFI\CData $value): void
+    public function uniformMatrix4x2fv($location, $count, $transpose, ?\FFI\CData $value): void
     {
         $location = $location instanceof \FFI\CData ? $location->cdata : $location;
         $count = $count instanceof \FFI\CData ? $count->cdata : $count;
         $transpose = $transpose instanceof \FFI\CData ? $transpose->cdata : $transpose;
 
-        assert(Assert::int16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Assert::uint8($transpose), 'Argument $transpose must be a C-like GLboolean, but incompatible or overflow value given');
+        assert(Type::isInt16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isUint8($transpose), 'Argument $transpose must be a C-like GLboolean, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glUniformMatrix4x2fv', 'void (*)(GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)');
         $proc($location, $count, $transpose, $value);
@@ -239,15 +239,15 @@ class GL21 extends GL20
      * @param \FFI\CData|\FFI\CFloatPtr|null $value
      * @return void
      */
-    public function glUniformMatrix3x4fv($location, $count, $transpose, ?\FFI\CData $value): void
+    public function uniformMatrix3x4fv($location, $count, $transpose, ?\FFI\CData $value): void
     {
         $location = $location instanceof \FFI\CData ? $location->cdata : $location;
         $count = $count instanceof \FFI\CData ? $count->cdata : $count;
         $transpose = $transpose instanceof \FFI\CData ? $transpose->cdata : $transpose;
 
-        assert(Assert::int16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Assert::uint8($transpose), 'Argument $transpose must be a C-like GLboolean, but incompatible or overflow value given');
+        assert(Type::isInt16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isUint8($transpose), 'Argument $transpose must be a C-like GLboolean, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glUniformMatrix3x4fv', 'void (*)(GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)');
         $proc($location, $count, $transpose, $value);
@@ -268,15 +268,15 @@ class GL21 extends GL20
      * @param \FFI\CData|\FFI\CFloatPtr|null $value
      * @return void
      */
-    public function glUniformMatrix4x3fv($location, $count, $transpose, ?\FFI\CData $value): void
+    public function uniformMatrix4x3fv($location, $count, $transpose, ?\FFI\CData $value): void
     {
         $location = $location instanceof \FFI\CData ? $location->cdata : $location;
         $count = $count instanceof \FFI\CData ? $count->cdata : $count;
         $transpose = $transpose instanceof \FFI\CData ? $transpose->cdata : $transpose;
 
-        assert(Assert::int16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Assert::uint8($transpose), 'Argument $transpose must be a C-like GLboolean, but incompatible or overflow value given');
+        assert(Type::isInt16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isUint8($transpose), 'Argument $transpose must be a C-like GLboolean, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glUniformMatrix4x3fv', 'void (*)(GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)');
         $proc($location, $count, $transpose, $value);

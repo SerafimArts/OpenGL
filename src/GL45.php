@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Serafim\OpenGL;
 
-use Serafim\OpenGL\Support\Assert;
+use Serafim\OpenGL\Type\Type;
 
 /**
  * The OpenGL functionality up to version 4.5. Includes the deprecated symbols of the Compatibility Profile.
@@ -171,13 +171,13 @@ class GL45 extends GL44
      * @param int|\FFI\CData|\FFI\CInt $depth
      * @return void
      */
-    public function glClipControl($origin, $depth): void
+    public function clipControl($origin, $depth): void
     {
         $origin = $origin instanceof \FFI\CData ? $origin->cdata : $origin;
         $depth = $depth instanceof \FFI\CData ? $depth->cdata : $depth;
 
-        assert(Assert::uint16($origin), 'Argument $origin must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::uint16($depth), 'Argument $depth must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($origin), 'Argument $origin must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($depth), 'Argument $depth must be a C-like GLenum, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glClipControl', 'void (*)(GLenum origin, GLenum depth)');
         $proc($origin, $depth);
@@ -193,11 +193,11 @@ class GL45 extends GL44
      * @param \FFI\CData|\FFI\CIntPtr|null $ids
      * @return void
      */
-    public function glCreateTransformFeedbacks($n, ?\FFI\CData $ids): void
+    public function createTransformFeedbacks($n, ?\FFI\CData $ids): void
     {
         $n = $n instanceof \FFI\CData ? $n->cdata : $n;
 
-        assert(Assert::int16($n), 'Argument $n must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isInt16($n), 'Argument $n must be a C-like GLsizei, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glCreateTransformFeedbacks', 'void (*)(GLsizei n, GLuint *ids)');
         $proc($n, $ids);
@@ -214,15 +214,15 @@ class GL45 extends GL44
      * @param int|\FFI\CData|\FFI\CInt $buffer
      * @return void
      */
-    public function glTransformFeedbackBufferBase($xfb, $index, $buffer): void
+    public function transformFeedbackBufferBase($xfb, $index, $buffer): void
     {
         $xfb = $xfb instanceof \FFI\CData ? $xfb->cdata : $xfb;
         $index = $index instanceof \FFI\CData ? $index->cdata : $index;
         $buffer = $buffer instanceof \FFI\CData ? $buffer->cdata : $buffer;
 
-        assert(Assert::uint16($xfb), 'Argument $xfb must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($buffer), 'Argument $buffer must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($xfb), 'Argument $xfb must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($buffer), 'Argument $buffer must be a C-like GLuint, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glTransformFeedbackBufferBase', 'void (*)(GLuint xfb, GLuint index, GLuint buffer)');
         $proc($xfb, $index, $buffer);
@@ -244,17 +244,17 @@ class GL45 extends GL44
      * @param mixed|float|string|int|\FFI\CData|\FFI\CInt $size
      * @return void
      */
-    public function glTransformFeedbackBufferRange($xfb, $index, $buffer, $offset, $size): void
+    public function transformFeedbackBufferRange($xfb, $index, $buffer, $offset, $size): void
     {
         $xfb = $xfb instanceof \FFI\CData ? $xfb->cdata : $xfb;
         $index = $index instanceof \FFI\CData ? $index->cdata : $index;
         $buffer = $buffer instanceof \FFI\CData ? $buffer->cdata : $buffer;
 
-        assert(Assert::uint16($xfb), 'Argument $xfb must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($buffer), 'Argument $buffer must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::int64($offset), 'Argument $offset must be a C-like GLintptr, but incompatible or overflow value given');
-        assert(Assert::int64($size), 'Argument $size must be a C-like GLsizeiptr, but incompatible or overflow value given');
+        assert(Type::isUint16($xfb), 'Argument $xfb must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($buffer), 'Argument $buffer must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isInt64($offset), 'Argument $offset must be a C-like GLintptr, but incompatible or overflow value given');
+        assert(Type::isInt64($size), 'Argument $size must be a C-like GLsizeiptr, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glTransformFeedbackBufferRange', 'void (*)(GLuint xfb, GLuint index, GLuint buffer, GLintptr offset, GLsizeiptr size)');
         $proc($xfb, $index, $buffer, $offset, $size);
@@ -301,13 +301,13 @@ class GL45 extends GL44
      * @param \FFI\CData|\FFI\CIntPtr|null $param
      * @return void
      */
-    public function glGetTransformFeedbackiv($xfb, $pname, ?\FFI\CData $param): void
+    public function getTransformFeedbackiv($xfb, $pname, ?\FFI\CData $param): void
     {
         $xfb = $xfb instanceof \FFI\CData ? $xfb->cdata : $xfb;
         $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
 
-        assert(Assert::uint16($xfb), 'Argument $xfb must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($xfb), 'Argument $xfb must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glGetTransformFeedbackiv', 'void (*)(GLuint xfb, GLenum pname, GLint *param)');
         $proc($xfb, $pname, $param);
@@ -355,15 +355,15 @@ class GL45 extends GL44
      * @param \FFI\CData|\FFI\CIntPtr|null $param
      * @return void
      */
-    public function glGetTransformFeedbacki_v($xfb, $pname, $index, ?\FFI\CData $param): void
+    public function getTransformFeedbacki_v($xfb, $pname, $index, ?\FFI\CData $param): void
     {
         $xfb = $xfb instanceof \FFI\CData ? $xfb->cdata : $xfb;
         $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
         $index = $index instanceof \FFI\CData ? $index->cdata : $index;
 
-        assert(Assert::uint16($xfb), 'Argument $xfb must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($xfb), 'Argument $xfb must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glGetTransformFeedbacki_v', 'void (*)(GLuint xfb, GLenum pname, GLuint index, GLint *param)');
         $proc($xfb, $pname, $index, $param);
@@ -411,15 +411,15 @@ class GL45 extends GL44
      * @param \FFI\CData|\FFI\CIntPtr|null $param
      * @return void
      */
-    public function glGetTransformFeedbacki64_v($xfb, $pname, $index, ?\FFI\CData $param): void
+    public function getTransformFeedbacki64_v($xfb, $pname, $index, ?\FFI\CData $param): void
     {
         $xfb = $xfb instanceof \FFI\CData ? $xfb->cdata : $xfb;
         $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
         $index = $index instanceof \FFI\CData ? $index->cdata : $index;
 
-        assert(Assert::uint16($xfb), 'Argument $xfb must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($xfb), 'Argument $xfb must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glGetTransformFeedbacki64_v', 'void (*)(GLuint xfb, GLenum pname, GLuint index, GLint64 *param)');
         $proc($xfb, $pname, $index, $param);
@@ -435,11 +435,11 @@ class GL45 extends GL44
      * @param \FFI\CData|\FFI\CIntPtr|null $buffers
      * @return void
      */
-    public function glCreateBuffers($n, ?\FFI\CData $buffers): void
+    public function createBuffers($n, ?\FFI\CData $buffers): void
     {
         $n = $n instanceof \FFI\CData ? $n->cdata : $n;
 
-        assert(Assert::int16($n), 'Argument $n must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isInt16($n), 'Argument $n must be a C-like GLsizei, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glCreateBuffers', 'void (*)(GLsizei n, GLuint *buffers)');
         $proc($n, $buffers);
@@ -496,14 +496,14 @@ class GL45 extends GL44
      * @param int|\FFI\CData|\FFI\CInt $flags
      * @return void
      */
-    public function glNamedBufferStorage($buffer, $size, ?\FFI\CData $data, $flags): void
+    public function namedBufferStorage($buffer, $size, ?\FFI\CData $data, $flags): void
     {
         $buffer = $buffer instanceof \FFI\CData ? $buffer->cdata : $buffer;
         $flags = $flags instanceof \FFI\CData ? $flags->cdata : $flags;
 
-        assert(Assert::uint16($buffer), 'Argument $buffer must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::int64($size), 'Argument $size must be a C-like GLsizeiptr, but incompatible or overflow value given');
-        assert(Assert::uint16($flags), 'Argument $flags must be a C-like GLbitfield, but incompatible or overflow value given');
+        assert(Type::isUint16($buffer), 'Argument $buffer must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isInt64($size), 'Argument $size must be a C-like GLsizeiptr, but incompatible or overflow value given');
+        assert(Type::isUint16($flags), 'Argument $flags must be a C-like GLbitfield, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glNamedBufferStorage', 'void (*)(GLuint buffer, GLsizeiptr size, const void *data, GLbitfield flags)');
         $proc($buffer, $size, $data, $flags);
@@ -564,14 +564,14 @@ class GL45 extends GL44
      * @param int|\FFI\CData|\FFI\CInt $usage
      * @return void
      */
-    public function glNamedBufferData($buffer, $size, ?\FFI\CData $data, $usage): void
+    public function namedBufferData($buffer, $size, ?\FFI\CData $data, $usage): void
     {
         $buffer = $buffer instanceof \FFI\CData ? $buffer->cdata : $buffer;
         $usage = $usage instanceof \FFI\CData ? $usage->cdata : $usage;
 
-        assert(Assert::uint16($buffer), 'Argument $buffer must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::int64($size), 'Argument $size must be a C-like GLsizeiptr, but incompatible or overflow value given');
-        assert(Assert::uint16($usage), 'Argument $usage must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($buffer), 'Argument $buffer must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isInt64($size), 'Argument $size must be a C-like GLsizeiptr, but incompatible or overflow value given');
+        assert(Type::isUint16($usage), 'Argument $usage must be a C-like GLenum, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glNamedBufferData', 'void (*)(GLuint buffer, GLsizeiptr size, const void *data, GLenum usage)');
         $proc($buffer, $size, $data, $usage);
@@ -593,13 +593,13 @@ class GL45 extends GL44
      * @param \FFI\CData|\FFI\CPtr|null $data
      * @return void
      */
-    public function glNamedBufferSubData($buffer, $offset, $size, ?\FFI\CData $data): void
+    public function namedBufferSubData($buffer, $offset, $size, ?\FFI\CData $data): void
     {
         $buffer = $buffer instanceof \FFI\CData ? $buffer->cdata : $buffer;
 
-        assert(Assert::uint16($buffer), 'Argument $buffer must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::int64($offset), 'Argument $offset must be a C-like GLintptr, but incompatible or overflow value given');
-        assert(Assert::int64($size), 'Argument $size must be a C-like GLsizeiptr, but incompatible or overflow value given');
+        assert(Type::isUint16($buffer), 'Argument $buffer must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isInt64($offset), 'Argument $offset must be a C-like GLintptr, but incompatible or overflow value given');
+        assert(Type::isInt64($size), 'Argument $size must be a C-like GLsizeiptr, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glNamedBufferSubData', 'void (*)(GLuint buffer, GLintptr offset, GLsizeiptr size, const void *data)');
         $proc($buffer, $offset, $size, $data);
@@ -648,16 +648,16 @@ class GL45 extends GL44
      * @param mixed|float|string|int|\FFI\CData|\FFI\CInt $size
      * @return void
      */
-    public function glCopyNamedBufferSubData($readBuffer, $writeBuffer, $readOffset, $writeOffset, $size): void
+    public function copyNamedBufferSubData($readBuffer, $writeBuffer, $readOffset, $writeOffset, $size): void
     {
         $readBuffer = $readBuffer instanceof \FFI\CData ? $readBuffer->cdata : $readBuffer;
         $writeBuffer = $writeBuffer instanceof \FFI\CData ? $writeBuffer->cdata : $writeBuffer;
 
-        assert(Assert::uint16($readBuffer), 'Argument $readBuffer must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($writeBuffer), 'Argument $writeBuffer must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::int64($readOffset), 'Argument $readOffset must be a C-like GLintptr, but incompatible or overflow value given');
-        assert(Assert::int64($writeOffset), 'Argument $writeOffset must be a C-like GLintptr, but incompatible or overflow value given');
-        assert(Assert::int64($size), 'Argument $size must be a C-like GLsizeiptr, but incompatible or overflow value given');
+        assert(Type::isUint16($readBuffer), 'Argument $readBuffer must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($writeBuffer), 'Argument $writeBuffer must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isInt64($readOffset), 'Argument $readOffset must be a C-like GLintptr, but incompatible or overflow value given');
+        assert(Type::isInt64($writeOffset), 'Argument $writeOffset must be a C-like GLintptr, but incompatible or overflow value given');
+        assert(Type::isInt64($size), 'Argument $size must be a C-like GLsizeiptr, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glCopyNamedBufferSubData', 'void (*)(GLuint readBuffer, GLuint writeBuffer, GLintptr readOffset, GLintptr writeOffset, GLsizeiptr size)');
         $proc($readBuffer, $writeBuffer, $readOffset, $writeOffset, $size);
@@ -717,17 +717,17 @@ class GL45 extends GL44
      * @param \FFI\CData|\FFI\CPtr|null $data
      * @return void
      */
-    public function glClearNamedBufferData($buffer, $internalformat, $format, $type, ?\FFI\CData $data): void
+    public function clearNamedBufferData($buffer, $internalformat, $format, $type, ?\FFI\CData $data): void
     {
         $buffer = $buffer instanceof \FFI\CData ? $buffer->cdata : $buffer;
         $internalformat = $internalformat instanceof \FFI\CData ? $internalformat->cdata : $internalformat;
         $format = $format instanceof \FFI\CData ? $format->cdata : $format;
         $type = $type instanceof \FFI\CData ? $type->cdata : $type;
 
-        assert(Assert::uint16($buffer), 'Argument $buffer must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($internalformat), 'Argument $internalformat must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::uint16($format), 'Argument $format must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::uint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($buffer), 'Argument $buffer must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($internalformat), 'Argument $internalformat must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($format), 'Argument $format must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glClearNamedBufferData', 'void (*)(GLuint buffer, GLenum internalformat, GLenum format, GLenum type, const void *data)');
         $proc($buffer, $internalformat, $format, $type, $data);
@@ -790,19 +790,19 @@ class GL45 extends GL44
      * @param \FFI\CData|\FFI\CPtr|null $data
      * @return void
      */
-    public function glClearNamedBufferSubData($buffer, $internalformat, $offset, $size, $format, $type, ?\FFI\CData $data): void
+    public function clearNamedBufferSubData($buffer, $internalformat, $offset, $size, $format, $type, ?\FFI\CData $data): void
     {
         $buffer = $buffer instanceof \FFI\CData ? $buffer->cdata : $buffer;
         $internalformat = $internalformat instanceof \FFI\CData ? $internalformat->cdata : $internalformat;
         $format = $format instanceof \FFI\CData ? $format->cdata : $format;
         $type = $type instanceof \FFI\CData ? $type->cdata : $type;
 
-        assert(Assert::uint16($buffer), 'Argument $buffer must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($internalformat), 'Argument $internalformat must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::int64($offset), 'Argument $offset must be a C-like GLintptr, but incompatible or overflow value given');
-        assert(Assert::int64($size), 'Argument $size must be a C-like GLsizeiptr, but incompatible or overflow value given');
-        assert(Assert::uint16($format), 'Argument $format must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::uint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($buffer), 'Argument $buffer must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($internalformat), 'Argument $internalformat must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isInt64($offset), 'Argument $offset must be a C-like GLintptr, but incompatible or overflow value given');
+        assert(Type::isInt64($size), 'Argument $size must be a C-like GLsizeiptr, but incompatible or overflow value given');
+        assert(Type::isUint16($format), 'Argument $format must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glClearNamedBufferSubData', 'void (*)(GLuint buffer, GLenum internalformat, GLintptr offset, GLsizeiptr size, GLenum format, GLenum type, const void *data)');
         $proc($buffer, $internalformat, $offset, $size, $format, $type, $data);
@@ -847,13 +847,13 @@ class GL45 extends GL44
      * @param int|\FFI\CData|\FFI\CInt $access
      * @return \FFI\CData|\FFI\CPtr|null
      */
-    public function glMapNamedBuffer($buffer, $access): \FFI\CData
+    public function mapNamedBuffer($buffer, $access): \FFI\CData
     {
         $buffer = $buffer instanceof \FFI\CData ? $buffer->cdata : $buffer;
         $access = $access instanceof \FFI\CData ? $access->cdata : $access;
 
-        assert(Assert::uint16($buffer), 'Argument $buffer must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($access), 'Argument $access must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($buffer), 'Argument $buffer must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($access), 'Argument $access must be a C-like GLenum, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glMapNamedBuffer', 'void * (*)(GLuint buffer, GLenum access)');
         return $proc($buffer, $access);
@@ -930,15 +930,15 @@ class GL45 extends GL44
      * @param int|\FFI\CData|\FFI\CInt $access
      * @return \FFI\CData|\FFI\CPtr|null
      */
-    public function glMapNamedBufferRange($buffer, $offset, $length, $access): \FFI\CData
+    public function mapNamedBufferRange($buffer, $offset, $length, $access): \FFI\CData
     {
         $buffer = $buffer instanceof \FFI\CData ? $buffer->cdata : $buffer;
         $access = $access instanceof \FFI\CData ? $access->cdata : $access;
 
-        assert(Assert::uint16($buffer), 'Argument $buffer must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::int64($offset), 'Argument $offset must be a C-like GLintptr, but incompatible or overflow value given');
-        assert(Assert::int64($length), 'Argument $length must be a C-like GLsizeiptr, but incompatible or overflow value given');
-        assert(Assert::uint16($access), 'Argument $access must be a C-like GLbitfield, but incompatible or overflow value given');
+        assert(Type::isUint16($buffer), 'Argument $buffer must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isInt64($offset), 'Argument $offset must be a C-like GLintptr, but incompatible or overflow value given');
+        assert(Type::isInt64($length), 'Argument $length must be a C-like GLsizeiptr, but incompatible or overflow value given');
+        assert(Type::isUint16($access), 'Argument $access must be a C-like GLbitfield, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glMapNamedBufferRange', 'void * (*)(GLuint buffer, GLintptr offset, GLsizeiptr length, GLbitfield access)');
         return $proc($buffer, $offset, $length, $access);
@@ -968,11 +968,11 @@ class GL45 extends GL44
      * @param int|\FFI\CData|\FFI\CInt $buffer
      * @return int|\FFI\CData|\FFI\CInt
      */
-    public function glUnmapNamedBuffer($buffer): int
+    public function unmapNamedBuffer($buffer): int
     {
         $buffer = $buffer instanceof \FFI\CData ? $buffer->cdata : $buffer;
 
-        assert(Assert::uint16($buffer), 'Argument $buffer must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($buffer), 'Argument $buffer must be a C-like GLuint, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glUnmapNamedBuffer', 'GLboolean (*)(GLuint buffer)');
         return $proc($buffer);
@@ -999,13 +999,13 @@ class GL45 extends GL44
      * @param mixed|float|string|int|\FFI\CData|\FFI\CInt $length
      * @return void
      */
-    public function glFlushMappedNamedBufferRange($buffer, $offset, $length): void
+    public function flushMappedNamedBufferRange($buffer, $offset, $length): void
     {
         $buffer = $buffer instanceof \FFI\CData ? $buffer->cdata : $buffer;
 
-        assert(Assert::uint16($buffer), 'Argument $buffer must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::int64($offset), 'Argument $offset must be a C-like GLintptr, but incompatible or overflow value given');
-        assert(Assert::int64($length), 'Argument $length must be a C-like GLsizeiptr, but incompatible or overflow value given');
+        assert(Type::isUint16($buffer), 'Argument $buffer must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isInt64($offset), 'Argument $offset must be a C-like GLintptr, but incompatible or overflow value given');
+        assert(Type::isInt64($length), 'Argument $length must be a C-like GLsizeiptr, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glFlushMappedNamedBufferRange', 'void (*)(GLuint buffer, GLintptr offset, GLsizeiptr length)');
         $proc($buffer, $offset, $length);
@@ -1038,13 +1038,13 @@ class GL45 extends GL44
      * @param \FFI\CData|\FFI\CIntPtr|null $params
      * @return void
      */
-    public function glGetNamedBufferParameteriv($buffer, $pname, ?\FFI\CData $params): void
+    public function getNamedBufferParameteriv($buffer, $pname, ?\FFI\CData $params): void
     {
         $buffer = $buffer instanceof \FFI\CData ? $buffer->cdata : $buffer;
         $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
 
-        assert(Assert::uint16($buffer), 'Argument $buffer must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($buffer), 'Argument $buffer must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glGetNamedBufferParameteriv', 'void (*)(GLuint buffer, GLenum pname, GLint *params)');
         $proc($buffer, $pname, $params);
@@ -1077,13 +1077,13 @@ class GL45 extends GL44
      * @param \FFI\CData|\FFI\CIntPtr|null $params
      * @return void
      */
-    public function glGetNamedBufferParameteri64v($buffer, $pname, ?\FFI\CData $params): void
+    public function getNamedBufferParameteri64v($buffer, $pname, ?\FFI\CData $params): void
     {
         $buffer = $buffer instanceof \FFI\CData ? $buffer->cdata : $buffer;
         $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
 
-        assert(Assert::uint16($buffer), 'Argument $buffer must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($buffer), 'Argument $buffer must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glGetNamedBufferParameteri64v', 'void (*)(GLuint buffer, GLenum pname, GLint64 *params)');
         $proc($buffer, $pname, $params);
@@ -1104,13 +1104,13 @@ class GL45 extends GL44
      * @param \FFI\CData|\FFI\CPtrPtr|null $params
      * @return void
      */
-    public function glGetNamedBufferPointerv($buffer, $pname, ?\FFI\CData $params): void
+    public function getNamedBufferPointerv($buffer, $pname, ?\FFI\CData $params): void
     {
         $buffer = $buffer instanceof \FFI\CData ? $buffer->cdata : $buffer;
         $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
 
-        assert(Assert::uint16($buffer), 'Argument $buffer must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($buffer), 'Argument $buffer must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glGetNamedBufferPointerv', 'void (*)(GLuint buffer, GLenum pname, void **params)');
         $proc($buffer, $pname, $params);
@@ -1132,13 +1132,13 @@ class GL45 extends GL44
      * @param \FFI\CData|\FFI\CPtr|null $data
      * @return void
      */
-    public function glGetNamedBufferSubData($buffer, $offset, $size, ?\FFI\CData $data): void
+    public function getNamedBufferSubData($buffer, $offset, $size, ?\FFI\CData $data): void
     {
         $buffer = $buffer instanceof \FFI\CData ? $buffer->cdata : $buffer;
 
-        assert(Assert::uint16($buffer), 'Argument $buffer must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::int64($offset), 'Argument $offset must be a C-like GLintptr, but incompatible or overflow value given');
-        assert(Assert::int64($size), 'Argument $size must be a C-like GLsizeiptr, but incompatible or overflow value given');
+        assert(Type::isUint16($buffer), 'Argument $buffer must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isInt64($offset), 'Argument $offset must be a C-like GLintptr, but incompatible or overflow value given');
+        assert(Type::isInt64($size), 'Argument $size must be a C-like GLsizeiptr, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glGetNamedBufferSubData', 'void (*)(GLuint buffer, GLintptr offset, GLsizeiptr size, void *data)');
         $proc($buffer, $offset, $size, $data);
@@ -1154,11 +1154,11 @@ class GL45 extends GL44
      * @param \FFI\CData|\FFI\CIntPtr|null $framebuffers
      * @return void
      */
-    public function glCreateFramebuffers($n, ?\FFI\CData $framebuffers): void
+    public function createFramebuffers($n, ?\FFI\CData $framebuffers): void
     {
         $n = $n instanceof \FFI\CData ? $n->cdata : $n;
 
-        assert(Assert::int16($n), 'Argument $n must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isInt16($n), 'Argument $n must be a C-like GLsizei, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glCreateFramebuffers', 'void (*)(GLsizei n, GLuint *framebuffers)');
         $proc($n, $framebuffers);
@@ -1208,17 +1208,17 @@ class GL45 extends GL44
      * @param int|\FFI\CData|\FFI\CInt $renderbuffer
      * @return void
      */
-    public function glNamedFramebufferRenderbuffer($framebuffer, $attachment, $renderbuffertarget, $renderbuffer): void
+    public function namedFramebufferRenderbuffer($framebuffer, $attachment, $renderbuffertarget, $renderbuffer): void
     {
         $framebuffer = $framebuffer instanceof \FFI\CData ? $framebuffer->cdata : $framebuffer;
         $attachment = $attachment instanceof \FFI\CData ? $attachment->cdata : $attachment;
         $renderbuffertarget = $renderbuffertarget instanceof \FFI\CData ? $renderbuffertarget->cdata : $renderbuffertarget;
         $renderbuffer = $renderbuffer instanceof \FFI\CData ? $renderbuffer->cdata : $renderbuffer;
 
-        assert(Assert::uint16($framebuffer), 'Argument $framebuffer must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($attachment), 'Argument $attachment must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::uint16($renderbuffertarget), 'Argument $renderbuffertarget must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::uint16($renderbuffer), 'Argument $renderbuffer must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($framebuffer), 'Argument $framebuffer must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($attachment), 'Argument $attachment must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($renderbuffertarget), 'Argument $renderbuffertarget must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($renderbuffer), 'Argument $renderbuffer must be a C-like GLuint, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glNamedFramebufferRenderbuffer', 'void (*)(GLuint framebuffer, GLenum attachment, GLenum renderbuffertarget, GLuint renderbuffer)');
         $proc($framebuffer, $attachment, $renderbuffertarget, $renderbuffer);
@@ -1298,15 +1298,15 @@ class GL45 extends GL44
      * @param int|\FFI\CData|\FFI\CInt $param
      * @return void
      */
-    public function glNamedFramebufferParameteri($framebuffer, $pname, $param): void
+    public function namedFramebufferParameteri($framebuffer, $pname, $param): void
     {
         $framebuffer = $framebuffer instanceof \FFI\CData ? $framebuffer->cdata : $framebuffer;
         $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
         $param = $param instanceof \FFI\CData ? $param->cdata : $param;
 
-        assert(Assert::uint16($framebuffer), 'Argument $framebuffer must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::int16($param), 'Argument $param must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isUint16($framebuffer), 'Argument $framebuffer must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isInt16($param), 'Argument $param must be a C-like GLint, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glNamedFramebufferParameteri', 'void (*)(GLuint framebuffer, GLenum pname, GLint param)');
         $proc($framebuffer, $pname, $param);
@@ -1386,17 +1386,17 @@ class GL45 extends GL44
      * @param int|\FFI\CData|\FFI\CInt $level
      * @return void
      */
-    public function glNamedFramebufferTexture($framebuffer, $attachment, $texture, $level): void
+    public function namedFramebufferTexture($framebuffer, $attachment, $texture, $level): void
     {
         $framebuffer = $framebuffer instanceof \FFI\CData ? $framebuffer->cdata : $framebuffer;
         $attachment = $attachment instanceof \FFI\CData ? $attachment->cdata : $attachment;
         $texture = $texture instanceof \FFI\CData ? $texture->cdata : $texture;
         $level = $level instanceof \FFI\CData ? $level->cdata : $level;
 
-        assert(Assert::uint16($framebuffer), 'Argument $framebuffer must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($attachment), 'Argument $attachment must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::uint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::int16($level), 'Argument $level must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isUint16($framebuffer), 'Argument $framebuffer must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($attachment), 'Argument $attachment must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isInt16($level), 'Argument $level must be a C-like GLint, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glNamedFramebufferTexture', 'void (*)(GLuint framebuffer, GLenum attachment, GLuint texture, GLint level)');
         $proc($framebuffer, $attachment, $texture, $level);
@@ -1443,7 +1443,7 @@ class GL45 extends GL44
      * @param int|\FFI\CData|\FFI\CInt $layer
      * @return void
      */
-    public function glNamedFramebufferTextureLayer($framebuffer, $attachment, $texture, $level, $layer): void
+    public function namedFramebufferTextureLayer($framebuffer, $attachment, $texture, $level, $layer): void
     {
         $framebuffer = $framebuffer instanceof \FFI\CData ? $framebuffer->cdata : $framebuffer;
         $attachment = $attachment instanceof \FFI\CData ? $attachment->cdata : $attachment;
@@ -1451,11 +1451,11 @@ class GL45 extends GL44
         $level = $level instanceof \FFI\CData ? $level->cdata : $level;
         $layer = $layer instanceof \FFI\CData ? $layer->cdata : $layer;
 
-        assert(Assert::uint16($framebuffer), 'Argument $framebuffer must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($attachment), 'Argument $attachment must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::uint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::int16($level), 'Argument $level must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($layer), 'Argument $layer must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isUint16($framebuffer), 'Argument $framebuffer must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($attachment), 'Argument $attachment must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isInt16($level), 'Argument $level must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($layer), 'Argument $layer must be a C-like GLint, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glNamedFramebufferTextureLayer', 'void (*)(GLuint framebuffer, GLenum attachment, GLuint texture, GLint level, GLint layer)');
         $proc($framebuffer, $attachment, $texture, $level, $layer);
@@ -1533,13 +1533,13 @@ class GL45 extends GL44
      * @param int|\FFI\CData|\FFI\CInt $buf
      * @return void
      */
-    public function glNamedFramebufferDrawBuffer($framebuffer, $buf): void
+    public function namedFramebufferDrawBuffer($framebuffer, $buf): void
     {
         $framebuffer = $framebuffer instanceof \FFI\CData ? $framebuffer->cdata : $framebuffer;
         $buf = $buf instanceof \FFI\CData ? $buf->cdata : $buf;
 
-        assert(Assert::uint16($framebuffer), 'Argument $framebuffer must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($buf), 'Argument $buf must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($framebuffer), 'Argument $framebuffer must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($buf), 'Argument $buf must be a C-like GLenum, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glNamedFramebufferDrawBuffer', 'void (*)(GLuint framebuffer, GLenum buf)');
         $proc($framebuffer, $buf);
@@ -1618,13 +1618,13 @@ class GL45 extends GL44
      * @param \FFI\CData|\FFI\CIntPtr|null $bufs
      * @return void
      */
-    public function glNamedFramebufferDrawBuffers($framebuffer, $n, ?\FFI\CData $bufs): void
+    public function namedFramebufferDrawBuffers($framebuffer, $n, ?\FFI\CData $bufs): void
     {
         $framebuffer = $framebuffer instanceof \FFI\CData ? $framebuffer->cdata : $framebuffer;
         $n = $n instanceof \FFI\CData ? $n->cdata : $n;
 
-        assert(Assert::uint16($framebuffer), 'Argument $framebuffer must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::int16($n), 'Argument $n must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isUint16($framebuffer), 'Argument $framebuffer must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isInt16($n), 'Argument $n must be a C-like GLsizei, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glNamedFramebufferDrawBuffers', 'void (*)(GLuint framebuffer, GLsizei n, const GLenum *bufs)');
         $proc($framebuffer, $n, $bufs);
@@ -1672,13 +1672,13 @@ class GL45 extends GL44
      * @param int|\FFI\CData|\FFI\CInt $src
      * @return void
      */
-    public function glNamedFramebufferReadBuffer($framebuffer, $src): void
+    public function namedFramebufferReadBuffer($framebuffer, $src): void
     {
         $framebuffer = $framebuffer instanceof \FFI\CData ? $framebuffer->cdata : $framebuffer;
         $src = $src instanceof \FFI\CData ? $src->cdata : $src;
 
-        assert(Assert::uint16($framebuffer), 'Argument $framebuffer must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($src), 'Argument $src must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($framebuffer), 'Argument $framebuffer must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($src), 'Argument $src must be a C-like GLenum, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glNamedFramebufferReadBuffer', 'void (*)(GLuint framebuffer, GLenum src)');
         $proc($framebuffer, $src);
@@ -1730,13 +1730,13 @@ class GL45 extends GL44
      * @param \FFI\CData|\FFI\CIntPtr|null $attachments
      * @return void
      */
-    public function glInvalidateNamedFramebufferData($framebuffer, $numAttachments, ?\FFI\CData $attachments): void
+    public function invalidateNamedFramebufferData($framebuffer, $numAttachments, ?\FFI\CData $attachments): void
     {
         $framebuffer = $framebuffer instanceof \FFI\CData ? $framebuffer->cdata : $framebuffer;
         $numAttachments = $numAttachments instanceof \FFI\CData ? $numAttachments->cdata : $numAttachments;
 
-        assert(Assert::uint16($framebuffer), 'Argument $framebuffer must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::int16($numAttachments), 'Argument $numAttachments must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isUint16($framebuffer), 'Argument $framebuffer must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isInt16($numAttachments), 'Argument $numAttachments must be a C-like GLsizei, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glInvalidateNamedFramebufferData', 'void (*)(GLuint framebuffer, GLsizei numAttachments, const GLenum *attachments)');
         $proc($framebuffer, $numAttachments, $attachments);
@@ -1759,7 +1759,7 @@ class GL45 extends GL44
      * @param int|\FFI\CData|\FFI\CInt $height
      * @return void
      */
-    public function glInvalidateNamedFramebufferSubData($framebuffer, $numAttachments, ?\FFI\CData $attachments, $x, $y, $width, $height): void
+    public function invalidateNamedFramebufferSubData($framebuffer, $numAttachments, ?\FFI\CData $attachments, $x, $y, $width, $height): void
     {
         $framebuffer = $framebuffer instanceof \FFI\CData ? $framebuffer->cdata : $framebuffer;
         $numAttachments = $numAttachments instanceof \FFI\CData ? $numAttachments->cdata : $numAttachments;
@@ -1768,12 +1768,12 @@ class GL45 extends GL44
         $width = $width instanceof \FFI\CData ? $width->cdata : $width;
         $height = $height instanceof \FFI\CData ? $height->cdata : $height;
 
-        assert(Assert::uint16($framebuffer), 'Argument $framebuffer must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::int16($numAttachments), 'Argument $numAttachments must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Assert::int16($x), 'Argument $x must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($y), 'Argument $y must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($width), 'Argument $width must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Assert::int16($height), 'Argument $height must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isUint16($framebuffer), 'Argument $framebuffer must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isInt16($numAttachments), 'Argument $numAttachments must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isInt16($x), 'Argument $x must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($y), 'Argument $y must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($width), 'Argument $width must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isInt16($height), 'Argument $height must be a C-like GLsizei, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glInvalidateNamedFramebufferSubData', 'void (*)(GLuint framebuffer, GLsizei numAttachments, const GLenum *attachments, GLint x, GLint y, GLsizei width, GLsizei height)');
         $proc($framebuffer, $numAttachments, $attachments, $x, $y, $width, $height);
@@ -1791,15 +1791,15 @@ class GL45 extends GL44
      * @param \FFI\CData|\FFI\CIntPtr|null $value
      * @return void
      */
-    public function glClearNamedFramebufferiv($framebuffer, $buffer, $drawbuffer, ?\FFI\CData $value): void
+    public function clearNamedFramebufferiv($framebuffer, $buffer, $drawbuffer, ?\FFI\CData $value): void
     {
         $framebuffer = $framebuffer instanceof \FFI\CData ? $framebuffer->cdata : $framebuffer;
         $buffer = $buffer instanceof \FFI\CData ? $buffer->cdata : $buffer;
         $drawbuffer = $drawbuffer instanceof \FFI\CData ? $drawbuffer->cdata : $drawbuffer;
 
-        assert(Assert::uint16($framebuffer), 'Argument $framebuffer must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($buffer), 'Argument $buffer must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::int16($drawbuffer), 'Argument $drawbuffer must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isUint16($framebuffer), 'Argument $framebuffer must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($buffer), 'Argument $buffer must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isInt16($drawbuffer), 'Argument $drawbuffer must be a C-like GLint, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glClearNamedFramebufferiv', 'void (*)(GLuint framebuffer, GLenum buffer, GLint drawbuffer, const GLint *value)');
         $proc($framebuffer, $buffer, $drawbuffer, $value);
@@ -1817,15 +1817,15 @@ class GL45 extends GL44
      * @param \FFI\CData|\FFI\CIntPtr|null $value
      * @return void
      */
-    public function glClearNamedFramebufferuiv($framebuffer, $buffer, $drawbuffer, ?\FFI\CData $value): void
+    public function clearNamedFramebufferuiv($framebuffer, $buffer, $drawbuffer, ?\FFI\CData $value): void
     {
         $framebuffer = $framebuffer instanceof \FFI\CData ? $framebuffer->cdata : $framebuffer;
         $buffer = $buffer instanceof \FFI\CData ? $buffer->cdata : $buffer;
         $drawbuffer = $drawbuffer instanceof \FFI\CData ? $drawbuffer->cdata : $drawbuffer;
 
-        assert(Assert::uint16($framebuffer), 'Argument $framebuffer must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($buffer), 'Argument $buffer must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::int16($drawbuffer), 'Argument $drawbuffer must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isUint16($framebuffer), 'Argument $framebuffer must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($buffer), 'Argument $buffer must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isInt16($drawbuffer), 'Argument $drawbuffer must be a C-like GLint, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glClearNamedFramebufferuiv', 'void (*)(GLuint framebuffer, GLenum buffer, GLint drawbuffer, const GLuint *value)');
         $proc($framebuffer, $buffer, $drawbuffer, $value);
@@ -1843,15 +1843,15 @@ class GL45 extends GL44
      * @param \FFI\CData|\FFI\CFloatPtr|null $value
      * @return void
      */
-    public function glClearNamedFramebufferfv($framebuffer, $buffer, $drawbuffer, ?\FFI\CData $value): void
+    public function clearNamedFramebufferfv($framebuffer, $buffer, $drawbuffer, ?\FFI\CData $value): void
     {
         $framebuffer = $framebuffer instanceof \FFI\CData ? $framebuffer->cdata : $framebuffer;
         $buffer = $buffer instanceof \FFI\CData ? $buffer->cdata : $buffer;
         $drawbuffer = $drawbuffer instanceof \FFI\CData ? $drawbuffer->cdata : $drawbuffer;
 
-        assert(Assert::uint16($framebuffer), 'Argument $framebuffer must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($buffer), 'Argument $buffer must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::int16($drawbuffer), 'Argument $drawbuffer must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isUint16($framebuffer), 'Argument $framebuffer must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($buffer), 'Argument $buffer must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isInt16($drawbuffer), 'Argument $drawbuffer must be a C-like GLint, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glClearNamedFramebufferfv', 'void (*)(GLuint framebuffer, GLenum buffer, GLint drawbuffer, const GLfloat *value)');
         $proc($framebuffer, $buffer, $drawbuffer, $value);
@@ -1870,7 +1870,7 @@ class GL45 extends GL44
      * @param int|\FFI\CData|\FFI\CInt $stencil
      * @return void
      */
-    public function glClearNamedFramebufferfi($framebuffer, $buffer, $drawbuffer, $depth, $stencil): void
+    public function clearNamedFramebufferfi($framebuffer, $buffer, $drawbuffer, $depth, $stencil): void
     {
         $framebuffer = $framebuffer instanceof \FFI\CData ? $framebuffer->cdata : $framebuffer;
         $buffer = $buffer instanceof \FFI\CData ? $buffer->cdata : $buffer;
@@ -1878,11 +1878,11 @@ class GL45 extends GL44
         $depth = $depth instanceof \FFI\CData ? $depth->cdata : $depth;
         $stencil = $stencil instanceof \FFI\CData ? $stencil->cdata : $stencil;
 
-        assert(Assert::uint16($framebuffer), 'Argument $framebuffer must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($buffer), 'Argument $buffer must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::int16($drawbuffer), 'Argument $drawbuffer must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::float32($depth), 'Argument $depth must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Assert::int16($stencil), 'Argument $stencil must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isUint16($framebuffer), 'Argument $framebuffer must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($buffer), 'Argument $buffer must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isInt16($drawbuffer), 'Argument $drawbuffer must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isFloat32($depth), 'Argument $depth must be a C-like GLfloat, but incompatible or overflow value given');
+        assert(Type::isInt16($stencil), 'Argument $stencil must be a C-like GLint, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glClearNamedFramebufferfi', 'void (*)(GLuint framebuffer, GLenum buffer, GLint drawbuffer, GLfloat depth, GLint stencil)');
         $proc($framebuffer, $buffer, $drawbuffer, $depth, $stencil);
@@ -1946,7 +1946,7 @@ class GL45 extends GL44
      * @param int|\FFI\CData|\FFI\CInt $filter
      * @return void
      */
-    public function glBlitNamedFramebuffer($readFramebuffer, $drawFramebuffer, $srcX0, $srcY0, $srcX1, $srcY1, $dstX0, $dstY0, $dstX1, $dstY1, $mask, $filter): void
+    public function blitNamedFramebuffer($readFramebuffer, $drawFramebuffer, $srcX0, $srcY0, $srcX1, $srcY1, $dstX0, $dstY0, $dstX1, $dstY1, $mask, $filter): void
     {
         $readFramebuffer = $readFramebuffer instanceof \FFI\CData ? $readFramebuffer->cdata : $readFramebuffer;
         $drawFramebuffer = $drawFramebuffer instanceof \FFI\CData ? $drawFramebuffer->cdata : $drawFramebuffer;
@@ -1961,18 +1961,18 @@ class GL45 extends GL44
         $mask = $mask instanceof \FFI\CData ? $mask->cdata : $mask;
         $filter = $filter instanceof \FFI\CData ? $filter->cdata : $filter;
 
-        assert(Assert::uint16($readFramebuffer), 'Argument $readFramebuffer must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($drawFramebuffer), 'Argument $drawFramebuffer must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::int16($srcX0), 'Argument $srcX0 must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($srcY0), 'Argument $srcY0 must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($srcX1), 'Argument $srcX1 must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($srcY1), 'Argument $srcY1 must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($dstX0), 'Argument $dstX0 must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($dstY0), 'Argument $dstY0 must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($dstX1), 'Argument $dstX1 must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($dstY1), 'Argument $dstY1 must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::uint16($mask), 'Argument $mask must be a C-like GLbitfield, but incompatible or overflow value given');
-        assert(Assert::uint16($filter), 'Argument $filter must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($readFramebuffer), 'Argument $readFramebuffer must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($drawFramebuffer), 'Argument $drawFramebuffer must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isInt16($srcX0), 'Argument $srcX0 must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($srcY0), 'Argument $srcY0 must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($srcX1), 'Argument $srcX1 must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($srcY1), 'Argument $srcY1 must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($dstX0), 'Argument $dstX0 must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($dstY0), 'Argument $dstY0 must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($dstX1), 'Argument $dstX1 must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($dstY1), 'Argument $dstY1 must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isUint16($mask), 'Argument $mask must be a C-like GLbitfield, but incompatible or overflow value given');
+        assert(Type::isUint16($filter), 'Argument $filter must be a C-like GLenum, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glBlitNamedFramebuffer', 'void (*)(GLuint readFramebuffer, GLuint drawFramebuffer, GLint srcX0, GLint srcY0, GLint srcX1, GLint srcY1, GLint dstX0, GLint dstY0, GLint dstX1, GLint dstY1, GLbitfield mask, GLenum filter)');
         $proc($readFramebuffer, $drawFramebuffer, $srcX0, $srcY0, $srcX1, $srcY1, $dstX0, $dstY0, $dstX1, $dstY1, $mask, $filter);
@@ -2023,13 +2023,13 @@ class GL45 extends GL44
      * @param int|\FFI\CData|\FFI\CInt $target
      * @return int|\FFI\CData|\FFI\CInt
      */
-    public function glCheckNamedFramebufferStatus($framebuffer, $target): int
+    public function checkNamedFramebufferStatus($framebuffer, $target): int
     {
         $framebuffer = $framebuffer instanceof \FFI\CData ? $framebuffer->cdata : $framebuffer;
         $target = $target instanceof \FFI\CData ? $target->cdata : $target;
 
-        assert(Assert::uint16($framebuffer), 'Argument $framebuffer must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($framebuffer), 'Argument $framebuffer must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glCheckNamedFramebufferStatus', 'GLenum (*)(GLuint framebuffer, GLenum target)');
         return $proc($framebuffer, $target);
@@ -2108,13 +2108,13 @@ class GL45 extends GL44
      * @param \FFI\CData|\FFI\CIntPtr|null $param
      * @return void
      */
-    public function glGetNamedFramebufferParameteriv($framebuffer, $pname, ?\FFI\CData $param): void
+    public function getNamedFramebufferParameteriv($framebuffer, $pname, ?\FFI\CData $param): void
     {
         $framebuffer = $framebuffer instanceof \FFI\CData ? $framebuffer->cdata : $framebuffer;
         $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
 
-        assert(Assert::uint16($framebuffer), 'Argument $framebuffer must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($framebuffer), 'Argument $framebuffer must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glGetNamedFramebufferParameteriv', 'void (*)(GLuint framebuffer, GLenum pname, GLint *param)');
         $proc($framebuffer, $pname, $param);
@@ -2214,15 +2214,15 @@ class GL45 extends GL44
      * @param \FFI\CData|\FFI\CIntPtr|null $params
      * @return void
      */
-    public function glGetNamedFramebufferAttachmentParameteriv($framebuffer, $attachment, $pname, ?\FFI\CData $params): void
+    public function getNamedFramebufferAttachmentParameteriv($framebuffer, $attachment, $pname, ?\FFI\CData $params): void
     {
         $framebuffer = $framebuffer instanceof \FFI\CData ? $framebuffer->cdata : $framebuffer;
         $attachment = $attachment instanceof \FFI\CData ? $attachment->cdata : $attachment;
         $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
 
-        assert(Assert::uint16($framebuffer), 'Argument $framebuffer must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($attachment), 'Argument $attachment must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::uint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($framebuffer), 'Argument $framebuffer must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($attachment), 'Argument $attachment must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glGetNamedFramebufferAttachmentParameteriv', 'void (*)(GLuint framebuffer, GLenum attachment, GLenum pname, GLint *params)');
         $proc($framebuffer, $attachment, $pname, $params);
@@ -2238,11 +2238,11 @@ class GL45 extends GL44
      * @param \FFI\CData|\FFI\CIntPtr|null $renderbuffers
      * @return void
      */
-    public function glCreateRenderbuffers($n, ?\FFI\CData $renderbuffers): void
+    public function createRenderbuffers($n, ?\FFI\CData $renderbuffers): void
     {
         $n = $n instanceof \FFI\CData ? $n->cdata : $n;
 
-        assert(Assert::int16($n), 'Argument $n must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isInt16($n), 'Argument $n must be a C-like GLsizei, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glCreateRenderbuffers', 'void (*)(GLsizei n, GLuint *renderbuffers)');
         $proc($n, $renderbuffers);
@@ -2272,17 +2272,17 @@ class GL45 extends GL44
      * @param int|\FFI\CData|\FFI\CInt $height
      * @return void
      */
-    public function glNamedRenderbufferStorage($renderbuffer, $internalformat, $width, $height): void
+    public function namedRenderbufferStorage($renderbuffer, $internalformat, $width, $height): void
     {
         $renderbuffer = $renderbuffer instanceof \FFI\CData ? $renderbuffer->cdata : $renderbuffer;
         $internalformat = $internalformat instanceof \FFI\CData ? $internalformat->cdata : $internalformat;
         $width = $width instanceof \FFI\CData ? $width->cdata : $width;
         $height = $height instanceof \FFI\CData ? $height->cdata : $height;
 
-        assert(Assert::uint16($renderbuffer), 'Argument $renderbuffer must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($internalformat), 'Argument $internalformat must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::int16($width), 'Argument $width must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Assert::int16($height), 'Argument $height must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isUint16($renderbuffer), 'Argument $renderbuffer must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($internalformat), 'Argument $internalformat must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isInt16($width), 'Argument $width must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isInt16($height), 'Argument $height must be a C-like GLsizei, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glNamedRenderbufferStorage', 'void (*)(GLuint renderbuffer, GLenum internalformat, GLsizei width, GLsizei height)');
         $proc($renderbuffer, $internalformat, $width, $height);
@@ -2315,7 +2315,7 @@ class GL45 extends GL44
      * @param int|\FFI\CData|\FFI\CInt $height
      * @return void
      */
-    public function glNamedRenderbufferStorageMultisample($renderbuffer, $samples, $internalformat, $width, $height): void
+    public function namedRenderbufferStorageMultisample($renderbuffer, $samples, $internalformat, $width, $height): void
     {
         $renderbuffer = $renderbuffer instanceof \FFI\CData ? $renderbuffer->cdata : $renderbuffer;
         $samples = $samples instanceof \FFI\CData ? $samples->cdata : $samples;
@@ -2323,11 +2323,11 @@ class GL45 extends GL44
         $width = $width instanceof \FFI\CData ? $width->cdata : $width;
         $height = $height instanceof \FFI\CData ? $height->cdata : $height;
 
-        assert(Assert::uint16($renderbuffer), 'Argument $renderbuffer must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::int16($samples), 'Argument $samples must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Assert::uint16($internalformat), 'Argument $internalformat must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::int16($width), 'Argument $width must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Assert::int16($height), 'Argument $height must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isUint16($renderbuffer), 'Argument $renderbuffer must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isInt16($samples), 'Argument $samples must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isUint16($internalformat), 'Argument $internalformat must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isInt16($width), 'Argument $width must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isInt16($height), 'Argument $height must be a C-like GLsizei, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glNamedRenderbufferStorageMultisample', 'void (*)(GLuint renderbuffer, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height)');
         $proc($renderbuffer, $samples, $internalformat, $width, $height);
@@ -2367,13 +2367,13 @@ class GL45 extends GL44
      * @param \FFI\CData|\FFI\CIntPtr|null $params
      * @return void
      */
-    public function glGetNamedRenderbufferParameteriv($renderbuffer, $pname, ?\FFI\CData $params): void
+    public function getNamedRenderbufferParameteriv($renderbuffer, $pname, ?\FFI\CData $params): void
     {
         $renderbuffer = $renderbuffer instanceof \FFI\CData ? $renderbuffer->cdata : $renderbuffer;
         $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
 
-        assert(Assert::uint16($renderbuffer), 'Argument $renderbuffer must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($renderbuffer), 'Argument $renderbuffer must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glGetNamedRenderbufferParameteriv', 'void (*)(GLuint renderbuffer, GLenum pname, GLint *params)');
         $proc($renderbuffer, $pname, $params);
@@ -2396,13 +2396,13 @@ class GL45 extends GL44
      * @param \FFI\CData|\FFI\CIntPtr|null $textures
      * @return void
      */
-    public function glCreateTextures($target, $n, ?\FFI\CData $textures): void
+    public function createTextures($target, $n, ?\FFI\CData $textures): void
     {
         $target = $target instanceof \FFI\CData ? $target->cdata : $target;
         $n = $n instanceof \FFI\CData ? $n->cdata : $n;
 
-        assert(Assert::uint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::int16($n), 'Argument $n must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isUint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isInt16($n), 'Argument $n must be a C-like GLsizei, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glCreateTextures', 'void (*)(GLenum target, GLsizei n, GLuint *textures)');
         $proc($target, $n, $textures);
@@ -2423,15 +2423,15 @@ class GL45 extends GL44
      * @param int|\FFI\CData|\FFI\CInt $buffer
      * @return void
      */
-    public function glTextureBuffer($texture, $internalformat, $buffer): void
+    public function textureBuffer($texture, $internalformat, $buffer): void
     {
         $texture = $texture instanceof \FFI\CData ? $texture->cdata : $texture;
         $internalformat = $internalformat instanceof \FFI\CData ? $internalformat->cdata : $internalformat;
         $buffer = $buffer instanceof \FFI\CData ? $buffer->cdata : $buffer;
 
-        assert(Assert::uint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($internalformat), 'Argument $internalformat must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::uint16($buffer), 'Argument $buffer must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($internalformat), 'Argument $internalformat must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($buffer), 'Argument $buffer must be a C-like GLuint, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glTextureBuffer', 'void (*)(GLuint texture, GLenum internalformat, GLuint buffer)');
         $proc($texture, $internalformat, $buffer);
@@ -2504,17 +2504,17 @@ class GL45 extends GL44
      * @param mixed|float|string|int|\FFI\CData|\FFI\CInt $size
      * @return void
      */
-    public function glTextureBufferRange($texture, $internalformat, $buffer, $offset, $size): void
+    public function textureBufferRange($texture, $internalformat, $buffer, $offset, $size): void
     {
         $texture = $texture instanceof \FFI\CData ? $texture->cdata : $texture;
         $internalformat = $internalformat instanceof \FFI\CData ? $internalformat->cdata : $internalformat;
         $buffer = $buffer instanceof \FFI\CData ? $buffer->cdata : $buffer;
 
-        assert(Assert::uint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($internalformat), 'Argument $internalformat must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::uint16($buffer), 'Argument $buffer must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::int64($offset), 'Argument $offset must be a C-like GLintptr, but incompatible or overflow value given');
-        assert(Assert::int64($size), 'Argument $size must be a C-like GLsizeiptr, but incompatible or overflow value given');
+        assert(Type::isUint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($internalformat), 'Argument $internalformat must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($buffer), 'Argument $buffer must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isInt64($offset), 'Argument $offset must be a C-like GLintptr, but incompatible or overflow value given');
+        assert(Type::isInt64($size), 'Argument $size must be a C-like GLsizeiptr, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glTextureBufferRange', 'void (*)(GLuint texture, GLenum internalformat, GLuint buffer, GLintptr offset, GLsizeiptr size)');
         $proc($texture, $internalformat, $buffer, $offset, $size);
@@ -2562,17 +2562,17 @@ class GL45 extends GL44
      * @param int|\FFI\CData|\FFI\CInt $width
      * @return void
      */
-    public function glTextureStorage1D($texture, $levels, $internalformat, $width): void
+    public function textureStorage1D($texture, $levels, $internalformat, $width): void
     {
         $texture = $texture instanceof \FFI\CData ? $texture->cdata : $texture;
         $levels = $levels instanceof \FFI\CData ? $levels->cdata : $levels;
         $internalformat = $internalformat instanceof \FFI\CData ? $internalformat->cdata : $internalformat;
         $width = $width instanceof \FFI\CData ? $width->cdata : $width;
 
-        assert(Assert::uint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::int16($levels), 'Argument $levels must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Assert::uint16($internalformat), 'Argument $internalformat must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::int16($width), 'Argument $width must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isUint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isInt16($levels), 'Argument $levels must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isUint16($internalformat), 'Argument $internalformat must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isInt16($width), 'Argument $width must be a C-like GLsizei, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glTextureStorage1D', 'void (*)(GLuint texture, GLsizei levels, GLenum internalformat, GLsizei width)');
         $proc($texture, $levels, $internalformat, $width);
@@ -2645,7 +2645,7 @@ class GL45 extends GL44
      * @param int|\FFI\CData|\FFI\CInt $height
      * @return void
      */
-    public function glTextureStorage2D($texture, $levels, $internalformat, $width, $height): void
+    public function textureStorage2D($texture, $levels, $internalformat, $width, $height): void
     {
         $texture = $texture instanceof \FFI\CData ? $texture->cdata : $texture;
         $levels = $levels instanceof \FFI\CData ? $levels->cdata : $levels;
@@ -2653,11 +2653,11 @@ class GL45 extends GL44
         $width = $width instanceof \FFI\CData ? $width->cdata : $width;
         $height = $height instanceof \FFI\CData ? $height->cdata : $height;
 
-        assert(Assert::uint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::int16($levels), 'Argument $levels must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Assert::uint16($internalformat), 'Argument $internalformat must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::int16($width), 'Argument $width must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Assert::int16($height), 'Argument $height must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isUint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isInt16($levels), 'Argument $levels must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isUint16($internalformat), 'Argument $internalformat must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isInt16($width), 'Argument $width must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isInt16($height), 'Argument $height must be a C-like GLsizei, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glTextureStorage2D', 'void (*)(GLuint texture, GLsizei levels, GLenum internalformat, GLsizei width, GLsizei height)');
         $proc($texture, $levels, $internalformat, $width, $height);
@@ -2721,7 +2721,7 @@ class GL45 extends GL44
      * @param int|\FFI\CData|\FFI\CInt $depth
      * @return void
      */
-    public function glTextureStorage3D($texture, $levels, $internalformat, $width, $height, $depth): void
+    public function textureStorage3D($texture, $levels, $internalformat, $width, $height, $depth): void
     {
         $texture = $texture instanceof \FFI\CData ? $texture->cdata : $texture;
         $levels = $levels instanceof \FFI\CData ? $levels->cdata : $levels;
@@ -2730,12 +2730,12 @@ class GL45 extends GL44
         $height = $height instanceof \FFI\CData ? $height->cdata : $height;
         $depth = $depth instanceof \FFI\CData ? $depth->cdata : $depth;
 
-        assert(Assert::uint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::int16($levels), 'Argument $levels must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Assert::uint16($internalformat), 'Argument $internalformat must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::int16($width), 'Argument $width must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Assert::int16($height), 'Argument $height must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Assert::int16($depth), 'Argument $depth must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isUint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isInt16($levels), 'Argument $levels must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isUint16($internalformat), 'Argument $internalformat must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isInt16($width), 'Argument $width must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isInt16($height), 'Argument $height must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isInt16($depth), 'Argument $depth must be a C-like GLsizei, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glTextureStorage3D', 'void (*)(GLuint texture, GLsizei levels, GLenum internalformat, GLsizei width, GLsizei height, GLsizei depth)');
         $proc($texture, $levels, $internalformat, $width, $height, $depth);
@@ -2765,7 +2765,7 @@ class GL45 extends GL44
      * @param int|\FFI\CData|\FFI\CInt $fixedsamplelocations
      * @return void
      */
-    public function glTextureStorage2DMultisample($texture, $samples, $internalformat, $width, $height, $fixedsamplelocations): void
+    public function textureStorage2DMultisample($texture, $samples, $internalformat, $width, $height, $fixedsamplelocations): void
     {
         $texture = $texture instanceof \FFI\CData ? $texture->cdata : $texture;
         $samples = $samples instanceof \FFI\CData ? $samples->cdata : $samples;
@@ -2774,12 +2774,12 @@ class GL45 extends GL44
         $height = $height instanceof \FFI\CData ? $height->cdata : $height;
         $fixedsamplelocations = $fixedsamplelocations instanceof \FFI\CData ? $fixedsamplelocations->cdata : $fixedsamplelocations;
 
-        assert(Assert::uint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::int16($samples), 'Argument $samples must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Assert::uint16($internalformat), 'Argument $internalformat must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::int16($width), 'Argument $width must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Assert::int16($height), 'Argument $height must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Assert::uint8($fixedsamplelocations), 'Argument $fixedsamplelocations must be a C-like GLboolean, but incompatible or overflow value given');
+        assert(Type::isUint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isInt16($samples), 'Argument $samples must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isUint16($internalformat), 'Argument $internalformat must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isInt16($width), 'Argument $width must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isInt16($height), 'Argument $height must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isUint8($fixedsamplelocations), 'Argument $fixedsamplelocations must be a C-like GLboolean, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glTextureStorage2DMultisample', 'void (*)(GLuint texture, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height, GLboolean fixedsamplelocations)');
         $proc($texture, $samples, $internalformat, $width, $height, $fixedsamplelocations);
@@ -2811,7 +2811,7 @@ class GL45 extends GL44
      * @param int|\FFI\CData|\FFI\CInt $fixedsamplelocations
      * @return void
      */
-    public function glTextureStorage3DMultisample($texture, $samples, $internalformat, $width, $height, $depth, $fixedsamplelocations): void
+    public function textureStorage3DMultisample($texture, $samples, $internalformat, $width, $height, $depth, $fixedsamplelocations): void
     {
         $texture = $texture instanceof \FFI\CData ? $texture->cdata : $texture;
         $samples = $samples instanceof \FFI\CData ? $samples->cdata : $samples;
@@ -2821,13 +2821,13 @@ class GL45 extends GL44
         $depth = $depth instanceof \FFI\CData ? $depth->cdata : $depth;
         $fixedsamplelocations = $fixedsamplelocations instanceof \FFI\CData ? $fixedsamplelocations->cdata : $fixedsamplelocations;
 
-        assert(Assert::uint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::int16($samples), 'Argument $samples must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Assert::uint16($internalformat), 'Argument $internalformat must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::int16($width), 'Argument $width must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Assert::int16($height), 'Argument $height must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Assert::int16($depth), 'Argument $depth must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Assert::uint8($fixedsamplelocations), 'Argument $fixedsamplelocations must be a C-like GLboolean, but incompatible or overflow value given');
+        assert(Type::isUint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isInt16($samples), 'Argument $samples must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isUint16($internalformat), 'Argument $internalformat must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isInt16($width), 'Argument $width must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isInt16($height), 'Argument $height must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isInt16($depth), 'Argument $depth must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isUint8($fixedsamplelocations), 'Argument $fixedsamplelocations must be a C-like GLboolean, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glTextureStorage3DMultisample', 'void (*)(GLuint texture, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height, GLsizei depth, GLboolean fixedsamplelocations)');
         $proc($texture, $samples, $internalformat, $width, $height, $depth, $fixedsamplelocations);
@@ -2860,7 +2860,7 @@ class GL45 extends GL44
      * @param \FFI\CData|\FFI\CPtr|null $pixels
      * @return void
      */
-    public function glTextureSubImage1D($texture, $level, $xoffset, $width, $format, $type, ?\FFI\CData $pixels): void
+    public function textureSubImage1D($texture, $level, $xoffset, $width, $format, $type, ?\FFI\CData $pixels): void
     {
         $texture = $texture instanceof \FFI\CData ? $texture->cdata : $texture;
         $level = $level instanceof \FFI\CData ? $level->cdata : $level;
@@ -2869,12 +2869,12 @@ class GL45 extends GL44
         $format = $format instanceof \FFI\CData ? $format->cdata : $format;
         $type = $type instanceof \FFI\CData ? $type->cdata : $type;
 
-        assert(Assert::uint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::int16($level), 'Argument $level must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($xoffset), 'Argument $xoffset must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($width), 'Argument $width must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Assert::uint16($format), 'Argument $format must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::uint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isInt16($level), 'Argument $level must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($xoffset), 'Argument $xoffset must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($width), 'Argument $width must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isUint16($format), 'Argument $format must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glTextureSubImage1D', 'void (*)(GLuint texture, GLint level, GLint xoffset, GLsizei width, GLenum format, GLenum type, const void *pixels)');
         $proc($texture, $level, $xoffset, $width, $format, $type, $pixels);
@@ -2909,7 +2909,7 @@ class GL45 extends GL44
      * @param \FFI\CData|\FFI\CPtr|null $pixels
      * @return void
      */
-    public function glTextureSubImage2D($texture, $level, $xoffset, $yoffset, $width, $height, $format, $type, ?\FFI\CData $pixels): void
+    public function textureSubImage2D($texture, $level, $xoffset, $yoffset, $width, $height, $format, $type, ?\FFI\CData $pixels): void
     {
         $texture = $texture instanceof \FFI\CData ? $texture->cdata : $texture;
         $level = $level instanceof \FFI\CData ? $level->cdata : $level;
@@ -2920,14 +2920,14 @@ class GL45 extends GL44
         $format = $format instanceof \FFI\CData ? $format->cdata : $format;
         $type = $type instanceof \FFI\CData ? $type->cdata : $type;
 
-        assert(Assert::uint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::int16($level), 'Argument $level must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($xoffset), 'Argument $xoffset must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($yoffset), 'Argument $yoffset must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($width), 'Argument $width must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Assert::int16($height), 'Argument $height must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Assert::uint16($format), 'Argument $format must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::uint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isInt16($level), 'Argument $level must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($xoffset), 'Argument $xoffset must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($yoffset), 'Argument $yoffset must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($width), 'Argument $width must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isInt16($height), 'Argument $height must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isUint16($format), 'Argument $format must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glTextureSubImage2D', 'void (*)(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height, GLenum format, GLenum type, const void *pixels)');
         $proc($texture, $level, $xoffset, $yoffset, $width, $height, $format, $type, $pixels);
@@ -2966,7 +2966,7 @@ class GL45 extends GL44
      * @param \FFI\CData|\FFI\CPtr|null $pixels
      * @return void
      */
-    public function glTextureSubImage3D($texture, $level, $xoffset, $yoffset, $zoffset, $width, $height, $depth, $format, $type, ?\FFI\CData $pixels): void
+    public function textureSubImage3D($texture, $level, $xoffset, $yoffset, $zoffset, $width, $height, $depth, $format, $type, ?\FFI\CData $pixels): void
     {
         $texture = $texture instanceof \FFI\CData ? $texture->cdata : $texture;
         $level = $level instanceof \FFI\CData ? $level->cdata : $level;
@@ -2979,16 +2979,16 @@ class GL45 extends GL44
         $format = $format instanceof \FFI\CData ? $format->cdata : $format;
         $type = $type instanceof \FFI\CData ? $type->cdata : $type;
 
-        assert(Assert::uint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::int16($level), 'Argument $level must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($xoffset), 'Argument $xoffset must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($yoffset), 'Argument $yoffset must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($zoffset), 'Argument $zoffset must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($width), 'Argument $width must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Assert::int16($height), 'Argument $height must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Assert::int16($depth), 'Argument $depth must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Assert::uint16($format), 'Argument $format must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::uint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isInt16($level), 'Argument $level must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($xoffset), 'Argument $xoffset must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($yoffset), 'Argument $yoffset must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($zoffset), 'Argument $zoffset must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($width), 'Argument $width must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isInt16($height), 'Argument $height must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isInt16($depth), 'Argument $depth must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isUint16($format), 'Argument $format must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glTextureSubImage3D', 'void (*)(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLenum type, const void *pixels)');
         $proc($texture, $level, $xoffset, $yoffset, $zoffset, $width, $height, $depth, $format, $type, $pixels);
@@ -3024,7 +3024,7 @@ class GL45 extends GL44
      * @param \FFI\CData|\FFI\CPtr|null $data
      * @return void
      */
-    public function glCompressedTextureSubImage1D($texture, $level, $xoffset, $width, $format, $imageSize, ?\FFI\CData $data): void
+    public function compressedTextureSubImage1D($texture, $level, $xoffset, $width, $format, $imageSize, ?\FFI\CData $data): void
     {
         $texture = $texture instanceof \FFI\CData ? $texture->cdata : $texture;
         $level = $level instanceof \FFI\CData ? $level->cdata : $level;
@@ -3033,12 +3033,12 @@ class GL45 extends GL44
         $format = $format instanceof \FFI\CData ? $format->cdata : $format;
         $imageSize = $imageSize instanceof \FFI\CData ? $imageSize->cdata : $imageSize;
 
-        assert(Assert::uint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::int16($level), 'Argument $level must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($xoffset), 'Argument $xoffset must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($width), 'Argument $width must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Assert::uint16($format), 'Argument $format must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::int16($imageSize), 'Argument $imageSize must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isUint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isInt16($level), 'Argument $level must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($xoffset), 'Argument $xoffset must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($width), 'Argument $width must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isUint16($format), 'Argument $format must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isInt16($imageSize), 'Argument $imageSize must be a C-like GLsizei, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glCompressedTextureSubImage1D', 'void (*)(GLuint texture, GLint level, GLint xoffset, GLsizei width, GLenum format, GLsizei imageSize, const void *data)');
         $proc($texture, $level, $xoffset, $width, $format, $imageSize, $data);
@@ -3077,7 +3077,7 @@ class GL45 extends GL44
      * @param \FFI\CData|\FFI\CPtr|null $data
      * @return void
      */
-    public function glCompressedTextureSubImage2D($texture, $level, $xoffset, $yoffset, $width, $height, $format, $imageSize, ?\FFI\CData $data): void
+    public function compressedTextureSubImage2D($texture, $level, $xoffset, $yoffset, $width, $height, $format, $imageSize, ?\FFI\CData $data): void
     {
         $texture = $texture instanceof \FFI\CData ? $texture->cdata : $texture;
         $level = $level instanceof \FFI\CData ? $level->cdata : $level;
@@ -3088,14 +3088,14 @@ class GL45 extends GL44
         $format = $format instanceof \FFI\CData ? $format->cdata : $format;
         $imageSize = $imageSize instanceof \FFI\CData ? $imageSize->cdata : $imageSize;
 
-        assert(Assert::uint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::int16($level), 'Argument $level must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($xoffset), 'Argument $xoffset must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($yoffset), 'Argument $yoffset must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($width), 'Argument $width must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Assert::int16($height), 'Argument $height must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Assert::uint16($format), 'Argument $format must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::int16($imageSize), 'Argument $imageSize must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isUint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isInt16($level), 'Argument $level must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($xoffset), 'Argument $xoffset must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($yoffset), 'Argument $yoffset must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($width), 'Argument $width must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isInt16($height), 'Argument $height must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isUint16($format), 'Argument $format must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isInt16($imageSize), 'Argument $imageSize must be a C-like GLsizei, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glCompressedTextureSubImage2D', 'void (*)(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height, GLenum format, GLsizei imageSize, const void *data)');
         $proc($texture, $level, $xoffset, $yoffset, $width, $height, $format, $imageSize, $data);
@@ -3136,7 +3136,7 @@ class GL45 extends GL44
      * @param \FFI\CData|\FFI\CPtr|null $data
      * @return void
      */
-    public function glCompressedTextureSubImage3D($texture, $level, $xoffset, $yoffset, $zoffset, $width, $height, $depth, $format, $imageSize, ?\FFI\CData $data): void
+    public function compressedTextureSubImage3D($texture, $level, $xoffset, $yoffset, $zoffset, $width, $height, $depth, $format, $imageSize, ?\FFI\CData $data): void
     {
         $texture = $texture instanceof \FFI\CData ? $texture->cdata : $texture;
         $level = $level instanceof \FFI\CData ? $level->cdata : $level;
@@ -3149,16 +3149,16 @@ class GL45 extends GL44
         $format = $format instanceof \FFI\CData ? $format->cdata : $format;
         $imageSize = $imageSize instanceof \FFI\CData ? $imageSize->cdata : $imageSize;
 
-        assert(Assert::uint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::int16($level), 'Argument $level must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($xoffset), 'Argument $xoffset must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($yoffset), 'Argument $yoffset must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($zoffset), 'Argument $zoffset must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($width), 'Argument $width must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Assert::int16($height), 'Argument $height must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Assert::int16($depth), 'Argument $depth must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Assert::uint16($format), 'Argument $format must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::int16($imageSize), 'Argument $imageSize must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isUint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isInt16($level), 'Argument $level must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($xoffset), 'Argument $xoffset must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($yoffset), 'Argument $yoffset must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($zoffset), 'Argument $zoffset must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($width), 'Argument $width must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isInt16($height), 'Argument $height must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isInt16($depth), 'Argument $depth must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isUint16($format), 'Argument $format must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isInt16($imageSize), 'Argument $imageSize must be a C-like GLsizei, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glCompressedTextureSubImage3D', 'void (*)(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLsizei imageSize, const void *data)');
         $proc($texture, $level, $xoffset, $yoffset, $zoffset, $width, $height, $depth, $format, $imageSize, $data);
@@ -3197,7 +3197,7 @@ class GL45 extends GL44
      * @param int|\FFI\CData|\FFI\CInt $width
      * @return void
      */
-    public function glCopyTextureSubImage1D($texture, $level, $xoffset, $x, $y, $width): void
+    public function copyTextureSubImage1D($texture, $level, $xoffset, $x, $y, $width): void
     {
         $texture = $texture instanceof \FFI\CData ? $texture->cdata : $texture;
         $level = $level instanceof \FFI\CData ? $level->cdata : $level;
@@ -3206,12 +3206,12 @@ class GL45 extends GL44
         $y = $y instanceof \FFI\CData ? $y->cdata : $y;
         $width = $width instanceof \FFI\CData ? $width->cdata : $width;
 
-        assert(Assert::uint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::int16($level), 'Argument $level must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($xoffset), 'Argument $xoffset must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($x), 'Argument $x must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($y), 'Argument $y must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($width), 'Argument $width must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isUint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isInt16($level), 'Argument $level must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($xoffset), 'Argument $xoffset must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($x), 'Argument $x must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($y), 'Argument $y must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($width), 'Argument $width must be a C-like GLsizei, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glCopyTextureSubImage1D', 'void (*)(GLuint texture, GLint level, GLint xoffset, GLint x, GLint y, GLsizei width)');
         $proc($texture, $level, $xoffset, $x, $y, $width);
@@ -3258,7 +3258,7 @@ class GL45 extends GL44
      * @param int|\FFI\CData|\FFI\CInt $height
      * @return void
      */
-    public function glCopyTextureSubImage2D($texture, $level, $xoffset, $yoffset, $x, $y, $width, $height): void
+    public function copyTextureSubImage2D($texture, $level, $xoffset, $yoffset, $x, $y, $width, $height): void
     {
         $texture = $texture instanceof \FFI\CData ? $texture->cdata : $texture;
         $level = $level instanceof \FFI\CData ? $level->cdata : $level;
@@ -3269,14 +3269,14 @@ class GL45 extends GL44
         $width = $width instanceof \FFI\CData ? $width->cdata : $width;
         $height = $height instanceof \FFI\CData ? $height->cdata : $height;
 
-        assert(Assert::uint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::int16($level), 'Argument $level must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($xoffset), 'Argument $xoffset must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($yoffset), 'Argument $yoffset must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($x), 'Argument $x must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($y), 'Argument $y must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($width), 'Argument $width must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Assert::int16($height), 'Argument $height must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isUint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isInt16($level), 'Argument $level must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($xoffset), 'Argument $xoffset must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($yoffset), 'Argument $yoffset must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($x), 'Argument $x must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($y), 'Argument $y must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($width), 'Argument $width must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isInt16($height), 'Argument $height must be a C-like GLsizei, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glCopyTextureSubImage2D', 'void (*)(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLint x, GLint y, GLsizei width, GLsizei height)');
         $proc($texture, $level, $xoffset, $yoffset, $x, $y, $width, $height);
@@ -3321,7 +3321,7 @@ class GL45 extends GL44
      * @param int|\FFI\CData|\FFI\CInt $height
      * @return void
      */
-    public function glCopyTextureSubImage3D($texture, $level, $xoffset, $yoffset, $zoffset, $x, $y, $width, $height): void
+    public function copyTextureSubImage3D($texture, $level, $xoffset, $yoffset, $zoffset, $x, $y, $width, $height): void
     {
         $texture = $texture instanceof \FFI\CData ? $texture->cdata : $texture;
         $level = $level instanceof \FFI\CData ? $level->cdata : $level;
@@ -3333,15 +3333,15 @@ class GL45 extends GL44
         $width = $width instanceof \FFI\CData ? $width->cdata : $width;
         $height = $height instanceof \FFI\CData ? $height->cdata : $height;
 
-        assert(Assert::uint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::int16($level), 'Argument $level must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($xoffset), 'Argument $xoffset must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($yoffset), 'Argument $yoffset must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($zoffset), 'Argument $zoffset must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($x), 'Argument $x must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($y), 'Argument $y must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($width), 'Argument $width must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Assert::int16($height), 'Argument $height must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isUint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isInt16($level), 'Argument $level must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($xoffset), 'Argument $xoffset must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($yoffset), 'Argument $yoffset must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($zoffset), 'Argument $zoffset must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($x), 'Argument $x must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($y), 'Argument $y must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($width), 'Argument $width must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isInt16($height), 'Argument $height must be a C-like GLsizei, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glCopyTextureSubImage3D', 'void (*)(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLint x, GLint y, GLsizei width, GLsizei height)');
         $proc($texture, $level, $xoffset, $yoffset, $zoffset, $x, $y, $width, $height);
@@ -3660,15 +3660,15 @@ class GL45 extends GL44
      * @param float|\FFI\CData|\FFI\CFloat $param
      * @return void
      */
-    public function glTextureParameterf($texture, $pname, $param): void
+    public function textureParameterf($texture, $pname, $param): void
     {
         $texture = $texture instanceof \FFI\CData ? $texture->cdata : $texture;
         $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
         $param = $param instanceof \FFI\CData ? $param->cdata : $param;
 
-        assert(Assert::uint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::float32($param), 'Argument $param must be a C-like GLfloat, but incompatible or overflow value given');
+        assert(Type::isUint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isFloat32($param), 'Argument $param must be a C-like GLfloat, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glTextureParameterf', 'void (*)(GLuint texture, GLenum pname, GLfloat param)');
         $proc($texture, $pname, $param);
@@ -3987,13 +3987,13 @@ class GL45 extends GL44
      * @param \FFI\CData|\FFI\CFloatPtr|null $param
      * @return void
      */
-    public function glTextureParameterfv($texture, $pname, ?\FFI\CData $param): void
+    public function textureParameterfv($texture, $pname, ?\FFI\CData $param): void
     {
         $texture = $texture instanceof \FFI\CData ? $texture->cdata : $texture;
         $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
 
-        assert(Assert::uint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glTextureParameterfv', 'void (*)(GLuint texture, GLenum pname, const GLfloat *param)');
         $proc($texture, $pname, $param);
@@ -4312,15 +4312,15 @@ class GL45 extends GL44
      * @param int|\FFI\CData|\FFI\CInt $param
      * @return void
      */
-    public function glTextureParameteri($texture, $pname, $param): void
+    public function textureParameteri($texture, $pname, $param): void
     {
         $texture = $texture instanceof \FFI\CData ? $texture->cdata : $texture;
         $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
         $param = $param instanceof \FFI\CData ? $param->cdata : $param;
 
-        assert(Assert::uint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::int16($param), 'Argument $param must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isUint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isInt16($param), 'Argument $param must be a C-like GLint, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glTextureParameteri', 'void (*)(GLuint texture, GLenum pname, GLint param)');
         $proc($texture, $pname, $param);
@@ -4640,13 +4640,13 @@ class GL45 extends GL44
      * @param \FFI\CData|\FFI\CIntPtr|null $params
      * @return void
      */
-    public function glTextureParameterIiv($texture, $pname, ?\FFI\CData $params): void
+    public function textureParameterIiv($texture, $pname, ?\FFI\CData $params): void
     {
         $texture = $texture instanceof \FFI\CData ? $texture->cdata : $texture;
         $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
 
-        assert(Assert::uint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glTextureParameterIiv', 'void (*)(GLuint texture, GLenum pname, const GLint *params)');
         $proc($texture, $pname, $params);
@@ -4966,13 +4966,13 @@ class GL45 extends GL44
      * @param \FFI\CData|\FFI\CIntPtr|null $params
      * @return void
      */
-    public function glTextureParameterIuiv($texture, $pname, ?\FFI\CData $params): void
+    public function textureParameterIuiv($texture, $pname, ?\FFI\CData $params): void
     {
         $texture = $texture instanceof \FFI\CData ? $texture->cdata : $texture;
         $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
 
-        assert(Assert::uint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glTextureParameterIuiv', 'void (*)(GLuint texture, GLenum pname, const GLuint *params)');
         $proc($texture, $pname, $params);
@@ -5292,13 +5292,13 @@ class GL45 extends GL44
      * @param \FFI\CData|\FFI\CIntPtr|null $param
      * @return void
      */
-    public function glTextureParameteriv($texture, $pname, ?\FFI\CData $param): void
+    public function textureParameteriv($texture, $pname, ?\FFI\CData $param): void
     {
         $texture = $texture instanceof \FFI\CData ? $texture->cdata : $texture;
         $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
 
-        assert(Assert::uint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glTextureParameteriv', 'void (*)(GLuint texture, GLenum pname, const GLint *param)');
         $proc($texture, $pname, $param);
@@ -5325,11 +5325,11 @@ class GL45 extends GL44
      * @param int|\FFI\CData|\FFI\CInt $texture
      * @return void
      */
-    public function glGenerateTextureMipmap($texture): void
+    public function generateTextureMipmap($texture): void
     {
         $texture = $texture instanceof \FFI\CData ? $texture->cdata : $texture;
 
-        assert(Assert::uint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glGenerateTextureMipmap', 'void (*)(GLuint texture)');
         $proc($texture);
@@ -5349,13 +5349,13 @@ class GL45 extends GL44
      * @param int|\FFI\CData|\FFI\CInt $texture
      * @return void
      */
-    public function glBindTextureUnit($unit, $texture): void
+    public function bindTextureUnit($unit, $texture): void
     {
         $unit = $unit instanceof \FFI\CData ? $unit->cdata : $unit;
         $texture = $texture instanceof \FFI\CData ? $texture->cdata : $texture;
 
-        assert(Assert::uint16($unit), 'Argument $unit must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($unit), 'Argument $unit must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glBindTextureUnit', 'void (*)(GLuint unit, GLuint texture)');
         $proc($unit, $texture);
@@ -5408,7 +5408,7 @@ class GL45 extends GL44
      * @param \FFI\CData|\FFI\CPtr|null $pixels
      * @return void
      */
-    public function glGetTextureImage($texture, $level, $format, $type, $bufSize, ?\FFI\CData $pixels): void
+    public function getTextureImage($texture, $level, $format, $type, $bufSize, ?\FFI\CData $pixels): void
     {
         $texture = $texture instanceof \FFI\CData ? $texture->cdata : $texture;
         $level = $level instanceof \FFI\CData ? $level->cdata : $level;
@@ -5416,11 +5416,11 @@ class GL45 extends GL44
         $type = $type instanceof \FFI\CData ? $type->cdata : $type;
         $bufSize = $bufSize instanceof \FFI\CData ? $bufSize->cdata : $bufSize;
 
-        assert(Assert::uint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::int16($level), 'Argument $level must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::uint16($format), 'Argument $format must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::uint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::int16($bufSize), 'Argument $bufSize must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isUint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isInt16($level), 'Argument $level must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isUint16($format), 'Argument $format must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isInt16($bufSize), 'Argument $bufSize must be a C-like GLsizei, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glGetTextureImage', 'void (*)(GLuint texture, GLint level, GLenum format, GLenum type, GLsizei bufSize, void *pixels)');
         $proc($texture, $level, $format, $type, $bufSize, $pixels);
@@ -5472,15 +5472,15 @@ class GL45 extends GL44
      * @param \FFI\CData|\FFI\CPtr|null $pixels
      * @return void
      */
-    public function glGetCompressedTextureImage($texture, $level, $bufSize, ?\FFI\CData $pixels): void
+    public function getCompressedTextureImage($texture, $level, $bufSize, ?\FFI\CData $pixels): void
     {
         $texture = $texture instanceof \FFI\CData ? $texture->cdata : $texture;
         $level = $level instanceof \FFI\CData ? $level->cdata : $level;
         $bufSize = $bufSize instanceof \FFI\CData ? $bufSize->cdata : $bufSize;
 
-        assert(Assert::uint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::int16($level), 'Argument $level must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($bufSize), 'Argument $bufSize must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isUint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isInt16($level), 'Argument $level must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($bufSize), 'Argument $bufSize must be a C-like GLsizei, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glGetCompressedTextureImage', 'void (*)(GLuint texture, GLint level, GLsizei bufSize, void *pixels)');
         $proc($texture, $level, $bufSize, $pixels);
@@ -5572,15 +5572,15 @@ class GL45 extends GL44
      * @param \FFI\CData|\FFI\CFloatPtr|null $params
      * @return void
      */
-    public function glGetTextureLevelParameterfv($texture, $level, $pname, ?\FFI\CData $params): void
+    public function getTextureLevelParameterfv($texture, $level, $pname, ?\FFI\CData $params): void
     {
         $texture = $texture instanceof \FFI\CData ? $texture->cdata : $texture;
         $level = $level instanceof \FFI\CData ? $level->cdata : $level;
         $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
 
-        assert(Assert::uint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::int16($level), 'Argument $level must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::uint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isInt16($level), 'Argument $level must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glGetTextureLevelParameterfv', 'void (*)(GLuint texture, GLint level, GLenum pname, GLfloat *params)');
         $proc($texture, $level, $pname, $params);
@@ -5672,15 +5672,15 @@ class GL45 extends GL44
      * @param \FFI\CData|\FFI\CIntPtr|null $params
      * @return void
      */
-    public function glGetTextureLevelParameteriv($texture, $level, $pname, ?\FFI\CData $params): void
+    public function getTextureLevelParameteriv($texture, $level, $pname, ?\FFI\CData $params): void
     {
         $texture = $texture instanceof \FFI\CData ? $texture->cdata : $texture;
         $level = $level instanceof \FFI\CData ? $level->cdata : $level;
         $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
 
-        assert(Assert::uint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::int16($level), 'Argument $level must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::uint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isInt16($level), 'Argument $level must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glGetTextureLevelParameteriv', 'void (*)(GLuint texture, GLint level, GLenum pname, GLint *params)');
         $proc($texture, $level, $pname, $params);
@@ -5825,13 +5825,13 @@ class GL45 extends GL44
      * @param \FFI\CData|\FFI\CFloatPtr|null $params
      * @return void
      */
-    public function glGetTextureParameterfv($texture, $pname, ?\FFI\CData $params): void
+    public function getTextureParameterfv($texture, $pname, ?\FFI\CData $params): void
     {
         $texture = $texture instanceof \FFI\CData ? $texture->cdata : $texture;
         $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
 
-        assert(Assert::uint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glGetTextureParameterfv', 'void (*)(GLuint texture, GLenum pname, GLfloat *params)');
         $proc($texture, $pname, $params);
@@ -5977,13 +5977,13 @@ class GL45 extends GL44
      * @param \FFI\CData|\FFI\CIntPtr|null $params
      * @return void
      */
-    public function glGetTextureParameterIiv($texture, $pname, ?\FFI\CData $params): void
+    public function getTextureParameterIiv($texture, $pname, ?\FFI\CData $params): void
     {
         $texture = $texture instanceof \FFI\CData ? $texture->cdata : $texture;
         $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
 
-        assert(Assert::uint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glGetTextureParameterIiv', 'void (*)(GLuint texture, GLenum pname, GLint *params)');
         $proc($texture, $pname, $params);
@@ -6129,13 +6129,13 @@ class GL45 extends GL44
      * @param \FFI\CData|\FFI\CIntPtr|null $params
      * @return void
      */
-    public function glGetTextureParameterIuiv($texture, $pname, ?\FFI\CData $params): void
+    public function getTextureParameterIuiv($texture, $pname, ?\FFI\CData $params): void
     {
         $texture = $texture instanceof \FFI\CData ? $texture->cdata : $texture;
         $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
 
-        assert(Assert::uint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glGetTextureParameterIuiv', 'void (*)(GLuint texture, GLenum pname, GLuint *params)');
         $proc($texture, $pname, $params);
@@ -6281,13 +6281,13 @@ class GL45 extends GL44
      * @param \FFI\CData|\FFI\CIntPtr|null $params
      * @return void
      */
-    public function glGetTextureParameteriv($texture, $pname, ?\FFI\CData $params): void
+    public function getTextureParameteriv($texture, $pname, ?\FFI\CData $params): void
     {
         $texture = $texture instanceof \FFI\CData ? $texture->cdata : $texture;
         $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
 
-        assert(Assert::uint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glGetTextureParameteriv', 'void (*)(GLuint texture, GLenum pname, GLint *params)');
         $proc($texture, $pname, $params);
@@ -6303,11 +6303,11 @@ class GL45 extends GL44
      * @param \FFI\CData|\FFI\CIntPtr|null $arrays
      * @return void
      */
-    public function glCreateVertexArrays($n, ?\FFI\CData $arrays): void
+    public function createVertexArrays($n, ?\FFI\CData $arrays): void
     {
         $n = $n instanceof \FFI\CData ? $n->cdata : $n;
 
-        assert(Assert::int16($n), 'Argument $n must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isInt16($n), 'Argument $n must be a C-like GLsizei, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glCreateVertexArrays', 'void (*)(GLsizei n, GLuint *arrays)');
         $proc($n, $arrays);
@@ -6338,13 +6338,13 @@ class GL45 extends GL44
      * @param int|\FFI\CData|\FFI\CInt $index
      * @return void
      */
-    public function glDisableVertexArrayAttrib($vaobj, $index): void
+    public function disableVertexArrayAttrib($vaobj, $index): void
     {
         $vaobj = $vaobj instanceof \FFI\CData ? $vaobj->cdata : $vaobj;
         $index = $index instanceof \FFI\CData ? $index->cdata : $index;
 
-        assert(Assert::uint16($vaobj), 'Argument $vaobj must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($vaobj), 'Argument $vaobj must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glDisableVertexArrayAttrib', 'void (*)(GLuint vaobj, GLuint index)');
         $proc($vaobj, $index);
@@ -6373,13 +6373,13 @@ class GL45 extends GL44
      * @param int|\FFI\CData|\FFI\CInt $index
      * @return void
      */
-    public function glEnableVertexArrayAttrib($vaobj, $index): void
+    public function enableVertexArrayAttrib($vaobj, $index): void
     {
         $vaobj = $vaobj instanceof \FFI\CData ? $vaobj->cdata : $vaobj;
         $index = $index instanceof \FFI\CData ? $index->cdata : $index;
 
-        assert(Assert::uint16($vaobj), 'Argument $vaobj must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($vaobj), 'Argument $vaobj must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glEnableVertexArrayAttrib', 'void (*)(GLuint vaobj, GLuint index)');
         $proc($vaobj, $index);
@@ -6396,13 +6396,13 @@ class GL45 extends GL44
      * @param int|\FFI\CData|\FFI\CInt $buffer
      * @return void
      */
-    public function glVertexArrayElementBuffer($vaobj, $buffer): void
+    public function vertexArrayElementBuffer($vaobj, $buffer): void
     {
         $vaobj = $vaobj instanceof \FFI\CData ? $vaobj->cdata : $vaobj;
         $buffer = $buffer instanceof \FFI\CData ? $buffer->cdata : $buffer;
 
-        assert(Assert::uint16($vaobj), 'Argument $vaobj must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($buffer), 'Argument $buffer must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($vaobj), 'Argument $vaobj must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($buffer), 'Argument $buffer must be a C-like GLuint, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glVertexArrayElementBuffer', 'void (*)(GLuint vaobj, GLuint buffer)');
         $proc($vaobj, $buffer);
@@ -6422,18 +6422,18 @@ class GL45 extends GL44
      * @param int|\FFI\CData|\FFI\CInt $stride
      * @return void
      */
-    public function glVertexArrayVertexBuffer($vaobj, $bindingindex, $buffer, $offset, $stride): void
+    public function vertexArrayVertexBuffer($vaobj, $bindingindex, $buffer, $offset, $stride): void
     {
         $vaobj = $vaobj instanceof \FFI\CData ? $vaobj->cdata : $vaobj;
         $bindingindex = $bindingindex instanceof \FFI\CData ? $bindingindex->cdata : $bindingindex;
         $buffer = $buffer instanceof \FFI\CData ? $buffer->cdata : $buffer;
         $stride = $stride instanceof \FFI\CData ? $stride->cdata : $stride;
 
-        assert(Assert::uint16($vaobj), 'Argument $vaobj must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($bindingindex), 'Argument $bindingindex must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($buffer), 'Argument $buffer must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::int64($offset), 'Argument $offset must be a C-like GLintptr, but incompatible or overflow value given');
-        assert(Assert::int16($stride), 'Argument $stride must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isUint16($vaobj), 'Argument $vaobj must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($bindingindex), 'Argument $bindingindex must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($buffer), 'Argument $buffer must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isInt64($offset), 'Argument $offset must be a C-like GLintptr, but incompatible or overflow value given');
+        assert(Type::isInt16($stride), 'Argument $stride must be a C-like GLsizei, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glVertexArrayVertexBuffer', 'void (*)(GLuint vaobj, GLuint bindingindex, GLuint buffer, GLintptr offset, GLsizei stride)');
         $proc($vaobj, $bindingindex, $buffer, $offset, $stride);
@@ -6454,15 +6454,15 @@ class GL45 extends GL44
      * @param \FFI\CData|\FFI\CIntPtr|null $strides
      * @return void
      */
-    public function glVertexArrayVertexBuffers($vaobj, $first, $count, ?\FFI\CData $buffers, ?\FFI\CData $offsets, ?\FFI\CData $strides): void
+    public function vertexArrayVertexBuffers($vaobj, $first, $count, ?\FFI\CData $buffers, ?\FFI\CData $offsets, ?\FFI\CData $strides): void
     {
         $vaobj = $vaobj instanceof \FFI\CData ? $vaobj->cdata : $vaobj;
         $first = $first instanceof \FFI\CData ? $first->cdata : $first;
         $count = $count instanceof \FFI\CData ? $count->cdata : $count;
 
-        assert(Assert::uint16($vaobj), 'Argument $vaobj must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($first), 'Argument $first must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::int16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isUint16($vaobj), 'Argument $vaobj must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($first), 'Argument $first must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isInt16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glVertexArrayVertexBuffers', 'void (*)(GLuint vaobj, GLuint first, GLsizei count, const GLuint *buffers, const GLintptr *offsets, const GLsizei *strides)');
         $proc($vaobj, $first, $count, $buffers, $offsets, $strides);
@@ -6485,15 +6485,15 @@ class GL45 extends GL44
      * @param int|\FFI\CData|\FFI\CInt $bindingindex
      * @return void
      */
-    public function glVertexArrayAttribBinding($vaobj, $attribindex, $bindingindex): void
+    public function vertexArrayAttribBinding($vaobj, $attribindex, $bindingindex): void
     {
         $vaobj = $vaobj instanceof \FFI\CData ? $vaobj->cdata : $vaobj;
         $attribindex = $attribindex instanceof \FFI\CData ? $attribindex->cdata : $attribindex;
         $bindingindex = $bindingindex instanceof \FFI\CData ? $bindingindex->cdata : $bindingindex;
 
-        assert(Assert::uint16($vaobj), 'Argument $vaobj must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($attribindex), 'Argument $attribindex must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($bindingindex), 'Argument $bindingindex must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($vaobj), 'Argument $vaobj must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($attribindex), 'Argument $attribindex must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($bindingindex), 'Argument $bindingindex must be a C-like GLuint, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glVertexArrayAttribBinding', 'void (*)(GLuint vaobj, GLuint attribindex, GLuint bindingindex)');
         $proc($vaobj, $attribindex, $bindingindex);
@@ -6552,7 +6552,7 @@ class GL45 extends GL44
      * @param int|\FFI\CData|\FFI\CInt $relativeoffset
      * @return void
      */
-    public function glVertexArrayAttribFormat($vaobj, $attribindex, $size, $type, $normalized, $relativeoffset): void
+    public function vertexArrayAttribFormat($vaobj, $attribindex, $size, $type, $normalized, $relativeoffset): void
     {
         $vaobj = $vaobj instanceof \FFI\CData ? $vaobj->cdata : $vaobj;
         $attribindex = $attribindex instanceof \FFI\CData ? $attribindex->cdata : $attribindex;
@@ -6561,12 +6561,12 @@ class GL45 extends GL44
         $normalized = $normalized instanceof \FFI\CData ? $normalized->cdata : $normalized;
         $relativeoffset = $relativeoffset instanceof \FFI\CData ? $relativeoffset->cdata : $relativeoffset;
 
-        assert(Assert::uint16($vaobj), 'Argument $vaobj must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($attribindex), 'Argument $attribindex must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::int16($size), 'Argument $size must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::uint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::uint8($normalized), 'Argument $normalized must be a C-like GLboolean, but incompatible or overflow value given');
-        assert(Assert::uint16($relativeoffset), 'Argument $relativeoffset must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($vaobj), 'Argument $vaobj must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($attribindex), 'Argument $attribindex must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isInt16($size), 'Argument $size must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isUint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint8($normalized), 'Argument $normalized must be a C-like GLboolean, but incompatible or overflow value given');
+        assert(Type::isUint16($relativeoffset), 'Argument $relativeoffset must be a C-like GLuint, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glVertexArrayAttribFormat', 'void (*)(GLuint vaobj, GLuint attribindex, GLint size, GLenum type, GLboolean normalized, GLuint relativeoffset)');
         $proc($vaobj, $attribindex, $size, $type, $normalized, $relativeoffset);
@@ -6624,7 +6624,7 @@ class GL45 extends GL44
      * @param int|\FFI\CData|\FFI\CInt $relativeoffset
      * @return void
      */
-    public function glVertexArrayAttribIFormat($vaobj, $attribindex, $size, $type, $relativeoffset): void
+    public function vertexArrayAttribIFormat($vaobj, $attribindex, $size, $type, $relativeoffset): void
     {
         $vaobj = $vaobj instanceof \FFI\CData ? $vaobj->cdata : $vaobj;
         $attribindex = $attribindex instanceof \FFI\CData ? $attribindex->cdata : $attribindex;
@@ -6632,11 +6632,11 @@ class GL45 extends GL44
         $type = $type instanceof \FFI\CData ? $type->cdata : $type;
         $relativeoffset = $relativeoffset instanceof \FFI\CData ? $relativeoffset->cdata : $relativeoffset;
 
-        assert(Assert::uint16($vaobj), 'Argument $vaobj must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($attribindex), 'Argument $attribindex must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::int16($size), 'Argument $size must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::uint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::uint16($relativeoffset), 'Argument $relativeoffset must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($vaobj), 'Argument $vaobj must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($attribindex), 'Argument $attribindex must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isInt16($size), 'Argument $size must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isUint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($relativeoffset), 'Argument $relativeoffset must be a C-like GLuint, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glVertexArrayAttribIFormat', 'void (*)(GLuint vaobj, GLuint attribindex, GLint size, GLenum type, GLuint relativeoffset)');
         $proc($vaobj, $attribindex, $size, $type, $relativeoffset);
@@ -6694,7 +6694,7 @@ class GL45 extends GL44
      * @param int|\FFI\CData|\FFI\CInt $relativeoffset
      * @return void
      */
-    public function glVertexArrayAttribLFormat($vaobj, $attribindex, $size, $type, $relativeoffset): void
+    public function vertexArrayAttribLFormat($vaobj, $attribindex, $size, $type, $relativeoffset): void
     {
         $vaobj = $vaobj instanceof \FFI\CData ? $vaobj->cdata : $vaobj;
         $attribindex = $attribindex instanceof \FFI\CData ? $attribindex->cdata : $attribindex;
@@ -6702,11 +6702,11 @@ class GL45 extends GL44
         $type = $type instanceof \FFI\CData ? $type->cdata : $type;
         $relativeoffset = $relativeoffset instanceof \FFI\CData ? $relativeoffset->cdata : $relativeoffset;
 
-        assert(Assert::uint16($vaobj), 'Argument $vaobj must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($attribindex), 'Argument $attribindex must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::int16($size), 'Argument $size must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::uint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::uint16($relativeoffset), 'Argument $relativeoffset must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($vaobj), 'Argument $vaobj must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($attribindex), 'Argument $attribindex must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isInt16($size), 'Argument $size must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isUint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($relativeoffset), 'Argument $relativeoffset must be a C-like GLuint, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glVertexArrayAttribLFormat', 'void (*)(GLuint vaobj, GLuint attribindex, GLint size, GLenum type, GLuint relativeoffset)');
         $proc($vaobj, $attribindex, $size, $type, $relativeoffset);
@@ -6729,15 +6729,15 @@ class GL45 extends GL44
      * @param int|\FFI\CData|\FFI\CInt $divisor
      * @return void
      */
-    public function glVertexArrayBindingDivisor($vaobj, $bindingindex, $divisor): void
+    public function vertexArrayBindingDivisor($vaobj, $bindingindex, $divisor): void
     {
         $vaobj = $vaobj instanceof \FFI\CData ? $vaobj->cdata : $vaobj;
         $bindingindex = $bindingindex instanceof \FFI\CData ? $bindingindex->cdata : $bindingindex;
         $divisor = $divisor instanceof \FFI\CData ? $divisor->cdata : $divisor;
 
-        assert(Assert::uint16($vaobj), 'Argument $vaobj must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($bindingindex), 'Argument $bindingindex must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($divisor), 'Argument $divisor must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($vaobj), 'Argument $vaobj must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($bindingindex), 'Argument $bindingindex must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($divisor), 'Argument $divisor must be a C-like GLuint, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glVertexArrayBindingDivisor', 'void (*)(GLuint vaobj, GLuint bindingindex, GLuint divisor)');
         $proc($vaobj, $bindingindex, $divisor);
@@ -6760,13 +6760,13 @@ class GL45 extends GL44
      * @param \FFI\CData|\FFI\CIntPtr|null $param
      * @return void
      */
-    public function glGetVertexArrayiv($vaobj, $pname, ?\FFI\CData $param): void
+    public function getVertexArrayiv($vaobj, $pname, ?\FFI\CData $param): void
     {
         $vaobj = $vaobj instanceof \FFI\CData ? $vaobj->cdata : $vaobj;
         $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
 
-        assert(Assert::uint16($vaobj), 'Argument $vaobj must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($vaobj), 'Argument $vaobj must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glGetVertexArrayiv', 'void (*)(GLuint vaobj, GLenum pname, GLint *param)');
         $proc($vaobj, $pname, $param);
@@ -6820,15 +6820,15 @@ class GL45 extends GL44
      * @param \FFI\CData|\FFI\CIntPtr|null $param
      * @return void
      */
-    public function glGetVertexArrayIndexediv($vaobj, $index, $pname, ?\FFI\CData $param): void
+    public function getVertexArrayIndexediv($vaobj, $index, $pname, ?\FFI\CData $param): void
     {
         $vaobj = $vaobj instanceof \FFI\CData ? $vaobj->cdata : $vaobj;
         $index = $index instanceof \FFI\CData ? $index->cdata : $index;
         $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
 
-        assert(Assert::uint16($vaobj), 'Argument $vaobj must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($vaobj), 'Argument $vaobj must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glGetVertexArrayIndexediv', 'void (*)(GLuint vaobj, GLuint index, GLenum pname, GLint *param)');
         $proc($vaobj, $index, $pname, $param);
@@ -6882,15 +6882,15 @@ class GL45 extends GL44
      * @param \FFI\CData|\FFI\CIntPtr|null $param
      * @return void
      */
-    public function glGetVertexArrayIndexed64iv($vaobj, $index, $pname, ?\FFI\CData $param): void
+    public function getVertexArrayIndexed64iv($vaobj, $index, $pname, ?\FFI\CData $param): void
     {
         $vaobj = $vaobj instanceof \FFI\CData ? $vaobj->cdata : $vaobj;
         $index = $index instanceof \FFI\CData ? $index->cdata : $index;
         $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
 
-        assert(Assert::uint16($vaobj), 'Argument $vaobj must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($vaobj), 'Argument $vaobj must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glGetVertexArrayIndexed64iv', 'void (*)(GLuint vaobj, GLuint index, GLenum pname, GLint64 *param)');
         $proc($vaobj, $index, $pname, $param);
@@ -6906,11 +6906,11 @@ class GL45 extends GL44
      * @param \FFI\CData|\FFI\CIntPtr|null $samplers
      * @return void
      */
-    public function glCreateSamplers($n, ?\FFI\CData $samplers): void
+    public function createSamplers($n, ?\FFI\CData $samplers): void
     {
         $n = $n instanceof \FFI\CData ? $n->cdata : $n;
 
-        assert(Assert::int16($n), 'Argument $n must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isInt16($n), 'Argument $n must be a C-like GLsizei, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glCreateSamplers', 'void (*)(GLsizei n, GLuint *samplers)');
         $proc($n, $samplers);
@@ -6926,11 +6926,11 @@ class GL45 extends GL44
      * @param \FFI\CData|\FFI\CIntPtr|null $pipelines
      * @return void
      */
-    public function glCreateProgramPipelines($n, ?\FFI\CData $pipelines): void
+    public function createProgramPipelines($n, ?\FFI\CData $pipelines): void
     {
         $n = $n instanceof \FFI\CData ? $n->cdata : $n;
 
-        assert(Assert::int16($n), 'Argument $n must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isInt16($n), 'Argument $n must be a C-like GLsizei, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glCreateProgramPipelines', 'void (*)(GLsizei n, GLuint *pipelines)');
         $proc($n, $pipelines);
@@ -6951,13 +6951,13 @@ class GL45 extends GL44
      * @param \FFI\CData|\FFI\CIntPtr|null $ids
      * @return void
      */
-    public function glCreateQueries($target, $n, ?\FFI\CData $ids): void
+    public function createQueries($target, $n, ?\FFI\CData $ids): void
     {
         $target = $target instanceof \FFI\CData ? $target->cdata : $target;
         $n = $n instanceof \FFI\CData ? $n->cdata : $n;
 
-        assert(Assert::uint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::int16($n), 'Argument $n must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isUint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isInt16($n), 'Argument $n must be a C-like GLsizei, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glCreateQueries', 'void (*)(GLenum target, GLsizei n, GLuint *ids)');
         $proc($target, $n, $ids);
@@ -6999,16 +6999,16 @@ class GL45 extends GL44
      * @param mixed|float|string|int|\FFI\CData|\FFI\CInt $offset
      * @return void
      */
-    public function glGetQueryBufferObjecti64v($id, $buffer, $pname, $offset): void
+    public function getQueryBufferObjecti64v($id, $buffer, $pname, $offset): void
     {
         $id = $id instanceof \FFI\CData ? $id->cdata : $id;
         $buffer = $buffer instanceof \FFI\CData ? $buffer->cdata : $buffer;
         $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
 
-        assert(Assert::uint16($id), 'Argument $id must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($buffer), 'Argument $buffer must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::int64($offset), 'Argument $offset must be a C-like GLintptr, but incompatible or overflow value given');
+        assert(Type::isUint16($id), 'Argument $id must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($buffer), 'Argument $buffer must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isInt64($offset), 'Argument $offset must be a C-like GLintptr, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glGetQueryBufferObjecti64v', 'void (*)(GLuint id, GLuint buffer, GLenum pname, GLintptr offset)');
         $proc($id, $buffer, $pname, $offset);
@@ -7050,16 +7050,16 @@ class GL45 extends GL44
      * @param mixed|float|string|int|\FFI\CData|\FFI\CInt $offset
      * @return void
      */
-    public function glGetQueryBufferObjectiv($id, $buffer, $pname, $offset): void
+    public function getQueryBufferObjectiv($id, $buffer, $pname, $offset): void
     {
         $id = $id instanceof \FFI\CData ? $id->cdata : $id;
         $buffer = $buffer instanceof \FFI\CData ? $buffer->cdata : $buffer;
         $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
 
-        assert(Assert::uint16($id), 'Argument $id must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($buffer), 'Argument $buffer must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::int64($offset), 'Argument $offset must be a C-like GLintptr, but incompatible or overflow value given');
+        assert(Type::isUint16($id), 'Argument $id must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($buffer), 'Argument $buffer must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isInt64($offset), 'Argument $offset must be a C-like GLintptr, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glGetQueryBufferObjectiv', 'void (*)(GLuint id, GLuint buffer, GLenum pname, GLintptr offset)');
         $proc($id, $buffer, $pname, $offset);
@@ -7101,16 +7101,16 @@ class GL45 extends GL44
      * @param mixed|float|string|int|\FFI\CData|\FFI\CInt $offset
      * @return void
      */
-    public function glGetQueryBufferObjectui64v($id, $buffer, $pname, $offset): void
+    public function getQueryBufferObjectui64v($id, $buffer, $pname, $offset): void
     {
         $id = $id instanceof \FFI\CData ? $id->cdata : $id;
         $buffer = $buffer instanceof \FFI\CData ? $buffer->cdata : $buffer;
         $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
 
-        assert(Assert::uint16($id), 'Argument $id must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($buffer), 'Argument $buffer must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::int64($offset), 'Argument $offset must be a C-like GLintptr, but incompatible or overflow value given');
+        assert(Type::isUint16($id), 'Argument $id must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($buffer), 'Argument $buffer must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isInt64($offset), 'Argument $offset must be a C-like GLintptr, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glGetQueryBufferObjectui64v', 'void (*)(GLuint id, GLuint buffer, GLenum pname, GLintptr offset)');
         $proc($id, $buffer, $pname, $offset);
@@ -7152,16 +7152,16 @@ class GL45 extends GL44
      * @param mixed|float|string|int|\FFI\CData|\FFI\CInt $offset
      * @return void
      */
-    public function glGetQueryBufferObjectuiv($id, $buffer, $pname, $offset): void
+    public function getQueryBufferObjectuiv($id, $buffer, $pname, $offset): void
     {
         $id = $id instanceof \FFI\CData ? $id->cdata : $id;
         $buffer = $buffer instanceof \FFI\CData ? $buffer->cdata : $buffer;
         $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
 
-        assert(Assert::uint16($id), 'Argument $id must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($buffer), 'Argument $buffer must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::uint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::int64($offset), 'Argument $offset must be a C-like GLintptr, but incompatible or overflow value given');
+        assert(Type::isUint16($id), 'Argument $id must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($buffer), 'Argument $buffer must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isInt64($offset), 'Argument $offset must be a C-like GLintptr, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glGetQueryBufferObjectuiv', 'void (*)(GLuint id, GLuint buffer, GLenum pname, GLintptr offset)');
         $proc($id, $buffer, $pname, $offset);
@@ -7262,11 +7262,11 @@ class GL45 extends GL44
      * @param int|\FFI\CData|\FFI\CInt $barriers
      * @return void
      */
-    public function glMemoryBarrierByRegion($barriers): void
+    public function memoryBarrierByRegion($barriers): void
     {
         $barriers = $barriers instanceof \FFI\CData ? $barriers->cdata : $barriers;
 
-        assert(Assert::uint16($barriers), 'Argument $barriers must be a C-like GLbitfield, but incompatible or overflow value given');
+        assert(Type::isUint16($barriers), 'Argument $barriers must be a C-like GLbitfield, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glMemoryBarrierByRegion', 'void (*)(GLbitfield barriers)');
         $proc($barriers);
@@ -7325,7 +7325,7 @@ class GL45 extends GL44
      * @param \FFI\CData|\FFI\CPtr|null $pixels
      * @return void
      */
-    public function glGetTextureSubImage($texture, $level, $xoffset, $yoffset, $zoffset, $width, $height, $depth, $format, $type, $bufSize, ?\FFI\CData $pixels): void
+    public function getTextureSubImage($texture, $level, $xoffset, $yoffset, $zoffset, $width, $height, $depth, $format, $type, $bufSize, ?\FFI\CData $pixels): void
     {
         $texture = $texture instanceof \FFI\CData ? $texture->cdata : $texture;
         $level = $level instanceof \FFI\CData ? $level->cdata : $level;
@@ -7339,17 +7339,17 @@ class GL45 extends GL44
         $type = $type instanceof \FFI\CData ? $type->cdata : $type;
         $bufSize = $bufSize instanceof \FFI\CData ? $bufSize->cdata : $bufSize;
 
-        assert(Assert::uint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::int16($level), 'Argument $level must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($xoffset), 'Argument $xoffset must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($yoffset), 'Argument $yoffset must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($zoffset), 'Argument $zoffset must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($width), 'Argument $width must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Assert::int16($height), 'Argument $height must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Assert::int16($depth), 'Argument $depth must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Assert::uint16($format), 'Argument $format must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::uint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::int16($bufSize), 'Argument $bufSize must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isUint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isInt16($level), 'Argument $level must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($xoffset), 'Argument $xoffset must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($yoffset), 'Argument $yoffset must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($zoffset), 'Argument $zoffset must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($width), 'Argument $width must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isInt16($height), 'Argument $height must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isInt16($depth), 'Argument $depth must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isUint16($format), 'Argument $format must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isInt16($bufSize), 'Argument $bufSize must be a C-like GLsizei, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glGetTextureSubImage', 'void (*)(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLenum type, GLsizei bufSize, void *pixels)');
         $proc($texture, $level, $xoffset, $yoffset, $zoffset, $width, $height, $depth, $format, $type, $bufSize, $pixels);
@@ -7407,7 +7407,7 @@ class GL45 extends GL44
      * @param \FFI\CData|\FFI\CPtr|null $pixels
      * @return void
      */
-    public function glGetCompressedTextureSubImage($texture, $level, $xoffset, $yoffset, $zoffset, $width, $height, $depth, $bufSize, ?\FFI\CData $pixels): void
+    public function getCompressedTextureSubImage($texture, $level, $xoffset, $yoffset, $zoffset, $width, $height, $depth, $bufSize, ?\FFI\CData $pixels): void
     {
         $texture = $texture instanceof \FFI\CData ? $texture->cdata : $texture;
         $level = $level instanceof \FFI\CData ? $level->cdata : $level;
@@ -7419,15 +7419,15 @@ class GL45 extends GL44
         $depth = $depth instanceof \FFI\CData ? $depth->cdata : $depth;
         $bufSize = $bufSize instanceof \FFI\CData ? $bufSize->cdata : $bufSize;
 
-        assert(Assert::uint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::int16($level), 'Argument $level must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($xoffset), 'Argument $xoffset must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($yoffset), 'Argument $yoffset must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($zoffset), 'Argument $zoffset must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($width), 'Argument $width must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Assert::int16($height), 'Argument $height must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Assert::int16($depth), 'Argument $depth must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Assert::int16($bufSize), 'Argument $bufSize must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isUint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isInt16($level), 'Argument $level must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($xoffset), 'Argument $xoffset must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($yoffset), 'Argument $yoffset must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($zoffset), 'Argument $zoffset must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($width), 'Argument $width must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isInt16($height), 'Argument $height must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isInt16($depth), 'Argument $depth must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isInt16($bufSize), 'Argument $bufSize must be a C-like GLsizei, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glGetCompressedTextureSubImage', 'void (*)(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLsizei bufSize, void *pixels)');
         $proc($texture, $level, $xoffset, $yoffset, $zoffset, $width, $height, $depth, $bufSize, $pixels);
@@ -7487,7 +7487,7 @@ class GL45 extends GL44
      * @since 4.5
      * @return int|\FFI\CData|\FFI\CInt
      */
-    public function glGetGraphicsResetStatus(): int
+    public function getGraphicsResetStatus(): int
     {
         $proc = $this->getProcAddress('glGetGraphicsResetStatus', 'GLenum (*)(void)');
         return $proc();
@@ -7524,15 +7524,15 @@ class GL45 extends GL44
      * @param \FFI\CData|\FFI\CPtr|null $pixels
      * @return void
      */
-    public function glGetnCompressedTexImage($target, $lod, $bufSize, ?\FFI\CData $pixels): void
+    public function getnCompressedTexImage($target, $lod, $bufSize, ?\FFI\CData $pixels): void
     {
         $target = $target instanceof \FFI\CData ? $target->cdata : $target;
         $lod = $lod instanceof \FFI\CData ? $lod->cdata : $lod;
         $bufSize = $bufSize instanceof \FFI\CData ? $bufSize->cdata : $bufSize;
 
-        assert(Assert::uint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::int16($lod), 'Argument $lod must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($bufSize), 'Argument $bufSize must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isUint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isInt16($lod), 'Argument $lod must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($bufSize), 'Argument $bufSize must be a C-like GLsizei, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glGetnCompressedTexImage', 'void (*)(GLenum target, GLint lod, GLsizei bufSize, void *pixels)');
         $proc($target, $lod, $bufSize, $pixels);
@@ -7597,7 +7597,7 @@ class GL45 extends GL44
      * @param \FFI\CData|\FFI\CPtr|null $pixels
      * @return void
      */
-    public function glGetnTexImage($target, $level, $format, $type, $bufSize, ?\FFI\CData $pixels): void
+    public function getnTexImage($target, $level, $format, $type, $bufSize, ?\FFI\CData $pixels): void
     {
         $target = $target instanceof \FFI\CData ? $target->cdata : $target;
         $level = $level instanceof \FFI\CData ? $level->cdata : $level;
@@ -7605,11 +7605,11 @@ class GL45 extends GL44
         $type = $type instanceof \FFI\CData ? $type->cdata : $type;
         $bufSize = $bufSize instanceof \FFI\CData ? $bufSize->cdata : $bufSize;
 
-        assert(Assert::uint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::int16($level), 'Argument $level must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::uint16($format), 'Argument $format must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::uint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::int16($bufSize), 'Argument $bufSize must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isUint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isInt16($level), 'Argument $level must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isUint16($format), 'Argument $format must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isInt16($bufSize), 'Argument $bufSize must be a C-like GLsizei, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glGetnTexImage', 'void (*)(GLenum target, GLint level, GLenum format, GLenum type, GLsizei bufSize, void *pixels)');
         $proc($target, $level, $format, $type, $bufSize, $pixels);
@@ -7645,15 +7645,15 @@ class GL45 extends GL44
      * @param \FFI\CData|\FFI\CFloatPtr|null $params
      * @return void
      */
-    public function glGetnUniformdv($program, $location, $bufSize, ?\FFI\CData $params): void
+    public function getnUniformdv($program, $location, $bufSize, ?\FFI\CData $params): void
     {
         $program = $program instanceof \FFI\CData ? $program->cdata : $program;
         $location = $location instanceof \FFI\CData ? $location->cdata : $location;
         $bufSize = $bufSize instanceof \FFI\CData ? $bufSize->cdata : $bufSize;
 
-        assert(Assert::uint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::int16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($bufSize), 'Argument $bufSize must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isUint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isInt16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($bufSize), 'Argument $bufSize must be a C-like GLsizei, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glGetnUniformdv', 'void (*)(GLuint program, GLint location, GLsizei bufSize, GLdouble *params)');
         $proc($program, $location, $bufSize, $params);
@@ -7689,15 +7689,15 @@ class GL45 extends GL44
      * @param \FFI\CData|\FFI\CFloatPtr|null $params
      * @return void
      */
-    public function glGetnUniformfv($program, $location, $bufSize, ?\FFI\CData $params): void
+    public function getnUniformfv($program, $location, $bufSize, ?\FFI\CData $params): void
     {
         $program = $program instanceof \FFI\CData ? $program->cdata : $program;
         $location = $location instanceof \FFI\CData ? $location->cdata : $location;
         $bufSize = $bufSize instanceof \FFI\CData ? $bufSize->cdata : $bufSize;
 
-        assert(Assert::uint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::int16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($bufSize), 'Argument $bufSize must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isUint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isInt16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($bufSize), 'Argument $bufSize must be a C-like GLsizei, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glGetnUniformfv', 'void (*)(GLuint program, GLint location, GLsizei bufSize, GLfloat *params)');
         $proc($program, $location, $bufSize, $params);
@@ -7733,15 +7733,15 @@ class GL45 extends GL44
      * @param \FFI\CData|\FFI\CIntPtr|null $params
      * @return void
      */
-    public function glGetnUniformiv($program, $location, $bufSize, ?\FFI\CData $params): void
+    public function getnUniformiv($program, $location, $bufSize, ?\FFI\CData $params): void
     {
         $program = $program instanceof \FFI\CData ? $program->cdata : $program;
         $location = $location instanceof \FFI\CData ? $location->cdata : $location;
         $bufSize = $bufSize instanceof \FFI\CData ? $bufSize->cdata : $bufSize;
 
-        assert(Assert::uint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::int16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($bufSize), 'Argument $bufSize must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isUint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isInt16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($bufSize), 'Argument $bufSize must be a C-like GLsizei, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glGetnUniformiv', 'void (*)(GLuint program, GLint location, GLsizei bufSize, GLint *params)');
         $proc($program, $location, $bufSize, $params);
@@ -7777,15 +7777,15 @@ class GL45 extends GL44
      * @param \FFI\CData|\FFI\CIntPtr|null $params
      * @return void
      */
-    public function glGetnUniformuiv($program, $location, $bufSize, ?\FFI\CData $params): void
+    public function getnUniformuiv($program, $location, $bufSize, ?\FFI\CData $params): void
     {
         $program = $program instanceof \FFI\CData ? $program->cdata : $program;
         $location = $location instanceof \FFI\CData ? $location->cdata : $location;
         $bufSize = $bufSize instanceof \FFI\CData ? $bufSize->cdata : $bufSize;
 
-        assert(Assert::uint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Assert::int16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($bufSize), 'Argument $bufSize must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isUint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
+        assert(Type::isInt16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($bufSize), 'Argument $bufSize must be a C-like GLsizei, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glGetnUniformuiv', 'void (*)(GLuint program, GLint location, GLsizei bufSize, GLuint *params)');
         $proc($program, $location, $bufSize, $params);
@@ -7887,7 +7887,7 @@ class GL45 extends GL44
      * @param \FFI\CData|\FFI\CPtr|null $data
      * @return void
      */
-    public function glReadnPixels($x, $y, $width, $height, $format, $type, $bufSize, ?\FFI\CData $data): void
+    public function readnPixels($x, $y, $width, $height, $format, $type, $bufSize, ?\FFI\CData $data): void
     {
         $x = $x instanceof \FFI\CData ? $x->cdata : $x;
         $y = $y instanceof \FFI\CData ? $y->cdata : $y;
@@ -7897,13 +7897,13 @@ class GL45 extends GL44
         $type = $type instanceof \FFI\CData ? $type->cdata : $type;
         $bufSize = $bufSize instanceof \FFI\CData ? $bufSize->cdata : $bufSize;
 
-        assert(Assert::int16($x), 'Argument $x must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($y), 'Argument $y must be a C-like GLint, but incompatible or overflow value given');
-        assert(Assert::int16($width), 'Argument $width must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Assert::int16($height), 'Argument $height must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Assert::uint16($format), 'Argument $format must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::uint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Assert::int16($bufSize), 'Argument $bufSize must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isInt16($x), 'Argument $x must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($y), 'Argument $y must be a C-like GLint, but incompatible or overflow value given');
+        assert(Type::isInt16($width), 'Argument $width must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isInt16($height), 'Argument $height must be a C-like GLsizei, but incompatible or overflow value given');
+        assert(Type::isUint16($format), 'Argument $format must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isUint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
+        assert(Type::isInt16($bufSize), 'Argument $bufSize must be a C-like GLsizei, but incompatible or overflow value given');
 
         $proc = $this->getProcAddress('glReadnPixels', 'void (*)(GLint x, GLint y, GLsizei width, GLsizei height, GLenum format, GLenum type, GLsizei bufSize, void *data)');
         $proc($x, $y, $width, $height, $format, $type, $bufSize, $data);
@@ -7920,7 +7920,7 @@ class GL45 extends GL44
      * @since 4.5
      * @return void
      */
-    public function glTextureBarrier(): void
+    public function textureBarrier(): void
     {
         $proc = $this->getProcAddress('glTextureBarrier', 'void (*)(void)');
         $proc();
