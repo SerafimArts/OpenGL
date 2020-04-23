@@ -42,15 +42,13 @@ $gl->genBuffers(1, $vbo);
 Current behaviour:
 
 ```php
-$vertices = GL::arrayOf('GLfloat', [
-    -1.0, -1.0, 0.0,
-     1.0, -1.0, 0.0,
-     0.0,  1.0, 0.0,
-]);
+$vertices = $gl->new('GLfloat[9]');
 
-$sizeOf = \FFI::sizeof(\FFI::addr($vertices));
+foreach ([-1.0, -1.0, 0.0, 1.0, -1.0, 0.0, 0.0, 1.0, 0.0] as $i => $v) {
+    $vertices[$i] = $v;
+}
 
-$gl->bufferData(GL::GL_ARRAY_BUFFER, $sizeOf, $vertices, GL::GL_STATIC_DRAW);
+$gl->bufferData(GL::GL_ARRAY_BUFFER, FFI::sizeof($vertices), $vertices, GL::GL_STATIC_DRAW);
 ```
 
 Instead of:
