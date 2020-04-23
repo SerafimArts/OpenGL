@@ -44,8 +44,8 @@ Current behaviour:
 ```php
 $vertices = GL::arrayOf('GLfloat', [
     -1.0, -1.0, 0.0,
-   1.0, -1.0, 0.0,
-   0.0,  1.0, 0.0,
+     1.0, -1.0, 0.0,
+     0.0,  1.0, 0.0,
 ]);
 
 $sizeOf = \FFI::sizeof(\FFI::addr($vertices));
@@ -58,8 +58,8 @@ Instead of:
 ```php
 $vertices = new Float32Array(
     -1.0, -1.0, 0.0,
-   1.0, -1.0, 0.0,
-   0.0,  1.0, 0.0,
+     1.0, -1.0, 0.0,
+     0.0,  1.0, 0.0,
 );
 
 $gl->bufferData(GL::GL_ARRAY_BUFFER, $vertices->sizeOf(), $vertices, GL::GL_STATIC_DRAW);
