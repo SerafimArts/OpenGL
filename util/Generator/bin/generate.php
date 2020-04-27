@@ -10,7 +10,7 @@
 declare(strict_types=1);
 
 use CodeGenerator\ClassGenerator;
-use CodeGenerator\Documentation\KhronosDocumentationGenerator;
+use Documentation\KhronosDocumentationGenerator;
 use CodeGenerator\Json;
 
 require __DIR__ . '/../vendor/autoload.php';

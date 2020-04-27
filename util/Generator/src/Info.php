@@ -11,7 +11,7 @@ declare(strict_types=1);
 
 namespace CodeGenerator;
 
-use CodeGenerator\Documentation\DocumentationInterface;
+use Documentation\DocumentationInterface;
 
 /**
  * Class Info

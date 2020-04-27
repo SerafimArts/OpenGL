@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace CodeGenerator\Documentation;
+namespace Documentation;
 
 /**
  * Class DocsGenerator

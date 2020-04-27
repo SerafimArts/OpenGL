@@ -13,7 +13,7 @@ namespace CodeGenerator;
 
 use CodeGenerator\Dependency\ConstantGenerator;
 use CodeGenerator\Dependency\MethodGenerator;
-use CodeGenerator\Documentation\DocumentationInterface;
+use Documentation\DocumentationInterface;
 use Nette\PhpGenerator\PhpFile;
 use Nette\PhpGenerator\PsrPrinter;
 use Serafim\OpenGL\Type\Type;

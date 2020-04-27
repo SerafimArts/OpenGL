@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace CodeGenerator\Documentation;
+namespace Documentation;
 
 use League\HTMLToMarkdown\HtmlConverter;
 use Symfony\Component\DomCrawler\Crawler;
