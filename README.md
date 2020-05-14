@@ -21,7 +21,7 @@ $wglSwapIntervalEXT(0);
 
 ### Note 1
 
-Some things are not optimized.
+Some things not optimized.
 
 ### Note 2
 
