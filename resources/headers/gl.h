@@ -1,11 +1,13 @@
 
-#include "platform.h"
+#include "platform/khrplatform.h"
+#include "platform/opengl.h"
 
 #ifdef __windows__
-  #include "wglext.h"
+  #include "wgl.h"
 #endif
 
 #ifdef __linux__
+    // TODO
     extern void *glXGetProcAddress(const char* fn);
 #endif
 

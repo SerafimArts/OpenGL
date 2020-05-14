@@ -13,114 +13,176 @@ declare(strict_types=1);
 
 namespace Serafim\OpenGL;
 
+use FFI\CData;
+
 /**
+ * The OpenGL functionality up to version 4.4. Includes the deprecated symbols of the Compatibility Profile.
+ *
+ * OpenGL 4.4 implementations support revision 4.40 of the OpenGL Shading Language.
+ *
+ * Extensions promoted to core in this release:
+ *
+ * - ARB_buffer_storage @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_buffer_storage.txt
+ * - ARB_clear_texture @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_clear_texture.txt
+ * - ARB_enhanced_layouts @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_enhanced_layouts.txt
+ * - ARB_multi_bind @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_multi_bind.txt
+ * - ARB_query_buffer_object @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_query_buffer_object.txt
+ * - ARB_texture_mirror_clamp_to_edge @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_texture_mirror_clamp_to_edge.txt
+ * - ARB_texture_stencil8 @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_texture_stencil8.txt
+ * - ARB_vertex_type_10f_11f_11f_rev @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_vertex_type_10f_11f_11f_rev.txt
+ *
  * @version 4.4
  */
 class GL44 extends GL43
 {
     /**
+     * Implementation-dependent state which constrains the maximum value of stride parameters to vertex array
+     * pointer-setting commands.
+     *
      * @since 4.4
      * @var int
      */
     public const GL_MAX_VERTEX_ATTRIB_STRIDE = 0x82E5;
+
     /**
+     * Implementations are not required to support primitive restart for separate patch primitives
+     * (primitive type PATCHES). Support can be queried by calling GetBooleanv with the symbolic constant
+     * PRIMITIVE_RESTART_FOR_PATCHES_SUPPORTED. A value of FALSE indicates that primitive restart is treated as disabled
+     * when drawing patches, no matter the value of the enables. A value of TRUE indicates that primitive restart
+     * behaves normally for patches.
+     *
      * @since 4.4
      * @var int
      */
     public const GL_PRIMITIVE_RESTART_FOR_PATCHES_SUPPORTED = 0x8221;
+
     /**
+     * Equivalent to {@link ARBTextureBufferObject#GL_TEXTURE_BUFFER_ARB TEXTURE_BUFFER_ARB} query, but named more
+     * consistently.
+     *
      * @since 4.4
      * @var int
      */
     public const GL_TEXTURE_BUFFER_BINDING = 0x8C2A;
+
     /**
+     * Accepted in the $flags parameter of {@link #glBufferStorage BufferStorage} and
+     * {@link ARBBufferStorage#glNamedBufferStorageEXT NamedBufferStorageEXT}.
+     *
      * @since 4.4
      * @var int
      */
-    public const GL_MAP_PERSISTENT_BIT = 0x0040;
+    public const
+        GL_MAP_PERSISTENT_BIT = 0x40,
+        GL_MAP_COHERENT_BIT = 0x80,
+        GL_DYNAMIC_STORAGE_BIT = 0x100,
+        GL_CLIENT_STORAGE_BIT = 0x200;
+
     /**
+     * Accepted by the $pname parameter of {@code GetBufferParameter&#123;i|i64&#125;v}.
+     *
      * @since 4.4
      * @var int
      */
-    public const GL_MAP_COHERENT_BIT = 0x0080;
+    public const
+        GL_BUFFER_IMMUTABLE_STORAGE = 0x821F,
+        GL_BUFFER_STORAGE_FLAGS = 0x8220;
+
     /**
-     * @since 4.4
-     * @var int
-     */
-    public const GL_DYNAMIC_STORAGE_BIT = 0x0100;
-    /**
-     * @since 4.4
-     * @var int
-     */
-    public const GL_CLIENT_STORAGE_BIT = 0x0200;
-    /**
+     * Accepted by the $barriers parameter of {@link GL42::memoryBarrier MemoryBarrier}.
+     *
      * @since 4.4
      * @var int
      */
     public const GL_CLIENT_MAPPED_BUFFER_BARRIER_BIT = 0x4000;
+
     /**
-     * @since 4.4
-     * @var int
-     */
-    public const GL_BUFFER_IMMUTABLE_STORAGE = 0x821F;
-    /**
-     * @since 4.4
-     * @var int
-     */
-    public const GL_BUFFER_STORAGE_FLAGS = 0x8220;
-    /**
+     * Accepted by the $pname parameter for {@link GL42::getInternalformativ GetInternalformativ} and
+     * {@link GL43::getInternalformati64v GetInternalformati64v}.
+     *
      * @since 4.4
      * @var int
      */
     public const GL_CLEAR_TEXTURE = 0x9365;
+
     /**
+     * Accepted in the $props array of {@link GL43::getProgramResourceiv GetProgramResourceiv}.
+     *
      * @since 4.4
      * @var int
      */
-    public const GL_LOCATION_COMPONENT = 0x934A;
+    public const
+        GL_LOCATION_COMPONENT = 0x934A,
+        GL_TRANSFORM_FEEDBACK_BUFFER_INDEX = 0x934B,
+        GL_TRANSFORM_FEEDBACK_BUFFER_STRIDE = 0x934C;
+
     /**
-     * @since 4.4
-     * @var int
-     */
-    public const GL_TRANSFORM_FEEDBACK_BUFFER_INDEX = 0x934B;
-    /**
-     * @since 4.4
-     * @var int
-     */
-    public const GL_TRANSFORM_FEEDBACK_BUFFER_STRIDE = 0x934C;
-    /**
-     * @since 4.4
-     * @var int
-     */
-    public const GL_QUERY_BUFFER = 0x9192;
-    /**
-     * @since 4.4
-     * @var int
-     */
-    public const GL_QUERY_BUFFER_BARRIER_BIT = 0x8000;
-    /**
-     * @since 4.4
-     * @var int
-     */
-    public const GL_QUERY_BUFFER_BINDING = 0x9193;
-    /**
+     * Accepted by the $pname parameter of {@link GL15::getQueryObjectiv GetQueryObjectiv},
+     * {@link GL15::getQueryObjectuiv GetQueryObjectuiv}, {@link GL33::getQueryObjecti64v GetQueryObjecti64v} and
+     * {@link GL33::getQueryObjectui64v GetQueryObjectui64v}.
+     *
      * @since 4.4
      * @var int
      */
     public const GL_QUERY_RESULT_NO_WAIT = 0x9194;
+
     /**
+     * Accepted by the $target parameter of
+     * {@link GL15::bindBuffer BindBuffer},
+     * {@link GL15::bufferData BufferData},
+     * {@link GL15::bufferSubData BufferSubData},
+     * {@link GL15::mapBuffer MapBuffer},
+     * {@link GL15::unmapBuffer UnmapBuffer},
+     * {@link GL30::mapBufferRange MapBufferRange},
+     * {@link GL15::getBufferSubData GetBufferSubData},
+     * {@link GL15::getBufferParameteriv GetBufferParameteriv},
+     * {@link GL32::getBufferParameteri64v GetBufferParameteri64v},
+     * {@link GL15::getBufferPointerv GetBufferPointerv},
+     * {@link GL43::clearBufferSubData ClearBufferSubData}
+     *
+     * and the $readtarget and $writetarget parameters of {@link GL31::copyBufferSubData CopyBufferSubData}.
+     *
+     * @since 4.4
+     * @var int
+     */
+    public const GL_QUERY_BUFFER = 0x9192;
+
+    /**
+     * Accepted by the $pname parameter of {@link GL11::getBooleanv GetBooleanv},
+     * {@link GL11::getIntegerv GetIntegerv}, {@link GL11::getFloatv GetFloatv},
+     * and {@link GL11::getDoublev GetDoublev}.
+     *
+     * @since 4.4
+     * @var int
+     */
+    public const GL_QUERY_BUFFER_BINDING = 0x9193;
+
+    /**
+     * Accepted in the $barriers bitfield in {@link GL42::memoryBarrier MemoryBarrier}.
+     *
+     * @since 4.4
+     * @var int
+     */
+    public const GL_QUERY_BUFFER_BARRIER_BIT = 0x8000;
+
+    /**
+     * Accepted by the $param parameter of TexParameter{if}, SamplerParameter{if} and SamplerParameter{if}v, and
+     * by the $params parameter of TexParameter{if}v, TexParameterI{i ui}v and SamplerParameterI{i ui}v when
+     * their $pname parameter is {@link GL11#GL_TEXTURE_WRAP_S TEXTURE_WRAP_S},
+     * {@link GL11#GL_TEXTURE_WRAP_T TEXTURE_WRAP_T}, or {@link GL12#GL_TEXTURE_WRAP_R TEXTURE_WRAP_R},
+     *
      * @since 4.4
      * @var int
      */
     public const GL_MIRROR_CLAMP_TO_EDGE = 0x8743;
 
     /**
-     * {@see GL46::glBindBuffersBase} binds a set of $count buffer objects whose names are given in the array
+     * {@see GL44::bindBuffersBase} binds a set of $count buffer objects whose names are given in the array
      * $buffers to the $count consecutive binding points starting from index $first of the array of targets specified
-     * by $target. If $buffers is {@see GL46::NULL} then {@see GL46::glBindBuffersBase} unbinds any buffers that are
+     * by $target. If $buffers is {@see GL46::NULL} then {@see GL44::bindBuffersBase} unbinds any buffers that are
      * currently bound to the referenced binding points. Assuming no errors are generated, it is equivalent to the
-     * following pseudo-code, which calls {@see GL46::glBindBufferBase}, with the exception that the non-indexed
-     * $target is not changed by {@see GL46::glBindBuffersBase}:
+     * following pseudo-code, which calls {@see GL44::bindBufferBase}, with the exception that the non-indexed
+     * $target is not changed by {@see GL44::bindBuffersBase}:
      *
      * <code>
      *     for (i = 0; i < count; i++) {
@@ -140,24 +202,25 @@ class GL44 extends GL43
      * @param int $target
      * @param int $first
      * @param int $count
-     * @param \FFI\CData|null $buffers
+     * @param CData|null $buffers
      * @return void
      */
-    public function bindBuffersBase(int $target, int $first, int $count, ?\FFI\CData $buffers): void
+    public function bindBuffersBase(int $target, int $first, int $count, ?CData $buffers): void
     {
-        $__proc = $this->getProcAs('glBindBuffersBase', 'void (*)(GLenum target, GLuint first, GLsizei count, const GLuint *buffers)');
+        $__proc = $this->proc('glBindBuffersBase',
+            'void (*)(GLenum target, GLuint first, GLsizei count, const GLuint *buffers)');
         $__proc($target, $first, $count, $buffers);
     }
 
     /**
-     * {@see GL46::glBindBuffersRange} binds a set of $count ranges from buffer objects whose names are given in the
+     * {@see GL44::bindBuffersRange} binds a set of $count ranges from buffer objects whose names are given in the
      * array $buffers to the $count consecutive binding points starting from index $first of the array of targets
      * specified by $target. $offsets specifies the address of an array containing $count starting offsets within the
      * buffers, and $sizes specifies the address of an array of $count sizes of the ranges. If $buffers is
-     * {@see GL46::NULL} then $offsets and $sizes are ignored and {@see GL46::glBindBuffersRange} unbinds any buffers
+     * {@see GL46::NULL} then $offsets and $sizes are ignored and {@see GL44::bindBuffersRange} unbinds any buffers
      * that are currently bound to the referenced binding points. Assuming no errors are generated, it is equivalent
-     * to the following pseudo-code, which calls {@see GL46::glBindBufferRange}, with the exception that the
-     * non-indexed $target is not changed by {@see GL46::glBindBuffersRange}:
+     * to the following pseudo-code, which calls {@see GL44::bindBufferRange}, with the exception that the
+     * non-indexed $target is not changed by {@see GL44::bindBuffersRange}:
      *
      * <code>
      *     for (i = 0; i < count; i++) {
@@ -177,19 +240,26 @@ class GL44 extends GL43
      * @param int $target
      * @param int $first
      * @param int $count
-     * @param \FFI\CData|null $buffers
-     * @param \FFI\CData|null $offsets
-     * @param \FFI\CData|null $sizes
+     * @param CData|null $buffers
+     * @param CData|null $offsets
+     * @param CData|null $sizes
      * @return void
      */
-    public function bindBuffersRange(int $target, int $first, int $count, ?\FFI\CData $buffers, ?\FFI\CData $offsets, ?\FFI\CData $sizes): void
-    {
-        $__proc = $this->getProcAs('glBindBuffersRange', 'void (*)(GLenum target, GLuint first, GLsizei count, const GLuint *buffers, const GLintptr *offsets, const GLsizeiptr *sizes)');
+    public function bindBuffersRange(
+        int $target,
+        int $first,
+        int $count,
+        ?CData $buffers,
+        ?CData $offsets,
+        ?CData $sizes
+    ): void {
+        $__proc = $this->proc('glBindBuffersRange',
+            'void (*)(GLenum target, GLuint first, GLsizei count, const GLuint *buffers, const GLintptr *offsets, const GLsizeiptr *sizes)');
         $__proc($target, $first, $count, $buffers, $offsets, $sizes);
     }
 
     /**
-     * {@see GL46::glBindImageTextures} binds images from an array of existing texture objects to a specified number
+     * {@see GL44::bindImageTextures} binds images from an array of existing texture objects to a specified number
      * of consecutive image units. $count specifies the number of texture objects whose names are stored in the array
      * $textures. That number of texture names are read from the array and bound to the $count consecutive texture
      * units starting from $first. If the name zero appears in the $textures array, any existing binding to the image
@@ -200,14 +270,15 @@ class GL44 extends GL43
      * internal format of the positive X image of level zero is used. If $textures is {@see GL46::NULL} then it is as
      * if an appropriately sized array containing only zeros had been specified.
      *
-     * {@see GL46::glBindImageTextures} is equivalent to the following pseudo code:
+     * {@see GL44::bindImageTextures} is equivalent to the following pseudo code:
      *
      * <code>
      *     for (i = 0; i < count; i++) {
      *         if (textures == NULL || textures[i] = 0) {
      *             glBindImageTexture(first + i, 0, 0, GL_FALSE, 0, GL_READ_ONLY, GL_R8);
      *         } else {
-     *             glBindImageTexture(first + i, textures[i], 0, GL_TRUE, 0, GL_READ_WRITE, lookupInternalFormat(textures[i]));
+     *             glBindImageTexture(first + i, textures[i], 0, GL_TRUE, 0, GL_READ_WRITE,
+     * lookupInternalFormat(textures[i]));
      *         }
      *     }
      * </code>
@@ -219,17 +290,18 @@ class GL44 extends GL43
      * @since 4.4
      * @param int $first
      * @param int $count
-     * @param \FFI\CData|null $textures
+     * @param CData|null $textures
      * @return void
      */
-    public function bindImageTextures(int $first, int $count, ?\FFI\CData $textures): void
+    public function bindImageTextures(int $first, int $count, ?CData $textures): void
     {
-        $__proc = $this->getProcAs('glBindImageTextures', 'void (*)(GLuint first, GLsizei count, const GLuint *textures)');
+        $__proc = $this->proc('glBindImageTextures',
+            'void (*)(GLuint first, GLsizei count, const GLuint *textures)');
         $__proc($first, $count, $textures);
     }
 
     /**
-     * {@see GL46::glBindSamplers} binds samplers from an array of existing sampler objects to a specified number of
+     * {@see GL44::bindSamplers} binds samplers from an array of existing sampler objects to a specified number of
      * consecutive sampler units. $count specifies the number of sampler objects whose names are stored in the array
      * $samplers. That number of sampler names is read from the array and bound to the $count consecutive sampler
      * units starting from $first.
@@ -239,7 +311,7 @@ class GL44 extends GL43
      * is present, that sampler object is bound to the corresponding sampler unit. If $samplers is {@see GL46::NULL}
      * then it is as if an appropriately sized array containing only zeros had been specified.
      *
-     * {@see GL46::glBindSamplers} is equivalent to the following pseudo code:
+     * {@see GL44::bindSamplers} is equivalent to the following pseudo code:
      *
      * <code>
      *     for (i = 0; i < count; i++) {
@@ -258,17 +330,17 @@ class GL44 extends GL43
      * @since 4.4
      * @param int $first
      * @param int $count
-     * @param \FFI\CData|null $samplers
+     * @param CData|null $samplers
      * @return void
      */
-    public function bindSamplers(int $first, int $count, ?\FFI\CData $samplers): void
+    public function bindSamplers(int $first, int $count, ?CData $samplers): void
     {
-        $__proc = $this->getProcAs('glBindSamplers', 'void (*)(GLuint first, GLsizei count, const GLuint *samplers)');
+        $__proc = $this->proc('glBindSamplers', 'void (*)(GLuint first, GLsizei count, const GLuint *samplers)');
         $__proc($first, $count, $samplers);
     }
 
     /**
-     * {@see GL46::glBindTextures} binds an array of existing texture objects to a specified number of consecutive
+     * {@see GL44::bindTextures} binds an array of existing texture objects to a specified number of consecutive
      * texture units. $count specifies the number of texture objects whose names are stored in the array $textures.
      * That number of texture names are read from the array and bound to the $count consecutive texture units
      * starting from $first. The target, or type of texture is deduced from the texture object and each texture is
@@ -277,7 +349,7 @@ class GL44 extends GL43
      * in its place. Any non-zero entry in $textures must be the name of an existing texture object. If $textures is
      * {@see GL46::NULL} then it is as if an appropriately sized array containing only zeros had been specified.
      *
-     * With the exception that the active texture selector maintains its current value, {@see GL46::glBindTextures}
+     * With the exception that the active texture selector maintains its current value, {@see GL44::bindTextures}
      * is equivalent to the following pseudo code:
      *
      * <code>
@@ -307,20 +379,20 @@ class GL44 extends GL43
      * @since 4.4
      * @param int $first
      * @param int $count
-     * @param \FFI\CData|null $textures
+     * @param CData|null $textures
      * @return void
      */
-    public function bindTextures(int $first, int $count, ?\FFI\CData $textures): void
+    public function bindTextures(int $first, int $count, ?CData $textures): void
     {
-        $__proc = $this->getProcAs('glBindTextures', 'void (*)(GLuint first, GLsizei count, const GLuint *textures)');
+        $__proc = $this->proc('glBindTextures', 'void (*)(GLuint first, GLsizei count, const GLuint *textures)');
         $__proc($first, $count, $textures);
     }
 
     /**
-     * {@see GL46::glBindVertexBuffers} and {@see GL46::glVertexArrayVertexBuffers} bind storage from an array of
+     * {@see GL44::bindVertexBuffers} and {@see GL44::vertexArrayVertexBuffers} bind storage from an array of
      * existing buffer objects to a specified number of consecutive vertex buffer binding points units in a vertex
-     * array object. For {@see GL46::glBindVertexBuffers}, the vertex array object is the currently bound vertex
-     * array object. For {@see GL46::glVertexArrayVertexBuffers}, $vaobj is the name of the vertex array object.
+     * array object. For {@see GL44::bindVertexBuffers}, the vertex array object is the currently bound vertex
+     * array object. For {@see GL44::vertexArrayVertexBuffers}, $vaobj is the name of the vertex array object.
      *
      * $count existing buffer objects are bound to vertex buffer binding points numbered $first$ through $first +
      * count - 1$. If $buffers is not NULL, it specifies an array of $count values, each of which must be zero or the
@@ -330,7 +402,7 @@ class GL44 extends GL43
      * buffer object. In this case, the offsets and strides associated with the binding points are set to default
      * values, ignoring $offsets and $strides.
      *
-     * {@see GL46::glBindVertexBuffers} is equivalent (assuming no errors are generated) to:
+     * {@see GL44::bindVertexBuffers} is equivalent (assuming no errors are generated) to:
      *
      * <code>
      *     for (i = 0; i < count; i++) {
@@ -344,8 +416,8 @@ class GL44 extends GL43
      *
      *  except that buffers will not be created if they do not exist.
      *
-     * {@see GL46::glVertexArrayVertexBuffers} is equivalent to the pseudocode above, but replacing
-     * {@see GL46::glBindVertexBuffers}(args) with {@see GL46::glVertexArrayVertexBuffers}(vaobj, args).
+     * {@see GL44::vertexArrayVertexBuffers} is equivalent to the pseudocode above, but replacing
+     * {@see GL44::bindVertexBuffers}(args) with {@see GL44::vertexArrayVertexBuffers}(vaobj, args).
      *
      * The values specified in $buffers, $offsets, and $strides will be checked separately for each vertex buffer
      * binding point. When a value for a specific vertex buffer binding point is invalid, the state for that binding
@@ -356,89 +428,96 @@ class GL44 extends GL43
      * @since 4.4
      * @param int $first
      * @param int $count
-     * @param \FFI\CData|null $buffers
-     * @param \FFI\CData|null $offsets
-     * @param \FFI\CData|null $strides
+     * @param CData|null $buffers
+     * @param CData|null $offsets
+     * @param CData|null $strides
      * @return void
      */
-    public function bindVertexBuffers(int $first, int $count, ?\FFI\CData $buffers, ?\FFI\CData $offsets, ?\FFI\CData $strides): void
-    {
-        $__proc = $this->getProcAs('glBindVertexBuffers', 'void (*)(GLuint first, GLsizei count, const GLuint *buffers, const GLintptr *offsets, const GLsizei *strides)');
+    public function bindVertexBuffers(
+        int $first,
+        int $count,
+        ?CData $buffers,
+        ?CData $offsets,
+        ?CData $strides
+    ): void {
+        $__proc = $this->proc('glBindVertexBuffers',
+            'void (*)(GLuint first, GLsizei count, const GLuint *buffers, const GLintptr *offsets, const GLsizei *strides)');
         $__proc($first, $count, $buffers, $offsets, $strides);
     }
 
     /**
-     * {@see GL46::glBufferStorage} and {@see GL46::glNamedBufferStorage} create a new immutable data store. For
-     * {@see GL46::glBufferStorage}, the buffer object currently bound to $target will be initialized. For
-     * {@see GL46::glNamedBufferStorage}, $buffer is the name of the buffer object that will be configured. The size
+     * {@see GL44::bufferStorage} and {@see GL44::namedBufferStorage} create a new immutable data store. For
+     * {@see GL44::bufferStorage}, the buffer object currently bound to $target will be initialized. For
+     * {@see GL44::namedBufferStorage}, $buffer is the name of the buffer object that will be configured. The size
      * of the data store is specified by $size. If an initial data is available, its address may be supplied in
      * $data. Otherwise, to create an uninitialized data store, $data should be {@see GL46::NULL}.
      *
      * The $flags parameters specifies the intended usage of the buffer's data store. It must be a bitwise
-     * combination of a subset of the following flags:   {@see GL46::GL_DYNAMIC_STORAGE_BIT}  The contents of the
-     * data store may be updated after creation through calls to {@see GL46::glBufferSubData}. If this bit is not
+     * combination of a subset of the following flags:   {@see GL44::GL_DYNAMIC_STORAGE_BIT}  The contents of the
+     * data store may be updated after creation through calls to {@see GL44::bufferSubData}. If this bit is not
      * set, the buffer content may not be directly updated by the client. The data argument may be used to specify
      * the initial content of the buffer's data store regardless of the presence of the
-     * {@see GL46::GL_DYNAMIC_STORAGE_BIT}. Regardless of the presence of this bit, buffers may always be updated
-     * with server-side calls such as {@see GL46::glCopyBufferSubData} and {@see GL46::glClearBufferSubData}.
-     * {@see GL46::GL_MAP_READ_BIT}  The data store may be mapped by the client for read access and a pointer in the
-     * client's address space obtained that may be read from.    {@see GL46::GL_MAP_WRITE_BIT}  The data store may be
+     * {@see GL44::GL_DYNAMIC_STORAGE_BIT}. Regardless of the presence of this bit, buffers may always be updated
+     * with server-side calls such as {@see GL44::copyBufferSubData} and {@see GL44::clearBufferSubData}.
+     * {@see GL44::GL_MAP_READ_BIT}  The data store may be mapped by the client for read access and a pointer in the
+     * client's address space obtained that may be read from.    {@see GL44::GL_MAP_WRITE_BIT}  The data store may be
      * mapped by the client for write access and a pointer in the client's address space obtained that may be written
-     * through.    {@see GL46::GL_MAP_PERSISTENT_BIT}  The client may request that the server read from or write to
+     * through.    {@see GL44::GL_MAP_PERSISTENT_BIT}  The client may request that the server read from or write to
      * the buffer while it is mapped. The client's pointer to the data store remains valid so long as the data store
-     * is mapped, even during execution of drawing or dispatch commands.    {@see GL46::GL_MAP_COHERENT_BIT}  Shared
+     * is mapped, even during execution of drawing or dispatch commands.    {@see GL44::GL_MAP_COHERENT_BIT}  Shared
      * access to buffers that are simultaneously mapped for client access and are used by the server will be
-     * coherent, so long as that mapping is performed using {@see GL46::glMapBufferRange}. That is, data written to
+     * coherent, so long as that mapping is performed using {@see GL44::mapBufferRange}. That is, data written to
      * the store by either the client or server will be immediately visible to the other with no further action taken
-     * by the application. In particular,   If {@see GL46::GL_MAP_COHERENT_BIT} is not set and the client performs a
-     * write followed by a call to the {@see GL46::glMemoryBarrier} command with the
-     * {@see GL46::GL_CLIENT_MAPPED_BUFFER_BARRIER_BIT} set, then in subsequent commands the server will see the
-     * writes.   If {@see GL46::GL_MAP_COHERENT_BIT} is set and the client performs a write, then in subsequent
-     * commands the server will see the writes.   If {@see GL46::GL_MAP_COHERENT_BIT} is not set and the server
-     * performs a write, the application must call {@see GL46::glMemoryBarrier} with the
-     * {@see GL46::GL_CLIENT_MAPPED_BUFFER_BARRIER_BIT} set and then call {@see GL46::glFenceSync} with
-     * {@see GL46::GL_SYNC_GPU_COMMANDS_COMPLETE} (or {@see GL46::glFinish}). Then the CPU will see the writes after
-     * the sync is complete.   If {@see GL46::GL_MAP_COHERENT_BIT} is set and the server does a write, the app must
-     * call {@see GL46::glFenceSync} with {@see GL46::GL_SYNC_GPU_COMMANDS_COMPLETE} (or {@see GL46::glFinish}). Then
-     * the CPU will see the writes after the sync is complete.      {@see GL46::GL_CLIENT_STORAGE_BIT}  When all
+     * by the application. In particular,   If {@see GL44::GL_MAP_COHERENT_BIT} is not set and the client performs a
+     * write followed by a call to the {@see GL44::memoryBarrier} command with the
+     * {@see GL44::GL_CLIENT_MAPPED_BUFFER_BARRIER_BIT} set, then in subsequent commands the server will see the
+     * writes.   If {@see GL44::GL_MAP_COHERENT_BIT} is set and the client performs a write, then in subsequent
+     * commands the server will see the writes.   If {@see GL44::GL_MAP_COHERENT_BIT} is not set and the server
+     * performs a write, the application must call {@see GL44::memoryBarrier} with the
+     * {@see GL44::GL_CLIENT_MAPPED_BUFFER_BARRIER_BIT} set and then call {@see GL44::fenceSync} with
+     * {@see GL44::GL_SYNC_GPU_COMMANDS_COMPLETE} (or {@see GL44::finish}). Then the CPU will see the writes after
+     * the sync is complete.   If {@see GL44::GL_MAP_COHERENT_BIT} is set and the server does a write, the app must
+     * call {@see GL44::fenceSync} with {@see GL44::GL_SYNC_GPU_COMMANDS_COMPLETE} (or {@see GL44::finish}). Then
+     * the CPU will see the writes after the sync is complete.      {@see GL44::GL_CLIENT_STORAGE_BIT}  When all
      * other criteria for the buffer storage allocation are met, this bit may be used by an implementation to
      * determine whether to use storage that is local to the server or to the client to serve as the backing store
      * for the buffer.
      *
      * The allowed combinations of flags are subject to certain restrictions. They are as follows:   If $flags
-     * contains {@see GL46::GL_MAP_PERSISTENT_BIT}, it must also contain at least one of {@see GL46::GL_MAP_READ_BIT}
-     * or {@see GL46::GL_MAP_WRITE_BIT}.   If $flags contains {@see GL46::GL_MAP_COHERENT_BIT}, it must also contain
-     * {@see GL46::GL_MAP_PERSISTENT_BIT}.
+     * contains {@see GL44::GL_MAP_PERSISTENT_BIT}, it must also contain at least one of {@see GL44::GL_MAP_READ_BIT}
+     * or {@see GL44::GL_MAP_WRITE_BIT}.   If $flags contains {@see GL44::GL_MAP_COHERENT_BIT}, it must also contain
+     * {@see GL44::GL_MAP_PERSISTENT_BIT}.
      *
      * @see http://docs.gl/gl4/glBufferStorage
      * @since 4.4
      * @param int $target
      * @param int $size
-     * @param \FFI\CData|null $data
+     * @param CData|null $data
      * @param int $flags
      * @return void
      */
-    public function bufferStorage(int $target, int $size, ?\FFI\CData $data, int $flags): void
+    public function bufferStorage(int $target, int $size, ?CData $data, int $flags): void
     {
-        $__proc = $this->getProcAs('glBufferStorage', 'void (*)(GLenum target, GLsizeiptr size, const void *data, GLbitfield flags)');
+        $__proc = $this->proc('glBufferStorage',
+            'void (*)(GLenum target, GLsizeiptr size, const void *data, GLbitfield flags)');
         $__proc($target, $size, $data, $flags);
     }
 
     /**
-     * {@see GL46::glClearTexImage} fills all an image contained in a texture with an application supplied value.
+     * {@see GL44::clearTexImage} fills all an image contained in a texture with an application supplied value.
      * $texture must be the name of an existing texture. Further, $texture may not be the name of a buffer texture,
      * nor may its internal format be compressed.
      *
      * $format and $type specify the format and type of the source data and are interpreted as they are for
-     * {@see GL46::glTexImage3D}. Textures with a base internal format of {@see GL46::GL_DEPTH_COMPONENT},
-     * {@see GL46::GL_STENCIL_INDEX}, or {@see GL46::GL_DEPTH_STENCIL} require depth component, stencil, or
+     * {@see GL44::texImage3D}. Textures with a base internal format of {@see GL44::GL_DEPTH_COMPONENT},
+     * {@see GL44::GL_STENCIL_INDEX}, or {@see GL44::GL_DEPTH_STENCIL} require depth component, stencil, or
      * depth-stencil component data respectively. Textures with other base internal formats require RGBA formats.
      * Textures with integer internal formats require integer data.
      *
      * $data is a pointer to an array of between one and four components of texel data that will be used as the
      * source for the constant fill value. The elements of data are converted by the GL into the internal format of
-     * the texture image (that was specified when the level was defined by any of the {@see GL46::glTexImage*},
-     * {@see GL46::glTexStorage*} or {@see GL46::glCopyTexImage*} commands), and then used to fill the specified
+     * the texture image (that was specified when the level was defined by any of the {@see GL44::texImage*},
+     * {@see GL44::texStorage*} or {@see GL44::copyTexImage*} commands), and then used to fill the specified
      * range of the destination texture level. If $data is {@see GL46::NULL}, then the pointer is ignored and the
      * sub-range of the texture image is filled with zeros. If texture is a multisample texture, all the samples in a
      * texel are cleared to the value specified by data.
@@ -449,17 +528,18 @@ class GL44 extends GL43
      * @param int $level
      * @param int $format
      * @param int $type
-     * @param \FFI\CData|null $data
+     * @param CData|null $data
      * @return void
      */
-    public function clearTexImage(int $texture, int $level, int $format, int $type, ?\FFI\CData $data): void
+    public function clearTexImage(int $texture, int $level, int $format, int $type, ?CData $data): void
     {
-        $__proc = $this->getProcAs('glClearTexImage', 'void (*)(GLuint texture, GLint level, GLenum format, GLenum type, const void *data)');
+        $__proc = $this->proc('glClearTexImage',
+            'void (*)(GLuint texture, GLint level, GLenum format, GLenum type, const void *data)');
         $__proc($texture, $level, $format, $type, $data);
     }
 
     /**
-     * {@see GL46::glClearTexSubImage} fills all or part of an image contained in a texture with an application
+     * {@see GL44::clearTexSubImage} fills all or part of an image contained in a texture with an application
      * supplied value. $texture must be the name of an existing texture. Further, $texture may not be the name of a
      * buffer texture, nor may its internal format be compressed.
      *
@@ -478,7 +558,7 @@ class GL44 extends GL43
      * ,  hs ,  ds ,  wb ,  hb , and  db  to be the specified $width, $height, $depth, and the border width, border
      * height, and border depth of the texel array and taking  x ,  y ,  z ,  w ,  h , and  d  to be the $xoffset,
      * $yoffset, $zoffset, $width, $height, and $depth argument values, any of the following relationships generates
-     * a {@see GL46::GL_INVALID_OPERATION} error:      x &lt;  w b          x + w &gt;  w s  -  w b          y &lt; -
+     * a {@see GL44::GL_INVALID_OPERATION} error:      x &lt;  w b          x + w &gt;  w s  -  w b          y &lt; -
      *  h b          y + h &gt;  h s  -  h b          z &lt; -  d b          z + d &gt;  d s  -  d b
      *
      * For texture types that do not have certain dimensions, this command treats those dimensions as having a size
@@ -486,15 +566,15 @@ class GL44 extends GL43
      * equal to one.
      *
      * $format and $type specify the format and type of the source data and are interpreted as they are for
-     * {@see GL46::glTexImage3D}. Textures with a base internal format of {@see GL46::GL_DEPTH_COMPONENT},
-     * {@see GL46::GL_STENCIL_INDEX}, or {@see GL46::GL_DEPTH_STENCIL} require depth component, stencil, or
+     * {@see GL44::texImage3D}. Textures with a base internal format of {@see GL44::GL_DEPTH_COMPONENT},
+     * {@see GL44::GL_STENCIL_INDEX}, or {@see GL44::GL_DEPTH_STENCIL} require depth component, stencil, or
      * depth-stencil component data respectively. Textures with other base internal formats require RGBA formats.
      * Textures with integer internal formats require integer data.
      *
      * $data is a pointer to an array of between one and four components of texel data that will be used as the
      * source for the constant fill value. The elements of data are converted by the GL into the internal format of
-     * the texture image (that was specified when the level was defined by any of the {@see GL46::glTexImage*},
-     * {@see GL46::glTexStorage*} or {@see GL46::glCopyTexImage*} commands), and then used to fill the specified
+     * the texture image (that was specified when the level was defined by any of the {@see GL44::texImage*},
+     * {@see GL44::texStorage*} or {@see GL44::copyTexImage*} commands), and then used to fill the specified
      * range of the destination texture level. If $data is {@see GL46::NULL}, then the pointer is ignored and the
      * sub-range of the texture image is filled with zeros. If texture is a multisample texture, all the samples in a
      * texel are cleared to the value specified by data.
@@ -511,7 +591,7 @@ class GL44 extends GL43
      * @param int $depth
      * @param int $format
      * @param int $type
-     * @param \FFI\CData|null $data
+     * @param CData|null $data
      * @return void
      */
     public function clearTexSubImage(
@@ -525,9 +605,10 @@ class GL44 extends GL43
         int $depth,
         int $format,
         int $type,
-        ?\FFI\CData $data
+        ?CData $data
     ): void {
-        $__proc = $this->getProcAs('glClearTexSubImage', 'void (*)(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLenum type, const void *data)');
+        $__proc = $this->proc('glClearTexSubImage',
+            'void (*)(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLenum type, const void *data)');
         $__proc($texture, $level, $xoffset, $yoffset, $zoffset, $width, $height, $depth, $format, $type, $data);
     }
 }

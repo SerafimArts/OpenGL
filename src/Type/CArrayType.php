@@ -102,7 +102,7 @@ abstract class CArrayType extends CType implements CArrayTypeInterface
     public function fill(iterable $entries): self
     {
         foreach ($entries as $i => $value) {
-            $value = $this->unwrap($value);
+            $value = $this->toScalar($value);
 
             \assert($this->assertType($value));
 
@@ -120,9 +120,17 @@ abstract class CArrayType extends CType implements CArrayTypeInterface
      * @param mixed $value
      * @return int|float
      */
-    private function unwrap($value)
+    private function toScalar($value)
     {
-        return Type::unwrap($value);
+        if ($value instanceof CTypeInterface) {
+            $value = $value->getCData();
+        }
+
+        if ($value instanceof CData) {
+            $value = $value->cdata;
+        }
+
+        return $value;
     }
 
     /**
@@ -197,7 +205,7 @@ abstract class CArrayType extends CType implements CArrayTypeInterface
      */
     public function offsetSet($offset, $value): void
     {
-        $value = $this->unwrap($value);
+        $value = $this->toScalar($value);
 
         \assert($this->assertType($value));
 

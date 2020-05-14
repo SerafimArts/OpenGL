@@ -13,416 +13,265 @@ declare(strict_types=1);
 
 namespace Serafim\OpenGL;
 
+use FFI\CData;
+
 /**
+ * The OpenGL functionality up to version 2.0. Includes the deprecated symbols of the Compatibility Profile.
+ *
+ * Extensions promoted to core in this release:
+ *
+ * - ARB_shader_objects @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_shader_objects.txt
+ * - ARB_vertex_shader @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_vertex_shader.txt
+ * - ARB_fragment_shader @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_fragment_shader.txt
+ * - ARB_shading_language_100 @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_shading_language_100.txt
+ * - ARB_draw_buffers @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_draw_buffers.txt
+ * - ARB_texture_non_power_of_two @see
+ * https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_texture_non_power_of_two.txt
+ * - ARB_point_sprite @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_point_sprite.txt
+ * - ATI_separate_stencil @see https://www.khronos.org/registry/OpenGL/extensions/ATI/ATI_separate_stencil.txt
+ * - EXT_stencil_two_side @see https://www.khronos.org/registry/OpenGL/extensions/EXT/EXT_stencil_two_side.txt
+ *
  * @version 2.0
  */
 class GL20 extends GL15
 {
+
     /**
-     * @since 2.0
-     * @var int
-     */
-    public const GL_BLEND_EQUATION_RGB = 0x8009;
-    /**
-     * @since 2.0
-     * @var int
-     */
-    public const GL_VERTEX_ATTRIB_ARRAY_ENABLED = 0x8622;
-    /**
-     * @since 2.0
-     * @var int
-     */
-    public const GL_VERTEX_ATTRIB_ARRAY_SIZE = 0x8623;
-    /**
-     * @since 2.0
-     * @var int
-     */
-    public const GL_VERTEX_ATTRIB_ARRAY_STRIDE = 0x8624;
-    /**
-     * @since 2.0
-     * @var int
-     */
-    public const GL_VERTEX_ATTRIB_ARRAY_TYPE = 0x8625;
-    /**
-     * @since 2.0
-     * @var int
-     */
-    public const GL_CURRENT_VERTEX_ATTRIB = 0x8626;
-    /**
-     * @since 2.0
-     * @var int
-     */
-    public const GL_VERTEX_PROGRAM_POINT_SIZE = 0x8642;
-    /**
-     * @since 2.0
-     * @var int
-     */
-    public const GL_VERTEX_ATTRIB_ARRAY_POINTER = 0x8645;
-    /**
-     * @since 2.0
-     * @var int
-     */
-    public const GL_STENCIL_BACK_FUNC = 0x8800;
-    /**
-     * @since 2.0
-     * @var int
-     */
-    public const GL_STENCIL_BACK_FAIL = 0x8801;
-    /**
-     * @since 2.0
-     * @var int
-     */
-    public const GL_STENCIL_BACK_PASS_DEPTH_FAIL = 0x8802;
-    /**
-     * @since 2.0
-     * @var int
-     */
-    public const GL_STENCIL_BACK_PASS_DEPTH_PASS = 0x8803;
-    /**
-     * @since 2.0
-     * @var int
-     */
-    public const GL_MAX_DRAW_BUFFERS = 0x8824;
-    /**
-     * @since 2.0
-     * @var int
-     */
-    public const GL_DRAW_BUFFER0 = 0x8825;
-    /**
-     * @since 2.0
-     * @var int
-     */
-    public const GL_DRAW_BUFFER1 = 0x8826;
-    /**
-     * @since 2.0
-     * @var int
-     */
-    public const GL_DRAW_BUFFER2 = 0x8827;
-    /**
-     * @since 2.0
-     * @var int
-     */
-    public const GL_DRAW_BUFFER3 = 0x8828;
-    /**
-     * @since 2.0
-     * @var int
-     */
-    public const GL_DRAW_BUFFER4 = 0x8829;
-    /**
-     * @since 2.0
-     * @var int
-     */
-    public const GL_DRAW_BUFFER5 = 0x882A;
-    /**
-     * @since 2.0
-     * @var int
-     */
-    public const GL_DRAW_BUFFER6 = 0x882B;
-    /**
-     * @since 2.0
-     * @var int
-     */
-    public const GL_DRAW_BUFFER7 = 0x882C;
-    /**
-     * @since 2.0
-     * @var int
-     */
-    public const GL_DRAW_BUFFER8 = 0x882D;
-    /**
-     * @since 2.0
-     * @var int
-     */
-    public const GL_DRAW_BUFFER9 = 0x882E;
-    /**
-     * @since 2.0
-     * @var int
-     */
-    public const GL_DRAW_BUFFER10 = 0x882F;
-    /**
-     * @since 2.0
-     * @var int
-     */
-    public const GL_DRAW_BUFFER11 = 0x8830;
-    /**
-     * @since 2.0
-     * @var int
-     */
-    public const GL_DRAW_BUFFER12 = 0x8831;
-    /**
-     * @since 2.0
-     * @var int
-     */
-    public const GL_DRAW_BUFFER13 = 0x8832;
-    /**
-     * @since 2.0
-     * @var int
-     */
-    public const GL_DRAW_BUFFER14 = 0x8833;
-    /**
-     * @since 2.0
-     * @var int
-     */
-    public const GL_DRAW_BUFFER15 = 0x8834;
-    /**
-     * @since 2.0
-     * @var int
-     */
-    public const GL_BLEND_EQUATION_ALPHA = 0x883D;
-    /**
-     * @since 2.0
-     * @var int
-     */
-    public const GL_MAX_VERTEX_ATTRIBS = 0x8869;
-    /**
-     * @since 2.0
-     * @var int
-     */
-    public const GL_VERTEX_ATTRIB_ARRAY_NORMALIZED = 0x886A;
-    /**
-     * @since 2.0
-     * @var int
-     */
-    public const GL_MAX_TEXTURE_IMAGE_UNITS = 0x8872;
-    /**
-     * @since 2.0
-     * @var int
-     */
-    public const GL_FRAGMENT_SHADER = 0x8B30;
-    /**
-     * @since 2.0
-     * @var int
-     */
-    public const GL_VERTEX_SHADER = 0x8B31;
-    /**
-     * @since 2.0
-     * @var int
-     */
-    public const GL_MAX_FRAGMENT_UNIFORM_COMPONENTS = 0x8B49;
-    /**
-     * @since 2.0
-     * @var int
-     */
-    public const GL_MAX_VERTEX_UNIFORM_COMPONENTS = 0x8B4A;
-    /**
-     * @since 2.0
-     * @var int
-     */
-    public const GL_MAX_VARYING_FLOATS = 0x8B4B;
-    /**
-     * @since 2.0
-     * @var int
-     */
-    public const GL_MAX_VERTEX_TEXTURE_IMAGE_UNITS = 0x8B4C;
-    /**
-     * @since 2.0
-     * @var int
-     */
-    public const GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS = 0x8B4D;
-    /**
-     * @since 2.0
-     * @var int
-     */
-    public const GL_SHADER_TYPE = 0x8B4F;
-    /**
-     * @since 2.0
-     * @var int
-     */
-    public const GL_FLOAT_VEC2 = 0x8B50;
-    /**
-     * @since 2.0
-     * @var int
-     */
-    public const GL_FLOAT_VEC3 = 0x8B51;
-    /**
-     * @since 2.0
-     * @var int
-     */
-    public const GL_FLOAT_VEC4 = 0x8B52;
-    /**
-     * @since 2.0
-     * @var int
-     */
-    public const GL_INT_VEC2 = 0x8B53;
-    /**
-     * @since 2.0
-     * @var int
-     */
-    public const GL_INT_VEC3 = 0x8B54;
-    /**
-     * @since 2.0
-     * @var int
-     */
-    public const GL_INT_VEC4 = 0x8B55;
-    /**
-     * @since 2.0
-     * @var int
-     */
-    public const GL_BOOL = 0x8B56;
-    /**
-     * @since 2.0
-     * @var int
-     */
-    public const GL_BOOL_VEC2 = 0x8B57;
-    /**
-     * @since 2.0
-     * @var int
-     */
-    public const GL_BOOL_VEC3 = 0x8B58;
-    /**
-     * @since 2.0
-     * @var int
-     */
-    public const GL_BOOL_VEC4 = 0x8B59;
-    /**
-     * @since 2.0
-     * @var int
-     */
-    public const GL_FLOAT_MAT2 = 0x8B5A;
-    /**
-     * @since 2.0
-     * @var int
-     */
-    public const GL_FLOAT_MAT3 = 0x8B5B;
-    /**
-     * @since 2.0
-     * @var int
-     */
-    public const GL_FLOAT_MAT4 = 0x8B5C;
-    /**
-     * @since 2.0
-     * @var int
-     */
-    public const GL_SAMPLER_1D = 0x8B5D;
-    /**
-     * @since 2.0
-     * @var int
-     */
-    public const GL_SAMPLER_2D = 0x8B5E;
-    /**
-     * @since 2.0
-     * @var int
-     */
-    public const GL_SAMPLER_3D = 0x8B5F;
-    /**
-     * @since 2.0
-     * @var int
-     */
-    public const GL_SAMPLER_CUBE = 0x8B60;
-    /**
-     * @since 2.0
-     * @var int
-     */
-    public const GL_SAMPLER_1D_SHADOW = 0x8B61;
-    /**
-     * @since 2.0
-     * @var int
-     */
-    public const GL_SAMPLER_2D_SHADOW = 0x8B62;
-    /**
-     * @since 2.0
-     * @var int
-     */
-    public const GL_DELETE_STATUS = 0x8B80;
-    /**
-     * @since 2.0
-     * @var int
-     */
-    public const GL_COMPILE_STATUS = 0x8B81;
-    /**
-     * @since 2.0
-     * @var int
-     */
-    public const GL_LINK_STATUS = 0x8B82;
-    /**
-     * @since 2.0
-     * @var int
-     */
-    public const GL_VALIDATE_STATUS = 0x8B83;
-    /**
-     * @since 2.0
-     * @var int
-     */
-    public const GL_INFO_LOG_LENGTH = 0x8B84;
-    /**
-     * @since 2.0
-     * @var int
-     */
-    public const GL_ATTACHED_SHADERS = 0x8B85;
-    /**
-     * @since 2.0
-     * @var int
-     */
-    public const GL_ACTIVE_UNIFORMS = 0x8B86;
-    /**
-     * @since 2.0
-     * @var int
-     */
-    public const GL_ACTIVE_UNIFORM_MAX_LENGTH = 0x8B87;
-    /**
-     * @since 2.0
-     * @var int
-     */
-    public const GL_SHADER_SOURCE_LENGTH = 0x8B88;
-    /**
-     * @since 2.0
-     * @var int
-     */
-    public const GL_ACTIVE_ATTRIBUTES = 0x8B89;
-    /**
-     * @since 2.0
-     * @var int
-     */
-    public const GL_ACTIVE_ATTRIBUTE_MAX_LENGTH = 0x8B8A;
-    /**
-     * @since 2.0
-     * @var int
-     */
-    public const GL_FRAGMENT_SHADER_DERIVATIVE_HINT = 0x8B8B;
-    /**
+     * Accepted by the $name parameter of GetString.
+     *
      * @since 2.0
      * @var int
      */
     public const GL_SHADING_LANGUAGE_VERSION = 0x8B8C;
+
     /**
+     * Accepted by the $pname parameter of GetInteger.
+     *
      * @since 2.0
      * @var int
      */
     public const GL_CURRENT_PROGRAM = 0x8B8D;
+
     /**
+     * Accepted by the $pname parameter of GetShaderiv.
+     *
+     * @since 2.0
+     * @var int
+     */
+    public const
+        GL_SHADER_TYPE = 0x8B4F,
+        GL_DELETE_STATUS = 0x8B80,
+        GL_COMPILE_STATUS = 0x8B81,
+        GL_LINK_STATUS = 0x8B82,
+        GL_VALIDATE_STATUS = 0x8B83,
+        GL_INFO_LOG_LENGTH = 0x8B84,
+        GL_ATTACHED_SHADERS = 0x8B85,
+        GL_ACTIVE_UNIFORMS = 0x8B86,
+        GL_ACTIVE_UNIFORM_MAX_LENGTH = 0x8B87,
+        GL_ACTIVE_ATTRIBUTES = 0x8B89,
+        GL_ACTIVE_ATTRIBUTE_MAX_LENGTH = 0x8B8A,
+        GL_SHADER_SOURCE_LENGTH = 0x8B88;
+
+    /**
+     * Returned by the $type parameter of GetActiveUniform.
+     *
+     * @since 2.0
+     * @var int
+     */
+    public const
+        GL_FLOAT_VEC2 = 0x8B50,
+        GL_FLOAT_VEC3 = 0x8B51,
+        GL_FLOAT_VEC4 = 0x8B52,
+        GL_INT_VEC2 = 0x8B53,
+        GL_INT_VEC3 = 0x8B54,
+        GL_INT_VEC4 = 0x8B55,
+        GL_BOOL = 0x8B56,
+        GL_BOOL_VEC2 = 0x8B57,
+        GL_BOOL_VEC3 = 0x8B58,
+        GL_BOOL_VEC4 = 0x8B59,
+        GL_FLOAT_MAT2 = 0x8B5A,
+        GL_FLOAT_MAT3 = 0x8B5B,
+        GL_FLOAT_MAT4 = 0x8B5C,
+        GL_SAMPLER_1D = 0x8B5D,
+        GL_SAMPLER_2D = 0x8B5E,
+        GL_SAMPLER_3D = 0x8B5F,
+        GL_SAMPLER_CUBE = 0x8B60,
+        GL_SAMPLER_1D_SHADOW = 0x8B61,
+        GL_SAMPLER_2D_SHADOW = 0x8B62;
+
+    /**
+     * Accepted by the $type argument of CreateShader and returned by the $params parameter of GetShaderiv.
+     *
+     * @since 2.0
+     * @var int
+     */
+    public const GL_VERTEX_SHADER = 0x8B31;
+
+    /**
+     * Accepted by the $pname parameter of GetBooleanv, GetIntegerv, GetFloatv, and GetDoublev.
+     *
+     * @since 2.0
+     * @var int
+     */
+    public const
+        GL_MAX_VERTEX_UNIFORM_COMPONENTS = 0x8B4A,
+        GL_MAX_VARYING_FLOATS = 0x8B4B,
+        GL_MAX_VERTEX_ATTRIBS = 0x8869,
+        GL_MAX_TEXTURE_IMAGE_UNITS = 0x8872,
+        GL_MAX_VERTEX_TEXTURE_IMAGE_UNITS = 0x8B4C,
+        GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS = 0x8B4D,
+        GL_MAX_TEXTURE_COORDS = 0x8871;
+
+    /**
+     * Accepted by the $cap parameter of Disable, Enable, and IsEnabled, and by the $pname parameter of GetBooleanv,
+     * GetIntegerv, GetFloatv, and GetDoublev.
+     *
+     * @since 2.0
+     * @var int
+     */
+    public const
+        GL_VERTEX_PROGRAM_POINT_SIZE = 0x8642,
+        GL_VERTEX_PROGRAM_TWO_SIDE = 0x8643;
+
+    /**
+     * Accepted by the $pname parameter of GetVertexAttrib{dfi}v.
+     *
+     * @since 2.0
+     * @var int
+     */
+    public const
+        GL_VERTEX_ATTRIB_ARRAY_ENABLED = 0x8622,
+        GL_VERTEX_ATTRIB_ARRAY_SIZE = 0x8623,
+        GL_VERTEX_ATTRIB_ARRAY_STRIDE = 0x8624,
+        GL_VERTEX_ATTRIB_ARRAY_TYPE = 0x8625,
+        GL_VERTEX_ATTRIB_ARRAY_NORMALIZED = 0x886A,
+        GL_CURRENT_VERTEX_ATTRIB = 0x8626;
+
+    /**
+     * Accepted by the $pname parameter of GetVertexAttribPointerv.
+     *
+     * @since 2.0
+     * @var int
+     */
+    public const GL_VERTEX_ATTRIB_ARRAY_POINTER = 0x8645;
+
+    /**
+     * Accepted by the $type argument of CreateShader and returned by the $params parameter of GetShaderiv.
+     *
+     * @since 2.0
+     * @var int
+     */
+    public const GL_FRAGMENT_SHADER = 0x8B30;
+
+    /**
+     * Accepted by the $pname parameter of GetBooleanv, GetIntegerv, GetFloatv, and GetDoublev.
+     *
+     * @since 2.0
+     * @var int
+     */
+    public const GL_MAX_FRAGMENT_UNIFORM_COMPONENTS = 0x8B49;
+
+    /**
+     * Accepted by the $target parameter of Hint and the $pname parameter of GetBooleanv, GetIntegerv, GetFloatv, and
+     * GetDoublev.
+     *
+     * @since 2.0
+     * @var int
+     */
+    public const GL_FRAGMENT_SHADER_DERIVATIVE_HINT = 0x8B8B;
+
+    /**
+     * Accepted by the $pname parameters of GetIntegerv, GetFloatv, and GetDoublev.
+     *
+     * @since 2.0
+     * @var int
+     */
+    public const
+        GL_MAX_DRAW_BUFFERS = 0x8824,
+        GL_DRAW_BUFFER0 = 0x8825,
+        GL_DRAW_BUFFER1 = 0x8826,
+        GL_DRAW_BUFFER2 = 0x8827,
+        GL_DRAW_BUFFER3 = 0x8828,
+        GL_DRAW_BUFFER4 = 0x8829,
+        GL_DRAW_BUFFER5 = 0x882A,
+        GL_DRAW_BUFFER6 = 0x882B,
+        GL_DRAW_BUFFER7 = 0x882C,
+        GL_DRAW_BUFFER8 = 0x882D,
+        GL_DRAW_BUFFER9 = 0x882E,
+        GL_DRAW_BUFFER10 = 0x882F,
+        GL_DRAW_BUFFER11 = 0x8830,
+        GL_DRAW_BUFFER12 = 0x8831,
+        GL_DRAW_BUFFER13 = 0x8832,
+        GL_DRAW_BUFFER14 = 0x8833,
+        GL_DRAW_BUFFER15 = 0x8834;
+
+    /**
+     * Accepted by the $cap parameter of Enable, Disable, and IsEnabled, by the $pname parameter of GetBooleanv,
+     * GetIntegerv, GetFloatv, and GetDoublev, and by the $target parameter of TexEnvi, TexEnviv, TexEnvf, TexEnvfv,
+     * GetTexEnviv, and GetTexEnvfv.
+     *
+     * @since 2.0
+     * @var int
+     */
+    public const GL_POINT_SPRITE = 0x8861;
+
+    /**
+     * When the $target parameter of TexEnvf, TexEnvfv, TexEnvi, TexEnviv, GetTexEnvfv, or GetTexEnviv is POINT_SPRITE,
+     * then the value of
+     * $pname may be.
+     *
+     * @since 2.0
+     * @var int
+     */
+    public const GL_COORD_REPLACE = 0x8862;
+
+    /**
+     * Accepted by the $pname parameter of PointParameter{if}v.
+     *
      * @since 2.0
      * @var int
      */
     public const GL_POINT_SPRITE_COORD_ORIGIN = 0x8CA0;
+
     /**
+     * Accepted by the $param parameter of PointParameter{if}v.
+     *
      * @since 2.0
      * @var int
      */
-    public const GL_LOWER_LEFT = 0x8CA1;
+    public const
+        GL_LOWER_LEFT = 0x8CA1,
+        GL_UPPER_LEFT = 0x8CA2;
+
     /**
+     * Accepted by the $pname parameter of GetBooleanv, GetIntegerv, GetFloatv, and GetDoublev.
+     *
      * @since 2.0
      * @var int
      */
-    public const GL_UPPER_LEFT = 0x8CA2;
+    public const
+        GL_BLEND_EQUATION_RGB = 0x8009,
+        GL_BLEND_EQUATION_ALPHA = 0x883D;
+
     /**
+     * Accepted by the $pname parameter of GetIntegerv.
+     *
      * @since 2.0
      * @var int
      */
-    public const GL_STENCIL_BACK_REF = 0x8CA3;
-    /**
-     * @since 2.0
-     * @var int
-     */
-    public const GL_STENCIL_BACK_VALUE_MASK = 0x8CA4;
-    /**
-     * @since 2.0
-     * @var int
-     */
-    public const GL_STENCIL_BACK_WRITEMASK = 0x8CA5;
+    public const
+        GL_STENCIL_BACK_FUNC = 0x8800,
+        GL_STENCIL_BACK_FAIL = 0x8801,
+        GL_STENCIL_BACK_PASS_DEPTH_FAIL = 0x8802,
+        GL_STENCIL_BACK_PASS_DEPTH_PASS = 0x8803,
+        GL_STENCIL_BACK_REF = 0x8CA3,
+        GL_STENCIL_BACK_VALUE_MASK = 0x8CA4,
+        GL_STENCIL_BACK_WRITEMASK = 0x8CA5;
 
     /**
      * In order to create a complete shader program, there must be a way to specify the list of things that will be
      * linked together. Program objects provide this mechanism. Shaders that are to be linked together in a program
-     * object must first be attached to that program object. {@see GL46::glAttachShader} attaches the shader object
+     * object must first be attached to that program object. {@see GL20::attachShader} attaches the shader object
      * specified by $shader to the program object specified by $program. This indicates that $shader will be included
      * in link operations that will be performed on $program.
      *
@@ -432,7 +281,7 @@ class GL20 extends GL15
      * multiple shader objects of the same type because each may contain a portion of the complete shader. It is also
      * permissible to attach a shader object to more than one program object. If a shader object is deleted while it
      * is attached to a program object, it will be flagged for deletion, and deletion will not occur until
-     * {@see GL46::glDetachShader} is called to detach it from all program objects to which it is attached.
+     * {@see GL20::detachShader} is called to detach it from all program objects to which it is attached.
      *
      * @see http://docs.gl/gl2/glAttachShader
      * @see http://docs.gl/gl4/glAttachShader
@@ -443,12 +292,12 @@ class GL20 extends GL15
      */
     public function attachShader(int $program, int $shader): void
     {
-        $__proc = $this->getProcAs('glAttachShader', 'void (*)(GLuint program, GLuint shader)');
+        $__proc = $this->proc('glAttachShader', 'void (*)(GLuint program, GLuint shader)');
         $__proc($program, $shader);
     }
 
     /**
-     * {@see GL46::glBindAttribLocation} is used to associate a user-defined attribute variable in the program object
+     * {@see GL20::bindAttribLocation} is used to associate a user-defined attribute variable in the program object
      * specified by $program with a generic vertex attribute index. The name of the user-defined attribute variable
      * is passed as a null terminated string in $name. The generic vertex attribute index to be bound to this
      * variable is specified by $index. When $program is made part of current state, values provided via the generic
@@ -460,14 +309,14 @@ class GL20 extends GL15
      * {@see GL46::mat4}.
      *
      * This command makes it possible for vertex shaders to use descriptive names for attribute variables rather than
-     * generic variables that are numbered from zero to the value of {@see GL46::GL_MAX_VERTEX_ATTRIBS} minus one.
+     * generic variables that are numbered from zero to the value of {@see GL20::GL_MAX_VERTEX_ATTRIBS} minus one.
      * The values sent to each generic attribute index are part of current state. If a different program object is
-     * made current by calling {@see GL46::glUseProgram}, the generic vertex attributes are tracked in such a way
+     * made current by calling {@see GL20::useProgram}, the generic vertex attributes are tracked in such a way
      * that the same values will be observed by attributes in the new program object that are also bound to $index.
      *
      * Attribute variable name-to-generic attribute index bindings for a program object can be explicitly assigned at
-     * any time by calling {@see GL46::glBindAttribLocation}. Attribute bindings do not go into effect until
-     * {@see GL46::glLinkProgram} is called. After a program object has been linked successfully, the index values
+     * any time by calling {@see GL20::bindAttribLocation}. Attribute bindings do not go into effect until
+     * {@see GL20::linkProgram} is called. After a program object has been linked successfully, the index values
      * for generic attributes remain fixed (and their values can be queried) until the next link command occurs.
      *
      * Any attribute binding that occurs after the program object has been linked will not take effect until the next
@@ -478,49 +327,50 @@ class GL20 extends GL15
      * @since 2.0
      * @param int $program
      * @param int $index
-     * @param \FFI\CData|null $name
+     * @param CData|null $name
      * @return void
      */
-    public function bindAttribLocation(int $program, int $index, ?\FFI\CData $name): void
+    public function bindAttribLocation(int $program, int $index, ?CData $name): void
     {
-        $__proc = $this->getProcAs('glBindAttribLocation', 'void (*)(GLuint program, GLuint index, const GLchar *name)');
+        $__proc = $this->proc('glBindAttribLocation',
+            'void (*)(GLuint program, GLuint index, const GLchar *name)');
         $__proc($program, $index, $name);
     }
 
     /**
      * The blend equations determines how a new pixel (the ''source'' color) is combined with a pixel already in the
      * framebuffer (the ''destination'' color). These functions specify one blend equation for the RGB-color
-     * components and one blend equation for the alpha component. {@see GL46::glBlendEquationSeparatei} specifies the
-     * blend equations for a single draw buffer whereas {@see GL46::glBlendEquationSeparate} sets the blend equations
+     * components and one blend equation for the alpha component. {@see GL20::blendEquationSeparatei} specifies the
+     * blend equations for a single draw buffer whereas {@see GL20::blendEquationSeparate} sets the blend equations
      * for all draw buffers.
      *
-     * The blend equations use the source and destination blend factors specified by either {@see GL46::glBlendFunc}
-     * or {@see GL46::glBlendFuncSeparate}. See {@see GL46::glBlendFunc} or {@see GL46::glBlendFuncSeparate} for a
+     * The blend equations use the source and destination blend factors specified by either {@see GL20::blendFunc}
+     * or {@see GL20::blendFuncSeparate}. See {@see GL20::blendFunc} or {@see GL20::blendFuncSeparate} for a
      * description of the various blend factors.
      *
      * In the equations that follow, source and destination color components are referred to as    R s  G s  B s  A s
      *    and    R d  G d  B d  A d   , respectively. The result color is referred to as    R r  G r  B r  A r   .
      * The source and destination blend factors are denoted    s R  s G  s B  s A    and    d R  d G  d B  d A   ,
      * respectively. For these equations all color components are understood to have values in the range    0 1  .
-     *       Mode     RGB Components     Alpha Component        {@see GL46::GL_FUNC_ADD}      Rr =  R s  &amp;it; s R
+     *       Mode     RGB Components     Alpha Component        {@see GL20::GL_FUNC_ADD}      Rr =  R s  &amp;it; s R
      *  + R d  &amp;it; d R        Gr =  G s  &amp;it; s G  + G d  &amp;it; d G        Br =  B s  &amp;it; s B  + B d
-     *  &amp;it; d B          Ar =  A s  &amp;it; s A  + A d  &amp;it; d A         {@see GL46::GL_FUNC_SUBTRACT}
+     *  &amp;it; d B          Ar =  A s  &amp;it; s A  + A d  &amp;it; d A         {@see GL20::GL_FUNC_SUBTRACT}
      * Rr =  R s  &amp;it; s R  - R d  &amp;it; d R        Gr =  G s  &amp;it; s G  - G d  &amp;it; d G        Br =
      * B s  &amp;it; s B  - B d  &amp;it; d B          Ar =  A s  &amp;it; s A  - A d  &amp;it; d A
-     * {@see GL46::GL_FUNC_REVERSE_SUBTRACT}      Rr =  R d  &amp;it; d R  - R s  &amp;it; s R        Gr =  G d
+     * {@see GL20::GL_FUNC_REVERSE_SUBTRACT}      Rr =  R d  &amp;it; d R  - R s  &amp;it; s R        Gr =  G d
      * &amp;it; d G  - G s  &amp;it; s G        Br =  B d  &amp;it; d B  - B s  &amp;it; s B          Ar =  A d
-     * &amp;it; d A  - A s  &amp;it; s A         {@see GL46::GL_MIN}      Rr =  min &amp;af;   R s    R d          Gr
+     * &amp;it; d A  - A s  &amp;it; s A         {@see GL20::GL_MIN}      Rr =  min &amp;af;   R s    R d          Gr
      * =  min &amp;af;   G s    G d          Br =  min &amp;af;   B s    B d            Ar =  min &amp;af;   A s    A
-     * d           {@see GL46::GL_MAX}      Rr =  max &amp;af;   R s    R d          Gr =  max &amp;af;   G s    G d
+     * d           {@see GL20::GL_MAX}      Rr =  max &amp;af;   R s    R d          Gr =  max &amp;af;   G s    G d
      *         Br =  max &amp;af;   B s    B d            Ar =  max &amp;af;   A s    A d
      *
      * The results of these equations are clamped to the range    0 1  .
      *
-     * The {@see GL46::GL_MIN} and {@see GL46::GL_MAX} equations are useful for applications that analyze image data
-     * (image thresholding against a constant color, for example). The {@see GL46::GL_FUNC_ADD} equation is useful
+     * The {@see GL20::GL_MIN} and {@see GL20::GL_MAX} equations are useful for applications that analyze image data
+     * (image thresholding against a constant color, for example). The {@see GL20::GL_FUNC_ADD} equation is useful
      * for antialiasing and transparency, among other things.
      *
-     * Initially, both the RGB blend equation and the alpha blend equation are set to {@see GL46::GL_FUNC_ADD}.
+     * Initially, both the RGB blend equation and the alpha blend equation are set to {@see GL20::GL_FUNC_ADD}.
      *
      * @see http://docs.gl/gl2/glBlendEquationSeparate
      * @see http://docs.gl/gl4/glBlendEquationSeparate
@@ -531,22 +381,22 @@ class GL20 extends GL15
      */
     public function blendEquationSeparate(int $modeRGB, int $modeAlpha): void
     {
-        $__proc = $this->getProcAs('glBlendEquationSeparate', 'void (*)(GLenum modeRGB, GLenum modeAlpha)');
+        $__proc = $this->proc('glBlendEquationSeparate', 'void (*)(GLenum modeRGB, GLenum modeAlpha)');
         $__proc($modeRGB, $modeAlpha);
     }
 
     /**
-     * {@see GL46::glCompileShader} compiles the source code strings that have been stored in the shader object
+     * {@see GL20::compileShader} compiles the source code strings that have been stored in the shader object
      * specified by $shader.
      *
      * The compilation status will be stored as part of the shader object's state. This value will be set to
-     * {@see GL46::GL_TRUE} if the shader was compiled without errors and is ready for use, and {@see GL46::GL_FALSE}
-     * otherwise. It can be queried by calling {@see GL46::glGetShader} with arguments $shader and
-     * {@see GL46::GL_COMPILE_STATUS}.
+     * {@see GL20::GL_TRUE} if the shader was compiled without errors and is ready for use, and {@see GL20::GL_FALSE}
+     * otherwise. It can be queried by calling {@see GL20::getShader} with arguments $shader and
+     * {@see GL20::GL_COMPILE_STATUS}.
      *
      * Compilation of a shader can fail for a number of reasons as specified by the OpenGL Shading Language
      * Specification. Whether or not the compilation was successful, information about the compilation can be
-     * obtained from the shader object's information log by calling {@see GL46::glGetShaderInfoLog}.
+     * obtained from the shader object's information log by calling {@see GL20::getShaderInfoLog}.
      *
      * @see http://docs.gl/gl2/glCompileShader
      * @see http://docs.gl/gl4/glCompileShader
@@ -556,12 +406,12 @@ class GL20 extends GL15
      */
     public function compileShader(int $shader): void
     {
-        $__proc = $this->getProcAs('glCompileShader', 'void (*)(GLuint shader)');
+        $__proc = $this->proc('glCompileShader', 'void (*)(GLuint shader)');
         $__proc($shader);
     }
 
     /**
-     * {@see GL46::glCreateProgram} creates an empty program object and returns a non-zero value by which it can be
+     * {@see GL20::createProgram} creates an empty program object and returns a non-zero value by which it can be
      * referenced. A program object is an object to which shader objects can be attached. This provides a mechanism
      * to specify the shader objects that will be linked to create a program. It also provides a means for checking
      * the compatibility of the shaders that will be used to create a program (for instance, checking the
@@ -569,10 +419,10 @@ class GL20 extends GL15
      * object, shader objects can be detached.
      *
      * One or more executables are created in a program object by successfully attaching shader objects to it with
-     * {@see GL46::glAttachShader}, successfully compiling the shader objects with {@see GL46::glCompileShader}, and
-     * successfully linking the program object with {@see GL46::glLinkProgram}. These executables are made part of
-     * current state when {@see GL46::glUseProgram} is called. Program objects can be deleted by calling
-     * {@see GL46::glDeleteProgram}. The memory associated with the program object will be deleted when it is no
+     * {@see GL20::attachShader}, successfully compiling the shader objects with {@see GL20::compileShader}, and
+     * successfully linking the program object with {@see GL20::linkProgram}. These executables are made part of
+     * current state when {@see GL20::useProgram} is called. Program objects can be deleted by calling
+     * {@see GL20::deleteProgram}. The memory associated with the program object will be deleted when it is no
      * longer part of current rendering state for any context.
      *
      * @see http://docs.gl/gl2/glCreateProgram
@@ -582,26 +432,27 @@ class GL20 extends GL15
      */
     public function createProgram(): int
     {
-        $__proc = $this->getProcAs('glCreateProgram', 'GLuint (*)()');
+        $__proc = $this->proc('glCreateProgram', 'GLuint (*)()');
+
         return $__proc();
     }
 
     /**
-     * {@see GL46::glCreateShader} creates an empty shader object and returns a non-zero value by which it can be
+     * {@see GL20::createShader} creates an empty shader object and returns a non-zero value by which it can be
      * referenced. A shader object is used to maintain the source code strings that define a shader. $shaderType
      * indicates the type of shader to be created. Five types of shader are supported. A shader of type
-     * {@see GL46::GL_COMPUTE_SHADER} is a shader that is intended to run on the programmable compute processor. A
-     * shader of type {@see GL46::GL_VERTEX_SHADER} is a shader that is intended to run on the programmable vertex
-     * processor. A shader of type {@see GL46::GL_TESS_CONTROL_SHADER} is a shader that is intended to run on the
+     * {@see GL20::GL_COMPUTE_SHADER} is a shader that is intended to run on the programmable compute processor. A
+     * shader of type {@see GL20::GL_VERTEX_SHADER} is a shader that is intended to run on the programmable vertex
+     * processor. A shader of type {@see GL20::GL_TESS_CONTROL_SHADER} is a shader that is intended to run on the
      * programmable tessellation processor in the control stage. A shader of type
-     * {@see GL46::GL_TESS_EVALUATION_SHADER} is a shader that is intended to run on the programmable tessellation
-     * processor in the evaluation stage. A shader of type {@see GL46::GL_GEOMETRY_SHADER} is a shader that is
-     * intended to run on the programmable geometry processor. A shader of type {@see GL46::GL_FRAGMENT_SHADER} is a
+     * {@see GL20::GL_TESS_EVALUATION_SHADER} is a shader that is intended to run on the programmable tessellation
+     * processor in the evaluation stage. A shader of type {@see GL20::GL_GEOMETRY_SHADER} is a shader that is
+     * intended to run on the programmable geometry processor. A shader of type {@see GL20::GL_FRAGMENT_SHADER} is a
      * shader that is intended to run on the programmable fragment processor.
      *
-     * When created, a shader object's {@see GL46::GL_SHADER_TYPE} parameter is set to either
-     * {@see GL46::GL_COMPUTE_SHADER}, {@see GL46::GL_VERTEX_SHADER}, {@see GL46::GL_TESS_CONTROL_SHADER},
-     * {@see GL46::GL_TESS_EVALUATION_SHADER}, {@see GL46::GL_GEOMETRY_SHADER} or {@see GL46::GL_FRAGMENT_SHADER},
+     * When created, a shader object's {@see GL20::GL_SHADER_TYPE} parameter is set to either
+     * {@see GL20::GL_COMPUTE_SHADER}, {@see GL20::GL_VERTEX_SHADER}, {@see GL20::GL_TESS_CONTROL_SHADER},
+     * {@see GL20::GL_TESS_EVALUATION_SHADER}, {@see GL20::GL_GEOMETRY_SHADER} or {@see GL20::GL_FRAGMENT_SHADER},
      * depending on the value of $shaderType.
      *
      * @see http://docs.gl/gl2/glCreateShader
@@ -612,22 +463,23 @@ class GL20 extends GL15
      */
     public function createShader(int $type): int
     {
-        $__proc = $this->getProcAs('glCreateShader', 'GLuint (*)(GLenum type)');
+        $__proc = $this->proc('glCreateShader', 'GLuint (*)(GLenum type)');
+
         return $__proc($type);
     }
 
     /**
-     * {@see GL46::glDeleteProgram} frees the memory and invalidates the name associated with the program object
-     * specified by $program. This command effectively undoes the effects of a call to {@see GL46::glCreateProgram}.
+     * {@see GL20::deleteProgram} frees the memory and invalidates the name associated with the program object
+     * specified by $program. This command effectively undoes the effects of a call to {@see GL20::createProgram}.
      *
      * If a program object is in use as part of current rendering state, it will be flagged for deletion, but it will
      * not be deleted until it is no longer part of current state for any rendering context. If a program object to
      * be deleted has shader objects attached to it, those shader objects will be automatically detached but not
-     * deleted unless they have already been flagged for deletion by a previous call to {@see GL46::glDeleteShader}.
+     * deleted unless they have already been flagged for deletion by a previous call to {@see GL20::deleteShader}.
      * A value of 0 for $program will be silently ignored.
      *
-     * To determine whether a program object has been flagged for deletion, call {@see GL46::glGetProgram} with
-     * arguments $program and {@see GL46::GL_DELETE_STATUS}.
+     * To determine whether a program object has been flagged for deletion, call {@see GL20::getProgram} with
+     * arguments $program and {@see GL20::GL_DELETE_STATUS}.
      *
      * @see http://docs.gl/gl2/glDeleteProgram
      * @see http://docs.gl/gl4/glDeleteProgram
@@ -637,21 +489,21 @@ class GL20 extends GL15
      */
     public function deleteProgram(int $program): void
     {
-        $__proc = $this->getProcAs('glDeleteProgram', 'void (*)(GLuint program)');
+        $__proc = $this->proc('glDeleteProgram', 'void (*)(GLuint program)');
         $__proc($program);
     }
 
     /**
-     * {@see GL46::glDeleteShader} frees the memory and invalidates the name associated with the shader object
-     * specified by $shader. This command effectively undoes the effects of a call to {@see GL46::glCreateShader}.
+     * {@see GL20::deleteShader} frees the memory and invalidates the name associated with the shader object
+     * specified by $shader. This command effectively undoes the effects of a call to {@see GL20::createShader}.
      *
      * If a shader object to be deleted is attached to a program object, it will be flagged for deletion, but it will
      * not be deleted until it is no longer attached to any program object, for any rendering context (i.e., it must
      * be detached from wherever it was attached before it will be deleted). A value of 0 for $shader will be
      * silently ignored.
      *
-     * To determine whether an object has been flagged for deletion, call {@see GL46::glGetShader} with arguments
-     * $shader and {@see GL46::GL_DELETE_STATUS}.
+     * To determine whether an object has been flagged for deletion, call {@see GL20::getShader} with arguments
+     * $shader and {@see GL20::GL_DELETE_STATUS}.
      *
      * @see http://docs.gl/gl2/glDeleteShader
      * @see http://docs.gl/gl4/glDeleteShader
@@ -661,15 +513,15 @@ class GL20 extends GL15
      */
     public function deleteShader(int $shader): void
     {
-        $__proc = $this->getProcAs('glDeleteShader', 'void (*)(GLuint shader)');
+        $__proc = $this->proc('glDeleteShader', 'void (*)(GLuint shader)');
         $__proc($shader);
     }
 
     /**
-     * {@see GL46::glDetachShader} detaches the shader object specified by $shader from the program object specified
-     * by $program. This command can be used to undo the effect of the command {@see GL46::glAttachShader}.
+     * {@see GL20::detachShader} detaches the shader object specified by $shader from the program object specified
+     * by $program. This command can be used to undo the effect of the command {@see GL20::attachShader}.
      *
-     * If $shader has already been flagged for deletion by a call to {@see GL46::glDeleteShader} and it is not
+     * If $shader has already been flagged for deletion by a call to {@see GL20::deleteShader} and it is not
      * attached to any other program object, it will be deleted after it has been detached.
      *
      * @see http://docs.gl/gl2/glDetachShader
@@ -681,25 +533,25 @@ class GL20 extends GL15
      */
     public function detachShader(int $program, int $shader): void
     {
-        $__proc = $this->getProcAs('glDetachShader', 'void (*)(GLuint program, GLuint shader)');
+        $__proc = $this->proc('glDetachShader', 'void (*)(GLuint program, GLuint shader)');
         $__proc($program, $shader);
     }
 
     /**
-     * {@see GL46::glEnableVertexAttribArray} and {@see GL46::glEnableVertexArrayAttrib} enable the generic vertex
-     * attribute array specified by $index. {@see GL46::glEnableVertexAttribArray} uses currently bound vertex array
-     * object for the operation, whereas {@see GL46::glEnableVertexArrayAttrib} updates state of the vertex array
+     * {@see GL20::enableVertexAttribArray} and {@see GL20::enableVertexArrayAttrib} enable the generic vertex
+     * attribute array specified by $index. {@see GL20::enableVertexAttribArray} uses currently bound vertex array
+     * object for the operation, whereas {@see GL20::enableVertexArrayAttrib} updates state of the vertex array
      * object with ID $vaobj.
      *
-     * {@see GL46::glDisableVertexAttribArray} and {@see GL46::glDisableVertexArrayAttrib} disable the generic vertex
-     * attribute array specified by $index. {@see GL46::glDisableVertexAttribArray} uses currently bound vertex array
-     * object for the operation, whereas {@see GL46::glDisableVertexArrayAttrib} updates state of the vertex array
+     * {@see GL20::disableVertexAttribArray} and {@see GL20::disableVertexArrayAttrib} disable the generic vertex
+     * attribute array specified by $index. {@see GL20::disableVertexAttribArray} uses currently bound vertex array
+     * object for the operation, whereas {@see GL20::disableVertexArrayAttrib} updates state of the vertex array
      * object with ID $vaobj.
      *
      * By default, all client-side capabilities are disabled, including all generic vertex attribute arrays. If
      * enabled, the values in the generic vertex attribute array will be accessed and used for rendering when calls
-     * are made to vertex array commands such as {@see GL46::glDrawArrays}, {@see GL46::glDrawElements},
-     * {@see GL46::glDrawRangeElements}, {@see GL46::glMultiDrawElements}, or {@see GL46::glMultiDrawArrays}.
+     * are made to vertex array commands such as {@see GL20::drawArrays}, {@see GL20::drawElements},
+     * {@see GL20::drawRangeElements}, {@see GL20::multiDrawElements}, or {@see GL20::multiDrawArrays}.
      *
      * @see http://docs.gl/gl2/glEnableVertexAttribArray
      * @see http://docs.gl/gl4/glEnableVertexAttribArray
@@ -709,76 +561,76 @@ class GL20 extends GL15
      */
     public function disableVertexAttribArray(int $index): void
     {
-        $__proc = $this->getProcAs('glDisableVertexAttribArray', 'void (*)(GLuint index)');
+        $__proc = $this->proc('glDisableVertexAttribArray', 'void (*)(GLuint index)');
         $__proc($index);
     }
 
     /**
-     * {@see GL46::glDrawBuffers} and {@see GL46::glNamedFramebufferDrawBuffers} define an array of buffers into
+     * {@see GL20::drawBuffers} and {@see GL20::namedFramebufferDrawBuffers} define an array of buffers into
      * which outputs from the fragment shader data will be written. If a fragment shader writes a value to one or
      * more user defined output variables, then the value of each variable will be written into the buffer specified
      * at a location within $bufs corresponding to the location assigned to that user defined output. The draw buffer
      * used for user defined outputs assigned to locations greater than or equal to $n is implicitly set to
-     * {@see GL46::GL_NONE} and any data written to such an output is discarded.
+     * {@see GL20::GL_NONE} and any data written to such an output is discarded.
      *
-     * For {@see GL46::glDrawBuffers}, the framebuffer object that is bound to the {@see GL46::GL_DRAW_FRAMEBUFFER}
-     * binding will be used. For {@see GL46::glNamedFramebufferDrawBuffers}, $framebuffer is the name of the
+     * For {@see GL20::drawBuffers}, the framebuffer object that is bound to the {@see GL20::GL_DRAW_FRAMEBUFFER}
+     * binding will be used. For {@see GL20::namedFramebufferDrawBuffers}, $framebuffer is the name of the
      * framebuffer object. If $framebuffer is zero, then the default framebuffer is affected.
      *
      * The symbolic constants contained in $bufs may be any of the following:
      *
-     *  - {@see GL46::GL_NONE}: The fragment shader output value is not written
+     *  - {@see GL20::GL_NONE}: The fragment shader output value is not written
      *    into any color buffer.
      *
-     *  - {@see GL46::GL_FRONT_LEFT}: The fragment shader output value is
+     *  - {@see GL20::GL_FRONT_LEFT}: The fragment shader output value is
      *    written into the front left color buffer.
      *
-     *  - {@see GL46::GL_FRONT_RIGHT}: The fragment shader output value is
+     *  - {@see GL20::GL_FRONT_RIGHT}: The fragment shader output value is
      *    written into the front right color buffer.
      *
-     *  - {@see GL46::GL_BACK_LEFT}: The fragment shader output value is written
+     *  - {@see GL20::GL_BACK_LEFT}: The fragment shader output value is written
      *    into the back left color buffer.
      *
-     *  - {@see GL46::GL_BACK_RIGHT}: The fragment shader output value is
+     *  - {@see GL20::GL_BACK_RIGHT}: The fragment shader output value is
      *    written into the back right color buffer.
      *
-     *  - {@see GL46::GL_COLOR_ATTACHMENTn}: The fragment shader output value is
+     *  - {@see GL20::GL_COLOR_ATTACHMENTn}: The fragment shader output value is
      *    written into the nth color attachment of the current framebuffer. n
      *    may
-     *    range from zero to the value of {@see GL46::GL_MAX_COLOR_ATTACHMENTS}.
+     *    range from zero to the value of {@see GL20::GL_MAX_COLOR_ATTACHMENTS}.
      *
-     * Except for {@see GL46::GL_NONE}, the preceding symbolic constants may not appear more than once in $bufs. The
+     * Except for {@see GL20::GL_NONE}, the preceding symbolic constants may not appear more than once in $bufs. The
      * maximum number of draw buffers supported is implementation dependent and can be queried by calling
-     * {@see GL46::glGet} with the argument {@see GL46::GL_MAX_DRAW_BUFFERS}.
+     * {@see GL20::get} with the argument {@see GL20::GL_MAX_DRAW_BUFFERS}.
      *
      * @see http://docs.gl/gl2/glDrawBuffers
      * @see http://docs.gl/gl4/glDrawBuffers
      * @since 2.0
      * @param int $n
-     * @param \FFI\CData|null $bufs
+     * @param CData|null $bufs
      * @return void
      */
-    public function drawBuffers(int $n, ?\FFI\CData $bufs): void
+    public function drawBuffers(int $n, ?CData $bufs): void
     {
-        $__proc = $this->getProcAs('glDrawBuffers', 'void (*)(GLsizei n, const GLenum *bufs)');
+        $__proc = $this->proc('glDrawBuffers', 'void (*)(GLsizei n, const GLenum *bufs)');
         $__proc($n, $bufs);
     }
 
     /**
-     * {@see GL46::glEnableVertexAttribArray} and {@see GL46::glEnableVertexArrayAttrib} enable the generic vertex
-     * attribute array specified by $index. {@see GL46::glEnableVertexAttribArray} uses currently bound vertex array
-     * object for the operation, whereas {@see GL46::glEnableVertexArrayAttrib} updates state of the vertex array
+     * {@see GL20::enableVertexAttribArray} and {@see GL20::enableVertexArrayAttrib} enable the generic vertex
+     * attribute array specified by $index. {@see GL20::enableVertexAttribArray} uses currently bound vertex array
+     * object for the operation, whereas {@see GL20::enableVertexArrayAttrib} updates state of the vertex array
      * object with ID $vaobj.
      *
-     * {@see GL46::glDisableVertexAttribArray} and {@see GL46::glDisableVertexArrayAttrib} disable the generic vertex
-     * attribute array specified by $index. {@see GL46::glDisableVertexAttribArray} uses currently bound vertex array
-     * object for the operation, whereas {@see GL46::glDisableVertexArrayAttrib} updates state of the vertex array
+     * {@see GL20::disableVertexAttribArray} and {@see GL20::disableVertexArrayAttrib} disable the generic vertex
+     * attribute array specified by $index. {@see GL20::disableVertexAttribArray} uses currently bound vertex array
+     * object for the operation, whereas {@see GL20::disableVertexArrayAttrib} updates state of the vertex array
      * object with ID $vaobj.
      *
      * By default, all client-side capabilities are disabled, including all generic vertex attribute arrays. If
      * enabled, the values in the generic vertex attribute array will be accessed and used for rendering when calls
-     * are made to vertex array commands such as {@see GL46::glDrawArrays}, {@see GL46::glDrawElements},
-     * {@see GL46::glDrawRangeElements}, {@see GL46::glMultiDrawElements}, or {@see GL46::glMultiDrawArrays}.
+     * are made to vertex array commands such as {@see GL20::drawArrays}, {@see GL20::drawElements},
+     * {@see GL20::drawRangeElements}, {@see GL20::multiDrawElements}, or {@see GL20::multiDrawArrays}.
      *
      * @see http://docs.gl/gl2/glEnableVertexAttribArray
      * @see http://docs.gl/gl4/glEnableVertexAttribArray
@@ -788,14 +640,14 @@ class GL20 extends GL15
      */
     public function enableVertexAttribArray(int $index): void
     {
-        $__proc = $this->getProcAs('glEnableVertexAttribArray', 'void (*)(GLuint index)');
+        $__proc = $this->proc('glEnableVertexAttribArray', 'void (*)(GLuint index)');
         $__proc($index);
     }
 
     /**
-     * {@see GL46::glGetActiveAttrib} returns information about an active attribute variable in the program object
-     * specified by $program. The number of active attributes can be obtained by calling {@see GL46::glGetProgram}
-     * with the value {@see GL46::GL_ACTIVE_ATTRIBUTES}. A value of 0 for $index selects the first active attribute
+     * {@see GL20::getActiveAttrib} returns information about an active attribute variable in the program object
+     * specified by $program. The number of active attributes can be obtained by calling {@see GL20::getProgram}
+     * with the value {@see GL20::GL_ACTIVE_ATTRIBUTES}. A value of 0 for $index selects the first active attribute
      * variable. Permissible values for $index range from zero to the number of active attribute variables minus one.
      *
      * A vertex shader may use either built-in attribute variables, user-defined attribute variables, or both.
@@ -804,32 +656,32 @@ class GL20 extends GL15
      * attribute variables have arbitrary names and obtain their values through numbered generic vertex attributes.
      * An attribute variable (either built-in or user-defined) is considered active if it is determined during the
      * link operation that it may be accessed during program execution. Therefore, $program should have previously
-     * been the target of a call to {@see GL46::glLinkProgram}, but it is not necessary for it to have been linked
+     * been the target of a call to {@see GL20::linkProgram}, but it is not necessary for it to have been linked
      * successfully.
      *
      * The size of the character buffer required to store the longest attribute variable name in $program can be
-     * obtained by calling {@see GL46::glGetProgram} with the value {@see GL46::GL_ACTIVE_ATTRIBUTE_MAX_LENGTH}. This
+     * obtained by calling {@see GL20::getProgram} with the value {@see GL20::GL_ACTIVE_ATTRIBUTE_MAX_LENGTH}. This
      * value should be used to allocate a buffer of sufficient size to store the returned attribute name. The size of
      * this character buffer is passed in $bufSize, and a pointer to this character buffer is passed in $name.
      *
-     * {@see GL46::glGetActiveAttrib} returns the name of the attribute variable indicated by $index, storing it in
+     * {@see GL20::getActiveAttrib} returns the name of the attribute variable indicated by $index, storing it in
      * the character buffer specified by $name. The string returned will be null terminated. The actual number of
      * characters written into this buffer is returned in $length, and this count does not include the null
      * termination character. If the length of the returned string is not required, a value of {@see GL46::NULL} can
      * be passed in the $length argument.
      *
      * The $type argument specifies a pointer to a variable into which the attribute variable's data type will be
-     * written. The symbolic constants {@see GL46::GL_FLOAT}, {@see GL46::GL_FLOAT_VEC2}, {@see GL46::GL_FLOAT_VEC3},
-     * {@see GL46::GL_FLOAT_VEC4}, {@see GL46::GL_FLOAT_MAT2}, {@see GL46::GL_FLOAT_MAT3},
-     * {@see GL46::GL_FLOAT_MAT4}, {@see GL46::GL_FLOAT_MAT2x3}, {@see GL46::GL_FLOAT_MAT2x4},
-     * {@see GL46::GL_FLOAT_MAT3x2}, {@see GL46::GL_FLOAT_MAT3x4}, {@see GL46::GL_FLOAT_MAT4x2},
-     * {@see GL46::GL_FLOAT_MAT4x3}, {@see GL46::GL_INT}, {@see GL46::GL_INT_VEC2}, {@see GL46::GL_INT_VEC3},
-     * {@see GL46::GL_INT_VEC4}, {@see GL46::GL_UNSIGNED_INT}, {@see GL46::GL_UNSIGNED_INT_VEC2},
-     * {@see GL46::GL_UNSIGNED_INT_VEC3}, {@see GL46::GL_UNSIGNED_INT_VEC4}, {@see GL46::GL_DOUBLE},
-     * {@see GL46::GL_DOUBLE_VEC2}, {@see GL46::GL_DOUBLE_VEC3}, {@see GL46::GL_DOUBLE_VEC4},
-     * {@see GL46::GL_DOUBLE_MAT2}, {@see GL46::GL_DOUBLE_MAT3}, {@see GL46::GL_DOUBLE_MAT4},
-     * {@see GL46::GL_DOUBLE_MAT2x3}, {@see GL46::GL_DOUBLE_MAT2x4}, {@see GL46::GL_DOUBLE_MAT3x2},
-     * {@see GL46::GL_DOUBLE_MAT3x4}, {@see GL46::GL_DOUBLE_MAT4x2}, or {@see GL46::GL_DOUBLE_MAT4x3} may be
+     * written. The symbolic constants {@see GL20::GL_FLOAT}, {@see GL20::GL_FLOAT_VEC2}, {@see GL20::GL_FLOAT_VEC3},
+     * {@see GL20::GL_FLOAT_VEC4}, {@see GL20::GL_FLOAT_MAT2}, {@see GL20::GL_FLOAT_MAT3},
+     * {@see GL20::GL_FLOAT_MAT4}, {@see GL20::GL_FLOAT_MAT2x3}, {@see GL20::GL_FLOAT_MAT2x4},
+     * {@see GL20::GL_FLOAT_MAT3x2}, {@see GL20::GL_FLOAT_MAT3x4}, {@see GL20::GL_FLOAT_MAT4x2},
+     * {@see GL20::GL_FLOAT_MAT4x3}, {@see GL20::GL_INT}, {@see GL20::GL_INT_VEC2}, {@see GL20::GL_INT_VEC3},
+     * {@see GL20::GL_INT_VEC4}, {@see GL20::GL_UNSIGNED_INT}, {@see GL20::GL_UNSIGNED_INT_VEC2},
+     * {@see GL20::GL_UNSIGNED_INT_VEC3}, {@see GL20::GL_UNSIGNED_INT_VEC4}, {@see GL20::GL_DOUBLE},
+     * {@see GL20::GL_DOUBLE_VEC2}, {@see GL20::GL_DOUBLE_VEC3}, {@see GL20::GL_DOUBLE_VEC4},
+     * {@see GL20::GL_DOUBLE_MAT2}, {@see GL20::GL_DOUBLE_MAT3}, {@see GL20::GL_DOUBLE_MAT4},
+     * {@see GL20::GL_DOUBLE_MAT2x3}, {@see GL20::GL_DOUBLE_MAT2x4}, {@see GL20::GL_DOUBLE_MAT3x2},
+     * {@see GL20::GL_DOUBLE_MAT3x4}, {@see GL20::GL_DOUBLE_MAT4x2}, or {@see GL20::GL_DOUBLE_MAT4x3} may be
      * returned. The $size argument will return the size of the attribute, in units of the type returned in $type.
      *
      * The list of active attribute variables may include both built-in attribute variables (which begin with the
@@ -852,15 +704,24 @@ class GL20 extends GL15
      * @param string|null $name
      * @return void
      */
-    public function getActiveAttrib(int $program, int $index, int $bufSize, ?int &$length, ?int &$size, ?int &$type, ?string &$name): void
-    {
+    public function getActiveAttrib(
+        int $program,
+        int $index,
+        int $bufSize,
+        ?int &$length,
+        ?int &$size,
+        ?int &$type,
+        ?string &$name
+    ): void {
         $lengthCType = $this->info->ffi->new('GLsizei', false);
         $sizeCType = $this->info->ffi->new('GLint', false);
         $typeCType = $this->info->ffi->new('GLenum', false);
         $nameCType = \FFI::addr($this->info->ffi->new('GLchar[' . $bufSize . ']', false)[0]);
         try {
-            $__proc = $this->getProcAs('glGetActiveAttrib', 'void (*)(GLuint program, GLuint index, GLsizei bufSize, GLsizei *length, GLint *size, GLenum *type, GLchar *name)');
-            $__proc($program, $index, $bufSize, \FFI::addr($lengthCType), \FFI::addr($sizeCType), \FFI::addr($typeCType), $nameCType);
+            $__proc = $this->proc('glGetActiveAttrib',
+                'void (*)(GLuint program, GLuint index, GLsizei bufSize, GLsizei *length, GLint *size, GLenum *type, GLchar *name)');
+            $__proc($program, $index, $bufSize, \FFI::addr($lengthCType), \FFI::addr($sizeCType),
+                \FFI::addr($typeCType), $nameCType);
         } finally {
             $length = $lengthCType->cdata;
             \FFI::free($lengthCType);
@@ -874,9 +735,9 @@ class GL20 extends GL15
     }
 
     /**
-     * {@see GL46::glGetActiveUniform} returns information about an active uniform variable in the program object
+     * {@see GL20::getActiveUniform} returns information about an active uniform variable in the program object
      * specified by $program. The number of active uniform variables can be obtained by calling
-     * {@see GL46::glGetProgram} with the value {@see GL46::GL_ACTIVE_UNIFORMS}. A value of 0 for $index selects the
+     * {@see GL20::getProgram} with the value {@see GL20::GL_ACTIVE_UNIFORMS}. A value of 0 for $index selects the
      * first active uniform variable. Permissible values for $index range from zero to the number of active uniform
      * variables minus one.
      *
@@ -884,18 +745,18 @@ class GL20 extends GL15
      * variables have a prefix of "gl_" and reference existing OpenGL state or values derived from such state (e.g.,
      * $gl_DepthRangeParameters, see the OpenGL Shading Language specification for a complete list.) User-defined
      * uniform variables have arbitrary names and obtain their values from the application through calls to
-     * {@see GL46::glUniform}. A uniform variable (either built-in or user-defined) is considered active if it is
+     * {@see GL20::uniform}. A uniform variable (either built-in or user-defined) is considered active if it is
      * determined during the link operation that it may be accessed during program execution. Therefore, $program
-     * should have previously been the target of a call to {@see GL46::glLinkProgram}, but it is not necessary for it
+     * should have previously been the target of a call to {@see GL20::linkProgram}, but it is not necessary for it
      * to have been linked successfully.
      *
      * The size of the character buffer required to store the longest uniform variable name in $program can be
-     * obtained by calling {@see GL46::glGetProgram} with the value {@see GL46::GL_ACTIVE_UNIFORM_MAX_LENGTH}. This
+     * obtained by calling {@see GL20::getProgram} with the value {@see GL20::GL_ACTIVE_UNIFORM_MAX_LENGTH}. This
      * value should be used to allocate a buffer of sufficient size to store the returned uniform variable name. The
      * size of this character buffer is passed in $bufSize, and a pointer to this character buffer is passed in
      * $name.
      *
-     * {@see GL46::glGetActiveUniform} returns the name of the uniform variable indicated by $index, storing it in
+     * {@see GL20::getActiveUniform} returns the name of the uniform variable indicated by $index, storing it in
      * the character buffer specified by $name. The string returned will be null terminated. The actual number of
      * characters written into this buffer is returned in $length, and this count does not include the null
      * termination character. If the length of the returned string is not required, a value of {@see GL46::NULL} can
@@ -903,76 +764,76 @@ class GL20 extends GL15
      *
      * The $type argument will return a pointer to the uniform variable's data type. The symbolic constants returned
      * for uniform types are shown in the table below.         Returned Symbolic Contant     Shader Uniform Type
-     *   {@see GL46::GL_FLOAT}   {@see GL46::float}     {@see GL46::GL_FLOAT_VEC2}   {@see GL46::vec2}
-     * {@see GL46::GL_FLOAT_VEC3}   {@see GL46::vec3}     {@see GL46::GL_FLOAT_VEC4}   {@see GL46::vec4}
-     * {@see GL46::GL_DOUBLE}   {@see GL46::double}     {@see GL46::GL_DOUBLE_VEC2}   {@see GL46::dvec2}
-     * {@see GL46::GL_DOUBLE_VEC3}   {@see GL46::dvec3}     {@see GL46::GL_DOUBLE_VEC4}   {@see GL46::dvec4}
-     * {@see GL46::GL_INT}   {@see GL46::int}     {@see GL46::GL_INT_VEC2}   {@see GL46::ivec2}
-     * {@see GL46::GL_INT_VEC3}   {@see GL46::ivec3}     {@see GL46::GL_INT_VEC4}   {@see GL46::ivec4}
-     * {@see GL46::GL_UNSIGNED_INT}   {@see GL46::unsigned int}     {@see GL46::GL_UNSIGNED_INT_VEC2}
-     * {@see GL46::uvec2}     {@see GL46::GL_UNSIGNED_INT_VEC3}   {@see GL46::uvec3}
-     * {@see GL46::GL_UNSIGNED_INT_VEC4}   {@see GL46::uvec4}     {@see GL46::GL_BOOL}   {@see GL46::bool}
-     * {@see GL46::GL_BOOL_VEC2}   {@see GL46::bvec2}     {@see GL46::GL_BOOL_VEC3}   {@see GL46::bvec3}
-     * {@see GL46::GL_BOOL_VEC4}   {@see GL46::bvec4}     {@see GL46::GL_FLOAT_MAT2}   {@see GL46::mat2}
-     * {@see GL46::GL_FLOAT_MAT3}   {@see GL46::mat3}     {@see GL46::GL_FLOAT_MAT4}   {@see GL46::mat4}
-     * {@see GL46::GL_FLOAT_MAT2x3}   {@see GL46::mat2x3}     {@see GL46::GL_FLOAT_MAT2x4}   {@see GL46::mat2x4}
-     * {@see GL46::GL_FLOAT_MAT3x2}   {@see GL46::mat3x2}     {@see GL46::GL_FLOAT_MAT3x4}   {@see GL46::mat3x4}
-     * {@see GL46::GL_FLOAT_MAT4x2}   {@see GL46::mat4x2}     {@see GL46::GL_FLOAT_MAT4x3}   {@see GL46::mat4x3}
-     * {@see GL46::GL_DOUBLE_MAT2}   {@see GL46::dmat2}     {@see GL46::GL_DOUBLE_MAT3}   {@see GL46::dmat3}
-     * {@see GL46::GL_DOUBLE_MAT4}   {@see GL46::dmat4}     {@see GL46::GL_DOUBLE_MAT2x3}   {@see GL46::dmat2x3}
-     * {@see GL46::GL_DOUBLE_MAT2x4}   {@see GL46::dmat2x4}     {@see GL46::GL_DOUBLE_MAT3x2}   {@see GL46::dmat3x2}
-     *    {@see GL46::GL_DOUBLE_MAT3x4}   {@see GL46::dmat3x4}     {@see GL46::GL_DOUBLE_MAT4x2}
-     * {@see GL46::dmat4x2}     {@see GL46::GL_DOUBLE_MAT4x3}   {@see GL46::dmat4x3}     {@see GL46::GL_SAMPLER_1D}
-     * {@see GL46::sampler1D}     {@see GL46::GL_SAMPLER_2D}   {@see GL46::sampler2D}     {@see GL46::GL_SAMPLER_3D}
-     *  {@see GL46::sampler3D}     {@see GL46::GL_SAMPLER_CUBE}   {@see GL46::samplerCube}
-     * {@see GL46::GL_SAMPLER_1D_SHADOW}   {@see GL46::sampler1DShadow}     {@see GL46::GL_SAMPLER_2D_SHADOW}
-     * {@see GL46::sampler2DShadow}     {@see GL46::GL_SAMPLER_1D_ARRAY}   {@see GL46::sampler1DArray}
-     * {@see GL46::GL_SAMPLER_2D_ARRAY}   {@see GL46::sampler2DArray}     {@see GL46::GL_SAMPLER_1D_ARRAY_SHADOW}
-     * {@see GL46::sampler1DArrayShadow}     {@see GL46::GL_SAMPLER_2D_ARRAY_SHADOW}
-     * {@see GL46::sampler2DArrayShadow}     {@see GL46::GL_SAMPLER_2D_MULTISAMPLE}   {@see GL46::sampler2DMS}
-     * {@see GL46::GL_SAMPLER_2D_MULTISAMPLE_ARRAY}   {@see GL46::sampler2DMSArray}
-     * {@see GL46::GL_SAMPLER_CUBE_SHADOW}   {@see GL46::samplerCubeShadow}     {@see GL46::GL_SAMPLER_BUFFER}
-     * {@see GL46::samplerBuffer}     {@see GL46::GL_SAMPLER_2D_RECT}   {@see GL46::sampler2DRect}
-     * {@see GL46::GL_SAMPLER_2D_RECT_SHADOW}   {@see GL46::sampler2DRectShadow}     {@see GL46::GL_INT_SAMPLER_1D}
-     * {@see GL46::isampler1D}     {@see GL46::GL_INT_SAMPLER_2D}   {@see GL46::isampler2D}
-     * {@see GL46::GL_INT_SAMPLER_3D}   {@see GL46::isampler3D}     {@see GL46::GL_INT_SAMPLER_CUBE}
-     * {@see GL46::isamplerCube}     {@see GL46::GL_INT_SAMPLER_1D_ARRAY}   {@see GL46::isampler1DArray}
-     * {@see GL46::GL_INT_SAMPLER_2D_ARRAY}   {@see GL46::isampler2DArray}
-     * {@see GL46::GL_INT_SAMPLER_2D_MULTISAMPLE}   {@see GL46::isampler2DMS}
-     * {@see GL46::GL_INT_SAMPLER_2D_MULTISAMPLE_ARRAY}   {@see GL46::isampler2DMSArray}
-     * {@see GL46::GL_INT_SAMPLER_BUFFER}   {@see GL46::isamplerBuffer}     {@see GL46::GL_INT_SAMPLER_2D_RECT}
-     * {@see GL46::isampler2DRect}     {@see GL46::GL_UNSIGNED_INT_SAMPLER_1D}   {@see GL46::usampler1D}
-     * {@see GL46::GL_UNSIGNED_INT_SAMPLER_2D}   {@see GL46::usampler2D}     {@see GL46::GL_UNSIGNED_INT_SAMPLER_3D}
-     *  {@see GL46::usampler3D}     {@see GL46::GL_UNSIGNED_INT_SAMPLER_CUBE}   {@see GL46::usamplerCube}
-     * {@see GL46::GL_UNSIGNED_INT_SAMPLER_1D_ARRAY}   {@see GL46::usampler2DArray}
-     * {@see GL46::GL_UNSIGNED_INT_SAMPLER_2D_ARRAY}   {@see GL46::usampler2DArray}
-     * {@see GL46::GL_UNSIGNED_INT_SAMPLER_2D_MULTISAMPLE}   {@see GL46::usampler2DMS}
-     * {@see GL46::GL_UNSIGNED_INT_SAMPLER_2D_MULTISAMPLE_ARRAY}   {@see GL46::usampler2DMSArray}
-     * {@see GL46::GL_UNSIGNED_INT_SAMPLER_BUFFER}   {@see GL46::usamplerBuffer}
-     * {@see GL46::GL_UNSIGNED_INT_SAMPLER_2D_RECT}   {@see GL46::usampler2DRect}     {@see GL46::GL_IMAGE_1D}
-     * {@see GL46::image1D}     {@see GL46::GL_IMAGE_2D}   {@see GL46::image2D}     {@see GL46::GL_IMAGE_3D}
-     * {@see GL46::image3D}     {@see GL46::GL_IMAGE_2D_RECT}   {@see GL46::image2DRect}
-     * {@see GL46::GL_IMAGE_CUBE}   {@see GL46::imageCube}     {@see GL46::GL_IMAGE_BUFFER}
-     * {@see GL46::imageBuffer}     {@see GL46::GL_IMAGE_1D_ARRAY}   {@see GL46::image1DArray}
-     * {@see GL46::GL_IMAGE_2D_ARRAY}   {@see GL46::image2DArray}     {@see GL46::GL_IMAGE_2D_MULTISAMPLE}
-     * {@see GL46::image2DMS}     {@see GL46::GL_IMAGE_2D_MULTISAMPLE_ARRAY}   {@see GL46::image2DMSArray}
-     * {@see GL46::GL_INT_IMAGE_1D}   {@see GL46::iimage1D}     {@see GL46::GL_INT_IMAGE_2D}   {@see GL46::iimage2D}
-     *    {@see GL46::GL_INT_IMAGE_3D}   {@see GL46::iimage3D}     {@see GL46::GL_INT_IMAGE_2D_RECT}
-     * {@see GL46::iimage2DRect}     {@see GL46::GL_INT_IMAGE_CUBE}   {@see GL46::iimageCube}
-     * {@see GL46::GL_INT_IMAGE_BUFFER}   {@see GL46::iimageBuffer}     {@see GL46::GL_INT_IMAGE_1D_ARRAY}
-     * {@see GL46::iimage1DArray}     {@see GL46::GL_INT_IMAGE_2D_ARRAY}   {@see GL46::iimage2DArray}
-     * {@see GL46::GL_INT_IMAGE_2D_MULTISAMPLE}   {@see GL46::iimage2DMS}
-     * {@see GL46::GL_INT_IMAGE_2D_MULTISAMPLE_ARRAY}   {@see GL46::iimage2DMSArray}
-     * {@see GL46::GL_UNSIGNED_INT_IMAGE_1D}   {@see GL46::uimage1D}     {@see GL46::GL_UNSIGNED_INT_IMAGE_2D}
-     * {@see GL46::uimage2D}     {@see GL46::GL_UNSIGNED_INT_IMAGE_3D}   {@see GL46::uimage3D}
-     * {@see GL46::GL_UNSIGNED_INT_IMAGE_2D_RECT}   {@see GL46::uimage2DRect}
-     * {@see GL46::GL_UNSIGNED_INT_IMAGE_CUBE}   {@see GL46::uimageCube}
-     * {@see GL46::GL_UNSIGNED_INT_IMAGE_BUFFER}   {@see GL46::uimageBuffer}
-     * {@see GL46::GL_UNSIGNED_INT_IMAGE_1D_ARRAY}   {@see GL46::uimage1DArray}
-     * {@see GL46::GL_UNSIGNED_INT_IMAGE_2D_ARRAY}   {@see GL46::uimage2DArray}
-     * {@see GL46::GL_UNSIGNED_INT_IMAGE_2D_MULTISAMPLE}   {@see GL46::uimage2DMS}
-     * {@see GL46::GL_UNSIGNED_INT_IMAGE_2D_MULTISAMPLE_ARRAY}   {@see GL46::uimage2DMSArray}
-     * {@see GL46::GL_UNSIGNED_INT_ATOMIC_COUNTER}   {@see GL46::atomic_uint}
+     *   {@see GL20::GL_FLOAT}   {@see GL46::float}     {@see GL20::GL_FLOAT_VEC2}   {@see GL46::vec2}
+     * {@see GL20::GL_FLOAT_VEC3}   {@see GL46::vec3}     {@see GL20::GL_FLOAT_VEC4}   {@see GL46::vec4}
+     * {@see GL20::GL_DOUBLE}   {@see GL46::double}     {@see GL20::GL_DOUBLE_VEC2}   {@see GL46::dvec2}
+     * {@see GL20::GL_DOUBLE_VEC3}   {@see GL46::dvec3}     {@see GL20::GL_DOUBLE_VEC4}   {@see GL46::dvec4}
+     * {@see GL20::GL_INT}   {@see GL46::int}     {@see GL20::GL_INT_VEC2}   {@see GL46::ivec2}
+     * {@see GL20::GL_INT_VEC3}   {@see GL46::ivec3}     {@see GL20::GL_INT_VEC4}   {@see GL46::ivec4}
+     * {@see GL20::GL_UNSIGNED_INT}   {@see GL46::unsigned int}     {@see GL20::GL_UNSIGNED_INT_VEC2}
+     * {@see GL46::uvec2}     {@see GL20::GL_UNSIGNED_INT_VEC3}   {@see GL46::uvec3}
+     * {@see GL20::GL_UNSIGNED_INT_VEC4}   {@see GL46::uvec4}     {@see GL20::GL_BOOL}   {@see GL46::bool}
+     * {@see GL20::GL_BOOL_VEC2}   {@see GL46::bvec2}     {@see GL20::GL_BOOL_VEC3}   {@see GL46::bvec3}
+     * {@see GL20::GL_BOOL_VEC4}   {@see GL46::bvec4}     {@see GL20::GL_FLOAT_MAT2}   {@see GL46::mat2}
+     * {@see GL20::GL_FLOAT_MAT3}   {@see GL46::mat3}     {@see GL20::GL_FLOAT_MAT4}   {@see GL46::mat4}
+     * {@see GL20::GL_FLOAT_MAT2x3}   {@see GL46::mat2x3}     {@see GL20::GL_FLOAT_MAT2x4}   {@see GL46::mat2x4}
+     * {@see GL20::GL_FLOAT_MAT3x2}   {@see GL46::mat3x2}     {@see GL20::GL_FLOAT_MAT3x4}   {@see GL46::mat3x4}
+     * {@see GL20::GL_FLOAT_MAT4x2}   {@see GL46::mat4x2}     {@see GL20::GL_FLOAT_MAT4x3}   {@see GL46::mat4x3}
+     * {@see GL20::GL_DOUBLE_MAT2}   {@see GL46::dmat2}     {@see GL20::GL_DOUBLE_MAT3}   {@see GL46::dmat3}
+     * {@see GL20::GL_DOUBLE_MAT4}   {@see GL46::dmat4}     {@see GL20::GL_DOUBLE_MAT2x3}   {@see GL46::dmat2x3}
+     * {@see GL20::GL_DOUBLE_MAT2x4}   {@see GL46::dmat2x4}     {@see GL20::GL_DOUBLE_MAT3x2}   {@see GL46::dmat3x2}
+     *    {@see GL20::GL_DOUBLE_MAT3x4}   {@see GL46::dmat3x4}     {@see GL20::GL_DOUBLE_MAT4x2}
+     * {@see GL46::dmat4x2}     {@see GL20::GL_DOUBLE_MAT4x3}   {@see GL46::dmat4x3}     {@see GL20::GL_SAMPLER_1D}
+     * {@see GL46::sampler1D}     {@see GL20::GL_SAMPLER_2D}   {@see GL46::sampler2D}     {@see GL20::GL_SAMPLER_3D}
+     *  {@see GL46::sampler3D}     {@see GL20::GL_SAMPLER_CUBE}   {@see GL46::samplerCube}
+     * {@see GL20::GL_SAMPLER_1D_SHADOW}   {@see GL46::sampler1DShadow}     {@see GL20::GL_SAMPLER_2D_SHADOW}
+     * {@see GL46::sampler2DShadow}     {@see GL20::GL_SAMPLER_1D_ARRAY}   {@see GL46::sampler1DArray}
+     * {@see GL20::GL_SAMPLER_2D_ARRAY}   {@see GL46::sampler2DArray}     {@see GL20::GL_SAMPLER_1D_ARRAY_SHADOW}
+     * {@see GL46::sampler1DArrayShadow}     {@see GL20::GL_SAMPLER_2D_ARRAY_SHADOW}
+     * {@see GL46::sampler2DArrayShadow}     {@see GL20::GL_SAMPLER_2D_MULTISAMPLE}   {@see GL46::sampler2DMS}
+     * {@see GL20::GL_SAMPLER_2D_MULTISAMPLE_ARRAY}   {@see GL46::sampler2DMSArray}
+     * {@see GL20::GL_SAMPLER_CUBE_SHADOW}   {@see GL46::samplerCubeShadow}     {@see GL20::GL_SAMPLER_BUFFER}
+     * {@see GL46::samplerBuffer}     {@see GL20::GL_SAMPLER_2D_RECT}   {@see GL46::sampler2DRect}
+     * {@see GL20::GL_SAMPLER_2D_RECT_SHADOW}   {@see GL46::sampler2DRectShadow}     {@see GL20::GL_INT_SAMPLER_1D}
+     * {@see GL46::isampler1D}     {@see GL20::GL_INT_SAMPLER_2D}   {@see GL46::isampler2D}
+     * {@see GL20::GL_INT_SAMPLER_3D}   {@see GL46::isampler3D}     {@see GL20::GL_INT_SAMPLER_CUBE}
+     * {@see GL46::isamplerCube}     {@see GL20::GL_INT_SAMPLER_1D_ARRAY}   {@see GL46::isampler1DArray}
+     * {@see GL20::GL_INT_SAMPLER_2D_ARRAY}   {@see GL46::isampler2DArray}
+     * {@see GL20::GL_INT_SAMPLER_2D_MULTISAMPLE}   {@see GL46::isampler2DMS}
+     * {@see GL20::GL_INT_SAMPLER_2D_MULTISAMPLE_ARRAY}   {@see GL46::isampler2DMSArray}
+     * {@see GL20::GL_INT_SAMPLER_BUFFER}   {@see GL46::isamplerBuffer}     {@see GL20::GL_INT_SAMPLER_2D_RECT}
+     * {@see GL46::isampler2DRect}     {@see GL20::GL_UNSIGNED_INT_SAMPLER_1D}   {@see GL46::usampler1D}
+     * {@see GL20::GL_UNSIGNED_INT_SAMPLER_2D}   {@see GL46::usampler2D}     {@see GL20::GL_UNSIGNED_INT_SAMPLER_3D}
+     *  {@see GL46::usampler3D}     {@see GL20::GL_UNSIGNED_INT_SAMPLER_CUBE}   {@see GL46::usamplerCube}
+     * {@see GL20::GL_UNSIGNED_INT_SAMPLER_1D_ARRAY}   {@see GL46::usampler2DArray}
+     * {@see GL20::GL_UNSIGNED_INT_SAMPLER_2D_ARRAY}   {@see GL46::usampler2DArray}
+     * {@see GL20::GL_UNSIGNED_INT_SAMPLER_2D_MULTISAMPLE}   {@see GL46::usampler2DMS}
+     * {@see GL20::GL_UNSIGNED_INT_SAMPLER_2D_MULTISAMPLE_ARRAY}   {@see GL46::usampler2DMSArray}
+     * {@see GL20::GL_UNSIGNED_INT_SAMPLER_BUFFER}   {@see GL46::usamplerBuffer}
+     * {@see GL20::GL_UNSIGNED_INT_SAMPLER_2D_RECT}   {@see GL46::usampler2DRect}     {@see GL20::GL_IMAGE_1D}
+     * {@see GL46::image1D}     {@see GL20::GL_IMAGE_2D}   {@see GL46::image2D}     {@see GL20::GL_IMAGE_3D}
+     * {@see GL46::image3D}     {@see GL20::GL_IMAGE_2D_RECT}   {@see GL46::image2DRect}
+     * {@see GL20::GL_IMAGE_CUBE}   {@see GL46::imageCube}     {@see GL20::GL_IMAGE_BUFFER}
+     * {@see GL46::imageBuffer}     {@see GL20::GL_IMAGE_1D_ARRAY}   {@see GL46::image1DArray}
+     * {@see GL20::GL_IMAGE_2D_ARRAY}   {@see GL46::image2DArray}     {@see GL20::GL_IMAGE_2D_MULTISAMPLE}
+     * {@see GL46::image2DMS}     {@see GL20::GL_IMAGE_2D_MULTISAMPLE_ARRAY}   {@see GL46::image2DMSArray}
+     * {@see GL20::GL_INT_IMAGE_1D}   {@see GL46::iimage1D}     {@see GL20::GL_INT_IMAGE_2D}   {@see GL46::iimage2D}
+     *    {@see GL20::GL_INT_IMAGE_3D}   {@see GL46::iimage3D}     {@see GL20::GL_INT_IMAGE_2D_RECT}
+     * {@see GL46::iimage2DRect}     {@see GL20::GL_INT_IMAGE_CUBE}   {@see GL46::iimageCube}
+     * {@see GL20::GL_INT_IMAGE_BUFFER}   {@see GL46::iimageBuffer}     {@see GL20::GL_INT_IMAGE_1D_ARRAY}
+     * {@see GL46::iimage1DArray}     {@see GL20::GL_INT_IMAGE_2D_ARRAY}   {@see GL46::iimage2DArray}
+     * {@see GL20::GL_INT_IMAGE_2D_MULTISAMPLE}   {@see GL46::iimage2DMS}
+     * {@see GL20::GL_INT_IMAGE_2D_MULTISAMPLE_ARRAY}   {@see GL46::iimage2DMSArray}
+     * {@see GL20::GL_UNSIGNED_INT_IMAGE_1D}   {@see GL46::uimage1D}     {@see GL20::GL_UNSIGNED_INT_IMAGE_2D}
+     * {@see GL46::uimage2D}     {@see GL20::GL_UNSIGNED_INT_IMAGE_3D}   {@see GL46::uimage3D}
+     * {@see GL20::GL_UNSIGNED_INT_IMAGE_2D_RECT}   {@see GL46::uimage2DRect}
+     * {@see GL20::GL_UNSIGNED_INT_IMAGE_CUBE}   {@see GL46::uimageCube}
+     * {@see GL20::GL_UNSIGNED_INT_IMAGE_BUFFER}   {@see GL46::uimageBuffer}
+     * {@see GL20::GL_UNSIGNED_INT_IMAGE_1D_ARRAY}   {@see GL46::uimage1DArray}
+     * {@see GL20::GL_UNSIGNED_INT_IMAGE_2D_ARRAY}   {@see GL46::uimage2DArray}
+     * {@see GL20::GL_UNSIGNED_INT_IMAGE_2D_MULTISAMPLE}   {@see GL46::uimage2DMS}
+     * {@see GL20::GL_UNSIGNED_INT_IMAGE_2D_MULTISAMPLE_ARRAY}   {@see GL46::uimage2DMSArray}
+     * {@see GL20::GL_UNSIGNED_INT_ATOMIC_COUNTER}   {@see GL46::atomic_uint}
      *
      * If one or more elements of an array are active, the name of the array is returned in $name, the type is
      * returned in $type, and the $size parameter returns the highest array element index used, plus one, as
@@ -982,7 +843,7 @@ class GL20 extends GL15
      * Uniform variables that are declared as structures or arrays of structures will not be returned directly by
      * this function. Instead, each of these uniform variables will be reduced to its fundamental components
      * containing the "." and "[]" operators such that each of the names is valid as an argument to
-     * {@see GL46::glGetUniformLocation}. Each of these reduced uniform variables is counted as one active uniform
+     * {@see GL20::getUniformLocation}. Each of these reduced uniform variables is counted as one active uniform
      * variable and is assigned an index. A valid name cannot be a structure, an array of structures, or a
      * subcomponent of a vector or matrix.
      *
@@ -1011,15 +872,24 @@ class GL20 extends GL15
      * @param string|null $name
      * @return void
      */
-    public function getActiveUniform(int $program, int $index, int $bufSize, ?int &$length, ?int &$size, ?int &$type, ?string &$name): void
-    {
+    public function getActiveUniform(
+        int $program,
+        int $index,
+        int $bufSize,
+        ?int &$length,
+        ?int &$size,
+        ?int &$type,
+        ?string &$name
+    ): void {
         $lengthCType = $this->info->ffi->new('GLsizei', false);
         $sizeCType = $this->info->ffi->new('GLint', false);
         $typeCType = $this->info->ffi->new('GLenum', false);
         $nameCType = \FFI::addr($this->info->ffi->new('GLchar[' . $bufSize . ']', false)[0]);
         try {
-            $__proc = $this->getProcAs('glGetActiveUniform', 'void (*)(GLuint program, GLuint index, GLsizei bufSize, GLsizei *length, GLint *size, GLenum *type, GLchar *name)');
-            $__proc($program, $index, $bufSize, \FFI::addr($lengthCType), \FFI::addr($sizeCType), \FFI::addr($typeCType), $nameCType);
+            $__proc = $this->proc('glGetActiveUniform',
+                'void (*)(GLuint program, GLuint index, GLsizei bufSize, GLsizei *length, GLint *size, GLenum *type, GLchar *name)');
+            $__proc($program, $index, $bufSize, \FFI::addr($lengthCType), \FFI::addr($sizeCType),
+                \FFI::addr($typeCType), $nameCType);
         } finally {
             $length = $lengthCType->cdata;
             \FFI::free($lengthCType);
@@ -1033,15 +903,15 @@ class GL20 extends GL15
     }
 
     /**
-     * {@see GL46::glGetAttachedShaders} returns the names of the shader objects attached to $program. The names of
+     * {@see GL20::getAttachedShaders} returns the names of the shader objects attached to $program. The names of
      * shader objects that are attached to $program will be returned in $shaders. The actual number of shader names
      * written into $shaders is returned in $count. If no shader objects are attached to $program, $count is set to
      * 0. The maximum number of shader names that may be returned in $shaders is specified by $maxCount.
      *
      * If the number of names actually returned is not required (for instance, if it has just been obtained by
-     * calling {@see GL46::glGetProgram}), a value of {@see GL46::NULL} may be passed for count. If no shader objects
+     * calling {@see GL20::getProgram}), a value of {@see GL46::NULL} may be passed for count. If no shader objects
      * are attached to $program, a value of 0 will be returned in $count. The actual number of attached shaders can
-     * be obtained by calling {@see GL46::glGetProgram} with the value {@see GL46::GL_ATTACHED_SHADERS}.
+     * be obtained by calling {@see GL20::getProgram} with the value {@see GL20::GL_ATTACHED_SHADERS}.
      *
      * @see http://docs.gl/gl2/glGetAttachedShaders
      * @see http://docs.gl/gl4/glGetAttachedShaders
@@ -1057,7 +927,8 @@ class GL20 extends GL15
         $countCType = $this->info->ffi->new('GLsizei', false);
         $shadersCType = $this->info->ffi->new('GLuint', false);
         try {
-            $__proc = $this->getProcAs('glGetAttachedShaders', 'void (*)(GLuint program, GLsizei maxCount, GLsizei *count, GLuint *shaders)');
+            $__proc = $this->proc('glGetAttachedShaders',
+                'void (*)(GLuint program, GLsizei maxCount, GLsizei *count, GLuint *shaders)');
             $__proc($program, $maxCount, \FFI::addr($countCType), \FFI::addr($shadersCType));
         } finally {
             $count = $countCType->cdata;
@@ -1068,45 +939,46 @@ class GL20 extends GL15
     }
 
     /**
-     * {@see GL46::glGetAttribLocation} queries the previously linked program object specified by $program for the
+     * {@see GL20::getAttribLocation} queries the previously linked program object specified by $program for the
      * attribute variable specified by $name and returns the index of the generic vertex attribute that is bound to
      * that attribute variable. If $name is a matrix attribute variable, the index of the first column of the matrix
      * is returned. If the named attribute variable is not an active attribute in the specified program object or if
      * $name starts with the reserved prefix "gl_", a value of -1 is returned.
      *
      * The association between an attribute variable name and a generic attribute index can be specified at any time
-     * by calling {@see GL46::glBindAttribLocation}. Attribute bindings do not go into effect until
-     * {@see GL46::glLinkProgram} is called. After a program object has been linked successfully, the index values
+     * by calling {@see GL20::bindAttribLocation}. Attribute bindings do not go into effect until
+     * {@see GL20::linkProgram} is called. After a program object has been linked successfully, the index values
      * for attribute variables remain fixed until the next link command occurs. The attribute values can only be
-     * queried after a link if the link was successful. {@see GL46::glGetAttribLocation} returns the binding that
-     * actually went into effect the last time {@see GL46::glLinkProgram} was called for the specified program
+     * queried after a link if the link was successful. {@see GL20::getAttribLocation} returns the binding that
+     * actually went into effect the last time {@see GL20::linkProgram} was called for the specified program
      * object. Attribute bindings that have been specified since the last link operation are not returned by
-     * {@see GL46::glGetAttribLocation}.
+     * {@see GL20::getAttribLocation}.
      *
      * @see http://docs.gl/gl2/glGetAttribLocation
      * @see http://docs.gl/gl4/glGetAttribLocation
      * @since 2.0
      * @param int $program
-     * @param \FFI\CData|null $name
+     * @param CData|null $name
      * @return int
      */
-    public function getAttribLocation(int $program, ?\FFI\CData $name): int
+    public function getAttribLocation(int $program, ?CData $name): int
     {
-        $__proc = $this->getProcAs('glGetAttribLocation', 'GLint (*)(GLuint program, const GLchar *name)');
+        $__proc = $this->proc('glGetAttribLocation', 'GLint (*)(GLuint program, const GLchar *name)');
+
         return $__proc($program, $name);
     }
 
     /**
-     * {@see GL46::glGetProgramInfoLog} returns the information log for the specified program object. The information
+     * {@see GL20::getProgramInfoLog} returns the information log for the specified program object. The information
      * log for a program object is modified when the program object is linked or validated. The string that is
      * returned will be null terminated.
      *
-     * {@see GL46::glGetProgramInfoLog} returns in $infoLog as much of the information log as it can, up to a maximum
+     * {@see GL20::getProgramInfoLog} returns in $infoLog as much of the information log as it can, up to a maximum
      * of $maxLength characters. The number of characters actually returned, excluding the null termination
      * character, is specified by $length. If the length of the returned string is not required, a value of
      * {@see GL46::NULL} can be passed in the $length argument. The size of the buffer required to store the returned
-     * information log can be obtained by calling {@see GL46::glGetProgram} with the value
-     * {@see GL46::GL_INFO_LOG_LENGTH}.
+     * information log can be obtained by calling {@see GL20::getProgram} with the value
+     * {@see GL20::GL_INFO_LOG_LENGTH}.
      *
      * The information log for a program object is either an empty string, or a string containing information about
      * the last link operation, or a string containing information about the last validation operation. It may
@@ -1127,7 +999,8 @@ class GL20 extends GL15
         $lengthCType = $this->info->ffi->new('GLsizei', false);
         $infoLogCType = \FFI::addr($this->info->ffi->new('GLchar[' . $bufSize . ']', false)[0]);
         try {
-            $__proc = $this->getProcAs('glGetProgramInfoLog', 'void (*)(GLuint program, GLsizei bufSize, GLsizei *length, GLchar *infoLog)');
+            $__proc = $this->proc('glGetProgramInfoLog',
+                'void (*)(GLuint program, GLsizei bufSize, GLsizei *length, GLchar *infoLog)');
             $__proc($program, $bufSize, \FFI::addr($lengthCType), $infoLogCType);
         } finally {
             $length = $lengthCType->cdata;
@@ -1138,61 +1011,61 @@ class GL20 extends GL15
     }
 
     /**
-     * {@see GL46::glGetProgram} returns in $params the value of a parameter for a specific program object. The
+     * {@see GL20::getProgram} returns in $params the value of a parameter for a specific program object. The
      * following parameters are defined:
      *
-     *  - {@see GL46::GL_DELETE_STATUS}: $params returns {@see GL46::GL_TRUE} if
+     *  - {@see GL20::GL_DELETE_STATUS}: $params returns {@see GL20::GL_TRUE} if
      *    $program is currently flagged for deletion, and
-     *    {@see GL46::GL_FALSE} otherwise.
+     *    {@see GL20::GL_FALSE} otherwise.
      *
-     *  - {@see GL46::GL_LINK_STATUS}: $params returns {@see GL46::GL_TRUE} if
+     *  - {@see GL20::GL_LINK_STATUS}: $params returns {@see GL20::GL_TRUE} if
      *    the last link operation on $program was successful, and
-     *    {@see GL46::GL_FALSE} otherwise.
+     *    {@see GL20::GL_FALSE} otherwise.
      *
-     *  - {@see GL46::GL_VALIDATE_STATUS}: $params returns {@see GL46::GL_TRUE}
+     *  - {@see GL20::GL_VALIDATE_STATUS}: $params returns {@see GL20::GL_TRUE}
      *    or if the last validation operation on $program was successful, and
-     *    {@see GL46::GL_FALSE} otherwise.
+     *    {@see GL20::GL_FALSE} otherwise.
      *
-     *  - {@see GL46::GL_INFO_LOG_LENGTH}: $params returns the number of
+     *  - {@see GL20::GL_INFO_LOG_LENGTH}: $params returns the number of
      *    characters in the information log for $program including the null
      *    termination
      *    character (i.e., the size of the character buffer required to store
      *    the information log). If $program has no
      *    information log, a value of 0 is returned.
      *
-     *  - {@see GL46::GL_ATTACHED_SHADERS}: $params returns the number of shader
+     *  - {@see GL20::GL_ATTACHED_SHADERS}: $params returns the number of shader
      *    objects attached to $program.
      *
-     *  - {@see GL46::GL_ACTIVE_ATOMIC_COUNTER_BUFFERS}: $params returns the
+     *  - {@see GL20::GL_ACTIVE_ATOMIC_COUNTER_BUFFERS}: $params returns the
      *    number of active attribute atomic counter buffers used by $program.
      *
-     *  - {@see GL46::GL_ACTIVE_ATTRIBUTES}: $params returns the number of
+     *  - {@see GL20::GL_ACTIVE_ATTRIBUTES}: $params returns the number of
      *    active attribute variables for $program.
      *
-     *  - {@see GL46::GL_ACTIVE_ATTRIBUTE_MAX_LENGTH}: $params returns the
+     *  - {@see GL20::GL_ACTIVE_ATTRIBUTE_MAX_LENGTH}: $params returns the
      *    length of the longest active attribute name for $program, including
      *    the null
      *    termination character (i.e., the size of the character buffer required
      *    to store the longest attribute name).
      *    If no active attributes exist, 0 is returned.
      *
-     *  - {@see GL46::GL_ACTIVE_UNIFORMS}: $params returns the number of active
+     *  - {@see GL20::GL_ACTIVE_UNIFORMS}: $params returns the number of active
      *    uniform variables for $program.
      *
-     *  - {@see GL46::GL_ACTIVE_UNIFORM_MAX_LENGTH}: $params returns the length
+     *  - {@see GL20::GL_ACTIVE_UNIFORM_MAX_LENGTH}: $params returns the length
      *    of the longest active uniform variable name for $program, including
      *    the null
      *    termination character (i.e., the size of the character buffer required
      *    to store the longest uniform variable
      *    name). If no active uniform variables exist, 0 is returned.
      *
-     *  - {@see GL46::GL_PROGRAM_BINARY_LENGTH}: $params returns the length of
+     *  - {@see GL20::GL_PROGRAM_BINARY_LENGTH}: $params returns the length of
      *    the program binary, in bytes that will be returned by a call to
-     *    {@see GL46::glGetProgramBinary}. When a progam's {@see
-     *    GL46::GL_LINK_STATUS} is {@see GL46::GL_FALSE}, its
+     *    {@see GL20::getProgramBinary}. When a progam's {@see
+     *    GL20::GL_LINK_STATUS} is {@see GL20::GL_FALSE}, its
      *    program binary length is zero.
      *
-     *  - {@see GL46::GL_COMPUTE_WORK_GROUP_SIZE}: $params returns an array of
+     *  - {@see GL20::GL_COMPUTE_WORK_GROUP_SIZE}: $params returns an array of
      *    three integers containing the local work group size of the compute
      *    program as
      *    specified by its input layout qualifier(s). $program must be the name
@@ -1200,30 +1073,30 @@ class GL20 extends GL15
      *    previously linked successfully and contains a binary for the compute
      *    shader stage.
      *
-     *  - {@see GL46::GL_TRANSFORM_FEEDBACK_BUFFER_MODE}: $params returns a
+     *  - {@see GL20::GL_TRANSFORM_FEEDBACK_BUFFER_MODE}: $params returns a
      *    symbolic constant indicating the buffer mode used when transform
      *    feedback is active. This
-     *    may be {@see GL46::GL_SEPARATE_ATTRIBS} or {@see
-     *    GL46::GL_INTERLEAVED_ATTRIBS}.
+     *    may be {@see GL20::GL_SEPARATE_ATTRIBS} or {@see
+     *    GL20::GL_INTERLEAVED_ATTRIBS}.
      *
-     *  - {@see GL46::GL_TRANSFORM_FEEDBACK_VARYINGS}: $params returns the
+     *  - {@see GL20::GL_TRANSFORM_FEEDBACK_VARYINGS}: $params returns the
      *    number of varying variables to capture in transform feedback mode for
      *    the program.
      *
-     *  - {@see GL46::GL_TRANSFORM_FEEDBACK_VARYING_MAX_LENGTH}: $params returns
+     *  - {@see GL20::GL_TRANSFORM_FEEDBACK_VARYING_MAX_LENGTH}: $params returns
      *    the length of the longest variable name to be used for transform
      *    feedback, including the
      *    null-terminator.
      *
-     *  - {@see GL46::GL_GEOMETRY_VERTICES_OUT}: $params returns the maximum
+     *  - {@see GL20::GL_GEOMETRY_VERTICES_OUT}: $params returns the maximum
      *    number of vertices that the geometry shader in $program will output.
      *
-     *  - {@see GL46::GL_GEOMETRY_INPUT_TYPE}: $params returns a symbolic
+     *  - {@see GL20::GL_GEOMETRY_INPUT_TYPE}: $params returns a symbolic
      *    constant indicating the primitive type accepted as input to the
      *    geometry shader
      *    contained in $program.
      *
-     *  - {@see GL46::GL_GEOMETRY_OUTPUT_TYPE}: $params returns a symbolic
+     *  - {@see GL20::GL_GEOMETRY_OUTPUT_TYPE}: $params returns a symbolic
      *    constant indicating the primitive type that will be output by the
      *    geometry
      *    shader contained in $program.
@@ -1240,7 +1113,7 @@ class GL20 extends GL15
     {
         $paramsCType = $this->info->ffi->new('GLint', false);
         try {
-            $__proc = $this->getProcAs('glGetProgramiv', 'void (*)(GLuint program, GLenum pname, GLint *params)');
+            $__proc = $this->proc('glGetProgramiv', 'void (*)(GLuint program, GLenum pname, GLint *params)');
             $__proc($program, $pname, \FFI::addr($paramsCType));
         } finally {
             $params = $paramsCType->cdata;
@@ -1249,16 +1122,16 @@ class GL20 extends GL15
     }
 
     /**
-     * {@see GL46::glGetShaderInfoLog} returns the information log for the specified shader object. The information
+     * {@see GL20::getShaderInfoLog} returns the information log for the specified shader object. The information
      * log for a shader object is modified when the shader is compiled. The string that is returned will be null
      * terminated.
      *
-     * {@see GL46::glGetShaderInfoLog} returns in $infoLog as much of the information log as it can, up to a maximum
+     * {@see GL20::getShaderInfoLog} returns in $infoLog as much of the information log as it can, up to a maximum
      * of $maxLength characters. The number of characters actually returned, excluding the null termination
      * character, is specified by $length. If the length of the returned string is not required, a value of
      * {@see GL46::NULL} can be passed in the $length argument. The size of the buffer required to store the returned
-     * information log can be obtained by calling {@see GL46::glGetShader} with the value
-     * {@see GL46::GL_INFO_LOG_LENGTH}.
+     * information log can be obtained by calling {@see GL20::getShader} with the value
+     * {@see GL20::GL_INFO_LOG_LENGTH}.
      *
      * The information log for a shader object is a string that may contain diagnostic messages, warning messages,
      * and other information about the last compile operation. When a shader object is created, its information log
@@ -1278,7 +1151,8 @@ class GL20 extends GL15
         $lengthCType = $this->info->ffi->new('GLsizei', false);
         $infoLogCType = \FFI::addr($this->info->ffi->new('GLchar[' . $bufSize . ']', false)[0]);
         try {
-            $__proc = $this->getProcAs('glGetShaderInfoLog', 'void (*)(GLuint shader, GLsizei bufSize, GLsizei *length, GLchar *infoLog)');
+            $__proc = $this->proc('glGetShaderInfoLog',
+                'void (*)(GLuint shader, GLsizei bufSize, GLsizei *length, GLchar *infoLog)');
             $__proc($shader, $bufSize, \FFI::addr($lengthCType), $infoLogCType);
         } finally {
             $length = $lengthCType->cdata;
@@ -1289,16 +1163,16 @@ class GL20 extends GL15
     }
 
     /**
-     * {@see GL46::glGetShaderSource} returns the concatenation of the source code strings from the shader object
+     * {@see GL20::getShaderSource} returns the concatenation of the source code strings from the shader object
      * specified by $shader. The source code strings for a shader object are the result of a previous call to
-     * {@see GL46::glShaderSource}. The string returned by the function will be null terminated.
+     * {@see GL20::shaderSource}. The string returned by the function will be null terminated.
      *
-     * {@see GL46::glGetShaderSource} returns in $source as much of the source code string as it can, up to a maximum
+     * {@see GL20::getShaderSource} returns in $source as much of the source code string as it can, up to a maximum
      * of $bufSize characters. The number of characters actually returned, excluding the null termination character,
      * is specified by $length. If the length of the returned string is not required, a value of {@see GL46::NULL}
      * can be passed in the $length argument. The size of the buffer required to store the returned source code
-     * string can be obtained by calling {@see GL46::glGetShader} with the value
-     * {@see GL46::GL_SHADER_SOURCE_LENGTH}.
+     * string can be obtained by calling {@see GL20::getShader} with the value
+     * {@see GL20::GL_SHADER_SOURCE_LENGTH}.
      *
      * @see http://docs.gl/gl2/glGetShaderSource
      * @see http://docs.gl/gl4/glGetShaderSource
@@ -1314,7 +1188,8 @@ class GL20 extends GL15
         $lengthCType = $this->info->ffi->new('GLsizei', false);
         $sourceCType = \FFI::addr($this->info->ffi->new('GLchar[' . $bufSize . ']', false)[0]);
         try {
-            $__proc = $this->getProcAs('glGetShaderSource', 'void (*)(GLuint shader, GLsizei bufSize, GLsizei *length, GLchar *source)');
+            $__proc = $this->proc('glGetShaderSource',
+                'void (*)(GLuint shader, GLsizei bufSize, GLsizei *length, GLchar *source)');
             $__proc($shader, $bufSize, \FFI::addr($lengthCType), $sourceCType);
         } finally {
             $length = $lengthCType->cdata;
@@ -1325,31 +1200,31 @@ class GL20 extends GL15
     }
 
     /**
-     * {@see GL46::glGetShader} returns in $params the value of a parameter for a specific shader object. The
+     * {@see GL20::getShader} returns in $params the value of a parameter for a specific shader object. The
      * following parameters are defined:
      *
-     *  - {@see GL46::GL_SHADER_TYPE}: $params returns {@see
-     *    GL46::GL_VERTEX_SHADER} if $shader is a vertex shader object,
-     *    {@see GL46::GL_GEOMETRY_SHADER} if $shader is a geometry shader
-     *    object, and {@see GL46::GL_FRAGMENT_SHADER} if
+     *  - {@see GL20::GL_SHADER_TYPE}: $params returns {@see
+     *    GL20::GL_VERTEX_SHADER} if $shader is a vertex shader object,
+     *    {@see GL20::GL_GEOMETRY_SHADER} if $shader is a geometry shader
+     *    object, and {@see GL20::GL_FRAGMENT_SHADER} if
      *    $shader is a fragment shader object.
      *
-     *  - {@see GL46::GL_DELETE_STATUS}: $params returns {@see GL46::GL_TRUE} if
-     *    $shader is currently flagged for deletion, and {@see GL46::GL_FALSE}
+     *  - {@see GL20::GL_DELETE_STATUS}: $params returns {@see GL20::GL_TRUE} if
+     *    $shader is currently flagged for deletion, and {@see GL20::GL_FALSE}
      *    otherwise.
      *
-     *  - {@see GL46::GL_COMPILE_STATUS}: $params returns {@see GL46::GL_TRUE}
+     *  - {@see GL20::GL_COMPILE_STATUS}: $params returns {@see GL20::GL_TRUE}
      *    if the last compile operation on $shader was successful, and
-     *    {@see GL46::GL_FALSE} otherwise.
+     *    {@see GL20::GL_FALSE} otherwise.
      *
-     *  - {@see GL46::GL_INFO_LOG_LENGTH}: $params returns the number of
+     *  - {@see GL20::GL_INFO_LOG_LENGTH}: $params returns the number of
      *    characters in the information log for $shader including the null
      *    termination
      *    character (i.e., the size of the character buffer required to store
      *    the information log). If $shader has no
      *    information log, a value of 0 is returned.
      *
-     *  - {@see GL46::GL_SHADER_SOURCE_LENGTH}: $params returns the length of
+     *  - {@see GL20::GL_SHADER_SOURCE_LENGTH}: $params returns the length of
      *    the concatenation of the source strings that make up the shader source
      *    for the
      *    $shader, including the null termination character. (i.e., the size of
@@ -1368,7 +1243,7 @@ class GL20 extends GL15
     {
         $paramsCType = $this->info->ffi->new('GLint', false);
         try {
-            $__proc = $this->getProcAs('glGetShaderiv', 'void (*)(GLuint shader, GLenum pname, GLint *params)');
+            $__proc = $this->proc('glGetShaderiv', 'void (*)(GLuint shader, GLenum pname, GLint *params)');
             $__proc($shader, $pname, \FFI::addr($paramsCType));
         } finally {
             $params = $paramsCType->cdata;
@@ -1377,7 +1252,7 @@ class GL20 extends GL15
     }
 
     /**
-     * {@see GL46::glGetUniformLocation } returns an integer that represents the location of a specific uniform
+     * {@see GL20::getUniformLocation } returns an integer that represents the location of a specific uniform
      * variable within a program object. $name must be a null terminated string that contains no white space. $name
      * must be an active uniform variable name in $program that is not a structure, an array of structures, or a
      * subcomponent of a vector or a matrix. This function returns -1 if $name does not correspond to an active
@@ -1385,7 +1260,7 @@ class GL20 extends GL15
      * an atomic counter or a named uniform block.
      *
      * Uniform variables that are structures or arrays of structures may be queried by calling
-     * {@see GL46::glGetUniformLocation} for each field within the structure. The array element operator "[]" and the
+     * {@see GL20::getUniformLocation} for each field within the structure. The array element operator "[]" and the
      * structure field operator "." may be used in $name in order to select elements within an array or fields within
      * a structure. The result of using these operators is not allowed to be another structure, an array of
      * structures, or a subcomponent of a vector or a matrix. Except if the last part of $name indicates a uniform
@@ -1393,9 +1268,9 @@ class GL20 extends GL15
      * or by using the name appended by "[0]".
      *
      * The actual locations assigned to uniform variables are not known until the program object is linked
-     * successfully. After linking has occurred, the command {@see GL46::glGetUniformLocation} can be used to obtain
-     * the location of a uniform variable. This location value can then be passed to {@see GL46::glUniform} to set
-     * the value of the uniform variable or to {@see GL46::glGetUniform} in order to query the current value of the
+     * successfully. After linking has occurred, the command {@see GL20::getUniformLocation} can be used to obtain
+     * the location of a uniform variable. This location value can then be passed to {@see GL20::uniform} to set
+     * the value of the uniform variable or to {@see GL20::getUniform} in order to query the current value of the
      * uniform variable. After a program object has been linked successfully, the index values for uniform variables
      * remain fixed until the next link command occurs. Uniform variable locations and values can only be queried
      * after a link if the link was successful.
@@ -1404,34 +1279,35 @@ class GL20 extends GL15
      * @see http://docs.gl/gl4/glGetUniformLocation
      * @since 2.0
      * @param int $program
-     * @param \FFI\CData|null $name
+     * @param CData|null $name
      * @return int
      */
-    public function getUniformLocation(int $program, ?\FFI\CData $name): int
+    public function getUniformLocation(int $program, ?CData $name): int
     {
-        $__proc = $this->getProcAs('glGetUniformLocation', 'GLint (*)(GLuint program, const GLchar *name)');
+        $__proc = $this->proc('glGetUniformLocation', 'GLint (*)(GLuint program, const GLchar *name)');
+
         return $__proc($program, $name);
     }
 
     /**
-     * {@see GL46::glGetUniform} and {@see GL46::glGetnUniform} return in $params the value(s) of the specified
+     * {@see GL20::getUniform} and {@see GL20::getnUniform} return in $params the value(s) of the specified
      * uniform variable. The type of the uniform variable specified by $location determines the number of values
      * returned. If the uniform variable is defined in the shader as a boolean, int, or float, a single value will be
      * returned. If it is defined as a vec2, ivec2, or bvec2, two values will be returned. If it is defined as a
      * vec3, ivec3, or bvec3, three values will be returned, and so on. To query values stored in uniform variables
-     * declared as arrays, call {@see GL46::glGetUniform} for each element of the array. To query values stored in
-     * uniform variables declared as structures, call {@see GL46::glGetUniform} for each field in the structure. The
+     * declared as arrays, call {@see GL20::getUniform} for each element of the array. To query values stored in
+     * uniform variables declared as structures, call {@see GL20::getUniform} for each field in the structure. The
      * values for uniform variables declared as a matrix will be returned in column major order.
      *
      * The locations assigned to uniform variables are not known until the program object is linked. After linking
-     * has occurred, the command {@see GL46::glGetUniformLocation} can be used to obtain the location of a uniform
-     * variable. This location value can then be passed to {@see GL46::glGetUniform} or {@see GL46::glGetnUniform} in
+     * has occurred, the command {@see GL20::getUniformLocation} can be used to obtain the location of a uniform
+     * variable. This location value can then be passed to {@see GL20::getUniform} or {@see GL20::getnUniform} in
      * order to query the current value of the uniform variable. After a program object has been linked successfully,
      * the index values for uniform variables remain fixed until the next link command occurs. The uniform variable
      * values can only be queried after a link if the link was successful.
      *
-     * The only difference between {@see GL46::glGetUniform} and {@see GL46::glGetnUniform} is that
-     * {@see GL46::glGetnUniform} will generate an error if size of the $params buffer,as described by $bufSize, is
+     * The only difference between {@see GL20::getUniform} and {@see GL20::getnUniform} is that
+     * {@see GL20::getnUniform} will generate an error if size of the $params buffer,as described by $bufSize, is
      * not large enough to hold the result data.
      *
      * @see http://docs.gl/gl2/glGetUniform
@@ -1446,7 +1322,7 @@ class GL20 extends GL15
     {
         $paramsCType = $this->info->ffi->new('GLfloat', false);
         try {
-            $__proc = $this->getProcAs('glGetUniformfv', 'void (*)(GLuint program, GLint location, GLfloat *params)');
+            $__proc = $this->proc('glGetUniformfv', 'void (*)(GLuint program, GLint location, GLfloat *params)');
             $__proc($program, $location, \FFI::addr($paramsCType));
         } finally {
             $params = $paramsCType->cdata;
@@ -1455,24 +1331,24 @@ class GL20 extends GL15
     }
 
     /**
-     * {@see GL46::glGetUniform} and {@see GL46::glGetnUniform} return in $params the value(s) of the specified
+     * {@see GL20::getUniform} and {@see GL20::getnUniform} return in $params the value(s) of the specified
      * uniform variable. The type of the uniform variable specified by $location determines the number of values
      * returned. If the uniform variable is defined in the shader as a boolean, int, or float, a single value will be
      * returned. If it is defined as a vec2, ivec2, or bvec2, two values will be returned. If it is defined as a
      * vec3, ivec3, or bvec3, three values will be returned, and so on. To query values stored in uniform variables
-     * declared as arrays, call {@see GL46::glGetUniform} for each element of the array. To query values stored in
-     * uniform variables declared as structures, call {@see GL46::glGetUniform} for each field in the structure. The
+     * declared as arrays, call {@see GL20::getUniform} for each element of the array. To query values stored in
+     * uniform variables declared as structures, call {@see GL20::getUniform} for each field in the structure. The
      * values for uniform variables declared as a matrix will be returned in column major order.
      *
      * The locations assigned to uniform variables are not known until the program object is linked. After linking
-     * has occurred, the command {@see GL46::glGetUniformLocation} can be used to obtain the location of a uniform
-     * variable. This location value can then be passed to {@see GL46::glGetUniform} or {@see GL46::glGetnUniform} in
+     * has occurred, the command {@see GL20::getUniformLocation} can be used to obtain the location of a uniform
+     * variable. This location value can then be passed to {@see GL20::getUniform} or {@see GL20::getnUniform} in
      * order to query the current value of the uniform variable. After a program object has been linked successfully,
      * the index values for uniform variables remain fixed until the next link command occurs. The uniform variable
      * values can only be queried after a link if the link was successful.
      *
-     * The only difference between {@see GL46::glGetUniform} and {@see GL46::glGetnUniform} is that
-     * {@see GL46::glGetnUniform} will generate an error if size of the $params buffer,as described by $bufSize, is
+     * The only difference between {@see GL20::getUniform} and {@see GL20::getnUniform} is that
+     * {@see GL20::getnUniform} will generate an error if size of the $params buffer,as described by $bufSize, is
      * not large enough to hold the result data.
      *
      * @see http://docs.gl/gl2/glGetUniform
@@ -1487,7 +1363,7 @@ class GL20 extends GL15
     {
         $paramsCType = $this->info->ffi->new('GLint', false);
         try {
-            $__proc = $this->getProcAs('glGetUniformiv', 'void (*)(GLuint program, GLint location, GLint *params)');
+            $__proc = $this->proc('glGetUniformiv', 'void (*)(GLuint program, GLint location, GLint *params)');
             $__proc($program, $location, \FFI::addr($paramsCType));
         } finally {
             $params = $paramsCType->cdata;
@@ -1496,12 +1372,12 @@ class GL20 extends GL15
     }
 
     /**
-     * {@see GL46::glGetVertexAttribPointerv} returns pointer information. $index is the generic vertex attribute to
+     * {@see GL20::getVertexAttribPointerv} returns pointer information. $index is the generic vertex attribute to
      * be queried, $pname is a symbolic constant indicating the pointer to be returned, and $params is a pointer to a
      * location in which to place the returned data.
      *
      * The $pointer returned is a byte offset into the data store of the buffer object that was bound to the
-     * {@see GL46::GL_ARRAY_BUFFER} target (see {@see GL46::glBindBuffer}) when the desired pointer was previously
+     * {@see GL20::GL_ARRAY_BUFFER} target (see {@see GL20::bindBuffer}) when the desired pointer was previously
      * specified.
      *
      * @see http://docs.gl/gl2/glGetVertexAttribPointerv
@@ -1509,111 +1385,111 @@ class GL20 extends GL15
      * @since 2.0
      * @param int $index
      * @param int $pname
-     * @param \FFI\CData|null $pointer
+     * @param CData|null $pointer
      * @return void
      */
-    public function getVertexAttribPointerv(int $index, int $pname, ?\FFI\CData $pointer): void
+    public function getVertexAttribPointerv(int $index, int $pname, ?CData $pointer): void
     {
-        $__proc = $this->getProcAs('glGetVertexAttribPointerv', 'void (*)(GLuint index, GLenum pname, void **pointer)');
+        $__proc = $this->proc('glGetVertexAttribPointerv', 'void (*)(GLuint index, GLenum pname, void **pointer)');
         $__proc($index, $pname, $pointer);
     }
 
     /**
-     * {@see GL46::glGetVertexAttrib} returns in $params the value of a generic vertex attribute parameter. The
+     * {@see GL20::getVertexAttrib} returns in $params the value of a generic vertex attribute parameter. The
      * generic vertex attribute to be queried is specified by $index, and the parameter to be queried is specified by
      * $pname.
      *
      * The accepted parameter names are as follows:
      *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING}: $params returns a
+     *  - {@see GL20::GL_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING}: $params returns a
      *    single value, the name of the buffer object currently bound to the
      *    binding point
      *    corresponding to generic vertex attribute array $index. If no buffer
      *    object is bound, 0 is returned. The
      *    initial value is 0.
      *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_ENABLED}: $params returns a single
+     *  - {@see GL20::GL_VERTEX_ATTRIB_ARRAY_ENABLED}: $params returns a single
      *    value that is non-zero (true) if the vertex attribute array for $index
      *    is enabled
      *    and 0 (false) if it is disabled. The initial value is {@see
-     *    GL46::GL_FALSE}.
+     *    GL20::GL_FALSE}.
      *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_SIZE}: $params returns a single
+     *  - {@see GL20::GL_VERTEX_ATTRIB_ARRAY_SIZE}: $params returns a single
      *    value, the size of the vertex attribute array for $index. The size is
      *    the number
      *    of values for each element of the vertex attribute array, and it will
      *    be 1, 2, 3, or 4. The initial value is
      *    4.
      *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_STRIDE}: $params returns a single
+     *  - {@see GL20::GL_VERTEX_ATTRIB_ARRAY_STRIDE}: $params returns a single
      *    value, the array stride for (number of bytes between successive
      *    elements in) the
      *    vertex attribute array for $index. A value of 0 indicates that the
      *    array elements are stored sequentially in
      *    memory. The initial value is 0.
      *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_TYPE}: $params returns a single
+     *  - {@see GL20::GL_VERTEX_ATTRIB_ARRAY_TYPE}: $params returns a single
      *    value, a symbolic constant indicating the array type for the vertex
      *    attribute
-     *    array for $index. Possible values are {@see GL46::GL_BYTE}, {@see
-     *    GL46::GL_UNSIGNED_BYTE},
-     *    {@see GL46::GL_SHORT}, {@see GL46::GL_UNSIGNED_SHORT}, {@see
-     *    GL46::GL_INT}, {@see GL46::GL_UNSIGNED_INT},
-     *    {@see GL46::GL_FLOAT}, and {@see GL46::GL_DOUBLE}. The initial value
-     *    is {@see GL46::GL_FLOAT}.
+     *    array for $index. Possible values are {@see GL20::GL_BYTE}, {@see
+     *    GL20::GL_UNSIGNED_BYTE},
+     *    {@see GL20::GL_SHORT}, {@see GL20::GL_UNSIGNED_SHORT}, {@see
+     *    GL20::GL_INT}, {@see GL20::GL_UNSIGNED_INT},
+     *    {@see GL20::GL_FLOAT}, and {@see GL20::GL_DOUBLE}. The initial value
+     *    is {@see GL20::GL_FLOAT}.
      *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_NORMALIZED}: $params returns a
+     *  - {@see GL20::GL_VERTEX_ATTRIB_ARRAY_NORMALIZED}: $params returns a
      *    single value that is non-zero (true) if fixed-point data types for the
      *    vertex attribute
      *    array indicated by $index are normalized when they are converted to
      *    floating point, and 0 (false) otherwise.
-     *    The initial value is {@see GL46::GL_FALSE}.
+     *    The initial value is {@see GL20::GL_FALSE}.
      *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_INTEGER}: $params returns a single
+     *  - {@see GL20::GL_VERTEX_ATTRIB_ARRAY_INTEGER}: $params returns a single
      *    value that is non-zero (true) if fixed-point data types for the vertex
      *    attribute
      *    array indicated by $index have integer data types, and 0 (false)
      *    otherwise. The initial value is 0
-     *    ({@see GL46::GL_FALSE}).
+     *    ({@see GL20::GL_FALSE}).
      *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_LONG}: $param returns a single
+     *  - {@see GL20::GL_VERTEX_ATTRIB_ARRAY_LONG}: $param returns a single
      *    value that is non-zero (true) if a vertex attribute is stored as an
      *    unconverted
      *    double, and 0 (false) otherwise. The initial value is 0 ({@see
-     *    GL46::GL_FALSE}).
+     *    GL20::GL_FALSE}).
      *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_DIVISOR}: $params returns a single
+     *  - {@see GL20::GL_VERTEX_ATTRIB_ARRAY_DIVISOR}: $params returns a single
      *    value that is the frequency divisor used for instanced rendering. See
-     *    {@see GL46::glVertexAttribDivisor}. The initial value is 0.
+     *    {@see GL20::vertexAttribDivisor}. The initial value is 0.
      *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_BINDING}: $params returns a single value,
+     *  - {@see GL20::GL_VERTEX_ATTRIB_BINDING}: $params returns a single value,
      *    the vertex buffer binding of the vertex attribute array $index.
      *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_RELATIVE_OFFSET}: $params returns a
+     *  - {@see GL20::GL_VERTEX_ATTRIB_RELATIVE_OFFSET}: $params returns a
      *    single value that is the byte offset of the first element relative to
      *    the start of the
      *    vertex buffer binding specified attribute fetches from. The initial
      *    value is 0.
      *
-     *  - {@see GL46::GL_CURRENT_VERTEX_ATTRIB}: $params returns four values
+     *  - {@see GL20::GL_CURRENT_VERTEX_ATTRIB}: $params returns four values
      *    that represent the current value for the generic vertex attribute
      *    specified by
      *    index. Generic vertex attribute 0 is unique in that it has no current
      *    state, so an error will be generated if
      *    $index is 0. The initial value for all other generic vertex attributes
      *    is (0,0,0,1).
-     *    {@see GL46::glGetVertexAttribdv} and {@see GL46::glGetVertexAttribfv}
+     *    {@see GL20::getVertexAttribdv} and {@see GL20::getVertexAttribfv}
      *    return the current attribute values as
      *    four single-precision floating-point values; {@see
-     *    GL46::glGetVertexAttribiv} reads them as floating-point
+     *    GL20::getVertexAttribiv} reads them as floating-point
      *    values and converts them to four integer values; {@see
-     *    GL46::glGetVertexAttribIiv} and
-     *    {@see GL46::glGetVertexAttribIuiv} read and return them as signed or
+     *    GL20::getVertexAttribIiv} and
+     *    {@see GL20::getVertexAttribIuiv} read and return them as signed or
      *    unsigned integer values, respectively;
-     *    {@see GL46::glGetVertexAttribLdv} reads and returns them as four
+     *    {@see GL20::getVertexAttribLdv} reads and returns them as four
      *    double-precision floating-point values.
      *
-     * All of the parameters except {@see GL46::GL_CURRENT_VERTEX_ATTRIB} represent state stored in the currently
+     * All of the parameters except {@see GL20::GL_CURRENT_VERTEX_ATTRIB} represent state stored in the currently
      * bound vertex array object.
      *
      * @see http://docs.gl/gl2/glGetVertexAttrib
@@ -1628,7 +1504,7 @@ class GL20 extends GL15
     {
         $paramsCType = $this->info->ffi->new('GLdouble', false);
         try {
-            $__proc = $this->getProcAs('glGetVertexAttribdv', 'void (*)(GLuint index, GLenum pname, GLdouble *params)');
+            $__proc = $this->proc('glGetVertexAttribdv', 'void (*)(GLuint index, GLenum pname, GLdouble *params)');
             $__proc($index, $pname, \FFI::addr($paramsCType));
         } finally {
             $params = $paramsCType->cdata;
@@ -1637,101 +1513,101 @@ class GL20 extends GL15
     }
 
     /**
-     * {@see GL46::glGetVertexAttrib} returns in $params the value of a generic vertex attribute parameter. The
+     * {@see GL20::getVertexAttrib} returns in $params the value of a generic vertex attribute parameter. The
      * generic vertex attribute to be queried is specified by $index, and the parameter to be queried is specified by
      * $pname.
      *
      * The accepted parameter names are as follows:
      *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING}: $params returns a
+     *  - {@see GL20::GL_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING}: $params returns a
      *    single value, the name of the buffer object currently bound to the
      *    binding point
      *    corresponding to generic vertex attribute array $index. If no buffer
      *    object is bound, 0 is returned. The
      *    initial value is 0.
      *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_ENABLED}: $params returns a single
+     *  - {@see GL20::GL_VERTEX_ATTRIB_ARRAY_ENABLED}: $params returns a single
      *    value that is non-zero (true) if the vertex attribute array for $index
      *    is enabled
      *    and 0 (false) if it is disabled. The initial value is {@see
-     *    GL46::GL_FALSE}.
+     *    GL20::GL_FALSE}.
      *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_SIZE}: $params returns a single
+     *  - {@see GL20::GL_VERTEX_ATTRIB_ARRAY_SIZE}: $params returns a single
      *    value, the size of the vertex attribute array for $index. The size is
      *    the number
      *    of values for each element of the vertex attribute array, and it will
      *    be 1, 2, 3, or 4. The initial value is
      *    4.
      *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_STRIDE}: $params returns a single
+     *  - {@see GL20::GL_VERTEX_ATTRIB_ARRAY_STRIDE}: $params returns a single
      *    value, the array stride for (number of bytes between successive
      *    elements in) the
      *    vertex attribute array for $index. A value of 0 indicates that the
      *    array elements are stored sequentially in
      *    memory. The initial value is 0.
      *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_TYPE}: $params returns a single
+     *  - {@see GL20::GL_VERTEX_ATTRIB_ARRAY_TYPE}: $params returns a single
      *    value, a symbolic constant indicating the array type for the vertex
      *    attribute
-     *    array for $index. Possible values are {@see GL46::GL_BYTE}, {@see
-     *    GL46::GL_UNSIGNED_BYTE},
-     *    {@see GL46::GL_SHORT}, {@see GL46::GL_UNSIGNED_SHORT}, {@see
-     *    GL46::GL_INT}, {@see GL46::GL_UNSIGNED_INT},
-     *    {@see GL46::GL_FLOAT}, and {@see GL46::GL_DOUBLE}. The initial value
-     *    is {@see GL46::GL_FLOAT}.
+     *    array for $index. Possible values are {@see GL20::GL_BYTE}, {@see
+     *    GL20::GL_UNSIGNED_BYTE},
+     *    {@see GL20::GL_SHORT}, {@see GL20::GL_UNSIGNED_SHORT}, {@see
+     *    GL20::GL_INT}, {@see GL20::GL_UNSIGNED_INT},
+     *    {@see GL20::GL_FLOAT}, and {@see GL20::GL_DOUBLE}. The initial value
+     *    is {@see GL20::GL_FLOAT}.
      *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_NORMALIZED}: $params returns a
+     *  - {@see GL20::GL_VERTEX_ATTRIB_ARRAY_NORMALIZED}: $params returns a
      *    single value that is non-zero (true) if fixed-point data types for the
      *    vertex attribute
      *    array indicated by $index are normalized when they are converted to
      *    floating point, and 0 (false) otherwise.
-     *    The initial value is {@see GL46::GL_FALSE}.
+     *    The initial value is {@see GL20::GL_FALSE}.
      *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_INTEGER}: $params returns a single
+     *  - {@see GL20::GL_VERTEX_ATTRIB_ARRAY_INTEGER}: $params returns a single
      *    value that is non-zero (true) if fixed-point data types for the vertex
      *    attribute
      *    array indicated by $index have integer data types, and 0 (false)
      *    otherwise. The initial value is 0
-     *    ({@see GL46::GL_FALSE}).
+     *    ({@see GL20::GL_FALSE}).
      *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_LONG}: $param returns a single
+     *  - {@see GL20::GL_VERTEX_ATTRIB_ARRAY_LONG}: $param returns a single
      *    value that is non-zero (true) if a vertex attribute is stored as an
      *    unconverted
      *    double, and 0 (false) otherwise. The initial value is 0 ({@see
-     *    GL46::GL_FALSE}).
+     *    GL20::GL_FALSE}).
      *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_DIVISOR}: $params returns a single
+     *  - {@see GL20::GL_VERTEX_ATTRIB_ARRAY_DIVISOR}: $params returns a single
      *    value that is the frequency divisor used for instanced rendering. See
-     *    {@see GL46::glVertexAttribDivisor}. The initial value is 0.
+     *    {@see GL20::vertexAttribDivisor}. The initial value is 0.
      *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_BINDING}: $params returns a single value,
+     *  - {@see GL20::GL_VERTEX_ATTRIB_BINDING}: $params returns a single value,
      *    the vertex buffer binding of the vertex attribute array $index.
      *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_RELATIVE_OFFSET}: $params returns a
+     *  - {@see GL20::GL_VERTEX_ATTRIB_RELATIVE_OFFSET}: $params returns a
      *    single value that is the byte offset of the first element relative to
      *    the start of the
      *    vertex buffer binding specified attribute fetches from. The initial
      *    value is 0.
      *
-     *  - {@see GL46::GL_CURRENT_VERTEX_ATTRIB}: $params returns four values
+     *  - {@see GL20::GL_CURRENT_VERTEX_ATTRIB}: $params returns four values
      *    that represent the current value for the generic vertex attribute
      *    specified by
      *    index. Generic vertex attribute 0 is unique in that it has no current
      *    state, so an error will be generated if
      *    $index is 0. The initial value for all other generic vertex attributes
      *    is (0,0,0,1).
-     *    {@see GL46::glGetVertexAttribdv} and {@see GL46::glGetVertexAttribfv}
+     *    {@see GL20::getVertexAttribdv} and {@see GL20::getVertexAttribfv}
      *    return the current attribute values as
      *    four single-precision floating-point values; {@see
-     *    GL46::glGetVertexAttribiv} reads them as floating-point
+     *    GL20::getVertexAttribiv} reads them as floating-point
      *    values and converts them to four integer values; {@see
-     *    GL46::glGetVertexAttribIiv} and
-     *    {@see GL46::glGetVertexAttribIuiv} read and return them as signed or
+     *    GL20::getVertexAttribIiv} and
+     *    {@see GL20::getVertexAttribIuiv} read and return them as signed or
      *    unsigned integer values, respectively;
-     *    {@see GL46::glGetVertexAttribLdv} reads and returns them as four
+     *    {@see GL20::getVertexAttribLdv} reads and returns them as four
      *    double-precision floating-point values.
      *
-     * All of the parameters except {@see GL46::GL_CURRENT_VERTEX_ATTRIB} represent state stored in the currently
+     * All of the parameters except {@see GL20::GL_CURRENT_VERTEX_ATTRIB} represent state stored in the currently
      * bound vertex array object.
      *
      * @see http://docs.gl/gl2/glGetVertexAttrib
@@ -1746,7 +1622,7 @@ class GL20 extends GL15
     {
         $paramsCType = $this->info->ffi->new('GLfloat', false);
         try {
-            $__proc = $this->getProcAs('glGetVertexAttribfv', 'void (*)(GLuint index, GLenum pname, GLfloat *params)');
+            $__proc = $this->proc('glGetVertexAttribfv', 'void (*)(GLuint index, GLenum pname, GLfloat *params)');
             $__proc($index, $pname, \FFI::addr($paramsCType));
         } finally {
             $params = $paramsCType->cdata;
@@ -1755,101 +1631,101 @@ class GL20 extends GL15
     }
 
     /**
-     * {@see GL46::glGetVertexAttrib} returns in $params the value of a generic vertex attribute parameter. The
+     * {@see GL20::getVertexAttrib} returns in $params the value of a generic vertex attribute parameter. The
      * generic vertex attribute to be queried is specified by $index, and the parameter to be queried is specified by
      * $pname.
      *
      * The accepted parameter names are as follows:
      *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING}: $params returns a
+     *  - {@see GL20::GL_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING}: $params returns a
      *    single value, the name of the buffer object currently bound to the
      *    binding point
      *    corresponding to generic vertex attribute array $index. If no buffer
      *    object is bound, 0 is returned. The
      *    initial value is 0.
      *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_ENABLED}: $params returns a single
+     *  - {@see GL20::GL_VERTEX_ATTRIB_ARRAY_ENABLED}: $params returns a single
      *    value that is non-zero (true) if the vertex attribute array for $index
      *    is enabled
      *    and 0 (false) if it is disabled. The initial value is {@see
-     *    GL46::GL_FALSE}.
+     *    GL20::GL_FALSE}.
      *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_SIZE}: $params returns a single
+     *  - {@see GL20::GL_VERTEX_ATTRIB_ARRAY_SIZE}: $params returns a single
      *    value, the size of the vertex attribute array for $index. The size is
      *    the number
      *    of values for each element of the vertex attribute array, and it will
      *    be 1, 2, 3, or 4. The initial value is
      *    4.
      *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_STRIDE}: $params returns a single
+     *  - {@see GL20::GL_VERTEX_ATTRIB_ARRAY_STRIDE}: $params returns a single
      *    value, the array stride for (number of bytes between successive
      *    elements in) the
      *    vertex attribute array for $index. A value of 0 indicates that the
      *    array elements are stored sequentially in
      *    memory. The initial value is 0.
      *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_TYPE}: $params returns a single
+     *  - {@see GL20::GL_VERTEX_ATTRIB_ARRAY_TYPE}: $params returns a single
      *    value, a symbolic constant indicating the array type for the vertex
      *    attribute
-     *    array for $index. Possible values are {@see GL46::GL_BYTE}, {@see
-     *    GL46::GL_UNSIGNED_BYTE},
-     *    {@see GL46::GL_SHORT}, {@see GL46::GL_UNSIGNED_SHORT}, {@see
-     *    GL46::GL_INT}, {@see GL46::GL_UNSIGNED_INT},
-     *    {@see GL46::GL_FLOAT}, and {@see GL46::GL_DOUBLE}. The initial value
-     *    is {@see GL46::GL_FLOAT}.
+     *    array for $index. Possible values are {@see GL20::GL_BYTE}, {@see
+     *    GL20::GL_UNSIGNED_BYTE},
+     *    {@see GL20::GL_SHORT}, {@see GL20::GL_UNSIGNED_SHORT}, {@see
+     *    GL20::GL_INT}, {@see GL20::GL_UNSIGNED_INT},
+     *    {@see GL20::GL_FLOAT}, and {@see GL20::GL_DOUBLE}. The initial value
+     *    is {@see GL20::GL_FLOAT}.
      *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_NORMALIZED}: $params returns a
+     *  - {@see GL20::GL_VERTEX_ATTRIB_ARRAY_NORMALIZED}: $params returns a
      *    single value that is non-zero (true) if fixed-point data types for the
      *    vertex attribute
      *    array indicated by $index are normalized when they are converted to
      *    floating point, and 0 (false) otherwise.
-     *    The initial value is {@see GL46::GL_FALSE}.
+     *    The initial value is {@see GL20::GL_FALSE}.
      *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_INTEGER}: $params returns a single
+     *  - {@see GL20::GL_VERTEX_ATTRIB_ARRAY_INTEGER}: $params returns a single
      *    value that is non-zero (true) if fixed-point data types for the vertex
      *    attribute
      *    array indicated by $index have integer data types, and 0 (false)
      *    otherwise. The initial value is 0
-     *    ({@see GL46::GL_FALSE}).
+     *    ({@see GL20::GL_FALSE}).
      *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_LONG}: $param returns a single
+     *  - {@see GL20::GL_VERTEX_ATTRIB_ARRAY_LONG}: $param returns a single
      *    value that is non-zero (true) if a vertex attribute is stored as an
      *    unconverted
      *    double, and 0 (false) otherwise. The initial value is 0 ({@see
-     *    GL46::GL_FALSE}).
+     *    GL20::GL_FALSE}).
      *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_DIVISOR}: $params returns a single
+     *  - {@see GL20::GL_VERTEX_ATTRIB_ARRAY_DIVISOR}: $params returns a single
      *    value that is the frequency divisor used for instanced rendering. See
-     *    {@see GL46::glVertexAttribDivisor}. The initial value is 0.
+     *    {@see GL20::vertexAttribDivisor}. The initial value is 0.
      *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_BINDING}: $params returns a single value,
+     *  - {@see GL20::GL_VERTEX_ATTRIB_BINDING}: $params returns a single value,
      *    the vertex buffer binding of the vertex attribute array $index.
      *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_RELATIVE_OFFSET}: $params returns a
+     *  - {@see GL20::GL_VERTEX_ATTRIB_RELATIVE_OFFSET}: $params returns a
      *    single value that is the byte offset of the first element relative to
      *    the start of the
      *    vertex buffer binding specified attribute fetches from. The initial
      *    value is 0.
      *
-     *  - {@see GL46::GL_CURRENT_VERTEX_ATTRIB}: $params returns four values
+     *  - {@see GL20::GL_CURRENT_VERTEX_ATTRIB}: $params returns four values
      *    that represent the current value for the generic vertex attribute
      *    specified by
      *    index. Generic vertex attribute 0 is unique in that it has no current
      *    state, so an error will be generated if
      *    $index is 0. The initial value for all other generic vertex attributes
      *    is (0,0,0,1).
-     *    {@see GL46::glGetVertexAttribdv} and {@see GL46::glGetVertexAttribfv}
+     *    {@see GL20::getVertexAttribdv} and {@see GL20::getVertexAttribfv}
      *    return the current attribute values as
      *    four single-precision floating-point values; {@see
-     *    GL46::glGetVertexAttribiv} reads them as floating-point
+     *    GL20::getVertexAttribiv} reads them as floating-point
      *    values and converts them to four integer values; {@see
-     *    GL46::glGetVertexAttribIiv} and
-     *    {@see GL46::glGetVertexAttribIuiv} read and return them as signed or
+     *    GL20::getVertexAttribIiv} and
+     *    {@see GL20::getVertexAttribIuiv} read and return them as signed or
      *    unsigned integer values, respectively;
-     *    {@see GL46::glGetVertexAttribLdv} reads and returns them as four
+     *    {@see GL20::getVertexAttribLdv} reads and returns them as four
      *    double-precision floating-point values.
      *
-     * All of the parameters except {@see GL46::GL_CURRENT_VERTEX_ATTRIB} represent state stored in the currently
+     * All of the parameters except {@see GL20::GL_CURRENT_VERTEX_ATTRIB} represent state stored in the currently
      * bound vertex array object.
      *
      * @see http://docs.gl/gl2/glGetVertexAttrib
@@ -1864,7 +1740,7 @@ class GL20 extends GL15
     {
         $paramsCType = $this->info->ffi->new('GLint', false);
         try {
-            $__proc = $this->getProcAs('glGetVertexAttribiv', 'void (*)(GLuint index, GLenum pname, GLint *params)');
+            $__proc = $this->proc('glGetVertexAttribiv', 'void (*)(GLuint index, GLenum pname, GLint *params)');
             $__proc($index, $pname, \FFI::addr($paramsCType));
         } finally {
             $params = $paramsCType->cdata;
@@ -1873,10 +1749,10 @@ class GL20 extends GL15
     }
 
     /**
-     * {@see GL46::glIsProgram} returns {@see GL46::GL_TRUE} if $program is the name of a program object previously
-     * created with {@see GL46::glCreateProgram} and not yet deleted with {@see GL46::glDeleteProgram}. If $program
+     * {@see GL20::isProgram} returns {@see GL20::GL_TRUE} if $program is the name of a program object previously
+     * created with {@see GL20::createProgram} and not yet deleted with {@see GL20::deleteProgram}. If $program
      * is zero or a non-zero value that is not the name of a program object, or if an error occurs,
-     * {@see GL46::glIsProgram} returns {@see GL46::GL_FALSE}.
+     * {@see GL20::isProgram} returns {@see GL20::GL_FALSE}.
      *
      * @see http://docs.gl/gl2/glIsProgram
      * @see http://docs.gl/gl4/glIsProgram
@@ -1886,15 +1762,16 @@ class GL20 extends GL15
      */
     public function isProgram(int $program): bool
     {
-        $__proc = $this->getProcAs('glIsProgram', 'GLboolean (*)(GLuint program)');
+        $__proc = $this->proc('glIsProgram', 'GLboolean (*)(GLuint program)');
+
         return $__proc($program) !== 0;
     }
 
     /**
-     * {@see GL46::glIsShader} returns {@see GL46::GL_TRUE} if $shader is the name of a shader object previously
-     * created with {@see GL46::glCreateShader} and not yet deleted with {@see GL46::glDeleteShader}. If $shader is
+     * {@see GL20::isShader} returns {@see GL20::GL_TRUE} if $shader is the name of a shader object previously
+     * created with {@see GL20::createShader} and not yet deleted with {@see GL20::deleteShader}. If $shader is
      * zero or a non-zero value that is not the name of a shader object, or if an error occurs,
-     * {@see GL46::glIsShader } returns {@see GL46::GL_FALSE}.
+     * {@see GL20::isShader } returns {@see GL20::GL_FALSE}.
      *
      * @see http://docs.gl/gl2/glIsShader
      * @see http://docs.gl/gl4/glIsShader
@@ -1904,26 +1781,27 @@ class GL20 extends GL15
      */
     public function isShader(int $shader): bool
     {
-        $__proc = $this->getProcAs('glIsShader', 'GLboolean (*)(GLuint shader)');
+        $__proc = $this->proc('glIsShader', 'GLboolean (*)(GLuint shader)');
+
         return $__proc($shader) !== 0;
     }
 
     /**
-     * {@see GL46::glLinkProgram} links the program object specified by $program. If any shader objects of type
-     * {@see GL46::GL_VERTEX_SHADER} are attached to $program, they will be used to create an executable that will
-     * run on the programmable vertex processor. If any shader objects of type {@see GL46::GL_GEOMETRY_SHADER} are
+     * {@see GL20::linkProgram} links the program object specified by $program. If any shader objects of type
+     * {@see GL20::GL_VERTEX_SHADER} are attached to $program, they will be used to create an executable that will
+     * run on the programmable vertex processor. If any shader objects of type {@see GL20::GL_GEOMETRY_SHADER} are
      * attached to $program, they will be used to create an executable that will run on the programmable geometry
-     * processor. If any shader objects of type {@see GL46::GL_FRAGMENT_SHADER} are attached to $program, they will
+     * processor. If any shader objects of type {@see GL20::GL_FRAGMENT_SHADER} are attached to $program, they will
      * be used to create an executable that will run on the programmable fragment processor.
      *
      * The status of the link operation will be stored as part of the program object's state. This value will be set
-     * to {@see GL46::GL_TRUE} if the program object was linked without errors and is ready for use, and
-     * {@see GL46::GL_FALSE} otherwise. It can be queried by calling {@see GL46::glGetProgram} with arguments
-     * $program and {@see GL46::GL_LINK_STATUS}.
+     * to {@see GL20::GL_TRUE} if the program object was linked without errors and is ready for use, and
+     * {@see GL20::GL_FALSE} otherwise. It can be queried by calling {@see GL20::getProgram} with arguments
+     * $program and {@see GL20::GL_LINK_STATUS}.
      *
      * As a result of a successful link operation, all active user-defined uniform variables belonging to $program
      * will be initialized to 0, and each of the program object's active uniform variables will be assigned a
-     * location that can be queried by calling {@see GL46::glGetUniformLocation}. Also, any active user-defined
+     * location that can be queried by calling {@see GL20::getUniformLocation}. Also, any active user-defined
      * attribute variables that have not been bound to a generic vertex attribute index will be bound to one at this
      * time.
      *
@@ -1940,7 +1818,7 @@ class GL20 extends GL15
      *  - A shared global is declared with two different types or two different initial values.
      *  - One or more of the attached shader objects has not been successfully compiled.
      *  - Binding a generic attribute matrix caused some rows of the matrix to fall outside the allowed maximum of
-     *    {@see GL46::GL_MAX_VERTEX_ATTRIBS}.
+     *    {@see GL20::GL_MAX_VERTEX_ATTRIBS}.
      *  - Not enough contiguous vertex attribute slots could be found to bind attribute matrices.
      *  - The program object contains objects to form a fragment shader but does not contain objects to form a vertex
      *    shader.
@@ -1951,38 +1829,38 @@ class GL20 extends GL15
      *  - The program object contains objects to form a geometry shader and the input primitive type, output primitive
      *    type, or maximum output vertex count is specified differently in multiple geometry shader objects.
      *  - The number of active outputs in the fragment shader is greater than the value of
-     *    {@see GL46::GL_MAX_DRAW_BUFFERS}.
+     *    {@see GL20::GL_MAX_DRAW_BUFFERS}.
      *  - The program has an active output assigned to a location greater than or equal to the value of
-     *    {@see GL46::GL_MAX_DUAL_SOURCE_DRAW_BUFFERS} and has an active output assigned an index greater than or equal
+     *    {@see GL20::GL_MAX_DUAL_SOURCE_DRAW_BUFFERS} and has an active output assigned an index greater than or equal
      *    to one.
      *  - More than one varying out variable is bound to the same number and index.
      *  - The explicit binding assigments do not leave enough space for the linker to automatically assign a location
      *    for a varying out array, which requires multiple contiguous locations.
-     *  - The $count specified by {@see GL46::glTransformFeedbackVaryings} is non-zero, but the program object has no
+     *  - The $count specified by {@see GL20::transformFeedbackVaryings} is non-zero, but the program object has no
      *    vertex or geometry shader.
-     *  - Any variable name specified to {@see GL46::glTransformFeedbackVaryings} in the $varyings array is not declared
+     *  - Any variable name specified to {@see GL20::transformFeedbackVaryings} in the $varyings array is not declared
      *    as an output in the vertex shader (or the geometry shader, if active).
-     *  - Any two entries in the $varyings array given {@see GL46::glTransformFeedbackVaryings} specify the same varying
+     *  - Any two entries in the $varyings array given {@see GL20::transformFeedbackVaryings} specify the same varying
      *    variable.
      *  - The total number of components to capture in any transform feedback varying variable is greater than the
-     *    constant {@see GL46::GL_MAX_TRANSFORM_FEEDBACK_SEPARATE_COMPONENTS} and the buffer mode is
-     *    {@see GL46::GL_SEPARATE_ATTRIBS}.
+     *    constant {@see GL20::GL_MAX_TRANSFORM_FEEDBACK_SEPARATE_COMPONENTS} and the buffer mode is
+     *    {@see GL20::GL_SEPARATE_ATTRIBS}.
      *
      * When a program object has been successfully linked, the program object can be made part of current state by
-     * calling {@see GL46::glUseProgram}. Whether or not the link operation was successful, the program object's
+     * calling {@see GL20::useProgram}. Whether or not the link operation was successful, the program object's
      * information log will be overwritten. The information log can be retrieved by calling
-     * {@see GL46::glGetProgramInfoLog}.
+     * {@see GL20::getProgramInfoLog}.
      *
-     * {@see GL46::glLinkProgram} will also install the generated executables as part of the current rendering state
+     * {@see GL20::linkProgram} will also install the generated executables as part of the current rendering state
      * if the link operation was successful and the specified program object is already currently in use as a result
-     * of a previous call to {@see GL46::glUseProgram}. If the program object currently in use is relinked
-     * unsuccessfully, its link status will be set to {@see GL46::GL_FALSE} , but the executables and associated
-     * state will remain part of the current state until a subsequent call to {@see GL46::glUseProgram} removes it
+     * of a previous call to {@see GL20::useProgram}. If the program object currently in use is relinked
+     * unsuccessfully, its link status will be set to {@see GL20::GL_FALSE} , but the executables and associated
+     * state will remain part of the current state until a subsequent call to {@see GL20::useProgram} removes it
      * from use. After it is removed from use, it cannot be made part of current state until it has been successfully
      * relinked.
      *
-     * If $program contains shader objects of type {@see GL46::GL_VERTEX_SHADER}, and optionally of type
-     * {@see GL46::GL_GEOMETRY_SHADER}, but does not contain shader objects of type {@see GL46::GL_FRAGMENT_SHADER},
+     * If $program contains shader objects of type {@see GL20::GL_VERTEX_SHADER}, and optionally of type
+     * {@see GL20::GL_GEOMETRY_SHADER}, but does not contain shader objects of type {@see GL20::GL_FRAGMENT_SHADER},
      * the vertex shader executable will be installed on the programmable vertex processor, the geometry shader
      * executable, if present, will be installed on the programmable geometry processor, but no executable will be
      * installed on the fragment processor. The results of rasterizing primitives with such a program will be
@@ -2001,12 +1879,12 @@ class GL20 extends GL15
      */
     public function linkProgram(int $program): void
     {
-        $__proc = $this->getProcAs('glLinkProgram', 'void (*)(GLuint program)');
+        $__proc = $this->proc('glLinkProgram', 'void (*)(GLuint program)');
         $__proc($program);
     }
 
     /**
-     * {@see GL46::glShaderSource} sets the source code in $shader to the source code in the array of strings
+     * {@see GL20::shaderSource} sets the source code in $shader to the source code in the array of strings
      * specified by $string. Any source code previously stored in the shader object is completely replaced. The
      * number of strings in the array is specified by $count. If $length is {@see GL46::NULL}, each string is assumed
      * to be null terminated. If $length is a value other than {@see GL46::NULL}, it points to an array containing a
@@ -2021,17 +1899,18 @@ class GL20 extends GL15
      * @param int $shader
      * @param int $count
      * @param array|string[] $string
-     * @param \FFI\CData|null $length
+     * @param CData|null $length
      * @return void
      */
-    public function shaderSource(int $shader, int $count, array $string, ?\FFI\CData $length): void
+    public function shaderSource(int $shader, int $count, array $string, ?CData $length): void
     {
         $stringCType = \FFI::new('char*[' . \count($string) . ']');
         foreach ($string as $i => $v) {
             $stringCType[$i] = Util::charPtr($v);
         }
 
-        $__proc = $this->getProcAs('glShaderSource', 'void (*)(GLuint shader, GLsizei count, const GLchar *const *string, const GLint *length)');
+        $__proc = $this->proc('glShaderSource',
+            'void (*)(GLuint shader, GLsizei count, const GLchar *const *string, const GLint *length)');
         $__proc($shader, $count, $stringCType, $length);
     }
 
@@ -2042,14 +1921,14 @@ class GL20 extends GL15
      * effects, such as decals, outlining, and constructive solid geometry rendering.
      *
      * The stencil test conditionally eliminates a pixel based on the outcome of a comparison between the reference
-     * value and the value in the stencil buffer. To enable and disable the test, call {@see GL46::glEnable} and
-     * {@see GL46::glDisable} with argument {@see GL46::GL_STENCIL_TEST}. To specify actions based on the outcome of
-     * the stencil test, call {@see GL46::glStencilOp} or {@see GL46::glStencilOpSeparate}.
+     * value and the value in the stencil buffer. To enable and disable the test, call {@see GL20::enable} and
+     * {@see GL20::disable} with argument {@see GL20::GL_STENCIL_TEST}. To specify actions based on the outcome of
+     * the stencil test, call {@see GL20::stencilOp} or {@see GL20::stencilOpSeparate}.
      *
      * There can be two separate sets of $func, $ref, and $mask parameters; one affects back-facing polygons, and the
-     * other affects front-facing polygons as well as other non-polygon primitives. {@see GL46::glStencilFunc} sets
-     * both front and back stencil state to the same values, as if {@see GL46::glStencilFuncSeparate} were called
-     * with $face set to {@see GL46::GL_FRONT_AND_BACK}.
+     * other affects front-facing polygons as well as other non-polygon primitives. {@see GL20::stencilFunc} sets
+     * both front and back stencil state to the same values, as if {@see GL20::stencilFuncSeparate} were called
+     * with $face set to {@see GL20::GL_FRONT_AND_BACK}.
      *
      * $func is a symbolic constant that determines the stencil comparison function. It accepts one of eight values,
      * shown in the following list. $ref is an integer reference value that is used in the stencil comparison. It is
@@ -2059,33 +1938,33 @@ class GL20 extends GL15
      *
      * If stencil represents the value stored in the corresponding stencil buffer location, the following list shows
      * the effect of each comparison function that can be specified by $func. Only if the comparison succeeds is the
-     * pixel passed through to the next stage in the rasterization process (see {@see GL46::glStencilOp}). All tests
+     * pixel passed through to the next stage in the rasterization process (see {@see GL20::stencilOp}). All tests
      * treat stencil values as unsigned integers in the range    0  2 n  - 1   , where n is the number of bitplanes
      * in the stencil buffer.
      *
      * The following values are accepted by $func:
      *
-     *  - {@see GL46::GL_NEVER}: Always fails.
+     *  - {@see GL20::GL_NEVER}: Always fails.
      *
-     *  - {@see GL46::GL_LESS}: Passes if ( $ref &amp; $mask ) &lt; ( stencil
+     *  - {@see GL20::GL_LESS}: Passes if ( $ref &amp; $mask ) &lt; ( stencil
      *    &amp; $mask ).
      *
-     *  - {@see GL46::GL_LEQUAL}: Passes if ( $ref &amp; $mask ) &lt;= ( stencil
+     *  - {@see GL20::GL_LEQUAL}: Passes if ( $ref &amp; $mask ) &lt;= ( stencil
      *    &amp; $mask ).
      *
-     *  - {@see GL46::GL_GREATER}: Passes if ( $ref &amp; $mask ) &gt; ( stencil
+     *  - {@see GL20::GL_GREATER}: Passes if ( $ref &amp; $mask ) &gt; ( stencil
      *    &amp; $mask ).
      *
-     *  - {@see GL46::GL_GEQUAL}: Passes if ( $ref &amp; $mask ) &gt;= ( stencil
+     *  - {@see GL20::GL_GEQUAL}: Passes if ( $ref &amp; $mask ) &gt;= ( stencil
      *    &amp; $mask ).
      *
-     *  - {@see GL46::GL_EQUAL}: Passes if ( $ref &amp; $mask ) = ( stencil
+     *  - {@see GL20::GL_EQUAL}: Passes if ( $ref &amp; $mask ) = ( stencil
      *    &amp; $mask ).
      *
-     *  - {@see GL46::GL_NOTEQUAL}: Passes if ( $ref &amp; $mask ) != ( stencil
+     *  - {@see GL20::GL_NOTEQUAL}: Passes if ( $ref &amp; $mask ) != ( stencil
      *    &amp; $mask ).
      *
-     *  - {@see GL46::GL_ALWAYS}: Always passes.
+     *  - {@see GL20::GL_ALWAYS}: Always passes.
      *
      * @see http://docs.gl/gl2/glStencilFuncSeparate
      * @see http://docs.gl/gl4/glStencilFuncSeparate
@@ -2098,20 +1977,21 @@ class GL20 extends GL15
      */
     public function stencilFuncSeparate(int $face, int $func, int $ref, int $mask): void
     {
-        $__proc = $this->getProcAs('glStencilFuncSeparate', 'void (*)(GLenum face, GLenum func, GLint ref, GLuint mask)');
+        $__proc = $this->proc('glStencilFuncSeparate',
+            'void (*)(GLenum face, GLenum func, GLint ref, GLuint mask)');
         $__proc($face, $func, $ref, $mask);
     }
 
     /**
-     * {@see GL46::glStencilMaskSeparate} controls the writing of individual bits in the stencil planes. The least
+     * {@see GL20::stencilMaskSeparate} controls the writing of individual bits in the stencil planes. The least
      * significant n bits of $mask, where n is the number of bits in the stencil buffer, specify a mask. Where a 1
      * appears in the mask, it's possible to write to the corresponding bit in the stencil buffer. Where a 0 appears,
      * the corresponding bit is write-protected. Initially, all bits are enabled for writing.
      *
      * There can be two separate $mask writemasks; one affects back-facing polygons, and the other affects
-     * front-facing polygons as well as other non-polygon primitives. {@see GL46::glStencilMask} sets both front and
-     * back stencil writemasks to the same values, as if {@see GL46::glStencilMaskSeparate} were called with $face
-     * set to {@see GL46::GL_FRONT_AND_BACK}.
+     * front-facing polygons as well as other non-polygon primitives. {@see GL20::stencilMask} sets both front and
+     * back stencil writemasks to the same values, as if {@see GL20::stencilMaskSeparate} were called with $face
+     * set to {@see GL20::GL_FRONT_AND_BACK}.
      *
      * @see http://docs.gl/gl2/glStencilMaskSeparate
      * @see http://docs.gl/gl4/glStencilMaskSeparate
@@ -2122,7 +2002,7 @@ class GL20 extends GL15
      */
     public function stencilMaskSeparate(int $face, int $mask): void
     {
-        $__proc = $this->getProcAs('glStencilMaskSeparate', 'void (*)(GLenum face, GLuint mask)');
+        $__proc = $this->proc('glStencilMaskSeparate', 'void (*)(GLenum face, GLuint mask)');
         $__proc($face, $mask);
     }
 
@@ -2133,51 +2013,51 @@ class GL20 extends GL15
      * effects, such as decals, outlining, and constructive solid geometry rendering.
      *
      * The stencil test conditionally eliminates a pixel based on the outcome of a comparison between the value in
-     * the stencil buffer and a reference value. To enable and disable the test, call {@see GL46::glEnable} and
-     * {@see GL46::glDisable} with argument {@see GL46::GL_STENCIL_TEST}; to control it, call
-     * {@see GL46::glStencilFunc} or {@see GL46::glStencilFuncSeparate}.
+     * the stencil buffer and a reference value. To enable and disable the test, call {@see GL20::enable} and
+     * {@see GL20::disable} with argument {@see GL20::GL_STENCIL_TEST}; to control it, call
+     * {@see GL20::stencilFunc} or {@see GL20::stencilFuncSeparate}.
      *
      * There can be two separate sets of $sfail, $dpfail, and $dppass parameters; one affects back-facing polygons,
-     * and the other affects front-facing polygons as well as other non-polygon primitives. {@see GL46::glStencilOp}
-     * sets both front and back stencil state to the same values, as if {@see GL46::glStencilOpSeparate} were called
-     * with $face set to {@see GL46::GL_FRONT_AND_BACK}.
+     * and the other affects front-facing polygons as well as other non-polygon primitives. {@see GL20::stencilOp}
+     * sets both front and back stencil state to the same values, as if {@see GL20::stencilOpSeparate} were called
+     * with $face set to {@see GL20::GL_FRONT_AND_BACK}.
      *
-     * {@see GL46::glStencilOpSeparate} takes three arguments that indicate what happens to the stored stencil value
+     * {@see GL20::stencilOpSeparate} takes three arguments that indicate what happens to the stored stencil value
      * while stenciling is enabled. If the stencil test fails, no change is made to the pixel's color or depth
      * buffers, and $sfail specifies what happens to the stencil buffer contents. The following eight actions are
      * possible.
      *
-     *  - {@see GL46::GL_KEEP}: Keeps the current value.
+     *  - {@see GL20::GL_KEEP}: Keeps the current value.
      *
-     *  - {@see GL46::GL_ZERO}: Sets the stencil buffer value to 0.
+     *  - {@see GL20::GL_ZERO}: Sets the stencil buffer value to 0.
      *
-     *  - {@see GL46::GL_REPLACE}: Sets the stencil buffer value to ref, as
-     *    specified by {@see GL46::glStencilFunc}.
+     *  - {@see GL20::GL_REPLACE}: Sets the stencil buffer value to ref, as
+     *    specified by {@see GL20::stencilFunc}.
      *
-     *  - {@see GL46::GL_INCR}: Increments the current stencil buffer value.
+     *  - {@see GL20::GL_INCR}: Increments the current stencil buffer value.
      *    Clamps to the maximum representable unsigned value.
      *
-     *  - {@see GL46::GL_INCR_WRAP}: Increments the current stencil buffer
+     *  - {@see GL20::GL_INCR_WRAP}: Increments the current stencil buffer
      *    value. Wraps stencil buffer value to zero when incrementing the
      *    maximum
      *    representable unsigned value.
      *
-     *  - {@see GL46::GL_DECR}: Decrements the current stencil buffer value.
+     *  - {@see GL20::GL_DECR}: Decrements the current stencil buffer value.
      *    Clamps to 0.
      *
-     *  - {@see GL46::GL_DECR_WRAP}: Decrements the current stencil buffer
+     *  - {@see GL20::GL_DECR_WRAP}: Decrements the current stencil buffer
      *    value. Wraps stencil buffer value to the maximum representable
      *    unsigned
      *    value when decrementing a stencil buffer value of zero.
      *
-     *  - {@see GL46::GL_INVERT}: Bitwise inverts the current stencil buffer
+     *  - {@see GL20::GL_INVERT}: Bitwise inverts the current stencil buffer
      *    value.
      *
      * Stencil buffer values are treated as unsigned integers. When incremented and decremented, values are clamped
-     * to 0 and    2 n  - 1  , where n is the value returned by querying {@see GL46::GL_STENCIL_BITS}.
+     * to 0 and    2 n  - 1  , where n is the value returned by querying {@see GL20::GL_STENCIL_BITS}.
      *
-     * The other two arguments to {@see GL46::glStencilOpSeparate} specify stencil buffer actions that depend on
-     * whether subsequent depth buffer tests succeed ($dppass) or fail ($dpfail) (see {@see GL46::glDepthFunc}). The
+     * The other two arguments to {@see GL20::stencilOpSeparate} specify stencil buffer actions that depend on
+     * whether subsequent depth buffer tests succeed ($dppass) or fail ($dpfail) (see {@see GL20::depthFunc}). The
      * actions are specified using the same eight symbolic constants as $sfail. Note that $dpfail is ignored when
      * there is no depth buffer, or when the depth buffer is not enabled. In these cases, $sfail and $dppass specify
      * stencil action when the stencil test fails and passes, respectively.
@@ -2193,17 +2073,18 @@ class GL20 extends GL15
      */
     public function stencilOpSeparate(int $face, int $sfail, int $dpfail, int $dppass): void
     {
-        $__proc = $this->getProcAs('glStencilOpSeparate', 'void (*)(GLenum face, GLenum sfail, GLenum dpfail, GLenum dppass)');
+        $__proc = $this->proc('glStencilOpSeparate',
+            'void (*)(GLenum face, GLenum sfail, GLenum dpfail, GLenum dppass)');
         $__proc($face, $sfail, $dpfail, $dppass);
     }
 
     /**
-     * {@see GL46::glUniform} modifies the value of a uniform variable or a uniform variable array. The location of
+     * {@see GL20::uniform} modifies the value of a uniform variable or a uniform variable array. The location of
      * the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glUniform} operates on the program object that was made part of
-     * current state by calling {@see GL46::glUseProgram}.
+     * {@see GL20::getUniformLocation}. {@see GL20::uniform} operates on the program object that was made part of
+     * current state by calling {@see GL20::useProgram}.
      *
-     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform variable
+     * The commands {@see GL20::uniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform variable
      * specified by $location using the values passed as arguments. The number specified in the command should match
      * the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
      * `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The suffix
@@ -2220,10 +2101,10 @@ class GL20 extends GL15
      * otherwise.
      *
      * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glUniform } until the
+     * linked successfully. They retain the values assigned to them by a call to {@see GL20::uniform } until the
      * next successful link operation occurs on the program object, when they are once again initialized to 0.
      *
-     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable or a
+     * The commands {@see GL20::uniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable or a
      * uniform variable array. These commands pass a count and a pointer to the values to be loaded into a uniform
      * variable or a uniform variable array. A count of 1 should be used if modifying the value of a single uniform
      * variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When loading
@@ -2234,21 +2115,21 @@ class GL20 extends GL15
      * components in the data type of the specified uniform variable (e.g., {@see GL46::1} for float, int, bool;
      * {@see GL46::2} for vec2, ivec2, bvec2, etc.). The data type specified in the name of the command must match
      * the data type for the specified uniform variable as described previously for
-     * {@see GL46::glUniform{1|2|3|4}{f|i|ui}}.
+     * {@see GL20::uniform{1|2|3|4}{f|i|ui}}.
      *
      * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glUniform3f} or {@see GL46::glUniform3fv} can be used to load a uniform
+     * of the command (e.g., {@see GL20::uniform3f} or {@see GL20::uniform3fv} can be used to load a uniform
      * variable array of type vec3). The number of elements of the uniform variable array to be modified is specified
      * by $count
      *
-     * The commands {@see GL46::glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix or an
+     * The commands {@see GL20::uniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix or an
      * array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix. The
      * number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3 × 3
      * matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values). Non-square
      * matrix dimensionality is explicit, with the first number representing the number of columns and the second
      * number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2 columns
-     * and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be supplied in
-     * column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied in row major
+     * and 4 rows (i.e., 8 values). If $transpose is {@see GL20::GL_FALSE}, each matrix is assumed to be supplied in
+     * column major order. If $transpose is {@see GL20::GL_TRUE}, each matrix is assumed to be supplied in row major
      * order. The $count argument indicates the number of matrices to be passed. A count of 1 should be used if
      * modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of matrices.
      *
@@ -2261,17 +2142,17 @@ class GL20 extends GL15
      */
     public function uniform1f(int $location, float $v0): void
     {
-        $__proc = $this->getProcAs('glUniform1f', 'void (*)(GLint location, GLfloat v0)');
+        $__proc = $this->proc('glUniform1f', 'void (*)(GLint location, GLfloat v0)');
         $__proc($location, $v0);
     }
 
     /**
-     * {@see GL46::glUniform} modifies the value of a uniform variable or a uniform variable array. The location of
+     * {@see GL20::uniform} modifies the value of a uniform variable or a uniform variable array. The location of
      * the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glUniform} operates on the program object that was made part of
-     * current state by calling {@see GL46::glUseProgram}.
+     * {@see GL20::getUniformLocation}. {@see GL20::uniform} operates on the program object that was made part of
+     * current state by calling {@see GL20::useProgram}.
      *
-     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform variable
+     * The commands {@see GL20::uniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform variable
      * specified by $location using the values passed as arguments. The number specified in the command should match
      * the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
      * `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The suffix
@@ -2288,10 +2169,10 @@ class GL20 extends GL15
      * otherwise.
      *
      * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glUniform } until the
+     * linked successfully. They retain the values assigned to them by a call to {@see GL20::uniform } until the
      * next successful link operation occurs on the program object, when they are once again initialized to 0.
      *
-     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable or a
+     * The commands {@see GL20::uniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable or a
      * uniform variable array. These commands pass a count and a pointer to the values to be loaded into a uniform
      * variable or a uniform variable array. A count of 1 should be used if modifying the value of a single uniform
      * variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When loading
@@ -2302,21 +2183,21 @@ class GL20 extends GL15
      * components in the data type of the specified uniform variable (e.g., {@see GL46::1} for float, int, bool;
      * {@see GL46::2} for vec2, ivec2, bvec2, etc.). The data type specified in the name of the command must match
      * the data type for the specified uniform variable as described previously for
-     * {@see GL46::glUniform{1|2|3|4}{f|i|ui}}.
+     * {@see GL20::uniform{1|2|3|4}{f|i|ui}}.
      *
      * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glUniform3f} or {@see GL46::glUniform3fv} can be used to load a uniform
+     * of the command (e.g., {@see GL20::uniform3f} or {@see GL20::uniform3fv} can be used to load a uniform
      * variable array of type vec3). The number of elements of the uniform variable array to be modified is specified
      * by $count
      *
-     * The commands {@see GL46::glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix or an
+     * The commands {@see GL20::uniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix or an
      * array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix. The
      * number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3 × 3
      * matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values). Non-square
      * matrix dimensionality is explicit, with the first number representing the number of columns and the second
      * number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2 columns
-     * and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be supplied in
-     * column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied in row major
+     * and 4 rows (i.e., 8 values). If $transpose is {@see GL20::GL_FALSE}, each matrix is assumed to be supplied in
+     * column major order. If $transpose is {@see GL20::GL_TRUE}, each matrix is assumed to be supplied in row major
      * order. The $count argument indicates the number of matrices to be passed. A count of 1 should be used if
      * modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of matrices.
      *
@@ -2325,22 +2206,22 @@ class GL20 extends GL15
      * @since 2.0
      * @param int $location
      * @param int $count
-     * @param \FFI\CData|null $value
+     * @param CData|null $value
      * @return void
      */
-    public function uniform1fv(int $location, int $count, ?\FFI\CData $value): void
+    public function uniform1fv(int $location, int $count, ?CData $value): void
     {
-        $__proc = $this->getProcAs('glUniform1fv', 'void (*)(GLint location, GLsizei count, const GLfloat *value)');
+        $__proc = $this->proc('glUniform1fv', 'void (*)(GLint location, GLsizei count, const GLfloat *value)');
         $__proc($location, $count, $value);
     }
 
     /**
-     * {@see GL46::glUniform} modifies the value of a uniform variable or a uniform variable array. The location of
+     * {@see GL20::uniform} modifies the value of a uniform variable or a uniform variable array. The location of
      * the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glUniform} operates on the program object that was made part of
-     * current state by calling {@see GL46::glUseProgram}.
+     * {@see GL20::getUniformLocation}. {@see GL20::uniform} operates on the program object that was made part of
+     * current state by calling {@see GL20::useProgram}.
      *
-     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform variable
+     * The commands {@see GL20::uniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform variable
      * specified by $location using the values passed as arguments. The number specified in the command should match
      * the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
      * `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The suffix
@@ -2357,10 +2238,10 @@ class GL20 extends GL15
      * otherwise.
      *
      * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glUniform } until the
+     * linked successfully. They retain the values assigned to them by a call to {@see GL20::uniform } until the
      * next successful link operation occurs on the program object, when they are once again initialized to 0.
      *
-     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable or a
+     * The commands {@see GL20::uniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable or a
      * uniform variable array. These commands pass a count and a pointer to the values to be loaded into a uniform
      * variable or a uniform variable array. A count of 1 should be used if modifying the value of a single uniform
      * variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When loading
@@ -2371,21 +2252,21 @@ class GL20 extends GL15
      * components in the data type of the specified uniform variable (e.g., {@see GL46::1} for float, int, bool;
      * {@see GL46::2} for vec2, ivec2, bvec2, etc.). The data type specified in the name of the command must match
      * the data type for the specified uniform variable as described previously for
-     * {@see GL46::glUniform{1|2|3|4}{f|i|ui}}.
+     * {@see GL20::uniform{1|2|3|4}{f|i|ui}}.
      *
      * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glUniform3f} or {@see GL46::glUniform3fv} can be used to load a uniform
+     * of the command (e.g., {@see GL20::uniform3f} or {@see GL20::uniform3fv} can be used to load a uniform
      * variable array of type vec3). The number of elements of the uniform variable array to be modified is specified
      * by $count
      *
-     * The commands {@see GL46::glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix or an
+     * The commands {@see GL20::uniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix or an
      * array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix. The
      * number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3 × 3
      * matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values). Non-square
      * matrix dimensionality is explicit, with the first number representing the number of columns and the second
      * number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2 columns
-     * and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be supplied in
-     * column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied in row major
+     * and 4 rows (i.e., 8 values). If $transpose is {@see GL20::GL_FALSE}, each matrix is assumed to be supplied in
+     * column major order. If $transpose is {@see GL20::GL_TRUE}, each matrix is assumed to be supplied in row major
      * order. The $count argument indicates the number of matrices to be passed. A count of 1 should be used if
      * modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of matrices.
      *
@@ -2398,17 +2279,17 @@ class GL20 extends GL15
      */
     public function uniform1i(int $location, int $v0): void
     {
-        $__proc = $this->getProcAs('glUniform1i', 'void (*)(GLint location, GLint v0)');
+        $__proc = $this->proc('glUniform1i', 'void (*)(GLint location, GLint v0)');
         $__proc($location, $v0);
     }
 
     /**
-     * {@see GL46::glUniform} modifies the value of a uniform variable or a uniform variable array. The location of
+     * {@see GL20::uniform} modifies the value of a uniform variable or a uniform variable array. The location of
      * the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glUniform} operates on the program object that was made part of
-     * current state by calling {@see GL46::glUseProgram}.
+     * {@see GL20::getUniformLocation}. {@see GL20::uniform} operates on the program object that was made part of
+     * current state by calling {@see GL20::useProgram}.
      *
-     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform variable
+     * The commands {@see GL20::uniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform variable
      * specified by $location using the values passed as arguments. The number specified in the command should match
      * the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
      * `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The suffix
@@ -2425,10 +2306,10 @@ class GL20 extends GL15
      * otherwise.
      *
      * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glUniform } until the
+     * linked successfully. They retain the values assigned to them by a call to {@see GL20::uniform } until the
      * next successful link operation occurs on the program object, when they are once again initialized to 0.
      *
-     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable or a
+     * The commands {@see GL20::uniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable or a
      * uniform variable array. These commands pass a count and a pointer to the values to be loaded into a uniform
      * variable or a uniform variable array. A count of 1 should be used if modifying the value of a single uniform
      * variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When loading
@@ -2439,21 +2320,21 @@ class GL20 extends GL15
      * components in the data type of the specified uniform variable (e.g., {@see GL46::1} for float, int, bool;
      * {@see GL46::2} for vec2, ivec2, bvec2, etc.). The data type specified in the name of the command must match
      * the data type for the specified uniform variable as described previously for
-     * {@see GL46::glUniform{1|2|3|4}{f|i|ui}}.
+     * {@see GL20::uniform{1|2|3|4}{f|i|ui}}.
      *
      * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glUniform3f} or {@see GL46::glUniform3fv} can be used to load a uniform
+     * of the command (e.g., {@see GL20::uniform3f} or {@see GL20::uniform3fv} can be used to load a uniform
      * variable array of type vec3). The number of elements of the uniform variable array to be modified is specified
      * by $count
      *
-     * The commands {@see GL46::glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix or an
+     * The commands {@see GL20::uniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix or an
      * array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix. The
      * number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3 × 3
      * matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values). Non-square
      * matrix dimensionality is explicit, with the first number representing the number of columns and the second
      * number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2 columns
-     * and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be supplied in
-     * column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied in row major
+     * and 4 rows (i.e., 8 values). If $transpose is {@see GL20::GL_FALSE}, each matrix is assumed to be supplied in
+     * column major order. If $transpose is {@see GL20::GL_TRUE}, each matrix is assumed to be supplied in row major
      * order. The $count argument indicates the number of matrices to be passed. A count of 1 should be used if
      * modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of matrices.
      *
@@ -2462,22 +2343,22 @@ class GL20 extends GL15
      * @since 2.0
      * @param int $location
      * @param int $count
-     * @param \FFI\CData|null $value
+     * @param CData|null $value
      * @return void
      */
-    public function uniform1iv(int $location, int $count, ?\FFI\CData $value): void
+    public function uniform1iv(int $location, int $count, ?CData $value): void
     {
-        $__proc = $this->getProcAs('glUniform1iv', 'void (*)(GLint location, GLsizei count, const GLint *value)');
+        $__proc = $this->proc('glUniform1iv', 'void (*)(GLint location, GLsizei count, const GLint *value)');
         $__proc($location, $count, $value);
     }
 
     /**
-     * {@see GL46::glUniform} modifies the value of a uniform variable or a uniform variable array. The location of
+     * {@see GL20::uniform} modifies the value of a uniform variable or a uniform variable array. The location of
      * the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glUniform} operates on the program object that was made part of
-     * current state by calling {@see GL46::glUseProgram}.
+     * {@see GL20::getUniformLocation}. {@see GL20::uniform} operates on the program object that was made part of
+     * current state by calling {@see GL20::useProgram}.
      *
-     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform variable
+     * The commands {@see GL20::uniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform variable
      * specified by $location using the values passed as arguments. The number specified in the command should match
      * the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
      * `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The suffix
@@ -2494,10 +2375,10 @@ class GL20 extends GL15
      * otherwise.
      *
      * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glUniform } until the
+     * linked successfully. They retain the values assigned to them by a call to {@see GL20::uniform } until the
      * next successful link operation occurs on the program object, when they are once again initialized to 0.
      *
-     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable or a
+     * The commands {@see GL20::uniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable or a
      * uniform variable array. These commands pass a count and a pointer to the values to be loaded into a uniform
      * variable or a uniform variable array. A count of 1 should be used if modifying the value of a single uniform
      * variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When loading
@@ -2508,21 +2389,21 @@ class GL20 extends GL15
      * components in the data type of the specified uniform variable (e.g., {@see GL46::1} for float, int, bool;
      * {@see GL46::2} for vec2, ivec2, bvec2, etc.). The data type specified in the name of the command must match
      * the data type for the specified uniform variable as described previously for
-     * {@see GL46::glUniform{1|2|3|4}{f|i|ui}}.
+     * {@see GL20::uniform{1|2|3|4}{f|i|ui}}.
      *
      * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glUniform3f} or {@see GL46::glUniform3fv} can be used to load a uniform
+     * of the command (e.g., {@see GL20::uniform3f} or {@see GL20::uniform3fv} can be used to load a uniform
      * variable array of type vec3). The number of elements of the uniform variable array to be modified is specified
      * by $count
      *
-     * The commands {@see GL46::glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix or an
+     * The commands {@see GL20::uniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix or an
      * array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix. The
      * number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3 × 3
      * matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values). Non-square
      * matrix dimensionality is explicit, with the first number representing the number of columns and the second
      * number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2 columns
-     * and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be supplied in
-     * column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied in row major
+     * and 4 rows (i.e., 8 values). If $transpose is {@see GL20::GL_FALSE}, each matrix is assumed to be supplied in
+     * column major order. If $transpose is {@see GL20::GL_TRUE}, each matrix is assumed to be supplied in row major
      * order. The $count argument indicates the number of matrices to be passed. A count of 1 should be used if
      * modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of matrices.
      *
@@ -2536,17 +2417,17 @@ class GL20 extends GL15
      */
     public function uniform2f(int $location, float $v0, float $v1): void
     {
-        $__proc = $this->getProcAs('glUniform2f', 'void (*)(GLint location, GLfloat v0, GLfloat v1)');
+        $__proc = $this->proc('glUniform2f', 'void (*)(GLint location, GLfloat v0, GLfloat v1)');
         $__proc($location, $v0, $v1);
     }
 
     /**
-     * {@see GL46::glUniform} modifies the value of a uniform variable or a uniform variable array. The location of
+     * {@see GL20::uniform} modifies the value of a uniform variable or a uniform variable array. The location of
      * the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glUniform} operates on the program object that was made part of
-     * current state by calling {@see GL46::glUseProgram}.
+     * {@see GL20::getUniformLocation}. {@see GL20::uniform} operates on the program object that was made part of
+     * current state by calling {@see GL20::useProgram}.
      *
-     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform variable
+     * The commands {@see GL20::uniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform variable
      * specified by $location using the values passed as arguments. The number specified in the command should match
      * the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
      * `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The suffix
@@ -2563,10 +2444,10 @@ class GL20 extends GL15
      * otherwise.
      *
      * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glUniform } until the
+     * linked successfully. They retain the values assigned to them by a call to {@see GL20::uniform } until the
      * next successful link operation occurs on the program object, when they are once again initialized to 0.
      *
-     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable or a
+     * The commands {@see GL20::uniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable or a
      * uniform variable array. These commands pass a count and a pointer to the values to be loaded into a uniform
      * variable or a uniform variable array. A count of 1 should be used if modifying the value of a single uniform
      * variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When loading
@@ -2577,21 +2458,21 @@ class GL20 extends GL15
      * components in the data type of the specified uniform variable (e.g., {@see GL46::1} for float, int, bool;
      * {@see GL46::2} for vec2, ivec2, bvec2, etc.). The data type specified in the name of the command must match
      * the data type for the specified uniform variable as described previously for
-     * {@see GL46::glUniform{1|2|3|4}{f|i|ui}}.
+     * {@see GL20::uniform{1|2|3|4}{f|i|ui}}.
      *
      * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glUniform3f} or {@see GL46::glUniform3fv} can be used to load a uniform
+     * of the command (e.g., {@see GL20::uniform3f} or {@see GL20::uniform3fv} can be used to load a uniform
      * variable array of type vec3). The number of elements of the uniform variable array to be modified is specified
      * by $count
      *
-     * The commands {@see GL46::glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix or an
+     * The commands {@see GL20::uniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix or an
      * array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix. The
      * number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3 × 3
      * matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values). Non-square
      * matrix dimensionality is explicit, with the first number representing the number of columns and the second
      * number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2 columns
-     * and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be supplied in
-     * column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied in row major
+     * and 4 rows (i.e., 8 values). If $transpose is {@see GL20::GL_FALSE}, each matrix is assumed to be supplied in
+     * column major order. If $transpose is {@see GL20::GL_TRUE}, each matrix is assumed to be supplied in row major
      * order. The $count argument indicates the number of matrices to be passed. A count of 1 should be used if
      * modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of matrices.
      *
@@ -2600,22 +2481,22 @@ class GL20 extends GL15
      * @since 2.0
      * @param int $location
      * @param int $count
-     * @param \FFI\CData|null $value
+     * @param CData|null $value
      * @return void
      */
-    public function uniform2fv(int $location, int $count, ?\FFI\CData $value): void
+    public function uniform2fv(int $location, int $count, ?CData $value): void
     {
-        $__proc = $this->getProcAs('glUniform2fv', 'void (*)(GLint location, GLsizei count, const GLfloat *value)');
+        $__proc = $this->proc('glUniform2fv', 'void (*)(GLint location, GLsizei count, const GLfloat *value)');
         $__proc($location, $count, $value);
     }
 
     /**
-     * {@see GL46::glUniform} modifies the value of a uniform variable or a uniform variable array. The location of
+     * {@see GL20::uniform} modifies the value of a uniform variable or a uniform variable array. The location of
      * the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glUniform} operates on the program object that was made part of
-     * current state by calling {@see GL46::glUseProgram}.
+     * {@see GL20::getUniformLocation}. {@see GL20::uniform} operates on the program object that was made part of
+     * current state by calling {@see GL20::useProgram}.
      *
-     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform variable
+     * The commands {@see GL20::uniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform variable
      * specified by $location using the values passed as arguments. The number specified in the command should match
      * the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
      * `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The suffix
@@ -2632,10 +2513,10 @@ class GL20 extends GL15
      * otherwise.
      *
      * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glUniform } until the
+     * linked successfully. They retain the values assigned to them by a call to {@see GL20::uniform } until the
      * next successful link operation occurs on the program object, when they are once again initialized to 0.
      *
-     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable or a
+     * The commands {@see GL20::uniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable or a
      * uniform variable array. These commands pass a count and a pointer to the values to be loaded into a uniform
      * variable or a uniform variable array. A count of 1 should be used if modifying the value of a single uniform
      * variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When loading
@@ -2646,21 +2527,21 @@ class GL20 extends GL15
      * components in the data type of the specified uniform variable (e.g., {@see GL46::1} for float, int, bool;
      * {@see GL46::2} for vec2, ivec2, bvec2, etc.). The data type specified in the name of the command must match
      * the data type for the specified uniform variable as described previously for
-     * {@see GL46::glUniform{1|2|3|4}{f|i|ui}}.
+     * {@see GL20::uniform{1|2|3|4}{f|i|ui}}.
      *
      * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glUniform3f} or {@see GL46::glUniform3fv} can be used to load a uniform
+     * of the command (e.g., {@see GL20::uniform3f} or {@see GL20::uniform3fv} can be used to load a uniform
      * variable array of type vec3). The number of elements of the uniform variable array to be modified is specified
      * by $count
      *
-     * The commands {@see GL46::glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix or an
+     * The commands {@see GL20::uniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix or an
      * array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix. The
      * number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3 × 3
      * matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values). Non-square
      * matrix dimensionality is explicit, with the first number representing the number of columns and the second
      * number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2 columns
-     * and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be supplied in
-     * column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied in row major
+     * and 4 rows (i.e., 8 values). If $transpose is {@see GL20::GL_FALSE}, each matrix is assumed to be supplied in
+     * column major order. If $transpose is {@see GL20::GL_TRUE}, each matrix is assumed to be supplied in row major
      * order. The $count argument indicates the number of matrices to be passed. A count of 1 should be used if
      * modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of matrices.
      *
@@ -2674,17 +2555,17 @@ class GL20 extends GL15
      */
     public function uniform2i(int $location, int $v0, int $v1): void
     {
-        $__proc = $this->getProcAs('glUniform2i', 'void (*)(GLint location, GLint v0, GLint v1)');
+        $__proc = $this->proc('glUniform2i', 'void (*)(GLint location, GLint v0, GLint v1)');
         $__proc($location, $v0, $v1);
     }
 
     /**
-     * {@see GL46::glUniform} modifies the value of a uniform variable or a uniform variable array. The location of
+     * {@see GL20::uniform} modifies the value of a uniform variable or a uniform variable array. The location of
      * the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glUniform} operates on the program object that was made part of
-     * current state by calling {@see GL46::glUseProgram}.
+     * {@see GL20::getUniformLocation}. {@see GL20::uniform} operates on the program object that was made part of
+     * current state by calling {@see GL20::useProgram}.
      *
-     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform variable
+     * The commands {@see GL20::uniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform variable
      * specified by $location using the values passed as arguments. The number specified in the command should match
      * the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
      * `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The suffix
@@ -2701,10 +2582,10 @@ class GL20 extends GL15
      * otherwise.
      *
      * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glUniform } until the
+     * linked successfully. They retain the values assigned to them by a call to {@see GL20::uniform } until the
      * next successful link operation occurs on the program object, when they are once again initialized to 0.
      *
-     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable or a
+     * The commands {@see GL20::uniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable or a
      * uniform variable array. These commands pass a count and a pointer to the values to be loaded into a uniform
      * variable or a uniform variable array. A count of 1 should be used if modifying the value of a single uniform
      * variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When loading
@@ -2715,21 +2596,21 @@ class GL20 extends GL15
      * components in the data type of the specified uniform variable (e.g., {@see GL46::1} for float, int, bool;
      * {@see GL46::2} for vec2, ivec2, bvec2, etc.). The data type specified in the name of the command must match
      * the data type for the specified uniform variable as described previously for
-     * {@see GL46::glUniform{1|2|3|4}{f|i|ui}}.
+     * {@see GL20::uniform{1|2|3|4}{f|i|ui}}.
      *
      * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glUniform3f} or {@see GL46::glUniform3fv} can be used to load a uniform
+     * of the command (e.g., {@see GL20::uniform3f} or {@see GL20::uniform3fv} can be used to load a uniform
      * variable array of type vec3). The number of elements of the uniform variable array to be modified is specified
      * by $count
      *
-     * The commands {@see GL46::glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix or an
+     * The commands {@see GL20::uniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix or an
      * array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix. The
      * number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3 × 3
      * matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values). Non-square
      * matrix dimensionality is explicit, with the first number representing the number of columns and the second
      * number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2 columns
-     * and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be supplied in
-     * column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied in row major
+     * and 4 rows (i.e., 8 values). If $transpose is {@see GL20::GL_FALSE}, each matrix is assumed to be supplied in
+     * column major order. If $transpose is {@see GL20::GL_TRUE}, each matrix is assumed to be supplied in row major
      * order. The $count argument indicates the number of matrices to be passed. A count of 1 should be used if
      * modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of matrices.
      *
@@ -2738,22 +2619,22 @@ class GL20 extends GL15
      * @since 2.0
      * @param int $location
      * @param int $count
-     * @param \FFI\CData|null $value
+     * @param CData|null $value
      * @return void
      */
-    public function uniform2iv(int $location, int $count, ?\FFI\CData $value): void
+    public function uniform2iv(int $location, int $count, ?CData $value): void
     {
-        $__proc = $this->getProcAs('glUniform2iv', 'void (*)(GLint location, GLsizei count, const GLint *value)');
+        $__proc = $this->proc('glUniform2iv', 'void (*)(GLint location, GLsizei count, const GLint *value)');
         $__proc($location, $count, $value);
     }
 
     /**
-     * {@see GL46::glUniform} modifies the value of a uniform variable or a uniform variable array. The location of
+     * {@see GL20::uniform} modifies the value of a uniform variable or a uniform variable array. The location of
      * the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glUniform} operates on the program object that was made part of
-     * current state by calling {@see GL46::glUseProgram}.
+     * {@see GL20::getUniformLocation}. {@see GL20::uniform} operates on the program object that was made part of
+     * current state by calling {@see GL20::useProgram}.
      *
-     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform variable
+     * The commands {@see GL20::uniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform variable
      * specified by $location using the values passed as arguments. The number specified in the command should match
      * the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
      * `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The suffix
@@ -2770,10 +2651,10 @@ class GL20 extends GL15
      * otherwise.
      *
      * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glUniform } until the
+     * linked successfully. They retain the values assigned to them by a call to {@see GL20::uniform } until the
      * next successful link operation occurs on the program object, when they are once again initialized to 0.
      *
-     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable or a
+     * The commands {@see GL20::uniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable or a
      * uniform variable array. These commands pass a count and a pointer to the values to be loaded into a uniform
      * variable or a uniform variable array. A count of 1 should be used if modifying the value of a single uniform
      * variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When loading
@@ -2784,21 +2665,21 @@ class GL20 extends GL15
      * components in the data type of the specified uniform variable (e.g., {@see GL46::1} for float, int, bool;
      * {@see GL46::2} for vec2, ivec2, bvec2, etc.). The data type specified in the name of the command must match
      * the data type for the specified uniform variable as described previously for
-     * {@see GL46::glUniform{1|2|3|4}{f|i|ui}}.
+     * {@see GL20::uniform{1|2|3|4}{f|i|ui}}.
      *
      * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glUniform3f} or {@see GL46::glUniform3fv} can be used to load a uniform
+     * of the command (e.g., {@see GL20::uniform3f} or {@see GL20::uniform3fv} can be used to load a uniform
      * variable array of type vec3). The number of elements of the uniform variable array to be modified is specified
      * by $count
      *
-     * The commands {@see GL46::glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix or an
+     * The commands {@see GL20::uniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix or an
      * array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix. The
      * number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3 × 3
      * matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values). Non-square
      * matrix dimensionality is explicit, with the first number representing the number of columns and the second
      * number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2 columns
-     * and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be supplied in
-     * column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied in row major
+     * and 4 rows (i.e., 8 values). If $transpose is {@see GL20::GL_FALSE}, each matrix is assumed to be supplied in
+     * column major order. If $transpose is {@see GL20::GL_TRUE}, each matrix is assumed to be supplied in row major
      * order. The $count argument indicates the number of matrices to be passed. A count of 1 should be used if
      * modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of matrices.
      *
@@ -2813,17 +2694,17 @@ class GL20 extends GL15
      */
     public function uniform3f(int $location, float $v0, float $v1, float $v2): void
     {
-        $__proc = $this->getProcAs('glUniform3f', 'void (*)(GLint location, GLfloat v0, GLfloat v1, GLfloat v2)');
+        $__proc = $this->proc('glUniform3f', 'void (*)(GLint location, GLfloat v0, GLfloat v1, GLfloat v2)');
         $__proc($location, $v0, $v1, $v2);
     }
 
     /**
-     * {@see GL46::glUniform} modifies the value of a uniform variable or a uniform variable array. The location of
+     * {@see GL20::uniform} modifies the value of a uniform variable or a uniform variable array. The location of
      * the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glUniform} operates on the program object that was made part of
-     * current state by calling {@see GL46::glUseProgram}.
+     * {@see GL20::getUniformLocation}. {@see GL20::uniform} operates on the program object that was made part of
+     * current state by calling {@see GL20::useProgram}.
      *
-     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform variable
+     * The commands {@see GL20::uniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform variable
      * specified by $location using the values passed as arguments. The number specified in the command should match
      * the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
      * `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The suffix
@@ -2840,10 +2721,10 @@ class GL20 extends GL15
      * otherwise.
      *
      * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glUniform } until the
+     * linked successfully. They retain the values assigned to them by a call to {@see GL20::uniform } until the
      * next successful link operation occurs on the program object, when they are once again initialized to 0.
      *
-     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable or a
+     * The commands {@see GL20::uniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable or a
      * uniform variable array. These commands pass a count and a pointer to the values to be loaded into a uniform
      * variable or a uniform variable array. A count of 1 should be used if modifying the value of a single uniform
      * variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When loading
@@ -2854,21 +2735,21 @@ class GL20 extends GL15
      * components in the data type of the specified uniform variable (e.g., {@see GL46::1} for float, int, bool;
      * {@see GL46::2} for vec2, ivec2, bvec2, etc.). The data type specified in the name of the command must match
      * the data type for the specified uniform variable as described previously for
-     * {@see GL46::glUniform{1|2|3|4}{f|i|ui}}.
+     * {@see GL20::uniform{1|2|3|4}{f|i|ui}}.
      *
      * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glUniform3f} or {@see GL46::glUniform3fv} can be used to load a uniform
+     * of the command (e.g., {@see GL20::uniform3f} or {@see GL20::uniform3fv} can be used to load a uniform
      * variable array of type vec3). The number of elements of the uniform variable array to be modified is specified
      * by $count
      *
-     * The commands {@see GL46::glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix or an
+     * The commands {@see GL20::uniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix or an
      * array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix. The
      * number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3 × 3
      * matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values). Non-square
      * matrix dimensionality is explicit, with the first number representing the number of columns and the second
      * number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2 columns
-     * and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be supplied in
-     * column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied in row major
+     * and 4 rows (i.e., 8 values). If $transpose is {@see GL20::GL_FALSE}, each matrix is assumed to be supplied in
+     * column major order. If $transpose is {@see GL20::GL_TRUE}, each matrix is assumed to be supplied in row major
      * order. The $count argument indicates the number of matrices to be passed. A count of 1 should be used if
      * modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of matrices.
      *
@@ -2877,22 +2758,22 @@ class GL20 extends GL15
      * @since 2.0
      * @param int $location
      * @param int $count
-     * @param \FFI\CData|null $value
+     * @param CData|null $value
      * @return void
      */
-    public function uniform3fv(int $location, int $count, ?\FFI\CData $value): void
+    public function uniform3fv(int $location, int $count, ?CData $value): void
     {
-        $__proc = $this->getProcAs('glUniform3fv', 'void (*)(GLint location, GLsizei count, const GLfloat *value)');
+        $__proc = $this->proc('glUniform3fv', 'void (*)(GLint location, GLsizei count, const GLfloat *value)');
         $__proc($location, $count, $value);
     }
 
     /**
-     * {@see GL46::glUniform} modifies the value of a uniform variable or a uniform variable array. The location of
+     * {@see GL20::uniform} modifies the value of a uniform variable or a uniform variable array. The location of
      * the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glUniform} operates on the program object that was made part of
-     * current state by calling {@see GL46::glUseProgram}.
+     * {@see GL20::getUniformLocation}. {@see GL20::uniform} operates on the program object that was made part of
+     * current state by calling {@see GL20::useProgram}.
      *
-     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform variable
+     * The commands {@see GL20::uniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform variable
      * specified by $location using the values passed as arguments. The number specified in the command should match
      * the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
      * `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The suffix
@@ -2909,10 +2790,10 @@ class GL20 extends GL15
      * otherwise.
      *
      * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glUniform } until the
+     * linked successfully. They retain the values assigned to them by a call to {@see GL20::uniform } until the
      * next successful link operation occurs on the program object, when they are once again initialized to 0.
      *
-     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable or a
+     * The commands {@see GL20::uniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable or a
      * uniform variable array. These commands pass a count and a pointer to the values to be loaded into a uniform
      * variable or a uniform variable array. A count of 1 should be used if modifying the value of a single uniform
      * variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When loading
@@ -2923,21 +2804,21 @@ class GL20 extends GL15
      * components in the data type of the specified uniform variable (e.g., {@see GL46::1} for float, int, bool;
      * {@see GL46::2} for vec2, ivec2, bvec2, etc.). The data type specified in the name of the command must match
      * the data type for the specified uniform variable as described previously for
-     * {@see GL46::glUniform{1|2|3|4}{f|i|ui}}.
+     * {@see GL20::uniform{1|2|3|4}{f|i|ui}}.
      *
      * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glUniform3f} or {@see GL46::glUniform3fv} can be used to load a uniform
+     * of the command (e.g., {@see GL20::uniform3f} or {@see GL20::uniform3fv} can be used to load a uniform
      * variable array of type vec3). The number of elements of the uniform variable array to be modified is specified
      * by $count
      *
-     * The commands {@see GL46::glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix or an
+     * The commands {@see GL20::uniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix or an
      * array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix. The
      * number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3 × 3
      * matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values). Non-square
      * matrix dimensionality is explicit, with the first number representing the number of columns and the second
      * number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2 columns
-     * and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be supplied in
-     * column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied in row major
+     * and 4 rows (i.e., 8 values). If $transpose is {@see GL20::GL_FALSE}, each matrix is assumed to be supplied in
+     * column major order. If $transpose is {@see GL20::GL_TRUE}, each matrix is assumed to be supplied in row major
      * order. The $count argument indicates the number of matrices to be passed. A count of 1 should be used if
      * modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of matrices.
      *
@@ -2952,17 +2833,17 @@ class GL20 extends GL15
      */
     public function uniform3i(int $location, int $v0, int $v1, int $v2): void
     {
-        $__proc = $this->getProcAs('glUniform3i', 'void (*)(GLint location, GLint v0, GLint v1, GLint v2)');
+        $__proc = $this->proc('glUniform3i', 'void (*)(GLint location, GLint v0, GLint v1, GLint v2)');
         $__proc($location, $v0, $v1, $v2);
     }
 
     /**
-     * {@see GL46::glUniform} modifies the value of a uniform variable or a uniform variable array. The location of
+     * {@see GL20::uniform} modifies the value of a uniform variable or a uniform variable array. The location of
      * the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glUniform} operates on the program object that was made part of
-     * current state by calling {@see GL46::glUseProgram}.
+     * {@see GL20::getUniformLocation}. {@see GL20::uniform} operates on the program object that was made part of
+     * current state by calling {@see GL20::useProgram}.
      *
-     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform variable
+     * The commands {@see GL20::uniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform variable
      * specified by $location using the values passed as arguments. The number specified in the command should match
      * the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
      * `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The suffix
@@ -2979,10 +2860,10 @@ class GL20 extends GL15
      * otherwise.
      *
      * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glUniform } until the
+     * linked successfully. They retain the values assigned to them by a call to {@see GL20::uniform } until the
      * next successful link operation occurs on the program object, when they are once again initialized to 0.
      *
-     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable or a
+     * The commands {@see GL20::uniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable or a
      * uniform variable array. These commands pass a count and a pointer to the values to be loaded into a uniform
      * variable or a uniform variable array. A count of 1 should be used if modifying the value of a single uniform
      * variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When loading
@@ -2993,21 +2874,21 @@ class GL20 extends GL15
      * components in the data type of the specified uniform variable (e.g., {@see GL46::1} for float, int, bool;
      * {@see GL46::2} for vec2, ivec2, bvec2, etc.). The data type specified in the name of the command must match
      * the data type for the specified uniform variable as described previously for
-     * {@see GL46::glUniform{1|2|3|4}{f|i|ui}}.
+     * {@see GL20::uniform{1|2|3|4}{f|i|ui}}.
      *
      * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glUniform3f} or {@see GL46::glUniform3fv} can be used to load a uniform
+     * of the command (e.g., {@see GL20::uniform3f} or {@see GL20::uniform3fv} can be used to load a uniform
      * variable array of type vec3). The number of elements of the uniform variable array to be modified is specified
      * by $count
      *
-     * The commands {@see GL46::glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix or an
+     * The commands {@see GL20::uniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix or an
      * array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix. The
      * number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3 × 3
      * matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values). Non-square
      * matrix dimensionality is explicit, with the first number representing the number of columns and the second
      * number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2 columns
-     * and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be supplied in
-     * column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied in row major
+     * and 4 rows (i.e., 8 values). If $transpose is {@see GL20::GL_FALSE}, each matrix is assumed to be supplied in
+     * column major order. If $transpose is {@see GL20::GL_TRUE}, each matrix is assumed to be supplied in row major
      * order. The $count argument indicates the number of matrices to be passed. A count of 1 should be used if
      * modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of matrices.
      *
@@ -3016,22 +2897,22 @@ class GL20 extends GL15
      * @since 2.0
      * @param int $location
      * @param int $count
-     * @param \FFI\CData|null $value
+     * @param CData|null $value
      * @return void
      */
-    public function uniform3iv(int $location, int $count, ?\FFI\CData $value): void
+    public function uniform3iv(int $location, int $count, ?CData $value): void
     {
-        $__proc = $this->getProcAs('glUniform3iv', 'void (*)(GLint location, GLsizei count, const GLint *value)');
+        $__proc = $this->proc('glUniform3iv', 'void (*)(GLint location, GLsizei count, const GLint *value)');
         $__proc($location, $count, $value);
     }
 
     /**
-     * {@see GL46::glUniform} modifies the value of a uniform variable or a uniform variable array. The location of
+     * {@see GL20::uniform} modifies the value of a uniform variable or a uniform variable array. The location of
      * the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glUniform} operates on the program object that was made part of
-     * current state by calling {@see GL46::glUseProgram}.
+     * {@see GL20::getUniformLocation}. {@see GL20::uniform} operates on the program object that was made part of
+     * current state by calling {@see GL20::useProgram}.
      *
-     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform variable
+     * The commands {@see GL20::uniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform variable
      * specified by $location using the values passed as arguments. The number specified in the command should match
      * the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
      * `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The suffix
@@ -3048,10 +2929,10 @@ class GL20 extends GL15
      * otherwise.
      *
      * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glUniform } until the
+     * linked successfully. They retain the values assigned to them by a call to {@see GL20::uniform } until the
      * next successful link operation occurs on the program object, when they are once again initialized to 0.
      *
-     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable or a
+     * The commands {@see GL20::uniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable or a
      * uniform variable array. These commands pass a count and a pointer to the values to be loaded into a uniform
      * variable or a uniform variable array. A count of 1 should be used if modifying the value of a single uniform
      * variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When loading
@@ -3062,21 +2943,21 @@ class GL20 extends GL15
      * components in the data type of the specified uniform variable (e.g., {@see GL46::1} for float, int, bool;
      * {@see GL46::2} for vec2, ivec2, bvec2, etc.). The data type specified in the name of the command must match
      * the data type for the specified uniform variable as described previously for
-     * {@see GL46::glUniform{1|2|3|4}{f|i|ui}}.
+     * {@see GL20::uniform{1|2|3|4}{f|i|ui}}.
      *
      * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glUniform3f} or {@see GL46::glUniform3fv} can be used to load a uniform
+     * of the command (e.g., {@see GL20::uniform3f} or {@see GL20::uniform3fv} can be used to load a uniform
      * variable array of type vec3). The number of elements of the uniform variable array to be modified is specified
      * by $count
      *
-     * The commands {@see GL46::glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix or an
+     * The commands {@see GL20::uniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix or an
      * array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix. The
      * number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3 × 3
      * matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values). Non-square
      * matrix dimensionality is explicit, with the first number representing the number of columns and the second
      * number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2 columns
-     * and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be supplied in
-     * column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied in row major
+     * and 4 rows (i.e., 8 values). If $transpose is {@see GL20::GL_FALSE}, each matrix is assumed to be supplied in
+     * column major order. If $transpose is {@see GL20::GL_TRUE}, each matrix is assumed to be supplied in row major
      * order. The $count argument indicates the number of matrices to be passed. A count of 1 should be used if
      * modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of matrices.
      *
@@ -3092,17 +2973,18 @@ class GL20 extends GL15
      */
     public function uniform4f(int $location, float $v0, float $v1, float $v2, float $v3): void
     {
-        $__proc = $this->getProcAs('glUniform4f', 'void (*)(GLint location, GLfloat v0, GLfloat v1, GLfloat v2, GLfloat v3)');
+        $__proc = $this->proc('glUniform4f',
+            'void (*)(GLint location, GLfloat v0, GLfloat v1, GLfloat v2, GLfloat v3)');
         $__proc($location, $v0, $v1, $v2, $v3);
     }
 
     /**
-     * {@see GL46::glUniform} modifies the value of a uniform variable or a uniform variable array. The location of
+     * {@see GL20::uniform} modifies the value of a uniform variable or a uniform variable array. The location of
      * the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glUniform} operates on the program object that was made part of
-     * current state by calling {@see GL46::glUseProgram}.
+     * {@see GL20::getUniformLocation}. {@see GL20::uniform} operates on the program object that was made part of
+     * current state by calling {@see GL20::useProgram}.
      *
-     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform variable
+     * The commands {@see GL20::uniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform variable
      * specified by $location using the values passed as arguments. The number specified in the command should match
      * the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
      * `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The suffix
@@ -3119,10 +3001,10 @@ class GL20 extends GL15
      * otherwise.
      *
      * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glUniform } until the
+     * linked successfully. They retain the values assigned to them by a call to {@see GL20::uniform } until the
      * next successful link operation occurs on the program object, when they are once again initialized to 0.
      *
-     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable or a
+     * The commands {@see GL20::uniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable or a
      * uniform variable array. These commands pass a count and a pointer to the values to be loaded into a uniform
      * variable or a uniform variable array. A count of 1 should be used if modifying the value of a single uniform
      * variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When loading
@@ -3133,21 +3015,21 @@ class GL20 extends GL15
      * components in the data type of the specified uniform variable (e.g., {@see GL46::1} for float, int, bool;
      * {@see GL46::2} for vec2, ivec2, bvec2, etc.). The data type specified in the name of the command must match
      * the data type for the specified uniform variable as described previously for
-     * {@see GL46::glUniform{1|2|3|4}{f|i|ui}}.
+     * {@see GL20::uniform{1|2|3|4}{f|i|ui}}.
      *
      * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glUniform3f} or {@see GL46::glUniform3fv} can be used to load a uniform
+     * of the command (e.g., {@see GL20::uniform3f} or {@see GL20::uniform3fv} can be used to load a uniform
      * variable array of type vec3). The number of elements of the uniform variable array to be modified is specified
      * by $count
      *
-     * The commands {@see GL46::glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix or an
+     * The commands {@see GL20::uniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix or an
      * array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix. The
      * number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3 × 3
      * matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values). Non-square
      * matrix dimensionality is explicit, with the first number representing the number of columns and the second
      * number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2 columns
-     * and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be supplied in
-     * column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied in row major
+     * and 4 rows (i.e., 8 values). If $transpose is {@see GL20::GL_FALSE}, each matrix is assumed to be supplied in
+     * column major order. If $transpose is {@see GL20::GL_TRUE}, each matrix is assumed to be supplied in row major
      * order. The $count argument indicates the number of matrices to be passed. A count of 1 should be used if
      * modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of matrices.
      *
@@ -3156,22 +3038,22 @@ class GL20 extends GL15
      * @since 2.0
      * @param int $location
      * @param int $count
-     * @param \FFI\CData|null $value
+     * @param CData|null $value
      * @return void
      */
-    public function uniform4fv(int $location, int $count, ?\FFI\CData $value): void
+    public function uniform4fv(int $location, int $count, ?CData $value): void
     {
-        $__proc = $this->getProcAs('glUniform4fv', 'void (*)(GLint location, GLsizei count, const GLfloat *value)');
+        $__proc = $this->proc('glUniform4fv', 'void (*)(GLint location, GLsizei count, const GLfloat *value)');
         $__proc($location, $count, $value);
     }
 
     /**
-     * {@see GL46::glUniform} modifies the value of a uniform variable or a uniform variable array. The location of
+     * {@see GL20::uniform} modifies the value of a uniform variable or a uniform variable array. The location of
      * the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glUniform} operates on the program object that was made part of
-     * current state by calling {@see GL46::glUseProgram}.
+     * {@see GL20::getUniformLocation}. {@see GL20::uniform} operates on the program object that was made part of
+     * current state by calling {@see GL20::useProgram}.
      *
-     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform variable
+     * The commands {@see GL20::uniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform variable
      * specified by $location using the values passed as arguments. The number specified in the command should match
      * the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
      * `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The suffix
@@ -3188,10 +3070,10 @@ class GL20 extends GL15
      * otherwise.
      *
      * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glUniform } until the
+     * linked successfully. They retain the values assigned to them by a call to {@see GL20::uniform } until the
      * next successful link operation occurs on the program object, when they are once again initialized to 0.
      *
-     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable or a
+     * The commands {@see GL20::uniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable or a
      * uniform variable array. These commands pass a count and a pointer to the values to be loaded into a uniform
      * variable or a uniform variable array. A count of 1 should be used if modifying the value of a single uniform
      * variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When loading
@@ -3202,21 +3084,21 @@ class GL20 extends GL15
      * components in the data type of the specified uniform variable (e.g., {@see GL46::1} for float, int, bool;
      * {@see GL46::2} for vec2, ivec2, bvec2, etc.). The data type specified in the name of the command must match
      * the data type for the specified uniform variable as described previously for
-     * {@see GL46::glUniform{1|2|3|4}{f|i|ui}}.
+     * {@see GL20::uniform{1|2|3|4}{f|i|ui}}.
      *
      * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glUniform3f} or {@see GL46::glUniform3fv} can be used to load a uniform
+     * of the command (e.g., {@see GL20::uniform3f} or {@see GL20::uniform3fv} can be used to load a uniform
      * variable array of type vec3). The number of elements of the uniform variable array to be modified is specified
      * by $count
      *
-     * The commands {@see GL46::glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix or an
+     * The commands {@see GL20::uniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix or an
      * array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix. The
      * number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3 × 3
      * matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values). Non-square
      * matrix dimensionality is explicit, with the first number representing the number of columns and the second
      * number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2 columns
-     * and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be supplied in
-     * column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied in row major
+     * and 4 rows (i.e., 8 values). If $transpose is {@see GL20::GL_FALSE}, each matrix is assumed to be supplied in
+     * column major order. If $transpose is {@see GL20::GL_TRUE}, each matrix is assumed to be supplied in row major
      * order. The $count argument indicates the number of matrices to be passed. A count of 1 should be used if
      * modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of matrices.
      *
@@ -3232,17 +3114,17 @@ class GL20 extends GL15
      */
     public function uniform4i(int $location, int $v0, int $v1, int $v2, int $v3): void
     {
-        $__proc = $this->getProcAs('glUniform4i', 'void (*)(GLint location, GLint v0, GLint v1, GLint v2, GLint v3)');
+        $__proc = $this->proc('glUniform4i', 'void (*)(GLint location, GLint v0, GLint v1, GLint v2, GLint v3)');
         $__proc($location, $v0, $v1, $v2, $v3);
     }
 
     /**
-     * {@see GL46::glUniform} modifies the value of a uniform variable or a uniform variable array. The location of
+     * {@see GL20::uniform} modifies the value of a uniform variable or a uniform variable array. The location of
      * the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glUniform} operates on the program object that was made part of
-     * current state by calling {@see GL46::glUseProgram}.
+     * {@see GL20::getUniformLocation}. {@see GL20::uniform} operates on the program object that was made part of
+     * current state by calling {@see GL20::useProgram}.
      *
-     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform variable
+     * The commands {@see GL20::uniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform variable
      * specified by $location using the values passed as arguments. The number specified in the command should match
      * the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
      * `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The suffix
@@ -3259,10 +3141,10 @@ class GL20 extends GL15
      * otherwise.
      *
      * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glUniform } until the
+     * linked successfully. They retain the values assigned to them by a call to {@see GL20::uniform } until the
      * next successful link operation occurs on the program object, when they are once again initialized to 0.
      *
-     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable or a
+     * The commands {@see GL20::uniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable or a
      * uniform variable array. These commands pass a count and a pointer to the values to be loaded into a uniform
      * variable or a uniform variable array. A count of 1 should be used if modifying the value of a single uniform
      * variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When loading
@@ -3273,21 +3155,21 @@ class GL20 extends GL15
      * components in the data type of the specified uniform variable (e.g., {@see GL46::1} for float, int, bool;
      * {@see GL46::2} for vec2, ivec2, bvec2, etc.). The data type specified in the name of the command must match
      * the data type for the specified uniform variable as described previously for
-     * {@see GL46::glUniform{1|2|3|4}{f|i|ui}}.
+     * {@see GL20::uniform{1|2|3|4}{f|i|ui}}.
      *
      * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glUniform3f} or {@see GL46::glUniform3fv} can be used to load a uniform
+     * of the command (e.g., {@see GL20::uniform3f} or {@see GL20::uniform3fv} can be used to load a uniform
      * variable array of type vec3). The number of elements of the uniform variable array to be modified is specified
      * by $count
      *
-     * The commands {@see GL46::glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix or an
+     * The commands {@see GL20::uniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix or an
      * array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix. The
      * number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3 × 3
      * matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values). Non-square
      * matrix dimensionality is explicit, with the first number representing the number of columns and the second
      * number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2 columns
-     * and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be supplied in
-     * column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied in row major
+     * and 4 rows (i.e., 8 values). If $transpose is {@see GL20::GL_FALSE}, each matrix is assumed to be supplied in
+     * column major order. If $transpose is {@see GL20::GL_TRUE}, each matrix is assumed to be supplied in row major
      * order. The $count argument indicates the number of matrices to be passed. A count of 1 should be used if
      * modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of matrices.
      *
@@ -3296,22 +3178,22 @@ class GL20 extends GL15
      * @since 2.0
      * @param int $location
      * @param int $count
-     * @param \FFI\CData|null $value
+     * @param CData|null $value
      * @return void
      */
-    public function uniform4iv(int $location, int $count, ?\FFI\CData $value): void
+    public function uniform4iv(int $location, int $count, ?CData $value): void
     {
-        $__proc = $this->getProcAs('glUniform4iv', 'void (*)(GLint location, GLsizei count, const GLint *value)');
+        $__proc = $this->proc('glUniform4iv', 'void (*)(GLint location, GLsizei count, const GLint *value)');
         $__proc($location, $count, $value);
     }
 
     /**
-     * {@see GL46::glUniform} modifies the value of a uniform variable or a uniform variable array. The location of
+     * {@see GL20::uniform} modifies the value of a uniform variable or a uniform variable array. The location of
      * the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glUniform} operates on the program object that was made part of
-     * current state by calling {@see GL46::glUseProgram}.
+     * {@see GL20::getUniformLocation}. {@see GL20::uniform} operates on the program object that was made part of
+     * current state by calling {@see GL20::useProgram}.
      *
-     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform variable
+     * The commands {@see GL20::uniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform variable
      * specified by $location using the values passed as arguments. The number specified in the command should match
      * the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
      * `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The suffix
@@ -3328,10 +3210,10 @@ class GL20 extends GL15
      * otherwise.
      *
      * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glUniform } until the
+     * linked successfully. They retain the values assigned to them by a call to {@see GL20::uniform } until the
      * next successful link operation occurs on the program object, when they are once again initialized to 0.
      *
-     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable or a
+     * The commands {@see GL20::uniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable or a
      * uniform variable array. These commands pass a count and a pointer to the values to be loaded into a uniform
      * variable or a uniform variable array. A count of 1 should be used if modifying the value of a single uniform
      * variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When loading
@@ -3342,21 +3224,21 @@ class GL20 extends GL15
      * components in the data type of the specified uniform variable (e.g., {@see GL46::1} for float, int, bool;
      * {@see GL46::2} for vec2, ivec2, bvec2, etc.). The data type specified in the name of the command must match
      * the data type for the specified uniform variable as described previously for
-     * {@see GL46::glUniform{1|2|3|4}{f|i|ui}}.
+     * {@see GL20::uniform{1|2|3|4}{f|i|ui}}.
      *
      * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glUniform3f} or {@see GL46::glUniform3fv} can be used to load a uniform
+     * of the command (e.g., {@see GL20::uniform3f} or {@see GL20::uniform3fv} can be used to load a uniform
      * variable array of type vec3). The number of elements of the uniform variable array to be modified is specified
      * by $count
      *
-     * The commands {@see GL46::glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix or an
+     * The commands {@see GL20::uniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix or an
      * array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix. The
      * number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3 × 3
      * matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values). Non-square
      * matrix dimensionality is explicit, with the first number representing the number of columns and the second
      * number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2 columns
-     * and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be supplied in
-     * column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied in row major
+     * and 4 rows (i.e., 8 values). If $transpose is {@see GL20::GL_FALSE}, each matrix is assumed to be supplied in
+     * column major order. If $transpose is {@see GL20::GL_TRUE}, each matrix is assumed to be supplied in row major
      * order. The $count argument indicates the number of matrices to be passed. A count of 1 should be used if
      * modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of matrices.
      *
@@ -3368,22 +3250,23 @@ class GL20 extends GL15
      * @param int $location
      * @param int $count
      * @param int $transpose
-     * @param \FFI\CData|null $value
+     * @param CData|null $value
      * @return void
      */
-    public function uniformMatrix2fv(int $location, int $count, int $transpose, ?\FFI\CData $value): void
+    public function uniformMatrix2fv(int $location, int $count, int $transpose, ?CData $value): void
     {
-        $__proc = $this->getProcAs('glUniformMatrix2fv', 'void (*)(GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)');
+        $__proc = $this->proc('glUniformMatrix2fv',
+            'void (*)(GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)');
         $__proc($location, $count, $transpose, $value);
     }
 
     /**
-     * {@see GL46::glUniform} modifies the value of a uniform variable or a uniform variable array. The location of
+     * {@see GL20::uniform} modifies the value of a uniform variable or a uniform variable array. The location of
      * the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glUniform} operates on the program object that was made part of
-     * current state by calling {@see GL46::glUseProgram}.
+     * {@see GL20::getUniformLocation}. {@see GL20::uniform} operates on the program object that was made part of
+     * current state by calling {@see GL20::useProgram}.
      *
-     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform variable
+     * The commands {@see GL20::uniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform variable
      * specified by $location using the values passed as arguments. The number specified in the command should match
      * the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
      * `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The suffix
@@ -3400,10 +3283,10 @@ class GL20 extends GL15
      * otherwise.
      *
      * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glUniform } until the
+     * linked successfully. They retain the values assigned to them by a call to {@see GL20::uniform } until the
      * next successful link operation occurs on the program object, when they are once again initialized to 0.
      *
-     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable or a
+     * The commands {@see GL20::uniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable or a
      * uniform variable array. These commands pass a count and a pointer to the values to be loaded into a uniform
      * variable or a uniform variable array. A count of 1 should be used if modifying the value of a single uniform
      * variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When loading
@@ -3414,21 +3297,21 @@ class GL20 extends GL15
      * components in the data type of the specified uniform variable (e.g., {@see GL46::1} for float, int, bool;
      * {@see GL46::2} for vec2, ivec2, bvec2, etc.). The data type specified in the name of the command must match
      * the data type for the specified uniform variable as described previously for
-     * {@see GL46::glUniform{1|2|3|4}{f|i|ui}}.
+     * {@see GL20::uniform{1|2|3|4}{f|i|ui}}.
      *
      * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glUniform3f} or {@see GL46::glUniform3fv} can be used to load a uniform
+     * of the command (e.g., {@see GL20::uniform3f} or {@see GL20::uniform3fv} can be used to load a uniform
      * variable array of type vec3). The number of elements of the uniform variable array to be modified is specified
      * by $count
      *
-     * The commands {@see GL46::glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix or an
+     * The commands {@see GL20::uniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix or an
      * array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix. The
      * number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3 × 3
      * matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values). Non-square
      * matrix dimensionality is explicit, with the first number representing the number of columns and the second
      * number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2 columns
-     * and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be supplied in
-     * column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied in row major
+     * and 4 rows (i.e., 8 values). If $transpose is {@see GL20::GL_FALSE}, each matrix is assumed to be supplied in
+     * column major order. If $transpose is {@see GL20::GL_TRUE}, each matrix is assumed to be supplied in row major
      * order. The $count argument indicates the number of matrices to be passed. A count of 1 should be used if
      * modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of matrices.
      *
@@ -3440,22 +3323,23 @@ class GL20 extends GL15
      * @param int $location
      * @param int $count
      * @param int $transpose
-     * @param \FFI\CData|null $value
+     * @param CData|null $value
      * @return void
      */
-    public function uniformMatrix3fv(int $location, int $count, int $transpose, ?\FFI\CData $value): void
+    public function uniformMatrix3fv(int $location, int $count, int $transpose, ?CData $value): void
     {
-        $__proc = $this->getProcAs('glUniformMatrix3fv', 'void (*)(GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)');
+        $__proc = $this->proc('glUniformMatrix3fv',
+            'void (*)(GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)');
         $__proc($location, $count, $transpose, $value);
     }
 
     /**
-     * {@see GL46::glUniform} modifies the value of a uniform variable or a uniform variable array. The location of
+     * {@see GL20::uniform} modifies the value of a uniform variable or a uniform variable array. The location of
      * the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glUniform} operates on the program object that was made part of
-     * current state by calling {@see GL46::glUseProgram}.
+     * {@see GL20::getUniformLocation}. {@see GL20::uniform} operates on the program object that was made part of
+     * current state by calling {@see GL20::useProgram}.
      *
-     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform variable
+     * The commands {@see GL20::uniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform variable
      * specified by $location using the values passed as arguments. The number specified in the command should match
      * the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
      * `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The suffix
@@ -3472,10 +3356,10 @@ class GL20 extends GL15
      * otherwise.
      *
      * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glUniform } until the
+     * linked successfully. They retain the values assigned to them by a call to {@see GL20::uniform } until the
      * next successful link operation occurs on the program object, when they are once again initialized to 0.
      *
-     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable or a
+     * The commands {@see GL20::uniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable or a
      * uniform variable array. These commands pass a count and a pointer to the values to be loaded into a uniform
      * variable or a uniform variable array. A count of 1 should be used if modifying the value of a single uniform
      * variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When loading
@@ -3486,21 +3370,21 @@ class GL20 extends GL15
      * components in the data type of the specified uniform variable (e.g., {@see GL46::1} for float, int, bool;
      * {@see GL46::2} for vec2, ivec2, bvec2, etc.). The data type specified in the name of the command must match
      * the data type for the specified uniform variable as described previously for
-     * {@see GL46::glUniform{1|2|3|4}{f|i|ui}}.
+     * {@see GL20::uniform{1|2|3|4}{f|i|ui}}.
      *
      * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glUniform3f} or {@see GL46::glUniform3fv} can be used to load a uniform
+     * of the command (e.g., {@see GL20::uniform3f} or {@see GL20::uniform3fv} can be used to load a uniform
      * variable array of type vec3). The number of elements of the uniform variable array to be modified is specified
      * by $count
      *
-     * The commands {@see GL46::glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix or an
+     * The commands {@see GL20::uniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix or an
      * array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix. The
      * number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3 × 3
      * matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values). Non-square
      * matrix dimensionality is explicit, with the first number representing the number of columns and the second
      * number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2 columns
-     * and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be supplied in
-     * column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied in row major
+     * and 4 rows (i.e., 8 values). If $transpose is {@see GL20::GL_FALSE}, each matrix is assumed to be supplied in
+     * column major order. If $transpose is {@see GL20::GL_TRUE}, each matrix is assumed to be supplied in row major
      * order. The $count argument indicates the number of matrices to be passed. A count of 1 should be used if
      * modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of matrices.
      *
@@ -3512,43 +3396,44 @@ class GL20 extends GL15
      * @param int $location
      * @param int $count
      * @param int $transpose
-     * @param \FFI\CData|null $value
+     * @param CData|null $value
      * @return void
      */
-    public function uniformMatrix4fv(int $location, int $count, int $transpose, ?\FFI\CData $value): void
+    public function uniformMatrix4fv(int $location, int $count, int $transpose, ?CData $value): void
     {
-        $__proc = $this->getProcAs('glUniformMatrix4fv', 'void (*)(GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)');
+        $__proc = $this->proc('glUniformMatrix4fv',
+            'void (*)(GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)');
         $__proc($location, $count, $transpose, $value);
     }
 
     /**
-     * {@see GL46::glUseProgram} installs the program object specified by $program as part of current rendering
+     * {@see GL20::useProgram} installs the program object specified by $program as part of current rendering
      * state. One or more executables are created in a program object by successfully attaching shader objects to it
-     * with {@see GL46::glAttachShader}, successfully compiling the shader objects with {@see GL46::glCompileShader},
-     * and successfully linking the program object with {@see GL46::glLinkProgram}.
+     * with {@see GL20::attachShader}, successfully compiling the shader objects with {@see GL20::compileShader},
+     * and successfully linking the program object with {@see GL20::linkProgram}.
      *
      * A program object will contain an executable that will run on the vertex processor if it contains one or more
-     * shader objects of type {@see GL46::GL_VERTEX_SHADER} that have been successfully compiled and linked. A
+     * shader objects of type {@see GL20::GL_VERTEX_SHADER} that have been successfully compiled and linked. A
      * program object will contain an executable that will run on the geometry processor if it contains one or more
-     * shader objects of type {@see GL46::GL_GEOMETRY_SHADER} that have been successfully compiled and linked.
+     * shader objects of type {@see GL20::GL_GEOMETRY_SHADER} that have been successfully compiled and linked.
      * Similarly, a program object will contain an executable that will run on the fragment processor if it contains
-     * one or more shader objects of type {@see GL46::GL_FRAGMENT_SHADER} that have been successfully compiled and
+     * one or more shader objects of type {@see GL20::GL_FRAGMENT_SHADER} that have been successfully compiled and
      * linked.
      *
      * While a program object is in use, applications are free to modify attached shader objects, compile attached
      * shader objects, attach additional shader objects, and detach or delete shader objects. None of these
      * operations will affect the executables that are part of the current state. However, relinking the program
      * object that is currently in use will install the program object as part of the current rendering state if the
-     * link operation was successful (see {@see GL46::glLinkProgram} ). If the program object currently in use is
-     * relinked unsuccessfully, its link status will be set to {@see GL46::GL_FALSE}, but the executables and
-     * associated state will remain part of the current state until a subsequent call to {@see GL46::glUseProgram}
+     * link operation was successful (see {@see GL20::linkProgram} ). If the program object currently in use is
+     * relinked unsuccessfully, its link status will be set to {@see GL20::GL_FALSE}, but the executables and
+     * associated state will remain part of the current state until a subsequent call to {@see GL20::useProgram}
      * removes it from use. After it is removed from use, it cannot be made part of current state until it has been
      * successfully relinked.
      *
      * If $program is zero, then the current rendering state refers to an invalid program object and the results of
      * shader execution are undefined. However, this is not an error.
      *
-     * If $program does not contain shader objects of type {@see GL46::GL_FRAGMENT_SHADER}, an executable will be
+     * If $program does not contain shader objects of type {@see GL20::GL_FRAGMENT_SHADER}, an executable will be
      * installed on the vertex, and possibly geometry processors, but the results of fragment shader execution will
      * be undefined.
      *
@@ -3560,12 +3445,12 @@ class GL20 extends GL15
      */
     public function useProgram(int $program): void
     {
-        $__proc = $this->getProcAs('glUseProgram', 'void (*)(GLuint program)');
+        $__proc = $this->proc('glUseProgram', 'void (*)(GLuint program)');
         $__proc($program);
     }
 
     /**
-     * {@see GL46::glValidateProgram} checks to see whether the executables contained in $program can execute given
+     * {@see GL20::validateProgram} checks to see whether the executables contained in $program can execute given
      * the current OpenGL state. The information generated by the validation process will be stored in $program's
      * information log. The validation information may consist of an empty string, or it may be a string containing
      * information about how the current program object interacts with the rest of current OpenGL state. This
@@ -3573,8 +3458,8 @@ class GL20 extends GL15
      * inefficient, suboptimal, failing to execute, and so on.
      *
      * The status of the validation operation will be stored as part of the program object's state. This value will
-     * be set to {@see GL46::GL_TRUE} if the validation succeeded, and {@see GL46::GL_FALSE} otherwise. It can be
-     * queried by calling {@see GL46::glGetProgram} with arguments $program and {@see GL46::GL_VALIDATE_STATUS}. If
+     * be set to {@see GL20::GL_TRUE} if the validation succeeded, and {@see GL20::GL_FALSE} otherwise. It can be
+     * queried by calling {@see GL20::getProgram} with arguments $program and {@see GL20::GL_VALIDATE_STATUS}. If
      * validation is successful, $program is guaranteed to execute given the current state. Otherwise, $program is
      * guaranteed to not execute.
      *
@@ -3590,18 +3475,18 @@ class GL20 extends GL15
      */
     public function validateProgram(int $program): void
     {
-        $__proc = $this->getProcAs('glValidateProgram', 'void (*)(GLuint program)');
+        $__proc = $this->proc('glValidateProgram', 'void (*)(GLuint program)');
         $__proc($program);
     }
 
     /**
-     * The {@see GL46::glVertexAttrib} family of entry points allows an application to pass generic vertex attributes
+     * The {@see GL20::vertexAttrib} family of entry points allows an application to pass generic vertex attributes
      * in numbered locations.
      *
      * Generic attributes are defined as four-component values that are organized into an array. The first entry of
      * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
-     * {@see GL46::glVertexAttrib} call that specifies the index of the element to be modified and a value for that
+     * {@see GL20::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
+     * {@see GL20::vertexAttrib} call that specifies the index of the element to be modified and a value for that
      * element.
      *
      * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
@@ -3636,12 +3521,12 @@ class GL20 extends GL15
      * passed directly to shader inputs declared as 64-bit double precision types.
      *
      * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * types may be loaded using the {@see GL20::vertexAttrib} entry points. Matrices must be loaded into
      * successive generic attribute slots in column major order, with one column of the matrix in each generic
      * attribute slot.
      *
      * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see GL46::glBindAttribLocation}. This allows an application to use more descriptive variable names
+     * calling {@see GL20::bindAttribLocation}. This allows an application to use more descriptive variable names
      * in a vertex shader. A subsequent change to the specified generic vertex attribute will be immediately
      * reflected as a change to the corresponding attribute variable in the vertex shader.
      *
@@ -3665,18 +3550,18 @@ class GL20 extends GL15
      */
     public function vertexAttrib1d(int $index, float $x): void
     {
-        $__proc = $this->getProcAs('glVertexAttrib1d', 'void (*)(GLuint index, GLdouble x)');
+        $__proc = $this->proc('glVertexAttrib1d', 'void (*)(GLuint index, GLdouble x)');
         $__proc($index, $x);
     }
 
     /**
-     * The {@see GL46::glVertexAttrib} family of entry points allows an application to pass generic vertex attributes
+     * The {@see GL20::vertexAttrib} family of entry points allows an application to pass generic vertex attributes
      * in numbered locations.
      *
      * Generic attributes are defined as four-component values that are organized into an array. The first entry of
      * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
-     * {@see GL46::glVertexAttrib} call that specifies the index of the element to be modified and a value for that
+     * {@see GL20::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
+     * {@see GL20::vertexAttrib} call that specifies the index of the element to be modified and a value for that
      * element.
      *
      * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
@@ -3711,12 +3596,12 @@ class GL20 extends GL15
      * passed directly to shader inputs declared as 64-bit double precision types.
      *
      * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * types may be loaded using the {@see GL20::vertexAttrib} entry points. Matrices must be loaded into
      * successive generic attribute slots in column major order, with one column of the matrix in each generic
      * attribute slot.
      *
      * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see GL46::glBindAttribLocation}. This allows an application to use more descriptive variable names
+     * calling {@see GL20::bindAttribLocation}. This allows an application to use more descriptive variable names
      * in a vertex shader. A subsequent change to the specified generic vertex attribute will be immediately
      * reflected as a change to the corresponding attribute variable in the vertex shader.
      *
@@ -3735,23 +3620,23 @@ class GL20 extends GL15
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
      * @param int $index
-     * @param \FFI\CData|null $v
+     * @param CData|null $v
      * @return void
      */
-    public function vertexAttrib1dv(int $index, ?\FFI\CData $v): void
+    public function vertexAttrib1dv(int $index, ?CData $v): void
     {
-        $__proc = $this->getProcAs('glVertexAttrib1dv', 'void (*)(GLuint index, const GLdouble *v)');
+        $__proc = $this->proc('glVertexAttrib1dv', 'void (*)(GLuint index, const GLdouble *v)');
         $__proc($index, $v);
     }
 
     /**
-     * The {@see GL46::glVertexAttrib} family of entry points allows an application to pass generic vertex attributes
+     * The {@see GL20::vertexAttrib} family of entry points allows an application to pass generic vertex attributes
      * in numbered locations.
      *
      * Generic attributes are defined as four-component values that are organized into an array. The first entry of
      * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
-     * {@see GL46::glVertexAttrib} call that specifies the index of the element to be modified and a value for that
+     * {@see GL20::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
+     * {@see GL20::vertexAttrib} call that specifies the index of the element to be modified and a value for that
      * element.
      *
      * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
@@ -3786,12 +3671,12 @@ class GL20 extends GL15
      * passed directly to shader inputs declared as 64-bit double precision types.
      *
      * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * types may be loaded using the {@see GL20::vertexAttrib} entry points. Matrices must be loaded into
      * successive generic attribute slots in column major order, with one column of the matrix in each generic
      * attribute slot.
      *
      * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see GL46::glBindAttribLocation}. This allows an application to use more descriptive variable names
+     * calling {@see GL20::bindAttribLocation}. This allows an application to use more descriptive variable names
      * in a vertex shader. A subsequent change to the specified generic vertex attribute will be immediately
      * reflected as a change to the corresponding attribute variable in the vertex shader.
      *
@@ -3815,18 +3700,18 @@ class GL20 extends GL15
      */
     public function vertexAttrib1f(int $index, float $x): void
     {
-        $__proc = $this->getProcAs('glVertexAttrib1f', 'void (*)(GLuint index, GLfloat x)');
+        $__proc = $this->proc('glVertexAttrib1f', 'void (*)(GLuint index, GLfloat x)');
         $__proc($index, $x);
     }
 
     /**
-     * The {@see GL46::glVertexAttrib} family of entry points allows an application to pass generic vertex attributes
+     * The {@see GL20::vertexAttrib} family of entry points allows an application to pass generic vertex attributes
      * in numbered locations.
      *
      * Generic attributes are defined as four-component values that are organized into an array. The first entry of
      * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
-     * {@see GL46::glVertexAttrib} call that specifies the index of the element to be modified and a value for that
+     * {@see GL20::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
+     * {@see GL20::vertexAttrib} call that specifies the index of the element to be modified and a value for that
      * element.
      *
      * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
@@ -3861,12 +3746,12 @@ class GL20 extends GL15
      * passed directly to shader inputs declared as 64-bit double precision types.
      *
      * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * types may be loaded using the {@see GL20::vertexAttrib} entry points. Matrices must be loaded into
      * successive generic attribute slots in column major order, with one column of the matrix in each generic
      * attribute slot.
      *
      * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see GL46::glBindAttribLocation}. This allows an application to use more descriptive variable names
+     * calling {@see GL20::bindAttribLocation}. This allows an application to use more descriptive variable names
      * in a vertex shader. A subsequent change to the specified generic vertex attribute will be immediately
      * reflected as a change to the corresponding attribute variable in the vertex shader.
      *
@@ -3885,23 +3770,23 @@ class GL20 extends GL15
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
      * @param int $index
-     * @param \FFI\CData|null $v
+     * @param CData|null $v
      * @return void
      */
-    public function vertexAttrib1fv(int $index, ?\FFI\CData $v): void
+    public function vertexAttrib1fv(int $index, ?CData $v): void
     {
-        $__proc = $this->getProcAs('glVertexAttrib1fv', 'void (*)(GLuint index, const GLfloat *v)');
+        $__proc = $this->proc('glVertexAttrib1fv', 'void (*)(GLuint index, const GLfloat *v)');
         $__proc($index, $v);
     }
 
     /**
-     * The {@see GL46::glVertexAttrib} family of entry points allows an application to pass generic vertex attributes
+     * The {@see GL20::vertexAttrib} family of entry points allows an application to pass generic vertex attributes
      * in numbered locations.
      *
      * Generic attributes are defined as four-component values that are organized into an array. The first entry of
      * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
-     * {@see GL46::glVertexAttrib} call that specifies the index of the element to be modified and a value for that
+     * {@see GL20::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
+     * {@see GL20::vertexAttrib} call that specifies the index of the element to be modified and a value for that
      * element.
      *
      * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
@@ -3936,12 +3821,12 @@ class GL20 extends GL15
      * passed directly to shader inputs declared as 64-bit double precision types.
      *
      * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * types may be loaded using the {@see GL20::vertexAttrib} entry points. Matrices must be loaded into
      * successive generic attribute slots in column major order, with one column of the matrix in each generic
      * attribute slot.
      *
      * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see GL46::glBindAttribLocation}. This allows an application to use more descriptive variable names
+     * calling {@see GL20::bindAttribLocation}. This allows an application to use more descriptive variable names
      * in a vertex shader. A subsequent change to the specified generic vertex attribute will be immediately
      * reflected as a change to the corresponding attribute variable in the vertex shader.
      *
@@ -3965,18 +3850,18 @@ class GL20 extends GL15
      */
     public function vertexAttrib1s(int $index, int $x): void
     {
-        $__proc = $this->getProcAs('glVertexAttrib1s', 'void (*)(GLuint index, GLshort x)');
+        $__proc = $this->proc('glVertexAttrib1s', 'void (*)(GLuint index, GLshort x)');
         $__proc($index, $x);
     }
 
     /**
-     * The {@see GL46::glVertexAttrib} family of entry points allows an application to pass generic vertex attributes
+     * The {@see GL20::vertexAttrib} family of entry points allows an application to pass generic vertex attributes
      * in numbered locations.
      *
      * Generic attributes are defined as four-component values that are organized into an array. The first entry of
      * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
-     * {@see GL46::glVertexAttrib} call that specifies the index of the element to be modified and a value for that
+     * {@see GL20::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
+     * {@see GL20::vertexAttrib} call that specifies the index of the element to be modified and a value for that
      * element.
      *
      * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
@@ -4011,12 +3896,12 @@ class GL20 extends GL15
      * passed directly to shader inputs declared as 64-bit double precision types.
      *
      * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * types may be loaded using the {@see GL20::vertexAttrib} entry points. Matrices must be loaded into
      * successive generic attribute slots in column major order, with one column of the matrix in each generic
      * attribute slot.
      *
      * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see GL46::glBindAttribLocation}. This allows an application to use more descriptive variable names
+     * calling {@see GL20::bindAttribLocation}. This allows an application to use more descriptive variable names
      * in a vertex shader. A subsequent change to the specified generic vertex attribute will be immediately
      * reflected as a change to the corresponding attribute variable in the vertex shader.
      *
@@ -4035,23 +3920,23 @@ class GL20 extends GL15
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
      * @param int $index
-     * @param \FFI\CData|null $v
+     * @param CData|null $v
      * @return void
      */
-    public function vertexAttrib1sv(int $index, ?\FFI\CData $v): void
+    public function vertexAttrib1sv(int $index, ?CData $v): void
     {
-        $__proc = $this->getProcAs('glVertexAttrib1sv', 'void (*)(GLuint index, const GLshort *v)');
+        $__proc = $this->proc('glVertexAttrib1sv', 'void (*)(GLuint index, const GLshort *v)');
         $__proc($index, $v);
     }
 
     /**
-     * The {@see GL46::glVertexAttrib} family of entry points allows an application to pass generic vertex attributes
+     * The {@see GL20::vertexAttrib} family of entry points allows an application to pass generic vertex attributes
      * in numbered locations.
      *
      * Generic attributes are defined as four-component values that are organized into an array. The first entry of
      * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
-     * {@see GL46::glVertexAttrib} call that specifies the index of the element to be modified and a value for that
+     * {@see GL20::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
+     * {@see GL20::vertexAttrib} call that specifies the index of the element to be modified and a value for that
      * element.
      *
      * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
@@ -4086,12 +3971,12 @@ class GL20 extends GL15
      * passed directly to shader inputs declared as 64-bit double precision types.
      *
      * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * types may be loaded using the {@see GL20::vertexAttrib} entry points. Matrices must be loaded into
      * successive generic attribute slots in column major order, with one column of the matrix in each generic
      * attribute slot.
      *
      * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see GL46::glBindAttribLocation}. This allows an application to use more descriptive variable names
+     * calling {@see GL20::bindAttribLocation}. This allows an application to use more descriptive variable names
      * in a vertex shader. A subsequent change to the specified generic vertex attribute will be immediately
      * reflected as a change to the corresponding attribute variable in the vertex shader.
      *
@@ -4116,18 +4001,18 @@ class GL20 extends GL15
      */
     public function vertexAttrib2d(int $index, float $x, float $y): void
     {
-        $__proc = $this->getProcAs('glVertexAttrib2d', 'void (*)(GLuint index, GLdouble x, GLdouble y)');
+        $__proc = $this->proc('glVertexAttrib2d', 'void (*)(GLuint index, GLdouble x, GLdouble y)');
         $__proc($index, $x, $y);
     }
 
     /**
-     * The {@see GL46::glVertexAttrib} family of entry points allows an application to pass generic vertex attributes
+     * The {@see GL20::vertexAttrib} family of entry points allows an application to pass generic vertex attributes
      * in numbered locations.
      *
      * Generic attributes are defined as four-component values that are organized into an array. The first entry of
      * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
-     * {@see GL46::glVertexAttrib} call that specifies the index of the element to be modified and a value for that
+     * {@see GL20::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
+     * {@see GL20::vertexAttrib} call that specifies the index of the element to be modified and a value for that
      * element.
      *
      * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
@@ -4162,12 +4047,12 @@ class GL20 extends GL15
      * passed directly to shader inputs declared as 64-bit double precision types.
      *
      * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * types may be loaded using the {@see GL20::vertexAttrib} entry points. Matrices must be loaded into
      * successive generic attribute slots in column major order, with one column of the matrix in each generic
      * attribute slot.
      *
      * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see GL46::glBindAttribLocation}. This allows an application to use more descriptive variable names
+     * calling {@see GL20::bindAttribLocation}. This allows an application to use more descriptive variable names
      * in a vertex shader. A subsequent change to the specified generic vertex attribute will be immediately
      * reflected as a change to the corresponding attribute variable in the vertex shader.
      *
@@ -4186,23 +4071,23 @@ class GL20 extends GL15
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
      * @param int $index
-     * @param \FFI\CData|null $v
+     * @param CData|null $v
      * @return void
      */
-    public function vertexAttrib2dv(int $index, ?\FFI\CData $v): void
+    public function vertexAttrib2dv(int $index, ?CData $v): void
     {
-        $__proc = $this->getProcAs('glVertexAttrib2dv', 'void (*)(GLuint index, const GLdouble *v)');
+        $__proc = $this->proc('glVertexAttrib2dv', 'void (*)(GLuint index, const GLdouble *v)');
         $__proc($index, $v);
     }
 
     /**
-     * The {@see GL46::glVertexAttrib} family of entry points allows an application to pass generic vertex attributes
+     * The {@see GL20::vertexAttrib} family of entry points allows an application to pass generic vertex attributes
      * in numbered locations.
      *
      * Generic attributes are defined as four-component values that are organized into an array. The first entry of
      * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
-     * {@see GL46::glVertexAttrib} call that specifies the index of the element to be modified and a value for that
+     * {@see GL20::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
+     * {@see GL20::vertexAttrib} call that specifies the index of the element to be modified and a value for that
      * element.
      *
      * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
@@ -4237,12 +4122,12 @@ class GL20 extends GL15
      * passed directly to shader inputs declared as 64-bit double precision types.
      *
      * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * types may be loaded using the {@see GL20::vertexAttrib} entry points. Matrices must be loaded into
      * successive generic attribute slots in column major order, with one column of the matrix in each generic
      * attribute slot.
      *
      * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see GL46::glBindAttribLocation}. This allows an application to use more descriptive variable names
+     * calling {@see GL20::bindAttribLocation}. This allows an application to use more descriptive variable names
      * in a vertex shader. A subsequent change to the specified generic vertex attribute will be immediately
      * reflected as a change to the corresponding attribute variable in the vertex shader.
      *
@@ -4267,18 +4152,18 @@ class GL20 extends GL15
      */
     public function vertexAttrib2f(int $index, float $x, float $y): void
     {
-        $__proc = $this->getProcAs('glVertexAttrib2f', 'void (*)(GLuint index, GLfloat x, GLfloat y)');
+        $__proc = $this->proc('glVertexAttrib2f', 'void (*)(GLuint index, GLfloat x, GLfloat y)');
         $__proc($index, $x, $y);
     }
 
     /**
-     * The {@see GL46::glVertexAttrib} family of entry points allows an application to pass generic vertex attributes
+     * The {@see GL20::vertexAttrib} family of entry points allows an application to pass generic vertex attributes
      * in numbered locations.
      *
      * Generic attributes are defined as four-component values that are organized into an array. The first entry of
      * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
-     * {@see GL46::glVertexAttrib} call that specifies the index of the element to be modified and a value for that
+     * {@see GL20::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
+     * {@see GL20::vertexAttrib} call that specifies the index of the element to be modified and a value for that
      * element.
      *
      * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
@@ -4313,12 +4198,12 @@ class GL20 extends GL15
      * passed directly to shader inputs declared as 64-bit double precision types.
      *
      * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * types may be loaded using the {@see GL20::vertexAttrib} entry points. Matrices must be loaded into
      * successive generic attribute slots in column major order, with one column of the matrix in each generic
      * attribute slot.
      *
      * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see GL46::glBindAttribLocation}. This allows an application to use more descriptive variable names
+     * calling {@see GL20::bindAttribLocation}. This allows an application to use more descriptive variable names
      * in a vertex shader. A subsequent change to the specified generic vertex attribute will be immediately
      * reflected as a change to the corresponding attribute variable in the vertex shader.
      *
@@ -4337,23 +4222,23 @@ class GL20 extends GL15
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
      * @param int $index
-     * @param \FFI\CData|null $v
+     * @param CData|null $v
      * @return void
      */
-    public function vertexAttrib2fv(int $index, ?\FFI\CData $v): void
+    public function vertexAttrib2fv(int $index, ?CData $v): void
     {
-        $__proc = $this->getProcAs('glVertexAttrib2fv', 'void (*)(GLuint index, const GLfloat *v)');
+        $__proc = $this->proc('glVertexAttrib2fv', 'void (*)(GLuint index, const GLfloat *v)');
         $__proc($index, $v);
     }
 
     /**
-     * The {@see GL46::glVertexAttrib} family of entry points allows an application to pass generic vertex attributes
+     * The {@see GL20::vertexAttrib} family of entry points allows an application to pass generic vertex attributes
      * in numbered locations.
      *
      * Generic attributes are defined as four-component values that are organized into an array. The first entry of
      * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
-     * {@see GL46::glVertexAttrib} call that specifies the index of the element to be modified and a value for that
+     * {@see GL20::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
+     * {@see GL20::vertexAttrib} call that specifies the index of the element to be modified and a value for that
      * element.
      *
      * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
@@ -4388,12 +4273,12 @@ class GL20 extends GL15
      * passed directly to shader inputs declared as 64-bit double precision types.
      *
      * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * types may be loaded using the {@see GL20::vertexAttrib} entry points. Matrices must be loaded into
      * successive generic attribute slots in column major order, with one column of the matrix in each generic
      * attribute slot.
      *
      * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see GL46::glBindAttribLocation}. This allows an application to use more descriptive variable names
+     * calling {@see GL20::bindAttribLocation}. This allows an application to use more descriptive variable names
      * in a vertex shader. A subsequent change to the specified generic vertex attribute will be immediately
      * reflected as a change to the corresponding attribute variable in the vertex shader.
      *
@@ -4418,18 +4303,18 @@ class GL20 extends GL15
      */
     public function vertexAttrib2s(int $index, int $x, int $y): void
     {
-        $__proc = $this->getProcAs('glVertexAttrib2s', 'void (*)(GLuint index, GLshort x, GLshort y)');
+        $__proc = $this->proc('glVertexAttrib2s', 'void (*)(GLuint index, GLshort x, GLshort y)');
         $__proc($index, $x, $y);
     }
 
     /**
-     * The {@see GL46::glVertexAttrib} family of entry points allows an application to pass generic vertex attributes
+     * The {@see GL20::vertexAttrib} family of entry points allows an application to pass generic vertex attributes
      * in numbered locations.
      *
      * Generic attributes are defined as four-component values that are organized into an array. The first entry of
      * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
-     * {@see GL46::glVertexAttrib} call that specifies the index of the element to be modified and a value for that
+     * {@see GL20::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
+     * {@see GL20::vertexAttrib} call that specifies the index of the element to be modified and a value for that
      * element.
      *
      * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
@@ -4464,12 +4349,12 @@ class GL20 extends GL15
      * passed directly to shader inputs declared as 64-bit double precision types.
      *
      * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * types may be loaded using the {@see GL20::vertexAttrib} entry points. Matrices must be loaded into
      * successive generic attribute slots in column major order, with one column of the matrix in each generic
      * attribute slot.
      *
      * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see GL46::glBindAttribLocation}. This allows an application to use more descriptive variable names
+     * calling {@see GL20::bindAttribLocation}. This allows an application to use more descriptive variable names
      * in a vertex shader. A subsequent change to the specified generic vertex attribute will be immediately
      * reflected as a change to the corresponding attribute variable in the vertex shader.
      *
@@ -4488,23 +4373,23 @@ class GL20 extends GL15
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
      * @param int $index
-     * @param \FFI\CData|null $v
+     * @param CData|null $v
      * @return void
      */
-    public function vertexAttrib2sv(int $index, ?\FFI\CData $v): void
+    public function vertexAttrib2sv(int $index, ?CData $v): void
     {
-        $__proc = $this->getProcAs('glVertexAttrib2sv', 'void (*)(GLuint index, const GLshort *v)');
+        $__proc = $this->proc('glVertexAttrib2sv', 'void (*)(GLuint index, const GLshort *v)');
         $__proc($index, $v);
     }
 
     /**
-     * The {@see GL46::glVertexAttrib} family of entry points allows an application to pass generic vertex attributes
+     * The {@see GL20::vertexAttrib} family of entry points allows an application to pass generic vertex attributes
      * in numbered locations.
      *
      * Generic attributes are defined as four-component values that are organized into an array. The first entry of
      * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
-     * {@see GL46::glVertexAttrib} call that specifies the index of the element to be modified and a value for that
+     * {@see GL20::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
+     * {@see GL20::vertexAttrib} call that specifies the index of the element to be modified and a value for that
      * element.
      *
      * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
@@ -4539,12 +4424,12 @@ class GL20 extends GL15
      * passed directly to shader inputs declared as 64-bit double precision types.
      *
      * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * types may be loaded using the {@see GL20::vertexAttrib} entry points. Matrices must be loaded into
      * successive generic attribute slots in column major order, with one column of the matrix in each generic
      * attribute slot.
      *
      * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see GL46::glBindAttribLocation}. This allows an application to use more descriptive variable names
+     * calling {@see GL20::bindAttribLocation}. This allows an application to use more descriptive variable names
      * in a vertex shader. A subsequent change to the specified generic vertex attribute will be immediately
      * reflected as a change to the corresponding attribute variable in the vertex shader.
      *
@@ -4570,18 +4455,18 @@ class GL20 extends GL15
      */
     public function vertexAttrib3d(int $index, float $x, float $y, float $z): void
     {
-        $__proc = $this->getProcAs('glVertexAttrib3d', 'void (*)(GLuint index, GLdouble x, GLdouble y, GLdouble z)');
+        $__proc = $this->proc('glVertexAttrib3d', 'void (*)(GLuint index, GLdouble x, GLdouble y, GLdouble z)');
         $__proc($index, $x, $y, $z);
     }
 
     /**
-     * The {@see GL46::glVertexAttrib} family of entry points allows an application to pass generic vertex attributes
+     * The {@see GL20::vertexAttrib} family of entry points allows an application to pass generic vertex attributes
      * in numbered locations.
      *
      * Generic attributes are defined as four-component values that are organized into an array. The first entry of
      * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
-     * {@see GL46::glVertexAttrib} call that specifies the index of the element to be modified and a value for that
+     * {@see GL20::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
+     * {@see GL20::vertexAttrib} call that specifies the index of the element to be modified and a value for that
      * element.
      *
      * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
@@ -4616,12 +4501,12 @@ class GL20 extends GL15
      * passed directly to shader inputs declared as 64-bit double precision types.
      *
      * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * types may be loaded using the {@see GL20::vertexAttrib} entry points. Matrices must be loaded into
      * successive generic attribute slots in column major order, with one column of the matrix in each generic
      * attribute slot.
      *
      * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see GL46::glBindAttribLocation}. This allows an application to use more descriptive variable names
+     * calling {@see GL20::bindAttribLocation}. This allows an application to use more descriptive variable names
      * in a vertex shader. A subsequent change to the specified generic vertex attribute will be immediately
      * reflected as a change to the corresponding attribute variable in the vertex shader.
      *
@@ -4640,23 +4525,23 @@ class GL20 extends GL15
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
      * @param int $index
-     * @param \FFI\CData|null $v
+     * @param CData|null $v
      * @return void
      */
-    public function vertexAttrib3dv(int $index, ?\FFI\CData $v): void
+    public function vertexAttrib3dv(int $index, ?CData $v): void
     {
-        $__proc = $this->getProcAs('glVertexAttrib3dv', 'void (*)(GLuint index, const GLdouble *v)');
+        $__proc = $this->proc('glVertexAttrib3dv', 'void (*)(GLuint index, const GLdouble *v)');
         $__proc($index, $v);
     }
 
     /**
-     * The {@see GL46::glVertexAttrib} family of entry points allows an application to pass generic vertex attributes
+     * The {@see GL20::vertexAttrib} family of entry points allows an application to pass generic vertex attributes
      * in numbered locations.
      *
      * Generic attributes are defined as four-component values that are organized into an array. The first entry of
      * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
-     * {@see GL46::glVertexAttrib} call that specifies the index of the element to be modified and a value for that
+     * {@see GL20::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
+     * {@see GL20::vertexAttrib} call that specifies the index of the element to be modified and a value for that
      * element.
      *
      * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
@@ -4691,12 +4576,12 @@ class GL20 extends GL15
      * passed directly to shader inputs declared as 64-bit double precision types.
      *
      * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * types may be loaded using the {@see GL20::vertexAttrib} entry points. Matrices must be loaded into
      * successive generic attribute slots in column major order, with one column of the matrix in each generic
      * attribute slot.
      *
      * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see GL46::glBindAttribLocation}. This allows an application to use more descriptive variable names
+     * calling {@see GL20::bindAttribLocation}. This allows an application to use more descriptive variable names
      * in a vertex shader. A subsequent change to the specified generic vertex attribute will be immediately
      * reflected as a change to the corresponding attribute variable in the vertex shader.
      *
@@ -4722,18 +4607,18 @@ class GL20 extends GL15
      */
     public function vertexAttrib3f(int $index, float $x, float $y, float $z): void
     {
-        $__proc = $this->getProcAs('glVertexAttrib3f', 'void (*)(GLuint index, GLfloat x, GLfloat y, GLfloat z)');
+        $__proc = $this->proc('glVertexAttrib3f', 'void (*)(GLuint index, GLfloat x, GLfloat y, GLfloat z)');
         $__proc($index, $x, $y, $z);
     }
 
     /**
-     * The {@see GL46::glVertexAttrib} family of entry points allows an application to pass generic vertex attributes
+     * The {@see GL20::vertexAttrib} family of entry points allows an application to pass generic vertex attributes
      * in numbered locations.
      *
      * Generic attributes are defined as four-component values that are organized into an array. The first entry of
      * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
-     * {@see GL46::glVertexAttrib} call that specifies the index of the element to be modified and a value for that
+     * {@see GL20::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
+     * {@see GL20::vertexAttrib} call that specifies the index of the element to be modified and a value for that
      * element.
      *
      * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
@@ -4768,12 +4653,12 @@ class GL20 extends GL15
      * passed directly to shader inputs declared as 64-bit double precision types.
      *
      * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * types may be loaded using the {@see GL20::vertexAttrib} entry points. Matrices must be loaded into
      * successive generic attribute slots in column major order, with one column of the matrix in each generic
      * attribute slot.
      *
      * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see GL46::glBindAttribLocation}. This allows an application to use more descriptive variable names
+     * calling {@see GL20::bindAttribLocation}. This allows an application to use more descriptive variable names
      * in a vertex shader. A subsequent change to the specified generic vertex attribute will be immediately
      * reflected as a change to the corresponding attribute variable in the vertex shader.
      *
@@ -4792,23 +4677,23 @@ class GL20 extends GL15
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
      * @param int $index
-     * @param \FFI\CData|null $v
+     * @param CData|null $v
      * @return void
      */
-    public function vertexAttrib3fv(int $index, ?\FFI\CData $v): void
+    public function vertexAttrib3fv(int $index, ?CData $v): void
     {
-        $__proc = $this->getProcAs('glVertexAttrib3fv', 'void (*)(GLuint index, const GLfloat *v)');
+        $__proc = $this->proc('glVertexAttrib3fv', 'void (*)(GLuint index, const GLfloat *v)');
         $__proc($index, $v);
     }
 
     /**
-     * The {@see GL46::glVertexAttrib} family of entry points allows an application to pass generic vertex attributes
+     * The {@see GL20::vertexAttrib} family of entry points allows an application to pass generic vertex attributes
      * in numbered locations.
      *
      * Generic attributes are defined as four-component values that are organized into an array. The first entry of
      * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
-     * {@see GL46::glVertexAttrib} call that specifies the index of the element to be modified and a value for that
+     * {@see GL20::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
+     * {@see GL20::vertexAttrib} call that specifies the index of the element to be modified and a value for that
      * element.
      *
      * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
@@ -4843,12 +4728,12 @@ class GL20 extends GL15
      * passed directly to shader inputs declared as 64-bit double precision types.
      *
      * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * types may be loaded using the {@see GL20::vertexAttrib} entry points. Matrices must be loaded into
      * successive generic attribute slots in column major order, with one column of the matrix in each generic
      * attribute slot.
      *
      * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see GL46::glBindAttribLocation}. This allows an application to use more descriptive variable names
+     * calling {@see GL20::bindAttribLocation}. This allows an application to use more descriptive variable names
      * in a vertex shader. A subsequent change to the specified generic vertex attribute will be immediately
      * reflected as a change to the corresponding attribute variable in the vertex shader.
      *
@@ -4874,18 +4759,18 @@ class GL20 extends GL15
      */
     public function vertexAttrib3s(int $index, int $x, int $y, int $z): void
     {
-        $__proc = $this->getProcAs('glVertexAttrib3s', 'void (*)(GLuint index, GLshort x, GLshort y, GLshort z)');
+        $__proc = $this->proc('glVertexAttrib3s', 'void (*)(GLuint index, GLshort x, GLshort y, GLshort z)');
         $__proc($index, $x, $y, $z);
     }
 
     /**
-     * The {@see GL46::glVertexAttrib} family of entry points allows an application to pass generic vertex attributes
+     * The {@see GL20::vertexAttrib} family of entry points allows an application to pass generic vertex attributes
      * in numbered locations.
      *
      * Generic attributes are defined as four-component values that are organized into an array. The first entry of
      * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
-     * {@see GL46::glVertexAttrib} call that specifies the index of the element to be modified and a value for that
+     * {@see GL20::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
+     * {@see GL20::vertexAttrib} call that specifies the index of the element to be modified and a value for that
      * element.
      *
      * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
@@ -4920,12 +4805,12 @@ class GL20 extends GL15
      * passed directly to shader inputs declared as 64-bit double precision types.
      *
      * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * types may be loaded using the {@see GL20::vertexAttrib} entry points. Matrices must be loaded into
      * successive generic attribute slots in column major order, with one column of the matrix in each generic
      * attribute slot.
      *
      * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see GL46::glBindAttribLocation}. This allows an application to use more descriptive variable names
+     * calling {@see GL20::bindAttribLocation}. This allows an application to use more descriptive variable names
      * in a vertex shader. A subsequent change to the specified generic vertex attribute will be immediately
      * reflected as a change to the corresponding attribute variable in the vertex shader.
      *
@@ -4944,23 +4829,23 @@ class GL20 extends GL15
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
      * @param int $index
-     * @param \FFI\CData|null $v
+     * @param CData|null $v
      * @return void
      */
-    public function vertexAttrib3sv(int $index, ?\FFI\CData $v): void
+    public function vertexAttrib3sv(int $index, ?CData $v): void
     {
-        $__proc = $this->getProcAs('glVertexAttrib3sv', 'void (*)(GLuint index, const GLshort *v)');
+        $__proc = $this->proc('glVertexAttrib3sv', 'void (*)(GLuint index, const GLshort *v)');
         $__proc($index, $v);
     }
 
     /**
-     * The {@see GL46::glVertexAttrib} family of entry points allows an application to pass generic vertex attributes
+     * The {@see GL20::vertexAttrib} family of entry points allows an application to pass generic vertex attributes
      * in numbered locations.
      *
      * Generic attributes are defined as four-component values that are organized into an array. The first entry of
      * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
-     * {@see GL46::glVertexAttrib} call that specifies the index of the element to be modified and a value for that
+     * {@see GL20::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
+     * {@see GL20::vertexAttrib} call that specifies the index of the element to be modified and a value for that
      * element.
      *
      * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
@@ -4995,12 +4880,12 @@ class GL20 extends GL15
      * passed directly to shader inputs declared as 64-bit double precision types.
      *
      * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * types may be loaded using the {@see GL20::vertexAttrib} entry points. Matrices must be loaded into
      * successive generic attribute slots in column major order, with one column of the matrix in each generic
      * attribute slot.
      *
      * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see GL46::glBindAttribLocation}. This allows an application to use more descriptive variable names
+     * calling {@see GL20::bindAttribLocation}. This allows an application to use more descriptive variable names
      * in a vertex shader. A subsequent change to the specified generic vertex attribute will be immediately
      * reflected as a change to the corresponding attribute variable in the vertex shader.
      *
@@ -5019,23 +4904,23 @@ class GL20 extends GL15
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
      * @param int $index
-     * @param \FFI\CData|null $v
+     * @param CData|null $v
      * @return void
      */
-    public function vertexAttrib4Nbv(int $index, ?\FFI\CData $v): void
+    public function vertexAttrib4Nbv(int $index, ?CData $v): void
     {
-        $__proc = $this->getProcAs('glVertexAttrib4Nbv', 'void (*)(GLuint index, const GLbyte *v)');
+        $__proc = $this->proc('glVertexAttrib4Nbv', 'void (*)(GLuint index, const GLbyte *v)');
         $__proc($index, $v);
     }
 
     /**
-     * The {@see GL46::glVertexAttrib} family of entry points allows an application to pass generic vertex attributes
+     * The {@see GL20::vertexAttrib} family of entry points allows an application to pass generic vertex attributes
      * in numbered locations.
      *
      * Generic attributes are defined as four-component values that are organized into an array. The first entry of
      * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
-     * {@see GL46::glVertexAttrib} call that specifies the index of the element to be modified and a value for that
+     * {@see GL20::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
+     * {@see GL20::vertexAttrib} call that specifies the index of the element to be modified and a value for that
      * element.
      *
      * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
@@ -5070,12 +4955,12 @@ class GL20 extends GL15
      * passed directly to shader inputs declared as 64-bit double precision types.
      *
      * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * types may be loaded using the {@see GL20::vertexAttrib} entry points. Matrices must be loaded into
      * successive generic attribute slots in column major order, with one column of the matrix in each generic
      * attribute slot.
      *
      * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see GL46::glBindAttribLocation}. This allows an application to use more descriptive variable names
+     * calling {@see GL20::bindAttribLocation}. This allows an application to use more descriptive variable names
      * in a vertex shader. A subsequent change to the specified generic vertex attribute will be immediately
      * reflected as a change to the corresponding attribute variable in the vertex shader.
      *
@@ -5094,23 +4979,23 @@ class GL20 extends GL15
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
      * @param int $index
-     * @param \FFI\CData|null $v
+     * @param CData|null $v
      * @return void
      */
-    public function vertexAttrib4Niv(int $index, ?\FFI\CData $v): void
+    public function vertexAttrib4Niv(int $index, ?CData $v): void
     {
-        $__proc = $this->getProcAs('glVertexAttrib4Niv', 'void (*)(GLuint index, const GLint *v)');
+        $__proc = $this->proc('glVertexAttrib4Niv', 'void (*)(GLuint index, const GLint *v)');
         $__proc($index, $v);
     }
 
     /**
-     * The {@see GL46::glVertexAttrib} family of entry points allows an application to pass generic vertex attributes
+     * The {@see GL20::vertexAttrib} family of entry points allows an application to pass generic vertex attributes
      * in numbered locations.
      *
      * Generic attributes are defined as four-component values that are organized into an array. The first entry of
      * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
-     * {@see GL46::glVertexAttrib} call that specifies the index of the element to be modified and a value for that
+     * {@see GL20::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
+     * {@see GL20::vertexAttrib} call that specifies the index of the element to be modified and a value for that
      * element.
      *
      * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
@@ -5145,12 +5030,12 @@ class GL20 extends GL15
      * passed directly to shader inputs declared as 64-bit double precision types.
      *
      * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * types may be loaded using the {@see GL20::vertexAttrib} entry points. Matrices must be loaded into
      * successive generic attribute slots in column major order, with one column of the matrix in each generic
      * attribute slot.
      *
      * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see GL46::glBindAttribLocation}. This allows an application to use more descriptive variable names
+     * calling {@see GL20::bindAttribLocation}. This allows an application to use more descriptive variable names
      * in a vertex shader. A subsequent change to the specified generic vertex attribute will be immediately
      * reflected as a change to the corresponding attribute variable in the vertex shader.
      *
@@ -5169,23 +5054,23 @@ class GL20 extends GL15
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
      * @param int $index
-     * @param \FFI\CData|null $v
+     * @param CData|null $v
      * @return void
      */
-    public function vertexAttrib4Nsv(int $index, ?\FFI\CData $v): void
+    public function vertexAttrib4Nsv(int $index, ?CData $v): void
     {
-        $__proc = $this->getProcAs('glVertexAttrib4Nsv', 'void (*)(GLuint index, const GLshort *v)');
+        $__proc = $this->proc('glVertexAttrib4Nsv', 'void (*)(GLuint index, const GLshort *v)');
         $__proc($index, $v);
     }
 
     /**
-     * The {@see GL46::glVertexAttrib} family of entry points allows an application to pass generic vertex attributes
+     * The {@see GL20::vertexAttrib} family of entry points allows an application to pass generic vertex attributes
      * in numbered locations.
      *
      * Generic attributes are defined as four-component values that are organized into an array. The first entry of
      * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
-     * {@see GL46::glVertexAttrib} call that specifies the index of the element to be modified and a value for that
+     * {@see GL20::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
+     * {@see GL20::vertexAttrib} call that specifies the index of the element to be modified and a value for that
      * element.
      *
      * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
@@ -5220,12 +5105,12 @@ class GL20 extends GL15
      * passed directly to shader inputs declared as 64-bit double precision types.
      *
      * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * types may be loaded using the {@see GL20::vertexAttrib} entry points. Matrices must be loaded into
      * successive generic attribute slots in column major order, with one column of the matrix in each generic
      * attribute slot.
      *
      * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see GL46::glBindAttribLocation}. This allows an application to use more descriptive variable names
+     * calling {@see GL20::bindAttribLocation}. This allows an application to use more descriptive variable names
      * in a vertex shader. A subsequent change to the specified generic vertex attribute will be immediately
      * reflected as a change to the corresponding attribute variable in the vertex shader.
      *
@@ -5252,18 +5137,19 @@ class GL20 extends GL15
      */
     public function vertexAttrib4Nub(int $index, int $x, int $y, int $z, int $w): void
     {
-        $__proc = $this->getProcAs('glVertexAttrib4Nub', 'void (*)(GLuint index, GLubyte x, GLubyte y, GLubyte z, GLubyte w)');
+        $__proc = $this->proc('glVertexAttrib4Nub',
+            'void (*)(GLuint index, GLubyte x, GLubyte y, GLubyte z, GLubyte w)');
         $__proc($index, $x, $y, $z, $w);
     }
 
     /**
-     * The {@see GL46::glVertexAttrib} family of entry points allows an application to pass generic vertex attributes
+     * The {@see GL20::vertexAttrib} family of entry points allows an application to pass generic vertex attributes
      * in numbered locations.
      *
      * Generic attributes are defined as four-component values that are organized into an array. The first entry of
      * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
-     * {@see GL46::glVertexAttrib} call that specifies the index of the element to be modified and a value for that
+     * {@see GL20::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
+     * {@see GL20::vertexAttrib} call that specifies the index of the element to be modified and a value for that
      * element.
      *
      * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
@@ -5298,12 +5184,12 @@ class GL20 extends GL15
      * passed directly to shader inputs declared as 64-bit double precision types.
      *
      * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * types may be loaded using the {@see GL20::vertexAttrib} entry points. Matrices must be loaded into
      * successive generic attribute slots in column major order, with one column of the matrix in each generic
      * attribute slot.
      *
      * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see GL46::glBindAttribLocation}. This allows an application to use more descriptive variable names
+     * calling {@see GL20::bindAttribLocation}. This allows an application to use more descriptive variable names
      * in a vertex shader. A subsequent change to the specified generic vertex attribute will be immediately
      * reflected as a change to the corresponding attribute variable in the vertex shader.
      *
@@ -5322,23 +5208,23 @@ class GL20 extends GL15
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
      * @param int $index
-     * @param \FFI\CData|null $v
+     * @param CData|null $v
      * @return void
      */
-    public function vertexAttrib4Nubv(int $index, ?\FFI\CData $v): void
+    public function vertexAttrib4Nubv(int $index, ?CData $v): void
     {
-        $__proc = $this->getProcAs('glVertexAttrib4Nubv', 'void (*)(GLuint index, const GLubyte *v)');
+        $__proc = $this->proc('glVertexAttrib4Nubv', 'void (*)(GLuint index, const GLubyte *v)');
         $__proc($index, $v);
     }
 
     /**
-     * The {@see GL46::glVertexAttrib} family of entry points allows an application to pass generic vertex attributes
+     * The {@see GL20::vertexAttrib} family of entry points allows an application to pass generic vertex attributes
      * in numbered locations.
      *
      * Generic attributes are defined as four-component values that are organized into an array. The first entry of
      * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
-     * {@see GL46::glVertexAttrib} call that specifies the index of the element to be modified and a value for that
+     * {@see GL20::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
+     * {@see GL20::vertexAttrib} call that specifies the index of the element to be modified and a value for that
      * element.
      *
      * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
@@ -5373,12 +5259,12 @@ class GL20 extends GL15
      * passed directly to shader inputs declared as 64-bit double precision types.
      *
      * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * types may be loaded using the {@see GL20::vertexAttrib} entry points. Matrices must be loaded into
      * successive generic attribute slots in column major order, with one column of the matrix in each generic
      * attribute slot.
      *
      * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see GL46::glBindAttribLocation}. This allows an application to use more descriptive variable names
+     * calling {@see GL20::bindAttribLocation}. This allows an application to use more descriptive variable names
      * in a vertex shader. A subsequent change to the specified generic vertex attribute will be immediately
      * reflected as a change to the corresponding attribute variable in the vertex shader.
      *
@@ -5397,23 +5283,23 @@ class GL20 extends GL15
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
      * @param int $index
-     * @param \FFI\CData|null $v
+     * @param CData|null $v
      * @return void
      */
-    public function vertexAttrib4Nuiv(int $index, ?\FFI\CData $v): void
+    public function vertexAttrib4Nuiv(int $index, ?CData $v): void
     {
-        $__proc = $this->getProcAs('glVertexAttrib4Nuiv', 'void (*)(GLuint index, const GLuint *v)');
+        $__proc = $this->proc('glVertexAttrib4Nuiv', 'void (*)(GLuint index, const GLuint *v)');
         $__proc($index, $v);
     }
 
     /**
-     * The {@see GL46::glVertexAttrib} family of entry points allows an application to pass generic vertex attributes
+     * The {@see GL20::vertexAttrib} family of entry points allows an application to pass generic vertex attributes
      * in numbered locations.
      *
      * Generic attributes are defined as four-component values that are organized into an array. The first entry of
      * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
-     * {@see GL46::glVertexAttrib} call that specifies the index of the element to be modified and a value for that
+     * {@see GL20::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
+     * {@see GL20::vertexAttrib} call that specifies the index of the element to be modified and a value for that
      * element.
      *
      * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
@@ -5448,12 +5334,12 @@ class GL20 extends GL15
      * passed directly to shader inputs declared as 64-bit double precision types.
      *
      * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * types may be loaded using the {@see GL20::vertexAttrib} entry points. Matrices must be loaded into
      * successive generic attribute slots in column major order, with one column of the matrix in each generic
      * attribute slot.
      *
      * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see GL46::glBindAttribLocation}. This allows an application to use more descriptive variable names
+     * calling {@see GL20::bindAttribLocation}. This allows an application to use more descriptive variable names
      * in a vertex shader. A subsequent change to the specified generic vertex attribute will be immediately
      * reflected as a change to the corresponding attribute variable in the vertex shader.
      *
@@ -5472,23 +5358,23 @@ class GL20 extends GL15
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
      * @param int $index
-     * @param \FFI\CData|null $v
+     * @param CData|null $v
      * @return void
      */
-    public function vertexAttrib4Nusv(int $index, ?\FFI\CData $v): void
+    public function vertexAttrib4Nusv(int $index, ?CData $v): void
     {
-        $__proc = $this->getProcAs('glVertexAttrib4Nusv', 'void (*)(GLuint index, const GLushort *v)');
+        $__proc = $this->proc('glVertexAttrib4Nusv', 'void (*)(GLuint index, const GLushort *v)');
         $__proc($index, $v);
     }
 
     /**
-     * The {@see GL46::glVertexAttrib} family of entry points allows an application to pass generic vertex attributes
+     * The {@see GL20::vertexAttrib} family of entry points allows an application to pass generic vertex attributes
      * in numbered locations.
      *
      * Generic attributes are defined as four-component values that are organized into an array. The first entry of
      * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
-     * {@see GL46::glVertexAttrib} call that specifies the index of the element to be modified and a value for that
+     * {@see GL20::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
+     * {@see GL20::vertexAttrib} call that specifies the index of the element to be modified and a value for that
      * element.
      *
      * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
@@ -5523,12 +5409,12 @@ class GL20 extends GL15
      * passed directly to shader inputs declared as 64-bit double precision types.
      *
      * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * types may be loaded using the {@see GL20::vertexAttrib} entry points. Matrices must be loaded into
      * successive generic attribute slots in column major order, with one column of the matrix in each generic
      * attribute slot.
      *
      * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see GL46::glBindAttribLocation}. This allows an application to use more descriptive variable names
+     * calling {@see GL20::bindAttribLocation}. This allows an application to use more descriptive variable names
      * in a vertex shader. A subsequent change to the specified generic vertex attribute will be immediately
      * reflected as a change to the corresponding attribute variable in the vertex shader.
      *
@@ -5547,23 +5433,23 @@ class GL20 extends GL15
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
      * @param int $index
-     * @param \FFI\CData|null $v
+     * @param CData|null $v
      * @return void
      */
-    public function vertexAttrib4bv(int $index, ?\FFI\CData $v): void
+    public function vertexAttrib4bv(int $index, ?CData $v): void
     {
-        $__proc = $this->getProcAs('glVertexAttrib4bv', 'void (*)(GLuint index, const GLbyte *v)');
+        $__proc = $this->proc('glVertexAttrib4bv', 'void (*)(GLuint index, const GLbyte *v)');
         $__proc($index, $v);
     }
 
     /**
-     * The {@see GL46::glVertexAttrib} family of entry points allows an application to pass generic vertex attributes
+     * The {@see GL20::vertexAttrib} family of entry points allows an application to pass generic vertex attributes
      * in numbered locations.
      *
      * Generic attributes are defined as four-component values that are organized into an array. The first entry of
      * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
-     * {@see GL46::glVertexAttrib} call that specifies the index of the element to be modified and a value for that
+     * {@see GL20::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
+     * {@see GL20::vertexAttrib} call that specifies the index of the element to be modified and a value for that
      * element.
      *
      * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
@@ -5598,12 +5484,12 @@ class GL20 extends GL15
      * passed directly to shader inputs declared as 64-bit double precision types.
      *
      * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * types may be loaded using the {@see GL20::vertexAttrib} entry points. Matrices must be loaded into
      * successive generic attribute slots in column major order, with one column of the matrix in each generic
      * attribute slot.
      *
      * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see GL46::glBindAttribLocation}. This allows an application to use more descriptive variable names
+     * calling {@see GL20::bindAttribLocation}. This allows an application to use more descriptive variable names
      * in a vertex shader. A subsequent change to the specified generic vertex attribute will be immediately
      * reflected as a change to the corresponding attribute variable in the vertex shader.
      *
@@ -5630,18 +5516,19 @@ class GL20 extends GL15
      */
     public function vertexAttrib4d(int $index, float $x, float $y, float $z, float $w): void
     {
-        $__proc = $this->getProcAs('glVertexAttrib4d', 'void (*)(GLuint index, GLdouble x, GLdouble y, GLdouble z, GLdouble w)');
+        $__proc = $this->proc('glVertexAttrib4d',
+            'void (*)(GLuint index, GLdouble x, GLdouble y, GLdouble z, GLdouble w)');
         $__proc($index, $x, $y, $z, $w);
     }
 
     /**
-     * The {@see GL46::glVertexAttrib} family of entry points allows an application to pass generic vertex attributes
+     * The {@see GL20::vertexAttrib} family of entry points allows an application to pass generic vertex attributes
      * in numbered locations.
      *
      * Generic attributes are defined as four-component values that are organized into an array. The first entry of
      * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
-     * {@see GL46::glVertexAttrib} call that specifies the index of the element to be modified and a value for that
+     * {@see GL20::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
+     * {@see GL20::vertexAttrib} call that specifies the index of the element to be modified and a value for that
      * element.
      *
      * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
@@ -5676,12 +5563,12 @@ class GL20 extends GL15
      * passed directly to shader inputs declared as 64-bit double precision types.
      *
      * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * types may be loaded using the {@see GL20::vertexAttrib} entry points. Matrices must be loaded into
      * successive generic attribute slots in column major order, with one column of the matrix in each generic
      * attribute slot.
      *
      * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see GL46::glBindAttribLocation}. This allows an application to use more descriptive variable names
+     * calling {@see GL20::bindAttribLocation}. This allows an application to use more descriptive variable names
      * in a vertex shader. A subsequent change to the specified generic vertex attribute will be immediately
      * reflected as a change to the corresponding attribute variable in the vertex shader.
      *
@@ -5700,23 +5587,23 @@ class GL20 extends GL15
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
      * @param int $index
-     * @param \FFI\CData|null $v
+     * @param CData|null $v
      * @return void
      */
-    public function vertexAttrib4dv(int $index, ?\FFI\CData $v): void
+    public function vertexAttrib4dv(int $index, ?CData $v): void
     {
-        $__proc = $this->getProcAs('glVertexAttrib4dv', 'void (*)(GLuint index, const GLdouble *v)');
+        $__proc = $this->proc('glVertexAttrib4dv', 'void (*)(GLuint index, const GLdouble *v)');
         $__proc($index, $v);
     }
 
     /**
-     * The {@see GL46::glVertexAttrib} family of entry points allows an application to pass generic vertex attributes
+     * The {@see GL20::vertexAttrib} family of entry points allows an application to pass generic vertex attributes
      * in numbered locations.
      *
      * Generic attributes are defined as four-component values that are organized into an array. The first entry of
      * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
-     * {@see GL46::glVertexAttrib} call that specifies the index of the element to be modified and a value for that
+     * {@see GL20::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
+     * {@see GL20::vertexAttrib} call that specifies the index of the element to be modified and a value for that
      * element.
      *
      * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
@@ -5751,12 +5638,12 @@ class GL20 extends GL15
      * passed directly to shader inputs declared as 64-bit double precision types.
      *
      * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * types may be loaded using the {@see GL20::vertexAttrib} entry points. Matrices must be loaded into
      * successive generic attribute slots in column major order, with one column of the matrix in each generic
      * attribute slot.
      *
      * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see GL46::glBindAttribLocation}. This allows an application to use more descriptive variable names
+     * calling {@see GL20::bindAttribLocation}. This allows an application to use more descriptive variable names
      * in a vertex shader. A subsequent change to the specified generic vertex attribute will be immediately
      * reflected as a change to the corresponding attribute variable in the vertex shader.
      *
@@ -5783,18 +5670,19 @@ class GL20 extends GL15
      */
     public function vertexAttrib4f(int $index, float $x, float $y, float $z, float $w): void
     {
-        $__proc = $this->getProcAs('glVertexAttrib4f', 'void (*)(GLuint index, GLfloat x, GLfloat y, GLfloat z, GLfloat w)');
+        $__proc = $this->proc('glVertexAttrib4f',
+            'void (*)(GLuint index, GLfloat x, GLfloat y, GLfloat z, GLfloat w)');
         $__proc($index, $x, $y, $z, $w);
     }
 
     /**
-     * The {@see GL46::glVertexAttrib} family of entry points allows an application to pass generic vertex attributes
+     * The {@see GL20::vertexAttrib} family of entry points allows an application to pass generic vertex attributes
      * in numbered locations.
      *
      * Generic attributes are defined as four-component values that are organized into an array. The first entry of
      * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
-     * {@see GL46::glVertexAttrib} call that specifies the index of the element to be modified and a value for that
+     * {@see GL20::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
+     * {@see GL20::vertexAttrib} call that specifies the index of the element to be modified and a value for that
      * element.
      *
      * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
@@ -5829,12 +5717,12 @@ class GL20 extends GL15
      * passed directly to shader inputs declared as 64-bit double precision types.
      *
      * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * types may be loaded using the {@see GL20::vertexAttrib} entry points. Matrices must be loaded into
      * successive generic attribute slots in column major order, with one column of the matrix in each generic
      * attribute slot.
      *
      * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see GL46::glBindAttribLocation}. This allows an application to use more descriptive variable names
+     * calling {@see GL20::bindAttribLocation}. This allows an application to use more descriptive variable names
      * in a vertex shader. A subsequent change to the specified generic vertex attribute will be immediately
      * reflected as a change to the corresponding attribute variable in the vertex shader.
      *
@@ -5853,23 +5741,23 @@ class GL20 extends GL15
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
      * @param int $index
-     * @param \FFI\CData|null $v
+     * @param CData|null $v
      * @return void
      */
-    public function vertexAttrib4fv(int $index, ?\FFI\CData $v): void
+    public function vertexAttrib4fv(int $index, ?CData $v): void
     {
-        $__proc = $this->getProcAs('glVertexAttrib4fv', 'void (*)(GLuint index, const GLfloat *v)');
+        $__proc = $this->proc('glVertexAttrib4fv', 'void (*)(GLuint index, const GLfloat *v)');
         $__proc($index, $v);
     }
 
     /**
-     * The {@see GL46::glVertexAttrib} family of entry points allows an application to pass generic vertex attributes
+     * The {@see GL20::vertexAttrib} family of entry points allows an application to pass generic vertex attributes
      * in numbered locations.
      *
      * Generic attributes are defined as four-component values that are organized into an array. The first entry of
      * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
-     * {@see GL46::glVertexAttrib} call that specifies the index of the element to be modified and a value for that
+     * {@see GL20::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
+     * {@see GL20::vertexAttrib} call that specifies the index of the element to be modified and a value for that
      * element.
      *
      * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
@@ -5904,12 +5792,12 @@ class GL20 extends GL15
      * passed directly to shader inputs declared as 64-bit double precision types.
      *
      * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * types may be loaded using the {@see GL20::vertexAttrib} entry points. Matrices must be loaded into
      * successive generic attribute slots in column major order, with one column of the matrix in each generic
      * attribute slot.
      *
      * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see GL46::glBindAttribLocation}. This allows an application to use more descriptive variable names
+     * calling {@see GL20::bindAttribLocation}. This allows an application to use more descriptive variable names
      * in a vertex shader. A subsequent change to the specified generic vertex attribute will be immediately
      * reflected as a change to the corresponding attribute variable in the vertex shader.
      *
@@ -5928,23 +5816,23 @@ class GL20 extends GL15
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
      * @param int $index
-     * @param \FFI\CData|null $v
+     * @param CData|null $v
      * @return void
      */
-    public function vertexAttrib4iv(int $index, ?\FFI\CData $v): void
+    public function vertexAttrib4iv(int $index, ?CData $v): void
     {
-        $__proc = $this->getProcAs('glVertexAttrib4iv', 'void (*)(GLuint index, const GLint *v)');
+        $__proc = $this->proc('glVertexAttrib4iv', 'void (*)(GLuint index, const GLint *v)');
         $__proc($index, $v);
     }
 
     /**
-     * The {@see GL46::glVertexAttrib} family of entry points allows an application to pass generic vertex attributes
+     * The {@see GL20::vertexAttrib} family of entry points allows an application to pass generic vertex attributes
      * in numbered locations.
      *
      * Generic attributes are defined as four-component values that are organized into an array. The first entry of
      * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
-     * {@see GL46::glVertexAttrib} call that specifies the index of the element to be modified and a value for that
+     * {@see GL20::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
+     * {@see GL20::vertexAttrib} call that specifies the index of the element to be modified and a value for that
      * element.
      *
      * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
@@ -5979,12 +5867,12 @@ class GL20 extends GL15
      * passed directly to shader inputs declared as 64-bit double precision types.
      *
      * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * types may be loaded using the {@see GL20::vertexAttrib} entry points. Matrices must be loaded into
      * successive generic attribute slots in column major order, with one column of the matrix in each generic
      * attribute slot.
      *
      * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see GL46::glBindAttribLocation}. This allows an application to use more descriptive variable names
+     * calling {@see GL20::bindAttribLocation}. This allows an application to use more descriptive variable names
      * in a vertex shader. A subsequent change to the specified generic vertex attribute will be immediately
      * reflected as a change to the corresponding attribute variable in the vertex shader.
      *
@@ -6011,18 +5899,19 @@ class GL20 extends GL15
      */
     public function vertexAttrib4s(int $index, int $x, int $y, int $z, int $w): void
     {
-        $__proc = $this->getProcAs('glVertexAttrib4s', 'void (*)(GLuint index, GLshort x, GLshort y, GLshort z, GLshort w)');
+        $__proc = $this->proc('glVertexAttrib4s',
+            'void (*)(GLuint index, GLshort x, GLshort y, GLshort z, GLshort w)');
         $__proc($index, $x, $y, $z, $w);
     }
 
     /**
-     * The {@see GL46::glVertexAttrib} family of entry points allows an application to pass generic vertex attributes
+     * The {@see GL20::vertexAttrib} family of entry points allows an application to pass generic vertex attributes
      * in numbered locations.
      *
      * Generic attributes are defined as four-component values that are organized into an array. The first entry of
      * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
-     * {@see GL46::glVertexAttrib} call that specifies the index of the element to be modified and a value for that
+     * {@see GL20::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
+     * {@see GL20::vertexAttrib} call that specifies the index of the element to be modified and a value for that
      * element.
      *
      * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
@@ -6057,12 +5946,12 @@ class GL20 extends GL15
      * passed directly to shader inputs declared as 64-bit double precision types.
      *
      * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * types may be loaded using the {@see GL20::vertexAttrib} entry points. Matrices must be loaded into
      * successive generic attribute slots in column major order, with one column of the matrix in each generic
      * attribute slot.
      *
      * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see GL46::glBindAttribLocation}. This allows an application to use more descriptive variable names
+     * calling {@see GL20::bindAttribLocation}. This allows an application to use more descriptive variable names
      * in a vertex shader. A subsequent change to the specified generic vertex attribute will be immediately
      * reflected as a change to the corresponding attribute variable in the vertex shader.
      *
@@ -6081,23 +5970,23 @@ class GL20 extends GL15
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
      * @param int $index
-     * @param \FFI\CData|null $v
+     * @param CData|null $v
      * @return void
      */
-    public function vertexAttrib4sv(int $index, ?\FFI\CData $v): void
+    public function vertexAttrib4sv(int $index, ?CData $v): void
     {
-        $__proc = $this->getProcAs('glVertexAttrib4sv', 'void (*)(GLuint index, const GLshort *v)');
+        $__proc = $this->proc('glVertexAttrib4sv', 'void (*)(GLuint index, const GLshort *v)');
         $__proc($index, $v);
     }
 
     /**
-     * The {@see GL46::glVertexAttrib} family of entry points allows an application to pass generic vertex attributes
+     * The {@see GL20::vertexAttrib} family of entry points allows an application to pass generic vertex attributes
      * in numbered locations.
      *
      * Generic attributes are defined as four-component values that are organized into an array. The first entry of
      * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
-     * {@see GL46::glVertexAttrib} call that specifies the index of the element to be modified and a value for that
+     * {@see GL20::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
+     * {@see GL20::vertexAttrib} call that specifies the index of the element to be modified and a value for that
      * element.
      *
      * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
@@ -6132,12 +6021,12 @@ class GL20 extends GL15
      * passed directly to shader inputs declared as 64-bit double precision types.
      *
      * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * types may be loaded using the {@see GL20::vertexAttrib} entry points. Matrices must be loaded into
      * successive generic attribute slots in column major order, with one column of the matrix in each generic
      * attribute slot.
      *
      * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see GL46::glBindAttribLocation}. This allows an application to use more descriptive variable names
+     * calling {@see GL20::bindAttribLocation}. This allows an application to use more descriptive variable names
      * in a vertex shader. A subsequent change to the specified generic vertex attribute will be immediately
      * reflected as a change to the corresponding attribute variable in the vertex shader.
      *
@@ -6156,23 +6045,23 @@ class GL20 extends GL15
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
      * @param int $index
-     * @param \FFI\CData|null $v
+     * @param CData|null $v
      * @return void
      */
-    public function vertexAttrib4ubv(int $index, ?\FFI\CData $v): void
+    public function vertexAttrib4ubv(int $index, ?CData $v): void
     {
-        $__proc = $this->getProcAs('glVertexAttrib4ubv', 'void (*)(GLuint index, const GLubyte *v)');
+        $__proc = $this->proc('glVertexAttrib4ubv', 'void (*)(GLuint index, const GLubyte *v)');
         $__proc($index, $v);
     }
 
     /**
-     * The {@see GL46::glVertexAttrib} family of entry points allows an application to pass generic vertex attributes
+     * The {@see GL20::vertexAttrib} family of entry points allows an application to pass generic vertex attributes
      * in numbered locations.
      *
      * Generic attributes are defined as four-component values that are organized into an array. The first entry of
      * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
-     * {@see GL46::glVertexAttrib} call that specifies the index of the element to be modified and a value for that
+     * {@see GL20::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
+     * {@see GL20::vertexAttrib} call that specifies the index of the element to be modified and a value for that
      * element.
      *
      * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
@@ -6207,12 +6096,12 @@ class GL20 extends GL15
      * passed directly to shader inputs declared as 64-bit double precision types.
      *
      * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * types may be loaded using the {@see GL20::vertexAttrib} entry points. Matrices must be loaded into
      * successive generic attribute slots in column major order, with one column of the matrix in each generic
      * attribute slot.
      *
      * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see GL46::glBindAttribLocation}. This allows an application to use more descriptive variable names
+     * calling {@see GL20::bindAttribLocation}. This allows an application to use more descriptive variable names
      * in a vertex shader. A subsequent change to the specified generic vertex attribute will be immediately
      * reflected as a change to the corresponding attribute variable in the vertex shader.
      *
@@ -6231,23 +6120,23 @@ class GL20 extends GL15
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
      * @param int $index
-     * @param \FFI\CData|null $v
+     * @param CData|null $v
      * @return void
      */
-    public function vertexAttrib4uiv(int $index, ?\FFI\CData $v): void
+    public function vertexAttrib4uiv(int $index, ?CData $v): void
     {
-        $__proc = $this->getProcAs('glVertexAttrib4uiv', 'void (*)(GLuint index, const GLuint *v)');
+        $__proc = $this->proc('glVertexAttrib4uiv', 'void (*)(GLuint index, const GLuint *v)');
         $__proc($index, $v);
     }
 
     /**
-     * The {@see GL46::glVertexAttrib} family of entry points allows an application to pass generic vertex attributes
+     * The {@see GL20::vertexAttrib} family of entry points allows an application to pass generic vertex attributes
      * in numbered locations.
      *
      * Generic attributes are defined as four-component values that are organized into an array. The first entry of
      * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
-     * {@see GL46::glVertexAttrib} call that specifies the index of the element to be modified and a value for that
+     * {@see GL20::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
+     * {@see GL20::vertexAttrib} call that specifies the index of the element to be modified and a value for that
      * element.
      *
      * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
@@ -6282,12 +6171,12 @@ class GL20 extends GL15
      * passed directly to shader inputs declared as 64-bit double precision types.
      *
      * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * types may be loaded using the {@see GL20::vertexAttrib} entry points. Matrices must be loaded into
      * successive generic attribute slots in column major order, with one column of the matrix in each generic
      * attribute slot.
      *
      * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see GL46::glBindAttribLocation}. This allows an application to use more descriptive variable names
+     * calling {@see GL20::bindAttribLocation}. This allows an application to use more descriptive variable names
      * in a vertex shader. A subsequent change to the specified generic vertex attribute will be immediately
      * reflected as a change to the corresponding attribute variable in the vertex shader.
      *
@@ -6306,49 +6195,49 @@ class GL20 extends GL15
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
      * @param int $index
-     * @param \FFI\CData|null $v
+     * @param CData|null $v
      * @return void
      */
-    public function vertexAttrib4usv(int $index, ?\FFI\CData $v): void
+    public function vertexAttrib4usv(int $index, ?CData $v): void
     {
-        $__proc = $this->getProcAs('glVertexAttrib4usv', 'void (*)(GLuint index, const GLushort *v)');
+        $__proc = $this->proc('glVertexAttrib4usv', 'void (*)(GLuint index, const GLushort *v)');
         $__proc($index, $v);
     }
 
     /**
-     * {@see GL46::glVertexAttribPointer}, {@see GL46::glVertexAttribIPointer} and
-     * {@see GL46::glVertexAttribLPointer} specify the location and data format of the array of generic vertex
+     * {@see GL20::vertexAttribPointer}, {@see GL20::vertexAttribIPointer} and
+     * {@see GL20::vertexAttribLPointer} specify the location and data format of the array of generic vertex
      * attributes at index $index to use when rendering. $size specifies the number of components per attribute and
-     * must be 1, 2, 3, 4, or {@see GL46::GL_BGRA}. $type specifies the data type of each component, and $stride
+     * must be 1, 2, 3, 4, or {@see GL20::GL_BGRA}. $type specifies the data type of each component, and $stride
      * specifies the byte stride from one attribute to the next, allowing vertices and attributes to be packed into a
      * single array or stored in separate arrays.
      *
-     * For {@see GL46::glVertexAttribPointer}, if $normalized is set to {@see GL46::GL_TRUE}, it indicates that
+     * For {@see GL20::vertexAttribPointer}, if $normalized is set to {@see GL20::GL_TRUE}, it indicates that
      * values stored in an integer format are to be mapped to the range [-1,1] (for signed values) or [0,1] (for
      * unsigned values) when they are accessed and converted to floating point. Otherwise, values will be converted
      * to floats directly without normalization.
      *
-     * For {@see GL46::glVertexAttribIPointer}, only the integer types {@see GL46::GL_BYTE},
-     * {@see GL46::GL_UNSIGNED_BYTE}, {@see GL46::GL_SHORT}, {@see GL46::GL_UNSIGNED_SHORT}, {@see GL46::GL_INT},
-     * {@see GL46::GL_UNSIGNED_INT} are accepted. Values are always left as integer values.
+     * For {@see GL20::vertexAttribIPointer}, only the integer types {@see GL20::GL_BYTE},
+     * {@see GL20::GL_UNSIGNED_BYTE}, {@see GL20::GL_SHORT}, {@see GL20::GL_UNSIGNED_SHORT}, {@see GL20::GL_INT},
+     * {@see GL20::GL_UNSIGNED_INT} are accepted. Values are always left as integer values.
      *
-     * {@see GL46::glVertexAttribLPointer} specifies state for a generic vertex attribute array associated with a
+     * {@see GL20::vertexAttribLPointer} specifies state for a generic vertex attribute array associated with a
      * shader attribute variable declared with 64-bit double precision components. $type must be
-     * {@see GL46::GL_DOUBLE}. $index, $size, and $stride behave as described for {@see GL46::glVertexAttribPointer}
-     * and {@see GL46::glVertexAttribIPointer}.
+     * {@see GL20::GL_DOUBLE}. $index, $size, and $stride behave as described for {@see GL20::vertexAttribPointer}
+     * and {@see GL20::vertexAttribIPointer}.
      *
-     * If $pointer is not `NULL`, a non-zero named buffer object must be bound to the {@see GL46::GL_ARRAY_BUFFER}
-     * target (see {@see GL46::glBindBuffer}), otherwise an error is generated. $pointer is treated as a byte offset
-     * into the buffer object's data store. The buffer object binding ({@see GL46::GL_ARRAY_BUFFER_BINDING}) is saved
-     * as generic vertex attribute array state ({@see GL46::GL_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING}) for index $index.
+     * If $pointer is not `NULL`, a non-zero named buffer object must be bound to the {@see GL20::GL_ARRAY_BUFFER}
+     * target (see {@see GL20::bindBuffer}), otherwise an error is generated. $pointer is treated as a byte offset
+     * into the buffer object's data store. The buffer object binding ({@see GL20::GL_ARRAY_BUFFER_BINDING}) is saved
+     * as generic vertex attribute array state ({@see GL20::GL_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING}) for index $index.
      *
      * When a generic vertex attribute array is specified, $size, $type, $normalized, $stride, and $pointer are saved
      * as vertex array state, in addition to the current vertex array buffer object binding.
      *
-     * To enable and disable a generic vertex attribute array, call {@see GL46::glEnableVertexAttribArray} and
-     * {@see GL46::glDisableVertexAttribArray} with $index. If enabled, the generic vertex attribute array is used
-     * when {@see GL46::glDrawArrays}, {@see GL46::glMultiDrawArrays}, {@see GL46::glDrawElements},
-     * {@see GL46::glMultiDrawElements}, or {@see GL46::glDrawRangeElements} is called.
+     * To enable and disable a generic vertex attribute array, call {@see GL20::enableVertexAttribArray} and
+     * {@see GL20::disableVertexAttribArray} with $index. If enabled, the generic vertex attribute array is used
+     * when {@see GL20::drawArrays}, {@see GL20::multiDrawArrays}, {@see GL20::drawElements},
+     * {@see GL20::multiDrawElements}, or {@see GL20::drawRangeElements} is called.
      *
      * @see http://docs.gl/gl2/glVertexAttribPointer
      * @see http://docs.gl/gl4/glVertexAttribPointer
@@ -6358,12 +6247,19 @@ class GL20 extends GL15
      * @param int $type
      * @param int $normalized
      * @param int $stride
-     * @param \FFI\CData|null $pointer
+     * @param CData|null $pointer
      * @return void
      */
-    public function vertexAttribPointer(int $index, int $size, int $type, int $normalized, int $stride, ?\FFI\CData $pointer): void
-    {
-        $__proc = $this->getProcAs('glVertexAttribPointer', 'void (*)(GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const void *pointer)');
+    public function vertexAttribPointer(
+        int $index,
+        int $size,
+        int $type,
+        int $normalized,
+        int $stride,
+        ?CData $pointer
+    ): void {
+        $__proc = $this->proc('glVertexAttribPointer',
+            'void (*)(GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const void *pointer)');
         $__proc($index, $size, $type, $normalized, $stride, $pointer);
     }
 }

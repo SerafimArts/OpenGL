@@ -46,7 +46,7 @@ abstract class GL
     {
         switch (\PHP_OS_FAMILY) {
             case 'Windows':
-                return $this->info->ffi->wglGetProcAddress($fn);
+                return WGL::getInstance()->getProcAddress($fn);
 
             case 'Linux':
                 // glXGetProcAddressARB?
@@ -62,7 +62,7 @@ abstract class GL
      * @param string $signature
      * @return CData|\Closure
      */
-    public function getProcAs(string $fn, string $signature): CData
+    public function proc(string $fn, string $signature): CData
     {
         return self::$virtualFunctions[$fn] ??= $this->cast($signature, $this->getProcAddressFunction($fn));
     }

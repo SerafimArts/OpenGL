@@ -13,192 +13,163 @@ declare(strict_types=1);
 
 namespace Serafim\OpenGL;
 
+use FFI\CData;
+
 /**
+ * The OpenGL functionality up to version 4.1. Includes the deprecated symbols of the Compatibility Profile.
+ *
+ * OpenGL 4.1 implementations support revision 4.10 of the OpenGL Shading Language.
+ *
+ * Extensions promoted to core in this release:
+ *
+ * - ARB_ES2_compatibility @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_ES2_compatibility.txt
+ * - ARB_get_program_binary @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_get_program_binary.txt
+ * - ARB_separate_shader_objects @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_separate_shader_objects.txt
+ * - ARB_shader_precision @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_shader_precision.txt
+ * - ARB_vertex_attrib_64bit @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_vertex_attrib_64bit.txt
+ * - ARB_viewport_array @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_viewport_array.txt
+ *
  * @version 4.1
  */
 class GL41 extends GL40
 {
     /**
+     * Accepted by the $value parameter of GetBooleanv, GetIntegerv, GetInteger64v, GetFloatv, and GetDoublev.
+     *
+     * @since 4.1
+     * @var int
+     */
+    public const
+        GL_SHADER_COMPILER = 0x8DFA,
+        GL_SHADER_BINARY_FORMATS = 0x8DF8,
+        GL_NUM_SHADER_BINARY_FORMATS = 0x8DF9,
+        GL_MAX_VERTEX_UNIFORM_VECTORS = 0x8DFB,
+        GL_MAX_VARYING_VECTORS = 0x8DFC,
+        GL_MAX_FRAGMENT_UNIFORM_VECTORS = 0x8DFD,
+        GL_IMPLEMENTATION_COLOR_READ_TYPE = 0x8B9A,
+        GL_IMPLEMENTATION_COLOR_READ_FORMAT = 0x8B9B;
+
+    /**
+     * Accepted by the $type parameter of VertexAttribPointer.
+     *
      * @since 4.1
      * @var int
      */
     public const GL_FIXED = 0x140C;
+
     /**
+     * Accepted by the $precisiontype parameter of GetShaderPrecisionFormat.
+     *
      * @since 4.1
      * @var int
      */
-    public const GL_IMPLEMENTATION_COLOR_READ_TYPE = 0x8B9A;
+    public const
+        GL_LOW_FLOAT = 0x8DF0,
+        GL_MEDIUM_FLOAT = 0x8DF1,
+        GL_HIGH_FLOAT = 0x8DF2,
+        GL_LOW_INT = 0x8DF3,
+        GL_MEDIUM_INT = 0x8DF4,
+        GL_HIGH_INT = 0x8DF5;
+
     /**
-     * @since 4.1
-     * @var int
-     */
-    public const GL_IMPLEMENTATION_COLOR_READ_FORMAT = 0x8B9B;
-    /**
-     * @since 4.1
-     * @var int
-     */
-    public const GL_LOW_FLOAT = 0x8DF0;
-    /**
-     * @since 4.1
-     * @var int
-     */
-    public const GL_MEDIUM_FLOAT = 0x8DF1;
-    /**
-     * @since 4.1
-     * @var int
-     */
-    public const GL_HIGH_FLOAT = 0x8DF2;
-    /**
-     * @since 4.1
-     * @var int
-     */
-    public const GL_LOW_INT = 0x8DF3;
-    /**
-     * @since 4.1
-     * @var int
-     */
-    public const GL_MEDIUM_INT = 0x8DF4;
-    /**
-     * @since 4.1
-     * @var int
-     */
-    public const GL_HIGH_INT = 0x8DF5;
-    /**
-     * @since 4.1
-     * @var int
-     */
-    public const GL_SHADER_COMPILER = 0x8DFA;
-    /**
-     * @since 4.1
-     * @var int
-     */
-    public const GL_SHADER_BINARY_FORMATS = 0x8DF8;
-    /**
-     * @since 4.1
-     * @var int
-     */
-    public const GL_NUM_SHADER_BINARY_FORMATS = 0x8DF9;
-    /**
-     * @since 4.1
-     * @var int
-     */
-    public const GL_MAX_VERTEX_UNIFORM_VECTORS = 0x8DFB;
-    /**
-     * @since 4.1
-     * @var int
-     */
-    public const GL_MAX_VARYING_VECTORS = 0x8DFC;
-    /**
-     * @since 4.1
-     * @var int
-     */
-    public const GL_MAX_FRAGMENT_UNIFORM_VECTORS = 0x8DFD;
-    /**
+     * Accepted by the $format parameter of most commands taking sized internal formats.
+     *
      * @since 4.1
      * @var int
      */
     public const GL_RGB565 = 0x8D62;
+
     /**
+     * Accepted by the $pname parameter of ProgramParameteri and GetProgramiv.
+     *
      * @since 4.1
      * @var int
      */
     public const GL_PROGRAM_BINARY_RETRIEVABLE_HINT = 0x8257;
+
     /**
+     * Accepted by the $pname parameter of GetProgramiv.
+     *
      * @since 4.1
      * @var int
      */
     public const GL_PROGRAM_BINARY_LENGTH = 0x8741;
+
     /**
+     * Accepted by the $pname parameter of GetBooleanv, GetIntegerv, GetInteger64v, GetFloatv and GetDoublev.
+     *
      * @since 4.1
      * @var int
      */
-    public const GL_NUM_PROGRAM_BINARY_FORMATS = 0x87FE;
+    public const
+        GL_NUM_PROGRAM_BINARY_FORMATS = 0x87FE,
+        GL_PROGRAM_BINARY_FORMATS = 0x87FF;
+
     /**
+     * Accepted by $stages parameter to UseProgramStages.
+     *
      * @since 4.1
      * @var int
      */
-    public const GL_PROGRAM_BINARY_FORMATS = 0x87FF;
+    public const
+        GL_VERTEX_SHADER_BIT = 0x1,
+        GL_FRAGMENT_SHADER_BIT = 0x2,
+        GL_GEOMETRY_SHADER_BIT = 0x4,
+        GL_TESS_CONTROL_SHADER_BIT = 0x8,
+        GL_TESS_EVALUATION_SHADER_BIT = 0x10,
+        GL_ALL_SHADER_BITS = 0xFFFF_FFFF;
+
     /**
-     * @since 4.1
-     * @var int
-     */
-    public const GL_VERTEX_SHADER_BIT = 0x0001;
-    /**
-     * @since 4.1
-     * @var int
-     */
-    public const GL_FRAGMENT_SHADER_BIT = 0x0002;
-    /**
-     * @since 4.1
-     * @var int
-     */
-    public const GL_GEOMETRY_SHADER_BIT = 0x0004;
-    /**
-     * @since 4.1
-     * @var int
-     */
-    public const GL_TESS_CONTROL_SHADER_BIT = 0x0008;
-    /**
-     * @since 4.1
-     * @var int
-     */
-    public const GL_TESS_EVALUATION_SHADER_BIT = 0x0010;
-    /**
-     * @since 4.1
-     * @var int
-     */
-    public const GL_ALL_SHADER_BITS = 0xFFFF_FFFF;
-    /**
+     * Accepted by the $pname parameter of ProgramParameteri and GetProgramiv.
+     *
      * @since 4.1
      * @var int
      */
     public const GL_PROGRAM_SEPARABLE = 0x8258;
+
     /**
+     * Accepted by $type parameter to GetProgramPipelineiv.
+     *
      * @since 4.1
      * @var int
      */
     public const GL_ACTIVE_PROGRAM = 0x8259;
+
     /**
+     * Accepted by the $pname parameter of GetBooleanv, GetIntegerv, GetInteger64v, GetFloatv, and GetDoublev.
+     *
      * @since 4.1
      * @var int
      */
     public const GL_PROGRAM_PIPELINE_BINDING = 0x825A;
+
     /**
+     * Accepted by the $pname parameter of GetBooleanv, GetIntegerv, GetFloatv, GetDoublev and GetInteger64v.
+     *
      * @since 4.1
      * @var int
      */
-    public const GL_MAX_VIEWPORTS = 0x825B;
+    public const
+        GL_MAX_VIEWPORTS = 0x825B,
+        GL_VIEWPORT_SUBPIXEL_BITS = 0x825C,
+        GL_VIEWPORT_BOUNDS_RANGE = 0x825D,
+        GL_LAYER_PROVOKING_VERTEX = 0x825E,
+        GL_VIEWPORT_INDEX_PROVOKING_VERTEX = 0x825F;
+
     /**
-     * @since 4.1
-     * @var int
-     */
-    public const GL_VIEWPORT_SUBPIXEL_BITS = 0x825C;
-    /**
-     * @since 4.1
-     * @var int
-     */
-    public const GL_VIEWPORT_BOUNDS_RANGE = 0x825D;
-    /**
-     * @since 4.1
-     * @var int
-     */
-    public const GL_LAYER_PROVOKING_VERTEX = 0x825E;
-    /**
-     * @since 4.1
-     * @var int
-     */
-    public const GL_VIEWPORT_INDEX_PROVOKING_VERTEX = 0x825F;
-    /**
+     * Returned in the $data parameter from a Get query with a $pname of LAYER_PROVOKING_VERTEX or
+     * VIEWPORT_INDEX_PROVOKING_VERTEX.
+     *
      * @since 4.1
      * @var int
      */
     public const GL_UNDEFINED_VERTEX = 0x8260;
 
     /**
-     * {@see GL46::glActiveShaderProgram} sets the linked program named by $program to be the active program for the
+     * {@see GL41::activeShaderProgram} sets the linked program named by $program to be the active program for the
      * program pipeline object $pipeline. The active program in the active program pipeline object is the target of
-     * calls to {@see GL46::glUniform} when no program has been made current through a call to
-     * {@see GL46::glUseProgram}.
+     * calls to {@see GL41::uniform} when no program has been made current through a call to
+     * {@see GL41::useProgram}.
      *
      * @see http://docs.gl/gl4/glActiveShaderProgram
      * @since 4.1
@@ -208,22 +179,22 @@ class GL41 extends GL40
      */
     public function activeShaderProgram(int $pipeline, int $program): void
     {
-        $__proc = $this->getProcAs('glActiveShaderProgram', 'void (*)(GLuint pipeline, GLuint program)');
+        $__proc = $this->proc('glActiveShaderProgram', 'void (*)(GLuint pipeline, GLuint program)');
         $__proc($pipeline, $program);
     }
 
     /**
-     * {@see GL46::glBindProgramPipeline} binds a program pipeline object to the current context. $pipeline must be a
-     * name previously returned from a call to {@see GL46::glGenProgramPipelines}. If no program pipeline exists with
+     * {@see GL41::bindProgramPipeline} binds a program pipeline object to the current context. $pipeline must be a
+     * name previously returned from a call to {@see GL41::genProgramPipelines}. If no program pipeline exists with
      * name $pipeline then a new pipeline object is created with that name and initialized to the default state
      * vector.
      *
-     * When a program pipeline object is bound using {@see GL46::glBindProgramPipeline}, any previous binding is
+     * When a program pipeline object is bound using {@see GL41::bindProgramPipeline}, any previous binding is
      * broken and is replaced with a binding to the specified pipeline object. If $pipeline is zero, the previous
      * binding is broken and is not replaced, leaving no pipeline object bound. If no current program object has been
-     * established by {@see GL46::glUseProgram}, the program objects used for each stage and for uniform updates are
+     * established by {@see GL41::useProgram}, the program objects used for each stage and for uniform updates are
      * taken from the bound program pipeline object, if any. If there is a current program object established by
-     * {@see GL46::glUseProgram}, the bound program pipeline object has no effect on rendering or uniform updates.
+     * {@see GL41::useProgram}, the bound program pipeline object has no effect on rendering or uniform updates.
      * When a bound program pipeline object is used for rendering, individual shader executables are taken from its
      * program objects.
      *
@@ -234,13 +205,13 @@ class GL41 extends GL40
      */
     public function bindProgramPipeline(int $pipeline): void
     {
-        $__proc = $this->getProcAs('glBindProgramPipeline', 'void (*)(GLuint pipeline)');
+        $__proc = $this->proc('glBindProgramPipeline', 'void (*)(GLuint pipeline)');
         $__proc($pipeline);
     }
 
     /**
-     * {@see GL46::glClearDepth} specifies the depth value used by {@see GL46::glClear} to clear the depth buffer.
-     * Values specified by {@see GL46::glClearDepth} are clamped to the range    0 1  .
+     * {@see GL41::clearDepth} specifies the depth value used by {@see GL41::clear} to clear the depth buffer.
+     * Values specified by {@see GL41::clearDepth} are clamped to the range    0 1  .
      *
      * @see http://docs.gl/gl2/glClearDepth
      * @see http://docs.gl/gl4/glClearDepth
@@ -250,16 +221,16 @@ class GL41 extends GL40
      */
     public function clearDepthf(float $d): void
     {
-        $__proc = $this->getProcAs('glClearDepthf', 'void (*)(GLfloat d)');
+        $__proc = $this->proc('glClearDepthf', 'void (*)(GLfloat d)');
         $__proc($d);
     }
 
     /**
-     * {@see GL46::glCreateShaderProgram} creates a program object containing compiled and linked shaders for a
+     * {@see GL41::createShaderProgram} creates a program object containing compiled and linked shaders for a
      * single stage specified by $type. $strings refers to an array of $count strings from which to create the shader
      * executables.
      *
-     * {@see GL46::glCreateShaderProgram} is equivalent (assuming no errors are generated) to:
+     * {@see GL41::createShaderProgram} is equivalent (assuming no errors are generated) to:
      *
      * <code>
      *     const GLuint shader = glCreateShader(type);
@@ -284,8 +255,8 @@ class GL41 extends GL40
      *         return 0;
      *     }
      * </code>
-     * The program object created by {@see GL46::glCreateShaderProgram} has its {@see GL46::GL_PROGRAM_SEPARABLE}
-     * status set to {@see GL46::GL_TRUE}.
+     * The program object created by {@see GL41::createShaderProgram} has its {@see GL41::GL_PROGRAM_SEPARABLE}
+     * status set to {@see GL41::GL_TRUE}.
      *
      * @see http://docs.gl/gl4/glCreateShaderProgram
      * @since 4.1
@@ -300,12 +271,14 @@ class GL41 extends GL40
         foreach ($strings as $i => $v) {
             $stringsCType[$i] = Util::charPtr($v);
         }
-        $__proc = $this->getProcAs('glCreateShaderProgramv', 'GLuint (*)(GLenum type, GLsizei count, const GLchar *const *strings)');
+        $__proc = $this->proc('glCreateShaderProgramv',
+            'GLuint (*)(GLenum type, GLsizei count, const GLchar *const *strings)');
+
         return $__proc($type, $count, $stringsCType);
     }
 
     /**
-     * {@see GL46::glDeleteProgramPipelines} deletes the $n program pipeline objects whose names are stored in the
+     * {@see GL41::deleteProgramPipelines} deletes the $n program pipeline objects whose names are stored in the
      * array $pipelines. Unused names in $pipelines are ignored, as is the name zero. After a program pipeline object
      * is deleted, its name is again unused and it has no contents. If program pipeline object that is currently
      * bound is deleted, the binding for that object reverts to zero and no program pipeline object becomes current.
@@ -313,12 +286,12 @@ class GL41 extends GL40
      * @see http://docs.gl/gl4/glDeleteProgramPipelines
      * @since 4.1
      * @param int $n
-     * @param \FFI\CData|null $pipelines
+     * @param CData|null $pipelines
      * @return void
      */
-    public function deleteProgramPipelines(int $n, ?\FFI\CData $pipelines): void
+    public function deleteProgramPipelines(int $n, ?CData $pipelines): void
     {
-        $__proc = $this->getProcAs('glDeleteProgramPipelines', 'void (*)(GLsizei n, const GLuint *pipelines)');
+        $__proc = $this->proc('glDeleteProgramPipelines', 'void (*)(GLsizei n, const GLuint *pipelines)');
         $__proc($n, $pipelines);
     }
 
@@ -327,13 +300,13 @@ class GL41 extends GL40
      * clipping planes. Each viewport has an independent depth range specified as a linear mapping of the normalized
      * depth coordinates in this range to window depth coordinates. Regardless of the actual depth buffer
      * implementation, window coordinate depth values are treated as though they range from 0 through 1 (like color
-     * components). {@see GL46::glDepthRangeArray} specifies a linear mapping of the normalized depth coordinates in
+     * components). {@see GL41::depthRangeArray} specifies a linear mapping of the normalized depth coordinates in
      * this range to window depth coordinates for each viewport in the range [$first, $first + $count). Thus, the
-     * values accepted by {@see GL46::glDepthRangeArray} are both clamped to this range before they are accepted.
+     * values accepted by {@see GL41::depthRangeArray} are both clamped to this range before they are accepted.
      *
      * The $first parameter specifies the index of the first viewport whose depth range to modify and must be less
-     * than the value of {@see GL46::GL_MAX_VIEWPORTS}. $count specifies the number of viewports whose depth range to
-     * modify. $first + $count must be less than or equal to the value of {@see GL46::GL_MAX_VIEWPORTS}. $v specifies
+     * than the value of {@see GL41::GL_MAX_VIEWPORTS}. $count specifies the number of viewports whose depth range to
+     * modify. $first + $count must be less than or equal to the value of {@see GL41::GL_MAX_VIEWPORTS}. $v specifies
      * the address of an array of pairs of double precision floating point values representing the near and far
      * values of the depth range for each viewport, in that order.
      *
@@ -344,12 +317,12 @@ class GL41 extends GL40
      * @since 4.1
      * @param int $first
      * @param int $count
-     * @param \FFI\CData|null $v
+     * @param CData|null $v
      * @return void
      */
-    public function depthRangeArrayv(int $first, int $count, ?\FFI\CData $v): void
+    public function depthRangeArrayv(int $first, int $count, ?CData $v): void
     {
-        $__proc = $this->getProcAs('glDepthRangeArrayv', 'void (*)(GLuint first, GLsizei count, const GLdouble *v)');
+        $__proc = $this->proc('glDepthRangeArrayv', 'void (*)(GLuint first, GLsizei count, const GLdouble *v)');
         $__proc($first, $count, $v);
     }
 
@@ -358,12 +331,12 @@ class GL41 extends GL40
      * clipping planes. Each viewport has an independent depth range specified as a linear mapping of the normalized
      * depth coordinates in this range to window depth coordinates. Regardless of the actual depth buffer
      * implementation, window coordinate depth values are treated as though they range from 0 through 1 (like color
-     * components). {@see GL46::glDepthRangeIndexed} specifies a linear mapping of the normalized depth coordinates
+     * components). {@see GL41::depthRangeIndexed} specifies a linear mapping of the normalized depth coordinates
      * in this range to window depth coordinates for a specified viewport. Thus, the values accepted by
-     * {@see GL46::glDepthRangeIndexed} are both clamped to this range before they are accepted.
+     * {@see GL41::depthRangeIndexed} are both clamped to this range before they are accepted.
      *
      * The $index parameter specifies the index of first viewport whose depth range to modify and must be less than
-     * the value of {@see GL46::GL_MAX_VIEWPORTS}. $nearVal and $farVal specify near and far values of the depth
+     * the value of {@see GL41::GL_MAX_VIEWPORTS}. $nearVal and $farVal specify near and far values of the depth
      * range for the specified viewport, respectively.
      *
      * The setting of (0,1) maps the near plane to 0 and the far plane to 1. With this mapping, the depth buffer
@@ -378,16 +351,16 @@ class GL41 extends GL40
      */
     public function depthRangeIndexed(int $index, float $n, float $f): void
     {
-        $__proc = $this->getProcAs('glDepthRangeIndexed', 'void (*)(GLuint index, GLdouble n, GLdouble f)');
+        $__proc = $this->proc('glDepthRangeIndexed', 'void (*)(GLuint index, GLdouble n, GLdouble f)');
         $__proc($index, $n, $f);
     }
 
     /**
      * After clipping and division by w, depth coordinates range from   -1  to 1, corresponding to the near and far
-     * clipping planes. {@see GL46::glDepthRange} specifies a linear mapping of the normalized depth coordinates in
+     * clipping planes. {@see GL41::depthRange} specifies a linear mapping of the normalized depth coordinates in
      * this range to window depth coordinates. Regardless of the actual depth buffer implementation, window
      * coordinate depth values are treated as though they range from 0 through 1 (like color components). Thus, the
-     * values accepted by {@see GL46::glDepthRange} are both clamped to this range before they are accepted.
+     * values accepted by {@see GL41::depthRange} are both clamped to this range before they are accepted.
      *
      * The setting of (0,1) maps the near plane to 0 and the far plane to 1. With this mapping, the depth buffer
      * range is fully utilized.
@@ -401,13 +374,13 @@ class GL41 extends GL40
      */
     public function depthRangef(float $n, float $f): void
     {
-        $__proc = $this->getProcAs('glDepthRangef', 'void (*)(GLfloat n, GLfloat f)');
+        $__proc = $this->proc('glDepthRangef', 'void (*)(GLfloat n, GLfloat f)');
         $__proc($n, $f);
     }
 
     /**
-     * {@see GL46::glGenProgramPipelines} returns $n previously unused program pipeline object names in $pipelines.
-     * These names are marked as used, for the purposes of {@see GL46::glGenProgramPipelines} only, but they acquire
+     * {@see GL41::genProgramPipelines} returns $n previously unused program pipeline object names in $pipelines.
+     * These names are marked as used, for the purposes of {@see GL41::genProgramPipelines} only, but they acquire
      * program pipeline state only when they are first bound.
      *
      * @see http://docs.gl/gl4/glGenProgramPipelines
@@ -420,7 +393,7 @@ class GL41 extends GL40
     {
         $pipelinesCType = $this->info->ffi->new('GLuint', false);
         try {
-            $__proc = $this->getProcAs('glGenProgramPipelines', 'void (*)(GLsizei n, GLuint *pipelines)');
+            $__proc = $this->proc('glGenProgramPipelines', 'void (*)(GLsizei n, GLuint *pipelines)');
             $__proc($n, \FFI::addr($pipelinesCType));
         } finally {
             $pipelines = $pipelinesCType->cdata;
@@ -429,12 +402,12 @@ class GL41 extends GL40
     }
 
     /**
-     * {@see GL46::glGetQueryiv} returns in $params a selected parameter of the query object target specified by
+     * {@see GL41::getQueryiv} returns in $params a selected parameter of the query object target specified by
      * $target.
      *
-     * $pname names a specific query object target parameter. When $pname is {@see GL46::GL_CURRENT_QUERY}, the name
+     * $pname names a specific query object target parameter. When $pname is {@see GL41::GL_CURRENT_QUERY}, the name
      * of the currently active query for $target, or zero if no query is active, will be placed in $params. If $pname
-     * is {@see GL46::GL_QUERY_COUNTER_BITS}, the implementation-dependent number of bits used to hold the result of
+     * is {@see GL41::GL_QUERY_COUNTER_BITS}, the implementation-dependent number of bits used to hold the result of
      * queries for $target is returned in $params.
      *
      * @see http://docs.gl/gl2/glGetPointerv
@@ -451,7 +424,7 @@ class GL41 extends GL40
     {
         $dataCType = $this->info->ffi->new('GLdouble', false);
         try {
-            $__proc = $this->getProcAs('glGetDoublei_v', 'void (*)(GLenum target, GLuint index, GLdouble *data)');
+            $__proc = $this->proc('glGetDoublei_v', 'void (*)(GLenum target, GLuint index, GLdouble *data)');
             $__proc($target, $index, \FFI::addr($dataCType));
         } finally {
             $data = $dataCType->cdata;
@@ -460,12 +433,12 @@ class GL41 extends GL40
     }
 
     /**
-     * {@see GL46::glGetQueryiv} returns in $params a selected parameter of the query object target specified by
+     * {@see GL41::getQueryiv} returns in $params a selected parameter of the query object target specified by
      * $target.
      *
-     * $pname names a specific query object target parameter. When $pname is {@see GL46::GL_CURRENT_QUERY}, the name
+     * $pname names a specific query object target parameter. When $pname is {@see GL41::GL_CURRENT_QUERY}, the name
      * of the currently active query for $target, or zero if no query is active, will be placed in $params. If $pname
-     * is {@see GL46::GL_QUERY_COUNTER_BITS}, the implementation-dependent number of bits used to hold the result of
+     * is {@see GL41::GL_QUERY_COUNTER_BITS}, the implementation-dependent number of bits used to hold the result of
      * queries for $target is returned in $params.
      *
      * @see http://docs.gl/gl2/glGetPointerv
@@ -482,7 +455,7 @@ class GL41 extends GL40
     {
         $dataCType = $this->info->ffi->new('GLfloat', false);
         try {
-            $__proc = $this->getProcAs('glGetFloati_v', 'void (*)(GLenum target, GLuint index, GLfloat *data)');
+            $__proc = $this->proc('glGetFloati_v', 'void (*)(GLenum target, GLuint index, GLfloat *data)');
             $__proc($target, $index, \FFI::addr($dataCType));
         } finally {
             $data = $dataCType->cdata;
@@ -491,7 +464,7 @@ class GL41 extends GL40
     }
 
     /**
-     * {@see GL46::glGetProgramBinary} returns a binary representation of the compiled and linked executable for
+     * {@see GL41::getProgramBinary} returns a binary representation of the compiled and linked executable for
      * $program into the array of bytes whose address is specified in $binary. The maximum number of bytes that may
      * be written into $binary is specified by $bufSize. If the program binary is greater in size than $bufSize
      * bytes, then an error is generated, otherwise the actual number of bytes written into $binary is returned in
@@ -499,8 +472,8 @@ class GL41 extends GL40
      *
      * The format of the program binary written into $binary is returned in the variable whose address is given by
      * $binaryFormat, and may be implementation dependent. The binary produced by the GL may subsequently be returned
-     * to the GL by calling {@see GL46::glProgramBinary}, with $binaryFormat and $length set to the values returned
-     * by {@see GL46::glGetProgramBinary}, and passing the returned binary data in the $binary parameter.
+     * to the GL by calling {@see GL41::programBinary}, with $binaryFormat and $length set to the values returned
+     * by {@see GL41::getProgramBinary}, and passing the returned binary data in the $binary parameter.
      *
      * @see http://docs.gl/gl4/glGetProgramBinary
      * @since 4.1
@@ -508,16 +481,22 @@ class GL41 extends GL40
      * @param int $bufSize
      * @param int|null $length
      * @param int|null $binaryFormat
-     * @param \FFI\CData|null $binary
+     * @param CData|null $binary
      * @return void
      */
-    public function getProgramBinary(int $program, int $bufSize, ?int &$length, ?int &$binaryFormat, ?\FFI\CData $binary): void
-    {
+    public function getProgramBinary(
+        int $program,
+        int $bufSize,
+        ?int &$length,
+        ?int &$binaryFormat,
+        ?CData $binary
+    ): void {
         $lengthCType = $this->info->ffi->new('GLsizei', false);
         $binaryFormatCType = $this->info->ffi->new('GLenum', false);
 
         try {
-            $__proc = $this->getProcAs('glGetProgramBinary', 'void (*)(GLuint program, GLsizei bufSize, GLsizei *length, GLenum *binaryFormat, void *binary)');
+            $__proc = $this->proc('glGetProgramBinary',
+                'void (*)(GLuint program, GLsizei bufSize, GLsizei *length, GLenum *binaryFormat, void *binary)');
             $__proc($program, $bufSize, \FFI::addr($lengthCType), \FFI::addr($binaryFormatCType), $binary);
         } finally {
             $length = $lengthCType->cdata;
@@ -528,14 +507,14 @@ class GL41 extends GL40
     }
 
     /**
-     * {@see GL46::glGetProgramPipelineInfoLog} retrieves the info log for the program pipeline object $pipeline. The
+     * {@see GL41::getProgramPipelineInfoLog} retrieves the info log for the program pipeline object $pipeline. The
      * info log, including its null terminator, is written into the array of characters whose address is given by
      * $infoLog. The maximum number of characters that may be written into $infoLog is given by $bufSize, and the
      * actual number of characters written into $infoLog is returned in the integer whose address is given by
      * $length. If $length is {@see GL46::NULL}, no length is returned.
      *
      * The actual length of the info log for the program pipeline may be determined by calling
-     * {@see GL46::glGetProgramPipeline} with $pname set to {@see GL46::GL_INFO_LOG_LENGTH}.
+     * {@see GL41::getProgramPipeline} with $pname set to {@see GL41::GL_INFO_LOG_LENGTH}.
      *
      * @see http://docs.gl/gl4/glGetProgramPipelineInfoLog
      * @since 4.1
@@ -550,7 +529,8 @@ class GL41 extends GL40
         $lengthCType = $this->info->ffi->new('GLsizei', false);
         $infoLogCType = \FFI::addr($this->info->ffi->new('GLchar[' . $bufSize . ']', false)[0]);
         try {
-            $__proc = $this->getProcAs('glGetProgramPipelineInfoLog', 'void (*)(GLuint pipeline, GLsizei bufSize, GLsizei *length, GLchar *infoLog)');
+            $__proc = $this->proc('glGetProgramPipelineInfoLog',
+                'void (*)(GLuint pipeline, GLsizei bufSize, GLsizei *length, GLchar *infoLog)');
             $__proc($pipeline, $bufSize, \FFI::addr($lengthCType), $infoLogCType);
         } finally {
             $length = $lengthCType->cdata;
@@ -561,29 +541,29 @@ class GL41 extends GL40
     }
 
     /**
-     * {@see GL46::glGetProgramPipelineiv} retrieves the value of a property of the program pipeline object
+     * {@see GL41::getProgramPipelineiv} retrieves the value of a property of the program pipeline object
      * $pipeline. $pname specifies the name of the parameter whose value to retrieve. The value of the parameter is
      * written to the variable whose address is given by $params.
      *
-     * If $pname is {@see GL46::GL_ACTIVE_PROGRAM}, the name of the active program object of the program pipeline
+     * If $pname is {@see GL41::GL_ACTIVE_PROGRAM}, the name of the active program object of the program pipeline
      * object is returned in $params.
      *
-     * If $pname is {@see GL46::GL_VERTEX_SHADER}, the name of the current program object for the vertex shader type
+     * If $pname is {@see GL41::GL_VERTEX_SHADER}, the name of the current program object for the vertex shader type
      * of the program pipeline object is returned in $params.
      *
-     * If $pname is {@see GL46::GL_TESS_CONTROL_SHADER}, the name of the current program object for the tessellation
+     * If $pname is {@see GL41::GL_TESS_CONTROL_SHADER}, the name of the current program object for the tessellation
      * control shader type of the program pipeline object is returned in $params.
      *
-     * If $pname is {@see GL46::GL_TESS_EVALUATION_SHADER}, the name of the current program object for the
+     * If $pname is {@see GL41::GL_TESS_EVALUATION_SHADER}, the name of the current program object for the
      * tessellation evaluation shader type of the program pipeline object is returned in $params.
      *
-     * If $pname is {@see GL46::GL_GEOMETRY_SHADER}, the name of the current program object for the geometry shader
+     * If $pname is {@see GL41::GL_GEOMETRY_SHADER}, the name of the current program object for the geometry shader
      * type of the program pipeline object is returned in $params.
      *
-     * If $pname is {@see GL46::GL_FRAGMENT_SHADER}, the name of the current program object for the fragment shader
+     * If $pname is {@see GL41::GL_FRAGMENT_SHADER}, the name of the current program object for the fragment shader
      * type of the program pipeline object is returned in $params.
      *
-     * If $pname is {@see GL46::GL_INFO_LOG_LENGTH}, the length of the info log, including the null terminator, is
+     * If $pname is {@see GL41::GL_INFO_LOG_LENGTH}, the length of the info log, including the null terminator, is
      * returned in $params. If there is no info log, zero is returned.
      *
      * @see http://docs.gl/gl4/glGetProgramPipeline
@@ -597,7 +577,8 @@ class GL41 extends GL40
     {
         $paramsCType = $this->info->ffi->new('GLint', false);
         try {
-            $__proc = $this->getProcAs('glGetProgramPipelineiv', 'void (*)(GLuint pipeline, GLenum pname, GLint *params)');
+            $__proc = $this->proc('glGetProgramPipelineiv',
+                'void (*)(GLuint pipeline, GLenum pname, GLint *params)');
             $__proc($pipeline, $pname, \FFI::addr($paramsCType));
         } finally {
             $params = $paramsCType->cdata;
@@ -606,12 +587,12 @@ class GL41 extends GL40
     }
 
     /**
-     * {@see GL46::glGetShaderPrecisionFormat} retrieves the numeric range and precision for the implementation's
+     * {@see GL41::getShaderPrecisionFormat} retrieves the numeric range and precision for the implementation's
      * representation of quantities in different numeric formats in specified shader type. $shaderType specifies the
      * type of shader for which the numeric precision and range is to be retrieved and must be one of
-     * {@see GL46::GL_VERTEX_SHADER} or {@see GL46::GL_FRAGMENT_SHADER}. $precisionType specifies the numeric format
-     * to query and must be one of {@see GL46::GL_LOW_FLOAT}, {@see GL46::GL_MEDIUM_FLOAT}
-     * {@see GL46::GL_HIGH_FLOAT}, {@see GL46::GL_LOW_INT}, {@see GL46::GL_MEDIUM_INT}, or {@see GL46::GL_HIGH_INT}.
+     * {@see GL41::GL_VERTEX_SHADER} or {@see GL41::GL_FRAGMENT_SHADER}. $precisionType specifies the numeric format
+     * to query and must be one of {@see GL41::GL_LOW_FLOAT}, {@see GL41::GL_MEDIUM_FLOAT}
+     * {@see GL41::GL_HIGH_FLOAT}, {@see GL41::GL_LOW_INT}, {@see GL41::GL_MEDIUM_INT}, or {@see GL41::GL_HIGH_INT}.
      *
      * $range points to an array of two integers into which the format's numeric range will be returned. If min and
      * max are the smallest values representable in the format, then the values returned are defined to be: $range[0]
@@ -634,7 +615,8 @@ class GL41 extends GL40
         $rangeCType = $this->info->ffi->new('GLint', false);
         $precisionCType = $this->info->ffi->new('GLint', false);
         try {
-            $__proc = $this->getProcAs('glGetShaderPrecisionFormat', 'void (*)(GLenum shadertype, GLenum precisiontype, GLint *range, GLint *precision)');
+            $__proc = $this->proc('glGetShaderPrecisionFormat',
+                'void (*)(GLenum shadertype, GLenum precisiontype, GLint *range, GLint *precision)');
             $__proc($shadertype, $precisiontype, \FFI::addr($rangeCType), \FFI::addr($precisionCType));
         } finally {
             $range = $rangeCType->cdata;
@@ -645,101 +627,101 @@ class GL41 extends GL40
     }
 
     /**
-     * {@see GL46::glGetVertexAttrib} returns in $params the value of a generic vertex attribute parameter. The
+     * {@see GL41::getVertexAttrib} returns in $params the value of a generic vertex attribute parameter. The
      * generic vertex attribute to be queried is specified by $index, and the parameter to be queried is specified by
      * $pname.
      *
      * The accepted parameter names are as follows:
      *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING}: $params returns a
+     *  - {@see GL41::GL_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING}: $params returns a
      *    single value, the name of the buffer object currently bound to the
      *    binding point
      *    corresponding to generic vertex attribute array $index. If no buffer
      *    object is bound, 0 is returned. The
      *    initial value is 0.
      *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_ENABLED}: $params returns a single
+     *  - {@see GL41::GL_VERTEX_ATTRIB_ARRAY_ENABLED}: $params returns a single
      *    value that is non-zero (true) if the vertex attribute array for $index
      *    is enabled
      *    and 0 (false) if it is disabled. The initial value is {@see
-     *    GL46::GL_FALSE}.
+     *    GL41::GL_FALSE}.
      *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_SIZE}: $params returns a single
+     *  - {@see GL41::GL_VERTEX_ATTRIB_ARRAY_SIZE}: $params returns a single
      *    value, the size of the vertex attribute array for $index. The size is
      *    the number
      *    of values for each element of the vertex attribute array, and it will
      *    be 1, 2, 3, or 4. The initial value is
      *    4.
      *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_STRIDE}: $params returns a single
+     *  - {@see GL41::GL_VERTEX_ATTRIB_ARRAY_STRIDE}: $params returns a single
      *    value, the array stride for (number of bytes between successive
      *    elements in) the
      *    vertex attribute array for $index. A value of 0 indicates that the
      *    array elements are stored sequentially in
      *    memory. The initial value is 0.
      *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_TYPE}: $params returns a single
+     *  - {@see GL41::GL_VERTEX_ATTRIB_ARRAY_TYPE}: $params returns a single
      *    value, a symbolic constant indicating the array type for the vertex
      *    attribute
-     *    array for $index. Possible values are {@see GL46::GL_BYTE}, {@see
-     *    GL46::GL_UNSIGNED_BYTE},
-     *    {@see GL46::GL_SHORT}, {@see GL46::GL_UNSIGNED_SHORT}, {@see
-     *    GL46::GL_INT}, {@see GL46::GL_UNSIGNED_INT},
-     *    {@see GL46::GL_FLOAT}, and {@see GL46::GL_DOUBLE}. The initial value
-     *    is {@see GL46::GL_FLOAT}.
+     *    array for $index. Possible values are {@see GL41::GL_BYTE}, {@see
+     *    GL41::GL_UNSIGNED_BYTE},
+     *    {@see GL41::GL_SHORT}, {@see GL41::GL_UNSIGNED_SHORT}, {@see
+     *    GL41::GL_INT}, {@see GL41::GL_UNSIGNED_INT},
+     *    {@see GL41::GL_FLOAT}, and {@see GL41::GL_DOUBLE}. The initial value
+     *    is {@see GL41::GL_FLOAT}.
      *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_NORMALIZED}: $params returns a
+     *  - {@see GL41::GL_VERTEX_ATTRIB_ARRAY_NORMALIZED}: $params returns a
      *    single value that is non-zero (true) if fixed-point data types for the
      *    vertex attribute
      *    array indicated by $index are normalized when they are converted to
      *    floating point, and 0 (false) otherwise.
-     *    The initial value is {@see GL46::GL_FALSE}.
+     *    The initial value is {@see GL41::GL_FALSE}.
      *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_INTEGER}: $params returns a single
+     *  - {@see GL41::GL_VERTEX_ATTRIB_ARRAY_INTEGER}: $params returns a single
      *    value that is non-zero (true) if fixed-point data types for the vertex
      *    attribute
      *    array indicated by $index have integer data types, and 0 (false)
      *    otherwise. The initial value is 0
-     *    ({@see GL46::GL_FALSE}).
+     *    ({@see GL41::GL_FALSE}).
      *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_LONG}: $param returns a single
+     *  - {@see GL41::GL_VERTEX_ATTRIB_ARRAY_LONG}: $param returns a single
      *    value that is non-zero (true) if a vertex attribute is stored as an
      *    unconverted
      *    double, and 0 (false) otherwise. The initial value is 0 ({@see
-     *    GL46::GL_FALSE}).
+     *    GL41::GL_FALSE}).
      *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_DIVISOR}: $params returns a single
+     *  - {@see GL41::GL_VERTEX_ATTRIB_ARRAY_DIVISOR}: $params returns a single
      *    value that is the frequency divisor used for instanced rendering. See
-     *    {@see GL46::glVertexAttribDivisor}. The initial value is 0.
+     *    {@see GL41::vertexAttribDivisor}. The initial value is 0.
      *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_BINDING}: $params returns a single value,
+     *  - {@see GL41::GL_VERTEX_ATTRIB_BINDING}: $params returns a single value,
      *    the vertex buffer binding of the vertex attribute array $index.
      *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_RELATIVE_OFFSET}: $params returns a
+     *  - {@see GL41::GL_VERTEX_ATTRIB_RELATIVE_OFFSET}: $params returns a
      *    single value that is the byte offset of the first element relative to
      *    the start of the
      *    vertex buffer binding specified attribute fetches from. The initial
      *    value is 0.
      *
-     *  - {@see GL46::GL_CURRENT_VERTEX_ATTRIB}: $params returns four values
+     *  - {@see GL41::GL_CURRENT_VERTEX_ATTRIB}: $params returns four values
      *    that represent the current value for the generic vertex attribute
      *    specified by
      *    index. Generic vertex attribute 0 is unique in that it has no current
      *    state, so an error will be generated if
      *    $index is 0. The initial value for all other generic vertex attributes
      *    is (0,0,0,1).
-     *    {@see GL46::glGetVertexAttribdv} and {@see GL46::glGetVertexAttribfv}
+     *    {@see GL41::getVertexAttribdv} and {@see GL41::getVertexAttribfv}
      *    return the current attribute values as
      *    four single-precision floating-point values; {@see
-     *    GL46::glGetVertexAttribiv} reads them as floating-point
+     *    GL41::getVertexAttribiv} reads them as floating-point
      *    values and converts them to four integer values; {@see
-     *    GL46::glGetVertexAttribIiv} and
-     *    {@see GL46::glGetVertexAttribIuiv} read and return them as signed or
+     *    GL41::getVertexAttribIiv} and
+     *    {@see GL41::getVertexAttribIuiv} read and return them as signed or
      *    unsigned integer values, respectively;
-     *    {@see GL46::glGetVertexAttribLdv} reads and returns them as four
+     *    {@see GL41::getVertexAttribLdv} reads and returns them as four
      *    double-precision floating-point values.
      *
-     * All of the parameters except {@see GL46::GL_CURRENT_VERTEX_ATTRIB} represent state stored in the currently
+     * All of the parameters except {@see GL41::GL_CURRENT_VERTEX_ATTRIB} represent state stored in the currently
      * bound vertex array object.
      *
      * @see http://docs.gl/gl2/glGetVertexAttrib
@@ -754,7 +736,8 @@ class GL41 extends GL40
     {
         $paramsCType = $this->info->ffi->new('GLdouble', false);
         try {
-            $__proc = $this->getProcAs('glGetVertexAttribLdv', 'void (*)(GLuint index, GLenum pname, GLdouble *params)');
+            $__proc = $this->proc('glGetVertexAttribLdv',
+                'void (*)(GLuint index, GLenum pname, GLdouble *params)');
             $__proc($index, $pname, \FFI::addr($paramsCType));
         } finally {
             $params = $paramsCType->cdata;
@@ -763,12 +746,12 @@ class GL41 extends GL40
     }
 
     /**
-     * {@see GL46::glIsProgramPipeline} returns {@see GL46::GL_TRUE} if $pipeline is currently the name of a program
+     * {@see GL41::isProgramPipeline} returns {@see GL41::GL_TRUE} if $pipeline is currently the name of a program
      * pipeline object. If $pipeline is zero, or if {@see GL46::pipeline} is not the name of a program pipeline
-     * object, or if an error occurs, {@see GL46::glIsProgramPipeline} returns {@see GL46::GL_FALSE}. If $pipeline is
-     * a name returned by {@see GL46::glGenProgramPipelines}, but that has not yet been bound through a call to
-     * {@see GL46::glBindProgramPipeline}, then the name is not a program pipeline object and
-     * {@see GL46::glIsProgramPipeline} returns {@see GL46::GL_FALSE}.
+     * object, or if an error occurs, {@see GL41::isProgramPipeline} returns {@see GL41::GL_FALSE}. If $pipeline is
+     * a name returned by {@see GL41::genProgramPipelines}, but that has not yet been bound through a call to
+     * {@see GL41::bindProgramPipeline}, then the name is not a program pipeline object and
+     * {@see GL41::isProgramPipeline} returns {@see GL41::GL_FALSE}.
      *
      * @see http://docs.gl/gl4/glIsProgramPipeline
      * @since 4.1
@@ -777,61 +760,63 @@ class GL41 extends GL40
      */
     public function isProgramPipeline(int $pipeline): bool
     {
-        $__proc = $this->getProcAs('glIsProgramPipeline', 'GLboolean (*)(GLuint pipeline)');
+        $__proc = $this->proc('glIsProgramPipeline', 'GLboolean (*)(GLuint pipeline)');
+
         return $__proc($pipeline) !== 0;
     }
 
     /**
-     * {@see GL46::glProgramBinary} loads a program object with a program binary previously returned from
-     * {@see GL46::glGetProgramBinary}. $binaryFormat and $binary must be those returned by a previous call to
-     * {@see GL46::glGetProgramBinary}, and $length must be the length returned by {@see GL46::glGetProgramBinary},
-     * or by {@see GL46::glGetProgram} when called with $pname set to {@see GL46::GL_PROGRAM_BINARY_LENGTH}. If these
-     * conditions are not met, loading the program binary will fail and $program's {@see GL46::GL_LINK_STATUS} will
-     * be set to {@see GL46::GL_FALSE}.
+     * {@see GL41::programBinary} loads a program object with a program binary previously returned from
+     * {@see GL41::getProgramBinary}. $binaryFormat and $binary must be those returned by a previous call to
+     * {@see GL41::getProgramBinary}, and $length must be the length returned by {@see GL41::getProgramBinary},
+     * or by {@see GL41::getProgram} when called with $pname set to {@see GL41::GL_PROGRAM_BINARY_LENGTH}. If these
+     * conditions are not met, loading the program binary will fail and $program's {@see GL41::GL_LINK_STATUS} will
+     * be set to {@see GL41::GL_FALSE}.
      *
-     * A program object's program binary is replaced by calls to {@see GL46::glLinkProgram} or
-     * {@see GL46::glProgramBinary}. When linking success or failure is concerned, {@see GL46::glProgramBinary} can
-     * be considered to perform an implicit linking operation. {@see GL46::glLinkProgram} and
-     * {@see GL46::glProgramBinary} both set the program object's {@see GL46::GL_LINK_STATUS} to {@see GL46::GL_TRUE}
-     * or {@see GL46::GL_FALSE}.
+     * A program object's program binary is replaced by calls to {@see GL41::linkProgram} or
+     * {@see GL41::programBinary}. When linking success or failure is concerned, {@see GL41::programBinary} can
+     * be considered to perform an implicit linking operation. {@see GL41::linkProgram} and
+     * {@see GL41::programBinary} both set the program object's {@see GL41::GL_LINK_STATUS} to {@see GL41::GL_TRUE}
+     * or {@see GL41::GL_FALSE}.
      *
-     * A successful call to {@see GL46::glProgramBinary} will reset all uniform variables to their initial values.
+     * A successful call to {@see GL41::programBinary} will reset all uniform variables to their initial values.
      * The initial value is either the value of the variable's initializer as specified in the original shader
      * source, or zero if no initializer was present. Additionally, all vertex shader input and fragment shader
      * output assignments that were in effect when the program was linked before saving are restored with
-     * {@see GL46::glProgramBinary} is called.
+     * {@see GL41::programBinary} is called.
      *
      * @see http://docs.gl/gl4/glProgramBinary
      * @since 4.1
      * @param int $program
      * @param int $binaryFormat
-     * @param \FFI\CData|null $binary
+     * @param CData|null $binary
      * @param int $length
      * @return void
      */
-    public function programBinary(int $program, int $binaryFormat, ?\FFI\CData $binary, int $length): void
+    public function programBinary(int $program, int $binaryFormat, ?CData $binary, int $length): void
     {
-        $__proc = $this->getProcAs('glProgramBinary', 'void (*)(GLuint program, GLenum binaryFormat, const void *binary, GLsizei length)');
+        $__proc = $this->proc('glProgramBinary',
+            'void (*)(GLuint program, GLenum binaryFormat, const void *binary, GLsizei length)');
         $__proc($program, $binaryFormat, $binary, $length);
     }
 
     /**
-     * {@see GL46::glProgramParameter} specifies a new value for the parameter nameed by $pname for the program
+     * {@see GL41::programParameter} specifies a new value for the parameter nameed by $pname for the program
      * object $program.
      *
-     * If $pname is {@see GL46::GL_PROGRAM_BINARY_RETRIEVABLE_HINT}, $value should be {@see GL46::GL_FALSE} or
-     * {@see GL46::GL_TRUE} to indicate to the implementation the intention of the application to retrieve the
-     * program's binary representation with {@see GL46::glGetProgramBinary}. The implementation may use this
+     * If $pname is {@see GL41::GL_PROGRAM_BINARY_RETRIEVABLE_HINT}, $value should be {@see GL41::GL_FALSE} or
+     * {@see GL41::GL_TRUE} to indicate to the implementation the intention of the application to retrieve the
+     * program's binary representation with {@see GL41::getProgramBinary}. The implementation may use this
      * information to store information that may be useful for a future query of the program's binary. It is
-     * recommended to set {@see GL46::GL_PROGRAM_BINARY_RETRIEVABLE_HINT} for the program to {@see GL46::GL_TRUE}
-     * before calling {@see GL46::glLinkProgram}, and using the program at run-time if the binary is to be retrieved
+     * recommended to set {@see GL41::GL_PROGRAM_BINARY_RETRIEVABLE_HINT} for the program to {@see GL41::GL_TRUE}
+     * before calling {@see GL41::linkProgram}, and using the program at run-time if the binary is to be retrieved
      * later.
      *
-     * If $pname is {@see GL46::GL_PROGRAM_SEPARABLE}, $value must be {@see GL46::GL_TRUE} or {@see GL46::GL_FALSE}
-     * and indicates whether $program can be bound to individual pipeline stages via {@see GL46::glUseProgramStages}.
-     * A program's {@see GL46::GL_PROGRAM_SEPARABLE} parameter must be set to {@see GL46::GL_TRUE} before
-     * {@see GL46::glLinkProgram} is called in order for it to be usable with a program pipeline object. The initial
-     * state of {@see GL46::GL_PROGRAM_SEPARABLE} is {@see GL46::GL_FALSE}.
+     * If $pname is {@see GL41::GL_PROGRAM_SEPARABLE}, $value must be {@see GL41::GL_TRUE} or {@see GL41::GL_FALSE}
+     * and indicates whether $program can be bound to individual pipeline stages via {@see GL41::useProgramStages}.
+     * A program's {@see GL41::GL_PROGRAM_SEPARABLE} parameter must be set to {@see GL41::GL_TRUE} before
+     * {@see GL41::linkProgram} is called in order for it to be usable with a program pipeline object. The initial
+     * state of {@see GL41::GL_PROGRAM_SEPARABLE} is {@see GL41::GL_FALSE}.
      *
      * @see http://docs.gl/gl4/glProgramParameter
      * @since 4.1
@@ -842,17 +827,17 @@ class GL41 extends GL40
      */
     public function programParameteri(int $program, int $pname, int $value): void
     {
-        $__proc = $this->getProcAs('glProgramParameteri', 'void (*)(GLuint program, GLenum pname, GLint value)');
+        $__proc = $this->proc('glProgramParameteri', 'void (*)(GLuint program, GLenum pname, GLint value)');
         $__proc($program, $pname, $value);
     }
 
     /**
-     * {@see GL46::glProgramUniform} modifies the value of a uniform variable or a uniform variable array. The
+     * {@see GL41::programUniform} modifies the value of a uniform variable or a uniform variable array. The
      * location of the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glProgramUniform} operates on the program object specified by
+     * {@see GL41::getUniformLocation}. {@see GL41::programUniform} operates on the program object specified by
      * $program.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
      * variable specified by $location using the values passed as arguments. The number specified in the command
      * should match the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1}
      * for `float`, `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The
@@ -869,10 +854,10 @@ class GL41 extends GL40
      * set to `true` otherwise.
      *
      * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glProgramUniform} until
+     * linked successfully. They retain the values assigned to them by a call to {@see GL41::programUniform} until
      * the next successful link operation occurs on the program object, when they are once again initialized to 0.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
      * or a uniform variable array. These commands pass a count and a pointer to the values to be loaded into a
      * uniform variable or a uniform variable array. A count of 1 should be used if modifying the value of a single
      * uniform variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When
@@ -883,21 +868,21 @@ class GL41 extends GL40
      * number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
      * `int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `bvec2`, etc.). The data type specified in the name of the
      * command must match the data type for the specified uniform variable as described previously for
-     * {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}}.
+     * {@see GL41::programUniform{1|2|3|4}{f|i|ui}}.
      *
      * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glProgramUniform3f} or {@see GL46::glProgramUniform3fv} can be used to load
+     * of the command (e.g., {@see GL41::programUniform3f} or {@see GL41::programUniform3fv} can be used to load
      * a uniform variable array of type vec3). The number of elements of the uniform variable array to be modified is
      * specified by $count
      *
-     * The commands {@see GL46::glProgramUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
+     * The commands {@see GL41::programUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
      * or an array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix.
      * The number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3
      * × 3 matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values).
      * Non-square matrix dimensionality is explicit, with the first number representing the number of columns and the
      * second number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2
-     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be
-     * supplied in column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied
+     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL41::GL_FALSE}, each matrix is assumed to be
+     * supplied in column major order. If $transpose is {@see GL41::GL_TRUE}, each matrix is assumed to be supplied
      * in row major order. The $count argument indicates the number of matrices to be passed. A count of 1 should be
      * used if modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of
      * matrices.
@@ -911,17 +896,17 @@ class GL41 extends GL40
      */
     public function programUniform1d(int $program, int $location, float $v0): void
     {
-        $__proc = $this->getProcAs('glProgramUniform1d', 'void (*)(GLuint program, GLint location, GLdouble v0)');
+        $__proc = $this->proc('glProgramUniform1d', 'void (*)(GLuint program, GLint location, GLdouble v0)');
         $__proc($program, $location, $v0);
     }
 
     /**
-     * {@see GL46::glProgramUniform} modifies the value of a uniform variable or a uniform variable array. The
+     * {@see GL41::programUniform} modifies the value of a uniform variable or a uniform variable array. The
      * location of the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glProgramUniform} operates on the program object specified by
+     * {@see GL41::getUniformLocation}. {@see GL41::programUniform} operates on the program object specified by
      * $program.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
      * variable specified by $location using the values passed as arguments. The number specified in the command
      * should match the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1}
      * for `float`, `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The
@@ -938,10 +923,10 @@ class GL41 extends GL40
      * set to `true` otherwise.
      *
      * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glProgramUniform} until
+     * linked successfully. They retain the values assigned to them by a call to {@see GL41::programUniform} until
      * the next successful link operation occurs on the program object, when they are once again initialized to 0.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
      * or a uniform variable array. These commands pass a count and a pointer to the values to be loaded into a
      * uniform variable or a uniform variable array. A count of 1 should be used if modifying the value of a single
      * uniform variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When
@@ -952,21 +937,21 @@ class GL41 extends GL40
      * number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
      * `int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `bvec2`, etc.). The data type specified in the name of the
      * command must match the data type for the specified uniform variable as described previously for
-     * {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}}.
+     * {@see GL41::programUniform{1|2|3|4}{f|i|ui}}.
      *
      * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glProgramUniform3f} or {@see GL46::glProgramUniform3fv} can be used to load
+     * of the command (e.g., {@see GL41::programUniform3f} or {@see GL41::programUniform3fv} can be used to load
      * a uniform variable array of type vec3). The number of elements of the uniform variable array to be modified is
      * specified by $count
      *
-     * The commands {@see GL46::glProgramUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
+     * The commands {@see GL41::programUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
      * or an array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix.
      * The number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3
      * × 3 matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values).
      * Non-square matrix dimensionality is explicit, with the first number representing the number of columns and the
      * second number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2
-     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be
-     * supplied in column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied
+     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL41::GL_FALSE}, each matrix is assumed to be
+     * supplied in column major order. If $transpose is {@see GL41::GL_TRUE}, each matrix is assumed to be supplied
      * in row major order. The $count argument indicates the number of matrices to be passed. A count of 1 should be
      * used if modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of
      * matrices.
@@ -976,22 +961,23 @@ class GL41 extends GL40
      * @param int $program
      * @param int $location
      * @param int $count
-     * @param \FFI\CData|null $value
+     * @param CData|null $value
      * @return void
      */
-    public function programUniform1dv(int $program, int $location, int $count, ?\FFI\CData $value): void
+    public function programUniform1dv(int $program, int $location, int $count, ?CData $value): void
     {
-        $__proc = $this->getProcAs('glProgramUniform1dv', 'void (*)(GLuint program, GLint location, GLsizei count, const GLdouble *value)');
+        $__proc = $this->proc('glProgramUniform1dv',
+            'void (*)(GLuint program, GLint location, GLsizei count, const GLdouble *value)');
         $__proc($program, $location, $count, $value);
     }
 
     /**
-     * {@see GL46::glProgramUniform} modifies the value of a uniform variable or a uniform variable array. The
+     * {@see GL41::programUniform} modifies the value of a uniform variable or a uniform variable array. The
      * location of the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glProgramUniform} operates on the program object specified by
+     * {@see GL41::getUniformLocation}. {@see GL41::programUniform} operates on the program object specified by
      * $program.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
      * variable specified by $location using the values passed as arguments. The number specified in the command
      * should match the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1}
      * for `float`, `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The
@@ -1008,10 +994,10 @@ class GL41 extends GL40
      * set to `true` otherwise.
      *
      * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glProgramUniform} until
+     * linked successfully. They retain the values assigned to them by a call to {@see GL41::programUniform} until
      * the next successful link operation occurs on the program object, when they are once again initialized to 0.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
      * or a uniform variable array. These commands pass a count and a pointer to the values to be loaded into a
      * uniform variable or a uniform variable array. A count of 1 should be used if modifying the value of a single
      * uniform variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When
@@ -1022,21 +1008,21 @@ class GL41 extends GL40
      * number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
      * `int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `bvec2`, etc.). The data type specified in the name of the
      * command must match the data type for the specified uniform variable as described previously for
-     * {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}}.
+     * {@see GL41::programUniform{1|2|3|4}{f|i|ui}}.
      *
      * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glProgramUniform3f} or {@see GL46::glProgramUniform3fv} can be used to load
+     * of the command (e.g., {@see GL41::programUniform3f} or {@see GL41::programUniform3fv} can be used to load
      * a uniform variable array of type vec3). The number of elements of the uniform variable array to be modified is
      * specified by $count
      *
-     * The commands {@see GL46::glProgramUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
+     * The commands {@see GL41::programUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
      * or an array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix.
      * The number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3
      * × 3 matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values).
      * Non-square matrix dimensionality is explicit, with the first number representing the number of columns and the
      * second number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2
-     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be
-     * supplied in column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied
+     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL41::GL_FALSE}, each matrix is assumed to be
+     * supplied in column major order. If $transpose is {@see GL41::GL_TRUE}, each matrix is assumed to be supplied
      * in row major order. The $count argument indicates the number of matrices to be passed. A count of 1 should be
      * used if modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of
      * matrices.
@@ -1050,17 +1036,17 @@ class GL41 extends GL40
      */
     public function programUniform1f(int $program, int $location, float $v0): void
     {
-        $__proc = $this->getProcAs('glProgramUniform1f', 'void (*)(GLuint program, GLint location, GLfloat v0)');
+        $__proc = $this->proc('glProgramUniform1f', 'void (*)(GLuint program, GLint location, GLfloat v0)');
         $__proc($program, $location, $v0);
     }
 
     /**
-     * {@see GL46::glProgramUniform} modifies the value of a uniform variable or a uniform variable array. The
+     * {@see GL41::programUniform} modifies the value of a uniform variable or a uniform variable array. The
      * location of the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glProgramUniform} operates on the program object specified by
+     * {@see GL41::getUniformLocation}. {@see GL41::programUniform} operates on the program object specified by
      * $program.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
      * variable specified by $location using the values passed as arguments. The number specified in the command
      * should match the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1}
      * for `float`, `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The
@@ -1077,10 +1063,10 @@ class GL41 extends GL40
      * set to `true` otherwise.
      *
      * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glProgramUniform} until
+     * linked successfully. They retain the values assigned to them by a call to {@see GL41::programUniform} until
      * the next successful link operation occurs on the program object, when they are once again initialized to 0.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
      * or a uniform variable array. These commands pass a count and a pointer to the values to be loaded into a
      * uniform variable or a uniform variable array. A count of 1 should be used if modifying the value of a single
      * uniform variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When
@@ -1091,21 +1077,21 @@ class GL41 extends GL40
      * number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
      * `int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `bvec2`, etc.). The data type specified in the name of the
      * command must match the data type for the specified uniform variable as described previously for
-     * {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}}.
+     * {@see GL41::programUniform{1|2|3|4}{f|i|ui}}.
      *
      * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glProgramUniform3f} or {@see GL46::glProgramUniform3fv} can be used to load
+     * of the command (e.g., {@see GL41::programUniform3f} or {@see GL41::programUniform3fv} can be used to load
      * a uniform variable array of type vec3). The number of elements of the uniform variable array to be modified is
      * specified by $count
      *
-     * The commands {@see GL46::glProgramUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
+     * The commands {@see GL41::programUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
      * or an array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix.
      * The number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3
      * × 3 matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values).
      * Non-square matrix dimensionality is explicit, with the first number representing the number of columns and the
      * second number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2
-     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be
-     * supplied in column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied
+     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL41::GL_FALSE}, each matrix is assumed to be
+     * supplied in column major order. If $transpose is {@see GL41::GL_TRUE}, each matrix is assumed to be supplied
      * in row major order. The $count argument indicates the number of matrices to be passed. A count of 1 should be
      * used if modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of
      * matrices.
@@ -1115,22 +1101,23 @@ class GL41 extends GL40
      * @param int $program
      * @param int $location
      * @param int $count
-     * @param \FFI\CData|null $value
+     * @param CData|null $value
      * @return void
      */
-    public function programUniform1fv(int $program, int $location, int $count, ?\FFI\CData $value): void
+    public function programUniform1fv(int $program, int $location, int $count, ?CData $value): void
     {
-        $__proc = $this->getProcAs('glProgramUniform1fv', 'void (*)(GLuint program, GLint location, GLsizei count, const GLfloat *value)');
+        $__proc = $this->proc('glProgramUniform1fv',
+            'void (*)(GLuint program, GLint location, GLsizei count, const GLfloat *value)');
         $__proc($program, $location, $count, $value);
     }
 
     /**
-     * {@see GL46::glProgramUniform} modifies the value of a uniform variable or a uniform variable array. The
+     * {@see GL41::programUniform} modifies the value of a uniform variable or a uniform variable array. The
      * location of the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glProgramUniform} operates on the program object specified by
+     * {@see GL41::getUniformLocation}. {@see GL41::programUniform} operates on the program object specified by
      * $program.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
      * variable specified by $location using the values passed as arguments. The number specified in the command
      * should match the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1}
      * for `float`, `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The
@@ -1147,10 +1134,10 @@ class GL41 extends GL40
      * set to `true` otherwise.
      *
      * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glProgramUniform} until
+     * linked successfully. They retain the values assigned to them by a call to {@see GL41::programUniform} until
      * the next successful link operation occurs on the program object, when they are once again initialized to 0.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
      * or a uniform variable array. These commands pass a count and a pointer to the values to be loaded into a
      * uniform variable or a uniform variable array. A count of 1 should be used if modifying the value of a single
      * uniform variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When
@@ -1161,21 +1148,21 @@ class GL41 extends GL40
      * number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
      * `int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `bvec2`, etc.). The data type specified in the name of the
      * command must match the data type for the specified uniform variable as described previously for
-     * {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}}.
+     * {@see GL41::programUniform{1|2|3|4}{f|i|ui}}.
      *
      * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glProgramUniform3f} or {@see GL46::glProgramUniform3fv} can be used to load
+     * of the command (e.g., {@see GL41::programUniform3f} or {@see GL41::programUniform3fv} can be used to load
      * a uniform variable array of type vec3). The number of elements of the uniform variable array to be modified is
      * specified by $count
      *
-     * The commands {@see GL46::glProgramUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
+     * The commands {@see GL41::programUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
      * or an array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix.
      * The number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3
      * × 3 matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values).
      * Non-square matrix dimensionality is explicit, with the first number representing the number of columns and the
      * second number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2
-     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be
-     * supplied in column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied
+     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL41::GL_FALSE}, each matrix is assumed to be
+     * supplied in column major order. If $transpose is {@see GL41::GL_TRUE}, each matrix is assumed to be supplied
      * in row major order. The $count argument indicates the number of matrices to be passed. A count of 1 should be
      * used if modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of
      * matrices.
@@ -1189,17 +1176,17 @@ class GL41 extends GL40
      */
     public function programUniform1i(int $program, int $location, int $v0): void
     {
-        $__proc = $this->getProcAs('glProgramUniform1i', 'void (*)(GLuint program, GLint location, GLint v0)');
+        $__proc = $this->proc('glProgramUniform1i', 'void (*)(GLuint program, GLint location, GLint v0)');
         $__proc($program, $location, $v0);
     }
 
     /**
-     * {@see GL46::glProgramUniform} modifies the value of a uniform variable or a uniform variable array. The
+     * {@see GL41::programUniform} modifies the value of a uniform variable or a uniform variable array. The
      * location of the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glProgramUniform} operates on the program object specified by
+     * {@see GL41::getUniformLocation}. {@see GL41::programUniform} operates on the program object specified by
      * $program.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
      * variable specified by $location using the values passed as arguments. The number specified in the command
      * should match the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1}
      * for `float`, `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The
@@ -1216,10 +1203,10 @@ class GL41 extends GL40
      * set to `true` otherwise.
      *
      * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glProgramUniform} until
+     * linked successfully. They retain the values assigned to them by a call to {@see GL41::programUniform} until
      * the next successful link operation occurs on the program object, when they are once again initialized to 0.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
      * or a uniform variable array. These commands pass a count and a pointer to the values to be loaded into a
      * uniform variable or a uniform variable array. A count of 1 should be used if modifying the value of a single
      * uniform variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When
@@ -1230,21 +1217,21 @@ class GL41 extends GL40
      * number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
      * `int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `bvec2`, etc.). The data type specified in the name of the
      * command must match the data type for the specified uniform variable as described previously for
-     * {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}}.
+     * {@see GL41::programUniform{1|2|3|4}{f|i|ui}}.
      *
      * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glProgramUniform3f} or {@see GL46::glProgramUniform3fv} can be used to load
+     * of the command (e.g., {@see GL41::programUniform3f} or {@see GL41::programUniform3fv} can be used to load
      * a uniform variable array of type vec3). The number of elements of the uniform variable array to be modified is
      * specified by $count
      *
-     * The commands {@see GL46::glProgramUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
+     * The commands {@see GL41::programUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
      * or an array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix.
      * The number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3
      * × 3 matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values).
      * Non-square matrix dimensionality is explicit, with the first number representing the number of columns and the
      * second number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2
-     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be
-     * supplied in column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied
+     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL41::GL_FALSE}, each matrix is assumed to be
+     * supplied in column major order. If $transpose is {@see GL41::GL_TRUE}, each matrix is assumed to be supplied
      * in row major order. The $count argument indicates the number of matrices to be passed. A count of 1 should be
      * used if modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of
      * matrices.
@@ -1254,22 +1241,23 @@ class GL41 extends GL40
      * @param int $program
      * @param int $location
      * @param int $count
-     * @param \FFI\CData|null $value
+     * @param CData|null $value
      * @return void
      */
-    public function programUniform1iv(int $program, int $location, int $count, ?\FFI\CData $value): void
+    public function programUniform1iv(int $program, int $location, int $count, ?CData $value): void
     {
-        $__proc = $this->getProcAs('glProgramUniform1iv', 'void (*)(GLuint program, GLint location, GLsizei count, const GLint *value)');
+        $__proc = $this->proc('glProgramUniform1iv',
+            'void (*)(GLuint program, GLint location, GLsizei count, const GLint *value)');
         $__proc($program, $location, $count, $value);
     }
 
     /**
-     * {@see GL46::glProgramUniform} modifies the value of a uniform variable or a uniform variable array. The
+     * {@see GL41::programUniform} modifies the value of a uniform variable or a uniform variable array. The
      * location of the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glProgramUniform} operates on the program object specified by
+     * {@see GL41::getUniformLocation}. {@see GL41::programUniform} operates on the program object specified by
      * $program.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
      * variable specified by $location using the values passed as arguments. The number specified in the command
      * should match the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1}
      * for `float`, `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The
@@ -1286,10 +1274,10 @@ class GL41 extends GL40
      * set to `true` otherwise.
      *
      * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glProgramUniform} until
+     * linked successfully. They retain the values assigned to them by a call to {@see GL41::programUniform} until
      * the next successful link operation occurs on the program object, when they are once again initialized to 0.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
      * or a uniform variable array. These commands pass a count and a pointer to the values to be loaded into a
      * uniform variable or a uniform variable array. A count of 1 should be used if modifying the value of a single
      * uniform variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When
@@ -1300,21 +1288,21 @@ class GL41 extends GL40
      * number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
      * `int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `bvec2`, etc.). The data type specified in the name of the
      * command must match the data type for the specified uniform variable as described previously for
-     * {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}}.
+     * {@see GL41::programUniform{1|2|3|4}{f|i|ui}}.
      *
      * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glProgramUniform3f} or {@see GL46::glProgramUniform3fv} can be used to load
+     * of the command (e.g., {@see GL41::programUniform3f} or {@see GL41::programUniform3fv} can be used to load
      * a uniform variable array of type vec3). The number of elements of the uniform variable array to be modified is
      * specified by $count
      *
-     * The commands {@see GL46::glProgramUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
+     * The commands {@see GL41::programUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
      * or an array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix.
      * The number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3
      * × 3 matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values).
      * Non-square matrix dimensionality is explicit, with the first number representing the number of columns and the
      * second number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2
-     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be
-     * supplied in column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied
+     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL41::GL_FALSE}, each matrix is assumed to be
+     * supplied in column major order. If $transpose is {@see GL41::GL_TRUE}, each matrix is assumed to be supplied
      * in row major order. The $count argument indicates the number of matrices to be passed. A count of 1 should be
      * used if modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of
      * matrices.
@@ -1328,17 +1316,17 @@ class GL41 extends GL40
      */
     public function programUniform1ui(int $program, int $location, int $v0): void
     {
-        $__proc = $this->getProcAs('glProgramUniform1ui', 'void (*)(GLuint program, GLint location, GLuint v0)');
+        $__proc = $this->proc('glProgramUniform1ui', 'void (*)(GLuint program, GLint location, GLuint v0)');
         $__proc($program, $location, $v0);
     }
 
     /**
-     * {@see GL46::glProgramUniform} modifies the value of a uniform variable or a uniform variable array. The
+     * {@see GL41::programUniform} modifies the value of a uniform variable or a uniform variable array. The
      * location of the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glProgramUniform} operates on the program object specified by
+     * {@see GL41::getUniformLocation}. {@see GL41::programUniform} operates on the program object specified by
      * $program.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
      * variable specified by $location using the values passed as arguments. The number specified in the command
      * should match the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1}
      * for `float`, `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The
@@ -1355,10 +1343,10 @@ class GL41 extends GL40
      * set to `true` otherwise.
      *
      * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glProgramUniform} until
+     * linked successfully. They retain the values assigned to them by a call to {@see GL41::programUniform} until
      * the next successful link operation occurs on the program object, when they are once again initialized to 0.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
      * or a uniform variable array. These commands pass a count and a pointer to the values to be loaded into a
      * uniform variable or a uniform variable array. A count of 1 should be used if modifying the value of a single
      * uniform variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When
@@ -1369,21 +1357,21 @@ class GL41 extends GL40
      * number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
      * `int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `bvec2`, etc.). The data type specified in the name of the
      * command must match the data type for the specified uniform variable as described previously for
-     * {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}}.
+     * {@see GL41::programUniform{1|2|3|4}{f|i|ui}}.
      *
      * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glProgramUniform3f} or {@see GL46::glProgramUniform3fv} can be used to load
+     * of the command (e.g., {@see GL41::programUniform3f} or {@see GL41::programUniform3fv} can be used to load
      * a uniform variable array of type vec3). The number of elements of the uniform variable array to be modified is
      * specified by $count
      *
-     * The commands {@see GL46::glProgramUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
+     * The commands {@see GL41::programUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
      * or an array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix.
      * The number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3
      * × 3 matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values).
      * Non-square matrix dimensionality is explicit, with the first number representing the number of columns and the
      * second number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2
-     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be
-     * supplied in column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied
+     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL41::GL_FALSE}, each matrix is assumed to be
+     * supplied in column major order. If $transpose is {@see GL41::GL_TRUE}, each matrix is assumed to be supplied
      * in row major order. The $count argument indicates the number of matrices to be passed. A count of 1 should be
      * used if modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of
      * matrices.
@@ -1393,22 +1381,23 @@ class GL41 extends GL40
      * @param int $program
      * @param int $location
      * @param int $count
-     * @param \FFI\CData|null $value
+     * @param CData|null $value
      * @return void
      */
-    public function programUniform1uiv(int $program, int $location, int $count, ?\FFI\CData $value): void
+    public function programUniform1uiv(int $program, int $location, int $count, ?CData $value): void
     {
-        $__proc = $this->getProcAs('glProgramUniform1uiv', 'void (*)(GLuint program, GLint location, GLsizei count, const GLuint *value)');
+        $__proc = $this->proc('glProgramUniform1uiv',
+            'void (*)(GLuint program, GLint location, GLsizei count, const GLuint *value)');
         $__proc($program, $location, $count, $value);
     }
 
     /**
-     * {@see GL46::glProgramUniform} modifies the value of a uniform variable or a uniform variable array. The
+     * {@see GL41::programUniform} modifies the value of a uniform variable or a uniform variable array. The
      * location of the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glProgramUniform} operates on the program object specified by
+     * {@see GL41::getUniformLocation}. {@see GL41::programUniform} operates on the program object specified by
      * $program.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
      * variable specified by $location using the values passed as arguments. The number specified in the command
      * should match the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1}
      * for `float`, `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The
@@ -1425,10 +1414,10 @@ class GL41 extends GL40
      * set to `true` otherwise.
      *
      * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glProgramUniform} until
+     * linked successfully. They retain the values assigned to them by a call to {@see GL41::programUniform} until
      * the next successful link operation occurs on the program object, when they are once again initialized to 0.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
      * or a uniform variable array. These commands pass a count and a pointer to the values to be loaded into a
      * uniform variable or a uniform variable array. A count of 1 should be used if modifying the value of a single
      * uniform variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When
@@ -1439,21 +1428,21 @@ class GL41 extends GL40
      * number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
      * `int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `bvec2`, etc.). The data type specified in the name of the
      * command must match the data type for the specified uniform variable as described previously for
-     * {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}}.
+     * {@see GL41::programUniform{1|2|3|4}{f|i|ui}}.
      *
      * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glProgramUniform3f} or {@see GL46::glProgramUniform3fv} can be used to load
+     * of the command (e.g., {@see GL41::programUniform3f} or {@see GL41::programUniform3fv} can be used to load
      * a uniform variable array of type vec3). The number of elements of the uniform variable array to be modified is
      * specified by $count
      *
-     * The commands {@see GL46::glProgramUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
+     * The commands {@see GL41::programUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
      * or an array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix.
      * The number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3
      * × 3 matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values).
      * Non-square matrix dimensionality is explicit, with the first number representing the number of columns and the
      * second number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2
-     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be
-     * supplied in column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied
+     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL41::GL_FALSE}, each matrix is assumed to be
+     * supplied in column major order. If $transpose is {@see GL41::GL_TRUE}, each matrix is assumed to be supplied
      * in row major order. The $count argument indicates the number of matrices to be passed. A count of 1 should be
      * used if modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of
      * matrices.
@@ -1468,17 +1457,18 @@ class GL41 extends GL40
      */
     public function programUniform2d(int $program, int $location, float $v0, float $v1): void
     {
-        $__proc = $this->getProcAs('glProgramUniform2d', 'void (*)(GLuint program, GLint location, GLdouble v0, GLdouble v1)');
+        $__proc = $this->proc('glProgramUniform2d',
+            'void (*)(GLuint program, GLint location, GLdouble v0, GLdouble v1)');
         $__proc($program, $location, $v0, $v1);
     }
 
     /**
-     * {@see GL46::glProgramUniform} modifies the value of a uniform variable or a uniform variable array. The
+     * {@see GL41::programUniform} modifies the value of a uniform variable or a uniform variable array. The
      * location of the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glProgramUniform} operates on the program object specified by
+     * {@see GL41::getUniformLocation}. {@see GL41::programUniform} operates on the program object specified by
      * $program.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
      * variable specified by $location using the values passed as arguments. The number specified in the command
      * should match the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1}
      * for `float`, `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The
@@ -1495,10 +1485,10 @@ class GL41 extends GL40
      * set to `true` otherwise.
      *
      * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glProgramUniform} until
+     * linked successfully. They retain the values assigned to them by a call to {@see GL41::programUniform} until
      * the next successful link operation occurs on the program object, when they are once again initialized to 0.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
      * or a uniform variable array. These commands pass a count and a pointer to the values to be loaded into a
      * uniform variable or a uniform variable array. A count of 1 should be used if modifying the value of a single
      * uniform variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When
@@ -1509,21 +1499,21 @@ class GL41 extends GL40
      * number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
      * `int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `bvec2`, etc.). The data type specified in the name of the
      * command must match the data type for the specified uniform variable as described previously for
-     * {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}}.
+     * {@see GL41::programUniform{1|2|3|4}{f|i|ui}}.
      *
      * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glProgramUniform3f} or {@see GL46::glProgramUniform3fv} can be used to load
+     * of the command (e.g., {@see GL41::programUniform3f} or {@see GL41::programUniform3fv} can be used to load
      * a uniform variable array of type vec3). The number of elements of the uniform variable array to be modified is
      * specified by $count
      *
-     * The commands {@see GL46::glProgramUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
+     * The commands {@see GL41::programUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
      * or an array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix.
      * The number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3
      * × 3 matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values).
      * Non-square matrix dimensionality is explicit, with the first number representing the number of columns and the
      * second number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2
-     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be
-     * supplied in column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied
+     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL41::GL_FALSE}, each matrix is assumed to be
+     * supplied in column major order. If $transpose is {@see GL41::GL_TRUE}, each matrix is assumed to be supplied
      * in row major order. The $count argument indicates the number of matrices to be passed. A count of 1 should be
      * used if modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of
      * matrices.
@@ -1533,22 +1523,23 @@ class GL41 extends GL40
      * @param int $program
      * @param int $location
      * @param int $count
-     * @param \FFI\CData|null $value
+     * @param CData|null $value
      * @return void
      */
-    public function programUniform2dv(int $program, int $location, int $count, ?\FFI\CData $value): void
+    public function programUniform2dv(int $program, int $location, int $count, ?CData $value): void
     {
-        $__proc = $this->getProcAs('glProgramUniform2dv', 'void (*)(GLuint program, GLint location, GLsizei count, const GLdouble *value)');
+        $__proc = $this->proc('glProgramUniform2dv',
+            'void (*)(GLuint program, GLint location, GLsizei count, const GLdouble *value)');
         $__proc($program, $location, $count, $value);
     }
 
     /**
-     * {@see GL46::glProgramUniform} modifies the value of a uniform variable or a uniform variable array. The
+     * {@see GL41::programUniform} modifies the value of a uniform variable or a uniform variable array. The
      * location of the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glProgramUniform} operates on the program object specified by
+     * {@see GL41::getUniformLocation}. {@see GL41::programUniform} operates on the program object specified by
      * $program.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
      * variable specified by $location using the values passed as arguments. The number specified in the command
      * should match the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1}
      * for `float`, `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The
@@ -1565,10 +1556,10 @@ class GL41 extends GL40
      * set to `true` otherwise.
      *
      * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glProgramUniform} until
+     * linked successfully. They retain the values assigned to them by a call to {@see GL41::programUniform} until
      * the next successful link operation occurs on the program object, when they are once again initialized to 0.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
      * or a uniform variable array. These commands pass a count and a pointer to the values to be loaded into a
      * uniform variable or a uniform variable array. A count of 1 should be used if modifying the value of a single
      * uniform variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When
@@ -1579,21 +1570,21 @@ class GL41 extends GL40
      * number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
      * `int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `bvec2`, etc.). The data type specified in the name of the
      * command must match the data type for the specified uniform variable as described previously for
-     * {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}}.
+     * {@see GL41::programUniform{1|2|3|4}{f|i|ui}}.
      *
      * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glProgramUniform3f} or {@see GL46::glProgramUniform3fv} can be used to load
+     * of the command (e.g., {@see GL41::programUniform3f} or {@see GL41::programUniform3fv} can be used to load
      * a uniform variable array of type vec3). The number of elements of the uniform variable array to be modified is
      * specified by $count
      *
-     * The commands {@see GL46::glProgramUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
+     * The commands {@see GL41::programUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
      * or an array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix.
      * The number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3
      * × 3 matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values).
      * Non-square matrix dimensionality is explicit, with the first number representing the number of columns and the
      * second number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2
-     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be
-     * supplied in column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied
+     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL41::GL_FALSE}, each matrix is assumed to be
+     * supplied in column major order. If $transpose is {@see GL41::GL_TRUE}, each matrix is assumed to be supplied
      * in row major order. The $count argument indicates the number of matrices to be passed. A count of 1 should be
      * used if modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of
      * matrices.
@@ -1608,17 +1599,18 @@ class GL41 extends GL40
      */
     public function programUniform2f(int $program, int $location, float $v0, float $v1): void
     {
-        $__proc = $this->getProcAs('glProgramUniform2f', 'void (*)(GLuint program, GLint location, GLfloat v0, GLfloat v1)');
+        $__proc = $this->proc('glProgramUniform2f',
+            'void (*)(GLuint program, GLint location, GLfloat v0, GLfloat v1)');
         $__proc($program, $location, $v0, $v1);
     }
 
     /**
-     * {@see GL46::glProgramUniform} modifies the value of a uniform variable or a uniform variable array. The
+     * {@see GL41::programUniform} modifies the value of a uniform variable or a uniform variable array. The
      * location of the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glProgramUniform} operates on the program object specified by
+     * {@see GL41::getUniformLocation}. {@see GL41::programUniform} operates on the program object specified by
      * $program.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
      * variable specified by $location using the values passed as arguments. The number specified in the command
      * should match the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1}
      * for `float`, `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The
@@ -1635,10 +1627,10 @@ class GL41 extends GL40
      * set to `true` otherwise.
      *
      * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glProgramUniform} until
+     * linked successfully. They retain the values assigned to them by a call to {@see GL41::programUniform} until
      * the next successful link operation occurs on the program object, when they are once again initialized to 0.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
      * or a uniform variable array. These commands pass a count and a pointer to the values to be loaded into a
      * uniform variable or a uniform variable array. A count of 1 should be used if modifying the value of a single
      * uniform variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When
@@ -1649,21 +1641,21 @@ class GL41 extends GL40
      * number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
      * `int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `bvec2`, etc.). The data type specified in the name of the
      * command must match the data type for the specified uniform variable as described previously for
-     * {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}}.
+     * {@see GL41::programUniform{1|2|3|4}{f|i|ui}}.
      *
      * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glProgramUniform3f} or {@see GL46::glProgramUniform3fv} can be used to load
+     * of the command (e.g., {@see GL41::programUniform3f} or {@see GL41::programUniform3fv} can be used to load
      * a uniform variable array of type vec3). The number of elements of the uniform variable array to be modified is
      * specified by $count
      *
-     * The commands {@see GL46::glProgramUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
+     * The commands {@see GL41::programUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
      * or an array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix.
      * The number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3
      * × 3 matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values).
      * Non-square matrix dimensionality is explicit, with the first number representing the number of columns and the
      * second number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2
-     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be
-     * supplied in column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied
+     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL41::GL_FALSE}, each matrix is assumed to be
+     * supplied in column major order. If $transpose is {@see GL41::GL_TRUE}, each matrix is assumed to be supplied
      * in row major order. The $count argument indicates the number of matrices to be passed. A count of 1 should be
      * used if modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of
      * matrices.
@@ -1673,22 +1665,23 @@ class GL41 extends GL40
      * @param int $program
      * @param int $location
      * @param int $count
-     * @param \FFI\CData|null $value
+     * @param CData|null $value
      * @return void
      */
-    public function programUniform2fv(int $program, int $location, int $count, ?\FFI\CData $value): void
+    public function programUniform2fv(int $program, int $location, int $count, ?CData $value): void
     {
-        $__proc = $this->getProcAs('glProgramUniform2fv', 'void (*)(GLuint program, GLint location, GLsizei count, const GLfloat *value)');
+        $__proc = $this->proc('glProgramUniform2fv',
+            'void (*)(GLuint program, GLint location, GLsizei count, const GLfloat *value)');
         $__proc($program, $location, $count, $value);
     }
 
     /**
-     * {@see GL46::glProgramUniform} modifies the value of a uniform variable or a uniform variable array. The
+     * {@see GL41::programUniform} modifies the value of a uniform variable or a uniform variable array. The
      * location of the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glProgramUniform} operates on the program object specified by
+     * {@see GL41::getUniformLocation}. {@see GL41::programUniform} operates on the program object specified by
      * $program.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
      * variable specified by $location using the values passed as arguments. The number specified in the command
      * should match the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1}
      * for `float`, `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The
@@ -1705,10 +1698,10 @@ class GL41 extends GL40
      * set to `true` otherwise.
      *
      * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glProgramUniform} until
+     * linked successfully. They retain the values assigned to them by a call to {@see GL41::programUniform} until
      * the next successful link operation occurs on the program object, when they are once again initialized to 0.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
      * or a uniform variable array. These commands pass a count and a pointer to the values to be loaded into a
      * uniform variable or a uniform variable array. A count of 1 should be used if modifying the value of a single
      * uniform variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When
@@ -1719,21 +1712,21 @@ class GL41 extends GL40
      * number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
      * `int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `bvec2`, etc.). The data type specified in the name of the
      * command must match the data type for the specified uniform variable as described previously for
-     * {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}}.
+     * {@see GL41::programUniform{1|2|3|4}{f|i|ui}}.
      *
      * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glProgramUniform3f} or {@see GL46::glProgramUniform3fv} can be used to load
+     * of the command (e.g., {@see GL41::programUniform3f} or {@see GL41::programUniform3fv} can be used to load
      * a uniform variable array of type vec3). The number of elements of the uniform variable array to be modified is
      * specified by $count
      *
-     * The commands {@see GL46::glProgramUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
+     * The commands {@see GL41::programUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
      * or an array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix.
      * The number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3
      * × 3 matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values).
      * Non-square matrix dimensionality is explicit, with the first number representing the number of columns and the
      * second number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2
-     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be
-     * supplied in column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied
+     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL41::GL_FALSE}, each matrix is assumed to be
+     * supplied in column major order. If $transpose is {@see GL41::GL_TRUE}, each matrix is assumed to be supplied
      * in row major order. The $count argument indicates the number of matrices to be passed. A count of 1 should be
      * used if modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of
      * matrices.
@@ -1748,17 +1741,18 @@ class GL41 extends GL40
      */
     public function programUniform2i(int $program, int $location, int $v0, int $v1): void
     {
-        $__proc = $this->getProcAs('glProgramUniform2i', 'void (*)(GLuint program, GLint location, GLint v0, GLint v1)');
+        $__proc = $this->proc('glProgramUniform2i',
+            'void (*)(GLuint program, GLint location, GLint v0, GLint v1)');
         $__proc($program, $location, $v0, $v1);
     }
 
     /**
-     * {@see GL46::glProgramUniform} modifies the value of a uniform variable or a uniform variable array. The
+     * {@see GL41::programUniform} modifies the value of a uniform variable or a uniform variable array. The
      * location of the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glProgramUniform} operates on the program object specified by
+     * {@see GL41::getUniformLocation}. {@see GL41::programUniform} operates on the program object specified by
      * $program.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
      * variable specified by $location using the values passed as arguments. The number specified in the command
      * should match the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1}
      * for `float`, `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The
@@ -1775,10 +1769,10 @@ class GL41 extends GL40
      * set to `true` otherwise.
      *
      * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glProgramUniform} until
+     * linked successfully. They retain the values assigned to them by a call to {@see GL41::programUniform} until
      * the next successful link operation occurs on the program object, when they are once again initialized to 0.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
      * or a uniform variable array. These commands pass a count and a pointer to the values to be loaded into a
      * uniform variable or a uniform variable array. A count of 1 should be used if modifying the value of a single
      * uniform variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When
@@ -1789,21 +1783,21 @@ class GL41 extends GL40
      * number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
      * `int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `bvec2`, etc.). The data type specified in the name of the
      * command must match the data type for the specified uniform variable as described previously for
-     * {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}}.
+     * {@see GL41::programUniform{1|2|3|4}{f|i|ui}}.
      *
      * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glProgramUniform3f} or {@see GL46::glProgramUniform3fv} can be used to load
+     * of the command (e.g., {@see GL41::programUniform3f} or {@see GL41::programUniform3fv} can be used to load
      * a uniform variable array of type vec3). The number of elements of the uniform variable array to be modified is
      * specified by $count
      *
-     * The commands {@see GL46::glProgramUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
+     * The commands {@see GL41::programUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
      * or an array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix.
      * The number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3
      * × 3 matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values).
      * Non-square matrix dimensionality is explicit, with the first number representing the number of columns and the
      * second number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2
-     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be
-     * supplied in column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied
+     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL41::GL_FALSE}, each matrix is assumed to be
+     * supplied in column major order. If $transpose is {@see GL41::GL_TRUE}, each matrix is assumed to be supplied
      * in row major order. The $count argument indicates the number of matrices to be passed. A count of 1 should be
      * used if modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of
      * matrices.
@@ -1813,22 +1807,23 @@ class GL41 extends GL40
      * @param int $program
      * @param int $location
      * @param int $count
-     * @param \FFI\CData|null $value
+     * @param CData|null $value
      * @return void
      */
-    public function programUniform2iv(int $program, int $location, int $count, ?\FFI\CData $value): void
+    public function programUniform2iv(int $program, int $location, int $count, ?CData $value): void
     {
-        $__proc = $this->getProcAs('glProgramUniform2iv', 'void (*)(GLuint program, GLint location, GLsizei count, const GLint *value)');
+        $__proc = $this->proc('glProgramUniform2iv',
+            'void (*)(GLuint program, GLint location, GLsizei count, const GLint *value)');
         $__proc($program, $location, $count, $value);
     }
 
     /**
-     * {@see GL46::glProgramUniform} modifies the value of a uniform variable or a uniform variable array. The
+     * {@see GL41::programUniform} modifies the value of a uniform variable or a uniform variable array. The
      * location of the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glProgramUniform} operates on the program object specified by
+     * {@see GL41::getUniformLocation}. {@see GL41::programUniform} operates on the program object specified by
      * $program.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
      * variable specified by $location using the values passed as arguments. The number specified in the command
      * should match the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1}
      * for `float`, `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The
@@ -1845,10 +1840,10 @@ class GL41 extends GL40
      * set to `true` otherwise.
      *
      * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glProgramUniform} until
+     * linked successfully. They retain the values assigned to them by a call to {@see GL41::programUniform} until
      * the next successful link operation occurs on the program object, when they are once again initialized to 0.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
      * or a uniform variable array. These commands pass a count and a pointer to the values to be loaded into a
      * uniform variable or a uniform variable array. A count of 1 should be used if modifying the value of a single
      * uniform variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When
@@ -1859,21 +1854,21 @@ class GL41 extends GL40
      * number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
      * `int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `bvec2`, etc.). The data type specified in the name of the
      * command must match the data type for the specified uniform variable as described previously for
-     * {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}}.
+     * {@see GL41::programUniform{1|2|3|4}{f|i|ui}}.
      *
      * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glProgramUniform3f} or {@see GL46::glProgramUniform3fv} can be used to load
+     * of the command (e.g., {@see GL41::programUniform3f} or {@see GL41::programUniform3fv} can be used to load
      * a uniform variable array of type vec3). The number of elements of the uniform variable array to be modified is
      * specified by $count
      *
-     * The commands {@see GL46::glProgramUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
+     * The commands {@see GL41::programUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
      * or an array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix.
      * The number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3
      * × 3 matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values).
      * Non-square matrix dimensionality is explicit, with the first number representing the number of columns and the
      * second number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2
-     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be
-     * supplied in column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied
+     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL41::GL_FALSE}, each matrix is assumed to be
+     * supplied in column major order. If $transpose is {@see GL41::GL_TRUE}, each matrix is assumed to be supplied
      * in row major order. The $count argument indicates the number of matrices to be passed. A count of 1 should be
      * used if modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of
      * matrices.
@@ -1888,17 +1883,18 @@ class GL41 extends GL40
      */
     public function programUniform2ui(int $program, int $location, int $v0, int $v1): void
     {
-        $__proc = $this->getProcAs('glProgramUniform2ui', 'void (*)(GLuint program, GLint location, GLuint v0, GLuint v1)');
+        $__proc = $this->proc('glProgramUniform2ui',
+            'void (*)(GLuint program, GLint location, GLuint v0, GLuint v1)');
         $__proc($program, $location, $v0, $v1);
     }
 
     /**
-     * {@see GL46::glProgramUniform} modifies the value of a uniform variable or a uniform variable array. The
+     * {@see GL41::programUniform} modifies the value of a uniform variable or a uniform variable array. The
      * location of the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glProgramUniform} operates on the program object specified by
+     * {@see GL41::getUniformLocation}. {@see GL41::programUniform} operates on the program object specified by
      * $program.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
      * variable specified by $location using the values passed as arguments. The number specified in the command
      * should match the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1}
      * for `float`, `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The
@@ -1915,10 +1911,10 @@ class GL41 extends GL40
      * set to `true` otherwise.
      *
      * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glProgramUniform} until
+     * linked successfully. They retain the values assigned to them by a call to {@see GL41::programUniform} until
      * the next successful link operation occurs on the program object, when they are once again initialized to 0.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
      * or a uniform variable array. These commands pass a count and a pointer to the values to be loaded into a
      * uniform variable or a uniform variable array. A count of 1 should be used if modifying the value of a single
      * uniform variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When
@@ -1929,21 +1925,21 @@ class GL41 extends GL40
      * number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
      * `int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `bvec2`, etc.). The data type specified in the name of the
      * command must match the data type for the specified uniform variable as described previously for
-     * {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}}.
+     * {@see GL41::programUniform{1|2|3|4}{f|i|ui}}.
      *
      * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glProgramUniform3f} or {@see GL46::glProgramUniform3fv} can be used to load
+     * of the command (e.g., {@see GL41::programUniform3f} or {@see GL41::programUniform3fv} can be used to load
      * a uniform variable array of type vec3). The number of elements of the uniform variable array to be modified is
      * specified by $count
      *
-     * The commands {@see GL46::glProgramUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
+     * The commands {@see GL41::programUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
      * or an array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix.
      * The number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3
      * × 3 matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values).
      * Non-square matrix dimensionality is explicit, with the first number representing the number of columns and the
      * second number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2
-     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be
-     * supplied in column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied
+     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL41::GL_FALSE}, each matrix is assumed to be
+     * supplied in column major order. If $transpose is {@see GL41::GL_TRUE}, each matrix is assumed to be supplied
      * in row major order. The $count argument indicates the number of matrices to be passed. A count of 1 should be
      * used if modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of
      * matrices.
@@ -1953,22 +1949,23 @@ class GL41 extends GL40
      * @param int $program
      * @param int $location
      * @param int $count
-     * @param \FFI\CData|null $value
+     * @param CData|null $value
      * @return void
      */
-    public function programUniform2uiv(int $program, int $location, int $count, ?\FFI\CData $value): void
+    public function programUniform2uiv(int $program, int $location, int $count, ?CData $value): void
     {
-        $__proc = $this->getProcAs('glProgramUniform2uiv', 'void (*)(GLuint program, GLint location, GLsizei count, const GLuint *value)');
+        $__proc = $this->proc('glProgramUniform2uiv',
+            'void (*)(GLuint program, GLint location, GLsizei count, const GLuint *value)');
         $__proc($program, $location, $count, $value);
     }
 
     /**
-     * {@see GL46::glProgramUniform} modifies the value of a uniform variable or a uniform variable array. The
+     * {@see GL41::programUniform} modifies the value of a uniform variable or a uniform variable array. The
      * location of the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glProgramUniform} operates on the program object specified by
+     * {@see GL41::getUniformLocation}. {@see GL41::programUniform} operates on the program object specified by
      * $program.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
      * variable specified by $location using the values passed as arguments. The number specified in the command
      * should match the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1}
      * for `float`, `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The
@@ -1985,10 +1982,10 @@ class GL41 extends GL40
      * set to `true` otherwise.
      *
      * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glProgramUniform} until
+     * linked successfully. They retain the values assigned to them by a call to {@see GL41::programUniform} until
      * the next successful link operation occurs on the program object, when they are once again initialized to 0.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
      * or a uniform variable array. These commands pass a count and a pointer to the values to be loaded into a
      * uniform variable or a uniform variable array. A count of 1 should be used if modifying the value of a single
      * uniform variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When
@@ -1999,21 +1996,21 @@ class GL41 extends GL40
      * number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
      * `int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `bvec2`, etc.). The data type specified in the name of the
      * command must match the data type for the specified uniform variable as described previously for
-     * {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}}.
+     * {@see GL41::programUniform{1|2|3|4}{f|i|ui}}.
      *
      * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glProgramUniform3f} or {@see GL46::glProgramUniform3fv} can be used to load
+     * of the command (e.g., {@see GL41::programUniform3f} or {@see GL41::programUniform3fv} can be used to load
      * a uniform variable array of type vec3). The number of elements of the uniform variable array to be modified is
      * specified by $count
      *
-     * The commands {@see GL46::glProgramUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
+     * The commands {@see GL41::programUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
      * or an array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix.
      * The number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3
      * × 3 matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values).
      * Non-square matrix dimensionality is explicit, with the first number representing the number of columns and the
      * second number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2
-     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be
-     * supplied in column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied
+     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL41::GL_FALSE}, each matrix is assumed to be
+     * supplied in column major order. If $transpose is {@see GL41::GL_TRUE}, each matrix is assumed to be supplied
      * in row major order. The $count argument indicates the number of matrices to be passed. A count of 1 should be
      * used if modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of
      * matrices.
@@ -2029,17 +2026,18 @@ class GL41 extends GL40
      */
     public function programUniform3d(int $program, int $location, float $v0, float $v1, float $v2): void
     {
-        $__proc = $this->getProcAs('glProgramUniform3d', 'void (*)(GLuint program, GLint location, GLdouble v0, GLdouble v1, GLdouble v2)');
+        $__proc = $this->proc('glProgramUniform3d',
+            'void (*)(GLuint program, GLint location, GLdouble v0, GLdouble v1, GLdouble v2)');
         $__proc($program, $location, $v0, $v1, $v2);
     }
 
     /**
-     * {@see GL46::glProgramUniform} modifies the value of a uniform variable or a uniform variable array. The
+     * {@see GL41::programUniform} modifies the value of a uniform variable or a uniform variable array. The
      * location of the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glProgramUniform} operates on the program object specified by
+     * {@see GL41::getUniformLocation}. {@see GL41::programUniform} operates on the program object specified by
      * $program.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
      * variable specified by $location using the values passed as arguments. The number specified in the command
      * should match the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1}
      * for `float`, `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The
@@ -2056,10 +2054,10 @@ class GL41 extends GL40
      * set to `true` otherwise.
      *
      * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glProgramUniform} until
+     * linked successfully. They retain the values assigned to them by a call to {@see GL41::programUniform} until
      * the next successful link operation occurs on the program object, when they are once again initialized to 0.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
      * or a uniform variable array. These commands pass a count and a pointer to the values to be loaded into a
      * uniform variable or a uniform variable array. A count of 1 should be used if modifying the value of a single
      * uniform variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When
@@ -2070,21 +2068,21 @@ class GL41 extends GL40
      * number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
      * `int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `bvec2`, etc.). The data type specified in the name of the
      * command must match the data type for the specified uniform variable as described previously for
-     * {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}}.
+     * {@see GL41::programUniform{1|2|3|4}{f|i|ui}}.
      *
      * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glProgramUniform3f} or {@see GL46::glProgramUniform3fv} can be used to load
+     * of the command (e.g., {@see GL41::programUniform3f} or {@see GL41::programUniform3fv} can be used to load
      * a uniform variable array of type vec3). The number of elements of the uniform variable array to be modified is
      * specified by $count
      *
-     * The commands {@see GL46::glProgramUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
+     * The commands {@see GL41::programUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
      * or an array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix.
      * The number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3
      * × 3 matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values).
      * Non-square matrix dimensionality is explicit, with the first number representing the number of columns and the
      * second number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2
-     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be
-     * supplied in column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied
+     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL41::GL_FALSE}, each matrix is assumed to be
+     * supplied in column major order. If $transpose is {@see GL41::GL_TRUE}, each matrix is assumed to be supplied
      * in row major order. The $count argument indicates the number of matrices to be passed. A count of 1 should be
      * used if modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of
      * matrices.
@@ -2094,22 +2092,23 @@ class GL41 extends GL40
      * @param int $program
      * @param int $location
      * @param int $count
-     * @param \FFI\CData|null $value
+     * @param CData|null $value
      * @return void
      */
-    public function programUniform3dv(int $program, int $location, int $count, ?\FFI\CData $value): void
+    public function programUniform3dv(int $program, int $location, int $count, ?CData $value): void
     {
-        $__proc = $this->getProcAs('glProgramUniform3dv', 'void (*)(GLuint program, GLint location, GLsizei count, const GLdouble *value)');
+        $__proc = $this->proc('glProgramUniform3dv',
+            'void (*)(GLuint program, GLint location, GLsizei count, const GLdouble *value)');
         $__proc($program, $location, $count, $value);
     }
 
     /**
-     * {@see GL46::glProgramUniform} modifies the value of a uniform variable or a uniform variable array. The
+     * {@see GL41::programUniform} modifies the value of a uniform variable or a uniform variable array. The
      * location of the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glProgramUniform} operates on the program object specified by
+     * {@see GL41::getUniformLocation}. {@see GL41::programUniform} operates on the program object specified by
      * $program.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
      * variable specified by $location using the values passed as arguments. The number specified in the command
      * should match the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1}
      * for `float`, `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The
@@ -2126,10 +2125,10 @@ class GL41 extends GL40
      * set to `true` otherwise.
      *
      * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glProgramUniform} until
+     * linked successfully. They retain the values assigned to them by a call to {@see GL41::programUniform} until
      * the next successful link operation occurs on the program object, when they are once again initialized to 0.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
      * or a uniform variable array. These commands pass a count and a pointer to the values to be loaded into a
      * uniform variable or a uniform variable array. A count of 1 should be used if modifying the value of a single
      * uniform variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When
@@ -2140,21 +2139,21 @@ class GL41 extends GL40
      * number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
      * `int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `bvec2`, etc.). The data type specified in the name of the
      * command must match the data type for the specified uniform variable as described previously for
-     * {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}}.
+     * {@see GL41::programUniform{1|2|3|4}{f|i|ui}}.
      *
      * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glProgramUniform3f} or {@see GL46::glProgramUniform3fv} can be used to load
+     * of the command (e.g., {@see GL41::programUniform3f} or {@see GL41::programUniform3fv} can be used to load
      * a uniform variable array of type vec3). The number of elements of the uniform variable array to be modified is
      * specified by $count
      *
-     * The commands {@see GL46::glProgramUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
+     * The commands {@see GL41::programUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
      * or an array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix.
      * The number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3
      * × 3 matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values).
      * Non-square matrix dimensionality is explicit, with the first number representing the number of columns and the
      * second number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2
-     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be
-     * supplied in column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied
+     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL41::GL_FALSE}, each matrix is assumed to be
+     * supplied in column major order. If $transpose is {@see GL41::GL_TRUE}, each matrix is assumed to be supplied
      * in row major order. The $count argument indicates the number of matrices to be passed. A count of 1 should be
      * used if modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of
      * matrices.
@@ -2170,17 +2169,18 @@ class GL41 extends GL40
      */
     public function programUniform3f(int $program, int $location, float $v0, float $v1, float $v2): void
     {
-        $__proc = $this->getProcAs('glProgramUniform3f', 'void (*)(GLuint program, GLint location, GLfloat v0, GLfloat v1, GLfloat v2)');
+        $__proc = $this->proc('glProgramUniform3f',
+            'void (*)(GLuint program, GLint location, GLfloat v0, GLfloat v1, GLfloat v2)');
         $__proc($program, $location, $v0, $v1, $v2);
     }
 
     /**
-     * {@see GL46::glProgramUniform} modifies the value of a uniform variable or a uniform variable array. The
+     * {@see GL41::programUniform} modifies the value of a uniform variable or a uniform variable array. The
      * location of the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glProgramUniform} operates on the program object specified by
+     * {@see GL41::getUniformLocation}. {@see GL41::programUniform} operates on the program object specified by
      * $program.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
      * variable specified by $location using the values passed as arguments. The number specified in the command
      * should match the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1}
      * for `float`, `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The
@@ -2197,10 +2197,10 @@ class GL41 extends GL40
      * set to `true` otherwise.
      *
      * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glProgramUniform} until
+     * linked successfully. They retain the values assigned to them by a call to {@see GL41::programUniform} until
      * the next successful link operation occurs on the program object, when they are once again initialized to 0.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
      * or a uniform variable array. These commands pass a count and a pointer to the values to be loaded into a
      * uniform variable or a uniform variable array. A count of 1 should be used if modifying the value of a single
      * uniform variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When
@@ -2211,21 +2211,21 @@ class GL41 extends GL40
      * number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
      * `int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `bvec2`, etc.). The data type specified in the name of the
      * command must match the data type for the specified uniform variable as described previously for
-     * {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}}.
+     * {@see GL41::programUniform{1|2|3|4}{f|i|ui}}.
      *
      * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glProgramUniform3f} or {@see GL46::glProgramUniform3fv} can be used to load
+     * of the command (e.g., {@see GL41::programUniform3f} or {@see GL41::programUniform3fv} can be used to load
      * a uniform variable array of type vec3). The number of elements of the uniform variable array to be modified is
      * specified by $count
      *
-     * The commands {@see GL46::glProgramUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
+     * The commands {@see GL41::programUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
      * or an array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix.
      * The number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3
      * × 3 matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values).
      * Non-square matrix dimensionality is explicit, with the first number representing the number of columns and the
      * second number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2
-     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be
-     * supplied in column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied
+     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL41::GL_FALSE}, each matrix is assumed to be
+     * supplied in column major order. If $transpose is {@see GL41::GL_TRUE}, each matrix is assumed to be supplied
      * in row major order. The $count argument indicates the number of matrices to be passed. A count of 1 should be
      * used if modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of
      * matrices.
@@ -2235,22 +2235,23 @@ class GL41 extends GL40
      * @param int $program
      * @param int $location
      * @param int $count
-     * @param \FFI\CData|null $value
+     * @param CData|null $value
      * @return void
      */
-    public function programUniform3fv(int $program, int $location, int $count, ?\FFI\CData $value): void
+    public function programUniform3fv(int $program, int $location, int $count, ?CData $value): void
     {
-        $__proc = $this->getProcAs('glProgramUniform3fv', 'void (*)(GLuint program, GLint location, GLsizei count, const GLfloat *value)');
+        $__proc = $this->proc('glProgramUniform3fv',
+            'void (*)(GLuint program, GLint location, GLsizei count, const GLfloat *value)');
         $__proc($program, $location, $count, $value);
     }
 
     /**
-     * {@see GL46::glProgramUniform} modifies the value of a uniform variable or a uniform variable array. The
+     * {@see GL41::programUniform} modifies the value of a uniform variable or a uniform variable array. The
      * location of the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glProgramUniform} operates on the program object specified by
+     * {@see GL41::getUniformLocation}. {@see GL41::programUniform} operates on the program object specified by
      * $program.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
      * variable specified by $location using the values passed as arguments. The number specified in the command
      * should match the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1}
      * for `float`, `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The
@@ -2267,10 +2268,10 @@ class GL41 extends GL40
      * set to `true` otherwise.
      *
      * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glProgramUniform} until
+     * linked successfully. They retain the values assigned to them by a call to {@see GL41::programUniform} until
      * the next successful link operation occurs on the program object, when they are once again initialized to 0.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
      * or a uniform variable array. These commands pass a count and a pointer to the values to be loaded into a
      * uniform variable or a uniform variable array. A count of 1 should be used if modifying the value of a single
      * uniform variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When
@@ -2281,21 +2282,21 @@ class GL41 extends GL40
      * number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
      * `int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `bvec2`, etc.). The data type specified in the name of the
      * command must match the data type for the specified uniform variable as described previously for
-     * {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}}.
+     * {@see GL41::programUniform{1|2|3|4}{f|i|ui}}.
      *
      * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glProgramUniform3f} or {@see GL46::glProgramUniform3fv} can be used to load
+     * of the command (e.g., {@see GL41::programUniform3f} or {@see GL41::programUniform3fv} can be used to load
      * a uniform variable array of type vec3). The number of elements of the uniform variable array to be modified is
      * specified by $count
      *
-     * The commands {@see GL46::glProgramUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
+     * The commands {@see GL41::programUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
      * or an array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix.
      * The number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3
      * × 3 matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values).
      * Non-square matrix dimensionality is explicit, with the first number representing the number of columns and the
      * second number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2
-     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be
-     * supplied in column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied
+     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL41::GL_FALSE}, each matrix is assumed to be
+     * supplied in column major order. If $transpose is {@see GL41::GL_TRUE}, each matrix is assumed to be supplied
      * in row major order. The $count argument indicates the number of matrices to be passed. A count of 1 should be
      * used if modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of
      * matrices.
@@ -2311,17 +2312,18 @@ class GL41 extends GL40
      */
     public function programUniform3i(int $program, int $location, int $v0, int $v1, int $v2): void
     {
-        $__proc = $this->getProcAs('glProgramUniform3i', 'void (*)(GLuint program, GLint location, GLint v0, GLint v1, GLint v2)');
+        $__proc = $this->proc('glProgramUniform3i',
+            'void (*)(GLuint program, GLint location, GLint v0, GLint v1, GLint v2)');
         $__proc($program, $location, $v0, $v1, $v2);
     }
 
     /**
-     * {@see GL46::glProgramUniform} modifies the value of a uniform variable or a uniform variable array. The
+     * {@see GL41::programUniform} modifies the value of a uniform variable or a uniform variable array. The
      * location of the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glProgramUniform} operates on the program object specified by
+     * {@see GL41::getUniformLocation}. {@see GL41::programUniform} operates on the program object specified by
      * $program.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
      * variable specified by $location using the values passed as arguments. The number specified in the command
      * should match the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1}
      * for `float`, `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The
@@ -2338,10 +2340,10 @@ class GL41 extends GL40
      * set to `true` otherwise.
      *
      * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glProgramUniform} until
+     * linked successfully. They retain the values assigned to them by a call to {@see GL41::programUniform} until
      * the next successful link operation occurs on the program object, when they are once again initialized to 0.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
      * or a uniform variable array. These commands pass a count and a pointer to the values to be loaded into a
      * uniform variable or a uniform variable array. A count of 1 should be used if modifying the value of a single
      * uniform variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When
@@ -2352,21 +2354,21 @@ class GL41 extends GL40
      * number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
      * `int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `bvec2`, etc.). The data type specified in the name of the
      * command must match the data type for the specified uniform variable as described previously for
-     * {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}}.
+     * {@see GL41::programUniform{1|2|3|4}{f|i|ui}}.
      *
      * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glProgramUniform3f} or {@see GL46::glProgramUniform3fv} can be used to load
+     * of the command (e.g., {@see GL41::programUniform3f} or {@see GL41::programUniform3fv} can be used to load
      * a uniform variable array of type vec3). The number of elements of the uniform variable array to be modified is
      * specified by $count
      *
-     * The commands {@see GL46::glProgramUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
+     * The commands {@see GL41::programUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
      * or an array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix.
      * The number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3
      * × 3 matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values).
      * Non-square matrix dimensionality is explicit, with the first number representing the number of columns and the
      * second number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2
-     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be
-     * supplied in column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied
+     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL41::GL_FALSE}, each matrix is assumed to be
+     * supplied in column major order. If $transpose is {@see GL41::GL_TRUE}, each matrix is assumed to be supplied
      * in row major order. The $count argument indicates the number of matrices to be passed. A count of 1 should be
      * used if modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of
      * matrices.
@@ -2376,22 +2378,23 @@ class GL41 extends GL40
      * @param int $program
      * @param int $location
      * @param int $count
-     * @param \FFI\CData|null $value
+     * @param CData|null $value
      * @return void
      */
-    public function programUniform3iv(int $program, int $location, int $count, ?\FFI\CData $value): void
+    public function programUniform3iv(int $program, int $location, int $count, ?CData $value): void
     {
-        $__proc = $this->getProcAs('glProgramUniform3iv', 'void (*)(GLuint program, GLint location, GLsizei count, const GLint *value)');
+        $__proc = $this->proc('glProgramUniform3iv',
+            'void (*)(GLuint program, GLint location, GLsizei count, const GLint *value)');
         $__proc($program, $location, $count, $value);
     }
 
     /**
-     * {@see GL46::glProgramUniform} modifies the value of a uniform variable or a uniform variable array. The
+     * {@see GL41::programUniform} modifies the value of a uniform variable or a uniform variable array. The
      * location of the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glProgramUniform} operates on the program object specified by
+     * {@see GL41::getUniformLocation}. {@see GL41::programUniform} operates on the program object specified by
      * $program.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
      * variable specified by $location using the values passed as arguments. The number specified in the command
      * should match the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1}
      * for `float`, `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The
@@ -2408,10 +2411,10 @@ class GL41 extends GL40
      * set to `true` otherwise.
      *
      * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glProgramUniform} until
+     * linked successfully. They retain the values assigned to them by a call to {@see GL41::programUniform} until
      * the next successful link operation occurs on the program object, when they are once again initialized to 0.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
      * or a uniform variable array. These commands pass a count and a pointer to the values to be loaded into a
      * uniform variable or a uniform variable array. A count of 1 should be used if modifying the value of a single
      * uniform variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When
@@ -2422,21 +2425,21 @@ class GL41 extends GL40
      * number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
      * `int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `bvec2`, etc.). The data type specified in the name of the
      * command must match the data type for the specified uniform variable as described previously for
-     * {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}}.
+     * {@see GL41::programUniform{1|2|3|4}{f|i|ui}}.
      *
      * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glProgramUniform3f} or {@see GL46::glProgramUniform3fv} can be used to load
+     * of the command (e.g., {@see GL41::programUniform3f} or {@see GL41::programUniform3fv} can be used to load
      * a uniform variable array of type vec3). The number of elements of the uniform variable array to be modified is
      * specified by $count
      *
-     * The commands {@see GL46::glProgramUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
+     * The commands {@see GL41::programUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
      * or an array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix.
      * The number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3
      * × 3 matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values).
      * Non-square matrix dimensionality is explicit, with the first number representing the number of columns and the
      * second number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2
-     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be
-     * supplied in column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied
+     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL41::GL_FALSE}, each matrix is assumed to be
+     * supplied in column major order. If $transpose is {@see GL41::GL_TRUE}, each matrix is assumed to be supplied
      * in row major order. The $count argument indicates the number of matrices to be passed. A count of 1 should be
      * used if modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of
      * matrices.
@@ -2452,17 +2455,18 @@ class GL41 extends GL40
      */
     public function programUniform3ui(int $program, int $location, int $v0, int $v1, int $v2): void
     {
-        $__proc = $this->getProcAs('glProgramUniform3ui', 'void (*)(GLuint program, GLint location, GLuint v0, GLuint v1, GLuint v2)');
+        $__proc = $this->proc('glProgramUniform3ui',
+            'void (*)(GLuint program, GLint location, GLuint v0, GLuint v1, GLuint v2)');
         $__proc($program, $location, $v0, $v1, $v2);
     }
 
     /**
-     * {@see GL46::glProgramUniform} modifies the value of a uniform variable or a uniform variable array. The
+     * {@see GL41::programUniform} modifies the value of a uniform variable or a uniform variable array. The
      * location of the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glProgramUniform} operates on the program object specified by
+     * {@see GL41::getUniformLocation}. {@see GL41::programUniform} operates on the program object specified by
      * $program.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
      * variable specified by $location using the values passed as arguments. The number specified in the command
      * should match the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1}
      * for `float`, `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The
@@ -2479,10 +2483,10 @@ class GL41 extends GL40
      * set to `true` otherwise.
      *
      * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glProgramUniform} until
+     * linked successfully. They retain the values assigned to them by a call to {@see GL41::programUniform} until
      * the next successful link operation occurs on the program object, when they are once again initialized to 0.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
      * or a uniform variable array. These commands pass a count and a pointer to the values to be loaded into a
      * uniform variable or a uniform variable array. A count of 1 should be used if modifying the value of a single
      * uniform variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When
@@ -2493,21 +2497,21 @@ class GL41 extends GL40
      * number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
      * `int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `bvec2`, etc.). The data type specified in the name of the
      * command must match the data type for the specified uniform variable as described previously for
-     * {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}}.
+     * {@see GL41::programUniform{1|2|3|4}{f|i|ui}}.
      *
      * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glProgramUniform3f} or {@see GL46::glProgramUniform3fv} can be used to load
+     * of the command (e.g., {@see GL41::programUniform3f} or {@see GL41::programUniform3fv} can be used to load
      * a uniform variable array of type vec3). The number of elements of the uniform variable array to be modified is
      * specified by $count
      *
-     * The commands {@see GL46::glProgramUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
+     * The commands {@see GL41::programUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
      * or an array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix.
      * The number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3
      * × 3 matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values).
      * Non-square matrix dimensionality is explicit, with the first number representing the number of columns and the
      * second number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2
-     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be
-     * supplied in column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied
+     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL41::GL_FALSE}, each matrix is assumed to be
+     * supplied in column major order. If $transpose is {@see GL41::GL_TRUE}, each matrix is assumed to be supplied
      * in row major order. The $count argument indicates the number of matrices to be passed. A count of 1 should be
      * used if modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of
      * matrices.
@@ -2517,22 +2521,23 @@ class GL41 extends GL40
      * @param int $program
      * @param int $location
      * @param int $count
-     * @param \FFI\CData|null $value
+     * @param CData|null $value
      * @return void
      */
-    public function programUniform3uiv(int $program, int $location, int $count, ?\FFI\CData $value): void
+    public function programUniform3uiv(int $program, int $location, int $count, ?CData $value): void
     {
-        $__proc = $this->getProcAs('glProgramUniform3uiv', 'void (*)(GLuint program, GLint location, GLsizei count, const GLuint *value)');
+        $__proc = $this->proc('glProgramUniform3uiv',
+            'void (*)(GLuint program, GLint location, GLsizei count, const GLuint *value)');
         $__proc($program, $location, $count, $value);
     }
 
     /**
-     * {@see GL46::glProgramUniform} modifies the value of a uniform variable or a uniform variable array. The
+     * {@see GL41::programUniform} modifies the value of a uniform variable or a uniform variable array. The
      * location of the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glProgramUniform} operates on the program object specified by
+     * {@see GL41::getUniformLocation}. {@see GL41::programUniform} operates on the program object specified by
      * $program.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
      * variable specified by $location using the values passed as arguments. The number specified in the command
      * should match the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1}
      * for `float`, `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The
@@ -2549,10 +2554,10 @@ class GL41 extends GL40
      * set to `true` otherwise.
      *
      * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glProgramUniform} until
+     * linked successfully. They retain the values assigned to them by a call to {@see GL41::programUniform} until
      * the next successful link operation occurs on the program object, when they are once again initialized to 0.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
      * or a uniform variable array. These commands pass a count and a pointer to the values to be loaded into a
      * uniform variable or a uniform variable array. A count of 1 should be used if modifying the value of a single
      * uniform variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When
@@ -2563,21 +2568,21 @@ class GL41 extends GL40
      * number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
      * `int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `bvec2`, etc.). The data type specified in the name of the
      * command must match the data type for the specified uniform variable as described previously for
-     * {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}}.
+     * {@see GL41::programUniform{1|2|3|4}{f|i|ui}}.
      *
      * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glProgramUniform3f} or {@see GL46::glProgramUniform3fv} can be used to load
+     * of the command (e.g., {@see GL41::programUniform3f} or {@see GL41::programUniform3fv} can be used to load
      * a uniform variable array of type vec3). The number of elements of the uniform variable array to be modified is
      * specified by $count
      *
-     * The commands {@see GL46::glProgramUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
+     * The commands {@see GL41::programUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
      * or an array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix.
      * The number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3
      * × 3 matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values).
      * Non-square matrix dimensionality is explicit, with the first number representing the number of columns and the
      * second number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2
-     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be
-     * supplied in column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied
+     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL41::GL_FALSE}, each matrix is assumed to be
+     * supplied in column major order. If $transpose is {@see GL41::GL_TRUE}, each matrix is assumed to be supplied
      * in row major order. The $count argument indicates the number of matrices to be passed. A count of 1 should be
      * used if modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of
      * matrices.
@@ -2594,17 +2599,18 @@ class GL41 extends GL40
      */
     public function programUniform4d(int $program, int $location, float $v0, float $v1, float $v2, float $v3): void
     {
-        $__proc = $this->getProcAs('glProgramUniform4d', 'void (*)(GLuint program, GLint location, GLdouble v0, GLdouble v1, GLdouble v2, GLdouble v3)');
+        $__proc = $this->proc('glProgramUniform4d',
+            'void (*)(GLuint program, GLint location, GLdouble v0, GLdouble v1, GLdouble v2, GLdouble v3)');
         $__proc($program, $location, $v0, $v1, $v2, $v3);
     }
 
     /**
-     * {@see GL46::glProgramUniform} modifies the value of a uniform variable or a uniform variable array. The
+     * {@see GL41::programUniform} modifies the value of a uniform variable or a uniform variable array. The
      * location of the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glProgramUniform} operates on the program object specified by
+     * {@see GL41::getUniformLocation}. {@see GL41::programUniform} operates on the program object specified by
      * $program.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
      * variable specified by $location using the values passed as arguments. The number specified in the command
      * should match the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1}
      * for `float`, `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The
@@ -2621,10 +2627,10 @@ class GL41 extends GL40
      * set to `true` otherwise.
      *
      * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glProgramUniform} until
+     * linked successfully. They retain the values assigned to them by a call to {@see GL41::programUniform} until
      * the next successful link operation occurs on the program object, when they are once again initialized to 0.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
      * or a uniform variable array. These commands pass a count and a pointer to the values to be loaded into a
      * uniform variable or a uniform variable array. A count of 1 should be used if modifying the value of a single
      * uniform variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When
@@ -2635,21 +2641,21 @@ class GL41 extends GL40
      * number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
      * `int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `bvec2`, etc.). The data type specified in the name of the
      * command must match the data type for the specified uniform variable as described previously for
-     * {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}}.
+     * {@see GL41::programUniform{1|2|3|4}{f|i|ui}}.
      *
      * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glProgramUniform3f} or {@see GL46::glProgramUniform3fv} can be used to load
+     * of the command (e.g., {@see GL41::programUniform3f} or {@see GL41::programUniform3fv} can be used to load
      * a uniform variable array of type vec3). The number of elements of the uniform variable array to be modified is
      * specified by $count
      *
-     * The commands {@see GL46::glProgramUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
+     * The commands {@see GL41::programUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
      * or an array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix.
      * The number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3
      * × 3 matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values).
      * Non-square matrix dimensionality is explicit, with the first number representing the number of columns and the
      * second number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2
-     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be
-     * supplied in column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied
+     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL41::GL_FALSE}, each matrix is assumed to be
+     * supplied in column major order. If $transpose is {@see GL41::GL_TRUE}, each matrix is assumed to be supplied
      * in row major order. The $count argument indicates the number of matrices to be passed. A count of 1 should be
      * used if modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of
      * matrices.
@@ -2659,22 +2665,23 @@ class GL41 extends GL40
      * @param int $program
      * @param int $location
      * @param int $count
-     * @param \FFI\CData|null $value
+     * @param CData|null $value
      * @return void
      */
-    public function programUniform4dv(int $program, int $location, int $count, ?\FFI\CData $value): void
+    public function programUniform4dv(int $program, int $location, int $count, ?CData $value): void
     {
-        $__proc = $this->getProcAs('glProgramUniform4dv', 'void (*)(GLuint program, GLint location, GLsizei count, const GLdouble *value)');
+        $__proc = $this->proc('glProgramUniform4dv',
+            'void (*)(GLuint program, GLint location, GLsizei count, const GLdouble *value)');
         $__proc($program, $location, $count, $value);
     }
 
     /**
-     * {@see GL46::glProgramUniform} modifies the value of a uniform variable or a uniform variable array. The
+     * {@see GL41::programUniform} modifies the value of a uniform variable or a uniform variable array. The
      * location of the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glProgramUniform} operates on the program object specified by
+     * {@see GL41::getUniformLocation}. {@see GL41::programUniform} operates on the program object specified by
      * $program.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
      * variable specified by $location using the values passed as arguments. The number specified in the command
      * should match the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1}
      * for `float`, `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The
@@ -2691,10 +2698,10 @@ class GL41 extends GL40
      * set to `true` otherwise.
      *
      * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glProgramUniform} until
+     * linked successfully. They retain the values assigned to them by a call to {@see GL41::programUniform} until
      * the next successful link operation occurs on the program object, when they are once again initialized to 0.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
      * or a uniform variable array. These commands pass a count and a pointer to the values to be loaded into a
      * uniform variable or a uniform variable array. A count of 1 should be used if modifying the value of a single
      * uniform variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When
@@ -2705,21 +2712,21 @@ class GL41 extends GL40
      * number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
      * `int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `bvec2`, etc.). The data type specified in the name of the
      * command must match the data type for the specified uniform variable as described previously for
-     * {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}}.
+     * {@see GL41::programUniform{1|2|3|4}{f|i|ui}}.
      *
      * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glProgramUniform3f} or {@see GL46::glProgramUniform3fv} can be used to load
+     * of the command (e.g., {@see GL41::programUniform3f} or {@see GL41::programUniform3fv} can be used to load
      * a uniform variable array of type vec3). The number of elements of the uniform variable array to be modified is
      * specified by $count
      *
-     * The commands {@see GL46::glProgramUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
+     * The commands {@see GL41::programUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
      * or an array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix.
      * The number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3
      * × 3 matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values).
      * Non-square matrix dimensionality is explicit, with the first number representing the number of columns and the
      * second number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2
-     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be
-     * supplied in column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied
+     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL41::GL_FALSE}, each matrix is assumed to be
+     * supplied in column major order. If $transpose is {@see GL41::GL_TRUE}, each matrix is assumed to be supplied
      * in row major order. The $count argument indicates the number of matrices to be passed. A count of 1 should be
      * used if modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of
      * matrices.
@@ -2736,17 +2743,18 @@ class GL41 extends GL40
      */
     public function programUniform4f(int $program, int $location, float $v0, float $v1, float $v2, float $v3): void
     {
-        $__proc = $this->getProcAs('glProgramUniform4f', 'void (*)(GLuint program, GLint location, GLfloat v0, GLfloat v1, GLfloat v2, GLfloat v3)');
+        $__proc = $this->proc('glProgramUniform4f',
+            'void (*)(GLuint program, GLint location, GLfloat v0, GLfloat v1, GLfloat v2, GLfloat v3)');
         $__proc($program, $location, $v0, $v1, $v2, $v3);
     }
 
     /**
-     * {@see GL46::glProgramUniform} modifies the value of a uniform variable or a uniform variable array. The
+     * {@see GL41::programUniform} modifies the value of a uniform variable or a uniform variable array. The
      * location of the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glProgramUniform} operates on the program object specified by
+     * {@see GL41::getUniformLocation}. {@see GL41::programUniform} operates on the program object specified by
      * $program.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
      * variable specified by $location using the values passed as arguments. The number specified in the command
      * should match the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1}
      * for `float`, `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The
@@ -2763,10 +2771,10 @@ class GL41 extends GL40
      * set to `true` otherwise.
      *
      * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glProgramUniform} until
+     * linked successfully. They retain the values assigned to them by a call to {@see GL41::programUniform} until
      * the next successful link operation occurs on the program object, when they are once again initialized to 0.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
      * or a uniform variable array. These commands pass a count and a pointer to the values to be loaded into a
      * uniform variable or a uniform variable array. A count of 1 should be used if modifying the value of a single
      * uniform variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When
@@ -2777,21 +2785,21 @@ class GL41 extends GL40
      * number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
      * `int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `bvec2`, etc.). The data type specified in the name of the
      * command must match the data type for the specified uniform variable as described previously for
-     * {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}}.
+     * {@see GL41::programUniform{1|2|3|4}{f|i|ui}}.
      *
      * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glProgramUniform3f} or {@see GL46::glProgramUniform3fv} can be used to load
+     * of the command (e.g., {@see GL41::programUniform3f} or {@see GL41::programUniform3fv} can be used to load
      * a uniform variable array of type vec3). The number of elements of the uniform variable array to be modified is
      * specified by $count
      *
-     * The commands {@see GL46::glProgramUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
+     * The commands {@see GL41::programUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
      * or an array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix.
      * The number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3
      * × 3 matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values).
      * Non-square matrix dimensionality is explicit, with the first number representing the number of columns and the
      * second number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2
-     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be
-     * supplied in column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied
+     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL41::GL_FALSE}, each matrix is assumed to be
+     * supplied in column major order. If $transpose is {@see GL41::GL_TRUE}, each matrix is assumed to be supplied
      * in row major order. The $count argument indicates the number of matrices to be passed. A count of 1 should be
      * used if modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of
      * matrices.
@@ -2801,22 +2809,23 @@ class GL41 extends GL40
      * @param int $program
      * @param int $location
      * @param int $count
-     * @param \FFI\CData|null $value
+     * @param CData|null $value
      * @return void
      */
-    public function programUniform4fv(int $program, int $location, int $count, ?\FFI\CData $value): void
+    public function programUniform4fv(int $program, int $location, int $count, ?CData $value): void
     {
-        $__proc = $this->getProcAs('glProgramUniform4fv', 'void (*)(GLuint program, GLint location, GLsizei count, const GLfloat *value)');
+        $__proc = $this->proc('glProgramUniform4fv',
+            'void (*)(GLuint program, GLint location, GLsizei count, const GLfloat *value)');
         $__proc($program, $location, $count, $value);
     }
 
     /**
-     * {@see GL46::glProgramUniform} modifies the value of a uniform variable or a uniform variable array. The
+     * {@see GL41::programUniform} modifies the value of a uniform variable or a uniform variable array. The
      * location of the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glProgramUniform} operates on the program object specified by
+     * {@see GL41::getUniformLocation}. {@see GL41::programUniform} operates on the program object specified by
      * $program.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
      * variable specified by $location using the values passed as arguments. The number specified in the command
      * should match the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1}
      * for `float`, `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The
@@ -2833,10 +2842,10 @@ class GL41 extends GL40
      * set to `true` otherwise.
      *
      * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glProgramUniform} until
+     * linked successfully. They retain the values assigned to them by a call to {@see GL41::programUniform} until
      * the next successful link operation occurs on the program object, when they are once again initialized to 0.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
      * or a uniform variable array. These commands pass a count and a pointer to the values to be loaded into a
      * uniform variable or a uniform variable array. A count of 1 should be used if modifying the value of a single
      * uniform variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When
@@ -2847,21 +2856,21 @@ class GL41 extends GL40
      * number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
      * `int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `bvec2`, etc.). The data type specified in the name of the
      * command must match the data type for the specified uniform variable as described previously for
-     * {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}}.
+     * {@see GL41::programUniform{1|2|3|4}{f|i|ui}}.
      *
      * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glProgramUniform3f} or {@see GL46::glProgramUniform3fv} can be used to load
+     * of the command (e.g., {@see GL41::programUniform3f} or {@see GL41::programUniform3fv} can be used to load
      * a uniform variable array of type vec3). The number of elements of the uniform variable array to be modified is
      * specified by $count
      *
-     * The commands {@see GL46::glProgramUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
+     * The commands {@see GL41::programUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
      * or an array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix.
      * The number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3
      * × 3 matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values).
      * Non-square matrix dimensionality is explicit, with the first number representing the number of columns and the
      * second number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2
-     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be
-     * supplied in column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied
+     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL41::GL_FALSE}, each matrix is assumed to be
+     * supplied in column major order. If $transpose is {@see GL41::GL_TRUE}, each matrix is assumed to be supplied
      * in row major order. The $count argument indicates the number of matrices to be passed. A count of 1 should be
      * used if modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of
      * matrices.
@@ -2878,17 +2887,18 @@ class GL41 extends GL40
      */
     public function programUniform4i(int $program, int $location, int $v0, int $v1, int $v2, int $v3): void
     {
-        $__proc = $this->getProcAs('glProgramUniform4i', 'void (*)(GLuint program, GLint location, GLint v0, GLint v1, GLint v2, GLint v3)');
+        $__proc = $this->proc('glProgramUniform4i',
+            'void (*)(GLuint program, GLint location, GLint v0, GLint v1, GLint v2, GLint v3)');
         $__proc($program, $location, $v0, $v1, $v2, $v3);
     }
 
     /**
-     * {@see GL46::glProgramUniform} modifies the value of a uniform variable or a uniform variable array. The
+     * {@see GL41::programUniform} modifies the value of a uniform variable or a uniform variable array. The
      * location of the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glProgramUniform} operates on the program object specified by
+     * {@see GL41::getUniformLocation}. {@see GL41::programUniform} operates on the program object specified by
      * $program.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
      * variable specified by $location using the values passed as arguments. The number specified in the command
      * should match the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1}
      * for `float`, `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The
@@ -2905,10 +2915,10 @@ class GL41 extends GL40
      * set to `true` otherwise.
      *
      * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glProgramUniform} until
+     * linked successfully. They retain the values assigned to them by a call to {@see GL41::programUniform} until
      * the next successful link operation occurs on the program object, when they are once again initialized to 0.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
      * or a uniform variable array. These commands pass a count and a pointer to the values to be loaded into a
      * uniform variable or a uniform variable array. A count of 1 should be used if modifying the value of a single
      * uniform variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When
@@ -2919,21 +2929,21 @@ class GL41 extends GL40
      * number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
      * `int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `bvec2`, etc.). The data type specified in the name of the
      * command must match the data type for the specified uniform variable as described previously for
-     * {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}}.
+     * {@see GL41::programUniform{1|2|3|4}{f|i|ui}}.
      *
      * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glProgramUniform3f} or {@see GL46::glProgramUniform3fv} can be used to load
+     * of the command (e.g., {@see GL41::programUniform3f} or {@see GL41::programUniform3fv} can be used to load
      * a uniform variable array of type vec3). The number of elements of the uniform variable array to be modified is
      * specified by $count
      *
-     * The commands {@see GL46::glProgramUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
+     * The commands {@see GL41::programUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
      * or an array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix.
      * The number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3
      * × 3 matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values).
      * Non-square matrix dimensionality is explicit, with the first number representing the number of columns and the
      * second number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2
-     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be
-     * supplied in column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied
+     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL41::GL_FALSE}, each matrix is assumed to be
+     * supplied in column major order. If $transpose is {@see GL41::GL_TRUE}, each matrix is assumed to be supplied
      * in row major order. The $count argument indicates the number of matrices to be passed. A count of 1 should be
      * used if modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of
      * matrices.
@@ -2943,22 +2953,23 @@ class GL41 extends GL40
      * @param int $program
      * @param int $location
      * @param int $count
-     * @param \FFI\CData|null $value
+     * @param CData|null $value
      * @return void
      */
-    public function programUniform4iv(int $program, int $location, int $count, ?\FFI\CData $value): void
+    public function programUniform4iv(int $program, int $location, int $count, ?CData $value): void
     {
-        $__proc = $this->getProcAs('glProgramUniform4iv', 'void (*)(GLuint program, GLint location, GLsizei count, const GLint *value)');
+        $__proc = $this->proc('glProgramUniform4iv',
+            'void (*)(GLuint program, GLint location, GLsizei count, const GLint *value)');
         $__proc($program, $location, $count, $value);
     }
 
     /**
-     * {@see GL46::glProgramUniform} modifies the value of a uniform variable or a uniform variable array. The
+     * {@see GL41::programUniform} modifies the value of a uniform variable or a uniform variable array. The
      * location of the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glProgramUniform} operates on the program object specified by
+     * {@see GL41::getUniformLocation}. {@see GL41::programUniform} operates on the program object specified by
      * $program.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
      * variable specified by $location using the values passed as arguments. The number specified in the command
      * should match the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1}
      * for `float`, `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The
@@ -2975,10 +2986,10 @@ class GL41 extends GL40
      * set to `true` otherwise.
      *
      * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glProgramUniform} until
+     * linked successfully. They retain the values assigned to them by a call to {@see GL41::programUniform} until
      * the next successful link operation occurs on the program object, when they are once again initialized to 0.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
      * or a uniform variable array. These commands pass a count and a pointer to the values to be loaded into a
      * uniform variable or a uniform variable array. A count of 1 should be used if modifying the value of a single
      * uniform variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When
@@ -2989,21 +3000,21 @@ class GL41 extends GL40
      * number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
      * `int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `bvec2`, etc.). The data type specified in the name of the
      * command must match the data type for the specified uniform variable as described previously for
-     * {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}}.
+     * {@see GL41::programUniform{1|2|3|4}{f|i|ui}}.
      *
      * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glProgramUniform3f} or {@see GL46::glProgramUniform3fv} can be used to load
+     * of the command (e.g., {@see GL41::programUniform3f} or {@see GL41::programUniform3fv} can be used to load
      * a uniform variable array of type vec3). The number of elements of the uniform variable array to be modified is
      * specified by $count
      *
-     * The commands {@see GL46::glProgramUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
+     * The commands {@see GL41::programUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
      * or an array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix.
      * The number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3
      * × 3 matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values).
      * Non-square matrix dimensionality is explicit, with the first number representing the number of columns and the
      * second number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2
-     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be
-     * supplied in column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied
+     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL41::GL_FALSE}, each matrix is assumed to be
+     * supplied in column major order. If $transpose is {@see GL41::GL_TRUE}, each matrix is assumed to be supplied
      * in row major order. The $count argument indicates the number of matrices to be passed. A count of 1 should be
      * used if modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of
      * matrices.
@@ -3020,17 +3031,18 @@ class GL41 extends GL40
      */
     public function programUniform4ui(int $program, int $location, int $v0, int $v1, int $v2, int $v3): void
     {
-        $__proc = $this->getProcAs('glProgramUniform4ui', 'void (*)(GLuint program, GLint location, GLuint v0, GLuint v1, GLuint v2, GLuint v3)');
+        $__proc = $this->proc('glProgramUniform4ui',
+            'void (*)(GLuint program, GLint location, GLuint v0, GLuint v1, GLuint v2, GLuint v3)');
         $__proc($program, $location, $v0, $v1, $v2, $v3);
     }
 
     /**
-     * {@see GL46::glProgramUniform} modifies the value of a uniform variable or a uniform variable array. The
+     * {@see GL41::programUniform} modifies the value of a uniform variable or a uniform variable array. The
      * location of the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glProgramUniform} operates on the program object specified by
+     * {@see GL41::getUniformLocation}. {@see GL41::programUniform} operates on the program object specified by
      * $program.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
      * variable specified by $location using the values passed as arguments. The number specified in the command
      * should match the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1}
      * for `float`, `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The
@@ -3047,10 +3059,10 @@ class GL41 extends GL40
      * set to `true` otherwise.
      *
      * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glProgramUniform} until
+     * linked successfully. They retain the values assigned to them by a call to {@see GL41::programUniform} until
      * the next successful link operation occurs on the program object, when they are once again initialized to 0.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
      * or a uniform variable array. These commands pass a count and a pointer to the values to be loaded into a
      * uniform variable or a uniform variable array. A count of 1 should be used if modifying the value of a single
      * uniform variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When
@@ -3061,21 +3073,21 @@ class GL41 extends GL40
      * number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
      * `int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `bvec2`, etc.). The data type specified in the name of the
      * command must match the data type for the specified uniform variable as described previously for
-     * {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}}.
+     * {@see GL41::programUniform{1|2|3|4}{f|i|ui}}.
      *
      * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glProgramUniform3f} or {@see GL46::glProgramUniform3fv} can be used to load
+     * of the command (e.g., {@see GL41::programUniform3f} or {@see GL41::programUniform3fv} can be used to load
      * a uniform variable array of type vec3). The number of elements of the uniform variable array to be modified is
      * specified by $count
      *
-     * The commands {@see GL46::glProgramUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
+     * The commands {@see GL41::programUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
      * or an array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix.
      * The number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3
      * × 3 matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values).
      * Non-square matrix dimensionality is explicit, with the first number representing the number of columns and the
      * second number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2
-     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be
-     * supplied in column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied
+     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL41::GL_FALSE}, each matrix is assumed to be
+     * supplied in column major order. If $transpose is {@see GL41::GL_TRUE}, each matrix is assumed to be supplied
      * in row major order. The $count argument indicates the number of matrices to be passed. A count of 1 should be
      * used if modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of
      * matrices.
@@ -3085,22 +3097,23 @@ class GL41 extends GL40
      * @param int $program
      * @param int $location
      * @param int $count
-     * @param \FFI\CData|null $value
+     * @param CData|null $value
      * @return void
      */
-    public function programUniform4uiv(int $program, int $location, int $count, ?\FFI\CData $value): void
+    public function programUniform4uiv(int $program, int $location, int $count, ?CData $value): void
     {
-        $__proc = $this->getProcAs('glProgramUniform4uiv', 'void (*)(GLuint program, GLint location, GLsizei count, const GLuint *value)');
+        $__proc = $this->proc('glProgramUniform4uiv',
+            'void (*)(GLuint program, GLint location, GLsizei count, const GLuint *value)');
         $__proc($program, $location, $count, $value);
     }
 
     /**
-     * {@see GL46::glProgramUniform} modifies the value of a uniform variable or a uniform variable array. The
+     * {@see GL41::programUniform} modifies the value of a uniform variable or a uniform variable array. The
      * location of the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glProgramUniform} operates on the program object specified by
+     * {@see GL41::getUniformLocation}. {@see GL41::programUniform} operates on the program object specified by
      * $program.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
      * variable specified by $location using the values passed as arguments. The number specified in the command
      * should match the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1}
      * for `float`, `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The
@@ -3117,10 +3130,10 @@ class GL41 extends GL40
      * set to `true` otherwise.
      *
      * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glProgramUniform} until
+     * linked successfully. They retain the values assigned to them by a call to {@see GL41::programUniform} until
      * the next successful link operation occurs on the program object, when they are once again initialized to 0.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
      * or a uniform variable array. These commands pass a count and a pointer to the values to be loaded into a
      * uniform variable or a uniform variable array. A count of 1 should be used if modifying the value of a single
      * uniform variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When
@@ -3131,21 +3144,21 @@ class GL41 extends GL40
      * number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
      * `int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `bvec2`, etc.). The data type specified in the name of the
      * command must match the data type for the specified uniform variable as described previously for
-     * {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}}.
+     * {@see GL41::programUniform{1|2|3|4}{f|i|ui}}.
      *
      * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glProgramUniform3f} or {@see GL46::glProgramUniform3fv} can be used to load
+     * of the command (e.g., {@see GL41::programUniform3f} or {@see GL41::programUniform3fv} can be used to load
      * a uniform variable array of type vec3). The number of elements of the uniform variable array to be modified is
      * specified by $count
      *
-     * The commands {@see GL46::glProgramUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
+     * The commands {@see GL41::programUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
      * or an array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix.
      * The number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3
      * × 3 matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values).
      * Non-square matrix dimensionality is explicit, with the first number representing the number of columns and the
      * second number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2
-     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be
-     * supplied in column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied
+     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL41::GL_FALSE}, each matrix is assumed to be
+     * supplied in column major order. If $transpose is {@see GL41::GL_TRUE}, each matrix is assumed to be supplied
      * in row major order. The $count argument indicates the number of matrices to be passed. A count of 1 should be
      * used if modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of
      * matrices.
@@ -3156,22 +3169,28 @@ class GL41 extends GL40
      * @param int $location
      * @param int $count
      * @param int $transpose
-     * @param \FFI\CData|null $value
+     * @param CData|null $value
      * @return void
      */
-    public function programUniformMatrix2dv(int $program, int $location, int $count, int $transpose, ?\FFI\CData $value): void
-    {
-        $__proc = $this->getProcAs('glProgramUniformMatrix2dv', 'void (*)(GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLdouble *value)');
+    public function programUniformMatrix2dv(
+        int $program,
+        int $location,
+        int $count,
+        int $transpose,
+        ?CData $value
+    ): void {
+        $__proc = $this->proc('glProgramUniformMatrix2dv',
+            'void (*)(GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLdouble *value)');
         $__proc($program, $location, $count, $transpose, $value);
     }
 
     /**
-     * {@see GL46::glProgramUniform} modifies the value of a uniform variable or a uniform variable array. The
+     * {@see GL41::programUniform} modifies the value of a uniform variable or a uniform variable array. The
      * location of the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glProgramUniform} operates on the program object specified by
+     * {@see GL41::getUniformLocation}. {@see GL41::programUniform} operates on the program object specified by
      * $program.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
      * variable specified by $location using the values passed as arguments. The number specified in the command
      * should match the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1}
      * for `float`, `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The
@@ -3188,10 +3207,10 @@ class GL41 extends GL40
      * set to `true` otherwise.
      *
      * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glProgramUniform} until
+     * linked successfully. They retain the values assigned to them by a call to {@see GL41::programUniform} until
      * the next successful link operation occurs on the program object, when they are once again initialized to 0.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
      * or a uniform variable array. These commands pass a count and a pointer to the values to be loaded into a
      * uniform variable or a uniform variable array. A count of 1 should be used if modifying the value of a single
      * uniform variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When
@@ -3202,21 +3221,21 @@ class GL41 extends GL40
      * number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
      * `int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `bvec2`, etc.). The data type specified in the name of the
      * command must match the data type for the specified uniform variable as described previously for
-     * {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}}.
+     * {@see GL41::programUniform{1|2|3|4}{f|i|ui}}.
      *
      * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glProgramUniform3f} or {@see GL46::glProgramUniform3fv} can be used to load
+     * of the command (e.g., {@see GL41::programUniform3f} or {@see GL41::programUniform3fv} can be used to load
      * a uniform variable array of type vec3). The number of elements of the uniform variable array to be modified is
      * specified by $count
      *
-     * The commands {@see GL46::glProgramUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
+     * The commands {@see GL41::programUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
      * or an array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix.
      * The number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3
      * × 3 matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values).
      * Non-square matrix dimensionality is explicit, with the first number representing the number of columns and the
      * second number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2
-     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be
-     * supplied in column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied
+     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL41::GL_FALSE}, each matrix is assumed to be
+     * supplied in column major order. If $transpose is {@see GL41::GL_TRUE}, each matrix is assumed to be supplied
      * in row major order. The $count argument indicates the number of matrices to be passed. A count of 1 should be
      * used if modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of
      * matrices.
@@ -3227,22 +3246,28 @@ class GL41 extends GL40
      * @param int $location
      * @param int $count
      * @param int $transpose
-     * @param \FFI\CData|null $value
+     * @param CData|null $value
      * @return void
      */
-    public function programUniformMatrix2fv(int $program, int $location, int $count, int $transpose, ?\FFI\CData $value): void
-    {
-        $__proc = $this->getProcAs('glProgramUniformMatrix2fv', 'void (*)(GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)');
+    public function programUniformMatrix2fv(
+        int $program,
+        int $location,
+        int $count,
+        int $transpose,
+        ?CData $value
+    ): void {
+        $__proc = $this->proc('glProgramUniformMatrix2fv',
+            'void (*)(GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)');
         $__proc($program, $location, $count, $transpose, $value);
     }
 
     /**
-     * {@see GL46::glProgramUniform} modifies the value of a uniform variable or a uniform variable array. The
+     * {@see GL41::programUniform} modifies the value of a uniform variable or a uniform variable array. The
      * location of the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glProgramUniform} operates on the program object specified by
+     * {@see GL41::getUniformLocation}. {@see GL41::programUniform} operates on the program object specified by
      * $program.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
      * variable specified by $location using the values passed as arguments. The number specified in the command
      * should match the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1}
      * for `float`, `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The
@@ -3259,10 +3284,10 @@ class GL41 extends GL40
      * set to `true` otherwise.
      *
      * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glProgramUniform} until
+     * linked successfully. They retain the values assigned to them by a call to {@see GL41::programUniform} until
      * the next successful link operation occurs on the program object, when they are once again initialized to 0.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
      * or a uniform variable array. These commands pass a count and a pointer to the values to be loaded into a
      * uniform variable or a uniform variable array. A count of 1 should be used if modifying the value of a single
      * uniform variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When
@@ -3273,21 +3298,21 @@ class GL41 extends GL40
      * number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
      * `int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `bvec2`, etc.). The data type specified in the name of the
      * command must match the data type for the specified uniform variable as described previously for
-     * {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}}.
+     * {@see GL41::programUniform{1|2|3|4}{f|i|ui}}.
      *
      * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glProgramUniform3f} or {@see GL46::glProgramUniform3fv} can be used to load
+     * of the command (e.g., {@see GL41::programUniform3f} or {@see GL41::programUniform3fv} can be used to load
      * a uniform variable array of type vec3). The number of elements of the uniform variable array to be modified is
      * specified by $count
      *
-     * The commands {@see GL46::glProgramUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
+     * The commands {@see GL41::programUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
      * or an array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix.
      * The number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3
      * × 3 matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values).
      * Non-square matrix dimensionality is explicit, with the first number representing the number of columns and the
      * second number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2
-     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be
-     * supplied in column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied
+     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL41::GL_FALSE}, each matrix is assumed to be
+     * supplied in column major order. If $transpose is {@see GL41::GL_TRUE}, each matrix is assumed to be supplied
      * in row major order. The $count argument indicates the number of matrices to be passed. A count of 1 should be
      * used if modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of
      * matrices.
@@ -3298,22 +3323,28 @@ class GL41 extends GL40
      * @param int $location
      * @param int $count
      * @param int $transpose
-     * @param \FFI\CData|null $value
+     * @param CData|null $value
      * @return void
      */
-    public function programUniformMatrix2x3dv(int $program, int $location, int $count, int $transpose, ?\FFI\CData $value): void
-    {
-        $__proc = $this->getProcAs('glProgramUniformMatrix2x3dv', 'void (*)(GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLdouble *value)');
+    public function programUniformMatrix2x3dv(
+        int $program,
+        int $location,
+        int $count,
+        int $transpose,
+        ?CData $value
+    ): void {
+        $__proc = $this->proc('glProgramUniformMatrix2x3dv',
+            'void (*)(GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLdouble *value)');
         $__proc($program, $location, $count, $transpose, $value);
     }
 
     /**
-     * {@see GL46::glProgramUniform} modifies the value of a uniform variable or a uniform variable array. The
+     * {@see GL41::programUniform} modifies the value of a uniform variable or a uniform variable array. The
      * location of the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glProgramUniform} operates on the program object specified by
+     * {@see GL41::getUniformLocation}. {@see GL41::programUniform} operates on the program object specified by
      * $program.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
      * variable specified by $location using the values passed as arguments. The number specified in the command
      * should match the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1}
      * for `float`, `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The
@@ -3330,10 +3361,10 @@ class GL41 extends GL40
      * set to `true` otherwise.
      *
      * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glProgramUniform} until
+     * linked successfully. They retain the values assigned to them by a call to {@see GL41::programUniform} until
      * the next successful link operation occurs on the program object, when they are once again initialized to 0.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
      * or a uniform variable array. These commands pass a count and a pointer to the values to be loaded into a
      * uniform variable or a uniform variable array. A count of 1 should be used if modifying the value of a single
      * uniform variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When
@@ -3344,21 +3375,21 @@ class GL41 extends GL40
      * number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
      * `int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `bvec2`, etc.). The data type specified in the name of the
      * command must match the data type for the specified uniform variable as described previously for
-     * {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}}.
+     * {@see GL41::programUniform{1|2|3|4}{f|i|ui}}.
      *
      * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glProgramUniform3f} or {@see GL46::glProgramUniform3fv} can be used to load
+     * of the command (e.g., {@see GL41::programUniform3f} or {@see GL41::programUniform3fv} can be used to load
      * a uniform variable array of type vec3). The number of elements of the uniform variable array to be modified is
      * specified by $count
      *
-     * The commands {@see GL46::glProgramUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
+     * The commands {@see GL41::programUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
      * or an array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix.
      * The number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3
      * × 3 matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values).
      * Non-square matrix dimensionality is explicit, with the first number representing the number of columns and the
      * second number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2
-     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be
-     * supplied in column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied
+     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL41::GL_FALSE}, each matrix is assumed to be
+     * supplied in column major order. If $transpose is {@see GL41::GL_TRUE}, each matrix is assumed to be supplied
      * in row major order. The $count argument indicates the number of matrices to be passed. A count of 1 should be
      * used if modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of
      * matrices.
@@ -3369,22 +3400,28 @@ class GL41 extends GL40
      * @param int $location
      * @param int $count
      * @param int $transpose
-     * @param \FFI\CData|null $value
+     * @param CData|null $value
      * @return void
      */
-    public function programUniformMatrix2x3fv(int $program, int $location, int $count, int $transpose, ?\FFI\CData $value): void
-    {
-        $__proc = $this->getProcAs('glProgramUniformMatrix2x3fv', 'void (*)(GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)');
+    public function programUniformMatrix2x3fv(
+        int $program,
+        int $location,
+        int $count,
+        int $transpose,
+        ?CData $value
+    ): void {
+        $__proc = $this->proc('glProgramUniformMatrix2x3fv',
+            'void (*)(GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)');
         $__proc($program, $location, $count, $transpose, $value);
     }
 
     /**
-     * {@see GL46::glProgramUniform} modifies the value of a uniform variable or a uniform variable array. The
+     * {@see GL41::programUniform} modifies the value of a uniform variable or a uniform variable array. The
      * location of the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glProgramUniform} operates on the program object specified by
+     * {@see GL41::getUniformLocation}. {@see GL41::programUniform} operates on the program object specified by
      * $program.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
      * variable specified by $location using the values passed as arguments. The number specified in the command
      * should match the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1}
      * for `float`, `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The
@@ -3401,10 +3438,10 @@ class GL41 extends GL40
      * set to `true` otherwise.
      *
      * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glProgramUniform} until
+     * linked successfully. They retain the values assigned to them by a call to {@see GL41::programUniform} until
      * the next successful link operation occurs on the program object, when they are once again initialized to 0.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
      * or a uniform variable array. These commands pass a count and a pointer to the values to be loaded into a
      * uniform variable or a uniform variable array. A count of 1 should be used if modifying the value of a single
      * uniform variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When
@@ -3415,21 +3452,21 @@ class GL41 extends GL40
      * number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
      * `int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `bvec2`, etc.). The data type specified in the name of the
      * command must match the data type for the specified uniform variable as described previously for
-     * {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}}.
+     * {@see GL41::programUniform{1|2|3|4}{f|i|ui}}.
      *
      * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glProgramUniform3f} or {@see GL46::glProgramUniform3fv} can be used to load
+     * of the command (e.g., {@see GL41::programUniform3f} or {@see GL41::programUniform3fv} can be used to load
      * a uniform variable array of type vec3). The number of elements of the uniform variable array to be modified is
      * specified by $count
      *
-     * The commands {@see GL46::glProgramUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
+     * The commands {@see GL41::programUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
      * or an array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix.
      * The number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3
      * × 3 matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values).
      * Non-square matrix dimensionality is explicit, with the first number representing the number of columns and the
      * second number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2
-     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be
-     * supplied in column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied
+     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL41::GL_FALSE}, each matrix is assumed to be
+     * supplied in column major order. If $transpose is {@see GL41::GL_TRUE}, each matrix is assumed to be supplied
      * in row major order. The $count argument indicates the number of matrices to be passed. A count of 1 should be
      * used if modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of
      * matrices.
@@ -3440,22 +3477,28 @@ class GL41 extends GL40
      * @param int $location
      * @param int $count
      * @param int $transpose
-     * @param \FFI\CData|null $value
+     * @param CData|null $value
      * @return void
      */
-    public function programUniformMatrix2x4dv(int $program, int $location, int $count, int $transpose, ?\FFI\CData $value): void
-    {
-        $__proc = $this->getProcAs('glProgramUniformMatrix2x4dv', 'void (*)(GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLdouble *value)');
+    public function programUniformMatrix2x4dv(
+        int $program,
+        int $location,
+        int $count,
+        int $transpose,
+        ?CData $value
+    ): void {
+        $__proc = $this->proc('glProgramUniformMatrix2x4dv',
+            'void (*)(GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLdouble *value)');
         $__proc($program, $location, $count, $transpose, $value);
     }
 
     /**
-     * {@see GL46::glProgramUniform} modifies the value of a uniform variable or a uniform variable array. The
+     * {@see GL41::programUniform} modifies the value of a uniform variable or a uniform variable array. The
      * location of the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glProgramUniform} operates on the program object specified by
+     * {@see GL41::getUniformLocation}. {@see GL41::programUniform} operates on the program object specified by
      * $program.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
      * variable specified by $location using the values passed as arguments. The number specified in the command
      * should match the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1}
      * for `float`, `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The
@@ -3472,10 +3515,10 @@ class GL41 extends GL40
      * set to `true` otherwise.
      *
      * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glProgramUniform} until
+     * linked successfully. They retain the values assigned to them by a call to {@see GL41::programUniform} until
      * the next successful link operation occurs on the program object, when they are once again initialized to 0.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
      * or a uniform variable array. These commands pass a count and a pointer to the values to be loaded into a
      * uniform variable or a uniform variable array. A count of 1 should be used if modifying the value of a single
      * uniform variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When
@@ -3486,21 +3529,21 @@ class GL41 extends GL40
      * number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
      * `int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `bvec2`, etc.). The data type specified in the name of the
      * command must match the data type for the specified uniform variable as described previously for
-     * {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}}.
+     * {@see GL41::programUniform{1|2|3|4}{f|i|ui}}.
      *
      * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glProgramUniform3f} or {@see GL46::glProgramUniform3fv} can be used to load
+     * of the command (e.g., {@see GL41::programUniform3f} or {@see GL41::programUniform3fv} can be used to load
      * a uniform variable array of type vec3). The number of elements of the uniform variable array to be modified is
      * specified by $count
      *
-     * The commands {@see GL46::glProgramUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
+     * The commands {@see GL41::programUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
      * or an array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix.
      * The number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3
      * × 3 matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values).
      * Non-square matrix dimensionality is explicit, with the first number representing the number of columns and the
      * second number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2
-     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be
-     * supplied in column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied
+     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL41::GL_FALSE}, each matrix is assumed to be
+     * supplied in column major order. If $transpose is {@see GL41::GL_TRUE}, each matrix is assumed to be supplied
      * in row major order. The $count argument indicates the number of matrices to be passed. A count of 1 should be
      * used if modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of
      * matrices.
@@ -3511,22 +3554,28 @@ class GL41 extends GL40
      * @param int $location
      * @param int $count
      * @param int $transpose
-     * @param \FFI\CData|null $value
+     * @param CData|null $value
      * @return void
      */
-    public function programUniformMatrix2x4fv(int $program, int $location, int $count, int $transpose, ?\FFI\CData $value): void
-    {
-        $__proc = $this->getProcAs('glProgramUniformMatrix2x4fv', 'void (*)(GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)');
+    public function programUniformMatrix2x4fv(
+        int $program,
+        int $location,
+        int $count,
+        int $transpose,
+        ?CData $value
+    ): void {
+        $__proc = $this->proc('glProgramUniformMatrix2x4fv',
+            'void (*)(GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)');
         $__proc($program, $location, $count, $transpose, $value);
     }
 
     /**
-     * {@see GL46::glProgramUniform} modifies the value of a uniform variable or a uniform variable array. The
+     * {@see GL41::programUniform} modifies the value of a uniform variable or a uniform variable array. The
      * location of the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glProgramUniform} operates on the program object specified by
+     * {@see GL41::getUniformLocation}. {@see GL41::programUniform} operates on the program object specified by
      * $program.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
      * variable specified by $location using the values passed as arguments. The number specified in the command
      * should match the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1}
      * for `float`, `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The
@@ -3543,10 +3592,10 @@ class GL41 extends GL40
      * set to `true` otherwise.
      *
      * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glProgramUniform} until
+     * linked successfully. They retain the values assigned to them by a call to {@see GL41::programUniform} until
      * the next successful link operation occurs on the program object, when they are once again initialized to 0.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
      * or a uniform variable array. These commands pass a count and a pointer to the values to be loaded into a
      * uniform variable or a uniform variable array. A count of 1 should be used if modifying the value of a single
      * uniform variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When
@@ -3557,21 +3606,21 @@ class GL41 extends GL40
      * number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
      * `int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `bvec2`, etc.). The data type specified in the name of the
      * command must match the data type for the specified uniform variable as described previously for
-     * {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}}.
+     * {@see GL41::programUniform{1|2|3|4}{f|i|ui}}.
      *
      * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glProgramUniform3f} or {@see GL46::glProgramUniform3fv} can be used to load
+     * of the command (e.g., {@see GL41::programUniform3f} or {@see GL41::programUniform3fv} can be used to load
      * a uniform variable array of type vec3). The number of elements of the uniform variable array to be modified is
      * specified by $count
      *
-     * The commands {@see GL46::glProgramUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
+     * The commands {@see GL41::programUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
      * or an array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix.
      * The number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3
      * × 3 matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values).
      * Non-square matrix dimensionality is explicit, with the first number representing the number of columns and the
      * second number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2
-     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be
-     * supplied in column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied
+     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL41::GL_FALSE}, each matrix is assumed to be
+     * supplied in column major order. If $transpose is {@see GL41::GL_TRUE}, each matrix is assumed to be supplied
      * in row major order. The $count argument indicates the number of matrices to be passed. A count of 1 should be
      * used if modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of
      * matrices.
@@ -3582,22 +3631,28 @@ class GL41 extends GL40
      * @param int $location
      * @param int $count
      * @param int $transpose
-     * @param \FFI\CData|null $value
+     * @param CData|null $value
      * @return void
      */
-    public function programUniformMatrix3dv(int $program, int $location, int $count, int $transpose, ?\FFI\CData $value): void
-    {
-        $__proc = $this->getProcAs('glProgramUniformMatrix3dv', 'void (*)(GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLdouble *value)');
+    public function programUniformMatrix3dv(
+        int $program,
+        int $location,
+        int $count,
+        int $transpose,
+        ?CData $value
+    ): void {
+        $__proc = $this->proc('glProgramUniformMatrix3dv',
+            'void (*)(GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLdouble *value)');
         $__proc($program, $location, $count, $transpose, $value);
     }
 
     /**
-     * {@see GL46::glProgramUniform} modifies the value of a uniform variable or a uniform variable array. The
+     * {@see GL41::programUniform} modifies the value of a uniform variable or a uniform variable array. The
      * location of the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glProgramUniform} operates on the program object specified by
+     * {@see GL41::getUniformLocation}. {@see GL41::programUniform} operates on the program object specified by
      * $program.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
      * variable specified by $location using the values passed as arguments. The number specified in the command
      * should match the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1}
      * for `float`, `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The
@@ -3614,10 +3669,10 @@ class GL41 extends GL40
      * set to `true` otherwise.
      *
      * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glProgramUniform} until
+     * linked successfully. They retain the values assigned to them by a call to {@see GL41::programUniform} until
      * the next successful link operation occurs on the program object, when they are once again initialized to 0.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
      * or a uniform variable array. These commands pass a count and a pointer to the values to be loaded into a
      * uniform variable or a uniform variable array. A count of 1 should be used if modifying the value of a single
      * uniform variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When
@@ -3628,21 +3683,21 @@ class GL41 extends GL40
      * number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
      * `int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `bvec2`, etc.). The data type specified in the name of the
      * command must match the data type for the specified uniform variable as described previously for
-     * {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}}.
+     * {@see GL41::programUniform{1|2|3|4}{f|i|ui}}.
      *
      * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glProgramUniform3f} or {@see GL46::glProgramUniform3fv} can be used to load
+     * of the command (e.g., {@see GL41::programUniform3f} or {@see GL41::programUniform3fv} can be used to load
      * a uniform variable array of type vec3). The number of elements of the uniform variable array to be modified is
      * specified by $count
      *
-     * The commands {@see GL46::glProgramUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
+     * The commands {@see GL41::programUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
      * or an array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix.
      * The number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3
      * × 3 matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values).
      * Non-square matrix dimensionality is explicit, with the first number representing the number of columns and the
      * second number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2
-     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be
-     * supplied in column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied
+     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL41::GL_FALSE}, each matrix is assumed to be
+     * supplied in column major order. If $transpose is {@see GL41::GL_TRUE}, each matrix is assumed to be supplied
      * in row major order. The $count argument indicates the number of matrices to be passed. A count of 1 should be
      * used if modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of
      * matrices.
@@ -3653,22 +3708,28 @@ class GL41 extends GL40
      * @param int $location
      * @param int $count
      * @param int $transpose
-     * @param \FFI\CData|null $value
+     * @param CData|null $value
      * @return void
      */
-    public function programUniformMatrix3fv(int $program, int $location, int $count, int $transpose, ?\FFI\CData $value): void
-    {
-        $__proc = $this->getProcAs('glProgramUniformMatrix3fv', 'void (*)(GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)');
+    public function programUniformMatrix3fv(
+        int $program,
+        int $location,
+        int $count,
+        int $transpose,
+        ?CData $value
+    ): void {
+        $__proc = $this->proc('glProgramUniformMatrix3fv',
+            'void (*)(GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)');
         $__proc($program, $location, $count, $transpose, $value);
     }
 
     /**
-     * {@see GL46::glProgramUniform} modifies the value of a uniform variable or a uniform variable array. The
+     * {@see GL41::programUniform} modifies the value of a uniform variable or a uniform variable array. The
      * location of the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glProgramUniform} operates on the program object specified by
+     * {@see GL41::getUniformLocation}. {@see GL41::programUniform} operates on the program object specified by
      * $program.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
      * variable specified by $location using the values passed as arguments. The number specified in the command
      * should match the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1}
      * for `float`, `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The
@@ -3685,10 +3746,10 @@ class GL41 extends GL40
      * set to `true` otherwise.
      *
      * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glProgramUniform} until
+     * linked successfully. They retain the values assigned to them by a call to {@see GL41::programUniform} until
      * the next successful link operation occurs on the program object, when they are once again initialized to 0.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
      * or a uniform variable array. These commands pass a count and a pointer to the values to be loaded into a
      * uniform variable or a uniform variable array. A count of 1 should be used if modifying the value of a single
      * uniform variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When
@@ -3699,21 +3760,21 @@ class GL41 extends GL40
      * number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
      * `int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `bvec2`, etc.). The data type specified in the name of the
      * command must match the data type for the specified uniform variable as described previously for
-     * {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}}.
+     * {@see GL41::programUniform{1|2|3|4}{f|i|ui}}.
      *
      * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glProgramUniform3f} or {@see GL46::glProgramUniform3fv} can be used to load
+     * of the command (e.g., {@see GL41::programUniform3f} or {@see GL41::programUniform3fv} can be used to load
      * a uniform variable array of type vec3). The number of elements of the uniform variable array to be modified is
      * specified by $count
      *
-     * The commands {@see GL46::glProgramUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
+     * The commands {@see GL41::programUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
      * or an array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix.
      * The number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3
      * × 3 matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values).
      * Non-square matrix dimensionality is explicit, with the first number representing the number of columns and the
      * second number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2
-     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be
-     * supplied in column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied
+     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL41::GL_FALSE}, each matrix is assumed to be
+     * supplied in column major order. If $transpose is {@see GL41::GL_TRUE}, each matrix is assumed to be supplied
      * in row major order. The $count argument indicates the number of matrices to be passed. A count of 1 should be
      * used if modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of
      * matrices.
@@ -3724,22 +3785,28 @@ class GL41 extends GL40
      * @param int $location
      * @param int $count
      * @param int $transpose
-     * @param \FFI\CData|null $value
+     * @param CData|null $value
      * @return void
      */
-    public function programUniformMatrix3x2dv(int $program, int $location, int $count, int $transpose, ?\FFI\CData $value): void
-    {
-        $__proc = $this->getProcAs('glProgramUniformMatrix3x2dv', 'void (*)(GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLdouble *value)');
+    public function programUniformMatrix3x2dv(
+        int $program,
+        int $location,
+        int $count,
+        int $transpose,
+        ?CData $value
+    ): void {
+        $__proc = $this->proc('glProgramUniformMatrix3x2dv',
+            'void (*)(GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLdouble *value)');
         $__proc($program, $location, $count, $transpose, $value);
     }
 
     /**
-     * {@see GL46::glProgramUniform} modifies the value of a uniform variable or a uniform variable array. The
+     * {@see GL41::programUniform} modifies the value of a uniform variable or a uniform variable array. The
      * location of the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glProgramUniform} operates on the program object specified by
+     * {@see GL41::getUniformLocation}. {@see GL41::programUniform} operates on the program object specified by
      * $program.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
      * variable specified by $location using the values passed as arguments. The number specified in the command
      * should match the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1}
      * for `float`, `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The
@@ -3756,10 +3823,10 @@ class GL41 extends GL40
      * set to `true` otherwise.
      *
      * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glProgramUniform} until
+     * linked successfully. They retain the values assigned to them by a call to {@see GL41::programUniform} until
      * the next successful link operation occurs on the program object, when they are once again initialized to 0.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
      * or a uniform variable array. These commands pass a count and a pointer to the values to be loaded into a
      * uniform variable or a uniform variable array. A count of 1 should be used if modifying the value of a single
      * uniform variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When
@@ -3770,21 +3837,21 @@ class GL41 extends GL40
      * number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
      * `int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `bvec2`, etc.). The data type specified in the name of the
      * command must match the data type for the specified uniform variable as described previously for
-     * {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}}.
+     * {@see GL41::programUniform{1|2|3|4}{f|i|ui}}.
      *
      * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glProgramUniform3f} or {@see GL46::glProgramUniform3fv} can be used to load
+     * of the command (e.g., {@see GL41::programUniform3f} or {@see GL41::programUniform3fv} can be used to load
      * a uniform variable array of type vec3). The number of elements of the uniform variable array to be modified is
      * specified by $count
      *
-     * The commands {@see GL46::glProgramUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
+     * The commands {@see GL41::programUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
      * or an array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix.
      * The number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3
      * × 3 matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values).
      * Non-square matrix dimensionality is explicit, with the first number representing the number of columns and the
      * second number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2
-     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be
-     * supplied in column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied
+     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL41::GL_FALSE}, each matrix is assumed to be
+     * supplied in column major order. If $transpose is {@see GL41::GL_TRUE}, each matrix is assumed to be supplied
      * in row major order. The $count argument indicates the number of matrices to be passed. A count of 1 should be
      * used if modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of
      * matrices.
@@ -3795,22 +3862,28 @@ class GL41 extends GL40
      * @param int $location
      * @param int $count
      * @param int $transpose
-     * @param \FFI\CData|null $value
+     * @param CData|null $value
      * @return void
      */
-    public function programUniformMatrix3x2fv(int $program, int $location, int $count, int $transpose, ?\FFI\CData $value): void
-    {
-        $__proc = $this->getProcAs('glProgramUniformMatrix3x2fv', 'void (*)(GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)');
+    public function programUniformMatrix3x2fv(
+        int $program,
+        int $location,
+        int $count,
+        int $transpose,
+        ?CData $value
+    ): void {
+        $__proc = $this->proc('glProgramUniformMatrix3x2fv',
+            'void (*)(GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)');
         $__proc($program, $location, $count, $transpose, $value);
     }
 
     /**
-     * {@see GL46::glProgramUniform} modifies the value of a uniform variable or a uniform variable array. The
+     * {@see GL41::programUniform} modifies the value of a uniform variable or a uniform variable array. The
      * location of the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glProgramUniform} operates on the program object specified by
+     * {@see GL41::getUniformLocation}. {@see GL41::programUniform} operates on the program object specified by
      * $program.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
      * variable specified by $location using the values passed as arguments. The number specified in the command
      * should match the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1}
      * for `float`, `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The
@@ -3827,10 +3900,10 @@ class GL41 extends GL40
      * set to `true` otherwise.
      *
      * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glProgramUniform} until
+     * linked successfully. They retain the values assigned to them by a call to {@see GL41::programUniform} until
      * the next successful link operation occurs on the program object, when they are once again initialized to 0.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
      * or a uniform variable array. These commands pass a count and a pointer to the values to be loaded into a
      * uniform variable or a uniform variable array. A count of 1 should be used if modifying the value of a single
      * uniform variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When
@@ -3841,21 +3914,21 @@ class GL41 extends GL40
      * number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
      * `int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `bvec2`, etc.). The data type specified in the name of the
      * command must match the data type for the specified uniform variable as described previously for
-     * {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}}.
+     * {@see GL41::programUniform{1|2|3|4}{f|i|ui}}.
      *
      * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glProgramUniform3f} or {@see GL46::glProgramUniform3fv} can be used to load
+     * of the command (e.g., {@see GL41::programUniform3f} or {@see GL41::programUniform3fv} can be used to load
      * a uniform variable array of type vec3). The number of elements of the uniform variable array to be modified is
      * specified by $count
      *
-     * The commands {@see GL46::glProgramUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
+     * The commands {@see GL41::programUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
      * or an array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix.
      * The number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3
      * × 3 matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values).
      * Non-square matrix dimensionality is explicit, with the first number representing the number of columns and the
      * second number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2
-     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be
-     * supplied in column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied
+     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL41::GL_FALSE}, each matrix is assumed to be
+     * supplied in column major order. If $transpose is {@see GL41::GL_TRUE}, each matrix is assumed to be supplied
      * in row major order. The $count argument indicates the number of matrices to be passed. A count of 1 should be
      * used if modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of
      * matrices.
@@ -3866,22 +3939,28 @@ class GL41 extends GL40
      * @param int $location
      * @param int $count
      * @param int $transpose
-     * @param \FFI\CData|null $value
+     * @param CData|null $value
      * @return void
      */
-    public function programUniformMatrix3x4dv(int $program, int $location, int $count, int $transpose, ?\FFI\CData $value): void
-    {
-        $__proc = $this->getProcAs('glProgramUniformMatrix3x4dv', 'void (*)(GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLdouble *value)');
+    public function programUniformMatrix3x4dv(
+        int $program,
+        int $location,
+        int $count,
+        int $transpose,
+        ?CData $value
+    ): void {
+        $__proc = $this->proc('glProgramUniformMatrix3x4dv',
+            'void (*)(GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLdouble *value)');
         $__proc($program, $location, $count, $transpose, $value);
     }
 
     /**
-     * {@see GL46::glProgramUniform} modifies the value of a uniform variable or a uniform variable array. The
+     * {@see GL41::programUniform} modifies the value of a uniform variable or a uniform variable array. The
      * location of the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glProgramUniform} operates on the program object specified by
+     * {@see GL41::getUniformLocation}. {@see GL41::programUniform} operates on the program object specified by
      * $program.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
      * variable specified by $location using the values passed as arguments. The number specified in the command
      * should match the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1}
      * for `float`, `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The
@@ -3898,10 +3977,10 @@ class GL41 extends GL40
      * set to `true` otherwise.
      *
      * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glProgramUniform} until
+     * linked successfully. They retain the values assigned to them by a call to {@see GL41::programUniform} until
      * the next successful link operation occurs on the program object, when they are once again initialized to 0.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
      * or a uniform variable array. These commands pass a count and a pointer to the values to be loaded into a
      * uniform variable or a uniform variable array. A count of 1 should be used if modifying the value of a single
      * uniform variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When
@@ -3912,21 +3991,21 @@ class GL41 extends GL40
      * number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
      * `int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `bvec2`, etc.). The data type specified in the name of the
      * command must match the data type for the specified uniform variable as described previously for
-     * {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}}.
+     * {@see GL41::programUniform{1|2|3|4}{f|i|ui}}.
      *
      * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glProgramUniform3f} or {@see GL46::glProgramUniform3fv} can be used to load
+     * of the command (e.g., {@see GL41::programUniform3f} or {@see GL41::programUniform3fv} can be used to load
      * a uniform variable array of type vec3). The number of elements of the uniform variable array to be modified is
      * specified by $count
      *
-     * The commands {@see GL46::glProgramUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
+     * The commands {@see GL41::programUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
      * or an array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix.
      * The number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3
      * × 3 matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values).
      * Non-square matrix dimensionality is explicit, with the first number representing the number of columns and the
      * second number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2
-     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be
-     * supplied in column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied
+     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL41::GL_FALSE}, each matrix is assumed to be
+     * supplied in column major order. If $transpose is {@see GL41::GL_TRUE}, each matrix is assumed to be supplied
      * in row major order. The $count argument indicates the number of matrices to be passed. A count of 1 should be
      * used if modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of
      * matrices.
@@ -3937,22 +4016,28 @@ class GL41 extends GL40
      * @param int $location
      * @param int $count
      * @param int $transpose
-     * @param \FFI\CData|null $value
+     * @param CData|null $value
      * @return void
      */
-    public function programUniformMatrix3x4fv(int $program, int $location, int $count, int $transpose, ?\FFI\CData $value): void
-    {
-        $__proc = $this->getProcAs('glProgramUniformMatrix3x4fv', 'void (*)(GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)');
+    public function programUniformMatrix3x4fv(
+        int $program,
+        int $location,
+        int $count,
+        int $transpose,
+        ?CData $value
+    ): void {
+        $__proc = $this->proc('glProgramUniformMatrix3x4fv',
+            'void (*)(GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)');
         $__proc($program, $location, $count, $transpose, $value);
     }
 
     /**
-     * {@see GL46::glProgramUniform} modifies the value of a uniform variable or a uniform variable array. The
+     * {@see GL41::programUniform} modifies the value of a uniform variable or a uniform variable array. The
      * location of the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glProgramUniform} operates on the program object specified by
+     * {@see GL41::getUniformLocation}. {@see GL41::programUniform} operates on the program object specified by
      * $program.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
      * variable specified by $location using the values passed as arguments. The number specified in the command
      * should match the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1}
      * for `float`, `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The
@@ -3969,10 +4054,10 @@ class GL41 extends GL40
      * set to `true` otherwise.
      *
      * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glProgramUniform} until
+     * linked successfully. They retain the values assigned to them by a call to {@see GL41::programUniform} until
      * the next successful link operation occurs on the program object, when they are once again initialized to 0.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
      * or a uniform variable array. These commands pass a count and a pointer to the values to be loaded into a
      * uniform variable or a uniform variable array. A count of 1 should be used if modifying the value of a single
      * uniform variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When
@@ -3983,21 +4068,21 @@ class GL41 extends GL40
      * number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
      * `int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `bvec2`, etc.). The data type specified in the name of the
      * command must match the data type for the specified uniform variable as described previously for
-     * {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}}.
+     * {@see GL41::programUniform{1|2|3|4}{f|i|ui}}.
      *
      * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glProgramUniform3f} or {@see GL46::glProgramUniform3fv} can be used to load
+     * of the command (e.g., {@see GL41::programUniform3f} or {@see GL41::programUniform3fv} can be used to load
      * a uniform variable array of type vec3). The number of elements of the uniform variable array to be modified is
      * specified by $count
      *
-     * The commands {@see GL46::glProgramUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
+     * The commands {@see GL41::programUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
      * or an array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix.
      * The number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3
      * × 3 matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values).
      * Non-square matrix dimensionality is explicit, with the first number representing the number of columns and the
      * second number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2
-     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be
-     * supplied in column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied
+     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL41::GL_FALSE}, each matrix is assumed to be
+     * supplied in column major order. If $transpose is {@see GL41::GL_TRUE}, each matrix is assumed to be supplied
      * in row major order. The $count argument indicates the number of matrices to be passed. A count of 1 should be
      * used if modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of
      * matrices.
@@ -4008,22 +4093,28 @@ class GL41 extends GL40
      * @param int $location
      * @param int $count
      * @param int $transpose
-     * @param \FFI\CData|null $value
+     * @param CData|null $value
      * @return void
      */
-    public function programUniformMatrix4dv(int $program, int $location, int $count, int $transpose, ?\FFI\CData $value): void
-    {
-        $__proc = $this->getProcAs('glProgramUniformMatrix4dv', 'void (*)(GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLdouble *value)');
+    public function programUniformMatrix4dv(
+        int $program,
+        int $location,
+        int $count,
+        int $transpose,
+        ?CData $value
+    ): void {
+        $__proc = $this->proc('glProgramUniformMatrix4dv',
+            'void (*)(GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLdouble *value)');
         $__proc($program, $location, $count, $transpose, $value);
     }
 
     /**
-     * {@see GL46::glProgramUniform} modifies the value of a uniform variable or a uniform variable array. The
+     * {@see GL41::programUniform} modifies the value of a uniform variable or a uniform variable array. The
      * location of the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glProgramUniform} operates on the program object specified by
+     * {@see GL41::getUniformLocation}. {@see GL41::programUniform} operates on the program object specified by
      * $program.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
      * variable specified by $location using the values passed as arguments. The number specified in the command
      * should match the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1}
      * for `float`, `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The
@@ -4040,10 +4131,10 @@ class GL41 extends GL40
      * set to `true` otherwise.
      *
      * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glProgramUniform} until
+     * linked successfully. They retain the values assigned to them by a call to {@see GL41::programUniform} until
      * the next successful link operation occurs on the program object, when they are once again initialized to 0.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
      * or a uniform variable array. These commands pass a count and a pointer to the values to be loaded into a
      * uniform variable or a uniform variable array. A count of 1 should be used if modifying the value of a single
      * uniform variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When
@@ -4054,21 +4145,21 @@ class GL41 extends GL40
      * number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
      * `int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `bvec2`, etc.). The data type specified in the name of the
      * command must match the data type for the specified uniform variable as described previously for
-     * {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}}.
+     * {@see GL41::programUniform{1|2|3|4}{f|i|ui}}.
      *
      * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glProgramUniform3f} or {@see GL46::glProgramUniform3fv} can be used to load
+     * of the command (e.g., {@see GL41::programUniform3f} or {@see GL41::programUniform3fv} can be used to load
      * a uniform variable array of type vec3). The number of elements of the uniform variable array to be modified is
      * specified by $count
      *
-     * The commands {@see GL46::glProgramUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
+     * The commands {@see GL41::programUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
      * or an array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix.
      * The number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3
      * × 3 matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values).
      * Non-square matrix dimensionality is explicit, with the first number representing the number of columns and the
      * second number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2
-     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be
-     * supplied in column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied
+     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL41::GL_FALSE}, each matrix is assumed to be
+     * supplied in column major order. If $transpose is {@see GL41::GL_TRUE}, each matrix is assumed to be supplied
      * in row major order. The $count argument indicates the number of matrices to be passed. A count of 1 should be
      * used if modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of
      * matrices.
@@ -4079,22 +4170,28 @@ class GL41 extends GL40
      * @param int $location
      * @param int $count
      * @param int $transpose
-     * @param \FFI\CData|null $value
+     * @param CData|null $value
      * @return void
      */
-    public function programUniformMatrix4fv(int $program, int $location, int $count, int $transpose, ?\FFI\CData $value): void
-    {
-        $__proc = $this->getProcAs('glProgramUniformMatrix4fv', 'void (*)(GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)');
+    public function programUniformMatrix4fv(
+        int $program,
+        int $location,
+        int $count,
+        int $transpose,
+        ?CData $value
+    ): void {
+        $__proc = $this->proc('glProgramUniformMatrix4fv',
+            'void (*)(GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)');
         $__proc($program, $location, $count, $transpose, $value);
     }
 
     /**
-     * {@see GL46::glProgramUniform} modifies the value of a uniform variable or a uniform variable array. The
+     * {@see GL41::programUniform} modifies the value of a uniform variable or a uniform variable array. The
      * location of the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glProgramUniform} operates on the program object specified by
+     * {@see GL41::getUniformLocation}. {@see GL41::programUniform} operates on the program object specified by
      * $program.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
      * variable specified by $location using the values passed as arguments. The number specified in the command
      * should match the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1}
      * for `float`, `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The
@@ -4111,10 +4208,10 @@ class GL41 extends GL40
      * set to `true` otherwise.
      *
      * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glProgramUniform} until
+     * linked successfully. They retain the values assigned to them by a call to {@see GL41::programUniform} until
      * the next successful link operation occurs on the program object, when they are once again initialized to 0.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
      * or a uniform variable array. These commands pass a count and a pointer to the values to be loaded into a
      * uniform variable or a uniform variable array. A count of 1 should be used if modifying the value of a single
      * uniform variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When
@@ -4125,21 +4222,21 @@ class GL41 extends GL40
      * number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
      * `int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `bvec2`, etc.). The data type specified in the name of the
      * command must match the data type for the specified uniform variable as described previously for
-     * {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}}.
+     * {@see GL41::programUniform{1|2|3|4}{f|i|ui}}.
      *
      * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glProgramUniform3f} or {@see GL46::glProgramUniform3fv} can be used to load
+     * of the command (e.g., {@see GL41::programUniform3f} or {@see GL41::programUniform3fv} can be used to load
      * a uniform variable array of type vec3). The number of elements of the uniform variable array to be modified is
      * specified by $count
      *
-     * The commands {@see GL46::glProgramUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
+     * The commands {@see GL41::programUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
      * or an array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix.
      * The number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3
      * × 3 matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values).
      * Non-square matrix dimensionality is explicit, with the first number representing the number of columns and the
      * second number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2
-     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be
-     * supplied in column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied
+     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL41::GL_FALSE}, each matrix is assumed to be
+     * supplied in column major order. If $transpose is {@see GL41::GL_TRUE}, each matrix is assumed to be supplied
      * in row major order. The $count argument indicates the number of matrices to be passed. A count of 1 should be
      * used if modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of
      * matrices.
@@ -4150,22 +4247,28 @@ class GL41 extends GL40
      * @param int $location
      * @param int $count
      * @param int $transpose
-     * @param \FFI\CData|null $value
+     * @param CData|null $value
      * @return void
      */
-    public function programUniformMatrix4x2dv(int $program, int $location, int $count, int $transpose, ?\FFI\CData $value): void
-    {
-        $__proc = $this->getProcAs('glProgramUniformMatrix4x2dv', 'void (*)(GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLdouble *value)');
+    public function programUniformMatrix4x2dv(
+        int $program,
+        int $location,
+        int $count,
+        int $transpose,
+        ?CData $value
+    ): void {
+        $__proc = $this->proc('glProgramUniformMatrix4x2dv',
+            'void (*)(GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLdouble *value)');
         $__proc($program, $location, $count, $transpose, $value);
     }
 
     /**
-     * {@see GL46::glProgramUniform} modifies the value of a uniform variable or a uniform variable array. The
+     * {@see GL41::programUniform} modifies the value of a uniform variable or a uniform variable array. The
      * location of the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glProgramUniform} operates on the program object specified by
+     * {@see GL41::getUniformLocation}. {@see GL41::programUniform} operates on the program object specified by
      * $program.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
      * variable specified by $location using the values passed as arguments. The number specified in the command
      * should match the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1}
      * for `float`, `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The
@@ -4182,10 +4285,10 @@ class GL41 extends GL40
      * set to `true` otherwise.
      *
      * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glProgramUniform} until
+     * linked successfully. They retain the values assigned to them by a call to {@see GL41::programUniform} until
      * the next successful link operation occurs on the program object, when they are once again initialized to 0.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
      * or a uniform variable array. These commands pass a count and a pointer to the values to be loaded into a
      * uniform variable or a uniform variable array. A count of 1 should be used if modifying the value of a single
      * uniform variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When
@@ -4196,21 +4299,21 @@ class GL41 extends GL40
      * number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
      * `int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `bvec2`, etc.). The data type specified in the name of the
      * command must match the data type for the specified uniform variable as described previously for
-     * {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}}.
+     * {@see GL41::programUniform{1|2|3|4}{f|i|ui}}.
      *
      * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glProgramUniform3f} or {@see GL46::glProgramUniform3fv} can be used to load
+     * of the command (e.g., {@see GL41::programUniform3f} or {@see GL41::programUniform3fv} can be used to load
      * a uniform variable array of type vec3). The number of elements of the uniform variable array to be modified is
      * specified by $count
      *
-     * The commands {@see GL46::glProgramUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
+     * The commands {@see GL41::programUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
      * or an array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix.
      * The number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3
      * × 3 matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values).
      * Non-square matrix dimensionality is explicit, with the first number representing the number of columns and the
      * second number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2
-     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be
-     * supplied in column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied
+     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL41::GL_FALSE}, each matrix is assumed to be
+     * supplied in column major order. If $transpose is {@see GL41::GL_TRUE}, each matrix is assumed to be supplied
      * in row major order. The $count argument indicates the number of matrices to be passed. A count of 1 should be
      * used if modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of
      * matrices.
@@ -4221,22 +4324,28 @@ class GL41 extends GL40
      * @param int $location
      * @param int $count
      * @param int $transpose
-     * @param \FFI\CData|null $value
+     * @param CData|null $value
      * @return void
      */
-    public function programUniformMatrix4x2fv(int $program, int $location, int $count, int $transpose, ?\FFI\CData $value): void
-    {
-        $__proc = $this->getProcAs('glProgramUniformMatrix4x2fv', 'void (*)(GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)');
+    public function programUniformMatrix4x2fv(
+        int $program,
+        int $location,
+        int $count,
+        int $transpose,
+        ?CData $value
+    ): void {
+        $__proc = $this->proc('glProgramUniformMatrix4x2fv',
+            'void (*)(GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)');
         $__proc($program, $location, $count, $transpose, $value);
     }
 
     /**
-     * {@see GL46::glProgramUniform} modifies the value of a uniform variable or a uniform variable array. The
+     * {@see GL41::programUniform} modifies the value of a uniform variable or a uniform variable array. The
      * location of the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glProgramUniform} operates on the program object specified by
+     * {@see GL41::getUniformLocation}. {@see GL41::programUniform} operates on the program object specified by
      * $program.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
      * variable specified by $location using the values passed as arguments. The number specified in the command
      * should match the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1}
      * for `float`, `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The
@@ -4253,10 +4362,10 @@ class GL41 extends GL40
      * set to `true` otherwise.
      *
      * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glProgramUniform} until
+     * linked successfully. They retain the values assigned to them by a call to {@see GL41::programUniform} until
      * the next successful link operation occurs on the program object, when they are once again initialized to 0.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
      * or a uniform variable array. These commands pass a count and a pointer to the values to be loaded into a
      * uniform variable or a uniform variable array. A count of 1 should be used if modifying the value of a single
      * uniform variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When
@@ -4267,21 +4376,21 @@ class GL41 extends GL40
      * number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
      * `int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `bvec2`, etc.). The data type specified in the name of the
      * command must match the data type for the specified uniform variable as described previously for
-     * {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}}.
+     * {@see GL41::programUniform{1|2|3|4}{f|i|ui}}.
      *
      * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glProgramUniform3f} or {@see GL46::glProgramUniform3fv} can be used to load
+     * of the command (e.g., {@see GL41::programUniform3f} or {@see GL41::programUniform3fv} can be used to load
      * a uniform variable array of type vec3). The number of elements of the uniform variable array to be modified is
      * specified by $count
      *
-     * The commands {@see GL46::glProgramUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
+     * The commands {@see GL41::programUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
      * or an array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix.
      * The number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3
      * × 3 matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values).
      * Non-square matrix dimensionality is explicit, with the first number representing the number of columns and the
      * second number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2
-     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be
-     * supplied in column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied
+     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL41::GL_FALSE}, each matrix is assumed to be
+     * supplied in column major order. If $transpose is {@see GL41::GL_TRUE}, each matrix is assumed to be supplied
      * in row major order. The $count argument indicates the number of matrices to be passed. A count of 1 should be
      * used if modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of
      * matrices.
@@ -4292,22 +4401,28 @@ class GL41 extends GL40
      * @param int $location
      * @param int $count
      * @param int $transpose
-     * @param \FFI\CData|null $value
+     * @param CData|null $value
      * @return void
      */
-    public function programUniformMatrix4x3dv(int $program, int $location, int $count, int $transpose, ?\FFI\CData $value): void
-    {
-        $__proc = $this->getProcAs('glProgramUniformMatrix4x3dv', 'void (*)(GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLdouble *value)');
+    public function programUniformMatrix4x3dv(
+        int $program,
+        int $location,
+        int $count,
+        int $transpose,
+        ?CData $value
+    ): void {
+        $__proc = $this->proc('glProgramUniformMatrix4x3dv',
+            'void (*)(GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLdouble *value)');
         $__proc($program, $location, $count, $transpose, $value);
     }
 
     /**
-     * {@see GL46::glProgramUniform} modifies the value of a uniform variable or a uniform variable array. The
+     * {@see GL41::programUniform} modifies the value of a uniform variable or a uniform variable array. The
      * location of the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glProgramUniform} operates on the program object specified by
+     * {@see GL41::getUniformLocation}. {@see GL41::programUniform} operates on the program object specified by
      * $program.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform
      * variable specified by $location using the values passed as arguments. The number specified in the command
      * should match the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1}
      * for `float`, `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The
@@ -4324,10 +4439,10 @@ class GL41 extends GL40
      * set to `true` otherwise.
      *
      * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glProgramUniform} until
+     * linked successfully. They retain the values assigned to them by a call to {@see GL41::programUniform} until
      * the next successful link operation occurs on the program object, when they are once again initialized to 0.
      *
-     * The commands {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
+     * The commands {@see GL41::programUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable
      * or a uniform variable array. These commands pass a count and a pointer to the values to be loaded into a
      * uniform variable or a uniform variable array. A count of 1 should be used if modifying the value of a single
      * uniform variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When
@@ -4338,21 +4453,21 @@ class GL41 extends GL40
      * number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
      * `int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `bvec2`, etc.). The data type specified in the name of the
      * command must match the data type for the specified uniform variable as described previously for
-     * {@see GL46::glProgramUniform{1|2|3|4}{f|i|ui}}.
+     * {@see GL41::programUniform{1|2|3|4}{f|i|ui}}.
      *
      * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glProgramUniform3f} or {@see GL46::glProgramUniform3fv} can be used to load
+     * of the command (e.g., {@see GL41::programUniform3f} or {@see GL41::programUniform3fv} can be used to load
      * a uniform variable array of type vec3). The number of elements of the uniform variable array to be modified is
      * specified by $count
      *
-     * The commands {@see GL46::glProgramUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
+     * The commands {@see GL41::programUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix
      * or an array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix.
      * The number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3
      * × 3 matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values).
      * Non-square matrix dimensionality is explicit, with the first number representing the number of columns and the
      * second number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2
-     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be
-     * supplied in column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied
+     * columns and 4 rows (i.e., 8 values). If $transpose is {@see GL41::GL_FALSE}, each matrix is assumed to be
+     * supplied in column major order. If $transpose is {@see GL41::GL_TRUE}, each matrix is assumed to be supplied
      * in row major order. The $count argument indicates the number of matrices to be passed. A count of 1 should be
      * used if modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of
      * matrices.
@@ -4363,20 +4478,26 @@ class GL41 extends GL40
      * @param int $location
      * @param int $count
      * @param int $transpose
-     * @param \FFI\CData|null $value
+     * @param CData|null $value
      * @return void
      */
-    public function programUniformMatrix4x3fv(int $program, int $location, int $count, int $transpose, ?\FFI\CData $value): void
-    {
-        $__proc = $this->getProcAs('glProgramUniformMatrix4x3fv', 'void (*)(GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)');
+    public function programUniformMatrix4x3fv(
+        int $program,
+        int $location,
+        int $count,
+        int $transpose,
+        ?CData $value
+    ): void {
+        $__proc = $this->proc('glProgramUniformMatrix4x3fv',
+            'void (*)(GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)');
         $__proc($program, $location, $count, $transpose, $value);
     }
 
     /**
-     * {@see GL46::glReleaseShaderCompiler} provides a hint to the implementation that it may free internal resources
-     * associated with its shader compiler. {@see GL46::glCompileShader} may subsequently be called and the
+     * {@see GL41::releaseShaderCompiler} provides a hint to the implementation that it may free internal resources
+     * associated with its shader compiler. {@see GL41::compileShader} may subsequently be called and the
      * implementation may at that time reallocate resources previously freed by the call to
-     * {@see GL46::glReleaseShaderCompiler}.
+     * {@see GL41::releaseShaderCompiler}.
      *
      * @see http://docs.gl/gl4/glReleaseShaderCompiler
      * @since 4.1
@@ -4384,20 +4505,20 @@ class GL41 extends GL40
      */
     public function releaseShaderCompiler(): void
     {
-        $__proc = $this->getProcAs('glReleaseShaderCompiler', 'void (*)()');
+        $__proc = $this->proc('glReleaseShaderCompiler', 'void (*)()');
         $__proc();
     }
 
     /**
-     * {@see GL46::glScissorArrayv} defines rectangles, called scissor boxes, in window coordinates for each
+     * {@see GL41::scissorArrayv} defines rectangles, called scissor boxes, in window coordinates for each
      * viewport. $first specifies the index of the first scissor box to modify and $count specifies the number of
-     * scissor boxes to modify. $first must be less than the value of {@see GL46::GL_MAX_VIEWPORTS}, and $first +
-     * $count must be less than or equal to the value of {@see GL46::GL_MAX_VIEWPORTS}. $v specifies the address of
+     * scissor boxes to modify. $first must be less than the value of {@see GL41::GL_MAX_VIEWPORTS}, and $first +
+     * $count must be less than or equal to the value of {@see GL41::GL_MAX_VIEWPORTS}. $v specifies the address of
      * an array containing integers specifying the lower left corner of the scissor boxes, and the width and height
      * of the scissor boxes, in that order.
      *
-     * To enable and disable the scissor test, call {@see GL46::glEnable} and  {@see GL46::glDisable} with argument
-     * {@see GL46::GL_SCISSOR_TEST}. The test is initially disabled for all viewports. While the test is enabled,
+     * To enable and disable the scissor test, call {@see GL41::enable} and  {@see GL41::disable} with argument
+     * {@see GL41::GL_SCISSOR_TEST}. The test is initially disabled for all viewports. While the test is enabled,
      * only pixels that lie within the scissor box can be modified by drawing commands. Window coordinates have
      * integer values at the shared corners of frame buffer pixels. `glScissor(0,0,1,1)` allows modification of only
      * the lower left pixel in the window, and `glScissor(0,0,0,0)` doesn't allow modification of any pixels in the
@@ -4409,25 +4530,25 @@ class GL41 extends GL40
      * @since 4.1
      * @param int $first
      * @param int $count
-     * @param \FFI\CData|null $v
+     * @param CData|null $v
      * @return void
      */
-    public function scissorArrayv(int $first, int $count, ?\FFI\CData $v): void
+    public function scissorArrayv(int $first, int $count, ?CData $v): void
     {
-        $__proc = $this->getProcAs('glScissorArrayv', 'void (*)(GLuint first, GLsizei count, const GLint *v)');
+        $__proc = $this->proc('glScissorArrayv', 'void (*)(GLuint first, GLsizei count, const GLint *v)');
         $__proc($first, $count, $v);
     }
 
     /**
-     * {@see GL46::glScissorIndexed} defines the scissor box for a specified viewport. $index specifies the index of
-     * scissor box to modify. $index must be less than the value of {@see GL46::GL_MAX_VIEWPORTS}. For
-     * {@see GL46::glScissorIndexed}, $left, $bottom, $width and $height specify the left, bottom, width and height
-     * of the scissor box, in pixels, respectively. For {@see GL46::glScissorIndexedv}, $v specifies the address of
+     * {@see GL41::scissorIndexed} defines the scissor box for a specified viewport. $index specifies the index of
+     * scissor box to modify. $index must be less than the value of {@see GL41::GL_MAX_VIEWPORTS}. For
+     * {@see GL41::scissorIndexed}, $left, $bottom, $width and $height specify the left, bottom, width and height
+     * of the scissor box, in pixels, respectively. For {@see GL41::scissorIndexedv}, $v specifies the address of
      * an array containing integers specifying the lower left corner of the scissor box, and the width and height of
      * the scissor box, in that order.
      *
-     * To enable and disable the scissor test, call {@see GL46::glEnable} and  {@see GL46::glDisable} with argument
-     * {@see GL46::GL_SCISSOR_TEST}. The test is initially disabled for all viewports. While the test is enabled,
+     * To enable and disable the scissor test, call {@see GL41::enable} and  {@see GL41::disable} with argument
+     * {@see GL41::GL_SCISSOR_TEST}. The test is initially disabled for all viewports. While the test is enabled,
      * only pixels that lie within the scissor box can be modified by drawing commands. Window coordinates have
      * integer values at the shared corners of frame buffer pixels. `glScissor(0,0,1,1)` allows modification of only
      * the lower left pixel in the window, and `glScissor(0,0,0,0)` doesn't allow modification of any pixels in the
@@ -4446,20 +4567,21 @@ class GL41 extends GL40
      */
     public function scissorIndexed(int $index, int $left, int $bottom, int $width, int $height): void
     {
-        $__proc = $this->getProcAs('glScissorIndexed', 'void (*)(GLuint index, GLint left, GLint bottom, GLsizei width, GLsizei height)');
+        $__proc = $this->proc('glScissorIndexed',
+            'void (*)(GLuint index, GLint left, GLint bottom, GLsizei width, GLsizei height)');
         $__proc($index, $left, $bottom, $width, $height);
     }
 
     /**
-     * {@see GL46::glScissorIndexed} defines the scissor box for a specified viewport. $index specifies the index of
-     * scissor box to modify. $index must be less than the value of {@see GL46::GL_MAX_VIEWPORTS}. For
-     * {@see GL46::glScissorIndexed}, $left, $bottom, $width and $height specify the left, bottom, width and height
-     * of the scissor box, in pixels, respectively. For {@see GL46::glScissorIndexedv}, $v specifies the address of
+     * {@see GL41::scissorIndexed} defines the scissor box for a specified viewport. $index specifies the index of
+     * scissor box to modify. $index must be less than the value of {@see GL41::GL_MAX_VIEWPORTS}. For
+     * {@see GL41::scissorIndexed}, $left, $bottom, $width and $height specify the left, bottom, width and height
+     * of the scissor box, in pixels, respectively. For {@see GL41::scissorIndexedv}, $v specifies the address of
      * an array containing integers specifying the lower left corner of the scissor box, and the width and height of
      * the scissor box, in that order.
      *
-     * To enable and disable the scissor test, call {@see GL46::glEnable} and  {@see GL46::glDisable} with argument
-     * {@see GL46::GL_SCISSOR_TEST}. The test is initially disabled for all viewports. While the test is enabled,
+     * To enable and disable the scissor test, call {@see GL41::enable} and  {@see GL41::disable} with argument
+     * {@see GL41::GL_SCISSOR_TEST}. The test is initially disabled for all viewports. While the test is enabled,
      * only pixels that lie within the scissor box can be modified by drawing commands. Window coordinates have
      * integer values at the shared corners of frame buffer pixels. `glScissor(0,0,1,1)` allows modification of only
      * the lower left pixel in the window, and `glScissor(0,0,0,0)` doesn't allow modification of any pixels in the
@@ -4470,17 +4592,17 @@ class GL41 extends GL40
      * @see http://docs.gl/gl4/glScissorIndexed
      * @since 4.1
      * @param int $index
-     * @param \FFI\CData|null $v
+     * @param CData|null $v
      * @return void
      */
-    public function scissorIndexedv(int $index, ?\FFI\CData $v): void
+    public function scissorIndexedv(int $index, ?CData $v): void
     {
-        $__proc = $this->getProcAs('glScissorIndexedv', 'void (*)(GLuint index, const GLint *v)');
+        $__proc = $this->proc('glScissorIndexedv', 'void (*)(GLuint index, const GLint *v)');
         $__proc($index, $v);
     }
 
     /**
-     * {@see GL46::glShaderBinary} loads pre-compiled shader binary code into the $count shader objects whose handles
+     * {@see GL41::shaderBinary} loads pre-compiled shader binary code into the $count shader objects whose handles
      * are given in $shaders. $binary points to $length bytes of binary shader code stored in client memory.
      * $binaryFormat specifies the format of the pre-compiled code.
      *
@@ -4488,42 +4610,48 @@ class GL41 extends GL40
      * specified $binaryFormat token. OpenGL does not define any specific binary formats, but it does provide a
      * mechanism to obtain token vaues for such formats provided by such extensions.
      *
-     * Depending on the types of the shader objects in $shaders, {@see GL46::glShaderBinary} will individually load
+     * Depending on the types of the shader objects in $shaders, {@see GL41::shaderBinary} will individually load
      * binary vertex or fragment shaders, or load an executable binary that contains an optimized pair of vertex and
      * fragment shaders stored in the same binary.
      *
      * @see http://docs.gl/gl4/glShaderBinary
      * @since 4.1
      * @param int $count
-     * @param \FFI\CData|null $shaders
+     * @param CData|null $shaders
      * @param int $binaryformat
-     * @param \FFI\CData|null $binary
+     * @param CData|null $binary
      * @param int $length
      * @return void
      */
-    public function shaderBinary(int $count, ?\FFI\CData $shaders, int $binaryformat, ?\FFI\CData $binary, int $length): void
-    {
-        $__proc = $this->getProcAs('glShaderBinary', 'void (*)(GLsizei count, const GLuint *shaders, GLenum binaryformat, const void *binary, GLsizei length)');
+    public function shaderBinary(
+        int $count,
+        ?CData $shaders,
+        int $binaryformat,
+        ?CData $binary,
+        int $length
+    ): void {
+        $__proc = $this->proc('glShaderBinary',
+            'void (*)(GLsizei count, const GLuint *shaders, GLenum binaryformat, const void *binary, GLsizei length)');
         $__proc($count, $shaders, $binaryformat, $binary, $length);
     }
 
     /**
-     * {@see GL46::glUseProgramStages} binds executables from a program object associated with a specified set of
+     * {@see GL41::useProgramStages} binds executables from a program object associated with a specified set of
      * shader stages to the program pipeline object given by $pipeline. $pipeline specifies the program pipeline
      * object to which to bind the executables. $stages contains a logical combination of bits indicating the shader
      * stages to use within $program with the program pipeline object $pipeline. $stages must be a logical
-     * combination of {@see GL46::GL_VERTEX_SHADER_BIT}, {@see GL46::GL_TESS_CONTROL_SHADER_BIT},
-     * {@see GL46::GL_TESS_EVALUATION_SHADER_BIT}, {@see GL46::GL_GEOMETRY_SHADER_BIT},
-     * {@see GL46::GL_FRAGMENT_SHADER_BIT} and {@see GL46::GL_COMPUTE_SHADER_BIT}. Additionally, the special value
-     * {@see GL46::GL_ALL_SHADER_BITS} may be specified to indicate that all executables contained in $program should
+     * combination of {@see GL41::GL_VERTEX_SHADER_BIT}, {@see GL41::GL_TESS_CONTROL_SHADER_BIT},
+     * {@see GL41::GL_TESS_EVALUATION_SHADER_BIT}, {@see GL41::GL_GEOMETRY_SHADER_BIT},
+     * {@see GL41::GL_FRAGMENT_SHADER_BIT} and {@see GL41::GL_COMPUTE_SHADER_BIT}. Additionally, the special value
+     * {@see GL41::GL_ALL_SHADER_BITS} may be specified to indicate that all executables contained in $program should
      * be installed in $pipeline.
      *
      * If $program refers to a program object with a valid shader attached for an indicated shader stage,
-     * {@see GL46::glUseProgramStages} installs the executable code for that stage in the indicated program pipeline
+     * {@see GL41::useProgramStages} installs the executable code for that stage in the indicated program pipeline
      * object $pipeline. If $program is zero, or refers to a program object with no valid shader executable for a
      * given stage, it is as if the pipeline object has no programmable stage configured for the indicated shader
      * stages. If $stages contains bits other than those listed above, and is not equal to
-     * {@see GL46::GL_ALL_SHADER_BITS}, an error is generated.
+     * {@see GL41::GL_ALL_SHADER_BITS}, an error is generated.
      *
      * @see http://docs.gl/gl4/glUseProgramStages
      * @since 4.1
@@ -4534,22 +4662,23 @@ class GL41 extends GL40
      */
     public function useProgramStages(int $pipeline, int $stages, int $program): void
     {
-        $__proc = $this->getProcAs('glUseProgramStages', 'void (*)(GLuint pipeline, GLbitfield stages, GLuint program)');
+        $__proc = $this->proc('glUseProgramStages',
+            'void (*)(GLuint pipeline, GLbitfield stages, GLuint program)');
         $__proc($pipeline, $stages, $program);
     }
 
     /**
-     * {@see GL46::glValidateProgramPipeline} instructs the implementation to validate the shader executables
+     * {@see GL41::validateProgramPipeline} instructs the implementation to validate the shader executables
      * contained in $pipeline against the current GL state. The implementation may use this as an opportunity to
      * perform any internal shader modifications that may be required to ensure correct operation of the installed
      * shaders given the current GL state.
      *
-     * After a program pipeline has been validated, its validation status is set to {@see GL46::GL_TRUE}. The
-     * validation status of a program pipeline object may be queried by calling {@see GL46::glGetProgramPipeline}
-     * with parameter {@see GL46::GL_VALIDATE_STATUS}.
+     * After a program pipeline has been validated, its validation status is set to {@see GL41::GL_TRUE}. The
+     * validation status of a program pipeline object may be queried by calling {@see GL41::getProgramPipeline}
+     * with parameter {@see GL41::GL_VALIDATE_STATUS}.
      *
-     * If $pipeline is a name previously returned from a call to {@see GL46::glGenProgramPipelines} but that has not
-     * yet been bound by a call to {@see GL46::glBindProgramPipeline}, a new program pipeline object is created with
+     * If $pipeline is a name previously returned from a call to {@see GL41::genProgramPipelines} but that has not
+     * yet been bound by a call to {@see GL41::bindProgramPipeline}, a new program pipeline object is created with
      * name $pipeline and the default state vector.
      *
      * @see http://docs.gl/gl4/glValidateProgramPipeline
@@ -4559,18 +4688,18 @@ class GL41 extends GL40
      */
     public function validateProgramPipeline(int $pipeline): void
     {
-        $__proc = $this->getProcAs('glValidateProgramPipeline', 'void (*)(GLuint pipeline)');
+        $__proc = $this->proc('glValidateProgramPipeline', 'void (*)(GLuint pipeline)');
         $__proc($pipeline);
     }
 
     /**
-     * The {@see GL46::glVertexAttrib} family of entry points allows an application to pass generic vertex attributes
+     * The {@see GL41::vertexAttrib} family of entry points allows an application to pass generic vertex attributes
      * in numbered locations.
      *
      * Generic attributes are defined as four-component values that are organized into an array. The first entry of
      * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
-     * {@see GL46::glVertexAttrib} call that specifies the index of the element to be modified and a value for that
+     * {@see GL41::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
+     * {@see GL41::vertexAttrib} call that specifies the index of the element to be modified and a value for that
      * element.
      *
      * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
@@ -4605,12 +4734,12 @@ class GL41 extends GL40
      * passed directly to shader inputs declared as 64-bit double precision types.
      *
      * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * types may be loaded using the {@see GL41::vertexAttrib} entry points. Matrices must be loaded into
      * successive generic attribute slots in column major order, with one column of the matrix in each generic
      * attribute slot.
      *
      * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see GL46::glBindAttribLocation}. This allows an application to use more descriptive variable names
+     * calling {@see GL41::bindAttribLocation}. This allows an application to use more descriptive variable names
      * in a vertex shader. A subsequent change to the specified generic vertex attribute will be immediately
      * reflected as a change to the corresponding attribute variable in the vertex shader.
      *
@@ -4634,18 +4763,18 @@ class GL41 extends GL40
      */
     public function vertexAttribL1d(int $index, float $x): void
     {
-        $__proc = $this->getProcAs('glVertexAttribL1d', 'void (*)(GLuint index, GLdouble x)');
+        $__proc = $this->proc('glVertexAttribL1d', 'void (*)(GLuint index, GLdouble x)');
         $__proc($index, $x);
     }
 
     /**
-     * The {@see GL46::glVertexAttrib} family of entry points allows an application to pass generic vertex attributes
+     * The {@see GL41::vertexAttrib} family of entry points allows an application to pass generic vertex attributes
      * in numbered locations.
      *
      * Generic attributes are defined as four-component values that are organized into an array. The first entry of
      * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
-     * {@see GL46::glVertexAttrib} call that specifies the index of the element to be modified and a value for that
+     * {@see GL41::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
+     * {@see GL41::vertexAttrib} call that specifies the index of the element to be modified and a value for that
      * element.
      *
      * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
@@ -4680,12 +4809,12 @@ class GL41 extends GL40
      * passed directly to shader inputs declared as 64-bit double precision types.
      *
      * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * types may be loaded using the {@see GL41::vertexAttrib} entry points. Matrices must be loaded into
      * successive generic attribute slots in column major order, with one column of the matrix in each generic
      * attribute slot.
      *
      * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see GL46::glBindAttribLocation}. This allows an application to use more descriptive variable names
+     * calling {@see GL41::bindAttribLocation}. This allows an application to use more descriptive variable names
      * in a vertex shader. A subsequent change to the specified generic vertex attribute will be immediately
      * reflected as a change to the corresponding attribute variable in the vertex shader.
      *
@@ -4704,23 +4833,23 @@ class GL41 extends GL40
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 4.1
      * @param int $index
-     * @param \FFI\CData|null $v
+     * @param CData|null $v
      * @return void
      */
-    public function vertexAttribL1dv(int $index, ?\FFI\CData $v): void
+    public function vertexAttribL1dv(int $index, ?CData $v): void
     {
-        $__proc = $this->getProcAs('glVertexAttribL1dv', 'void (*)(GLuint index, const GLdouble *v)');
+        $__proc = $this->proc('glVertexAttribL1dv', 'void (*)(GLuint index, const GLdouble *v)');
         $__proc($index, $v);
     }
 
     /**
-     * The {@see GL46::glVertexAttrib} family of entry points allows an application to pass generic vertex attributes
+     * The {@see GL41::vertexAttrib} family of entry points allows an application to pass generic vertex attributes
      * in numbered locations.
      *
      * Generic attributes are defined as four-component values that are organized into an array. The first entry of
      * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
-     * {@see GL46::glVertexAttrib} call that specifies the index of the element to be modified and a value for that
+     * {@see GL41::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
+     * {@see GL41::vertexAttrib} call that specifies the index of the element to be modified and a value for that
      * element.
      *
      * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
@@ -4755,12 +4884,12 @@ class GL41 extends GL40
      * passed directly to shader inputs declared as 64-bit double precision types.
      *
      * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * types may be loaded using the {@see GL41::vertexAttrib} entry points. Matrices must be loaded into
      * successive generic attribute slots in column major order, with one column of the matrix in each generic
      * attribute slot.
      *
      * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see GL46::glBindAttribLocation}. This allows an application to use more descriptive variable names
+     * calling {@see GL41::bindAttribLocation}. This allows an application to use more descriptive variable names
      * in a vertex shader. A subsequent change to the specified generic vertex attribute will be immediately
      * reflected as a change to the corresponding attribute variable in the vertex shader.
      *
@@ -4785,18 +4914,18 @@ class GL41 extends GL40
      */
     public function vertexAttribL2d(int $index, float $x, float $y): void
     {
-        $__proc = $this->getProcAs('glVertexAttribL2d', 'void (*)(GLuint index, GLdouble x, GLdouble y)');
+        $__proc = $this->proc('glVertexAttribL2d', 'void (*)(GLuint index, GLdouble x, GLdouble y)');
         $__proc($index, $x, $y);
     }
 
     /**
-     * The {@see GL46::glVertexAttrib} family of entry points allows an application to pass generic vertex attributes
+     * The {@see GL41::vertexAttrib} family of entry points allows an application to pass generic vertex attributes
      * in numbered locations.
      *
      * Generic attributes are defined as four-component values that are organized into an array. The first entry of
      * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
-     * {@see GL46::glVertexAttrib} call that specifies the index of the element to be modified and a value for that
+     * {@see GL41::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
+     * {@see GL41::vertexAttrib} call that specifies the index of the element to be modified and a value for that
      * element.
      *
      * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
@@ -4831,12 +4960,12 @@ class GL41 extends GL40
      * passed directly to shader inputs declared as 64-bit double precision types.
      *
      * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * types may be loaded using the {@see GL41::vertexAttrib} entry points. Matrices must be loaded into
      * successive generic attribute slots in column major order, with one column of the matrix in each generic
      * attribute slot.
      *
      * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see GL46::glBindAttribLocation}. This allows an application to use more descriptive variable names
+     * calling {@see GL41::bindAttribLocation}. This allows an application to use more descriptive variable names
      * in a vertex shader. A subsequent change to the specified generic vertex attribute will be immediately
      * reflected as a change to the corresponding attribute variable in the vertex shader.
      *
@@ -4855,23 +4984,23 @@ class GL41 extends GL40
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 4.1
      * @param int $index
-     * @param \FFI\CData|null $v
+     * @param CData|null $v
      * @return void
      */
-    public function vertexAttribL2dv(int $index, ?\FFI\CData $v): void
+    public function vertexAttribL2dv(int $index, ?CData $v): void
     {
-        $__proc = $this->getProcAs('glVertexAttribL2dv', 'void (*)(GLuint index, const GLdouble *v)');
+        $__proc = $this->proc('glVertexAttribL2dv', 'void (*)(GLuint index, const GLdouble *v)');
         $__proc($index, $v);
     }
 
     /**
-     * The {@see GL46::glVertexAttrib} family of entry points allows an application to pass generic vertex attributes
+     * The {@see GL41::vertexAttrib} family of entry points allows an application to pass generic vertex attributes
      * in numbered locations.
      *
      * Generic attributes are defined as four-component values that are organized into an array. The first entry of
      * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
-     * {@see GL46::glVertexAttrib} call that specifies the index of the element to be modified and a value for that
+     * {@see GL41::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
+     * {@see GL41::vertexAttrib} call that specifies the index of the element to be modified and a value for that
      * element.
      *
      * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
@@ -4906,12 +5035,12 @@ class GL41 extends GL40
      * passed directly to shader inputs declared as 64-bit double precision types.
      *
      * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * types may be loaded using the {@see GL41::vertexAttrib} entry points. Matrices must be loaded into
      * successive generic attribute slots in column major order, with one column of the matrix in each generic
      * attribute slot.
      *
      * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see GL46::glBindAttribLocation}. This allows an application to use more descriptive variable names
+     * calling {@see GL41::bindAttribLocation}. This allows an application to use more descriptive variable names
      * in a vertex shader. A subsequent change to the specified generic vertex attribute will be immediately
      * reflected as a change to the corresponding attribute variable in the vertex shader.
      *
@@ -4937,18 +5066,18 @@ class GL41 extends GL40
      */
     public function vertexAttribL3d(int $index, float $x, float $y, float $z): void
     {
-        $__proc = $this->getProcAs('glVertexAttribL3d', 'void (*)(GLuint index, GLdouble x, GLdouble y, GLdouble z)');
+        $__proc = $this->proc('glVertexAttribL3d', 'void (*)(GLuint index, GLdouble x, GLdouble y, GLdouble z)');
         $__proc($index, $x, $y, $z);
     }
 
     /**
-     * The {@see GL46::glVertexAttrib} family of entry points allows an application to pass generic vertex attributes
+     * The {@see GL41::vertexAttrib} family of entry points allows an application to pass generic vertex attributes
      * in numbered locations.
      *
      * Generic attributes are defined as four-component values that are organized into an array. The first entry of
      * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
-     * {@see GL46::glVertexAttrib} call that specifies the index of the element to be modified and a value for that
+     * {@see GL41::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
+     * {@see GL41::vertexAttrib} call that specifies the index of the element to be modified and a value for that
      * element.
      *
      * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
@@ -4983,12 +5112,12 @@ class GL41 extends GL40
      * passed directly to shader inputs declared as 64-bit double precision types.
      *
      * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * types may be loaded using the {@see GL41::vertexAttrib} entry points. Matrices must be loaded into
      * successive generic attribute slots in column major order, with one column of the matrix in each generic
      * attribute slot.
      *
      * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see GL46::glBindAttribLocation}. This allows an application to use more descriptive variable names
+     * calling {@see GL41::bindAttribLocation}. This allows an application to use more descriptive variable names
      * in a vertex shader. A subsequent change to the specified generic vertex attribute will be immediately
      * reflected as a change to the corresponding attribute variable in the vertex shader.
      *
@@ -5007,23 +5136,23 @@ class GL41 extends GL40
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 4.1
      * @param int $index
-     * @param \FFI\CData|null $v
+     * @param CData|null $v
      * @return void
      */
-    public function vertexAttribL3dv(int $index, ?\FFI\CData $v): void
+    public function vertexAttribL3dv(int $index, ?CData $v): void
     {
-        $__proc = $this->getProcAs('glVertexAttribL3dv', 'void (*)(GLuint index, const GLdouble *v)');
+        $__proc = $this->proc('glVertexAttribL3dv', 'void (*)(GLuint index, const GLdouble *v)');
         $__proc($index, $v);
     }
 
     /**
-     * The {@see GL46::glVertexAttrib} family of entry points allows an application to pass generic vertex attributes
+     * The {@see GL41::vertexAttrib} family of entry points allows an application to pass generic vertex attributes
      * in numbered locations.
      *
      * Generic attributes are defined as four-component values that are organized into an array. The first entry of
      * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
-     * {@see GL46::glVertexAttrib} call that specifies the index of the element to be modified and a value for that
+     * {@see GL41::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
+     * {@see GL41::vertexAttrib} call that specifies the index of the element to be modified and a value for that
      * element.
      *
      * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
@@ -5058,12 +5187,12 @@ class GL41 extends GL40
      * passed directly to shader inputs declared as 64-bit double precision types.
      *
      * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * types may be loaded using the {@see GL41::vertexAttrib} entry points. Matrices must be loaded into
      * successive generic attribute slots in column major order, with one column of the matrix in each generic
      * attribute slot.
      *
      * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see GL46::glBindAttribLocation}. This allows an application to use more descriptive variable names
+     * calling {@see GL41::bindAttribLocation}. This allows an application to use more descriptive variable names
      * in a vertex shader. A subsequent change to the specified generic vertex attribute will be immediately
      * reflected as a change to the corresponding attribute variable in the vertex shader.
      *
@@ -5090,18 +5219,19 @@ class GL41 extends GL40
      */
     public function vertexAttribL4d(int $index, float $x, float $y, float $z, float $w): void
     {
-        $__proc = $this->getProcAs('glVertexAttribL4d', 'void (*)(GLuint index, GLdouble x, GLdouble y, GLdouble z, GLdouble w)');
+        $__proc = $this->proc('glVertexAttribL4d',
+            'void (*)(GLuint index, GLdouble x, GLdouble y, GLdouble z, GLdouble w)');
         $__proc($index, $x, $y, $z, $w);
     }
 
     /**
-     * The {@see GL46::glVertexAttrib} family of entry points allows an application to pass generic vertex attributes
+     * The {@see GL41::vertexAttrib} family of entry points allows an application to pass generic vertex attributes
      * in numbered locations.
      *
      * Generic attributes are defined as four-component values that are organized into an array. The first entry of
      * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
-     * {@see GL46::glVertexAttrib} call that specifies the index of the element to be modified and a value for that
+     * {@see GL41::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
+     * {@see GL41::vertexAttrib} call that specifies the index of the element to be modified and a value for that
      * element.
      *
      * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
@@ -5136,12 +5266,12 @@ class GL41 extends GL40
      * passed directly to shader inputs declared as 64-bit double precision types.
      *
      * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * types may be loaded using the {@see GL41::vertexAttrib} entry points. Matrices must be loaded into
      * successive generic attribute slots in column major order, with one column of the matrix in each generic
      * attribute slot.
      *
      * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see GL46::glBindAttribLocation}. This allows an application to use more descriptive variable names
+     * calling {@see GL41::bindAttribLocation}. This allows an application to use more descriptive variable names
      * in a vertex shader. A subsequent change to the specified generic vertex attribute will be immediately
      * reflected as a change to the corresponding attribute variable in the vertex shader.
      *
@@ -5160,49 +5290,49 @@ class GL41 extends GL40
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 4.1
      * @param int $index
-     * @param \FFI\CData|null $v
+     * @param CData|null $v
      * @return void
      */
-    public function vertexAttribL4dv(int $index, ?\FFI\CData $v): void
+    public function vertexAttribL4dv(int $index, ?CData $v): void
     {
-        $__proc = $this->getProcAs('glVertexAttribL4dv', 'void (*)(GLuint index, const GLdouble *v)');
+        $__proc = $this->proc('glVertexAttribL4dv', 'void (*)(GLuint index, const GLdouble *v)');
         $__proc($index, $v);
     }
 
     /**
-     * {@see GL46::glVertexAttribPointer}, {@see GL46::glVertexAttribIPointer} and
-     * {@see GL46::glVertexAttribLPointer} specify the location and data format of the array of generic vertex
+     * {@see GL41::vertexAttribPointer}, {@see GL41::vertexAttribIPointer} and
+     * {@see GL41::vertexAttribLPointer} specify the location and data format of the array of generic vertex
      * attributes at index $index to use when rendering. $size specifies the number of components per attribute and
-     * must be 1, 2, 3, 4, or {@see GL46::GL_BGRA}. $type specifies the data type of each component, and $stride
+     * must be 1, 2, 3, 4, or {@see GL41::GL_BGRA}. $type specifies the data type of each component, and $stride
      * specifies the byte stride from one attribute to the next, allowing vertices and attributes to be packed into a
      * single array or stored in separate arrays.
      *
-     * For {@see GL46::glVertexAttribPointer}, if $normalized is set to {@see GL46::GL_TRUE}, it indicates that
+     * For {@see GL41::vertexAttribPointer}, if $normalized is set to {@see GL41::GL_TRUE}, it indicates that
      * values stored in an integer format are to be mapped to the range [-1,1] (for signed values) or [0,1] (for
      * unsigned values) when they are accessed and converted to floating point. Otherwise, values will be converted
      * to floats directly without normalization.
      *
-     * For {@see GL46::glVertexAttribIPointer}, only the integer types {@see GL46::GL_BYTE},
-     * {@see GL46::GL_UNSIGNED_BYTE}, {@see GL46::GL_SHORT}, {@see GL46::GL_UNSIGNED_SHORT}, {@see GL46::GL_INT},
-     * {@see GL46::GL_UNSIGNED_INT} are accepted. Values are always left as integer values.
+     * For {@see GL41::vertexAttribIPointer}, only the integer types {@see GL41::GL_BYTE},
+     * {@see GL41::GL_UNSIGNED_BYTE}, {@see GL41::GL_SHORT}, {@see GL41::GL_UNSIGNED_SHORT}, {@see GL41::GL_INT},
+     * {@see GL41::GL_UNSIGNED_INT} are accepted. Values are always left as integer values.
      *
-     * {@see GL46::glVertexAttribLPointer} specifies state for a generic vertex attribute array associated with a
+     * {@see GL41::vertexAttribLPointer} specifies state for a generic vertex attribute array associated with a
      * shader attribute variable declared with 64-bit double precision components. $type must be
-     * {@see GL46::GL_DOUBLE}. $index, $size, and $stride behave as described for {@see GL46::glVertexAttribPointer}
-     * and {@see GL46::glVertexAttribIPointer}.
+     * {@see GL41::GL_DOUBLE}. $index, $size, and $stride behave as described for {@see GL41::vertexAttribPointer}
+     * and {@see GL41::vertexAttribIPointer}.
      *
-     * If $pointer is not `NULL`, a non-zero named buffer object must be bound to the {@see GL46::GL_ARRAY_BUFFER}
-     * target (see {@see GL46::glBindBuffer}), otherwise an error is generated. $pointer is treated as a byte offset
-     * into the buffer object's data store. The buffer object binding ({@see GL46::GL_ARRAY_BUFFER_BINDING}) is saved
-     * as generic vertex attribute array state ({@see GL46::GL_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING}) for index $index.
+     * If $pointer is not `NULL`, a non-zero named buffer object must be bound to the {@see GL41::GL_ARRAY_BUFFER}
+     * target (see {@see GL41::bindBuffer}), otherwise an error is generated. $pointer is treated as a byte offset
+     * into the buffer object's data store. The buffer object binding ({@see GL41::GL_ARRAY_BUFFER_BINDING}) is saved
+     * as generic vertex attribute array state ({@see GL41::GL_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING}) for index $index.
      *
      * When a generic vertex attribute array is specified, $size, $type, $normalized, $stride, and $pointer are saved
      * as vertex array state, in addition to the current vertex array buffer object binding.
      *
-     * To enable and disable a generic vertex attribute array, call {@see GL46::glEnableVertexAttribArray} and
-     * {@see GL46::glDisableVertexAttribArray} with $index. If enabled, the generic vertex attribute array is used
-     * when {@see GL46::glDrawArrays}, {@see GL46::glMultiDrawArrays}, {@see GL46::glDrawElements},
-     * {@see GL46::glMultiDrawElements}, or {@see GL46::glDrawRangeElements} is called.
+     * To enable and disable a generic vertex attribute array, call {@see GL41::enableVertexAttribArray} and
+     * {@see GL41::disableVertexAttribArray} with $index. If enabled, the generic vertex attribute array is used
+     * when {@see GL41::drawArrays}, {@see GL41::multiDrawArrays}, {@see GL41::drawElements},
+     * {@see GL41::multiDrawElements}, or {@see GL41::drawRangeElements} is called.
      *
      * @see http://docs.gl/gl2/glVertexAttribPointer
      * @see http://docs.gl/gl4/glVertexAttribPointer
@@ -5211,20 +5341,21 @@ class GL41 extends GL40
      * @param int $size
      * @param int $type
      * @param int $stride
-     * @param \FFI\CData|null $pointer
+     * @param CData|null $pointer
      * @return void
      */
-    public function vertexAttribLPointer(int $index, int $size, int $type, int $stride, ?\FFI\CData $pointer): void
+    public function vertexAttribLPointer(int $index, int $size, int $type, int $stride, ?CData $pointer): void
     {
-        $__proc = $this->getProcAs('glVertexAttribLPointer', 'void (*)(GLuint index, GLint size, GLenum type, GLsizei stride, const void *pointer)');
+        $__proc = $this->proc('glVertexAttribLPointer',
+            'void (*)(GLuint index, GLint size, GLenum type, GLsizei stride, const void *pointer)');
         $__proc($index, $size, $type, $stride, $pointer);
     }
 
     /**
-     * {@see GL46::glViewportArrayv} specifies the parameters for multiple viewports simulataneously. $first
+     * {@see GL41::viewportArrayv} specifies the parameters for multiple viewports simulataneously. $first
      * specifies the index of the first viewport to modify and $count specifies the number of viewports to modify.
-     * $first must be less than the value of {@see GL46::GL_MAX_VIEWPORTS}, and $first + $count must be less than or
-     * equal to the value of {@see GL46::GL_MAX_VIEWPORTS}. Viewports whose indices lie outside the range [$first,
+     * $first must be less than the value of {@see GL41::GL_MAX_VIEWPORTS}, and $first + $count must be less than or
+     * equal to the value of {@see GL41::GL_MAX_VIEWPORTS}. Viewports whose indices lie outside the range [$first,
      * $first + $count) are not modified. $v contains the address of an array of floating point values specifying the
      * left (x), bottom (y), width (w), and height (h) of each viewport, in that order. x and y give the location of
      * the viewport's lower left corner, and w and h give the width and height of the viewport, respectively. The
@@ -5238,31 +5369,31 @@ class GL41 extends GL40
      *
      * The location of the viewport's bottom left corner, given by (x, y) is clamped to be within the
      * implementaiton-dependent viewport bounds range. The viewport bounds range [min, max] can be determined by
-     * calling {@see GL46::glGet} with argument {@see GL46::GL_VIEWPORT_BOUNDS_RANGE}. Viewport width and height are
-     * silently clamped to a range that depends on the implementation. To query this range, call {@see GL46::glGet}
-     * with argument {@see GL46::GL_MAX_VIEWPORT_DIMS}.
+     * calling {@see GL41::get} with argument {@see GL41::GL_VIEWPORT_BOUNDS_RANGE}. Viewport width and height are
+     * silently clamped to a range that depends on the implementation. To query this range, call {@see GL41::get}
+     * with argument {@see GL41::GL_MAX_VIEWPORT_DIMS}.
      *
      * The precision with which the GL interprets the floating point viewport bounds is implementation-dependent and
-     * may be determined by querying the impementation-defined constant {@see GL46::GL_VIEWPORT_SUBPIXEL_BITS}.
+     * may be determined by querying the impementation-defined constant {@see GL41::GL_VIEWPORT_SUBPIXEL_BITS}.
      *
      * @see http://docs.gl/gl4/glViewportArray
      * @since 4.1
      * @param int $first
      * @param int $count
-     * @param \FFI\CData|null $v
+     * @param CData|null $v
      * @return void
      */
-    public function viewportArrayv(int $first, int $count, ?\FFI\CData $v): void
+    public function viewportArrayv(int $first, int $count, ?CData $v): void
     {
-        $__proc = $this->getProcAs('glViewportArrayv', 'void (*)(GLuint first, GLsizei count, const GLfloat *v)');
+        $__proc = $this->proc('glViewportArrayv', 'void (*)(GLuint first, GLsizei count, const GLfloat *v)');
         $__proc($first, $count, $v);
     }
 
     /**
-     * {@see GL46::glViewportIndexedf} and {@see GL46::glViewportIndexedfv} specify the parameters for a single
+     * {@see GL41::viewportIndexedf} and {@see GL41::viewportIndexedfv} specify the parameters for a single
      * viewport. $index specifies the index of the viewport to modify. $index must be less than the value of
-     * {@see GL46::GL_MAX_VIEWPORTS}. For {@see GL46::glViewportIndexedf}, $x, $y, $w, and $h specify the left,
-     * bottom, width and height of the viewport in pixels, respectively. For {@see GL46::glViewportIndexedfv}, $v
+     * {@see GL41::GL_MAX_VIEWPORTS}. For {@see GL41::viewportIndexedf}, $x, $y, $w, and $h specify the left,
+     * bottom, width and height of the viewport in pixels, respectively. For {@see GL41::viewportIndexedfv}, $v
      * contains the address of an array of floating point values specifying the left (x), bottom (y), width (w), and
      * height (h) of each viewport, in that order. x and y give the location of the viewport's lower left corner, and
      * w and h give the width and height of the viewport, respectively. The viewport specifies the affine
@@ -5275,15 +5406,15 @@ class GL41 extends GL40
      *
      * The location of the viewport's bottom left corner, given by (x, y) is clamped to be within the
      * implementaiton-dependent viewport bounds range. The viewport bounds range [min, max] can be determined by
-     * calling {@see GL46::glGet} with argument {@see GL46::GL_VIEWPORT_BOUNDS_RANGE}. Viewport width and height are
-     * silently clamped to a range that depends on the implementation. To query this range, call {@see GL46::glGet}
-     * with argument {@see GL46::GL_MAX_VIEWPORT_DIMS}.
+     * calling {@see GL41::get} with argument {@see GL41::GL_VIEWPORT_BOUNDS_RANGE}. Viewport width and height are
+     * silently clamped to a range that depends on the implementation. To query this range, call {@see GL41::get}
+     * with argument {@see GL41::GL_MAX_VIEWPORT_DIMS}.
      *
      * The precision with which the GL interprets the floating point viewport bounds is implementation-dependent and
-     * may be determined by querying the impementation-defined constant {@see GL46::GL_VIEWPORT_SUBPIXEL_BITS}.
+     * may be determined by querying the impementation-defined constant {@see GL41::GL_VIEWPORT_SUBPIXEL_BITS}.
      *
-     * Calling {@see GL46::glViewportIndexedfv} is equivalent to calling {@see GL46::glViewportArray} with $first set
-     * to $index, $count set to 1 and $v passsed directly. {@see GL46::glViewportIndexedf} is equivalent to:
+     * Calling {@see GL41::viewportIndexedfv} is equivalent to calling {@see GL41::viewportArray} with $first set
+     * to $index, $count set to 1 and $v passsed directly. {@see GL41::viewportIndexedf} is equivalent to:
      *
      * <code>
      *     void glViewportIndexedf(GLuint index, GLfloat x, GLfloat y, GLfloat w, GLfloat h) {
@@ -5291,6 +5422,7 @@ class GL41 extends GL40
      *         glViewportArrayv(index, 1, v);
      *     }
      * </code>
+     *
      * @see http://docs.gl/gl4/glViewportIndexed
      * @since 4.1
      * @param int $index
@@ -5302,15 +5434,16 @@ class GL41 extends GL40
      */
     public function viewportIndexedf(int $index, float $x, float $y, float $w, float $h): void
     {
-        $__proc = $this->getProcAs('glViewportIndexedf', 'void (*)(GLuint index, GLfloat x, GLfloat y, GLfloat w, GLfloat h)');
+        $__proc = $this->proc('glViewportIndexedf',
+            'void (*)(GLuint index, GLfloat x, GLfloat y, GLfloat w, GLfloat h)');
         $__proc($index, $x, $y, $w, $h);
     }
 
     /**
-     * {@see GL46::glViewportIndexedf} and {@see GL46::glViewportIndexedfv} specify the parameters for a single
+     * {@see GL41::viewportIndexedf} and {@see GL41::viewportIndexedfv} specify the parameters for a single
      * viewport. $index specifies the index of the viewport to modify. $index must be less than the value of
-     * {@see GL46::GL_MAX_VIEWPORTS}. For {@see GL46::glViewportIndexedf}, $x, $y, $w, and $h specify the left,
-     * bottom, width and height of the viewport in pixels, respectively. For {@see GL46::glViewportIndexedfv}, $v
+     * {@see GL41::GL_MAX_VIEWPORTS}. For {@see GL41::viewportIndexedf}, $x, $y, $w, and $h specify the left,
+     * bottom, width and height of the viewport in pixels, respectively. For {@see GL41::viewportIndexedfv}, $v
      * contains the address of an array of floating point values specifying the left (x), bottom (y), width (w), and
      * height (h) of each viewport, in that order. x and y give the location of the viewport's lower left corner, and
      * w and h give the width and height of the viewport, respectively. The viewport specifies the affine
@@ -5323,15 +5456,15 @@ class GL41 extends GL40
      *
      * The location of the viewport's bottom left corner, given by (x, y) is clamped to be within the
      * implementaiton-dependent viewport bounds range. The viewport bounds range [min, max] can be determined by
-     * calling {@see GL46::glGet} with argument {@see GL46::GL_VIEWPORT_BOUNDS_RANGE}. Viewport width and height are
-     * silently clamped to a range that depends on the implementation. To query this range, call {@see GL46::glGet}
-     * with argument {@see GL46::GL_MAX_VIEWPORT_DIMS}.
+     * calling {@see GL41::get} with argument {@see GL41::GL_VIEWPORT_BOUNDS_RANGE}. Viewport width and height are
+     * silently clamped to a range that depends on the implementation. To query this range, call {@see GL41::get}
+     * with argument {@see GL41::GL_MAX_VIEWPORT_DIMS}.
      *
      * The precision with which the GL interprets the floating point viewport bounds is implementation-dependent and
-     * may be determined by querying the impementation-defined constant {@see GL46::GL_VIEWPORT_SUBPIXEL_BITS}.
+     * may be determined by querying the impementation-defined constant {@see GL41::GL_VIEWPORT_SUBPIXEL_BITS}.
      *
-     * Calling {@see GL46::glViewportIndexedfv} is equivalent to calling {@see GL46::glViewportArray} with $first set
-     * to $index, $count set to 1 and $v passsed directly. {@see GL46::glViewportIndexedf} is equivalent to:
+     * Calling {@see GL41::viewportIndexedfv} is equivalent to calling {@see GL41::viewportArray} with $first set
+     * to $index, $count set to 1 and $v passsed directly. {@see GL41::viewportIndexedf} is equivalent to:
      *
      * <code>
      *     void glViewportIndexedf(GLuint index, GLfloat x, GLfloat y, GLfloat w, GLfloat h) {
@@ -5339,15 +5472,16 @@ class GL41 extends GL40
      *         glViewportArrayv(index, 1, v);
      *     }
      * </code>
+     *
      * @see http://docs.gl/gl4/glViewportIndexed
      * @since 4.1
      * @param int $index
-     * @param \FFI\CData|null $v
+     * @param CData|null $v
      * @return void
      */
-    public function viewportIndexedfv(int $index, ?\FFI\CData $v): void
+    public function viewportIndexedfv(int $index, ?CData $v): void
     {
-        $__proc = $this->getProcAs('glViewportIndexedfv', 'void (*)(GLuint index, const GLfloat *v)');
+        $__proc = $this->proc('glViewportIndexedfv', 'void (*)(GLuint index, const GLfloat *v)');
         $__proc($index, $v);
     }
 }

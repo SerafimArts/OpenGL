@@ -1,30 +1,25 @@
 <?php
+
 declare(strict_types=1);
 
-use Serafim\SDL\Event;
+use Serafim\OpenGL\Example\Util\Logger;
+use Serafim\OpenGL\Example\Util\Program;
+use Serafim\OpenGL\Example\Util\Shader;
+use Serafim\OpenGL\Example\Util\Window;
 use Serafim\OpenGL\GL43 as GL;
-use Serafim\SDL\Kernel\Event\Type;
-use Serafim\SDL\SDL;
+use Serafim\OpenGL\Type\Float32Array;
 
 require __DIR__ . '/../vendor/autoload.php';
-require __DIR__ . '/utils.php';
 
-// =================== WINDOW ===================
-$sdl = SDL::getInstance();
-$sdl->SDL_Init(SDL::SDL_INIT_VIDEO);
-$window = $sdl->SDL_CreateWindow('Window', SDL::SDL_WINDOWPOS_CENTERED, SDL::SDL_WINDOWPOS_CENTERED, 1920, 1080, SDL::SDL_WINDOW_OPENGL | SDL::SDL_WINDOW_SHOWN);
-$sdl->SDL_GL_SetAttribute(SDL::SDL_GL_CONTEXT_MAJOR_VERSION, 3);
-$sdl->SDL_GL_SetAttribute(SDL::SDL_GL_CONTEXT_MINOR_VERSION, 3);
-$sdl->SDL_GL_SetAttribute(SDL::SDL_GL_CONTEXT_PROFILE_MASK, SDL::SDL_GL_CONTEXT_PROFILE_CORE);
-$context = $sdl->SDL_GL_CreateContext($window);
-// =================== WINDOW ===================
-
-
-
+$window = new Window('Example', 1024, 768);
+$window->opengl(4, 3);
 
 $gl = new GL();
 
-$gl->getProcAs('wglSwapIntervalEXT', 'int (*)(int interval)')(0);
+// Enable logger
+(new Logger($gl))->enable();
+
+$gl->proc('wglSwapIntervalEXT', 'int (*)(int interval)')(0);
 
 echo 'Renderer: ' . $gl->getString(GL::GL_RENDERER) . "\n";
 echo 'Version: ' . $gl->getString(GL::GL_VERSION) . "\n";
@@ -32,20 +27,24 @@ echo 'Version: ' . $gl->getString(GL::GL_VERSION) . "\n";
 $gl->enable(GL::GL_DEPTH_TEST);
 $gl->enable(GL::GL_LESS);
 
-enable_logger($gl);
+$program = (new Program($gl))
+    ->attach(Shader::fromFile($gl, GL::GL_VERTEX_SHADER, __DIR__ . '/shader.vert'))
+    ->attach(Shader::fromFile($gl, GL::GL_FRAGMENT_SHADER, __DIR__ . '/shader.frag'))
+    ->compile()
+;
 
-$program = load_shaders($gl, __DIR__ . '/shader.vert', __DIR__ . '/shader.frag');
-
-$vertices = new \Serafim\OpenGL\Type\Float32Array(
-     0.0,  0.5,  0.0,
-     0.5, -0.5,  0.0,
-    -0.5, -0.5,  0.0,
+$vertices = new Float32Array(
+    0.0, 0.5, 0.0,
+    0.5, -0.5, 0.0,
+    -0.5, -0.5, 0.0,
 );
+
 
 $vbo = 0;
 $gl->genBuffers(1, $vbo);
 $gl->bindBuffer(GL::GL_ARRAY_BUFFER, $vbo);
 $gl->bufferData(GL::GL_ARRAY_BUFFER, $vertices->sizeOf(), $vertices->cdata, GL::GL_STATIC_DRAW);
+
 
 $vao = 0;
 $gl->genVertexArrays(1, $vao);
@@ -54,17 +53,10 @@ $gl->enableVertexAttribArray(0);
 $gl->bindBuffer(GL::GL_ARRAY_BUFFER, $vbo);
 $gl->vertexAttribPointer(0, 3, GL::GL_FLOAT, GL::GL_FALSE, 0, null);
 
-$event = $sdl->new(Event::class);
-while ($running ??= true) {
-    $sdl->SDL_PollEvent(SDL::addr($event));
-    if ($event->type === Type::SDL_QUIT) {
-        $running = false;
-    }
 
+$window->loop(static function () use ($gl, $program, $vao) {
     $gl->clear(GL::GL_COLOR_BUFFER_BIT | GL::GL_DEPTH_BUFFER_BIT);
     $gl->useProgram($program);
     $gl->bindVertexArray($vao);
     $gl->drawArrays(GL::GL_TRIANGLES, 0, 3);
-
-    $sdl->SDL_GL_SwapWindow($window);
-}
+});

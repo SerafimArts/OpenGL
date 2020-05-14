@@ -13,110 +13,152 @@ declare(strict_types=1);
 
 namespace Serafim\OpenGL;
 
+use FFI\CData;
+
 /**
+ * The OpenGL functionality up to version 3.3. Includes the deprecated symbols of the Compatibility Profile.
+ *
+ * OpenGL 3.3 implementations support revision 3.30 of the OpenGL Shading Language.
+ *
+ * Extensions promoted to core in this release:
+ *
+ * - ARB_shader_bit_encoding @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_shader_bit_encoding.txt
+ * - ARB_blend_func_extended @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_blend_func_extended.txt
+ * - ARB_explicit_attrib_location @see
+ * https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_explicit_attrib_location.txt
+ * - ARB_occlusion_query2 @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_occlusion_query2.txt
+ * - ARB_sampler_objects @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_sampler_objects.txt
+ * - ARB_texture_rgb10_a2ui @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_texture_rgb10_a2ui.txt
+ * - ARB_texture_swizzle @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_texture_swizzle.txt
+ * - ARB_timer_query @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_timer_query.txt
+ * - ARB_instanced_arrays @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_instanced_arrays.txt
+ * - ARB_vertex_type_2_10_10_10_rev @see
+ * https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_vertex_type_2_10_10_10_rev.txt
+ *
  * @version 3.3
  */
 class GL33 extends GL32
 {
     /**
+     * Accepted by the $src and $dst parameters of BlendFunc and BlendFunci, and by the $srcRGB,
+     * $dstRGB, $srcAlpha and $dstAlpha parameters of BlendFuncSeparate and BlendFuncSeparatei.
+     *
      * @since 3.3
      * @var int
      */
-    public const GL_VERTEX_ATTRIB_ARRAY_DIVISOR = 0x88FE;
+    public const
+        GL_SRC1_COLOR = 0x88F9,
+        GL_ONE_MINUS_SRC1_COLOR = 0x88FA,
+        GL_ONE_MINUS_SRC1_ALPHA = 0x88FB;
+
     /**
-     * @since 3.3
-     * @var int
-     */
-    public const GL_SRC1_COLOR = 0x88F9;
-    /**
-     * @since 3.3
-     * @var int
-     */
-    public const GL_ONE_MINUS_SRC1_COLOR = 0x88FA;
-    /**
-     * @since 3.3
-     * @var int
-     */
-    public const GL_ONE_MINUS_SRC1_ALPHA = 0x88FB;
-    /**
+     * Accepted by the $pname parameter of GetBooleanv, GetIntegerv, GetFloatv and GetDoublev.
+     *
      * @since 3.3
      * @var int
      */
     public const GL_MAX_DUAL_SOURCE_DRAW_BUFFERS = 0x88FC;
+
     /**
+     * Accepted by the $target parameter of BeginQuery, EndQuery, and GetQueryiv.
+     *
      * @since 3.3
      * @var int
      */
     public const GL_ANY_SAMPLES_PASSED = 0x8C2F;
+
     /**
+     * Accepted by the $value parameter of the GetBooleanv, GetIntegerv, GetInteger64v, GetFloatv and
+     * GetDoublev functions.
+     *
      * @since 3.3
      * @var int
      */
     public const GL_SAMPLER_BINDING = 0x8919;
+
     /**
+     * Accepted by the $internalFormat parameter of TexImage1D, TexImage2D, TexImage3D, CopyTexImage1D,
+     * CopyTexImage2D, RenderbufferStorage and RenderbufferStorageMultisample.
+     *
      * @since 3.3
      * @var int
      */
     public const GL_RGB10_A2UI = 0x906F;
+
     /**
+     * Accepted by the $pname parameters of TexParameteri, TexParameterf, TexParameteriv, TexParameterfv,
+     * GetTexParameterfv, and GetTexParameteriv.
+     *
      * @since 3.3
      * @var int
      */
-    public const GL_TEXTURE_SWIZZLE_R = 0x8E42;
+    public const
+        GL_TEXTURE_SWIZZLE_R = 0x8E42,
+        GL_TEXTURE_SWIZZLE_G = 0x8E43,
+        GL_TEXTURE_SWIZZLE_B = 0x8E44,
+        GL_TEXTURE_SWIZZLE_A = 0x8E45;
+
     /**
-     * @since 3.3
-     * @var int
-     */
-    public const GL_TEXTURE_SWIZZLE_G = 0x8E43;
-    /**
-     * @since 3.3
-     * @var int
-     */
-    public const GL_TEXTURE_SWIZZLE_B = 0x8E44;
-    /**
-     * @since 3.3
-     * @var int
-     */
-    public const GL_TEXTURE_SWIZZLE_A = 0x8E45;
-    /**
+     * Accepted by the $pname parameters of TexParameteriv,  TexParameterfv, GetTexParameterfv, and
+     * GetTexParameteriv.
+     *
      * @since 3.3
      * @var int
      */
     public const GL_TEXTURE_SWIZZLE_RGBA = 0x8E46;
+
     /**
+     * Accepted by the $target parameter of BeginQuery, EndQuery, and GetQueryiv.
+     *
      * @since 3.3
      * @var int
      */
     public const GL_TIME_ELAPSED = 0x88BF;
+
     /**
+     * Accepted by the $target parameter of GetQueryiv and QueryCounter. Accepted by the $value parameter
+     * of GetBooleanv, GetIntegerv, GetInteger64v, GetFloatv, and GetDoublev.
+     *
      * @since 3.3
      * @var int
      */
     public const GL_TIMESTAMP = 0x8E28;
+
     /**
+     * Accepted by the $pname parameters of GetVertexAttribdv, GetVertexAttribfv, and GetVertexAttribiv.
+     *
+     * @since 3.3
+     * @var int
+     */
+    public const GL_VERTEX_ATTRIB_ARRAY_DIVISOR = 0x88FE;
+
+    /**
+     * Accepted by the $type parameter of VertexAttribPointer, VertexPointer, NormalPointer, ColorPointer,
+     * SecondaryColorPointer, TexCoordPointer, VertexAttribP{1234}ui, VertexP*, TexCoordP*, MultiTexCoordP*,
+     * NormalP3ui, ColorP*, SecondaryColorP* and VertexAttribP*.
+     *
      * @since 3.3
      * @var int
      */
     public const GL_INT_2_10_10_10_REV = 0x8D9F;
 
     /**
-     * {@see GL46::glBindFragDataLocationIndexed} specifies that the varying out variable $name in $program should be
+     * {@see GL33::bindFragDataLocationIndexed} specifies that the varying out variable $name in $program should be
      * bound to fragment color $colorNumber when the program is next linked. $index may be zero or one to specify
      * that the color be used as either the first or second color input to the blend equation, respectively.
      *
-     * The bindings specified by {@see GL46::glBindFragDataLocationIndexed} have no effect until $program is next
+     * The bindings specified by {@see GL33::bindFragDataLocationIndexed} have no effect until $program is next
      * linked. Bindings may be specified at any time after $program has been created. Specifically, they may be
      * specified before shader objects are attached to the program. Therefore, any name may be specified in $name,
-     * including a name that is never used as a varying out variable in any fragment shader object. Names beginning
-     * with {@see GL46::gl_} are reserved by the GL.
+     * including a name that is never used as a varying out variable in any fragment shader object.
      *
      * If $name was bound previously, its assigned binding is replaced with $colorNumber and $index. $name must be a
      * null-terminated string. $index must be less than or equal to one, and $colorNumber must be less than the value
-     * of {@see GL46::GL_MAX_DRAW_BUFFERS} if $index is zero, and less than the value of
-     * {@see GL46::GL_MAX_DUAL_SOURCE_DRAW_BUFFERS} if index is greater than or equal to one.
+     * of {@see GL33::GL_MAX_DRAW_BUFFERS} if $index is zero, and less than the value of
+     * {@see GL33::GL_MAX_DUAL_SOURCE_DRAW_BUFFERS} if index is greater than or equal to one.
      *
-     * In addition to the errors generated by {@see GL46::glBindFragDataLocationIndexed}, the program $program will
-     * fail to link if:    The number of active outputs is greater than the value {@see GL46::GL_MAX_DRAW_BUFFERS}.
+     * In addition to the errors generated by {@see GL33::bindFragDataLocationIndexed}, the program $program will
+     * fail to link if:    The number of active outputs is greater than the value {@see GL33::GL_MAX_DRAW_BUFFERS}.
      *   More than one varying out variable is bound to the same color number.
      *
      * @see http://docs.gl/gl4/glBindFragDataLocationIndexed
@@ -124,19 +166,20 @@ class GL33 extends GL32
      * @param int $program
      * @param int $colorNumber
      * @param int $index
-     * @param \FFI\CData|null $name
+     * @param CData|null $name
      * @return void
      */
-    public function bindFragDataLocationIndexed(int $program, int $colorNumber, int $index, ?\FFI\CData $name): void
+    public function bindFragDataLocationIndexed(int $program, int $colorNumber, int $index, ?CData $name): void
     {
-        $__proc = $this->getProcAs('glBindFragDataLocationIndexed', 'void (*)(GLuint program, GLuint colorNumber, GLuint index, const GLchar *name)');
+        $__proc = $this->proc('glBindFragDataLocationIndexed',
+            'void (*)(GLuint program, GLuint colorNumber, GLuint index, const GLchar *name)');
         $__proc($program, $colorNumber, $index, $name);
     }
 
     /**
-     * {@see GL46::glBindSampler} binds $sampler to the texture unit at index $unit. $sampler must be zero or the
-     * name of a sampler object previously returned from a call to {@see GL46::glGenSamplers}. $unit must be less
-     * than the value of {@see GL46::GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS}.
+     * {@see GL33::bindSampler} binds $sampler to the texture unit at index $unit. $sampler must be zero or the
+     * name of a sampler object previously returned from a call to {@see GL33::genSamplers}. $unit must be less
+     * than the value of {@see GL33::GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS}.
      *
      * When a sampler object is bound to a texture unit, its state supersedes that of the texture object bound to
      * that texture unit. If the sampler name zero is bound to a texture unit, the currently bound texture's sampler
@@ -150,37 +193,37 @@ class GL33 extends GL32
      */
     public function bindSampler(int $unit, int $sampler): void
     {
-        $__proc = $this->getProcAs('glBindSampler', 'void (*)(GLuint unit, GLuint sampler)');
+        $__proc = $this->proc('glBindSampler', 'void (*)(GLuint unit, GLuint sampler)');
         $__proc($unit, $sampler);
     }
 
     /**
-     * {@see GL46::glDeleteSamplers} deletes $n sampler objects named by the elements of the array $samplers. After a
+     * {@see GL33::deleteSamplers} deletes $n sampler objects named by the elements of the array $samplers. After a
      * sampler object is deleted, its name is again unused. If a sampler object that is currently bound to a sampler
-     * unit is deleted, it is as though {@see GL46::glBindSampler} is called with unit set to the unit the sampler is
+     * unit is deleted, it is as though {@see GL33::bindSampler} is called with unit set to the unit the sampler is
      * bound to and sampler zero. Unused names in samplers are silently ignored, as is the reserved name zero.
      *
      * @see http://docs.gl/gl4/glDeleteSamplers
      * @since 3.3
      * @param int $count
-     * @param \FFI\CData|null $samplers
+     * @param CData|null $samplers
      * @return void
      */
-    public function deleteSamplers(int $count, ?\FFI\CData $samplers): void
+    public function deleteSamplers(int $count, ?CData $samplers): void
     {
-        $__proc = $this->getProcAs('glDeleteSamplers', 'void (*)(GLsizei count, const GLuint *samplers)');
+        $__proc = $this->proc('glDeleteSamplers', 'void (*)(GLsizei count, const GLuint *samplers)');
         $__proc($count, $samplers);
     }
 
     /**
-     * {@see GL46::glGenSamplers} returns $n sampler object names in $samplers. There is no guarantee that the names
+     * {@see GL33::genSamplers} returns $n sampler object names in $samplers. There is no guarantee that the names
      * form a contiguous set of integers; however, it is guaranteed that none of the returned names was in use
-     * immediately before the call to {@see GL46::glGenSamplers}.
+     * immediately before the call to {@see GL33::genSamplers}.
      *
-     * Sampler object names returned by a call to {@see GL46::glGenSamplers} are not returned by subsequent calls,
-     * unless they are first deleted with {@see GL46::glDeleteSamplers}.
+     * Sampler object names returned by a call to {@see GL33::genSamplers} are not returned by subsequent calls,
+     * unless they are first deleted with {@see GL33::deleteSamplers}.
      *
-     * The names returned in $samplers are marked as used, for the purposes of {@see GL46::glGenSamplers} only, but
+     * The names returned in $samplers are marked as used, for the purposes of {@see GL33::genSamplers} only, but
      * they acquire state and type only when they are first bound.
      *
      * @see http://docs.gl/gl4/glGenSamplers
@@ -193,7 +236,7 @@ class GL33 extends GL32
     {
         $samplersCType = $this->info->ffi->new('GLuint', false);
         try {
-            $__proc = $this->getProcAs('glGenSamplers', 'void (*)(GLsizei count, GLuint *samplers)');
+            $__proc = $this->proc('glGenSamplers', 'void (*)(GLsizei count, GLuint *samplers)');
             $__proc($count, \FFI::addr($samplersCType));
         } finally {
             $samplers = $samplersCType->cdata;
@@ -202,46 +245,47 @@ class GL33 extends GL32
     }
 
     /**
-     * {@see GL46::glGetFragDataIndex} returns the index of the fragment color to which the variable $name was bound
+     * {@see GL33::getFragDataIndex} returns the index of the fragment color to which the variable $name was bound
      * when the program object $program was last linked. If $name is not a varying out variable of $program, or if an
      * error occurs, -1 will be returned.
      *
      * @see http://docs.gl/gl4/glGetFragDataIndex
      * @since 3.3
      * @param int $program
-     * @param \FFI\CData|null $name
+     * @param CData|null $name
      * @return int
      */
-    public function getFragDataIndex(int $program, ?\FFI\CData $name): int
+    public function getFragDataIndex(int $program, ?CData $name): int
     {
-        $__proc = $this->getProcAs('glGetFragDataIndex', 'GLint (*)(GLuint program, const GLchar *name)');
+        $__proc = $this->proc('glGetFragDataIndex', 'GLint (*)(GLuint program, const GLchar *name)');
+
         return $__proc($program, $name);
     }
 
     /**
-     * These commands return a selected parameter of the query object specified by $id. {@see GL46::glGetQueryObject}
+     * These commands return a selected parameter of the query object specified by $id. {@see GL33::getQueryObject}
      * returns in $params a selected parameter of the query object specified by $id.
-     * {@see GL46::glGetQueryBufferObject} returns in $buffer a selected parameter of the query object specified by
+     * {@see GL33::getQueryBufferObject} returns in $buffer a selected parameter of the query object specified by
      * $id, by writing it to $buffer's data store at the byte offset specified by $offset.
      *
      * $pname names a specific query object parameter. $pname can be as follows:
      *
-     *  - {@see GL46::GL_QUERY_RESULT}: $params or $buffer returns the value of
+     *  - {@see GL33::GL_QUERY_RESULT}: $params or $buffer returns the value of
      *    the query object's passed samples counter. The initial value is 0.
      *
-     *  - {@see GL46::GL_QUERY_RESULT_NO_WAIT}: If the result of the query is
-     *    available (that is, a query of {@see GL46::GL_QUERY_RESULT_AVAILABLE}
+     *  - {@see GL33::GL_QUERY_RESULT_NO_WAIT}: If the result of the query is
+     *    available (that is, a query of {@see GL33::GL_QUERY_RESULT_AVAILABLE}
      *    would
      *    return non-zero), then $params or $buffer returns the value of the
      *    query object's passed samples counter,
      *    otherwise, the data referred to by $params or $buffer is not modified.
      *    The initial value is 0.
      *
-     *  - {@see GL46::GL_QUERY_RESULT_AVAILABLE}: $params or $buffer returns
+     *  - {@see GL33::GL_QUERY_RESULT_AVAILABLE}: $params or $buffer returns
      *    whether the passed samples counter is immediately available. If a
      *    delay would
-     *    occur waiting for the query result, {@see GL46::GL_FALSE} is returned.
-     *    Otherwise, {@see GL46::GL_TRUE} is
+     *    occur waiting for the query result, {@see GL33::GL_FALSE} is returned.
+     *    Otherwise, {@see GL33::GL_TRUE} is
      *    returned, which also indicates that the results of all previous
      *    queries are available as well.
      *
@@ -257,7 +301,7 @@ class GL33 extends GL32
     {
         $paramsCType = $this->info->ffi->new('GLint64', false);
         try {
-            $__proc = $this->getProcAs('glGetQueryObjecti64v', 'void (*)(GLuint id, GLenum pname, GLint64 *params)');
+            $__proc = $this->proc('glGetQueryObjecti64v', 'void (*)(GLuint id, GLenum pname, GLint64 *params)');
             $__proc($id, $pname, \FFI::addr($paramsCType));
         } finally {
             $params = $paramsCType->cdata;
@@ -266,29 +310,29 @@ class GL33 extends GL32
     }
 
     /**
-     * These commands return a selected parameter of the query object specified by $id. {@see GL46::glGetQueryObject}
+     * These commands return a selected parameter of the query object specified by $id. {@see GL33::getQueryObject}
      * returns in $params a selected parameter of the query object specified by $id.
-     * {@see GL46::glGetQueryBufferObject} returns in $buffer a selected parameter of the query object specified by
+     * {@see GL33::getQueryBufferObject} returns in $buffer a selected parameter of the query object specified by
      * $id, by writing it to $buffer's data store at the byte offset specified by $offset.
      *
      * $pname names a specific query object parameter. $pname can be as follows:
      *
-     *  - {@see GL46::GL_QUERY_RESULT}: $params or $buffer returns the value of
+     *  - {@see GL33::GL_QUERY_RESULT}: $params or $buffer returns the value of
      *    the query object's passed samples counter. The initial value is 0.
      *
-     *  - {@see GL46::GL_QUERY_RESULT_NO_WAIT}: If the result of the query is
-     *    available (that is, a query of {@see GL46::GL_QUERY_RESULT_AVAILABLE}
+     *  - {@see GL33::GL_QUERY_RESULT_NO_WAIT}: If the result of the query is
+     *    available (that is, a query of {@see GL33::GL_QUERY_RESULT_AVAILABLE}
      *    would
      *    return non-zero), then $params or $buffer returns the value of the
      *    query object's passed samples counter,
      *    otherwise, the data referred to by $params or $buffer is not modified.
      *    The initial value is 0.
      *
-     *  - {@see GL46::GL_QUERY_RESULT_AVAILABLE}: $params or $buffer returns
+     *  - {@see GL33::GL_QUERY_RESULT_AVAILABLE}: $params or $buffer returns
      *    whether the passed samples counter is immediately available. If a
      *    delay would
-     *    occur waiting for the query result, {@see GL46::GL_FALSE} is returned.
-     *    Otherwise, {@see GL46::GL_TRUE} is
+     *    occur waiting for the query result, {@see GL33::GL_FALSE} is returned.
+     *    Otherwise, {@see GL33::GL_TRUE} is
      *    returned, which also indicates that the results of all previous
      *    queries are available as well.
      *
@@ -304,7 +348,7 @@ class GL33 extends GL32
     {
         $paramsCType = $this->info->ffi->new('GLuint64', false);
         try {
-            $__proc = $this->getProcAs('glGetQueryObjectui64v', 'void (*)(GLuint id, GLenum pname, GLuint64 *params)');
+            $__proc = $this->proc('glGetQueryObjectui64v', 'void (*)(GLuint id, GLenum pname, GLuint64 *params)');
             $__proc($id, $pname, \FFI::addr($paramsCType));
         } finally {
             $params = $paramsCType->cdata;
@@ -313,41 +357,41 @@ class GL33 extends GL32
     }
 
     /**
-     * {@see GL46::glGetSamplerParameter} returns in $params the value or values of the sampler parameter specified
+     * {@see GL33::getSamplerParameter} returns in $params the value or values of the sampler parameter specified
      * as $pname. $sampler defines the target sampler, and must be the name of an existing sampler object, returned
-     * from a previous call to {@see GL46::glGenSamplers}. $pname accepts the same symbols as
-     * {@see GL46::glSamplerParameter}, with the same interpretations:
+     * from a previous call to {@see GL33::genSamplers}. $pname accepts the same symbols as
+     * {@see GL33::samplerParameter}, with the same interpretations:
      *
-     *  - {@see GL46::GL_TEXTURE_MAG_FILTER}: Returns the single-valued texture
+     *  - {@see GL33::GL_TEXTURE_MAG_FILTER}: Returns the single-valued texture
      *    magnification filter, a symbolic constant. The initial value is
-     *    {@see GL46::GL_LINEAR}.
+     *    {@see GL33::GL_LINEAR}.
      *
-     *  - {@see GL46::GL_TEXTURE_MIN_FILTER}: Returns the single-valued texture
+     *  - {@see GL33::GL_TEXTURE_MIN_FILTER}: Returns the single-valued texture
      *    minification filter, a symbolic constant. The initial value is
-     *    {@see GL46::GL_NEAREST_MIPMAP_LINEAR}.
+     *    {@see GL33::GL_NEAREST_MIPMAP_LINEAR}.
      *
-     *  - {@see GL46::GL_TEXTURE_MIN_LOD}: Returns the single-valued texture
+     *  - {@see GL33::GL_TEXTURE_MIN_LOD}: Returns the single-valued texture
      *    minimum level-of-detail value. The initial value is   -1000 .
      *
-     *  - {@see GL46::GL_TEXTURE_MAX_LOD}: Returns the single-valued texture
+     *  - {@see GL33::GL_TEXTURE_MAX_LOD}: Returns the single-valued texture
      *    maximum level-of-detail value. The initial value is 1000.
      *
-     *  - {@see GL46::GL_TEXTURE_WRAP_S}: Returns the single-valued wrapping
+     *  - {@see GL33::GL_TEXTURE_WRAP_S}: Returns the single-valued wrapping
      *    function for texture coordinate s, a symbolic constant. The initial
      *    value
-     *    is {@see GL46::GL_REPEAT}.
+     *    is {@see GL33::GL_REPEAT}.
      *
-     *  - {@see GL46::GL_TEXTURE_WRAP_T}: Returns the single-valued wrapping
+     *  - {@see GL33::GL_TEXTURE_WRAP_T}: Returns the single-valued wrapping
      *    function for texture coordinate t, a symbolic constant. The initial
      *    value
-     *    is {@see GL46::GL_REPEAT}.
+     *    is {@see GL33::GL_REPEAT}.
      *
-     *  - {@see GL46::GL_TEXTURE_WRAP_R}: Returns the single-valued wrapping
+     *  - {@see GL33::GL_TEXTURE_WRAP_R}: Returns the single-valued wrapping
      *    function for texture coordinate r, a symbolic constant. The initial
      *    value
-     *    is {@see GL46::GL_REPEAT}.
+     *    is {@see GL33::GL_REPEAT}.
      *
-     *  - {@see GL46::GL_TEXTURE_BORDER_COLOR}: Returns four integer or
+     *  - {@see GL33::GL_TEXTURE_BORDER_COLOR}: Returns four integer or
      *    floating-point numbers that comprise the RGBA color of the texture
      *    border.
      *    Floating-point values are returned in the range    0 1  . Integer
@@ -357,13 +401,13 @@ class GL33 extends GL32
      *    -1.0  maps to the most negative representable integer. The initial
      *    value is (0, 0, 0, 0).
      *
-     *  - {@see GL46::GL_TEXTURE_COMPARE_MODE}: Returns a single-valued texture
+     *  - {@see GL33::GL_TEXTURE_COMPARE_MODE}: Returns a single-valued texture
      *    comparison mode, a symbolic constant. The initial value is
-     *    {@see GL46::GL_NONE}. See {@see GL46::glSamplerParameter}.
+     *    {@see GL33::GL_NONE}. See {@see GL33::samplerParameter}.
      *
-     *  - {@see GL46::GL_TEXTURE_COMPARE_FUNC}: Returns a single-valued texture
+     *  - {@see GL33::GL_TEXTURE_COMPARE_FUNC}: Returns a single-valued texture
      *    comparison function, a symbolic constant. The initial value is
-     *    {@see GL46::GL_LEQUAL}. See {@see GL46::glSamplerParameter}.
+     *    {@see GL33::GL_LEQUAL}. See {@see GL33::samplerParameter}.
      *
      * @see http://docs.gl/gl4/glGetSamplerParameter
      * @since 3.3
@@ -376,7 +420,8 @@ class GL33 extends GL32
     {
         $paramsCType = $this->info->ffi->new('GLint', false);
         try {
-            $__proc = $this->getProcAs('glGetSamplerParameterIiv', 'void (*)(GLuint sampler, GLenum pname, GLint *params)');
+            $__proc = $this->proc('glGetSamplerParameterIiv',
+                'void (*)(GLuint sampler, GLenum pname, GLint *params)');
             $__proc($sampler, $pname, \FFI::addr($paramsCType));
         } finally {
             $params = $paramsCType->cdata;
@@ -385,41 +430,41 @@ class GL33 extends GL32
     }
 
     /**
-     * {@see GL46::glGetSamplerParameter} returns in $params the value or values of the sampler parameter specified
+     * {@see GL33::getSamplerParameter} returns in $params the value or values of the sampler parameter specified
      * as $pname. $sampler defines the target sampler, and must be the name of an existing sampler object, returned
-     * from a previous call to {@see GL46::glGenSamplers}. $pname accepts the same symbols as
-     * {@see GL46::glSamplerParameter}, with the same interpretations:
+     * from a previous call to {@see GL33::genSamplers}. $pname accepts the same symbols as
+     * {@see GL33::samplerParameter}, with the same interpretations:
      *
-     *  - {@see GL46::GL_TEXTURE_MAG_FILTER}: Returns the single-valued texture
+     *  - {@see GL33::GL_TEXTURE_MAG_FILTER}: Returns the single-valued texture
      *    magnification filter, a symbolic constant. The initial value is
-     *    {@see GL46::GL_LINEAR}.
+     *    {@see GL33::GL_LINEAR}.
      *
-     *  - {@see GL46::GL_TEXTURE_MIN_FILTER}: Returns the single-valued texture
+     *  - {@see GL33::GL_TEXTURE_MIN_FILTER}: Returns the single-valued texture
      *    minification filter, a symbolic constant. The initial value is
-     *    {@see GL46::GL_NEAREST_MIPMAP_LINEAR}.
+     *    {@see GL33::GL_NEAREST_MIPMAP_LINEAR}.
      *
-     *  - {@see GL46::GL_TEXTURE_MIN_LOD}: Returns the single-valued texture
+     *  - {@see GL33::GL_TEXTURE_MIN_LOD}: Returns the single-valued texture
      *    minimum level-of-detail value. The initial value is   -1000 .
      *
-     *  - {@see GL46::GL_TEXTURE_MAX_LOD}: Returns the single-valued texture
+     *  - {@see GL33::GL_TEXTURE_MAX_LOD}: Returns the single-valued texture
      *    maximum level-of-detail value. The initial value is 1000.
      *
-     *  - {@see GL46::GL_TEXTURE_WRAP_S}: Returns the single-valued wrapping
+     *  - {@see GL33::GL_TEXTURE_WRAP_S}: Returns the single-valued wrapping
      *    function for texture coordinate s, a symbolic constant. The initial
      *    value
-     *    is {@see GL46::GL_REPEAT}.
+     *    is {@see GL33::GL_REPEAT}.
      *
-     *  - {@see GL46::GL_TEXTURE_WRAP_T}: Returns the single-valued wrapping
+     *  - {@see GL33::GL_TEXTURE_WRAP_T}: Returns the single-valued wrapping
      *    function for texture coordinate t, a symbolic constant. The initial
      *    value
-     *    is {@see GL46::GL_REPEAT}.
+     *    is {@see GL33::GL_REPEAT}.
      *
-     *  - {@see GL46::GL_TEXTURE_WRAP_R}: Returns the single-valued wrapping
+     *  - {@see GL33::GL_TEXTURE_WRAP_R}: Returns the single-valued wrapping
      *    function for texture coordinate r, a symbolic constant. The initial
      *    value
-     *    is {@see GL46::GL_REPEAT}.
+     *    is {@see GL33::GL_REPEAT}.
      *
-     *  - {@see GL46::GL_TEXTURE_BORDER_COLOR}: Returns four integer or
+     *  - {@see GL33::GL_TEXTURE_BORDER_COLOR}: Returns four integer or
      *    floating-point numbers that comprise the RGBA color of the texture
      *    border.
      *    Floating-point values are returned in the range    0 1  . Integer
@@ -429,13 +474,13 @@ class GL33 extends GL32
      *    -1.0  maps to the most negative representable integer. The initial
      *    value is (0, 0, 0, 0).
      *
-     *  - {@see GL46::GL_TEXTURE_COMPARE_MODE}: Returns a single-valued texture
+     *  - {@see GL33::GL_TEXTURE_COMPARE_MODE}: Returns a single-valued texture
      *    comparison mode, a symbolic constant. The initial value is
-     *    {@see GL46::GL_NONE}. See {@see GL46::glSamplerParameter}.
+     *    {@see GL33::GL_NONE}. See {@see GL33::samplerParameter}.
      *
-     *  - {@see GL46::GL_TEXTURE_COMPARE_FUNC}: Returns a single-valued texture
+     *  - {@see GL33::GL_TEXTURE_COMPARE_FUNC}: Returns a single-valued texture
      *    comparison function, a symbolic constant. The initial value is
-     *    {@see GL46::GL_LEQUAL}. See {@see GL46::glSamplerParameter}.
+     *    {@see GL33::GL_LEQUAL}. See {@see GL33::samplerParameter}.
      *
      * @see http://docs.gl/gl4/glGetSamplerParameter
      * @since 3.3
@@ -448,7 +493,8 @@ class GL33 extends GL32
     {
         $paramsCType = $this->info->ffi->new('GLuint', false);
         try {
-            $__proc = $this->getProcAs('glGetSamplerParameterIuiv', 'void (*)(GLuint sampler, GLenum pname, GLuint *params)');
+            $__proc = $this->proc('glGetSamplerParameterIuiv',
+                'void (*)(GLuint sampler, GLenum pname, GLuint *params)');
             $__proc($sampler, $pname, \FFI::addr($paramsCType));
         } finally {
             $params = $paramsCType->cdata;
@@ -457,41 +503,41 @@ class GL33 extends GL32
     }
 
     /**
-     * {@see GL46::glGetSamplerParameter} returns in $params the value or values of the sampler parameter specified
+     * {@see GL33::getSamplerParameter} returns in $params the value or values of the sampler parameter specified
      * as $pname. $sampler defines the target sampler, and must be the name of an existing sampler object, returned
-     * from a previous call to {@see GL46::glGenSamplers}. $pname accepts the same symbols as
-     * {@see GL46::glSamplerParameter}, with the same interpretations:
+     * from a previous call to {@see GL33::genSamplers}. $pname accepts the same symbols as
+     * {@see GL33::samplerParameter}, with the same interpretations:
      *
-     *  - {@see GL46::GL_TEXTURE_MAG_FILTER}: Returns the single-valued texture
+     *  - {@see GL33::GL_TEXTURE_MAG_FILTER}: Returns the single-valued texture
      *    magnification filter, a symbolic constant. The initial value is
-     *    {@see GL46::GL_LINEAR}.
+     *    {@see GL33::GL_LINEAR}.
      *
-     *  - {@see GL46::GL_TEXTURE_MIN_FILTER}: Returns the single-valued texture
+     *  - {@see GL33::GL_TEXTURE_MIN_FILTER}: Returns the single-valued texture
      *    minification filter, a symbolic constant. The initial value is
-     *    {@see GL46::GL_NEAREST_MIPMAP_LINEAR}.
+     *    {@see GL33::GL_NEAREST_MIPMAP_LINEAR}.
      *
-     *  - {@see GL46::GL_TEXTURE_MIN_LOD}: Returns the single-valued texture
+     *  - {@see GL33::GL_TEXTURE_MIN_LOD}: Returns the single-valued texture
      *    minimum level-of-detail value. The initial value is   -1000 .
      *
-     *  - {@see GL46::GL_TEXTURE_MAX_LOD}: Returns the single-valued texture
+     *  - {@see GL33::GL_TEXTURE_MAX_LOD}: Returns the single-valued texture
      *    maximum level-of-detail value. The initial value is 1000.
      *
-     *  - {@see GL46::GL_TEXTURE_WRAP_S}: Returns the single-valued wrapping
+     *  - {@see GL33::GL_TEXTURE_WRAP_S}: Returns the single-valued wrapping
      *    function for texture coordinate s, a symbolic constant. The initial
      *    value
-     *    is {@see GL46::GL_REPEAT}.
+     *    is {@see GL33::GL_REPEAT}.
      *
-     *  - {@see GL46::GL_TEXTURE_WRAP_T}: Returns the single-valued wrapping
+     *  - {@see GL33::GL_TEXTURE_WRAP_T}: Returns the single-valued wrapping
      *    function for texture coordinate t, a symbolic constant. The initial
      *    value
-     *    is {@see GL46::GL_REPEAT}.
+     *    is {@see GL33::GL_REPEAT}.
      *
-     *  - {@see GL46::GL_TEXTURE_WRAP_R}: Returns the single-valued wrapping
+     *  - {@see GL33::GL_TEXTURE_WRAP_R}: Returns the single-valued wrapping
      *    function for texture coordinate r, a symbolic constant. The initial
      *    value
-     *    is {@see GL46::GL_REPEAT}.
+     *    is {@see GL33::GL_REPEAT}.
      *
-     *  - {@see GL46::GL_TEXTURE_BORDER_COLOR}: Returns four integer or
+     *  - {@see GL33::GL_TEXTURE_BORDER_COLOR}: Returns four integer or
      *    floating-point numbers that comprise the RGBA color of the texture
      *    border.
      *    Floating-point values are returned in the range    0 1  . Integer
@@ -501,13 +547,13 @@ class GL33 extends GL32
      *    -1.0  maps to the most negative representable integer. The initial
      *    value is (0, 0, 0, 0).
      *
-     *  - {@see GL46::GL_TEXTURE_COMPARE_MODE}: Returns a single-valued texture
+     *  - {@see GL33::GL_TEXTURE_COMPARE_MODE}: Returns a single-valued texture
      *    comparison mode, a symbolic constant. The initial value is
-     *    {@see GL46::GL_NONE}. See {@see GL46::glSamplerParameter}.
+     *    {@see GL33::GL_NONE}. See {@see GL33::samplerParameter}.
      *
-     *  - {@see GL46::GL_TEXTURE_COMPARE_FUNC}: Returns a single-valued texture
+     *  - {@see GL33::GL_TEXTURE_COMPARE_FUNC}: Returns a single-valued texture
      *    comparison function, a symbolic constant. The initial value is
-     *    {@see GL46::GL_LEQUAL}. See {@see GL46::glSamplerParameter}.
+     *    {@see GL33::GL_LEQUAL}. See {@see GL33::samplerParameter}.
      *
      * @see http://docs.gl/gl4/glGetSamplerParameter
      * @since 3.3
@@ -520,7 +566,8 @@ class GL33 extends GL32
     {
         $paramsCType = $this->info->ffi->new('GLfloat', false);
         try {
-            $__proc = $this->getProcAs('glGetSamplerParameterfv', 'void (*)(GLuint sampler, GLenum pname, GLfloat *params)');
+            $__proc = $this->proc('glGetSamplerParameterfv',
+                'void (*)(GLuint sampler, GLenum pname, GLfloat *params)');
             $__proc($sampler, $pname, \FFI::addr($paramsCType));
         } finally {
             $params = $paramsCType->cdata;
@@ -529,41 +576,41 @@ class GL33 extends GL32
     }
 
     /**
-     * {@see GL46::glGetSamplerParameter} returns in $params the value or values of the sampler parameter specified
+     * {@see GL33::getSamplerParameter} returns in $params the value or values of the sampler parameter specified
      * as $pname. $sampler defines the target sampler, and must be the name of an existing sampler object, returned
-     * from a previous call to {@see GL46::glGenSamplers}. $pname accepts the same symbols as
-     * {@see GL46::glSamplerParameter}, with the same interpretations:
+     * from a previous call to {@see GL33::genSamplers}. $pname accepts the same symbols as
+     * {@see GL33::samplerParameter}, with the same interpretations:
      *
-     *  - {@see GL46::GL_TEXTURE_MAG_FILTER}: Returns the single-valued texture
+     *  - {@see GL33::GL_TEXTURE_MAG_FILTER}: Returns the single-valued texture
      *    magnification filter, a symbolic constant. The initial value is
-     *    {@see GL46::GL_LINEAR}.
+     *    {@see GL33::GL_LINEAR}.
      *
-     *  - {@see GL46::GL_TEXTURE_MIN_FILTER}: Returns the single-valued texture
+     *  - {@see GL33::GL_TEXTURE_MIN_FILTER}: Returns the single-valued texture
      *    minification filter, a symbolic constant. The initial value is
-     *    {@see GL46::GL_NEAREST_MIPMAP_LINEAR}.
+     *    {@see GL33::GL_NEAREST_MIPMAP_LINEAR}.
      *
-     *  - {@see GL46::GL_TEXTURE_MIN_LOD}: Returns the single-valued texture
+     *  - {@see GL33::GL_TEXTURE_MIN_LOD}: Returns the single-valued texture
      *    minimum level-of-detail value. The initial value is   -1000 .
      *
-     *  - {@see GL46::GL_TEXTURE_MAX_LOD}: Returns the single-valued texture
+     *  - {@see GL33::GL_TEXTURE_MAX_LOD}: Returns the single-valued texture
      *    maximum level-of-detail value. The initial value is 1000.
      *
-     *  - {@see GL46::GL_TEXTURE_WRAP_S}: Returns the single-valued wrapping
+     *  - {@see GL33::GL_TEXTURE_WRAP_S}: Returns the single-valued wrapping
      *    function for texture coordinate s, a symbolic constant. The initial
      *    value
-     *    is {@see GL46::GL_REPEAT}.
+     *    is {@see GL33::GL_REPEAT}.
      *
-     *  - {@see GL46::GL_TEXTURE_WRAP_T}: Returns the single-valued wrapping
+     *  - {@see GL33::GL_TEXTURE_WRAP_T}: Returns the single-valued wrapping
      *    function for texture coordinate t, a symbolic constant. The initial
      *    value
-     *    is {@see GL46::GL_REPEAT}.
+     *    is {@see GL33::GL_REPEAT}.
      *
-     *  - {@see GL46::GL_TEXTURE_WRAP_R}: Returns the single-valued wrapping
+     *  - {@see GL33::GL_TEXTURE_WRAP_R}: Returns the single-valued wrapping
      *    function for texture coordinate r, a symbolic constant. The initial
      *    value
-     *    is {@see GL46::GL_REPEAT}.
+     *    is {@see GL33::GL_REPEAT}.
      *
-     *  - {@see GL46::GL_TEXTURE_BORDER_COLOR}: Returns four integer or
+     *  - {@see GL33::GL_TEXTURE_BORDER_COLOR}: Returns four integer or
      *    floating-point numbers that comprise the RGBA color of the texture
      *    border.
      *    Floating-point values are returned in the range    0 1  . Integer
@@ -573,13 +620,13 @@ class GL33 extends GL32
      *    -1.0  maps to the most negative representable integer. The initial
      *    value is (0, 0, 0, 0).
      *
-     *  - {@see GL46::GL_TEXTURE_COMPARE_MODE}: Returns a single-valued texture
+     *  - {@see GL33::GL_TEXTURE_COMPARE_MODE}: Returns a single-valued texture
      *    comparison mode, a symbolic constant. The initial value is
-     *    {@see GL46::GL_NONE}. See {@see GL46::glSamplerParameter}.
+     *    {@see GL33::GL_NONE}. See {@see GL33::samplerParameter}.
      *
-     *  - {@see GL46::GL_TEXTURE_COMPARE_FUNC}: Returns a single-valued texture
+     *  - {@see GL33::GL_TEXTURE_COMPARE_FUNC}: Returns a single-valued texture
      *    comparison function, a symbolic constant. The initial value is
-     *    {@see GL46::GL_LEQUAL}. See {@see GL46::glSamplerParameter}.
+     *    {@see GL33::GL_LEQUAL}. See {@see GL33::samplerParameter}.
      *
      * @see http://docs.gl/gl4/glGetSamplerParameter
      * @since 3.3
@@ -592,7 +639,8 @@ class GL33 extends GL32
     {
         $paramsCType = $this->info->ffi->new('GLint', false);
         try {
-            $__proc = $this->getProcAs('glGetSamplerParameteriv', 'void (*)(GLuint sampler, GLenum pname, GLint *params)');
+            $__proc = $this->proc('glGetSamplerParameteriv',
+                'void (*)(GLuint sampler, GLenum pname, GLint *params)');
             $__proc($sampler, $pname, \FFI::addr($paramsCType));
         } finally {
             $params = $paramsCType->cdata;
@@ -601,11 +649,11 @@ class GL33 extends GL32
     }
 
     /**
-     * {@see GL46::glIsSampler} returns {@see GL46::GL_TRUE} if $id is currently the name of a sampler object. If $id
+     * {@see GL33::isSampler} returns {@see GL33::GL_TRUE} if $id is currently the name of a sampler object. If $id
      * is zero, or is a non-zero value that is not currently the name of a sampler object, or if an error occurs,
-     * {@see GL46::glIsSampler} returns {@see GL46::GL_FALSE}.
+     * {@see GL33::isSampler} returns {@see GL33::GL_FALSE}.
      *
-     * A name returned by {@see GL46::glGenSamplers}, is the name of a sampler object.
+     * A name returned by {@see GL33::genSamplers}, is the name of a sampler object.
      *
      * @see http://docs.gl/gl4/glIsSampler
      * @since 3.3
@@ -614,16 +662,17 @@ class GL33 extends GL32
      */
     public function isSampler(int $sampler): bool
     {
-        $__proc = $this->getProcAs('glIsSampler', 'GLboolean (*)(GLuint sampler)');
+        $__proc = $this->proc('glIsSampler', 'GLboolean (*)(GLuint sampler)');
+
         return $__proc($sampler) !== 0;
     }
 
     /**
-     * {@see GL46::glQueryCounter} causes the GL to record the current time into the query object named $id. $target
-     * must be {@see GL46::GL_TIMESTAMP}. The time is recorded after all previous commands on the GL client and
+     * {@see GL33::queryCounter} causes the GL to record the current time into the query object named $id. $target
+     * must be {@see GL33::GL_TIMESTAMP}. The time is recorded after all previous commands on the GL client and
      * server state and the framebuffer have been fully realized. When the time is recorded, the query result for
-     * that object is marked available. {@see GL46::glQueryCounter} timer queries can be used within a
-     * {@see GL46::glBeginQuery} /  {@see GL46::glEndQuery} block where the target is {@see GL46::GL_TIME_ELAPSED}
+     * that object is marked available. {@see GL33::queryCounter} timer queries can be used within a
+     * {@see GL33::beginQuery} /  {@see GL33::endQuery} block where the target is {@see GL33::GL_TIME_ELAPSED}
      * and it does not affect the result of that query object.
      *
      * @see http://docs.gl/gl4/glQueryCounter
@@ -634,16 +683,16 @@ class GL33 extends GL32
      */
     public function queryCounter(int $id, int $target): void
     {
-        $__proc = $this->getProcAs('glQueryCounter', 'void (*)(GLuint id, GLenum target)');
+        $__proc = $this->proc('glQueryCounter', 'void (*)(GLuint id, GLenum target)');
         $__proc($id, $target);
     }
 
     /**
-     * {@see GL46::glSamplerParameter} assigns the value or values in $params to the sampler parameter specified as
+     * {@see GL33::samplerParameter} assigns the value or values in $params to the sampler parameter specified as
      * $pname. $sampler specifies the sampler object to be modified, and must be the name of a sampler object
-     * previously returned from a call to {@see GL46::glGenSamplers}. The following symbols are accepted in $pname:
+     * previously returned from a call to {@see GL33::genSamplers}. The following symbols are accepted in $pname:
      *
-     *  - {@see GL46::GL_TEXTURE_MIN_FILTER}: The texture minifying function is
+     *  - {@see GL33::GL_TEXTURE_MIN_FILTER}: The texture minifying function is
      *    used whenever the pixel being textured maps to an area greater than
      *    one
      *    texture element. There are six defined minifying functions. Two of
@@ -661,177 +710,177 @@ class GL33 extends GL32
      *    point, subsequent mipmaps have dimension    1 × 2   l - 1      or
      *    2   k - 1    × 1   until the final
      *    mipmap, which has dimension    1 × 1  . To define the mipmaps, call
-     *    {@see GL46::glTexImage1D},
-     *    {@see GL46::glTexImage2D}, {@see GL46::glTexImage3D}, {@see
-     *    GL46::glCopyTexImage1D}, or
-     *    {@see GL46::glCopyTexImage2D} with the level argument indicating the
+     *    {@see GL33::texImage1D},
+     *    {@see GL33::texImage2D}, {@see GL33::texImage3D}, {@see
+     *    GL33::copyTexImage1D}, or
+     *    {@see GL33::copyTexImage2D} with the level argument indicating the
      *    order of the mipmaps. Level 0 is the
      *    original texture; level    max &amp;af;  n m    is the final    1 × 1
      *      mipmap.   $params supplies a function
      *    for minifying the texture as one of the following:   {@see
-     *    GL46::GL_NEAREST}   Returns the value of the
+     *    GL33::GL_NEAREST}   Returns the value of the
      *    texture element that is nearest (in Manhattan distance) to the center
      *    of the pixel being textured.
-     *    {@see GL46::GL_LINEAR}   Returns the weighted average of the four
+     *    {@see GL33::GL_LINEAR}   Returns the weighted average of the four
      *    texture elements that are closest to the
      *    center of the pixel being textured. These can include border texture
      *    elements, depending on the values of
-     *    {@see GL46::GL_TEXTURE_WRAP_S} and {@see GL46::GL_TEXTURE_WRAP_T}, and
+     *    {@see GL33::GL_TEXTURE_WRAP_S} and {@see GL33::GL_TEXTURE_WRAP_T}, and
      *    on the exact mapping.
-     *    {@see GL46::GL_NEAREST_MIPMAP_NEAREST}   Chooses the mipmap that most
+     *    {@see GL33::GL_NEAREST_MIPMAP_NEAREST}   Chooses the mipmap that most
      *    closely matches the size of the pixel
-     *    being textured and uses the {@see GL46::GL_NEAREST} criterion (the
+     *    being textured and uses the {@see GL33::GL_NEAREST} criterion (the
      *    texture element nearest to the center of
      *    the pixel) to produce a texture value.     {@see
-     *    GL46::GL_LINEAR_MIPMAP_NEAREST}   Chooses the mipmap that
+     *    GL33::GL_LINEAR_MIPMAP_NEAREST}   Chooses the mipmap that
      *    most closely matches the size of the pixel being textured and uses the
-     *    {@see GL46::GL_LINEAR} criterion (a
+     *    {@see GL33::GL_LINEAR} criterion (a
      *    weighted average of the four texture elements that are closest to the
      *    center of the pixel) to produce a
-     *    texture value.     {@see GL46::GL_NEAREST_MIPMAP_LINEAR}   Chooses the
+     *    texture value.     {@see GL33::GL_NEAREST_MIPMAP_LINEAR}   Chooses the
      *    two mipmaps that most closely match the
-     *    size of the pixel being textured and uses the {@see GL46::GL_NEAREST}
+     *    size of the pixel being textured and uses the {@see GL33::GL_NEAREST}
      *    criterion (the texture element nearest
      *    to the center of the pixel) to produce a texture value from each
      *    mipmap. The final texture value is a weighted
-     *    average of those two values.     {@see GL46::GL_LINEAR_MIPMAP_LINEAR}
+     *    average of those two values.     {@see GL33::GL_LINEAR_MIPMAP_LINEAR}
      *     Chooses the two mipmaps that most
      *    closely match the size of the pixel being textured and uses the {@see
-     *    GL46::GL_LINEAR} criterion (a weighted
+     *    GL33::GL_LINEAR} criterion (a weighted
      *    average of the four texture elements that are closest to the center of
      *    the pixel) to produce a texture value
      *    from each mipmap. The final texture value is a weighted average of
      *    those two values.       As more texture
      *    elements are sampled in the minification process, fewer aliasing
      *    artifacts will be apparent. While the
-     *    {@see GL46::GL_NEAREST} and {@see GL46::GL_LINEAR} minification
+     *    {@see GL33::GL_NEAREST} and {@see GL33::GL_LINEAR} minification
      *    functions can be faster than the other four,
      *    they sample only one or four texture elements to determine the texture
      *    value of the pixel being rendered and
      *    can produce moire patterns or ragged transitions. The initial value of
-     *    {@see GL46::GL_TEXTURE_MIN_FILTER} is
-     *    {@see GL46::GL_NEAREST_MIPMAP_LINEAR}.
+     *    {@see GL33::GL_TEXTURE_MIN_FILTER} is
+     *    {@see GL33::GL_NEAREST_MIPMAP_LINEAR}.
      *
-     *  - {@see GL46::GL_TEXTURE_MAG_FILTER}: The texture magnification function
+     *  - {@see GL33::GL_TEXTURE_MAG_FILTER}: The texture magnification function
      *    is used when the pixel being textured maps to an area less than or
      *    equal
      *    to one texture element. It sets the texture magnification function to
-     *    either {@see GL46::GL_NEAREST} or
-     *    {@see GL46::GL_LINEAR} (see below). {@see GL46::GL_NEAREST} is
-     *    generally faster than {@see GL46::GL_LINEAR},
+     *    either {@see GL33::GL_NEAREST} or
+     *    {@see GL33::GL_LINEAR} (see below). {@see GL33::GL_NEAREST} is
+     *    generally faster than {@see GL33::GL_LINEAR},
      *    but it can produce textured images with sharper edges because the
      *    transition between texture elements is not
-     *    as smooth. The initial value of {@see GL46::GL_TEXTURE_MAG_FILTER} is
-     *    {@see GL46::GL_LINEAR}.
-     *    {@see GL46::GL_NEAREST}   Returns the value of the texture element
+     *    as smooth. The initial value of {@see GL33::GL_TEXTURE_MAG_FILTER} is
+     *    {@see GL33::GL_LINEAR}.
+     *    {@see GL33::GL_NEAREST}   Returns the value of the texture element
      *    that is nearest (in Manhattan distance) to
-     *    the center of the pixel being textured.     {@see GL46::GL_LINEAR}
+     *    the center of the pixel being textured.     {@see GL33::GL_LINEAR}
      *    Returns the weighted average of the four
      *    texture elements that are closest to the center of the pixel being
      *    textured. These can include border texture
-     *    elements, depending on the values of {@see GL46::GL_TEXTURE_WRAP_S}
-     *    and {@see GL46::GL_TEXTURE_WRAP_T}, and on
+     *    elements, depending on the values of {@see GL33::GL_TEXTURE_WRAP_S}
+     *    and {@see GL33::GL_TEXTURE_WRAP_T}, and on
      *    the exact mapping.
      *
-     *  - {@see GL46::GL_TEXTURE_MIN_LOD}: Sets the minimum level-of-detail
+     *  - {@see GL33::GL_TEXTURE_MIN_LOD}: Sets the minimum level-of-detail
      *    parameter. This floating-point value limits the selection of highest
      *    resolution mipmap (lowest mipmap level). The initial value is -1000.
      *
-     *  - {@see GL46::GL_TEXTURE_MAX_LOD}: Sets the maximum level-of-detail
+     *  - {@see GL33::GL_TEXTURE_MAX_LOD}: Sets the maximum level-of-detail
      *    parameter. This floating-point value limits the selection of the
      *    lowest
      *    resolution mipmap (highest mipmap level). The initial value is 1000.
      *
-     *  - {@see GL46::GL_TEXTURE_WRAP_S}: Sets the wrap parameter for texture
-     *    coordinate s to either {@see GL46::GL_CLAMP_TO_EDGE},
-     *    {@see GL46::GL_MIRRORED_REPEAT}, {@see GL46::GL_REPEAT}, or {@see
-     *    GL46::GL_MIRROR_CLAMP_TO_EDGE}.
-     *    {@see GL46::GL_CLAMP_TO_BORDER} causes the s coordinate to be clamped
+     *  - {@see GL33::GL_TEXTURE_WRAP_S}: Sets the wrap parameter for texture
+     *    coordinate s to either {@see GL33::GL_CLAMP_TO_EDGE},
+     *    {@see GL33::GL_MIRRORED_REPEAT}, {@see GL33::GL_REPEAT}, or {@see
+     *    GL33::GL_MIRROR_CLAMP_TO_EDGE}.
+     *    {@see GL33::GL_CLAMP_TO_BORDER} causes the s coordinate to be clamped
      *    to the range       -1  2N      1 +    1
      *    2N       , where N is the size of the texture in the direction of
-     *    clamping.{@see GL46::GL_CLAMP_TO_EDGE}
+     *    clamping.{@see GL33::GL_CLAMP_TO_EDGE}
      *    causes s coordinates to be clamped to the range       1  2N      1 -
      *     1  2N       , where N is the size of
-     *    the texture in the direction of clamping. {@see GL46::GL_REPEAT}
+     *    the texture in the direction of clamping. {@see GL33::GL_REPEAT}
      *    causes the integer part of the s coordinate
      *    to be ignored; the GL uses only the fractional part, thereby creating
      *    a repeating pattern.
-     *    {@see GL46::GL_MIRRORED_REPEAT} causes the s coordinate to be set to
+     *    {@see GL33::GL_MIRRORED_REPEAT} causes the s coordinate to be set to
      *    the fractional part of the texture
      *    coordinate if the integer part of s is even; if the integer part of s
      *    is odd, then the s texture coordinate is
      *    set to    1 -  frac &amp;af;  s    , where    frac &amp;af;  s
      *    represents the fractional part of s.
-     *    {@see GL46::GL_MIRROR_CLAMP_TO_EDGE} causes the s coordinate to be
+     *    {@see GL33::GL_MIRROR_CLAMP_TO_EDGE} causes the s coordinate to be
      *    repeated as for
-     *    {@see GL46::GL_MIRRORED_REPEAT} for one repetition of the texture, at
+     *    {@see GL33::GL_MIRRORED_REPEAT} for one repetition of the texture, at
      *    which point the coordinate to be clamped
-     *    as in {@see GL46::GL_CLAMP_TO_EDGE}. Initially, {@see
-     *    GL46::GL_TEXTURE_WRAP_S} is set to
-     *    {@see GL46::GL_REPEAT}.
+     *    as in {@see GL33::GL_CLAMP_TO_EDGE}. Initially, {@see
+     *    GL33::GL_TEXTURE_WRAP_S} is set to
+     *    {@see GL33::GL_REPEAT}.
      *
-     *  - {@see GL46::GL_TEXTURE_WRAP_T}: Sets the wrap parameter for texture
-     *    coordinate t to either {@see GL46::GL_CLAMP_TO_EDGE},
-     *    {@see GL46::GL_MIRRORED_REPEAT}, {@see GL46::GL_REPEAT}, or {@see
-     *    GL46::GL_MIRROR_CLAMP_TO_EDGE}. See the
-     *    discussion under {@see GL46::GL_TEXTURE_WRAP_S}. Initially, {@see
-     *    GL46::GL_TEXTURE_WRAP_T} is set to
-     *    {@see GL46::GL_REPEAT}.
+     *  - {@see GL33::GL_TEXTURE_WRAP_T}: Sets the wrap parameter for texture
+     *    coordinate t to either {@see GL33::GL_CLAMP_TO_EDGE},
+     *    {@see GL33::GL_MIRRORED_REPEAT}, {@see GL33::GL_REPEAT}, or {@see
+     *    GL33::GL_MIRROR_CLAMP_TO_EDGE}. See the
+     *    discussion under {@see GL33::GL_TEXTURE_WRAP_S}. Initially, {@see
+     *    GL33::GL_TEXTURE_WRAP_T} is set to
+     *    {@see GL33::GL_REPEAT}.
      *
-     *  - {@see GL46::GL_TEXTURE_WRAP_R}: Sets the wrap parameter for texture
-     *    coordinate r to either {@see GL46::GL_CLAMP_TO_EDGE},
-     *    {@see GL46::GL_MIRRORED_REPEAT}, {@see GL46::GL_REPEAT}, or {@see
-     *    GL46::GL_MIRROR_CLAMP_TO_EDGE}. See the
-     *    discussion under {@see GL46::GL_TEXTURE_WRAP_S}. Initially, {@see
-     *    GL46::GL_TEXTURE_WRAP_R} is set to
-     *    {@see GL46::GL_REPEAT}.
+     *  - {@see GL33::GL_TEXTURE_WRAP_R}: Sets the wrap parameter for texture
+     *    coordinate r to either {@see GL33::GL_CLAMP_TO_EDGE},
+     *    {@see GL33::GL_MIRRORED_REPEAT}, {@see GL33::GL_REPEAT}, or {@see
+     *    GL33::GL_MIRROR_CLAMP_TO_EDGE}. See the
+     *    discussion under {@see GL33::GL_TEXTURE_WRAP_S}. Initially, {@see
+     *    GL33::GL_TEXTURE_WRAP_R} is set to
+     *    {@see GL33::GL_REPEAT}.
      *
-     *  - {@see GL46::GL_TEXTURE_BORDER_COLOR}: The data in $params specifies
+     *  - {@see GL33::GL_TEXTURE_BORDER_COLOR}: The data in $params specifies
      *    four values that define the border values that should be used for
      *    border
      *    texels. If a texel is sampled from the border of the texture, the
      *    values of
-     *    {@see GL46::GL_TEXTURE_BORDER_COLOR} are interpreted as an RGBA color
+     *    {@see GL33::GL_TEXTURE_BORDER_COLOR} are interpreted as an RGBA color
      *    to match the texture's internal format
      *    and substituted for the non-existent texel data. If the texture
      *    contains depth components, the first component
-     *    of {@see GL46::GL_TEXTURE_BORDER_COLOR} is interpreted as a depth
+     *    of {@see GL33::GL_TEXTURE_BORDER_COLOR} is interpreted as a depth
      *    value. The initial value is     0.0 , 0.0 ,
      *    0.0 , 0.0    .
      *
-     *  - {@see GL46::GL_TEXTURE_COMPARE_MODE}: Specifies the texture comparison
+     *  - {@see GL33::GL_TEXTURE_COMPARE_MODE}: Specifies the texture comparison
      *    mode for currently bound textures. That is, a texture whose internal
      *    format
-     *    is {@see GL46::GL_DEPTH_COMPONENT_*}; see {@see GL46::glTexImage2D})
+     *    is {@see GL33::GL_DEPTH_COMPONENT_*}; see {@see GL33::texImage2D})
      *    Permissible values are:
-     *    {@see GL46::GL_COMPARE_REF_TO_TEXTURE}   Specifies that the
+     *    {@see GL33::GL_COMPARE_REF_TO_TEXTURE}   Specifies that the
      *    interpolated and clamped r texture coordinate
      *    should be compared to the value in the currently bound texture. See
      *    the discussion of
-     *    {@see GL46::GL_TEXTURE_COMPARE_FUNC} for details of how the comparison
+     *    {@see GL33::GL_TEXTURE_COMPARE_FUNC} for details of how the comparison
      *    is evaluated. The result of the
-     *    comparison is assigned to the red channel.     {@see GL46::GL_NONE}
+     *    comparison is assigned to the red channel.     {@see GL33::GL_NONE}
      *    Specifies that the red channel should be
      *    assigned the appropriate value from the currently bound texture.
      *
-     *  - {@see GL46::GL_TEXTURE_COMPARE_FUNC}: Specifies the comparison
-     *    operator used when {@see GL46::GL_TEXTURE_COMPARE_MODE} is set to
-     *    {@see GL46::GL_COMPARE_REF_TO_TEXTURE}. Permissible values are:
+     *  - {@see GL33::GL_TEXTURE_COMPARE_FUNC}: Specifies the comparison
+     *    operator used when {@see GL33::GL_TEXTURE_COMPARE_MODE} is set to
+     *    {@see GL33::GL_COMPARE_REF_TO_TEXTURE}. Permissible values are:
      *     Texture Comparison Function
-     *    Computed result        {@see GL46::GL_LEQUAL}      result =     1.0
+     *    Computed result        {@see GL33::GL_LEQUAL}      result =     1.0
      *    0.0   &amp;it;     r &lt;=  D t       r
-     *    &gt;  D t              {@see GL46::GL_GEQUAL}      result =     1.0
+     *    &gt;  D t              {@see GL33::GL_GEQUAL}      result =     1.0
      *    0.0   &amp;it;     r &gt;=  D t       r
-     *    &lt;  D t              {@see GL46::GL_LESS}      result =     1.0
+     *    &lt;  D t              {@see GL33::GL_LESS}      result =     1.0
      *    0.0   &amp;it;     r &lt;  D t       r
-     *    &gt;=  D t              {@see GL46::GL_GREATER}      result =     1.0
+     *    &gt;=  D t              {@see GL33::GL_GREATER}      result =     1.0
      *     0.0   &amp;it;     r &gt;  D t       r
-     *    &lt;=  D t              {@see GL46::GL_EQUAL}      result =     1.0
+     *    &lt;=  D t              {@see GL33::GL_EQUAL}      result =     1.0
      *    0.0   &amp;it;     r =  D t       r ≠
-     *    D t              {@see GL46::GL_NOTEQUAL}      result =     1.0   0.0
+     *    D t              {@see GL33::GL_NOTEQUAL}      result =     1.0   0.0
      *     &amp;it;     r ≠  D t       r =  D t
-     *                 {@see GL46::GL_ALWAYS}      result = 1.0        {@see
-     *    GL46::GL_NEVER}      result = 0.0
+     *                 {@see GL33::GL_ALWAYS}      result = 1.0        {@see
+     *    GL33::GL_NEVER}      result = 0.0
      *    where r is the current interpolated texture coordinate, and   D t   is
      *    the texture value sampled from the
      *    currently bound texture. result is assigned to   R t  .
@@ -840,21 +889,22 @@ class GL33 extends GL32
      * @since 3.3
      * @param int $sampler
      * @param int $pname
-     * @param \FFI\CData|null $param
+     * @param CData|null $param
      * @return void
      */
-    public function samplerParameterIiv(int $sampler, int $pname, ?\FFI\CData $param): void
+    public function samplerParameterIiv(int $sampler, int $pname, ?CData $param): void
     {
-        $__proc = $this->getProcAs('glSamplerParameterIiv', 'void (*)(GLuint sampler, GLenum pname, const GLint *param)');
+        $__proc = $this->proc('glSamplerParameterIiv',
+            'void (*)(GLuint sampler, GLenum pname, const GLint *param)');
         $__proc($sampler, $pname, $param);
     }
 
     /**
-     * {@see GL46::glSamplerParameter} assigns the value or values in $params to the sampler parameter specified as
+     * {@see GL33::samplerParameter} assigns the value or values in $params to the sampler parameter specified as
      * $pname. $sampler specifies the sampler object to be modified, and must be the name of a sampler object
-     * previously returned from a call to {@see GL46::glGenSamplers}. The following symbols are accepted in $pname:
+     * previously returned from a call to {@see GL33::genSamplers}. The following symbols are accepted in $pname:
      *
-     *  - {@see GL46::GL_TEXTURE_MIN_FILTER}: The texture minifying function is
+     *  - {@see GL33::GL_TEXTURE_MIN_FILTER}: The texture minifying function is
      *    used whenever the pixel being textured maps to an area greater than
      *    one
      *    texture element. There are six defined minifying functions. Two of
@@ -872,177 +922,177 @@ class GL33 extends GL32
      *    point, subsequent mipmaps have dimension    1 × 2   l - 1      or
      *    2   k - 1    × 1   until the final
      *    mipmap, which has dimension    1 × 1  . To define the mipmaps, call
-     *    {@see GL46::glTexImage1D},
-     *    {@see GL46::glTexImage2D}, {@see GL46::glTexImage3D}, {@see
-     *    GL46::glCopyTexImage1D}, or
-     *    {@see GL46::glCopyTexImage2D} with the level argument indicating the
+     *    {@see GL33::texImage1D},
+     *    {@see GL33::texImage2D}, {@see GL33::texImage3D}, {@see
+     *    GL33::copyTexImage1D}, or
+     *    {@see GL33::copyTexImage2D} with the level argument indicating the
      *    order of the mipmaps. Level 0 is the
      *    original texture; level    max &amp;af;  n m    is the final    1 × 1
      *      mipmap.   $params supplies a function
      *    for minifying the texture as one of the following:   {@see
-     *    GL46::GL_NEAREST}   Returns the value of the
+     *    GL33::GL_NEAREST}   Returns the value of the
      *    texture element that is nearest (in Manhattan distance) to the center
      *    of the pixel being textured.
-     *    {@see GL46::GL_LINEAR}   Returns the weighted average of the four
+     *    {@see GL33::GL_LINEAR}   Returns the weighted average of the four
      *    texture elements that are closest to the
      *    center of the pixel being textured. These can include border texture
      *    elements, depending on the values of
-     *    {@see GL46::GL_TEXTURE_WRAP_S} and {@see GL46::GL_TEXTURE_WRAP_T}, and
+     *    {@see GL33::GL_TEXTURE_WRAP_S} and {@see GL33::GL_TEXTURE_WRAP_T}, and
      *    on the exact mapping.
-     *    {@see GL46::GL_NEAREST_MIPMAP_NEAREST}   Chooses the mipmap that most
+     *    {@see GL33::GL_NEAREST_MIPMAP_NEAREST}   Chooses the mipmap that most
      *    closely matches the size of the pixel
-     *    being textured and uses the {@see GL46::GL_NEAREST} criterion (the
+     *    being textured and uses the {@see GL33::GL_NEAREST} criterion (the
      *    texture element nearest to the center of
      *    the pixel) to produce a texture value.     {@see
-     *    GL46::GL_LINEAR_MIPMAP_NEAREST}   Chooses the mipmap that
+     *    GL33::GL_LINEAR_MIPMAP_NEAREST}   Chooses the mipmap that
      *    most closely matches the size of the pixel being textured and uses the
-     *    {@see GL46::GL_LINEAR} criterion (a
+     *    {@see GL33::GL_LINEAR} criterion (a
      *    weighted average of the four texture elements that are closest to the
      *    center of the pixel) to produce a
-     *    texture value.     {@see GL46::GL_NEAREST_MIPMAP_LINEAR}   Chooses the
+     *    texture value.     {@see GL33::GL_NEAREST_MIPMAP_LINEAR}   Chooses the
      *    two mipmaps that most closely match the
-     *    size of the pixel being textured and uses the {@see GL46::GL_NEAREST}
+     *    size of the pixel being textured and uses the {@see GL33::GL_NEAREST}
      *    criterion (the texture element nearest
      *    to the center of the pixel) to produce a texture value from each
      *    mipmap. The final texture value is a weighted
-     *    average of those two values.     {@see GL46::GL_LINEAR_MIPMAP_LINEAR}
+     *    average of those two values.     {@see GL33::GL_LINEAR_MIPMAP_LINEAR}
      *     Chooses the two mipmaps that most
      *    closely match the size of the pixel being textured and uses the {@see
-     *    GL46::GL_LINEAR} criterion (a weighted
+     *    GL33::GL_LINEAR} criterion (a weighted
      *    average of the four texture elements that are closest to the center of
      *    the pixel) to produce a texture value
      *    from each mipmap. The final texture value is a weighted average of
      *    those two values.       As more texture
      *    elements are sampled in the minification process, fewer aliasing
      *    artifacts will be apparent. While the
-     *    {@see GL46::GL_NEAREST} and {@see GL46::GL_LINEAR} minification
+     *    {@see GL33::GL_NEAREST} and {@see GL33::GL_LINEAR} minification
      *    functions can be faster than the other four,
      *    they sample only one or four texture elements to determine the texture
      *    value of the pixel being rendered and
      *    can produce moire patterns or ragged transitions. The initial value of
-     *    {@see GL46::GL_TEXTURE_MIN_FILTER} is
-     *    {@see GL46::GL_NEAREST_MIPMAP_LINEAR}.
+     *    {@see GL33::GL_TEXTURE_MIN_FILTER} is
+     *    {@see GL33::GL_NEAREST_MIPMAP_LINEAR}.
      *
-     *  - {@see GL46::GL_TEXTURE_MAG_FILTER}: The texture magnification function
+     *  - {@see GL33::GL_TEXTURE_MAG_FILTER}: The texture magnification function
      *    is used when the pixel being textured maps to an area less than or
      *    equal
      *    to one texture element. It sets the texture magnification function to
-     *    either {@see GL46::GL_NEAREST} or
-     *    {@see GL46::GL_LINEAR} (see below). {@see GL46::GL_NEAREST} is
-     *    generally faster than {@see GL46::GL_LINEAR},
+     *    either {@see GL33::GL_NEAREST} or
+     *    {@see GL33::GL_LINEAR} (see below). {@see GL33::GL_NEAREST} is
+     *    generally faster than {@see GL33::GL_LINEAR},
      *    but it can produce textured images with sharper edges because the
      *    transition between texture elements is not
-     *    as smooth. The initial value of {@see GL46::GL_TEXTURE_MAG_FILTER} is
-     *    {@see GL46::GL_LINEAR}.
-     *    {@see GL46::GL_NEAREST}   Returns the value of the texture element
+     *    as smooth. The initial value of {@see GL33::GL_TEXTURE_MAG_FILTER} is
+     *    {@see GL33::GL_LINEAR}.
+     *    {@see GL33::GL_NEAREST}   Returns the value of the texture element
      *    that is nearest (in Manhattan distance) to
-     *    the center of the pixel being textured.     {@see GL46::GL_LINEAR}
+     *    the center of the pixel being textured.     {@see GL33::GL_LINEAR}
      *    Returns the weighted average of the four
      *    texture elements that are closest to the center of the pixel being
      *    textured. These can include border texture
-     *    elements, depending on the values of {@see GL46::GL_TEXTURE_WRAP_S}
-     *    and {@see GL46::GL_TEXTURE_WRAP_T}, and on
+     *    elements, depending on the values of {@see GL33::GL_TEXTURE_WRAP_S}
+     *    and {@see GL33::GL_TEXTURE_WRAP_T}, and on
      *    the exact mapping.
      *
-     *  - {@see GL46::GL_TEXTURE_MIN_LOD}: Sets the minimum level-of-detail
+     *  - {@see GL33::GL_TEXTURE_MIN_LOD}: Sets the minimum level-of-detail
      *    parameter. This floating-point value limits the selection of highest
      *    resolution mipmap (lowest mipmap level). The initial value is -1000.
      *
-     *  - {@see GL46::GL_TEXTURE_MAX_LOD}: Sets the maximum level-of-detail
+     *  - {@see GL33::GL_TEXTURE_MAX_LOD}: Sets the maximum level-of-detail
      *    parameter. This floating-point value limits the selection of the
      *    lowest
      *    resolution mipmap (highest mipmap level). The initial value is 1000.
      *
-     *  - {@see GL46::GL_TEXTURE_WRAP_S}: Sets the wrap parameter for texture
-     *    coordinate s to either {@see GL46::GL_CLAMP_TO_EDGE},
-     *    {@see GL46::GL_MIRRORED_REPEAT}, {@see GL46::GL_REPEAT}, or {@see
-     *    GL46::GL_MIRROR_CLAMP_TO_EDGE}.
-     *    {@see GL46::GL_CLAMP_TO_BORDER} causes the s coordinate to be clamped
+     *  - {@see GL33::GL_TEXTURE_WRAP_S}: Sets the wrap parameter for texture
+     *    coordinate s to either {@see GL33::GL_CLAMP_TO_EDGE},
+     *    {@see GL33::GL_MIRRORED_REPEAT}, {@see GL33::GL_REPEAT}, or {@see
+     *    GL33::GL_MIRROR_CLAMP_TO_EDGE}.
+     *    {@see GL33::GL_CLAMP_TO_BORDER} causes the s coordinate to be clamped
      *    to the range       -1  2N      1 +    1
      *    2N       , where N is the size of the texture in the direction of
-     *    clamping.{@see GL46::GL_CLAMP_TO_EDGE}
+     *    clamping.{@see GL33::GL_CLAMP_TO_EDGE}
      *    causes s coordinates to be clamped to the range       1  2N      1 -
      *     1  2N       , where N is the size of
-     *    the texture in the direction of clamping. {@see GL46::GL_REPEAT}
+     *    the texture in the direction of clamping. {@see GL33::GL_REPEAT}
      *    causes the integer part of the s coordinate
      *    to be ignored; the GL uses only the fractional part, thereby creating
      *    a repeating pattern.
-     *    {@see GL46::GL_MIRRORED_REPEAT} causes the s coordinate to be set to
+     *    {@see GL33::GL_MIRRORED_REPEAT} causes the s coordinate to be set to
      *    the fractional part of the texture
      *    coordinate if the integer part of s is even; if the integer part of s
      *    is odd, then the s texture coordinate is
      *    set to    1 -  frac &amp;af;  s    , where    frac &amp;af;  s
      *    represents the fractional part of s.
-     *    {@see GL46::GL_MIRROR_CLAMP_TO_EDGE} causes the s coordinate to be
+     *    {@see GL33::GL_MIRROR_CLAMP_TO_EDGE} causes the s coordinate to be
      *    repeated as for
-     *    {@see GL46::GL_MIRRORED_REPEAT} for one repetition of the texture, at
+     *    {@see GL33::GL_MIRRORED_REPEAT} for one repetition of the texture, at
      *    which point the coordinate to be clamped
-     *    as in {@see GL46::GL_CLAMP_TO_EDGE}. Initially, {@see
-     *    GL46::GL_TEXTURE_WRAP_S} is set to
-     *    {@see GL46::GL_REPEAT}.
+     *    as in {@see GL33::GL_CLAMP_TO_EDGE}. Initially, {@see
+     *    GL33::GL_TEXTURE_WRAP_S} is set to
+     *    {@see GL33::GL_REPEAT}.
      *
-     *  - {@see GL46::GL_TEXTURE_WRAP_T}: Sets the wrap parameter for texture
-     *    coordinate t to either {@see GL46::GL_CLAMP_TO_EDGE},
-     *    {@see GL46::GL_MIRRORED_REPEAT}, {@see GL46::GL_REPEAT}, or {@see
-     *    GL46::GL_MIRROR_CLAMP_TO_EDGE}. See the
-     *    discussion under {@see GL46::GL_TEXTURE_WRAP_S}. Initially, {@see
-     *    GL46::GL_TEXTURE_WRAP_T} is set to
-     *    {@see GL46::GL_REPEAT}.
+     *  - {@see GL33::GL_TEXTURE_WRAP_T}: Sets the wrap parameter for texture
+     *    coordinate t to either {@see GL33::GL_CLAMP_TO_EDGE},
+     *    {@see GL33::GL_MIRRORED_REPEAT}, {@see GL33::GL_REPEAT}, or {@see
+     *    GL33::GL_MIRROR_CLAMP_TO_EDGE}. See the
+     *    discussion under {@see GL33::GL_TEXTURE_WRAP_S}. Initially, {@see
+     *    GL33::GL_TEXTURE_WRAP_T} is set to
+     *    {@see GL33::GL_REPEAT}.
      *
-     *  - {@see GL46::GL_TEXTURE_WRAP_R}: Sets the wrap parameter for texture
-     *    coordinate r to either {@see GL46::GL_CLAMP_TO_EDGE},
-     *    {@see GL46::GL_MIRRORED_REPEAT}, {@see GL46::GL_REPEAT}, or {@see
-     *    GL46::GL_MIRROR_CLAMP_TO_EDGE}. See the
-     *    discussion under {@see GL46::GL_TEXTURE_WRAP_S}. Initially, {@see
-     *    GL46::GL_TEXTURE_WRAP_R} is set to
-     *    {@see GL46::GL_REPEAT}.
+     *  - {@see GL33::GL_TEXTURE_WRAP_R}: Sets the wrap parameter for texture
+     *    coordinate r to either {@see GL33::GL_CLAMP_TO_EDGE},
+     *    {@see GL33::GL_MIRRORED_REPEAT}, {@see GL33::GL_REPEAT}, or {@see
+     *    GL33::GL_MIRROR_CLAMP_TO_EDGE}. See the
+     *    discussion under {@see GL33::GL_TEXTURE_WRAP_S}. Initially, {@see
+     *    GL33::GL_TEXTURE_WRAP_R} is set to
+     *    {@see GL33::GL_REPEAT}.
      *
-     *  - {@see GL46::GL_TEXTURE_BORDER_COLOR}: The data in $params specifies
+     *  - {@see GL33::GL_TEXTURE_BORDER_COLOR}: The data in $params specifies
      *    four values that define the border values that should be used for
      *    border
      *    texels. If a texel is sampled from the border of the texture, the
      *    values of
-     *    {@see GL46::GL_TEXTURE_BORDER_COLOR} are interpreted as an RGBA color
+     *    {@see GL33::GL_TEXTURE_BORDER_COLOR} are interpreted as an RGBA color
      *    to match the texture's internal format
      *    and substituted for the non-existent texel data. If the texture
      *    contains depth components, the first component
-     *    of {@see GL46::GL_TEXTURE_BORDER_COLOR} is interpreted as a depth
+     *    of {@see GL33::GL_TEXTURE_BORDER_COLOR} is interpreted as a depth
      *    value. The initial value is     0.0 , 0.0 ,
      *    0.0 , 0.0    .
      *
-     *  - {@see GL46::GL_TEXTURE_COMPARE_MODE}: Specifies the texture comparison
+     *  - {@see GL33::GL_TEXTURE_COMPARE_MODE}: Specifies the texture comparison
      *    mode for currently bound textures. That is, a texture whose internal
      *    format
-     *    is {@see GL46::GL_DEPTH_COMPONENT_*}; see {@see GL46::glTexImage2D})
+     *    is {@see GL33::GL_DEPTH_COMPONENT_*}; see {@see GL33::texImage2D})
      *    Permissible values are:
-     *    {@see GL46::GL_COMPARE_REF_TO_TEXTURE}   Specifies that the
+     *    {@see GL33::GL_COMPARE_REF_TO_TEXTURE}   Specifies that the
      *    interpolated and clamped r texture coordinate
      *    should be compared to the value in the currently bound texture. See
      *    the discussion of
-     *    {@see GL46::GL_TEXTURE_COMPARE_FUNC} for details of how the comparison
+     *    {@see GL33::GL_TEXTURE_COMPARE_FUNC} for details of how the comparison
      *    is evaluated. The result of the
-     *    comparison is assigned to the red channel.     {@see GL46::GL_NONE}
+     *    comparison is assigned to the red channel.     {@see GL33::GL_NONE}
      *    Specifies that the red channel should be
      *    assigned the appropriate value from the currently bound texture.
      *
-     *  - {@see GL46::GL_TEXTURE_COMPARE_FUNC}: Specifies the comparison
-     *    operator used when {@see GL46::GL_TEXTURE_COMPARE_MODE} is set to
-     *    {@see GL46::GL_COMPARE_REF_TO_TEXTURE}. Permissible values are:
+     *  - {@see GL33::GL_TEXTURE_COMPARE_FUNC}: Specifies the comparison
+     *    operator used when {@see GL33::GL_TEXTURE_COMPARE_MODE} is set to
+     *    {@see GL33::GL_COMPARE_REF_TO_TEXTURE}. Permissible values are:
      *     Texture Comparison Function
-     *    Computed result        {@see GL46::GL_LEQUAL}      result =     1.0
+     *    Computed result        {@see GL33::GL_LEQUAL}      result =     1.0
      *    0.0   &amp;it;     r &lt;=  D t       r
-     *    &gt;  D t              {@see GL46::GL_GEQUAL}      result =     1.0
+     *    &gt;  D t              {@see GL33::GL_GEQUAL}      result =     1.0
      *    0.0   &amp;it;     r &gt;=  D t       r
-     *    &lt;  D t              {@see GL46::GL_LESS}      result =     1.0
+     *    &lt;  D t              {@see GL33::GL_LESS}      result =     1.0
      *    0.0   &amp;it;     r &lt;  D t       r
-     *    &gt;=  D t              {@see GL46::GL_GREATER}      result =     1.0
+     *    &gt;=  D t              {@see GL33::GL_GREATER}      result =     1.0
      *     0.0   &amp;it;     r &gt;  D t       r
-     *    &lt;=  D t              {@see GL46::GL_EQUAL}      result =     1.0
+     *    &lt;=  D t              {@see GL33::GL_EQUAL}      result =     1.0
      *    0.0   &amp;it;     r =  D t       r ≠
-     *    D t              {@see GL46::GL_NOTEQUAL}      result =     1.0   0.0
+     *    D t              {@see GL33::GL_NOTEQUAL}      result =     1.0   0.0
      *     &amp;it;     r ≠  D t       r =  D t
-     *                 {@see GL46::GL_ALWAYS}      result = 1.0        {@see
-     *    GL46::GL_NEVER}      result = 0.0
+     *                 {@see GL33::GL_ALWAYS}      result = 1.0        {@see
+     *    GL33::GL_NEVER}      result = 0.0
      *    where r is the current interpolated texture coordinate, and   D t   is
      *    the texture value sampled from the
      *    currently bound texture. result is assigned to   R t  .
@@ -1051,21 +1101,22 @@ class GL33 extends GL32
      * @since 3.3
      * @param int $sampler
      * @param int $pname
-     * @param \FFI\CData|null $param
+     * @param CData|null $param
      * @return void
      */
-    public function samplerParameterIuiv(int $sampler, int $pname, ?\FFI\CData $param): void
+    public function samplerParameterIuiv(int $sampler, int $pname, ?CData $param): void
     {
-        $__proc = $this->getProcAs('glSamplerParameterIuiv', 'void (*)(GLuint sampler, GLenum pname, const GLuint *param)');
+        $__proc = $this->proc('glSamplerParameterIuiv',
+            'void (*)(GLuint sampler, GLenum pname, const GLuint *param)');
         $__proc($sampler, $pname, $param);
     }
 
     /**
-     * {@see GL46::glSamplerParameter} assigns the value or values in $params to the sampler parameter specified as
+     * {@see GL33::samplerParameter} assigns the value or values in $params to the sampler parameter specified as
      * $pname. $sampler specifies the sampler object to be modified, and must be the name of a sampler object
-     * previously returned from a call to {@see GL46::glGenSamplers}. The following symbols are accepted in $pname:
+     * previously returned from a call to {@see GL33::genSamplers}. The following symbols are accepted in $pname:
      *
-     *  - {@see GL46::GL_TEXTURE_MIN_FILTER}: The texture minifying function is
+     *  - {@see GL33::GL_TEXTURE_MIN_FILTER}: The texture minifying function is
      *    used whenever the pixel being textured maps to an area greater than
      *    one
      *    texture element. There are six defined minifying functions. Two of
@@ -1083,177 +1134,177 @@ class GL33 extends GL32
      *    point, subsequent mipmaps have dimension    1 × 2   l - 1      or
      *    2   k - 1    × 1   until the final
      *    mipmap, which has dimension    1 × 1  . To define the mipmaps, call
-     *    {@see GL46::glTexImage1D},
-     *    {@see GL46::glTexImage2D}, {@see GL46::glTexImage3D}, {@see
-     *    GL46::glCopyTexImage1D}, or
-     *    {@see GL46::glCopyTexImage2D} with the level argument indicating the
+     *    {@see GL33::texImage1D},
+     *    {@see GL33::texImage2D}, {@see GL33::texImage3D}, {@see
+     *    GL33::copyTexImage1D}, or
+     *    {@see GL33::copyTexImage2D} with the level argument indicating the
      *    order of the mipmaps. Level 0 is the
      *    original texture; level    max &amp;af;  n m    is the final    1 × 1
      *      mipmap.   $params supplies a function
      *    for minifying the texture as one of the following:   {@see
-     *    GL46::GL_NEAREST}   Returns the value of the
+     *    GL33::GL_NEAREST}   Returns the value of the
      *    texture element that is nearest (in Manhattan distance) to the center
      *    of the pixel being textured.
-     *    {@see GL46::GL_LINEAR}   Returns the weighted average of the four
+     *    {@see GL33::GL_LINEAR}   Returns the weighted average of the four
      *    texture elements that are closest to the
      *    center of the pixel being textured. These can include border texture
      *    elements, depending on the values of
-     *    {@see GL46::GL_TEXTURE_WRAP_S} and {@see GL46::GL_TEXTURE_WRAP_T}, and
+     *    {@see GL33::GL_TEXTURE_WRAP_S} and {@see GL33::GL_TEXTURE_WRAP_T}, and
      *    on the exact mapping.
-     *    {@see GL46::GL_NEAREST_MIPMAP_NEAREST}   Chooses the mipmap that most
+     *    {@see GL33::GL_NEAREST_MIPMAP_NEAREST}   Chooses the mipmap that most
      *    closely matches the size of the pixel
-     *    being textured and uses the {@see GL46::GL_NEAREST} criterion (the
+     *    being textured and uses the {@see GL33::GL_NEAREST} criterion (the
      *    texture element nearest to the center of
      *    the pixel) to produce a texture value.     {@see
-     *    GL46::GL_LINEAR_MIPMAP_NEAREST}   Chooses the mipmap that
+     *    GL33::GL_LINEAR_MIPMAP_NEAREST}   Chooses the mipmap that
      *    most closely matches the size of the pixel being textured and uses the
-     *    {@see GL46::GL_LINEAR} criterion (a
+     *    {@see GL33::GL_LINEAR} criterion (a
      *    weighted average of the four texture elements that are closest to the
      *    center of the pixel) to produce a
-     *    texture value.     {@see GL46::GL_NEAREST_MIPMAP_LINEAR}   Chooses the
+     *    texture value.     {@see GL33::GL_NEAREST_MIPMAP_LINEAR}   Chooses the
      *    two mipmaps that most closely match the
-     *    size of the pixel being textured and uses the {@see GL46::GL_NEAREST}
+     *    size of the pixel being textured and uses the {@see GL33::GL_NEAREST}
      *    criterion (the texture element nearest
      *    to the center of the pixel) to produce a texture value from each
      *    mipmap. The final texture value is a weighted
-     *    average of those two values.     {@see GL46::GL_LINEAR_MIPMAP_LINEAR}
+     *    average of those two values.     {@see GL33::GL_LINEAR_MIPMAP_LINEAR}
      *     Chooses the two mipmaps that most
      *    closely match the size of the pixel being textured and uses the {@see
-     *    GL46::GL_LINEAR} criterion (a weighted
+     *    GL33::GL_LINEAR} criterion (a weighted
      *    average of the four texture elements that are closest to the center of
      *    the pixel) to produce a texture value
      *    from each mipmap. The final texture value is a weighted average of
      *    those two values.       As more texture
      *    elements are sampled in the minification process, fewer aliasing
      *    artifacts will be apparent. While the
-     *    {@see GL46::GL_NEAREST} and {@see GL46::GL_LINEAR} minification
+     *    {@see GL33::GL_NEAREST} and {@see GL33::GL_LINEAR} minification
      *    functions can be faster than the other four,
      *    they sample only one or four texture elements to determine the texture
      *    value of the pixel being rendered and
      *    can produce moire patterns or ragged transitions. The initial value of
-     *    {@see GL46::GL_TEXTURE_MIN_FILTER} is
-     *    {@see GL46::GL_NEAREST_MIPMAP_LINEAR}.
+     *    {@see GL33::GL_TEXTURE_MIN_FILTER} is
+     *    {@see GL33::GL_NEAREST_MIPMAP_LINEAR}.
      *
-     *  - {@see GL46::GL_TEXTURE_MAG_FILTER}: The texture magnification function
+     *  - {@see GL33::GL_TEXTURE_MAG_FILTER}: The texture magnification function
      *    is used when the pixel being textured maps to an area less than or
      *    equal
      *    to one texture element. It sets the texture magnification function to
-     *    either {@see GL46::GL_NEAREST} or
-     *    {@see GL46::GL_LINEAR} (see below). {@see GL46::GL_NEAREST} is
-     *    generally faster than {@see GL46::GL_LINEAR},
+     *    either {@see GL33::GL_NEAREST} or
+     *    {@see GL33::GL_LINEAR} (see below). {@see GL33::GL_NEAREST} is
+     *    generally faster than {@see GL33::GL_LINEAR},
      *    but it can produce textured images with sharper edges because the
      *    transition between texture elements is not
-     *    as smooth. The initial value of {@see GL46::GL_TEXTURE_MAG_FILTER} is
-     *    {@see GL46::GL_LINEAR}.
-     *    {@see GL46::GL_NEAREST}   Returns the value of the texture element
+     *    as smooth. The initial value of {@see GL33::GL_TEXTURE_MAG_FILTER} is
+     *    {@see GL33::GL_LINEAR}.
+     *    {@see GL33::GL_NEAREST}   Returns the value of the texture element
      *    that is nearest (in Manhattan distance) to
-     *    the center of the pixel being textured.     {@see GL46::GL_LINEAR}
+     *    the center of the pixel being textured.     {@see GL33::GL_LINEAR}
      *    Returns the weighted average of the four
      *    texture elements that are closest to the center of the pixel being
      *    textured. These can include border texture
-     *    elements, depending on the values of {@see GL46::GL_TEXTURE_WRAP_S}
-     *    and {@see GL46::GL_TEXTURE_WRAP_T}, and on
+     *    elements, depending on the values of {@see GL33::GL_TEXTURE_WRAP_S}
+     *    and {@see GL33::GL_TEXTURE_WRAP_T}, and on
      *    the exact mapping.
      *
-     *  - {@see GL46::GL_TEXTURE_MIN_LOD}: Sets the minimum level-of-detail
+     *  - {@see GL33::GL_TEXTURE_MIN_LOD}: Sets the minimum level-of-detail
      *    parameter. This floating-point value limits the selection of highest
      *    resolution mipmap (lowest mipmap level). The initial value is -1000.
      *
-     *  - {@see GL46::GL_TEXTURE_MAX_LOD}: Sets the maximum level-of-detail
+     *  - {@see GL33::GL_TEXTURE_MAX_LOD}: Sets the maximum level-of-detail
      *    parameter. This floating-point value limits the selection of the
      *    lowest
      *    resolution mipmap (highest mipmap level). The initial value is 1000.
      *
-     *  - {@see GL46::GL_TEXTURE_WRAP_S}: Sets the wrap parameter for texture
-     *    coordinate s to either {@see GL46::GL_CLAMP_TO_EDGE},
-     *    {@see GL46::GL_MIRRORED_REPEAT}, {@see GL46::GL_REPEAT}, or {@see
-     *    GL46::GL_MIRROR_CLAMP_TO_EDGE}.
-     *    {@see GL46::GL_CLAMP_TO_BORDER} causes the s coordinate to be clamped
+     *  - {@see GL33::GL_TEXTURE_WRAP_S}: Sets the wrap parameter for texture
+     *    coordinate s to either {@see GL33::GL_CLAMP_TO_EDGE},
+     *    {@see GL33::GL_MIRRORED_REPEAT}, {@see GL33::GL_REPEAT}, or {@see
+     *    GL33::GL_MIRROR_CLAMP_TO_EDGE}.
+     *    {@see GL33::GL_CLAMP_TO_BORDER} causes the s coordinate to be clamped
      *    to the range       -1  2N      1 +    1
      *    2N       , where N is the size of the texture in the direction of
-     *    clamping.{@see GL46::GL_CLAMP_TO_EDGE}
+     *    clamping.{@see GL33::GL_CLAMP_TO_EDGE}
      *    causes s coordinates to be clamped to the range       1  2N      1 -
      *     1  2N       , where N is the size of
-     *    the texture in the direction of clamping. {@see GL46::GL_REPEAT}
+     *    the texture in the direction of clamping. {@see GL33::GL_REPEAT}
      *    causes the integer part of the s coordinate
      *    to be ignored; the GL uses only the fractional part, thereby creating
      *    a repeating pattern.
-     *    {@see GL46::GL_MIRRORED_REPEAT} causes the s coordinate to be set to
+     *    {@see GL33::GL_MIRRORED_REPEAT} causes the s coordinate to be set to
      *    the fractional part of the texture
      *    coordinate if the integer part of s is even; if the integer part of s
      *    is odd, then the s texture coordinate is
      *    set to    1 -  frac &amp;af;  s    , where    frac &amp;af;  s
      *    represents the fractional part of s.
-     *    {@see GL46::GL_MIRROR_CLAMP_TO_EDGE} causes the s coordinate to be
+     *    {@see GL33::GL_MIRROR_CLAMP_TO_EDGE} causes the s coordinate to be
      *    repeated as for
-     *    {@see GL46::GL_MIRRORED_REPEAT} for one repetition of the texture, at
+     *    {@see GL33::GL_MIRRORED_REPEAT} for one repetition of the texture, at
      *    which point the coordinate to be clamped
-     *    as in {@see GL46::GL_CLAMP_TO_EDGE}. Initially, {@see
-     *    GL46::GL_TEXTURE_WRAP_S} is set to
-     *    {@see GL46::GL_REPEAT}.
+     *    as in {@see GL33::GL_CLAMP_TO_EDGE}. Initially, {@see
+     *    GL33::GL_TEXTURE_WRAP_S} is set to
+     *    {@see GL33::GL_REPEAT}.
      *
-     *  - {@see GL46::GL_TEXTURE_WRAP_T}: Sets the wrap parameter for texture
-     *    coordinate t to either {@see GL46::GL_CLAMP_TO_EDGE},
-     *    {@see GL46::GL_MIRRORED_REPEAT}, {@see GL46::GL_REPEAT}, or {@see
-     *    GL46::GL_MIRROR_CLAMP_TO_EDGE}. See the
-     *    discussion under {@see GL46::GL_TEXTURE_WRAP_S}. Initially, {@see
-     *    GL46::GL_TEXTURE_WRAP_T} is set to
-     *    {@see GL46::GL_REPEAT}.
+     *  - {@see GL33::GL_TEXTURE_WRAP_T}: Sets the wrap parameter for texture
+     *    coordinate t to either {@see GL33::GL_CLAMP_TO_EDGE},
+     *    {@see GL33::GL_MIRRORED_REPEAT}, {@see GL33::GL_REPEAT}, or {@see
+     *    GL33::GL_MIRROR_CLAMP_TO_EDGE}. See the
+     *    discussion under {@see GL33::GL_TEXTURE_WRAP_S}. Initially, {@see
+     *    GL33::GL_TEXTURE_WRAP_T} is set to
+     *    {@see GL33::GL_REPEAT}.
      *
-     *  - {@see GL46::GL_TEXTURE_WRAP_R}: Sets the wrap parameter for texture
-     *    coordinate r to either {@see GL46::GL_CLAMP_TO_EDGE},
-     *    {@see GL46::GL_MIRRORED_REPEAT}, {@see GL46::GL_REPEAT}, or {@see
-     *    GL46::GL_MIRROR_CLAMP_TO_EDGE}. See the
-     *    discussion under {@see GL46::GL_TEXTURE_WRAP_S}. Initially, {@see
-     *    GL46::GL_TEXTURE_WRAP_R} is set to
-     *    {@see GL46::GL_REPEAT}.
+     *  - {@see GL33::GL_TEXTURE_WRAP_R}: Sets the wrap parameter for texture
+     *    coordinate r to either {@see GL33::GL_CLAMP_TO_EDGE},
+     *    {@see GL33::GL_MIRRORED_REPEAT}, {@see GL33::GL_REPEAT}, or {@see
+     *    GL33::GL_MIRROR_CLAMP_TO_EDGE}. See the
+     *    discussion under {@see GL33::GL_TEXTURE_WRAP_S}. Initially, {@see
+     *    GL33::GL_TEXTURE_WRAP_R} is set to
+     *    {@see GL33::GL_REPEAT}.
      *
-     *  - {@see GL46::GL_TEXTURE_BORDER_COLOR}: The data in $params specifies
+     *  - {@see GL33::GL_TEXTURE_BORDER_COLOR}: The data in $params specifies
      *    four values that define the border values that should be used for
      *    border
      *    texels. If a texel is sampled from the border of the texture, the
      *    values of
-     *    {@see GL46::GL_TEXTURE_BORDER_COLOR} are interpreted as an RGBA color
+     *    {@see GL33::GL_TEXTURE_BORDER_COLOR} are interpreted as an RGBA color
      *    to match the texture's internal format
      *    and substituted for the non-existent texel data. If the texture
      *    contains depth components, the first component
-     *    of {@see GL46::GL_TEXTURE_BORDER_COLOR} is interpreted as a depth
+     *    of {@see GL33::GL_TEXTURE_BORDER_COLOR} is interpreted as a depth
      *    value. The initial value is     0.0 , 0.0 ,
      *    0.0 , 0.0    .
      *
-     *  - {@see GL46::GL_TEXTURE_COMPARE_MODE}: Specifies the texture comparison
+     *  - {@see GL33::GL_TEXTURE_COMPARE_MODE}: Specifies the texture comparison
      *    mode for currently bound textures. That is, a texture whose internal
      *    format
-     *    is {@see GL46::GL_DEPTH_COMPONENT_*}; see {@see GL46::glTexImage2D})
+     *    is {@see GL33::GL_DEPTH_COMPONENT_*}; see {@see GL33::texImage2D})
      *    Permissible values are:
-     *    {@see GL46::GL_COMPARE_REF_TO_TEXTURE}   Specifies that the
+     *    {@see GL33::GL_COMPARE_REF_TO_TEXTURE}   Specifies that the
      *    interpolated and clamped r texture coordinate
      *    should be compared to the value in the currently bound texture. See
      *    the discussion of
-     *    {@see GL46::GL_TEXTURE_COMPARE_FUNC} for details of how the comparison
+     *    {@see GL33::GL_TEXTURE_COMPARE_FUNC} for details of how the comparison
      *    is evaluated. The result of the
-     *    comparison is assigned to the red channel.     {@see GL46::GL_NONE}
+     *    comparison is assigned to the red channel.     {@see GL33::GL_NONE}
      *    Specifies that the red channel should be
      *    assigned the appropriate value from the currently bound texture.
      *
-     *  - {@see GL46::GL_TEXTURE_COMPARE_FUNC}: Specifies the comparison
-     *    operator used when {@see GL46::GL_TEXTURE_COMPARE_MODE} is set to
-     *    {@see GL46::GL_COMPARE_REF_TO_TEXTURE}. Permissible values are:
+     *  - {@see GL33::GL_TEXTURE_COMPARE_FUNC}: Specifies the comparison
+     *    operator used when {@see GL33::GL_TEXTURE_COMPARE_MODE} is set to
+     *    {@see GL33::GL_COMPARE_REF_TO_TEXTURE}. Permissible values are:
      *     Texture Comparison Function
-     *    Computed result        {@see GL46::GL_LEQUAL}      result =     1.0
+     *    Computed result        {@see GL33::GL_LEQUAL}      result =     1.0
      *    0.0   &amp;it;     r &lt;=  D t       r
-     *    &gt;  D t              {@see GL46::GL_GEQUAL}      result =     1.0
+     *    &gt;  D t              {@see GL33::GL_GEQUAL}      result =     1.0
      *    0.0   &amp;it;     r &gt;=  D t       r
-     *    &lt;  D t              {@see GL46::GL_LESS}      result =     1.0
+     *    &lt;  D t              {@see GL33::GL_LESS}      result =     1.0
      *    0.0   &amp;it;     r &lt;  D t       r
-     *    &gt;=  D t              {@see GL46::GL_GREATER}      result =     1.0
+     *    &gt;=  D t              {@see GL33::GL_GREATER}      result =     1.0
      *     0.0   &amp;it;     r &gt;  D t       r
-     *    &lt;=  D t              {@see GL46::GL_EQUAL}      result =     1.0
+     *    &lt;=  D t              {@see GL33::GL_EQUAL}      result =     1.0
      *    0.0   &amp;it;     r =  D t       r ≠
-     *    D t              {@see GL46::GL_NOTEQUAL}      result =     1.0   0.0
+     *    D t              {@see GL33::GL_NOTEQUAL}      result =     1.0   0.0
      *     &amp;it;     r ≠  D t       r =  D t
-     *                 {@see GL46::GL_ALWAYS}      result = 1.0        {@see
-     *    GL46::GL_NEVER}      result = 0.0
+     *                 {@see GL33::GL_ALWAYS}      result = 1.0        {@see
+     *    GL33::GL_NEVER}      result = 0.0
      *    where r is the current interpolated texture coordinate, and   D t   is
      *    the texture value sampled from the
      *    currently bound texture. result is assigned to   R t  .
@@ -1267,16 +1318,16 @@ class GL33 extends GL32
      */
     public function samplerParameterf(int $sampler, int $pname, float $param): void
     {
-        $__proc = $this->getProcAs('glSamplerParameterf', 'void (*)(GLuint sampler, GLenum pname, GLfloat param)');
+        $__proc = $this->proc('glSamplerParameterf', 'void (*)(GLuint sampler, GLenum pname, GLfloat param)');
         $__proc($sampler, $pname, $param);
     }
 
     /**
-     * {@see GL46::glSamplerParameter} assigns the value or values in $params to the sampler parameter specified as
+     * {@see GL33::samplerParameter} assigns the value or values in $params to the sampler parameter specified as
      * $pname. $sampler specifies the sampler object to be modified, and must be the name of a sampler object
-     * previously returned from a call to {@see GL46::glGenSamplers}. The following symbols are accepted in $pname:
+     * previously returned from a call to {@see GL33::genSamplers}. The following symbols are accepted in $pname:
      *
-     *  - {@see GL46::GL_TEXTURE_MIN_FILTER}: The texture minifying function is
+     *  - {@see GL33::GL_TEXTURE_MIN_FILTER}: The texture minifying function is
      *    used whenever the pixel being textured maps to an area greater than
      *    one
      *    texture element. There are six defined minifying functions. Two of
@@ -1294,177 +1345,177 @@ class GL33 extends GL32
      *    point, subsequent mipmaps have dimension    1 × 2   l - 1      or
      *    2   k - 1    × 1   until the final
      *    mipmap, which has dimension    1 × 1  . To define the mipmaps, call
-     *    {@see GL46::glTexImage1D},
-     *    {@see GL46::glTexImage2D}, {@see GL46::glTexImage3D}, {@see
-     *    GL46::glCopyTexImage1D}, or
-     *    {@see GL46::glCopyTexImage2D} with the level argument indicating the
+     *    {@see GL33::texImage1D},
+     *    {@see GL33::texImage2D}, {@see GL33::texImage3D}, {@see
+     *    GL33::copyTexImage1D}, or
+     *    {@see GL33::copyTexImage2D} with the level argument indicating the
      *    order of the mipmaps. Level 0 is the
      *    original texture; level    max &amp;af;  n m    is the final    1 × 1
      *      mipmap.   $params supplies a function
      *    for minifying the texture as one of the following:   {@see
-     *    GL46::GL_NEAREST}   Returns the value of the
+     *    GL33::GL_NEAREST}   Returns the value of the
      *    texture element that is nearest (in Manhattan distance) to the center
      *    of the pixel being textured.
-     *    {@see GL46::GL_LINEAR}   Returns the weighted average of the four
+     *    {@see GL33::GL_LINEAR}   Returns the weighted average of the four
      *    texture elements that are closest to the
      *    center of the pixel being textured. These can include border texture
      *    elements, depending on the values of
-     *    {@see GL46::GL_TEXTURE_WRAP_S} and {@see GL46::GL_TEXTURE_WRAP_T}, and
+     *    {@see GL33::GL_TEXTURE_WRAP_S} and {@see GL33::GL_TEXTURE_WRAP_T}, and
      *    on the exact mapping.
-     *    {@see GL46::GL_NEAREST_MIPMAP_NEAREST}   Chooses the mipmap that most
+     *    {@see GL33::GL_NEAREST_MIPMAP_NEAREST}   Chooses the mipmap that most
      *    closely matches the size of the pixel
-     *    being textured and uses the {@see GL46::GL_NEAREST} criterion (the
+     *    being textured and uses the {@see GL33::GL_NEAREST} criterion (the
      *    texture element nearest to the center of
      *    the pixel) to produce a texture value.     {@see
-     *    GL46::GL_LINEAR_MIPMAP_NEAREST}   Chooses the mipmap that
+     *    GL33::GL_LINEAR_MIPMAP_NEAREST}   Chooses the mipmap that
      *    most closely matches the size of the pixel being textured and uses the
-     *    {@see GL46::GL_LINEAR} criterion (a
+     *    {@see GL33::GL_LINEAR} criterion (a
      *    weighted average of the four texture elements that are closest to the
      *    center of the pixel) to produce a
-     *    texture value.     {@see GL46::GL_NEAREST_MIPMAP_LINEAR}   Chooses the
+     *    texture value.     {@see GL33::GL_NEAREST_MIPMAP_LINEAR}   Chooses the
      *    two mipmaps that most closely match the
-     *    size of the pixel being textured and uses the {@see GL46::GL_NEAREST}
+     *    size of the pixel being textured and uses the {@see GL33::GL_NEAREST}
      *    criterion (the texture element nearest
      *    to the center of the pixel) to produce a texture value from each
      *    mipmap. The final texture value is a weighted
-     *    average of those two values.     {@see GL46::GL_LINEAR_MIPMAP_LINEAR}
+     *    average of those two values.     {@see GL33::GL_LINEAR_MIPMAP_LINEAR}
      *     Chooses the two mipmaps that most
      *    closely match the size of the pixel being textured and uses the {@see
-     *    GL46::GL_LINEAR} criterion (a weighted
+     *    GL33::GL_LINEAR} criterion (a weighted
      *    average of the four texture elements that are closest to the center of
      *    the pixel) to produce a texture value
      *    from each mipmap. The final texture value is a weighted average of
      *    those two values.       As more texture
      *    elements are sampled in the minification process, fewer aliasing
      *    artifacts will be apparent. While the
-     *    {@see GL46::GL_NEAREST} and {@see GL46::GL_LINEAR} minification
+     *    {@see GL33::GL_NEAREST} and {@see GL33::GL_LINEAR} minification
      *    functions can be faster than the other four,
      *    they sample only one or four texture elements to determine the texture
      *    value of the pixel being rendered and
      *    can produce moire patterns or ragged transitions. The initial value of
-     *    {@see GL46::GL_TEXTURE_MIN_FILTER} is
-     *    {@see GL46::GL_NEAREST_MIPMAP_LINEAR}.
+     *    {@see GL33::GL_TEXTURE_MIN_FILTER} is
+     *    {@see GL33::GL_NEAREST_MIPMAP_LINEAR}.
      *
-     *  - {@see GL46::GL_TEXTURE_MAG_FILTER}: The texture magnification function
+     *  - {@see GL33::GL_TEXTURE_MAG_FILTER}: The texture magnification function
      *    is used when the pixel being textured maps to an area less than or
      *    equal
      *    to one texture element. It sets the texture magnification function to
-     *    either {@see GL46::GL_NEAREST} or
-     *    {@see GL46::GL_LINEAR} (see below). {@see GL46::GL_NEAREST} is
-     *    generally faster than {@see GL46::GL_LINEAR},
+     *    either {@see GL33::GL_NEAREST} or
+     *    {@see GL33::GL_LINEAR} (see below). {@see GL33::GL_NEAREST} is
+     *    generally faster than {@see GL33::GL_LINEAR},
      *    but it can produce textured images with sharper edges because the
      *    transition between texture elements is not
-     *    as smooth. The initial value of {@see GL46::GL_TEXTURE_MAG_FILTER} is
-     *    {@see GL46::GL_LINEAR}.
-     *    {@see GL46::GL_NEAREST}   Returns the value of the texture element
+     *    as smooth. The initial value of {@see GL33::GL_TEXTURE_MAG_FILTER} is
+     *    {@see GL33::GL_LINEAR}.
+     *    {@see GL33::GL_NEAREST}   Returns the value of the texture element
      *    that is nearest (in Manhattan distance) to
-     *    the center of the pixel being textured.     {@see GL46::GL_LINEAR}
+     *    the center of the pixel being textured.     {@see GL33::GL_LINEAR}
      *    Returns the weighted average of the four
      *    texture elements that are closest to the center of the pixel being
      *    textured. These can include border texture
-     *    elements, depending on the values of {@see GL46::GL_TEXTURE_WRAP_S}
-     *    and {@see GL46::GL_TEXTURE_WRAP_T}, and on
+     *    elements, depending on the values of {@see GL33::GL_TEXTURE_WRAP_S}
+     *    and {@see GL33::GL_TEXTURE_WRAP_T}, and on
      *    the exact mapping.
      *
-     *  - {@see GL46::GL_TEXTURE_MIN_LOD}: Sets the minimum level-of-detail
+     *  - {@see GL33::GL_TEXTURE_MIN_LOD}: Sets the minimum level-of-detail
      *    parameter. This floating-point value limits the selection of highest
      *    resolution mipmap (lowest mipmap level). The initial value is -1000.
      *
-     *  - {@see GL46::GL_TEXTURE_MAX_LOD}: Sets the maximum level-of-detail
+     *  - {@see GL33::GL_TEXTURE_MAX_LOD}: Sets the maximum level-of-detail
      *    parameter. This floating-point value limits the selection of the
      *    lowest
      *    resolution mipmap (highest mipmap level). The initial value is 1000.
      *
-     *  - {@see GL46::GL_TEXTURE_WRAP_S}: Sets the wrap parameter for texture
-     *    coordinate s to either {@see GL46::GL_CLAMP_TO_EDGE},
-     *    {@see GL46::GL_MIRRORED_REPEAT}, {@see GL46::GL_REPEAT}, or {@see
-     *    GL46::GL_MIRROR_CLAMP_TO_EDGE}.
-     *    {@see GL46::GL_CLAMP_TO_BORDER} causes the s coordinate to be clamped
+     *  - {@see GL33::GL_TEXTURE_WRAP_S}: Sets the wrap parameter for texture
+     *    coordinate s to either {@see GL33::GL_CLAMP_TO_EDGE},
+     *    {@see GL33::GL_MIRRORED_REPEAT}, {@see GL33::GL_REPEAT}, or {@see
+     *    GL33::GL_MIRROR_CLAMP_TO_EDGE}.
+     *    {@see GL33::GL_CLAMP_TO_BORDER} causes the s coordinate to be clamped
      *    to the range       -1  2N      1 +    1
      *    2N       , where N is the size of the texture in the direction of
-     *    clamping.{@see GL46::GL_CLAMP_TO_EDGE}
+     *    clamping.{@see GL33::GL_CLAMP_TO_EDGE}
      *    causes s coordinates to be clamped to the range       1  2N      1 -
      *     1  2N       , where N is the size of
-     *    the texture in the direction of clamping. {@see GL46::GL_REPEAT}
+     *    the texture in the direction of clamping. {@see GL33::GL_REPEAT}
      *    causes the integer part of the s coordinate
      *    to be ignored; the GL uses only the fractional part, thereby creating
      *    a repeating pattern.
-     *    {@see GL46::GL_MIRRORED_REPEAT} causes the s coordinate to be set to
+     *    {@see GL33::GL_MIRRORED_REPEAT} causes the s coordinate to be set to
      *    the fractional part of the texture
      *    coordinate if the integer part of s is even; if the integer part of s
      *    is odd, then the s texture coordinate is
      *    set to    1 -  frac &amp;af;  s    , where    frac &amp;af;  s
      *    represents the fractional part of s.
-     *    {@see GL46::GL_MIRROR_CLAMP_TO_EDGE} causes the s coordinate to be
+     *    {@see GL33::GL_MIRROR_CLAMP_TO_EDGE} causes the s coordinate to be
      *    repeated as for
-     *    {@see GL46::GL_MIRRORED_REPEAT} for one repetition of the texture, at
+     *    {@see GL33::GL_MIRRORED_REPEAT} for one repetition of the texture, at
      *    which point the coordinate to be clamped
-     *    as in {@see GL46::GL_CLAMP_TO_EDGE}. Initially, {@see
-     *    GL46::GL_TEXTURE_WRAP_S} is set to
-     *    {@see GL46::GL_REPEAT}.
+     *    as in {@see GL33::GL_CLAMP_TO_EDGE}. Initially, {@see
+     *    GL33::GL_TEXTURE_WRAP_S} is set to
+     *    {@see GL33::GL_REPEAT}.
      *
-     *  - {@see GL46::GL_TEXTURE_WRAP_T}: Sets the wrap parameter for texture
-     *    coordinate t to either {@see GL46::GL_CLAMP_TO_EDGE},
-     *    {@see GL46::GL_MIRRORED_REPEAT}, {@see GL46::GL_REPEAT}, or {@see
-     *    GL46::GL_MIRROR_CLAMP_TO_EDGE}. See the
-     *    discussion under {@see GL46::GL_TEXTURE_WRAP_S}. Initially, {@see
-     *    GL46::GL_TEXTURE_WRAP_T} is set to
-     *    {@see GL46::GL_REPEAT}.
+     *  - {@see GL33::GL_TEXTURE_WRAP_T}: Sets the wrap parameter for texture
+     *    coordinate t to either {@see GL33::GL_CLAMP_TO_EDGE},
+     *    {@see GL33::GL_MIRRORED_REPEAT}, {@see GL33::GL_REPEAT}, or {@see
+     *    GL33::GL_MIRROR_CLAMP_TO_EDGE}. See the
+     *    discussion under {@see GL33::GL_TEXTURE_WRAP_S}. Initially, {@see
+     *    GL33::GL_TEXTURE_WRAP_T} is set to
+     *    {@see GL33::GL_REPEAT}.
      *
-     *  - {@see GL46::GL_TEXTURE_WRAP_R}: Sets the wrap parameter for texture
-     *    coordinate r to either {@see GL46::GL_CLAMP_TO_EDGE},
-     *    {@see GL46::GL_MIRRORED_REPEAT}, {@see GL46::GL_REPEAT}, or {@see
-     *    GL46::GL_MIRROR_CLAMP_TO_EDGE}. See the
-     *    discussion under {@see GL46::GL_TEXTURE_WRAP_S}. Initially, {@see
-     *    GL46::GL_TEXTURE_WRAP_R} is set to
-     *    {@see GL46::GL_REPEAT}.
+     *  - {@see GL33::GL_TEXTURE_WRAP_R}: Sets the wrap parameter for texture
+     *    coordinate r to either {@see GL33::GL_CLAMP_TO_EDGE},
+     *    {@see GL33::GL_MIRRORED_REPEAT}, {@see GL33::GL_REPEAT}, or {@see
+     *    GL33::GL_MIRROR_CLAMP_TO_EDGE}. See the
+     *    discussion under {@see GL33::GL_TEXTURE_WRAP_S}. Initially, {@see
+     *    GL33::GL_TEXTURE_WRAP_R} is set to
+     *    {@see GL33::GL_REPEAT}.
      *
-     *  - {@see GL46::GL_TEXTURE_BORDER_COLOR}: The data in $params specifies
+     *  - {@see GL33::GL_TEXTURE_BORDER_COLOR}: The data in $params specifies
      *    four values that define the border values that should be used for
      *    border
      *    texels. If a texel is sampled from the border of the texture, the
      *    values of
-     *    {@see GL46::GL_TEXTURE_BORDER_COLOR} are interpreted as an RGBA color
+     *    {@see GL33::GL_TEXTURE_BORDER_COLOR} are interpreted as an RGBA color
      *    to match the texture's internal format
      *    and substituted for the non-existent texel data. If the texture
      *    contains depth components, the first component
-     *    of {@see GL46::GL_TEXTURE_BORDER_COLOR} is interpreted as a depth
+     *    of {@see GL33::GL_TEXTURE_BORDER_COLOR} is interpreted as a depth
      *    value. The initial value is     0.0 , 0.0 ,
      *    0.0 , 0.0    .
      *
-     *  - {@see GL46::GL_TEXTURE_COMPARE_MODE}: Specifies the texture comparison
+     *  - {@see GL33::GL_TEXTURE_COMPARE_MODE}: Specifies the texture comparison
      *    mode for currently bound textures. That is, a texture whose internal
      *    format
-     *    is {@see GL46::GL_DEPTH_COMPONENT_*}; see {@see GL46::glTexImage2D})
+     *    is {@see GL33::GL_DEPTH_COMPONENT_*}; see {@see GL33::texImage2D})
      *    Permissible values are:
-     *    {@see GL46::GL_COMPARE_REF_TO_TEXTURE}   Specifies that the
+     *    {@see GL33::GL_COMPARE_REF_TO_TEXTURE}   Specifies that the
      *    interpolated and clamped r texture coordinate
      *    should be compared to the value in the currently bound texture. See
      *    the discussion of
-     *    {@see GL46::GL_TEXTURE_COMPARE_FUNC} for details of how the comparison
+     *    {@see GL33::GL_TEXTURE_COMPARE_FUNC} for details of how the comparison
      *    is evaluated. The result of the
-     *    comparison is assigned to the red channel.     {@see GL46::GL_NONE}
+     *    comparison is assigned to the red channel.     {@see GL33::GL_NONE}
      *    Specifies that the red channel should be
      *    assigned the appropriate value from the currently bound texture.
      *
-     *  - {@see GL46::GL_TEXTURE_COMPARE_FUNC}: Specifies the comparison
-     *    operator used when {@see GL46::GL_TEXTURE_COMPARE_MODE} is set to
-     *    {@see GL46::GL_COMPARE_REF_TO_TEXTURE}. Permissible values are:
+     *  - {@see GL33::GL_TEXTURE_COMPARE_FUNC}: Specifies the comparison
+     *    operator used when {@see GL33::GL_TEXTURE_COMPARE_MODE} is set to
+     *    {@see GL33::GL_COMPARE_REF_TO_TEXTURE}. Permissible values are:
      *     Texture Comparison Function
-     *    Computed result        {@see GL46::GL_LEQUAL}      result =     1.0
+     *    Computed result        {@see GL33::GL_LEQUAL}      result =     1.0
      *    0.0   &amp;it;     r &lt;=  D t       r
-     *    &gt;  D t              {@see GL46::GL_GEQUAL}      result =     1.0
+     *    &gt;  D t              {@see GL33::GL_GEQUAL}      result =     1.0
      *    0.0   &amp;it;     r &gt;=  D t       r
-     *    &lt;  D t              {@see GL46::GL_LESS}      result =     1.0
+     *    &lt;  D t              {@see GL33::GL_LESS}      result =     1.0
      *    0.0   &amp;it;     r &lt;  D t       r
-     *    &gt;=  D t              {@see GL46::GL_GREATER}      result =     1.0
+     *    &gt;=  D t              {@see GL33::GL_GREATER}      result =     1.0
      *     0.0   &amp;it;     r &gt;  D t       r
-     *    &lt;=  D t              {@see GL46::GL_EQUAL}      result =     1.0
+     *    &lt;=  D t              {@see GL33::GL_EQUAL}      result =     1.0
      *    0.0   &amp;it;     r =  D t       r ≠
-     *    D t              {@see GL46::GL_NOTEQUAL}      result =     1.0   0.0
+     *    D t              {@see GL33::GL_NOTEQUAL}      result =     1.0   0.0
      *     &amp;it;     r ≠  D t       r =  D t
-     *                 {@see GL46::GL_ALWAYS}      result = 1.0        {@see
-     *    GL46::GL_NEVER}      result = 0.0
+     *                 {@see GL33::GL_ALWAYS}      result = 1.0        {@see
+     *    GL33::GL_NEVER}      result = 0.0
      *    where r is the current interpolated texture coordinate, and   D t   is
      *    the texture value sampled from the
      *    currently bound texture. result is assigned to   R t  .
@@ -1473,21 +1524,22 @@ class GL33 extends GL32
      * @since 3.3
      * @param int $sampler
      * @param int $pname
-     * @param \FFI\CData|null $param
+     * @param CData|null $param
      * @return void
      */
-    public function samplerParameterfv(int $sampler, int $pname, ?\FFI\CData $param): void
+    public function samplerParameterfv(int $sampler, int $pname, ?CData $param): void
     {
-        $__proc = $this->getProcAs('glSamplerParameterfv', 'void (*)(GLuint sampler, GLenum pname, const GLfloat *param)');
+        $__proc = $this->proc('glSamplerParameterfv',
+            'void (*)(GLuint sampler, GLenum pname, const GLfloat *param)');
         $__proc($sampler, $pname, $param);
     }
 
     /**
-     * {@see GL46::glSamplerParameter} assigns the value or values in $params to the sampler parameter specified as
+     * {@see GL33::samplerParameter} assigns the value or values in $params to the sampler parameter specified as
      * $pname. $sampler specifies the sampler object to be modified, and must be the name of a sampler object
-     * previously returned from a call to {@see GL46::glGenSamplers}. The following symbols are accepted in $pname:
+     * previously returned from a call to {@see GL33::genSamplers}. The following symbols are accepted in $pname:
      *
-     *  - {@see GL46::GL_TEXTURE_MIN_FILTER}: The texture minifying function is
+     *  - {@see GL33::GL_TEXTURE_MIN_FILTER}: The texture minifying function is
      *    used whenever the pixel being textured maps to an area greater than
      *    one
      *    texture element. There are six defined minifying functions. Two of
@@ -1505,177 +1557,177 @@ class GL33 extends GL32
      *    point, subsequent mipmaps have dimension    1 × 2   l - 1      or
      *    2   k - 1    × 1   until the final
      *    mipmap, which has dimension    1 × 1  . To define the mipmaps, call
-     *    {@see GL46::glTexImage1D},
-     *    {@see GL46::glTexImage2D}, {@see GL46::glTexImage3D}, {@see
-     *    GL46::glCopyTexImage1D}, or
-     *    {@see GL46::glCopyTexImage2D} with the level argument indicating the
+     *    {@see GL33::texImage1D},
+     *    {@see GL33::texImage2D}, {@see GL33::texImage3D}, {@see
+     *    GL33::copyTexImage1D}, or
+     *    {@see GL33::copyTexImage2D} with the level argument indicating the
      *    order of the mipmaps. Level 0 is the
      *    original texture; level    max &amp;af;  n m    is the final    1 × 1
      *      mipmap.   $params supplies a function
      *    for minifying the texture as one of the following:   {@see
-     *    GL46::GL_NEAREST}   Returns the value of the
+     *    GL33::GL_NEAREST}   Returns the value of the
      *    texture element that is nearest (in Manhattan distance) to the center
      *    of the pixel being textured.
-     *    {@see GL46::GL_LINEAR}   Returns the weighted average of the four
+     *    {@see GL33::GL_LINEAR}   Returns the weighted average of the four
      *    texture elements that are closest to the
      *    center of the pixel being textured. These can include border texture
      *    elements, depending on the values of
-     *    {@see GL46::GL_TEXTURE_WRAP_S} and {@see GL46::GL_TEXTURE_WRAP_T}, and
+     *    {@see GL33::GL_TEXTURE_WRAP_S} and {@see GL33::GL_TEXTURE_WRAP_T}, and
      *    on the exact mapping.
-     *    {@see GL46::GL_NEAREST_MIPMAP_NEAREST}   Chooses the mipmap that most
+     *    {@see GL33::GL_NEAREST_MIPMAP_NEAREST}   Chooses the mipmap that most
      *    closely matches the size of the pixel
-     *    being textured and uses the {@see GL46::GL_NEAREST} criterion (the
+     *    being textured and uses the {@see GL33::GL_NEAREST} criterion (the
      *    texture element nearest to the center of
      *    the pixel) to produce a texture value.     {@see
-     *    GL46::GL_LINEAR_MIPMAP_NEAREST}   Chooses the mipmap that
+     *    GL33::GL_LINEAR_MIPMAP_NEAREST}   Chooses the mipmap that
      *    most closely matches the size of the pixel being textured and uses the
-     *    {@see GL46::GL_LINEAR} criterion (a
+     *    {@see GL33::GL_LINEAR} criterion (a
      *    weighted average of the four texture elements that are closest to the
      *    center of the pixel) to produce a
-     *    texture value.     {@see GL46::GL_NEAREST_MIPMAP_LINEAR}   Chooses the
+     *    texture value.     {@see GL33::GL_NEAREST_MIPMAP_LINEAR}   Chooses the
      *    two mipmaps that most closely match the
-     *    size of the pixel being textured and uses the {@see GL46::GL_NEAREST}
+     *    size of the pixel being textured and uses the {@see GL33::GL_NEAREST}
      *    criterion (the texture element nearest
      *    to the center of the pixel) to produce a texture value from each
      *    mipmap. The final texture value is a weighted
-     *    average of those two values.     {@see GL46::GL_LINEAR_MIPMAP_LINEAR}
+     *    average of those two values.     {@see GL33::GL_LINEAR_MIPMAP_LINEAR}
      *     Chooses the two mipmaps that most
      *    closely match the size of the pixel being textured and uses the {@see
-     *    GL46::GL_LINEAR} criterion (a weighted
+     *    GL33::GL_LINEAR} criterion (a weighted
      *    average of the four texture elements that are closest to the center of
      *    the pixel) to produce a texture value
      *    from each mipmap. The final texture value is a weighted average of
      *    those two values.       As more texture
      *    elements are sampled in the minification process, fewer aliasing
      *    artifacts will be apparent. While the
-     *    {@see GL46::GL_NEAREST} and {@see GL46::GL_LINEAR} minification
+     *    {@see GL33::GL_NEAREST} and {@see GL33::GL_LINEAR} minification
      *    functions can be faster than the other four,
      *    they sample only one or four texture elements to determine the texture
      *    value of the pixel being rendered and
      *    can produce moire patterns or ragged transitions. The initial value of
-     *    {@see GL46::GL_TEXTURE_MIN_FILTER} is
-     *    {@see GL46::GL_NEAREST_MIPMAP_LINEAR}.
+     *    {@see GL33::GL_TEXTURE_MIN_FILTER} is
+     *    {@see GL33::GL_NEAREST_MIPMAP_LINEAR}.
      *
-     *  - {@see GL46::GL_TEXTURE_MAG_FILTER}: The texture magnification function
+     *  - {@see GL33::GL_TEXTURE_MAG_FILTER}: The texture magnification function
      *    is used when the pixel being textured maps to an area less than or
      *    equal
      *    to one texture element. It sets the texture magnification function to
-     *    either {@see GL46::GL_NEAREST} or
-     *    {@see GL46::GL_LINEAR} (see below). {@see GL46::GL_NEAREST} is
-     *    generally faster than {@see GL46::GL_LINEAR},
+     *    either {@see GL33::GL_NEAREST} or
+     *    {@see GL33::GL_LINEAR} (see below). {@see GL33::GL_NEAREST} is
+     *    generally faster than {@see GL33::GL_LINEAR},
      *    but it can produce textured images with sharper edges because the
      *    transition between texture elements is not
-     *    as smooth. The initial value of {@see GL46::GL_TEXTURE_MAG_FILTER} is
-     *    {@see GL46::GL_LINEAR}.
-     *    {@see GL46::GL_NEAREST}   Returns the value of the texture element
+     *    as smooth. The initial value of {@see GL33::GL_TEXTURE_MAG_FILTER} is
+     *    {@see GL33::GL_LINEAR}.
+     *    {@see GL33::GL_NEAREST}   Returns the value of the texture element
      *    that is nearest (in Manhattan distance) to
-     *    the center of the pixel being textured.     {@see GL46::GL_LINEAR}
+     *    the center of the pixel being textured.     {@see GL33::GL_LINEAR}
      *    Returns the weighted average of the four
      *    texture elements that are closest to the center of the pixel being
      *    textured. These can include border texture
-     *    elements, depending on the values of {@see GL46::GL_TEXTURE_WRAP_S}
-     *    and {@see GL46::GL_TEXTURE_WRAP_T}, and on
+     *    elements, depending on the values of {@see GL33::GL_TEXTURE_WRAP_S}
+     *    and {@see GL33::GL_TEXTURE_WRAP_T}, and on
      *    the exact mapping.
      *
-     *  - {@see GL46::GL_TEXTURE_MIN_LOD}: Sets the minimum level-of-detail
+     *  - {@see GL33::GL_TEXTURE_MIN_LOD}: Sets the minimum level-of-detail
      *    parameter. This floating-point value limits the selection of highest
      *    resolution mipmap (lowest mipmap level). The initial value is -1000.
      *
-     *  - {@see GL46::GL_TEXTURE_MAX_LOD}: Sets the maximum level-of-detail
+     *  - {@see GL33::GL_TEXTURE_MAX_LOD}: Sets the maximum level-of-detail
      *    parameter. This floating-point value limits the selection of the
      *    lowest
      *    resolution mipmap (highest mipmap level). The initial value is 1000.
      *
-     *  - {@see GL46::GL_TEXTURE_WRAP_S}: Sets the wrap parameter for texture
-     *    coordinate s to either {@see GL46::GL_CLAMP_TO_EDGE},
-     *    {@see GL46::GL_MIRRORED_REPEAT}, {@see GL46::GL_REPEAT}, or {@see
-     *    GL46::GL_MIRROR_CLAMP_TO_EDGE}.
-     *    {@see GL46::GL_CLAMP_TO_BORDER} causes the s coordinate to be clamped
+     *  - {@see GL33::GL_TEXTURE_WRAP_S}: Sets the wrap parameter for texture
+     *    coordinate s to either {@see GL33::GL_CLAMP_TO_EDGE},
+     *    {@see GL33::GL_MIRRORED_REPEAT}, {@see GL33::GL_REPEAT}, or {@see
+     *    GL33::GL_MIRROR_CLAMP_TO_EDGE}.
+     *    {@see GL33::GL_CLAMP_TO_BORDER} causes the s coordinate to be clamped
      *    to the range       -1  2N      1 +    1
      *    2N       , where N is the size of the texture in the direction of
-     *    clamping.{@see GL46::GL_CLAMP_TO_EDGE}
+     *    clamping.{@see GL33::GL_CLAMP_TO_EDGE}
      *    causes s coordinates to be clamped to the range       1  2N      1 -
      *     1  2N       , where N is the size of
-     *    the texture in the direction of clamping. {@see GL46::GL_REPEAT}
+     *    the texture in the direction of clamping. {@see GL33::GL_REPEAT}
      *    causes the integer part of the s coordinate
      *    to be ignored; the GL uses only the fractional part, thereby creating
      *    a repeating pattern.
-     *    {@see GL46::GL_MIRRORED_REPEAT} causes the s coordinate to be set to
+     *    {@see GL33::GL_MIRRORED_REPEAT} causes the s coordinate to be set to
      *    the fractional part of the texture
      *    coordinate if the integer part of s is even; if the integer part of s
      *    is odd, then the s texture coordinate is
      *    set to    1 -  frac &amp;af;  s    , where    frac &amp;af;  s
      *    represents the fractional part of s.
-     *    {@see GL46::GL_MIRROR_CLAMP_TO_EDGE} causes the s coordinate to be
+     *    {@see GL33::GL_MIRROR_CLAMP_TO_EDGE} causes the s coordinate to be
      *    repeated as for
-     *    {@see GL46::GL_MIRRORED_REPEAT} for one repetition of the texture, at
+     *    {@see GL33::GL_MIRRORED_REPEAT} for one repetition of the texture, at
      *    which point the coordinate to be clamped
-     *    as in {@see GL46::GL_CLAMP_TO_EDGE}. Initially, {@see
-     *    GL46::GL_TEXTURE_WRAP_S} is set to
-     *    {@see GL46::GL_REPEAT}.
+     *    as in {@see GL33::GL_CLAMP_TO_EDGE}. Initially, {@see
+     *    GL33::GL_TEXTURE_WRAP_S} is set to
+     *    {@see GL33::GL_REPEAT}.
      *
-     *  - {@see GL46::GL_TEXTURE_WRAP_T}: Sets the wrap parameter for texture
-     *    coordinate t to either {@see GL46::GL_CLAMP_TO_EDGE},
-     *    {@see GL46::GL_MIRRORED_REPEAT}, {@see GL46::GL_REPEAT}, or {@see
-     *    GL46::GL_MIRROR_CLAMP_TO_EDGE}. See the
-     *    discussion under {@see GL46::GL_TEXTURE_WRAP_S}. Initially, {@see
-     *    GL46::GL_TEXTURE_WRAP_T} is set to
-     *    {@see GL46::GL_REPEAT}.
+     *  - {@see GL33::GL_TEXTURE_WRAP_T}: Sets the wrap parameter for texture
+     *    coordinate t to either {@see GL33::GL_CLAMP_TO_EDGE},
+     *    {@see GL33::GL_MIRRORED_REPEAT}, {@see GL33::GL_REPEAT}, or {@see
+     *    GL33::GL_MIRROR_CLAMP_TO_EDGE}. See the
+     *    discussion under {@see GL33::GL_TEXTURE_WRAP_S}. Initially, {@see
+     *    GL33::GL_TEXTURE_WRAP_T} is set to
+     *    {@see GL33::GL_REPEAT}.
      *
-     *  - {@see GL46::GL_TEXTURE_WRAP_R}: Sets the wrap parameter for texture
-     *    coordinate r to either {@see GL46::GL_CLAMP_TO_EDGE},
-     *    {@see GL46::GL_MIRRORED_REPEAT}, {@see GL46::GL_REPEAT}, or {@see
-     *    GL46::GL_MIRROR_CLAMP_TO_EDGE}. See the
-     *    discussion under {@see GL46::GL_TEXTURE_WRAP_S}. Initially, {@see
-     *    GL46::GL_TEXTURE_WRAP_R} is set to
-     *    {@see GL46::GL_REPEAT}.
+     *  - {@see GL33::GL_TEXTURE_WRAP_R}: Sets the wrap parameter for texture
+     *    coordinate r to either {@see GL33::GL_CLAMP_TO_EDGE},
+     *    {@see GL33::GL_MIRRORED_REPEAT}, {@see GL33::GL_REPEAT}, or {@see
+     *    GL33::GL_MIRROR_CLAMP_TO_EDGE}. See the
+     *    discussion under {@see GL33::GL_TEXTURE_WRAP_S}. Initially, {@see
+     *    GL33::GL_TEXTURE_WRAP_R} is set to
+     *    {@see GL33::GL_REPEAT}.
      *
-     *  - {@see GL46::GL_TEXTURE_BORDER_COLOR}: The data in $params specifies
+     *  - {@see GL33::GL_TEXTURE_BORDER_COLOR}: The data in $params specifies
      *    four values that define the border values that should be used for
      *    border
      *    texels. If a texel is sampled from the border of the texture, the
      *    values of
-     *    {@see GL46::GL_TEXTURE_BORDER_COLOR} are interpreted as an RGBA color
+     *    {@see GL33::GL_TEXTURE_BORDER_COLOR} are interpreted as an RGBA color
      *    to match the texture's internal format
      *    and substituted for the non-existent texel data. If the texture
      *    contains depth components, the first component
-     *    of {@see GL46::GL_TEXTURE_BORDER_COLOR} is interpreted as a depth
+     *    of {@see GL33::GL_TEXTURE_BORDER_COLOR} is interpreted as a depth
      *    value. The initial value is     0.0 , 0.0 ,
      *    0.0 , 0.0    .
      *
-     *  - {@see GL46::GL_TEXTURE_COMPARE_MODE}: Specifies the texture comparison
+     *  - {@see GL33::GL_TEXTURE_COMPARE_MODE}: Specifies the texture comparison
      *    mode for currently bound textures. That is, a texture whose internal
      *    format
-     *    is {@see GL46::GL_DEPTH_COMPONENT_*}; see {@see GL46::glTexImage2D})
+     *    is {@see GL33::GL_DEPTH_COMPONENT_*}; see {@see GL33::texImage2D})
      *    Permissible values are:
-     *    {@see GL46::GL_COMPARE_REF_TO_TEXTURE}   Specifies that the
+     *    {@see GL33::GL_COMPARE_REF_TO_TEXTURE}   Specifies that the
      *    interpolated and clamped r texture coordinate
      *    should be compared to the value in the currently bound texture. See
      *    the discussion of
-     *    {@see GL46::GL_TEXTURE_COMPARE_FUNC} for details of how the comparison
+     *    {@see GL33::GL_TEXTURE_COMPARE_FUNC} for details of how the comparison
      *    is evaluated. The result of the
-     *    comparison is assigned to the red channel.     {@see GL46::GL_NONE}
+     *    comparison is assigned to the red channel.     {@see GL33::GL_NONE}
      *    Specifies that the red channel should be
      *    assigned the appropriate value from the currently bound texture.
      *
-     *  - {@see GL46::GL_TEXTURE_COMPARE_FUNC}: Specifies the comparison
-     *    operator used when {@see GL46::GL_TEXTURE_COMPARE_MODE} is set to
-     *    {@see GL46::GL_COMPARE_REF_TO_TEXTURE}. Permissible values are:
+     *  - {@see GL33::GL_TEXTURE_COMPARE_FUNC}: Specifies the comparison
+     *    operator used when {@see GL33::GL_TEXTURE_COMPARE_MODE} is set to
+     *    {@see GL33::GL_COMPARE_REF_TO_TEXTURE}. Permissible values are:
      *     Texture Comparison Function
-     *    Computed result        {@see GL46::GL_LEQUAL}      result =     1.0
+     *    Computed result        {@see GL33::GL_LEQUAL}      result =     1.0
      *    0.0   &amp;it;     r &lt;=  D t       r
-     *    &gt;  D t              {@see GL46::GL_GEQUAL}      result =     1.0
+     *    &gt;  D t              {@see GL33::GL_GEQUAL}      result =     1.0
      *    0.0   &amp;it;     r &gt;=  D t       r
-     *    &lt;  D t              {@see GL46::GL_LESS}      result =     1.0
+     *    &lt;  D t              {@see GL33::GL_LESS}      result =     1.0
      *    0.0   &amp;it;     r &lt;  D t       r
-     *    &gt;=  D t              {@see GL46::GL_GREATER}      result =     1.0
+     *    &gt;=  D t              {@see GL33::GL_GREATER}      result =     1.0
      *     0.0   &amp;it;     r &gt;  D t       r
-     *    &lt;=  D t              {@see GL46::GL_EQUAL}      result =     1.0
+     *    &lt;=  D t              {@see GL33::GL_EQUAL}      result =     1.0
      *    0.0   &amp;it;     r =  D t       r ≠
-     *    D t              {@see GL46::GL_NOTEQUAL}      result =     1.0   0.0
+     *    D t              {@see GL33::GL_NOTEQUAL}      result =     1.0   0.0
      *     &amp;it;     r ≠  D t       r =  D t
-     *                 {@see GL46::GL_ALWAYS}      result = 1.0        {@see
-     *    GL46::GL_NEVER}      result = 0.0
+     *                 {@see GL33::GL_ALWAYS}      result = 1.0        {@see
+     *    GL33::GL_NEVER}      result = 0.0
      *    where r is the current interpolated texture coordinate, and   D t   is
      *    the texture value sampled from the
      *    currently bound texture. result is assigned to   R t  .
@@ -1689,16 +1741,16 @@ class GL33 extends GL32
      */
     public function samplerParameteri(int $sampler, int $pname, int $param): void
     {
-        $__proc = $this->getProcAs('glSamplerParameteri', 'void (*)(GLuint sampler, GLenum pname, GLint param)');
+        $__proc = $this->proc('glSamplerParameteri', 'void (*)(GLuint sampler, GLenum pname, GLint param)');
         $__proc($sampler, $pname, $param);
     }
 
     /**
-     * {@see GL46::glSamplerParameter} assigns the value or values in $params to the sampler parameter specified as
+     * {@see GL33::samplerParameter} assigns the value or values in $params to the sampler parameter specified as
      * $pname. $sampler specifies the sampler object to be modified, and must be the name of a sampler object
-     * previously returned from a call to {@see GL46::glGenSamplers}. The following symbols are accepted in $pname:
+     * previously returned from a call to {@see GL33::genSamplers}. The following symbols are accepted in $pname:
      *
-     *  - {@see GL46::GL_TEXTURE_MIN_FILTER}: The texture minifying function is
+     *  - {@see GL33::GL_TEXTURE_MIN_FILTER}: The texture minifying function is
      *    used whenever the pixel being textured maps to an area greater than
      *    one
      *    texture element. There are six defined minifying functions. Two of
@@ -1716,177 +1768,177 @@ class GL33 extends GL32
      *    point, subsequent mipmaps have dimension    1 × 2   l - 1      or
      *    2   k - 1    × 1   until the final
      *    mipmap, which has dimension    1 × 1  . To define the mipmaps, call
-     *    {@see GL46::glTexImage1D},
-     *    {@see GL46::glTexImage2D}, {@see GL46::glTexImage3D}, {@see
-     *    GL46::glCopyTexImage1D}, or
-     *    {@see GL46::glCopyTexImage2D} with the level argument indicating the
+     *    {@see GL33::texImage1D},
+     *    {@see GL33::texImage2D}, {@see GL33::texImage3D}, {@see
+     *    GL33::copyTexImage1D}, or
+     *    {@see GL33::copyTexImage2D} with the level argument indicating the
      *    order of the mipmaps. Level 0 is the
      *    original texture; level    max &amp;af;  n m    is the final    1 × 1
      *      mipmap.   $params supplies a function
      *    for minifying the texture as one of the following:   {@see
-     *    GL46::GL_NEAREST}   Returns the value of the
+     *    GL33::GL_NEAREST}   Returns the value of the
      *    texture element that is nearest (in Manhattan distance) to the center
      *    of the pixel being textured.
-     *    {@see GL46::GL_LINEAR}   Returns the weighted average of the four
+     *    {@see GL33::GL_LINEAR}   Returns the weighted average of the four
      *    texture elements that are closest to the
      *    center of the pixel being textured. These can include border texture
      *    elements, depending on the values of
-     *    {@see GL46::GL_TEXTURE_WRAP_S} and {@see GL46::GL_TEXTURE_WRAP_T}, and
+     *    {@see GL33::GL_TEXTURE_WRAP_S} and {@see GL33::GL_TEXTURE_WRAP_T}, and
      *    on the exact mapping.
-     *    {@see GL46::GL_NEAREST_MIPMAP_NEAREST}   Chooses the mipmap that most
+     *    {@see GL33::GL_NEAREST_MIPMAP_NEAREST}   Chooses the mipmap that most
      *    closely matches the size of the pixel
-     *    being textured and uses the {@see GL46::GL_NEAREST} criterion (the
+     *    being textured and uses the {@see GL33::GL_NEAREST} criterion (the
      *    texture element nearest to the center of
      *    the pixel) to produce a texture value.     {@see
-     *    GL46::GL_LINEAR_MIPMAP_NEAREST}   Chooses the mipmap that
+     *    GL33::GL_LINEAR_MIPMAP_NEAREST}   Chooses the mipmap that
      *    most closely matches the size of the pixel being textured and uses the
-     *    {@see GL46::GL_LINEAR} criterion (a
+     *    {@see GL33::GL_LINEAR} criterion (a
      *    weighted average of the four texture elements that are closest to the
      *    center of the pixel) to produce a
-     *    texture value.     {@see GL46::GL_NEAREST_MIPMAP_LINEAR}   Chooses the
+     *    texture value.     {@see GL33::GL_NEAREST_MIPMAP_LINEAR}   Chooses the
      *    two mipmaps that most closely match the
-     *    size of the pixel being textured and uses the {@see GL46::GL_NEAREST}
+     *    size of the pixel being textured and uses the {@see GL33::GL_NEAREST}
      *    criterion (the texture element nearest
      *    to the center of the pixel) to produce a texture value from each
      *    mipmap. The final texture value is a weighted
-     *    average of those two values.     {@see GL46::GL_LINEAR_MIPMAP_LINEAR}
+     *    average of those two values.     {@see GL33::GL_LINEAR_MIPMAP_LINEAR}
      *     Chooses the two mipmaps that most
      *    closely match the size of the pixel being textured and uses the {@see
-     *    GL46::GL_LINEAR} criterion (a weighted
+     *    GL33::GL_LINEAR} criterion (a weighted
      *    average of the four texture elements that are closest to the center of
      *    the pixel) to produce a texture value
      *    from each mipmap. The final texture value is a weighted average of
      *    those two values.       As more texture
      *    elements are sampled in the minification process, fewer aliasing
      *    artifacts will be apparent. While the
-     *    {@see GL46::GL_NEAREST} and {@see GL46::GL_LINEAR} minification
+     *    {@see GL33::GL_NEAREST} and {@see GL33::GL_LINEAR} minification
      *    functions can be faster than the other four,
      *    they sample only one or four texture elements to determine the texture
      *    value of the pixel being rendered and
      *    can produce moire patterns or ragged transitions. The initial value of
-     *    {@see GL46::GL_TEXTURE_MIN_FILTER} is
-     *    {@see GL46::GL_NEAREST_MIPMAP_LINEAR}.
+     *    {@see GL33::GL_TEXTURE_MIN_FILTER} is
+     *    {@see GL33::GL_NEAREST_MIPMAP_LINEAR}.
      *
-     *  - {@see GL46::GL_TEXTURE_MAG_FILTER}: The texture magnification function
+     *  - {@see GL33::GL_TEXTURE_MAG_FILTER}: The texture magnification function
      *    is used when the pixel being textured maps to an area less than or
      *    equal
      *    to one texture element. It sets the texture magnification function to
-     *    either {@see GL46::GL_NEAREST} or
-     *    {@see GL46::GL_LINEAR} (see below). {@see GL46::GL_NEAREST} is
-     *    generally faster than {@see GL46::GL_LINEAR},
+     *    either {@see GL33::GL_NEAREST} or
+     *    {@see GL33::GL_LINEAR} (see below). {@see GL33::GL_NEAREST} is
+     *    generally faster than {@see GL33::GL_LINEAR},
      *    but it can produce textured images with sharper edges because the
      *    transition between texture elements is not
-     *    as smooth. The initial value of {@see GL46::GL_TEXTURE_MAG_FILTER} is
-     *    {@see GL46::GL_LINEAR}.
-     *    {@see GL46::GL_NEAREST}   Returns the value of the texture element
+     *    as smooth. The initial value of {@see GL33::GL_TEXTURE_MAG_FILTER} is
+     *    {@see GL33::GL_LINEAR}.
+     *    {@see GL33::GL_NEAREST}   Returns the value of the texture element
      *    that is nearest (in Manhattan distance) to
-     *    the center of the pixel being textured.     {@see GL46::GL_LINEAR}
+     *    the center of the pixel being textured.     {@see GL33::GL_LINEAR}
      *    Returns the weighted average of the four
      *    texture elements that are closest to the center of the pixel being
      *    textured. These can include border texture
-     *    elements, depending on the values of {@see GL46::GL_TEXTURE_WRAP_S}
-     *    and {@see GL46::GL_TEXTURE_WRAP_T}, and on
+     *    elements, depending on the values of {@see GL33::GL_TEXTURE_WRAP_S}
+     *    and {@see GL33::GL_TEXTURE_WRAP_T}, and on
      *    the exact mapping.
      *
-     *  - {@see GL46::GL_TEXTURE_MIN_LOD}: Sets the minimum level-of-detail
+     *  - {@see GL33::GL_TEXTURE_MIN_LOD}: Sets the minimum level-of-detail
      *    parameter. This floating-point value limits the selection of highest
      *    resolution mipmap (lowest mipmap level). The initial value is -1000.
      *
-     *  - {@see GL46::GL_TEXTURE_MAX_LOD}: Sets the maximum level-of-detail
+     *  - {@see GL33::GL_TEXTURE_MAX_LOD}: Sets the maximum level-of-detail
      *    parameter. This floating-point value limits the selection of the
      *    lowest
      *    resolution mipmap (highest mipmap level). The initial value is 1000.
      *
-     *  - {@see GL46::GL_TEXTURE_WRAP_S}: Sets the wrap parameter for texture
-     *    coordinate s to either {@see GL46::GL_CLAMP_TO_EDGE},
-     *    {@see GL46::GL_MIRRORED_REPEAT}, {@see GL46::GL_REPEAT}, or {@see
-     *    GL46::GL_MIRROR_CLAMP_TO_EDGE}.
-     *    {@see GL46::GL_CLAMP_TO_BORDER} causes the s coordinate to be clamped
+     *  - {@see GL33::GL_TEXTURE_WRAP_S}: Sets the wrap parameter for texture
+     *    coordinate s to either {@see GL33::GL_CLAMP_TO_EDGE},
+     *    {@see GL33::GL_MIRRORED_REPEAT}, {@see GL33::GL_REPEAT}, or {@see
+     *    GL33::GL_MIRROR_CLAMP_TO_EDGE}.
+     *    {@see GL33::GL_CLAMP_TO_BORDER} causes the s coordinate to be clamped
      *    to the range       -1  2N      1 +    1
      *    2N       , where N is the size of the texture in the direction of
-     *    clamping.{@see GL46::GL_CLAMP_TO_EDGE}
+     *    clamping.{@see GL33::GL_CLAMP_TO_EDGE}
      *    causes s coordinates to be clamped to the range       1  2N      1 -
      *     1  2N       , where N is the size of
-     *    the texture in the direction of clamping. {@see GL46::GL_REPEAT}
+     *    the texture in the direction of clamping. {@see GL33::GL_REPEAT}
      *    causes the integer part of the s coordinate
      *    to be ignored; the GL uses only the fractional part, thereby creating
      *    a repeating pattern.
-     *    {@see GL46::GL_MIRRORED_REPEAT} causes the s coordinate to be set to
+     *    {@see GL33::GL_MIRRORED_REPEAT} causes the s coordinate to be set to
      *    the fractional part of the texture
      *    coordinate if the integer part of s is even; if the integer part of s
      *    is odd, then the s texture coordinate is
      *    set to    1 -  frac &amp;af;  s    , where    frac &amp;af;  s
      *    represents the fractional part of s.
-     *    {@see GL46::GL_MIRROR_CLAMP_TO_EDGE} causes the s coordinate to be
+     *    {@see GL33::GL_MIRROR_CLAMP_TO_EDGE} causes the s coordinate to be
      *    repeated as for
-     *    {@see GL46::GL_MIRRORED_REPEAT} for one repetition of the texture, at
+     *    {@see GL33::GL_MIRRORED_REPEAT} for one repetition of the texture, at
      *    which point the coordinate to be clamped
-     *    as in {@see GL46::GL_CLAMP_TO_EDGE}. Initially, {@see
-     *    GL46::GL_TEXTURE_WRAP_S} is set to
-     *    {@see GL46::GL_REPEAT}.
+     *    as in {@see GL33::GL_CLAMP_TO_EDGE}. Initially, {@see
+     *    GL33::GL_TEXTURE_WRAP_S} is set to
+     *    {@see GL33::GL_REPEAT}.
      *
-     *  - {@see GL46::GL_TEXTURE_WRAP_T}: Sets the wrap parameter for texture
-     *    coordinate t to either {@see GL46::GL_CLAMP_TO_EDGE},
-     *    {@see GL46::GL_MIRRORED_REPEAT}, {@see GL46::GL_REPEAT}, or {@see
-     *    GL46::GL_MIRROR_CLAMP_TO_EDGE}. See the
-     *    discussion under {@see GL46::GL_TEXTURE_WRAP_S}. Initially, {@see
-     *    GL46::GL_TEXTURE_WRAP_T} is set to
-     *    {@see GL46::GL_REPEAT}.
+     *  - {@see GL33::GL_TEXTURE_WRAP_T}: Sets the wrap parameter for texture
+     *    coordinate t to either {@see GL33::GL_CLAMP_TO_EDGE},
+     *    {@see GL33::GL_MIRRORED_REPEAT}, {@see GL33::GL_REPEAT}, or {@see
+     *    GL33::GL_MIRROR_CLAMP_TO_EDGE}. See the
+     *    discussion under {@see GL33::GL_TEXTURE_WRAP_S}. Initially, {@see
+     *    GL33::GL_TEXTURE_WRAP_T} is set to
+     *    {@see GL33::GL_REPEAT}.
      *
-     *  - {@see GL46::GL_TEXTURE_WRAP_R}: Sets the wrap parameter for texture
-     *    coordinate r to either {@see GL46::GL_CLAMP_TO_EDGE},
-     *    {@see GL46::GL_MIRRORED_REPEAT}, {@see GL46::GL_REPEAT}, or {@see
-     *    GL46::GL_MIRROR_CLAMP_TO_EDGE}. See the
-     *    discussion under {@see GL46::GL_TEXTURE_WRAP_S}. Initially, {@see
-     *    GL46::GL_TEXTURE_WRAP_R} is set to
-     *    {@see GL46::GL_REPEAT}.
+     *  - {@see GL33::GL_TEXTURE_WRAP_R}: Sets the wrap parameter for texture
+     *    coordinate r to either {@see GL33::GL_CLAMP_TO_EDGE},
+     *    {@see GL33::GL_MIRRORED_REPEAT}, {@see GL33::GL_REPEAT}, or {@see
+     *    GL33::GL_MIRROR_CLAMP_TO_EDGE}. See the
+     *    discussion under {@see GL33::GL_TEXTURE_WRAP_S}. Initially, {@see
+     *    GL33::GL_TEXTURE_WRAP_R} is set to
+     *    {@see GL33::GL_REPEAT}.
      *
-     *  - {@see GL46::GL_TEXTURE_BORDER_COLOR}: The data in $params specifies
+     *  - {@see GL33::GL_TEXTURE_BORDER_COLOR}: The data in $params specifies
      *    four values that define the border values that should be used for
      *    border
      *    texels. If a texel is sampled from the border of the texture, the
      *    values of
-     *    {@see GL46::GL_TEXTURE_BORDER_COLOR} are interpreted as an RGBA color
+     *    {@see GL33::GL_TEXTURE_BORDER_COLOR} are interpreted as an RGBA color
      *    to match the texture's internal format
      *    and substituted for the non-existent texel data. If the texture
      *    contains depth components, the first component
-     *    of {@see GL46::GL_TEXTURE_BORDER_COLOR} is interpreted as a depth
+     *    of {@see GL33::GL_TEXTURE_BORDER_COLOR} is interpreted as a depth
      *    value. The initial value is     0.0 , 0.0 ,
      *    0.0 , 0.0    .
      *
-     *  - {@see GL46::GL_TEXTURE_COMPARE_MODE}: Specifies the texture comparison
+     *  - {@see GL33::GL_TEXTURE_COMPARE_MODE}: Specifies the texture comparison
      *    mode for currently bound textures. That is, a texture whose internal
      *    format
-     *    is {@see GL46::GL_DEPTH_COMPONENT_*}; see {@see GL46::glTexImage2D})
+     *    is {@see GL33::GL_DEPTH_COMPONENT_*}; see {@see GL33::texImage2D})
      *    Permissible values are:
-     *    {@see GL46::GL_COMPARE_REF_TO_TEXTURE}   Specifies that the
+     *    {@see GL33::GL_COMPARE_REF_TO_TEXTURE}   Specifies that the
      *    interpolated and clamped r texture coordinate
      *    should be compared to the value in the currently bound texture. See
      *    the discussion of
-     *    {@see GL46::GL_TEXTURE_COMPARE_FUNC} for details of how the comparison
+     *    {@see GL33::GL_TEXTURE_COMPARE_FUNC} for details of how the comparison
      *    is evaluated. The result of the
-     *    comparison is assigned to the red channel.     {@see GL46::GL_NONE}
+     *    comparison is assigned to the red channel.     {@see GL33::GL_NONE}
      *    Specifies that the red channel should be
      *    assigned the appropriate value from the currently bound texture.
      *
-     *  - {@see GL46::GL_TEXTURE_COMPARE_FUNC}: Specifies the comparison
-     *    operator used when {@see GL46::GL_TEXTURE_COMPARE_MODE} is set to
-     *    {@see GL46::GL_COMPARE_REF_TO_TEXTURE}. Permissible values are:
+     *  - {@see GL33::GL_TEXTURE_COMPARE_FUNC}: Specifies the comparison
+     *    operator used when {@see GL33::GL_TEXTURE_COMPARE_MODE} is set to
+     *    {@see GL33::GL_COMPARE_REF_TO_TEXTURE}. Permissible values are:
      *     Texture Comparison Function
-     *    Computed result        {@see GL46::GL_LEQUAL}      result =     1.0
+     *    Computed result        {@see GL33::GL_LEQUAL}      result =     1.0
      *    0.0   &amp;it;     r &lt;=  D t       r
-     *    &gt;  D t              {@see GL46::GL_GEQUAL}      result =     1.0
+     *    &gt;  D t              {@see GL33::GL_GEQUAL}      result =     1.0
      *    0.0   &amp;it;     r &gt;=  D t       r
-     *    &lt;  D t              {@see GL46::GL_LESS}      result =     1.0
+     *    &lt;  D t              {@see GL33::GL_LESS}      result =     1.0
      *    0.0   &amp;it;     r &lt;  D t       r
-     *    &gt;=  D t              {@see GL46::GL_GREATER}      result =     1.0
+     *    &gt;=  D t              {@see GL33::GL_GREATER}      result =     1.0
      *     0.0   &amp;it;     r &gt;  D t       r
-     *    &lt;=  D t              {@see GL46::GL_EQUAL}      result =     1.0
+     *    &lt;=  D t              {@see GL33::GL_EQUAL}      result =     1.0
      *    0.0   &amp;it;     r =  D t       r ≠
-     *    D t              {@see GL46::GL_NOTEQUAL}      result =     1.0   0.0
+     *    D t              {@see GL33::GL_NOTEQUAL}      result =     1.0   0.0
      *     &amp;it;     r ≠  D t       r =  D t
-     *                 {@see GL46::GL_ALWAYS}      result = 1.0        {@see
-     *    GL46::GL_NEVER}      result = 0.0
+     *                 {@see GL33::GL_ALWAYS}      result = 1.0        {@see
+     *    GL33::GL_NEVER}      result = 0.0
      *    where r is the current interpolated texture coordinate, and   D t   is
      *    the texture value sampled from the
      *    currently bound texture. result is assigned to   R t  .
@@ -1895,23 +1947,24 @@ class GL33 extends GL32
      * @since 3.3
      * @param int $sampler
      * @param int $pname
-     * @param \FFI\CData|null $param
+     * @param CData|null $param
      * @return void
      */
-    public function samplerParameteriv(int $sampler, int $pname, ?\FFI\CData $param): void
+    public function samplerParameteriv(int $sampler, int $pname, ?CData $param): void
     {
-        $__proc = $this->getProcAs('glSamplerParameteriv', 'void (*)(GLuint sampler, GLenum pname, const GLint *param)');
+        $__proc = $this->proc('glSamplerParameteriv',
+            'void (*)(GLuint sampler, GLenum pname, const GLint *param)');
         $__proc($sampler, $pname, $param);
     }
 
     /**
-     * {@see GL46::glVertexAttribDivisor} modifies the rate at which generic vertex attributes advance when rendering
+     * {@see GL33::vertexAttribDivisor} modifies the rate at which generic vertex attributes advance when rendering
      * multiple instances of primitives in a single draw call. If $divisor is zero, the attribute at slot $index
      * advances once per vertex. If $divisor is non-zero, the attribute advances once per $divisor instances of the
      * set(s) of vertices being rendered. An attribute is referred to as instanced if its
-     * {@see GL46::GL_VERTEX_ATTRIB_ARRAY_DIVISOR} value is non-zero.
+     * {@see GL33::GL_VERTEX_ATTRIB_ARRAY_DIVISOR} value is non-zero.
      *
-     * $index must be less than the value of {@see GL46::GL_MAX_VERTEX_ATTRIBS}.
+     * $index must be less than the value of {@see GL33::GL_MAX_VERTEX_ATTRIBS}.
      *
      * @see http://docs.gl/gl4/glVertexAttribDivisor
      * @since 3.3
@@ -1921,18 +1974,18 @@ class GL33 extends GL32
      */
     public function vertexAttribDivisor(int $index, int $divisor): void
     {
-        $__proc = $this->getProcAs('glVertexAttribDivisor', 'void (*)(GLuint index, GLuint divisor)');
+        $__proc = $this->proc('glVertexAttribDivisor', 'void (*)(GLuint index, GLuint divisor)');
         $__proc($index, $divisor);
     }
 
     /**
-     * The {@see GL46::glVertexAttrib} family of entry points allows an application to pass generic vertex attributes
+     * The {@see GL33::vertexAttrib} family of entry points allows an application to pass generic vertex attributes
      * in numbered locations.
      *
      * Generic attributes are defined as four-component values that are organized into an array. The first entry of
      * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
-     * {@see GL46::glVertexAttrib} call that specifies the index of the element to be modified and a value for that
+     * {@see GL33::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
+     * {@see GL33::vertexAttrib} call that specifies the index of the element to be modified and a value for that
      * element.
      *
      * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
@@ -1967,12 +2020,12 @@ class GL33 extends GL32
      * passed directly to shader inputs declared as 64-bit double precision types.
      *
      * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * types may be loaded using the {@see GL33::vertexAttrib} entry points. Matrices must be loaded into
      * successive generic attribute slots in column major order, with one column of the matrix in each generic
      * attribute slot.
      *
      * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see GL46::glBindAttribLocation}. This allows an application to use more descriptive variable names
+     * calling {@see GL33::bindAttribLocation}. This allows an application to use more descriptive variable names
      * in a vertex shader. A subsequent change to the specified generic vertex attribute will be immediately
      * reflected as a change to the corresponding attribute variable in the vertex shader.
      *
@@ -1998,18 +2051,19 @@ class GL33 extends GL32
      */
     public function vertexAttribP1ui(int $index, int $type, int $normalized, int $value): void
     {
-        $__proc = $this->getProcAs('glVertexAttribP1ui', 'void (*)(GLuint index, GLenum type, GLboolean normalized, GLuint value)');
+        $__proc = $this->proc('glVertexAttribP1ui',
+            'void (*)(GLuint index, GLenum type, GLboolean normalized, GLuint value)');
         $__proc($index, $type, $normalized, $value);
     }
 
     /**
-     * The {@see GL46::glVertexAttrib} family of entry points allows an application to pass generic vertex attributes
+     * The {@see GL33::vertexAttrib} family of entry points allows an application to pass generic vertex attributes
      * in numbered locations.
      *
      * Generic attributes are defined as four-component values that are organized into an array. The first entry of
      * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
-     * {@see GL46::glVertexAttrib} call that specifies the index of the element to be modified and a value for that
+     * {@see GL33::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
+     * {@see GL33::vertexAttrib} call that specifies the index of the element to be modified and a value for that
      * element.
      *
      * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
@@ -2044,12 +2098,12 @@ class GL33 extends GL32
      * passed directly to shader inputs declared as 64-bit double precision types.
      *
      * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * types may be loaded using the {@see GL33::vertexAttrib} entry points. Matrices must be loaded into
      * successive generic attribute slots in column major order, with one column of the matrix in each generic
      * attribute slot.
      *
      * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see GL46::glBindAttribLocation}. This allows an application to use more descriptive variable names
+     * calling {@see GL33::bindAttribLocation}. This allows an application to use more descriptive variable names
      * in a vertex shader. A subsequent change to the specified generic vertex attribute will be immediately
      * reflected as a change to the corresponding attribute variable in the vertex shader.
      *
@@ -2070,23 +2124,24 @@ class GL33 extends GL32
      * @param int $index
      * @param int $type
      * @param int $normalized
-     * @param \FFI\CData|null $value
+     * @param CData|null $value
      * @return void
      */
-    public function vertexAttribP1uiv(int $index, int $type, int $normalized, ?\FFI\CData $value): void
+    public function vertexAttribP1uiv(int $index, int $type, int $normalized, ?CData $value): void
     {
-        $__proc = $this->getProcAs('glVertexAttribP1uiv', 'void (*)(GLuint index, GLenum type, GLboolean normalized, const GLuint *value)');
+        $__proc = $this->proc('glVertexAttribP1uiv',
+            'void (*)(GLuint index, GLenum type, GLboolean normalized, const GLuint *value)');
         $__proc($index, $type, $normalized, $value);
     }
 
     /**
-     * The {@see GL46::glVertexAttrib} family of entry points allows an application to pass generic vertex attributes
+     * The {@see GL33::vertexAttrib} family of entry points allows an application to pass generic vertex attributes
      * in numbered locations.
      *
      * Generic attributes are defined as four-component values that are organized into an array. The first entry of
      * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
-     * {@see GL46::glVertexAttrib} call that specifies the index of the element to be modified and a value for that
+     * {@see GL33::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
+     * {@see GL33::vertexAttrib} call that specifies the index of the element to be modified and a value for that
      * element.
      *
      * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
@@ -2121,12 +2176,12 @@ class GL33 extends GL32
      * passed directly to shader inputs declared as 64-bit double precision types.
      *
      * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * types may be loaded using the {@see GL33::vertexAttrib} entry points. Matrices must be loaded into
      * successive generic attribute slots in column major order, with one column of the matrix in each generic
      * attribute slot.
      *
      * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see GL46::glBindAttribLocation}. This allows an application to use more descriptive variable names
+     * calling {@see GL33::bindAttribLocation}. This allows an application to use more descriptive variable names
      * in a vertex shader. A subsequent change to the specified generic vertex attribute will be immediately
      * reflected as a change to the corresponding attribute variable in the vertex shader.
      *
@@ -2152,18 +2207,19 @@ class GL33 extends GL32
      */
     public function vertexAttribP2ui(int $index, int $type, int $normalized, int $value): void
     {
-        $__proc = $this->getProcAs('glVertexAttribP2ui', 'void (*)(GLuint index, GLenum type, GLboolean normalized, GLuint value)');
+        $__proc = $this->proc('glVertexAttribP2ui',
+            'void (*)(GLuint index, GLenum type, GLboolean normalized, GLuint value)');
         $__proc($index, $type, $normalized, $value);
     }
 
     /**
-     * The {@see GL46::glVertexAttrib} family of entry points allows an application to pass generic vertex attributes
+     * The {@see GL33::vertexAttrib} family of entry points allows an application to pass generic vertex attributes
      * in numbered locations.
      *
      * Generic attributes are defined as four-component values that are organized into an array. The first entry of
      * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
-     * {@see GL46::glVertexAttrib} call that specifies the index of the element to be modified and a value for that
+     * {@see GL33::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
+     * {@see GL33::vertexAttrib} call that specifies the index of the element to be modified and a value for that
      * element.
      *
      * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
@@ -2198,12 +2254,12 @@ class GL33 extends GL32
      * passed directly to shader inputs declared as 64-bit double precision types.
      *
      * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * types may be loaded using the {@see GL33::vertexAttrib} entry points. Matrices must be loaded into
      * successive generic attribute slots in column major order, with one column of the matrix in each generic
      * attribute slot.
      *
      * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see GL46::glBindAttribLocation}. This allows an application to use more descriptive variable names
+     * calling {@see GL33::bindAttribLocation}. This allows an application to use more descriptive variable names
      * in a vertex shader. A subsequent change to the specified generic vertex attribute will be immediately
      * reflected as a change to the corresponding attribute variable in the vertex shader.
      *
@@ -2224,23 +2280,24 @@ class GL33 extends GL32
      * @param int $index
      * @param int $type
      * @param int $normalized
-     * @param \FFI\CData|null $value
+     * @param CData|null $value
      * @return void
      */
-    public function vertexAttribP2uiv(int $index, int $type, int $normalized, ?\FFI\CData $value): void
+    public function vertexAttribP2uiv(int $index, int $type, int $normalized, ?CData $value): void
     {
-        $__proc = $this->getProcAs('glVertexAttribP2uiv', 'void (*)(GLuint index, GLenum type, GLboolean normalized, const GLuint *value)');
+        $__proc = $this->proc('glVertexAttribP2uiv',
+            'void (*)(GLuint index, GLenum type, GLboolean normalized, const GLuint *value)');
         $__proc($index, $type, $normalized, $value);
     }
 
     /**
-     * The {@see GL46::glVertexAttrib} family of entry points allows an application to pass generic vertex attributes
+     * The {@see GL33::vertexAttrib} family of entry points allows an application to pass generic vertex attributes
      * in numbered locations.
      *
      * Generic attributes are defined as four-component values that are organized into an array. The first entry of
      * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
-     * {@see GL46::glVertexAttrib} call that specifies the index of the element to be modified and a value for that
+     * {@see GL33::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
+     * {@see GL33::vertexAttrib} call that specifies the index of the element to be modified and a value for that
      * element.
      *
      * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
@@ -2275,12 +2332,12 @@ class GL33 extends GL32
      * passed directly to shader inputs declared as 64-bit double precision types.
      *
      * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * types may be loaded using the {@see GL33::vertexAttrib} entry points. Matrices must be loaded into
      * successive generic attribute slots in column major order, with one column of the matrix in each generic
      * attribute slot.
      *
      * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see GL46::glBindAttribLocation}. This allows an application to use more descriptive variable names
+     * calling {@see GL33::bindAttribLocation}. This allows an application to use more descriptive variable names
      * in a vertex shader. A subsequent change to the specified generic vertex attribute will be immediately
      * reflected as a change to the corresponding attribute variable in the vertex shader.
      *
@@ -2306,18 +2363,19 @@ class GL33 extends GL32
      */
     public function vertexAttribP3ui(int $index, int $type, int $normalized, int $value): void
     {
-        $__proc = $this->getProcAs('glVertexAttribP3ui', 'void (*)(GLuint index, GLenum type, GLboolean normalized, GLuint value)');
+        $__proc = $this->proc('glVertexAttribP3ui',
+            'void (*)(GLuint index, GLenum type, GLboolean normalized, GLuint value)');
         $__proc($index, $type, $normalized, $value);
     }
 
     /**
-     * The {@see GL46::glVertexAttrib} family of entry points allows an application to pass generic vertex attributes
+     * The {@see GL33::vertexAttrib} family of entry points allows an application to pass generic vertex attributes
      * in numbered locations.
      *
      * Generic attributes are defined as four-component values that are organized into an array. The first entry of
      * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
-     * {@see GL46::glVertexAttrib} call that specifies the index of the element to be modified and a value for that
+     * {@see GL33::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
+     * {@see GL33::vertexAttrib} call that specifies the index of the element to be modified and a value for that
      * element.
      *
      * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
@@ -2352,12 +2410,12 @@ class GL33 extends GL32
      * passed directly to shader inputs declared as 64-bit double precision types.
      *
      * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * types may be loaded using the {@see GL33::vertexAttrib} entry points. Matrices must be loaded into
      * successive generic attribute slots in column major order, with one column of the matrix in each generic
      * attribute slot.
      *
      * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see GL46::glBindAttribLocation}. This allows an application to use more descriptive variable names
+     * calling {@see GL33::bindAttribLocation}. This allows an application to use more descriptive variable names
      * in a vertex shader. A subsequent change to the specified generic vertex attribute will be immediately
      * reflected as a change to the corresponding attribute variable in the vertex shader.
      *
@@ -2378,23 +2436,24 @@ class GL33 extends GL32
      * @param int $index
      * @param int $type
      * @param int $normalized
-     * @param \FFI\CData|null $value
+     * @param CData|null $value
      * @return void
      */
-    public function vertexAttribP3uiv(int $index, int $type, int $normalized, ?\FFI\CData $value): void
+    public function vertexAttribP3uiv(int $index, int $type, int $normalized, ?CData $value): void
     {
-        $__proc = $this->getProcAs('glVertexAttribP3uiv', 'void (*)(GLuint index, GLenum type, GLboolean normalized, const GLuint *value)');
+        $__proc = $this->proc('glVertexAttribP3uiv',
+            'void (*)(GLuint index, GLenum type, GLboolean normalized, const GLuint *value)');
         $__proc($index, $type, $normalized, $value);
     }
 
     /**
-     * The {@see GL46::glVertexAttrib} family of entry points allows an application to pass generic vertex attributes
+     * The {@see GL33::vertexAttrib} family of entry points allows an application to pass generic vertex attributes
      * in numbered locations.
      *
      * Generic attributes are defined as four-component values that are organized into an array. The first entry of
      * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
-     * {@see GL46::glVertexAttrib} call that specifies the index of the element to be modified and a value for that
+     * {@see GL33::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
+     * {@see GL33::vertexAttrib} call that specifies the index of the element to be modified and a value for that
      * element.
      *
      * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
@@ -2429,12 +2488,12 @@ class GL33 extends GL32
      * passed directly to shader inputs declared as 64-bit double precision types.
      *
      * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * types may be loaded using the {@see GL33::vertexAttrib} entry points. Matrices must be loaded into
      * successive generic attribute slots in column major order, with one column of the matrix in each generic
      * attribute slot.
      *
      * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see GL46::glBindAttribLocation}. This allows an application to use more descriptive variable names
+     * calling {@see GL33::bindAttribLocation}. This allows an application to use more descriptive variable names
      * in a vertex shader. A subsequent change to the specified generic vertex attribute will be immediately
      * reflected as a change to the corresponding attribute variable in the vertex shader.
      *
@@ -2460,18 +2519,19 @@ class GL33 extends GL32
      */
     public function vertexAttribP4ui(int $index, int $type, int $normalized, int $value): void
     {
-        $__proc = $this->getProcAs('glVertexAttribP4ui', 'void (*)(GLuint index, GLenum type, GLboolean normalized, GLuint value)');
+        $__proc = $this->proc('glVertexAttribP4ui',
+            'void (*)(GLuint index, GLenum type, GLboolean normalized, GLuint value)');
         $__proc($index, $type, $normalized, $value);
     }
 
     /**
-     * The {@see GL46::glVertexAttrib} family of entry points allows an application to pass generic vertex attributes
+     * The {@see GL33::vertexAttrib} family of entry points allows an application to pass generic vertex attributes
      * in numbered locations.
      *
      * Generic attributes are defined as four-component values that are organized into an array. The first entry of
      * this array is numbered 0, and the size of the array is specified by the implementation-dependent constant
-     * {@see GL46::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
-     * {@see GL46::glVertexAttrib} call that specifies the index of the element to be modified and a value for that
+     * {@see GL33::GL_MAX_VERTEX_ATTRIBS}. Individual elements of this array can be modified with a
+     * {@see GL33::vertexAttrib} call that specifies the index of the element to be modified and a value for that
      * element.
      *
      * These commands can be used to specify one, two, three, or all four components of the generic vertex attribute
@@ -2506,12 +2566,12 @@ class GL33 extends GL32
      * passed directly to shader inputs declared as 64-bit double precision types.
      *
      * OpenGL Shading Language attribute variables are allowed to be of type mat2, mat3, or mat4. Attributes of these
-     * types may be loaded using the {@see GL46::glVertexAttrib} entry points. Matrices must be loaded into
+     * types may be loaded using the {@see GL33::vertexAttrib} entry points. Matrices must be loaded into
      * successive generic attribute slots in column major order, with one column of the matrix in each generic
      * attribute slot.
      *
      * A user-defined attribute variable declared in a vertex shader can be bound to a generic attribute index by
-     * calling {@see GL46::glBindAttribLocation}. This allows an application to use more descriptive variable names
+     * calling {@see GL33::bindAttribLocation}. This allows an application to use more descriptive variable names
      * in a vertex shader. A subsequent change to the specified generic vertex attribute will be immediately
      * reflected as a change to the corresponding attribute variable in the vertex shader.
      *
@@ -2532,12 +2592,13 @@ class GL33 extends GL32
      * @param int $index
      * @param int $type
      * @param int $normalized
-     * @param \FFI\CData|null $value
+     * @param CData|null $value
      * @return void
      */
-    public function vertexAttribP4uiv(int $index, int $type, int $normalized, ?\FFI\CData $value): void
+    public function vertexAttribP4uiv(int $index, int $type, int $normalized, ?CData $value): void
     {
-        $__proc = $this->getProcAs('glVertexAttribP4uiv', 'void (*)(GLuint index, GLenum type, GLboolean normalized, const GLuint *value)');
+        $__proc = $this->proc('glVertexAttribP4uiv',
+            'void (*)(GLuint index, GLenum type, GLboolean normalized, const GLuint *value)');
         $__proc($index, $type, $normalized, $value);
     }
 }
