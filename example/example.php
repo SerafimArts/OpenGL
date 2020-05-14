@@ -1,33 +1,33 @@
 <?php
 declare(strict_types=1);
 
-use Serafim\OpenGL\GL43 as GL;
-use Serafim\OpenGL\Support\GLLibrary;
 use Serafim\SDL\Event;
+use Serafim\OpenGL\GL43 as GL;
 use Serafim\SDL\Kernel\Event\Type;
 use Serafim\SDL\SDL;
 
 require __DIR__ . '/../vendor/autoload.php';
 require __DIR__ . '/utils.php';
 
+// =================== WINDOW ===================
 $sdl = SDL::getInstance();
 $sdl->SDL_Init(SDL::SDL_INIT_VIDEO);
-
-$mid = SDL::SDL_WINDOWPOS_CENTERED;
-$window = $sdl->SDL_CreateWindow('Window', $mid, $mid, 1920, 1080, SDL::SDL_WINDOW_OPENGL | SDL::SDL_WINDOW_SHOWN);
-
+$window = $sdl->SDL_CreateWindow('Window', SDL::SDL_WINDOWPOS_CENTERED, SDL::SDL_WINDOWPOS_CENTERED, 1920, 1080, SDL::SDL_WINDOW_OPENGL | SDL::SDL_WINDOW_SHOWN);
 $sdl->SDL_GL_SetAttribute(SDL::SDL_GL_CONTEXT_MAJOR_VERSION, 3);
 $sdl->SDL_GL_SetAttribute(SDL::SDL_GL_CONTEXT_MINOR_VERSION, 3);
 $sdl->SDL_GL_SetAttribute(SDL::SDL_GL_CONTEXT_PROFILE_MASK, SDL::SDL_GL_CONTEXT_PROFILE_CORE);
-
 $context = $sdl->SDL_GL_CreateContext($window);
+// =================== WINDOW ===================
+
+
+
 
 $gl = new GL();
 
-$gl->getProcAddress('wglSwapIntervalEXT', 'int (*)(int interval)')(0);
+$gl->getProcAs('wglSwapIntervalEXT', 'int (*)(int interval)')(0);
 
-echo 'Renderer: ' . FFI::string($gl->cast('char*', $gl->getString(GL::GL_RENDERER))) . "\n";
-echo 'Version: ' . FFI::string($gl->cast('char*', $gl->getString(GL::GL_VERSION))) . "\n";
+echo 'Renderer: ' . $gl->getString(GL::GL_RENDERER) . "\n";
+echo 'Version: ' . $gl->getString(GL::GL_VERSION) . "\n";
 
 $gl->enable(GL::GL_DEPTH_TEST);
 $gl->enable(GL::GL_LESS);
@@ -42,13 +42,13 @@ $vertices = new \Serafim\OpenGL\Type\Float32Array(
     -0.5, -0.5,  0.0,
 );
 
-$vbo = $gl->new('GLuint');
-$gl->genBuffers(1, \FFI::addr($vbo));
+$vbo = 0;
+$gl->genBuffers(1, $vbo);
 $gl->bindBuffer(GL::GL_ARRAY_BUFFER, $vbo);
 $gl->bufferData(GL::GL_ARRAY_BUFFER, $vertices->sizeOf(), $vertices->cdata, GL::GL_STATIC_DRAW);
 
-$vao = $gl->new('GLuint');
-$gl->genVertexArrays(1, \FFI::addr($vao));
+$vao = 0;
+$gl->genVertexArrays(1, $vao);
 $gl->bindVertexArray($vao);
 $gl->enableVertexAttribArray(0);
 $gl->bindBuffer(GL::GL_ARRAY_BUFFER, $vbo);

@@ -13,2976 +13,2651 @@ declare(strict_types=1);
 
 namespace Serafim\OpenGL;
 
-use Serafim\OpenGL\Type\Type;
-
 /**
- * The OpenGL functionality up to version 1.1. Includes the deprecated symbols of the Compatibility Profile.
- *
- * Extensions promoted to core in this release:
- *
- * - EXT_vertex_array @see https://www.khronos.org/registry/OpenGL/extensions/EXT/EXT_vertex_array.txt
- * - EXT_polygon_offset @see https://www.khronos.org/registry/OpenGL/extensions/EXT/EXT_polygon_offset.txt
- * - EXT_blend_logic_op @see https://www.khronos.org/registry/OpenGL/extensions/EXT/EXT_blend_logic_op.txt
- * - EXT_texture @see https://www.khronos.org/registry/OpenGL/extensions/EXT/EXT_texture.txt
- * - EXT_copy_texture @see https://www.khronos.org/registry/OpenGL/extensions/EXT/EXT_copy_texture.txt
- * - EXT_subtexture @see https://www.khronos.org/registry/OpenGL/extensions/EXT/EXT_subtexture.txt
- * - EXT_texture_object @see https://www.khronos.org/registry/OpenGL/extensions/EXT/EXT_texture_object.txt
+ * @version 1.1
  */
 class GL11 extends GL
 {
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_ACCUM = 0x0100;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_LOAD = 0x0101;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_RETURN = 0x0102;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_MULT = 0x0103;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_ADD = 0x0104;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_NEVER = 0x0200;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_LESS = 0x0201;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_EQUAL = 0x0202;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_LEQUAL = 0x0203;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_GREATER = 0x0204;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_NOTEQUAL = 0x0205;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_GEQUAL = 0x0206;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_ALWAYS = 0x0207;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_CURRENT_BIT = 0x0001;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_POINT_BIT = 0x0002;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_LINE_BIT = 0x0004;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_POLYGON_BIT = 0x0008;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_POLYGON_STIPPLE_BIT = 0x0010;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_PIXEL_MODE_BIT = 0x0020;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_LIGHTING_BIT = 0x0040;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_FOG_BIT = 0x0080;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_DEPTH_BUFFER_BIT = 0x0100;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_ACCUM_BUFFER_BIT = 0x0200;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_STENCIL_BUFFER_BIT = 0x0400;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_VIEWPORT_BIT = 0x0800;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_TRANSFORM_BIT = 0x1000;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_ENABLE_BIT = 0x2000;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_COLOR_BUFFER_BIT = 0x4000;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_HINT_BIT = 0x8000;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_EVAL_BIT = 0x10000;
+    public const GL_EVAL_BIT = 0x0001_0000;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_LIST_BIT = 0x20000;
+    public const GL_LIST_BIT = 0x0002_0000;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_TEXTURE_BIT = 0x40000;
+    public const GL_TEXTURE_BIT = 0x0004_0000;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_SCISSOR_BIT = 0x80000;
+    public const GL_SCISSOR_BIT = 0x0008_0000;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_ALL_ATTRIB_BITS = 0xfffff;
+    public const GL_ALL_ATTRIB_BITS = 0x000F_FFFF;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_POINTS = 0x0000;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_LINES = 0x0001;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_LINE_LOOP = 0x0002;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_LINE_STRIP = 0x0003;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_TRIANGLES = 0x0004;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_TRIANGLE_STRIP = 0x0005;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_TRIANGLE_FAN = 0x0006;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_QUADS = 0x0007;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_QUAD_STRIP = 0x0008;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_POLYGON = 0x0009;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_ZERO = 0x0000;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_ONE = 0x0001;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_SRC_COLOR = 0x0300;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_ONE_MINUS_SRC_COLOR = 0x0301;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_SRC_ALPHA = 0x0302;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_ONE_MINUS_SRC_ALPHA = 0x0303;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_DST_ALPHA = 0x0304;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_ONE_MINUS_DST_ALPHA = 0x0305;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_DST_COLOR = 0x0306;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_ONE_MINUS_DST_COLOR = 0x0307;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_SRC_ALPHA_SATURATE = 0x0308;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_TRUE = 0x0001;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_FALSE = 0x0000;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_CLIP_PLANE0 = 0x3000;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_CLIP_PLANE1 = 0x3001;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_CLIP_PLANE2 = 0x3002;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_CLIP_PLANE3 = 0x3003;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_CLIP_PLANE4 = 0x3004;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_CLIP_PLANE5 = 0x3005;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_BYTE = 0x1400;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_UNSIGNED_BYTE = 0x1401;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_SHORT = 0x1402;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_UNSIGNED_SHORT = 0x1403;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_INT = 0x1404;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_UNSIGNED_INT = 0x1405;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_FLOAT = 0x1406;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_2_BYTES = 0x1407;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_3_BYTES = 0x1408;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_4_BYTES = 0x1409;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_DOUBLE = 0x140a;
+    public const GL_DOUBLE = 0x140A;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_NONE = 0x0000;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_FRONT_LEFT = 0x0400;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_FRONT_RIGHT = 0x0401;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_BACK_LEFT = 0x0402;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_BACK_RIGHT = 0x0403;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_FRONT = 0x0404;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_BACK = 0x0405;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_LEFT = 0x0406;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_RIGHT = 0x0407;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_FRONT_AND_BACK = 0x0408;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_AUX0 = 0x0409;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_AUX1 = 0x040a;
+    public const GL_AUX1 = 0x040A;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_AUX2 = 0x040b;
+    public const GL_AUX2 = 0x040B;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_AUX3 = 0x040c;
+    public const GL_AUX3 = 0x040C;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_NO_ERROR = 0x0000;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_INVALID_ENUM = 0x0500;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_INVALID_VALUE = 0x0501;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_INVALID_OPERATION = 0x0502;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_STACK_OVERFLOW = 0x0503;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_STACK_UNDERFLOW = 0x0504;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_OUT_OF_MEMORY = 0x0505;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_2D = 0x0600;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_3D = 0x0601;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_3D_COLOR = 0x0602;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_3D_COLOR_TEXTURE = 0x0603;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_4D_COLOR_TEXTURE = 0x0604;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_PASS_THROUGH_TOKEN = 0x0700;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_POINT_TOKEN = 0x0701;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_LINE_TOKEN = 0x0702;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_POLYGON_TOKEN = 0x0703;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_BITMAP_TOKEN = 0x0704;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_DRAW_PIXEL_TOKEN = 0x0705;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_COPY_PIXEL_TOKEN = 0x0706;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_LINE_RESET_TOKEN = 0x0707;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_EXP = 0x0800;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_EXP2 = 0x0801;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_CW = 0x0900;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_CCW = 0x0901;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_COEFF = 0x0a00;
+    public const GL_COEFF = 0x0A00;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_ORDER = 0x0a01;
+    public const GL_ORDER = 0x0A01;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_DOMAIN = 0x0a02;
+    public const GL_DOMAIN = 0x0A02;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_CURRENT_COLOR = 0x0b00;
+    public const GL_CURRENT_COLOR = 0x0B00;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_CURRENT_INDEX = 0x0b01;
+    public const GL_CURRENT_INDEX = 0x0B01;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_CURRENT_NORMAL = 0x0b02;
+    public const GL_CURRENT_NORMAL = 0x0B02;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_CURRENT_TEXTURE_COORDS = 0x0b03;
+    public const GL_CURRENT_TEXTURE_COORDS = 0x0B03;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_CURRENT_RASTER_COLOR = 0x0b04;
+    public const GL_CURRENT_RASTER_COLOR = 0x0B04;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_CURRENT_RASTER_INDEX = 0x0b05;
+    public const GL_CURRENT_RASTER_INDEX = 0x0B05;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_CURRENT_RASTER_TEXTURE_COORDS = 0x0b06;
+    public const GL_CURRENT_RASTER_TEXTURE_COORDS = 0x0B06;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_CURRENT_RASTER_POSITION = 0x0b07;
+    public const GL_CURRENT_RASTER_POSITION = 0x0B07;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_CURRENT_RASTER_POSITION_VALID = 0x0b08;
+    public const GL_CURRENT_RASTER_POSITION_VALID = 0x0B08;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_CURRENT_RASTER_DISTANCE = 0x0b09;
+    public const GL_CURRENT_RASTER_DISTANCE = 0x0B09;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_POINT_SMOOTH = 0x0b10;
+    public const GL_POINT_SMOOTH = 0x0B10;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_POINT_SIZE = 0x0b11;
+    public const GL_POINT_SIZE = 0x0B11;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_POINT_SIZE_RANGE = 0x0b12;
+    public const GL_POINT_SIZE_RANGE = 0x0B12;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_POINT_SIZE_GRANULARITY = 0x0b13;
+    public const GL_POINT_SIZE_GRANULARITY = 0x0B13;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_LINE_SMOOTH = 0x0b20;
+    public const GL_LINE_SMOOTH = 0x0B20;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_LINE_WIDTH = 0x0b21;
+    public const GL_LINE_WIDTH = 0x0B21;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_LINE_WIDTH_RANGE = 0x0b22;
+    public const GL_LINE_WIDTH_RANGE = 0x0B22;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_LINE_WIDTH_GRANULARITY = 0x0b23;
+    public const GL_LINE_WIDTH_GRANULARITY = 0x0B23;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_LINE_STIPPLE = 0x0b24;
+    public const GL_LINE_STIPPLE = 0x0B24;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_LINE_STIPPLE_PATTERN = 0x0b25;
+    public const GL_LINE_STIPPLE_PATTERN = 0x0B25;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_LINE_STIPPLE_REPEAT = 0x0b26;
+    public const GL_LINE_STIPPLE_REPEAT = 0x0B26;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_LIST_MODE = 0x0b30;
+    public const GL_LIST_MODE = 0x0B30;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_MAX_LIST_NESTING = 0x0b31;
+    public const GL_MAX_LIST_NESTING = 0x0B31;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_LIST_BASE = 0x0b32;
+    public const GL_LIST_BASE = 0x0B32;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_LIST_INDEX = 0x0b33;
+    public const GL_LIST_INDEX = 0x0B33;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_POLYGON_MODE = 0x0b40;
+    public const GL_POLYGON_MODE = 0x0B40;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_POLYGON_SMOOTH = 0x0b41;
+    public const GL_POLYGON_SMOOTH = 0x0B41;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_POLYGON_STIPPLE = 0x0b42;
+    public const GL_POLYGON_STIPPLE = 0x0B42;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_EDGE_FLAG = 0x0b43;
+    public const GL_EDGE_FLAG = 0x0B43;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_CULL_FACE = 0x0b44;
+    public const GL_CULL_FACE = 0x0B44;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_CULL_FACE_MODE = 0x0b45;
+    public const GL_CULL_FACE_MODE = 0x0B45;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_FRONT_FACE = 0x0b46;
+    public const GL_FRONT_FACE = 0x0B46;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_LIGHTING = 0x0b50;
+    public const GL_LIGHTING = 0x0B50;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_LIGHT_MODEL_LOCAL_VIEWER = 0x0b51;
+    public const GL_LIGHT_MODEL_LOCAL_VIEWER = 0x0B51;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_LIGHT_MODEL_TWO_SIDE = 0x0b52;
+    public const GL_LIGHT_MODEL_TWO_SIDE = 0x0B52;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_LIGHT_MODEL_AMBIENT = 0x0b53;
+    public const GL_LIGHT_MODEL_AMBIENT = 0x0B53;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_SHADE_MODEL = 0x0b54;
+    public const GL_SHADE_MODEL = 0x0B54;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_COLOR_MATERIAL_FACE = 0x0b55;
+    public const GL_COLOR_MATERIAL_FACE = 0x0B55;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_COLOR_MATERIAL_PARAMETER = 0x0b56;
+    public const GL_COLOR_MATERIAL_PARAMETER = 0x0B56;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_COLOR_MATERIAL = 0x0b57;
+    public const GL_COLOR_MATERIAL = 0x0B57;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_FOG = 0x0b60;
+    public const GL_FOG = 0x0B60;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_FOG_INDEX = 0x0b61;
+    public const GL_FOG_INDEX = 0x0B61;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_FOG_DENSITY = 0x0b62;
+    public const GL_FOG_DENSITY = 0x0B62;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_FOG_START = 0x0b63;
+    public const GL_FOG_START = 0x0B63;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_FOG_END = 0x0b64;
+    public const GL_FOG_END = 0x0B64;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_FOG_MODE = 0x0b65;
+    public const GL_FOG_MODE = 0x0B65;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_FOG_COLOR = 0x0b66;
+    public const GL_FOG_COLOR = 0x0B66;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_DEPTH_RANGE = 0x0b70;
+    public const GL_DEPTH_RANGE = 0x0B70;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_DEPTH_TEST = 0x0b71;
+    public const GL_DEPTH_TEST = 0x0B71;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_DEPTH_WRITEMASK = 0x0b72;
+    public const GL_DEPTH_WRITEMASK = 0x0B72;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_DEPTH_CLEAR_VALUE = 0x0b73;
+    public const GL_DEPTH_CLEAR_VALUE = 0x0B73;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_DEPTH_FUNC = 0x0b74;
+    public const GL_DEPTH_FUNC = 0x0B74;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_ACCUM_CLEAR_VALUE = 0x0b80;
+    public const GL_ACCUM_CLEAR_VALUE = 0x0B80;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_STENCIL_TEST = 0x0b90;
+    public const GL_STENCIL_TEST = 0x0B90;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_STENCIL_CLEAR_VALUE = 0x0b91;
+    public const GL_STENCIL_CLEAR_VALUE = 0x0B91;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_STENCIL_FUNC = 0x0b92;
+    public const GL_STENCIL_FUNC = 0x0B92;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_STENCIL_VALUE_MASK = 0x0b93;
+    public const GL_STENCIL_VALUE_MASK = 0x0B93;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_STENCIL_FAIL = 0x0b94;
+    public const GL_STENCIL_FAIL = 0x0B94;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_STENCIL_PASS_DEPTH_FAIL = 0x0b95;
+    public const GL_STENCIL_PASS_DEPTH_FAIL = 0x0B95;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_STENCIL_PASS_DEPTH_PASS = 0x0b96;
+    public const GL_STENCIL_PASS_DEPTH_PASS = 0x0B96;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_STENCIL_REF = 0x0b97;
+    public const GL_STENCIL_REF = 0x0B97;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_STENCIL_WRITEMASK = 0x0b98;
+    public const GL_STENCIL_WRITEMASK = 0x0B98;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_MATRIX_MODE = 0x0ba0;
+    public const GL_MATRIX_MODE = 0x0BA0;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_NORMALIZE = 0x0ba1;
+    public const GL_NORMALIZE = 0x0BA1;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_VIEWPORT = 0x0ba2;
+    public const GL_VIEWPORT = 0x0BA2;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_MODELVIEW_STACK_DEPTH = 0x0ba3;
+    public const GL_MODELVIEW_STACK_DEPTH = 0x0BA3;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_PROJECTION_STACK_DEPTH = 0x0ba4;
+    public const GL_PROJECTION_STACK_DEPTH = 0x0BA4;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_TEXTURE_STACK_DEPTH = 0x0ba5;
+    public const GL_TEXTURE_STACK_DEPTH = 0x0BA5;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_MODELVIEW_MATRIX = 0x0ba6;
+    public const GL_MODELVIEW_MATRIX = 0x0BA6;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_PROJECTION_MATRIX = 0x0ba7;
+    public const GL_PROJECTION_MATRIX = 0x0BA7;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_TEXTURE_MATRIX = 0x0ba8;
+    public const GL_TEXTURE_MATRIX = 0x0BA8;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_ATTRIB_STACK_DEPTH = 0x0bb0;
+    public const GL_ATTRIB_STACK_DEPTH = 0x0BB0;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_CLIENT_ATTRIB_STACK_DEPTH = 0x0bb1;
+    public const GL_CLIENT_ATTRIB_STACK_DEPTH = 0x0BB1;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_ALPHA_TEST = 0x0bc0;
+    public const GL_ALPHA_TEST = 0x0BC0;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_ALPHA_TEST_FUNC = 0x0bc1;
+    public const GL_ALPHA_TEST_FUNC = 0x0BC1;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_ALPHA_TEST_REF = 0x0bc2;
+    public const GL_ALPHA_TEST_REF = 0x0BC2;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_DITHER = 0x0bd0;
+    public const GL_DITHER = 0x0BD0;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_BLEND_DST = 0x0be0;
+    public const GL_BLEND_DST = 0x0BE0;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_BLEND_SRC = 0x0be1;
+    public const GL_BLEND_SRC = 0x0BE1;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_BLEND = 0x0be2;
+    public const GL_BLEND = 0x0BE2;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_LOGIC_OP_MODE = 0x0bf0;
+    public const GL_LOGIC_OP_MODE = 0x0BF0;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_INDEX_LOGIC_OP = 0x0bf1;
+    public const GL_INDEX_LOGIC_OP = 0x0BF1;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_LOGIC_OP = 0x0bf1;
+    public const GL_LOGIC_OP = 0x0BF1;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_COLOR_LOGIC_OP = 0x0bf2;
+    public const GL_COLOR_LOGIC_OP = 0x0BF2;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_AUX_BUFFERS = 0x0c00;
+    public const GL_AUX_BUFFERS = 0x0C00;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_DRAW_BUFFER = 0x0c01;
+    public const GL_DRAW_BUFFER = 0x0C01;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_READ_BUFFER = 0x0c02;
+    public const GL_READ_BUFFER = 0x0C02;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_SCISSOR_BOX = 0x0c10;
+    public const GL_SCISSOR_BOX = 0x0C10;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_SCISSOR_TEST = 0x0c11;
+    public const GL_SCISSOR_TEST = 0x0C11;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_INDEX_CLEAR_VALUE = 0x0c20;
+    public const GL_INDEX_CLEAR_VALUE = 0x0C20;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_INDEX_WRITEMASK = 0x0c21;
+    public const GL_INDEX_WRITEMASK = 0x0C21;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_COLOR_CLEAR_VALUE = 0x0c22;
+    public const GL_COLOR_CLEAR_VALUE = 0x0C22;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_COLOR_WRITEMASK = 0x0c23;
+    public const GL_COLOR_WRITEMASK = 0x0C23;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_INDEX_MODE = 0x0c30;
+    public const GL_INDEX_MODE = 0x0C30;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_RGBA_MODE = 0x0c31;
+    public const GL_RGBA_MODE = 0x0C31;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_DOUBLEBUFFER = 0x0c32;
+    public const GL_DOUBLEBUFFER = 0x0C32;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_STEREO = 0x0c33;
+    public const GL_STEREO = 0x0C33;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_RENDER_MODE = 0x0c40;
+    public const GL_RENDER_MODE = 0x0C40;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_PERSPECTIVE_CORRECTION_HINT = 0x0c50;
+    public const GL_PERSPECTIVE_CORRECTION_HINT = 0x0C50;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_POINT_SMOOTH_HINT = 0x0c51;
+    public const GL_POINT_SMOOTH_HINT = 0x0C51;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_LINE_SMOOTH_HINT = 0x0c52;
+    public const GL_LINE_SMOOTH_HINT = 0x0C52;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_POLYGON_SMOOTH_HINT = 0x0c53;
+    public const GL_POLYGON_SMOOTH_HINT = 0x0C53;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_FOG_HINT = 0x0c54;
+    public const GL_FOG_HINT = 0x0C54;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_TEXTURE_GEN_S = 0x0c60;
+    public const GL_TEXTURE_GEN_S = 0x0C60;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_TEXTURE_GEN_T = 0x0c61;
+    public const GL_TEXTURE_GEN_T = 0x0C61;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_TEXTURE_GEN_R = 0x0c62;
+    public const GL_TEXTURE_GEN_R = 0x0C62;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_TEXTURE_GEN_Q = 0x0c63;
+    public const GL_TEXTURE_GEN_Q = 0x0C63;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_PIXEL_MAP_I_TO_I = 0x0c70;
+    public const GL_PIXEL_MAP_I_TO_I = 0x0C70;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_PIXEL_MAP_S_TO_S = 0x0c71;
+    public const GL_PIXEL_MAP_S_TO_S = 0x0C71;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_PIXEL_MAP_I_TO_R = 0x0c72;
+    public const GL_PIXEL_MAP_I_TO_R = 0x0C72;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_PIXEL_MAP_I_TO_G = 0x0c73;
+    public const GL_PIXEL_MAP_I_TO_G = 0x0C73;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_PIXEL_MAP_I_TO_B = 0x0c74;
+    public const GL_PIXEL_MAP_I_TO_B = 0x0C74;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_PIXEL_MAP_I_TO_A = 0x0c75;
+    public const GL_PIXEL_MAP_I_TO_A = 0x0C75;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_PIXEL_MAP_R_TO_R = 0x0c76;
+    public const GL_PIXEL_MAP_R_TO_R = 0x0C76;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_PIXEL_MAP_G_TO_G = 0x0c77;
+    public const GL_PIXEL_MAP_G_TO_G = 0x0C77;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_PIXEL_MAP_B_TO_B = 0x0c78;
+    public const GL_PIXEL_MAP_B_TO_B = 0x0C78;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_PIXEL_MAP_A_TO_A = 0x0c79;
+    public const GL_PIXEL_MAP_A_TO_A = 0x0C79;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_PIXEL_MAP_I_TO_I_SIZE = 0x0cb0;
+    public const GL_PIXEL_MAP_I_TO_I_SIZE = 0x0CB0;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_PIXEL_MAP_S_TO_S_SIZE = 0x0cb1;
+    public const GL_PIXEL_MAP_S_TO_S_SIZE = 0x0CB1;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_PIXEL_MAP_I_TO_R_SIZE = 0x0cb2;
+    public const GL_PIXEL_MAP_I_TO_R_SIZE = 0x0CB2;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_PIXEL_MAP_I_TO_G_SIZE = 0x0cb3;
+    public const GL_PIXEL_MAP_I_TO_G_SIZE = 0x0CB3;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_PIXEL_MAP_I_TO_B_SIZE = 0x0cb4;
+    public const GL_PIXEL_MAP_I_TO_B_SIZE = 0x0CB4;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_PIXEL_MAP_I_TO_A_SIZE = 0x0cb5;
+    public const GL_PIXEL_MAP_I_TO_A_SIZE = 0x0CB5;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_PIXEL_MAP_R_TO_R_SIZE = 0x0cb6;
+    public const GL_PIXEL_MAP_R_TO_R_SIZE = 0x0CB6;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_PIXEL_MAP_G_TO_G_SIZE = 0x0cb7;
+    public const GL_PIXEL_MAP_G_TO_G_SIZE = 0x0CB7;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_PIXEL_MAP_B_TO_B_SIZE = 0x0cb8;
+    public const GL_PIXEL_MAP_B_TO_B_SIZE = 0x0CB8;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_PIXEL_MAP_A_TO_A_SIZE = 0x0cb9;
+    public const GL_PIXEL_MAP_A_TO_A_SIZE = 0x0CB9;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_UNPACK_SWAP_BYTES = 0x0cf0;
+    public const GL_UNPACK_SWAP_BYTES = 0x0CF0;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_UNPACK_LSB_FIRST = 0x0cf1;
+    public const GL_UNPACK_LSB_FIRST = 0x0CF1;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_UNPACK_ROW_LENGTH = 0x0cf2;
+    public const GL_UNPACK_ROW_LENGTH = 0x0CF2;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_UNPACK_SKIP_ROWS = 0x0cf3;
+    public const GL_UNPACK_SKIP_ROWS = 0x0CF3;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_UNPACK_SKIP_PIXELS = 0x0cf4;
+    public const GL_UNPACK_SKIP_PIXELS = 0x0CF4;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_UNPACK_ALIGNMENT = 0x0cf5;
+    public const GL_UNPACK_ALIGNMENT = 0x0CF5;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_PACK_SWAP_BYTES = 0x0d00;
+    public const GL_PACK_SWAP_BYTES = 0x0D00;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_PACK_LSB_FIRST = 0x0d01;
+    public const GL_PACK_LSB_FIRST = 0x0D01;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_PACK_ROW_LENGTH = 0x0d02;
+    public const GL_PACK_ROW_LENGTH = 0x0D02;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_PACK_SKIP_ROWS = 0x0d03;
+    public const GL_PACK_SKIP_ROWS = 0x0D03;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_PACK_SKIP_PIXELS = 0x0d04;
+    public const GL_PACK_SKIP_PIXELS = 0x0D04;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_PACK_ALIGNMENT = 0x0d05;
+    public const GL_PACK_ALIGNMENT = 0x0D05;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_MAP_COLOR = 0x0d10;
+    public const GL_MAP_COLOR = 0x0D10;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_MAP_STENCIL = 0x0d11;
+    public const GL_MAP_STENCIL = 0x0D11;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_INDEX_SHIFT = 0x0d12;
+    public const GL_INDEX_SHIFT = 0x0D12;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_INDEX_OFFSET = 0x0d13;
+    public const GL_INDEX_OFFSET = 0x0D13;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_RED_SCALE = 0x0d14;
+    public const GL_RED_SCALE = 0x0D14;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_RED_BIAS = 0x0d15;
+    public const GL_RED_BIAS = 0x0D15;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_ZOOM_X = 0x0d16;
+    public const GL_ZOOM_X = 0x0D16;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_ZOOM_Y = 0x0d17;
+    public const GL_ZOOM_Y = 0x0D17;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_GREEN_SCALE = 0x0d18;
+    public const GL_GREEN_SCALE = 0x0D18;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_GREEN_BIAS = 0x0d19;
+    public const GL_GREEN_BIAS = 0x0D19;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_BLUE_SCALE = 0x0d1a;
+    public const GL_BLUE_SCALE = 0x0D1A;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_BLUE_BIAS = 0x0d1b;
+    public const GL_BLUE_BIAS = 0x0D1B;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_ALPHA_SCALE = 0x0d1c;
+    public const GL_ALPHA_SCALE = 0x0D1C;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_ALPHA_BIAS = 0x0d1d;
+    public const GL_ALPHA_BIAS = 0x0D1D;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_DEPTH_SCALE = 0x0d1e;
+    public const GL_DEPTH_SCALE = 0x0D1E;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_DEPTH_BIAS = 0x0d1f;
+    public const GL_DEPTH_BIAS = 0x0D1F;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_MAX_EVAL_ORDER = 0x0d30;
+    public const GL_MAX_EVAL_ORDER = 0x0D30;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_MAX_LIGHTS = 0x0d31;
+    public const GL_MAX_LIGHTS = 0x0D31;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_MAX_CLIP_PLANES = 0x0d32;
+    public const GL_MAX_CLIP_PLANES = 0x0D32;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_MAX_TEXTURE_SIZE = 0x0d33;
+    public const GL_MAX_TEXTURE_SIZE = 0x0D33;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_MAX_PIXEL_MAP_TABLE = 0x0d34;
+    public const GL_MAX_PIXEL_MAP_TABLE = 0x0D34;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_MAX_ATTRIB_STACK_DEPTH = 0x0d35;
+    public const GL_MAX_ATTRIB_STACK_DEPTH = 0x0D35;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_MAX_MODELVIEW_STACK_DEPTH = 0x0d36;
+    public const GL_MAX_MODELVIEW_STACK_DEPTH = 0x0D36;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_MAX_NAME_STACK_DEPTH = 0x0d37;
+    public const GL_MAX_NAME_STACK_DEPTH = 0x0D37;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_MAX_PROJECTION_STACK_DEPTH = 0x0d38;
+    public const GL_MAX_PROJECTION_STACK_DEPTH = 0x0D38;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_MAX_TEXTURE_STACK_DEPTH = 0x0d39;
+    public const GL_MAX_TEXTURE_STACK_DEPTH = 0x0D39;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_MAX_VIEWPORT_DIMS = 0x0d3a;
+    public const GL_MAX_VIEWPORT_DIMS = 0x0D3A;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_MAX_CLIENT_ATTRIB_STACK_DEPTH = 0x0d3b;
+    public const GL_MAX_CLIENT_ATTRIB_STACK_DEPTH = 0x0D3B;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_SUBPIXEL_BITS = 0x0d50;
+    public const GL_SUBPIXEL_BITS = 0x0D50;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_INDEX_BITS = 0x0d51;
+    public const GL_INDEX_BITS = 0x0D51;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_RED_BITS = 0x0d52;
+    public const GL_RED_BITS = 0x0D52;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_GREEN_BITS = 0x0d53;
+    public const GL_GREEN_BITS = 0x0D53;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_BLUE_BITS = 0x0d54;
+    public const GL_BLUE_BITS = 0x0D54;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_ALPHA_BITS = 0x0d55;
+    public const GL_ALPHA_BITS = 0x0D55;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_DEPTH_BITS = 0x0d56;
+    public const GL_DEPTH_BITS = 0x0D56;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_STENCIL_BITS = 0x0d57;
+    public const GL_STENCIL_BITS = 0x0D57;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_ACCUM_RED_BITS = 0x0d58;
+    public const GL_ACCUM_RED_BITS = 0x0D58;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_ACCUM_GREEN_BITS = 0x0d59;
+    public const GL_ACCUM_GREEN_BITS = 0x0D59;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_ACCUM_BLUE_BITS = 0x0d5a;
+    public const GL_ACCUM_BLUE_BITS = 0x0D5A;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_ACCUM_ALPHA_BITS = 0x0d5b;
+    public const GL_ACCUM_ALPHA_BITS = 0x0D5B;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_NAME_STACK_DEPTH = 0x0d70;
+    public const GL_NAME_STACK_DEPTH = 0x0D70;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_AUTO_NORMAL = 0x0d80;
+    public const GL_AUTO_NORMAL = 0x0D80;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_MAP1_COLOR_4 = 0x0d90;
+    public const GL_MAP1_COLOR_4 = 0x0D90;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_MAP1_INDEX = 0x0d91;
+    public const GL_MAP1_INDEX = 0x0D91;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_MAP1_NORMAL = 0x0d92;
+    public const GL_MAP1_NORMAL = 0x0D92;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_MAP1_TEXTURE_COORD_1 = 0x0d93;
+    public const GL_MAP1_TEXTURE_COORD_1 = 0x0D93;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_MAP1_TEXTURE_COORD_2 = 0x0d94;
+    public const GL_MAP1_TEXTURE_COORD_2 = 0x0D94;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_MAP1_TEXTURE_COORD_3 = 0x0d95;
+    public const GL_MAP1_TEXTURE_COORD_3 = 0x0D95;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_MAP1_TEXTURE_COORD_4 = 0x0d96;
+    public const GL_MAP1_TEXTURE_COORD_4 = 0x0D96;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_MAP1_VERTEX_3 = 0x0d97;
+    public const GL_MAP1_VERTEX_3 = 0x0D97;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_MAP1_VERTEX_4 = 0x0d98;
+    public const GL_MAP1_VERTEX_4 = 0x0D98;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_MAP2_COLOR_4 = 0x0db0;
+    public const GL_MAP2_COLOR_4 = 0x0DB0;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_MAP2_INDEX = 0x0db1;
+    public const GL_MAP2_INDEX = 0x0DB1;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_MAP2_NORMAL = 0x0db2;
+    public const GL_MAP2_NORMAL = 0x0DB2;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_MAP2_TEXTURE_COORD_1 = 0x0db3;
+    public const GL_MAP2_TEXTURE_COORD_1 = 0x0DB3;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_MAP2_TEXTURE_COORD_2 = 0x0db4;
+    public const GL_MAP2_TEXTURE_COORD_2 = 0x0DB4;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_MAP2_TEXTURE_COORD_3 = 0x0db5;
+    public const GL_MAP2_TEXTURE_COORD_3 = 0x0DB5;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_MAP2_TEXTURE_COORD_4 = 0x0db6;
+    public const GL_MAP2_TEXTURE_COORD_4 = 0x0DB6;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_MAP2_VERTEX_3 = 0x0db7;
+    public const GL_MAP2_VERTEX_3 = 0x0DB7;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_MAP2_VERTEX_4 = 0x0db8;
+    public const GL_MAP2_VERTEX_4 = 0x0DB8;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_MAP1_GRID_DOMAIN = 0x0dd0;
+    public const GL_MAP1_GRID_DOMAIN = 0x0DD0;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_MAP1_GRID_SEGMENTS = 0x0dd1;
+    public const GL_MAP1_GRID_SEGMENTS = 0x0DD1;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_MAP2_GRID_DOMAIN = 0x0dd2;
+    public const GL_MAP2_GRID_DOMAIN = 0x0DD2;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_MAP2_GRID_SEGMENTS = 0x0dd3;
+    public const GL_MAP2_GRID_SEGMENTS = 0x0DD3;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_TEXTURE_1D = 0x0de0;
+    public const GL_TEXTURE_1D = 0x0DE0;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_TEXTURE_2D = 0x0de1;
+    public const GL_TEXTURE_2D = 0x0DE1;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_FEEDBACK_BUFFER_POINTER = 0x0df0;
+    public const GL_FEEDBACK_BUFFER_POINTER = 0x0DF0;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_FEEDBACK_BUFFER_SIZE = 0x0df1;
+    public const GL_FEEDBACK_BUFFER_SIZE = 0x0DF1;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_FEEDBACK_BUFFER_TYPE = 0x0df2;
+    public const GL_FEEDBACK_BUFFER_TYPE = 0x0DF2;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_SELECTION_BUFFER_POINTER = 0x0df3;
+    public const GL_SELECTION_BUFFER_POINTER = 0x0DF3;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_SELECTION_BUFFER_SIZE = 0x0df4;
+    public const GL_SELECTION_BUFFER_SIZE = 0x0DF4;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_TEXTURE_WIDTH = 0x1000;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_TEXTURE_HEIGHT = 0x1001;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_TEXTURE_INTERNAL_FORMAT = 0x1003;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_TEXTURE_COMPONENTS = 0x1003;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_TEXTURE_BORDER_COLOR = 0x1004;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_TEXTURE_BORDER = 0x1005;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_DONT_CARE = 0x1100;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_FASTEST = 0x1101;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_NICEST = 0x1102;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_LIGHT0 = 0x4000;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_LIGHT1 = 0x4001;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_LIGHT2 = 0x4002;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_LIGHT3 = 0x4003;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_LIGHT4 = 0x4004;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_LIGHT5 = 0x4005;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_LIGHT6 = 0x4006;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_LIGHT7 = 0x4007;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_AMBIENT = 0x1200;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_DIFFUSE = 0x1201;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_SPECULAR = 0x1202;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_POSITION = 0x1203;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_SPOT_DIRECTION = 0x1204;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_SPOT_EXPONENT = 0x1205;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_SPOT_CUTOFF = 0x1206;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_CONSTANT_ATTENUATION = 0x1207;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_LINEAR_ATTENUATION = 0x1208;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_QUADRATIC_ATTENUATION = 0x1209;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_COMPILE = 0x1300;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_COMPILE_AND_EXECUTE = 0x1301;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_CLEAR = 0x1500;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_AND = 0x1501;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_AND_REVERSE = 0x1502;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_COPY = 0x1503;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_AND_INVERTED = 0x1504;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_NOOP = 0x1505;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_XOR = 0x1506;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_OR = 0x1507;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_NOR = 0x1508;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_EQUIV = 0x1509;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_INVERT = 0x150a;
+    public const GL_INVERT = 0x150A;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_OR_REVERSE = 0x150b;
+    public const GL_OR_REVERSE = 0x150B;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_COPY_INVERTED = 0x150c;
+    public const GL_COPY_INVERTED = 0x150C;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_OR_INVERTED = 0x150d;
+    public const GL_OR_INVERTED = 0x150D;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_NAND = 0x150e;
+    public const GL_NAND = 0x150E;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_SET = 0x150f;
+    public const GL_SET = 0x150F;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_EMISSION = 0x1600;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_SHININESS = 0x1601;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_AMBIENT_AND_DIFFUSE = 0x1602;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_COLOR_INDEXES = 0x1603;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_MODELVIEW = 0x1700;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_PROJECTION = 0x1701;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_TEXTURE = 0x1702;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_COLOR = 0x1800;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_DEPTH = 0x1801;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_STENCIL = 0x1802;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_COLOR_INDEX = 0x1900;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_STENCIL_INDEX = 0x1901;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_DEPTH_COMPONENT = 0x1902;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_RED = 0x1903;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_GREEN = 0x1904;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_BLUE = 0x1905;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_ALPHA = 0x1906;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_RGB = 0x1907;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_RGBA = 0x1908;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_LUMINANCE = 0x1909;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_LUMINANCE_ALPHA = 0x190a;
+    public const GL_LUMINANCE_ALPHA = 0x190A;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_BITMAP = 0x1a00;
+    public const GL_BITMAP = 0x1A00;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_POINT = 0x1b00;
+    public const GL_POINT = 0x1B00;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_LINE = 0x1b01;
+    public const GL_LINE = 0x1B01;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_FILL = 0x1b02;
+    public const GL_FILL = 0x1B02;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_RENDER = 0x1c00;
+    public const GL_RENDER = 0x1C00;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_FEEDBACK = 0x1c01;
+    public const GL_FEEDBACK = 0x1C01;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_SELECT = 0x1c02;
+    public const GL_SELECT = 0x1C02;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_FLAT = 0x1d00;
+    public const GL_FLAT = 0x1D00;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_SMOOTH = 0x1d01;
+    public const GL_SMOOTH = 0x1D01;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_KEEP = 0x1e00;
+    public const GL_KEEP = 0x1E00;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_REPLACE = 0x1e01;
+    public const GL_REPLACE = 0x1E01;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_INCR = 0x1e02;
+    public const GL_INCR = 0x1E02;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_DECR = 0x1e03;
+    public const GL_DECR = 0x1E03;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_VENDOR = 0x1f00;
+    public const GL_VENDOR = 0x1F00;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_RENDERER = 0x1f01;
+    public const GL_RENDERER = 0x1F01;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_VERSION = 0x1f02;
+    public const GL_VERSION = 0x1F02;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_EXTENSIONS = 0x1f03;
+    public const GL_EXTENSIONS = 0x1F03;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_S = 0x2000;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_T = 0x2001;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_R = 0x2002;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_Q = 0x2003;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_MODULATE = 0x2100;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_DECAL = 0x2101;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_TEXTURE_ENV_MODE = 0x2200;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_TEXTURE_ENV_COLOR = 0x2201;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_TEXTURE_ENV = 0x2300;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_EYE_LINEAR = 0x2400;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_OBJECT_LINEAR = 0x2401;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_SPHERE_MAP = 0x2402;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_TEXTURE_GEN_MODE = 0x2500;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_OBJECT_PLANE = 0x2501;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_EYE_PLANE = 0x2502;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_NEAREST = 0x2600;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_LINEAR = 0x2601;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_NEAREST_MIPMAP_NEAREST = 0x2700;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_LINEAR_MIPMAP_NEAREST = 0x2701;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_NEAREST_MIPMAP_LINEAR = 0x2702;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_LINEAR_MIPMAP_LINEAR = 0x2703;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_TEXTURE_MAG_FILTER = 0x2800;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_TEXTURE_MIN_FILTER = 0x2801;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_TEXTURE_WRAP_S = 0x2802;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_TEXTURE_WRAP_T = 0x2803;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_CLAMP = 0x2900;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_REPEAT = 0x2901;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_CLIENT_PIXEL_STORE_BIT = 0x0001;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_CLIENT_VERTEX_ARRAY_BIT = 0x0002;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_CLIENT_ALL_ATTRIB_BITS = 0xffffffff;
+    public const GL_CLIENT_ALL_ATTRIB_BITS = 0xFFFF_FFFF;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_POLYGON_OFFSET_FACTOR = 0x8038;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_POLYGON_OFFSET_UNITS = 0x2a00;
+    public const GL_POLYGON_OFFSET_UNITS = 0x2A00;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_POLYGON_OFFSET_POINT = 0x2a01;
+    public const GL_POLYGON_OFFSET_POINT = 0x2A01;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_POLYGON_OFFSET_LINE = 0x2a02;
+    public const GL_POLYGON_OFFSET_LINE = 0x2A02;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_POLYGON_OFFSET_FILL = 0x8037;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_ALPHA4 = 0x803b;
+    public const GL_ALPHA4 = 0x803B;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_ALPHA8 = 0x803c;
+    public const GL_ALPHA8 = 0x803C;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_ALPHA12 = 0x803d;
+    public const GL_ALPHA12 = 0x803D;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_ALPHA16 = 0x803e;
+    public const GL_ALPHA16 = 0x803E;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_LUMINANCE4 = 0x803f;
+    public const GL_LUMINANCE4 = 0x803F;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_LUMINANCE8 = 0x8040;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_LUMINANCE12 = 0x8041;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_LUMINANCE16 = 0x8042;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_LUMINANCE4_ALPHA4 = 0x8043;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_LUMINANCE6_ALPHA2 = 0x8044;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_LUMINANCE8_ALPHA8 = 0x8045;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_LUMINANCE12_ALPHA4 = 0x8046;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_LUMINANCE12_ALPHA12 = 0x8047;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_LUMINANCE16_ALPHA16 = 0x8048;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_INTENSITY = 0x8049;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_INTENSITY4 = 0x804a;
+    public const GL_INTENSITY4 = 0x804A;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_INTENSITY8 = 0x804b;
+    public const GL_INTENSITY8 = 0x804B;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_INTENSITY12 = 0x804c;
+    public const GL_INTENSITY12 = 0x804C;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_INTENSITY16 = 0x804d;
+    public const GL_INTENSITY16 = 0x804D;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_R3_G3_B2 = 0x2a10;
+    public const GL_R3_G3_B2 = 0x2A10;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_RGB4 = 0x804f;
+    public const GL_RGB4 = 0x804F;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_RGB5 = 0x8050;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_RGB8 = 0x8051;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_RGB10 = 0x8052;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_RGB12 = 0x8053;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_RGB16 = 0x8054;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_RGBA2 = 0x8055;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_RGBA4 = 0x8056;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_RGB5_A1 = 0x8057;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_RGBA8 = 0x8058;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_RGB10_A2 = 0x8059;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_RGBA12 = 0x805a;
+    public const GL_RGBA12 = 0x805A;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_RGBA16 = 0x805b;
+    public const GL_RGBA16 = 0x805B;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_TEXTURE_RED_SIZE = 0x805c;
+    public const GL_TEXTURE_RED_SIZE = 0x805C;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_TEXTURE_GREEN_SIZE = 0x805d;
+    public const GL_TEXTURE_GREEN_SIZE = 0x805D;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_TEXTURE_BLUE_SIZE = 0x805e;
+    public const GL_TEXTURE_BLUE_SIZE = 0x805E;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_TEXTURE_ALPHA_SIZE = 0x805f;
+    public const GL_TEXTURE_ALPHA_SIZE = 0x805F;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_TEXTURE_LUMINANCE_SIZE = 0x8060;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_TEXTURE_INTENSITY_SIZE = 0x8061;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_PROXY_TEXTURE_1D = 0x8063;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_PROXY_TEXTURE_2D = 0x8064;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_TEXTURE_PRIORITY = 0x8066;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_TEXTURE_RESIDENT = 0x8067;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_TEXTURE_BINDING_1D = 0x8068;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_TEXTURE_BINDING_2D = 0x8069;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_VERTEX_ARRAY = 0x8074;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_NORMAL_ARRAY = 0x8075;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_COLOR_ARRAY = 0x8076;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_INDEX_ARRAY = 0x8077;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_TEXTURE_COORD_ARRAY = 0x8078;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_EDGE_FLAG_ARRAY = 0x8079;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_VERTEX_ARRAY_SIZE = 0x807a;
+    public const GL_VERTEX_ARRAY_SIZE = 0x807A;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_VERTEX_ARRAY_TYPE = 0x807b;
+    public const GL_VERTEX_ARRAY_TYPE = 0x807B;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_VERTEX_ARRAY_STRIDE = 0x807c;
+    public const GL_VERTEX_ARRAY_STRIDE = 0x807C;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_NORMAL_ARRAY_TYPE = 0x807e;
+    public const GL_NORMAL_ARRAY_TYPE = 0x807E;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_NORMAL_ARRAY_STRIDE = 0x807f;
+    public const GL_NORMAL_ARRAY_STRIDE = 0x807F;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_COLOR_ARRAY_SIZE = 0x8081;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_COLOR_ARRAY_TYPE = 0x8082;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_COLOR_ARRAY_STRIDE = 0x8083;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_INDEX_ARRAY_TYPE = 0x8085;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_INDEX_ARRAY_STRIDE = 0x8086;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_TEXTURE_COORD_ARRAY_SIZE = 0x8088;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_TEXTURE_COORD_ARRAY_TYPE = 0x8089;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_TEXTURE_COORD_ARRAY_STRIDE = 0x808a;
+    public const GL_TEXTURE_COORD_ARRAY_STRIDE = 0x808A;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_EDGE_FLAG_ARRAY_STRIDE = 0x808c;
+    public const GL_EDGE_FLAG_ARRAY_STRIDE = 0x808C;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_VERTEX_ARRAY_POINTER = 0x808e;
+    public const GL_VERTEX_ARRAY_POINTER = 0x808E;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
-    public const GL_NORMAL_ARRAY_POINTER = 0x808f;
+    public const GL_NORMAL_ARRAY_POINTER = 0x808F;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_COLOR_ARRAY_POINTER = 0x8090;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_INDEX_ARRAY_POINTER = 0x8091;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_TEXTURE_COORD_ARRAY_POINTER = 0x8092;
     /**
-     * @var int
      * @since 1.1
+     * @var int
      */
     public const GL_EDGE_FLAG_ARRAY_POINTER = 0x8093;
     /**
+     * @since 1.1
      * @var int
-     * @since 1.1
      */
-    public const GL_V2F = 0x2a20;
+    public const GL_V2F = 0x2A20;
     /**
+     * @since 1.1
      * @var int
-     * @since 1.1
      */
-    public const GL_V3F = 0x2a21;
+    public const GL_V3F = 0x2A21;
     /**
+     * @since 1.1
      * @var int
-     * @since 1.1
      */
-    public const GL_C4UB_V2F = 0x2a22;
+    public const GL_C4UB_V2F = 0x2A22;
     /**
+     * @since 1.1
      * @var int
-     * @since 1.1
      */
-    public const GL_C4UB_V3F = 0x2a23;
+    public const GL_C4UB_V3F = 0x2A23;
     /**
+     * @since 1.1
      * @var int
-     * @since 1.1
      */
-    public const GL_C3F_V3F = 0x2a24;
+    public const GL_C3F_V3F = 0x2A24;
     /**
+     * @since 1.1
      * @var int
-     * @since 1.1
      */
-    public const GL_N3F_V3F = 0x2a25;
+    public const GL_N3F_V3F = 0x2A25;
     /**
+     * @since 1.1
      * @var int
-     * @since 1.1
      */
-    public const GL_C4F_N3F_V3F = 0x2a26;
+    public const GL_C4F_N3F_V3F = 0x2A26;
     /**
+     * @since 1.1
      * @var int
-     * @since 1.1
      */
-    public const GL_T2F_V3F = 0x2a27;
+    public const GL_T2F_V3F = 0x2A27;
     /**
+     * @since 1.1
      * @var int
-     * @since 1.1
      */
-    public const GL_T4F_V4F = 0x2a28;
+    public const GL_T4F_V4F = 0x2A28;
     /**
+     * @since 1.1
      * @var int
-     * @since 1.1
      */
-    public const GL_T2F_C4UB_V3F = 0x2a29;
+    public const GL_T2F_C4UB_V3F = 0x2A29;
     /**
+     * @since 1.1
      * @var int
-     * @since 1.1
      */
-    public const GL_T2F_C3F_V3F = 0x2a2a;
+    public const GL_T2F_C3F_V3F = 0x2A2A;
     /**
+     * @since 1.1
      * @var int
-     * @since 1.1
      */
-    public const GL_T2F_N3F_V3F = 0x2a2b;
+    public const GL_T2F_N3F_V3F = 0x2A2B;
     /**
+     * @since 1.1
      * @var int
-     * @since 1.1
      */
-    public const GL_T2F_C4F_N3F_V3F = 0x2a2c;
+    public const GL_T2F_C4F_N3F_V3F = 0x2A2C;
     /**
+     * @since 1.1
      * @var int
-     * @since 1.1
      */
-    public const GL_T4F_C4F_N3F_V4F = 0x2a2d;
-
-    /**
-     * {@see GL46::glRenderMode} sets the rasterization mode. It takes one argument, $mode, which can assume one of
-     * three predefined values:
-     *
-     *  - {@see GL46::GL_RENDER}: Render mode. Primitives are rasterized,
-     *    producing pixel fragments, which are written into the frame buffer.
-     *    This is the normal mode and also the default mode.
-     *
-     *  - {@see GL46::GL_SELECT}: Selection mode. No pixel fragments are
-     *    produced, and no change to the frame buffer contents is made. Instead,
-     *    a record of the names of primitives that would have been drawn if the
-     *    render mode had been
-     *    {@see GL46::GL_RENDER} is returned in a select buffer, which must be
-     *    created (see {@see GL46::glSelectBuffer})
-     *    before selection mode is entered.
-     *
-     *  - {@see GL46::GL_FEEDBACK}: Feedback mode. No pixel fragments are
-     *    produced, and no change to the frame buffer contents is made. Instead,
-     *    the coordinates and attributes of vertices that would have been drawn
-     *    if the render mode had been
-     *    {@see GL46::GL_RENDER} is returned in a feedback buffer, which must be
-     *    created (see
-     *    {@see GL46::glFeedbackBuffer}) before feedback mode is entered.
-     *
-     * The return value of {@see GL46::glRenderMode} is determined by the render mode at the time
-     * {@see GL46::glRenderMode} is called, rather than by $mode. The values returned for the three render modes are
-     * as follows:
-     *
-     *  - {@see GL46::GL_RENDER}: 0.
-     *
-     *  - {@see GL46::GL_SELECT}: The number of hit records transferred to the
-     *    select buffer.
-     *
-     *  - {@see GL46::GL_FEEDBACK}: The number of values (not vertices)
-     *    transferred to the feedback buffer.
-     *
-     * See the {@see GL46::glSelectBuffer} and {@see GL46::glFeedbackBuffer} reference pages for more details
-     * concerning selection and feedback operation.
-     *
-     * @see http://docs.gl/gl2/glRenderMode
-     * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $mode
-     * @return int|\FFI\CData|\FFI\CInt
-     */
-    public function renderMode($mode): int
-    {
-        $mode = $mode instanceof \FFI\CData ? $mode->cdata : $mode;
-
-        assert(Type::isUint16($mode), 'Argument $mode must be a C-like GLenum, but incompatible or overflow value given');
-
-        return $this->info->ffi->glRenderMode($mode);
-    }
-
-    /**
-     * {@see GL46::glGenLists} has one argument, $range. It returns an integer n such that $range contiguous empty
-     * display lists, named n,    n + 1  ,   ... ,    n + range - 1  , are created. If $range is 0, if there is no
-     * group of $range contiguous names available, or if any error is generated, no display lists are generated, and
-     * 0 is returned.
-     *
-     * @see http://docs.gl/gl2/glGenLists
-     * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $range
-     * @return int|\FFI\CData|\FFI\CInt
-     */
-    public function genLists($range): int
-    {
-        $range = $range instanceof \FFI\CData ? $range->cdata : $range;
-
-        assert(Type::isInt16($range), 'Argument $range must be a C-like GLsizei, but incompatible or overflow value given');
-
-        return $this->info->ffi->glGenLists($range);
-    }
-
-    /**
-     * {@see GL46::glGetError} returns the value of the error flag. Each detectable error is assigned a numeric code
-     * and symbolic name. When an error occurs, the error flag is set to the appropriate error code value. No other
-     * errors are recorded until {@see GL46::glGetError} is called, the error code is returned, and the flag is reset
-     * to {@see GL46::GL_NO_ERROR}. If a call to {@see GL46::glGetError} returns {@see GL46::GL_NO_ERROR}, there has
-     * been no detectable error since the last call to {@see GL46::glGetError}, or since the GL was initialized.
-     *
-     * To allow for distributed implementations, there may be several error flags. If any single error flag has
-     * recorded an error, the value of that flag is returned and that flag is reset to {@see GL46::GL_NO_ERROR} when
-     * {@see GL46::glGetError} is called. If more than one flag has recorded an error, {@see GL46::glGetError}
-     * returns and clears an arbitrary error flag value. Thus, {@see GL46::glGetError} should always be called in a
-     * loop, until it returns {@see GL46::GL_NO_ERROR}, if all error flags are to be reset.
-     *
-     * Initially, all error flags are set to {@see GL46::GL_NO_ERROR}.
-     *
-     * The following errors are currently defined:
-     *
-     *  - {@see GL46::GL_NO_ERROR}: No error has been recorded. The value of
-     *    this symbolic constant is guaranteed to be 0.
-     *
-     *  - {@see GL46::GL_INVALID_ENUM}: An unacceptable value is specified for
-     *    an enumerated argument. The offending command is ignored and has no
-     *    other side effect than to set the error flag.
-     *
-     *  - {@see GL46::GL_INVALID_VALUE}: A numeric argument is out of range. The
-     *    offending command is ignored and has no other side effect than to set
-     *    the error flag.
-     *
-     *  - {@see GL46::GL_INVALID_OPERATION}: The specified operation is not
-     *    allowed in the current state. The offending command is ignored and has
-     *    no
-     *    other side effect than to set the error flag.
-     *
-     *  - {@see GL46::GL_INVALID_FRAMEBUFFER_OPERATION}: The framebuffer object
-     *    is not complete. The offending command is ignored and has no other
-     *    side effect than to
-     *    set the error flag.
-     *
-     *  - {@see GL46::GL_OUT_OF_MEMORY}: There is not enough memory left to
-     *    execute the command. The state of the GL is undefined, except for the
-     *    state of the error flags, after this error is recorded.
-     *
-     *  - {@see GL46::GL_STACK_UNDERFLOW}: An attempt has been made to perform
-     *    an operation that would cause an internal stack to underflow.
-     *
-     *  - {@see GL46::GL_STACK_OVERFLOW}: An attempt has been made to perform an
-     *    operation that would cause an internal stack to overflow.
-     *
-     * When an error flag is set, results of a GL operation are undefined only if {@see GL46::GL_OUT_OF_MEMORY} has
-     * occurred. In all other cases, the command generating the error is ignored and has no effect on the GL state or
-     * frame buffer contents. If the generating command returns a value, it returns 0. If {@see GL46::glGetError}
-     * itself generates an error, it returns 0.
-     *
-     * @see http://docs.gl/gl2/glGetError
-     * @see http://docs.gl/gl4/glGetError
-     * @since 1.1
-     * @return int|\FFI\CData|\FFI\CInt
-     */
-    public function getError(): int
-    {
-        return $this->info->ffi->glGetError();
-    }
-
-    /**
-     * GL establishes a ``working set'' of textures that are resident in texture memory. These textures can be bound
-     * to a texture target much more efficiently than textures that are not resident.
-     *
-     * {@see GL46::glAreTexturesResident} queries the texture residence status of the $n textures named by the
-     * elements of $textures. If all the named textures are resident, {@see GL46::glAreTexturesResident} returns
-     * {@see GL46::GL_TRUE}, and the contents of $residences are undisturbed. If not all the named textures are
-     * resident, {@see GL46::glAreTexturesResident} returns {@see GL46::GL_FALSE}, and detailed status is returned in
-     * the $n elements of $residences. If an element of $residences is {@see GL46::GL_TRUE}, then the texture named
-     * by the corresponding element of $textures is resident.
-     *
-     * The residence status of a single bound texture may also be queried by calling {@see GL46::glGetTexParameter}
-     * with the target argument set to the target to which the texture is bound, and the pname argument set to
-     * {@see GL46::GL_TEXTURE_RESIDENT}. This is the only way that the residence status of a default texture can be
-     * queried.
-     *
-     * @see http://docs.gl/gl2/glAreTexturesResident
-     * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $n
-     * @param \FFI\CData|\FFI\CIntPtr|null $textures
-     * @param \FFI\CData|\FFI\CIntPtr|null $residences
-     * @return int|\FFI\CData|\FFI\CInt
-     */
-    public function areTexturesResident($n, ?\FFI\CData $textures, ?\FFI\CData $residences): int
-    {
-        $n = $n instanceof \FFI\CData ? $n->cdata : $n;
-
-        assert(Type::isInt16($n), 'Argument $n must be a C-like GLsizei, but incompatible or overflow value given');
-
-        return $this->info->ffi->glAreTexturesResident($n, $textures, $residences);
-    }
-
-    /**
-     * {@see GL46::glIsEnabled} returns {@see GL46::GL_TRUE} if $cap is an enabled capability and returns
-     * {@see GL46::GL_FALSE} otherwise. Boolean states that are indexed may be tested with {@see GL46::glIsEnabledi}.
-     * For {@see GL46::glIsEnabledi}, $index specifies the index of the capability to test. $index must be between
-     * zero and the count of indexed capabilities for $cap. Initially all capabilities except {@see GL46::GL_DITHER}
-     * are disabled; {@see GL46::GL_DITHER} is initially enabled.
-     *
-     * The following capabilities are accepted for $cap:
-     *
-     * | {@see GL46::GL_BLEND}                     | {@see GL46::glBlendFunc}, {@see GL46::glLogicOp}            |
-     * | {@see GL46::GL_CLIP_DISTANCE}i            | {@see GL46::glEnable}                                       |
-     * | {@see GL46::GL_COLOR_LOGIC_OP}            | {@see GL46::glLogicOp}                                      |
-     * | {@see GL46::GL_CULL_FACE}                 | {@see GL46::glCullFace}                                     |
-     * | {@see GL46::GL_DEPTH_CLAMP}               | {@see GL46::glEnable}                                       |
-     * | {@see GL46::GL_DEBUG_OUTPUT}              | {@see GL46::glEnable}                                       |
-     * | {@see GL46::GL_DEBUG_OUTPUT_SYNCHRONOUS}  | {@see GL46::glEnable}                                       |
-     * | {@see GL46::GL_DEPTH_TEST}                | {@see GL46::glDepthFunc}, {@see GL46::glDepthRange}         |
-     * | {@see GL46::GL_DITHER}                    | {@see GL46::glEnable}                                       |
-     * | {@see GL46::GL_FRAMEBUFFER_SRGB}          | {@see GL46::glEnable}                                       |
-     * | {@see GL46::GL_LINE_SMOOTH}               | {@see GL46::glLineWidth}                                    |
-     * | {@see GL46::GL_MULTISAMPLE}               | {@see GL46::glSampleCoverage}                               |
-     * | {@see GL46::GL_POLYGON_SMOOTH}            | {@see GL46::glPolygonMode}                                  |
-     * | {@see GL46::GL_POLYGON_OFFSET_FILL}       | {@see GL46::glPolygonOffset}                                |
-     * | {@see GL46::GL_POLYGON_OFFSET_LINE}       | {@see GL46::glPolygonOffset}                                |
-     * | {@see GL46::GL_POLYGON_OFFSET_POINT}      | {@see GL46::glPolygonOffset}                                |
-     * | {@see GL46::GL_PROGRAM_POINT_SIZE}        | {@see GL46::glEnable}                                       |
-     * | {@see GL46::GL_PRIMITIVE_RESTART}         | {@see GL46::glEnable}, {@see GL46::glPrimitiveRestartIndex} |
-     * | {@see GL46::GL_SAMPLE_ALPHA_TO_COVERAGE}  | {@see GL46::glSampleCoverage}                               |
-     * | {@see GL46::GL_SAMPLE_ALPHA_TO_ONE}       | {@see GL46::glSampleCoverage}                               |
-     * | {@see GL46::GL_SAMPLE_COVERAGE}           | {@see GL46::glSampleCoverage}                               |
-     * | {@see GL46::GL_SAMPLE_MASK}               | {@see GL46::glEnable}                                       |
-     * | {@see GL46::GL_SCISSOR_TEST}              | {@see GL46::glScissor}                                      |
-     * | {@see GL46::GL_STENCIL_TEST}              | {@see GL46::glStencilFunc}, {@see GL46::glStencilOp}        |
-     * | {@see GL46::GL_TEXTURE_CUBE_MAP_SEAMLESS} | {@see GL46::glEnable}                                       |
-     * @see http://docs.gl/gl2/glIsEnabled
-     * @see http://docs.gl/gl4/glIsEnabled
-     * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $cap
-     * @return int|\FFI\CData|\FFI\CInt
-     */
-    public function isEnabled($cap): int
-    {
-        $cap = $cap instanceof \FFI\CData ? $cap->cdata : $cap;
-
-        assert(Type::isUint16($cap), 'Argument $cap must be a C-like GLenum, but incompatible or overflow value given');
-
-        return $this->info->ffi->glIsEnabled($cap);
-    }
-
-    /**
-     * {@see GL46::glIsList} returns {@see GL46::GL_TRUE} if $list is the name of a display list and returns
-     * {@see GL46::GL_FALSE} if it is not, or if an error occurs.
-     *
-     * A name returned by {@see GL46::glGenLists}, but not yet associated with a display list by calling
-     * {@see GL46::glNewList}, is not the name of a display list.
-     *
-     * @see http://docs.gl/gl2/glIsList
-     * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $list
-     * @return int|\FFI\CData|\FFI\CInt
-     */
-    public function isList($list): int
-    {
-        $list = $list instanceof \FFI\CData ? $list->cdata : $list;
-
-        assert(Type::isUint16($list), 'Argument $list must be a C-like GLuint, but incompatible or overflow value given');
-
-        return $this->info->ffi->glIsList($list);
-    }
-
-    /**
-     * {@see GL46::glIsTexture} returns {@see GL46::GL_TRUE} if $texture is currently the name of a texture. If
-     * $texture is zero, or is a non-zero value that is not currently the name of a texture, or if an error occurs,
-     * {@see GL46::glIsTexture} returns {@see GL46::GL_FALSE}.
-     *
-     * A name returned by {@see GL46::glGenTextures}, but not yet associated with a texture by calling
-     * {@see GL46::glBindTexture}, is not the name of a texture.
-     *
-     * @see http://docs.gl/gl2/glIsTexture
-     * @see http://docs.gl/gl4/glIsTexture
-     * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $texture
-     * @return int|\FFI\CData|\FFI\CInt
-     */
-    public function isTexture($texture): int
-    {
-        $texture = $texture instanceof \FFI\CData ? $texture->cdata : $texture;
-
-        assert(Type::isUint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
-
-        return $this->info->ffi->glIsTexture($texture);
-    }
-
-    /**
-     * {@see GL46::glGetString} returns a pointer to a static string describing some aspect of the current GL
-     * connection. $name can be one of the following:
-     *
-     *  - {@see GL46::GL_VENDOR}: Returns the company responsible for this GL
-     *    implementation. This name does not change from release to
-     *    release.
-     *
-     *  - {@see GL46::GL_RENDERER}: Returns the name of the renderer. This name
-     *    is typically specific to a particular configuration of a hardware
-     *    platform. It does not change from release to release.
-     *
-     *  - {@see GL46::GL_VERSION}: Returns a version or release number.
-     *
-     *  - {@see GL46::GL_SHADING_LANGUAGE_VERSION}: Returns a version or release
-     *    number for the shading language.
-     *
-     * {@see GL46::glGetStringi} returns a pointer to a static string indexed by $index. $name can be one of the
-     * following:
-     *
-     *  - {@see GL46::GL_EXTENSIONS}: For {@see GL46::glGetStringi} only,
-     *    returns the extension string supported by the implementation at
-     *    $index.
-     *
-     * Strings {@see GL46::GL_VENDOR} and {@see GL46::GL_RENDERER} together uniquely specify a platform. They do not
-     * change from release to release and should be used by platform-recognition algorithms.
-     *
-     * The {@see GL46::GL_VERSION} and {@see GL46::GL_SHADING_LANGUAGE_VERSION} strings begin with a version number.
-     * The version number uses one of these forms:
-     *
-     * major_number.minor_number major_number.minor_number.release_number
-     *
-     * Vendor-specific information may follow the version number. Its format depends on the implementation, but a
-     * space always separates the version number and the vendor-specific information.
-     *
-     * All strings are null-terminated.
-     *
-     * @see http://docs.gl/gl2/glGetString
-     * @see http://docs.gl/gl4/glGetString
-     * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $name
-     * @return \FFI\CData|\FFI\CIntPtr|null
-     */
-    public function getString($name): \FFI\CData
-    {
-        $name = $name instanceof \FFI\CData ? $name->cdata : $name;
-
-        assert(Type::isUint16($name), 'Argument $name must be a C-like GLenum, but incompatible or overflow value given');
-
-        return $this->info->ffi->glGetString($name);
-    }
+    public const GL_T4F_C4F_N3F_V4F = 0x2A2D;
 
     /**
      * The accumulation buffer is an extended-range color buffer. Images are not rendered into it. Rather, images
@@ -3047,18 +2722,12 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glAccum
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $op
-     * @param float|\FFI\CData|\FFI\CFloat $value
+     * @param int $op
+     * @param float $value
      * @return void
      */
-    public function accum($op, $value): void
+    public function accum(int $op, float $value): void
     {
-        $op = $op instanceof \FFI\CData ? $op->cdata : $op;
-        $value = $value instanceof \FFI\CData ? $value->cdata : $value;
-
-        assert(Type::isUint16($op), 'Argument $op must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isFloat32($value), 'Argument $value must be a C-like GLfloat, but incompatible or overflow value given');
-
         $this->info->ffi->glAccum($op, $value);
     }
 
@@ -3101,19 +2770,47 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glAlphaFunc
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $func
-     * @param float|\FFI\CData|\FFI\CFloat $ref
+     * @param int $func
+     * @param float $ref
      * @return void
      */
-    public function alphaFunc($func, $ref): void
+    public function alphaFunc(int $func, float $ref): void
     {
-        $func = $func instanceof \FFI\CData ? $func->cdata : $func;
-        $ref = $ref instanceof \FFI\CData ? $ref->cdata : $ref;
-
-        assert(Type::isUint16($func), 'Argument $func must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isFloat32($ref), 'Argument $ref must be a C-like GLclampf, but incompatible or overflow value given');
-
         $this->info->ffi->glAlphaFunc($func, $ref);
+    }
+
+    /**
+     * GL establishes a ``working set'' of textures that are resident in texture memory. These textures can be bound
+     * to a texture target much more efficiently than textures that are not resident.
+     *
+     * {@see GL46::glAreTexturesResident} queries the texture residence status of the $n textures named by the
+     * elements of $textures. If all the named textures are resident, {@see GL46::glAreTexturesResident} returns
+     * {@see GL46::GL_TRUE}, and the contents of $residences are undisturbed. If not all the named textures are
+     * resident, {@see GL46::glAreTexturesResident} returns {@see GL46::GL_FALSE}, and detailed status is returned in
+     * the $n elements of $residences. If an element of $residences is {@see GL46::GL_TRUE}, then the texture named
+     * by the corresponding element of $textures is resident.
+     *
+     * The residence status of a single bound texture may also be queried by calling {@see GL46::glGetTexParameter}
+     * with the target argument set to the target to which the texture is bound, and the pname argument set to
+     * {@see GL46::GL_TEXTURE_RESIDENT}. This is the only way that the residence status of a default texture can be
+     * queried.
+     *
+     * @see http://docs.gl/gl2/glAreTexturesResident
+     * @since 1.1
+     * @param int $n
+     * @param \FFI\CData|null $textures
+     * @param bool|null $residences
+     * @return bool
+     */
+    public function areTexturesResident(int $n, ?\FFI\CData $textures, ?bool &$residences): bool
+    {
+        $residencesCType = $this->info->ffi->new('GLboolean', false);
+        try {
+            return $this->info->ffi->glAreTexturesResident($n, $textures, \FFI::addr($residencesCType)) !== 0;
+        } finally {
+            $residences = $residencesCType->cdata !== 0;
+            \FFI::free($residencesCType);
+        }
     }
 
     /**
@@ -3135,15 +2832,11 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glArrayElement
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $i
+     * @param int $i
      * @return void
      */
-    public function arrayElement($i): void
+    public function arrayElement(int $i): void
     {
-        $i = $i instanceof \FFI\CData ? $i->cdata : $i;
-
-        assert(Type::isInt16($i), 'Argument $i must be a C-like GLint, but incompatible or overflow value given');
-
         $this->info->ffi->glArrayElement($i);
     }
 
@@ -3227,15 +2920,11 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glBegin
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $mode
+     * @param int $mode
      * @return void
      */
-    public function begin($mode): void
+    public function begin(int $mode): void
     {
-        $mode = $mode instanceof \FFI\CData ? $mode->cdata : $mode;
-
-        assert(Type::isUint16($mode), 'Argument $mode must be a C-like GLenum, but incompatible or overflow value given');
-
         $this->info->ffi->glBegin($mode);
     }
 
@@ -3286,18 +2975,12 @@ class GL11 extends GL
      * @see http://docs.gl/gl2/glBindTexture
      * @see http://docs.gl/gl4/glBindTexture
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $target
-     * @param int|\FFI\CData|\FFI\CInt $texture
+     * @param int $target
+     * @param int $texture
      * @return void
      */
-    public function bindTexture($target, $texture): void
+    public function bindTexture(int $target, int $texture): void
     {
-        $target = $target instanceof \FFI\CData ? $target->cdata : $target;
-        $texture = $texture instanceof \FFI\CData ? $texture->cdata : $texture;
-
-        assert(Type::isUint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
-
         $this->info->ffi->glBindTexture($target, $texture);
     }
 
@@ -3340,31 +3023,17 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glBitmap
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $width
-     * @param int|\FFI\CData|\FFI\CInt $height
-     * @param float|\FFI\CData|\FFI\CFloat $xorig
-     * @param float|\FFI\CData|\FFI\CFloat $yorig
-     * @param float|\FFI\CData|\FFI\CFloat $xmove
-     * @param float|\FFI\CData|\FFI\CFloat $ymove
-     * @param \FFI\CData|\FFI\CIntPtr|null $bitmap
+     * @param int $width
+     * @param int $height
+     * @param float $xorig
+     * @param float $yorig
+     * @param float $xmove
+     * @param float $ymove
+     * @param \FFI\CData|null $bitmap
      * @return void
      */
-    public function bitmap($width, $height, $xorig, $yorig, $xmove, $ymove, ?\FFI\CData $bitmap): void
+    public function bitmap(int $width, int $height, float $xorig, float $yorig, float $xmove, float $ymove, ?\FFI\CData $bitmap): void
     {
-        $width = $width instanceof \FFI\CData ? $width->cdata : $width;
-        $height = $height instanceof \FFI\CData ? $height->cdata : $height;
-        $xorig = $xorig instanceof \FFI\CData ? $xorig->cdata : $xorig;
-        $yorig = $yorig instanceof \FFI\CData ? $yorig->cdata : $yorig;
-        $xmove = $xmove instanceof \FFI\CData ? $xmove->cdata : $xmove;
-        $ymove = $ymove instanceof \FFI\CData ? $ymove->cdata : $ymove;
-
-        assert(Type::isInt16($width), 'Argument $width must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Type::isInt16($height), 'Argument $height must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Type::isFloat32($xorig), 'Argument $xorig must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Type::isFloat32($yorig), 'Argument $yorig must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Type::isFloat32($xmove), 'Argument $xmove must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Type::isFloat32($ymove), 'Argument $ymove must be a C-like GLfloat, but incompatible or overflow value given');
-
         $this->info->ffi->glBitmap($width, $height, $xorig, $yorig, $xmove, $ymove, $bitmap);
     }
 
@@ -3439,18 +3108,12 @@ class GL11 extends GL
      * @see http://docs.gl/gl2/glBlendFunc
      * @see http://docs.gl/gl4/glBlendFunc
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $sfactor
-     * @param int|\FFI\CData|\FFI\CInt $dfactor
+     * @param int $sfactor
+     * @param int $dfactor
      * @return void
      */
-    public function blendFunc($sfactor, $dfactor): void
+    public function blendFunc(int $sfactor, int $dfactor): void
     {
-        $sfactor = $sfactor instanceof \FFI\CData ? $sfactor->cdata : $sfactor;
-        $dfactor = $dfactor instanceof \FFI\CData ? $dfactor->cdata : $dfactor;
-
-        assert(Type::isUint16($sfactor), 'Argument $sfactor must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($dfactor), 'Argument $dfactor must be a C-like GLenum, but incompatible or overflow value given');
-
         $this->info->ffi->glBlendFunc($sfactor, $dfactor);
     }
 
@@ -3470,15 +3133,11 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glCallList
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $list
+     * @param int $list
      * @return void
      */
-    public function callList($list): void
+    public function callList(int $list): void
     {
-        $list = $list instanceof \FFI\CData ? $list->cdata : $list;
-
-        assert(Type::isUint16($list), 'Argument $list must be a C-like GLuint, but incompatible or overflow value given');
-
         $this->info->ffi->glCallList($list);
     }
 
@@ -3550,19 +3209,13 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glCallLists
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $n
-     * @param int|\FFI\CData|\FFI\CInt $type
-     * @param \FFI\CData|\FFI\CPtr|null $lists
+     * @param int $n
+     * @param int $type
+     * @param \FFI\CData|null $lists
      * @return void
      */
-    public function callLists($n, $type, ?\FFI\CData $lists): void
+    public function callLists(int $n, int $type, ?\FFI\CData $lists): void
     {
-        $n = $n instanceof \FFI\CData ? $n->cdata : $n;
-        $type = $type instanceof \FFI\CData ? $type->cdata : $type;
-
-        assert(Type::isInt16($n), 'Argument $n must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Type::isUint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
-
         $this->info->ffi->glCallLists($n, $type, $lists);
     }
 
@@ -3592,15 +3245,11 @@ class GL11 extends GL
      * @see http://docs.gl/gl2/glClear
      * @see http://docs.gl/gl4/glClear
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $mask
+     * @param int $mask
      * @return void
      */
-    public function clear($mask): void
+    public function clear(int $mask): void
     {
-        $mask = $mask instanceof \FFI\CData ? $mask->cdata : $mask;
-
-        assert(Type::isUint16($mask), 'Argument $mask must be a C-like GLbitfield, but incompatible or overflow value given');
-
         $this->info->ffi->glClear($mask);
     }
 
@@ -3612,24 +3261,14 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glClearAccum
      * @since 1.1
-     * @param float|\FFI\CData|\FFI\CFloat $red
-     * @param float|\FFI\CData|\FFI\CFloat $green
-     * @param float|\FFI\CData|\FFI\CFloat $blue
-     * @param float|\FFI\CData|\FFI\CFloat $alpha
+     * @param float $red
+     * @param float $green
+     * @param float $blue
+     * @param float $alpha
      * @return void
      */
-    public function clearAccum($red, $green, $blue, $alpha): void
+    public function clearAccum(float $red, float $green, float $blue, float $alpha): void
     {
-        $red = $red instanceof \FFI\CData ? $red->cdata : $red;
-        $green = $green instanceof \FFI\CData ? $green->cdata : $green;
-        $blue = $blue instanceof \FFI\CData ? $blue->cdata : $blue;
-        $alpha = $alpha instanceof \FFI\CData ? $alpha->cdata : $alpha;
-
-        assert(Type::isFloat32($red), 'Argument $red must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Type::isFloat32($green), 'Argument $green must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Type::isFloat32($blue), 'Argument $blue must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Type::isFloat32($alpha), 'Argument $alpha must be a C-like GLfloat, but incompatible or overflow value given');
-
         $this->info->ffi->glClearAccum($red, $green, $blue, $alpha);
     }
 
@@ -3640,24 +3279,14 @@ class GL11 extends GL
      * @see http://docs.gl/gl2/glClearColor
      * @see http://docs.gl/gl4/glClearColor
      * @since 1.1
-     * @param float|\FFI\CData|\FFI\CFloat $red
-     * @param float|\FFI\CData|\FFI\CFloat $green
-     * @param float|\FFI\CData|\FFI\CFloat $blue
-     * @param float|\FFI\CData|\FFI\CFloat $alpha
+     * @param float $red
+     * @param float $green
+     * @param float $blue
+     * @param float $alpha
      * @return void
      */
-    public function clearColor($red, $green, $blue, $alpha): void
+    public function clearColor(float $red, float $green, float $blue, float $alpha): void
     {
-        $red = $red instanceof \FFI\CData ? $red->cdata : $red;
-        $green = $green instanceof \FFI\CData ? $green->cdata : $green;
-        $blue = $blue instanceof \FFI\CData ? $blue->cdata : $blue;
-        $alpha = $alpha instanceof \FFI\CData ? $alpha->cdata : $alpha;
-
-        assert(Type::isFloat32($red), 'Argument $red must be a C-like GLclampf, but incompatible or overflow value given');
-        assert(Type::isFloat32($green), 'Argument $green must be a C-like GLclampf, but incompatible or overflow value given');
-        assert(Type::isFloat32($blue), 'Argument $blue must be a C-like GLclampf, but incompatible or overflow value given');
-        assert(Type::isFloat32($alpha), 'Argument $alpha must be a C-like GLclampf, but incompatible or overflow value given');
-
         $this->info->ffi->glClearColor($red, $green, $blue, $alpha);
     }
 
@@ -3668,15 +3297,11 @@ class GL11 extends GL
      * @see http://docs.gl/gl2/glClearDepth
      * @see http://docs.gl/gl4/glClearDepth
      * @since 1.1
-     * @param float|\FFI\CData|\FFI\CFloat $depth
+     * @param float $depth
      * @return void
      */
-    public function clearDepth($depth): void
+    public function clearDepth(float $depth): void
     {
-        $depth = $depth instanceof \FFI\CData ? $depth->cdata : $depth;
-
-        assert(Type::isFloat64($depth), 'Argument $depth must be a C-like GLclampd, but incompatible or overflow value given');
-
         $this->info->ffi->glClearDepth($depth);
     }
 
@@ -3688,15 +3313,11 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glClearIndex
      * @since 1.1
-     * @param float|\FFI\CData|\FFI\CFloat $c
+     * @param float $c
      * @return void
      */
-    public function clearIndex($c): void
+    public function clearIndex(float $c): void
     {
-        $c = $c instanceof \FFI\CData ? $c->cdata : $c;
-
-        assert(Type::isFloat32($c), 'Argument $c must be a C-like GLfloat, but incompatible or overflow value given');
-
         $this->info->ffi->glClearIndex($c);
     }
 
@@ -3707,15 +3328,11 @@ class GL11 extends GL
      * @see http://docs.gl/gl2/glClearStencil
      * @see http://docs.gl/gl4/glClearStencil
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $s
+     * @param int $s
      * @return void
      */
-    public function clearStencil($s): void
+    public function clearStencil(int $s): void
     {
-        $s = $s instanceof \FFI\CData ? $s->cdata : $s;
-
-        assert(Type::isInt16($s), 'Argument $s must be a C-like GLint, but incompatible or overflow value given');
-
         $this->info->ffi->glClearStencil($s);
     }
 
@@ -3741,16 +3358,12 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glClipPlane
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $plane
-     * @param \FFI\CData|\FFI\CFloatPtr|null $equation
+     * @param int $plane
+     * @param \FFI\CData|null $equation
      * @return void
      */
-    public function clipPlane($plane, ?\FFI\CData $equation): void
+    public function clipPlane(int $plane, ?\FFI\CData $equation): void
     {
-        $plane = $plane instanceof \FFI\CData ? $plane->cdata : $plane;
-
-        assert(Type::isUint16($plane), 'Argument $plane must be a C-like GLenum, but incompatible or overflow value given');
-
         $this->info->ffi->glClipPlane($plane, $equation);
     }
 
@@ -3778,21 +3391,13 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glColor
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $red
-     * @param int|\FFI\CData|\FFI\CInt $green
-     * @param int|\FFI\CData|\FFI\CInt $blue
+     * @param int $red
+     * @param int $green
+     * @param int $blue
      * @return void
      */
-    public function color3b($red, $green, $blue): void
+    public function color3b(int $red, int $green, int $blue): void
     {
-        $red = $red instanceof \FFI\CData ? $red->cdata : $red;
-        $green = $green instanceof \FFI\CData ? $green->cdata : $green;
-        $blue = $blue instanceof \FFI\CData ? $blue->cdata : $blue;
-
-        assert(Type::isInt8($red), 'Argument $red must be a C-like GLbyte, but incompatible or overflow value given');
-        assert(Type::isInt8($green), 'Argument $green must be a C-like GLbyte, but incompatible or overflow value given');
-        assert(Type::isInt8($blue), 'Argument $blue must be a C-like GLbyte, but incompatible or overflow value given');
-
         $this->info->ffi->glColor3b($red, $green, $blue);
     }
 
@@ -3820,7 +3425,7 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glColor
      * @since 1.1
-     * @param \FFI\CData|\FFI\CIntPtr|null $v
+     * @param \FFI\CData|null $v
      * @return void
      */
     public function color3bv(?\FFI\CData $v): void
@@ -3852,21 +3457,13 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glColor
      * @since 1.1
-     * @param float|\FFI\CData|\FFI\CFloat $red
-     * @param float|\FFI\CData|\FFI\CFloat $green
-     * @param float|\FFI\CData|\FFI\CFloat $blue
+     * @param float $red
+     * @param float $green
+     * @param float $blue
      * @return void
      */
-    public function color3d($red, $green, $blue): void
+    public function color3d(float $red, float $green, float $blue): void
     {
-        $red = $red instanceof \FFI\CData ? $red->cdata : $red;
-        $green = $green instanceof \FFI\CData ? $green->cdata : $green;
-        $blue = $blue instanceof \FFI\CData ? $blue->cdata : $blue;
-
-        assert(Type::isFloat64($red), 'Argument $red must be a C-like GLdouble, but incompatible or overflow value given');
-        assert(Type::isFloat64($green), 'Argument $green must be a C-like GLdouble, but incompatible or overflow value given');
-        assert(Type::isFloat64($blue), 'Argument $blue must be a C-like GLdouble, but incompatible or overflow value given');
-
         $this->info->ffi->glColor3d($red, $green, $blue);
     }
 
@@ -3894,7 +3491,7 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glColor
      * @since 1.1
-     * @param \FFI\CData|\FFI\CFloatPtr|null $v
+     * @param \FFI\CData|null $v
      * @return void
      */
     public function color3dv(?\FFI\CData $v): void
@@ -3926,21 +3523,13 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glColor
      * @since 1.1
-     * @param float|\FFI\CData|\FFI\CFloat $red
-     * @param float|\FFI\CData|\FFI\CFloat $green
-     * @param float|\FFI\CData|\FFI\CFloat $blue
+     * @param float $red
+     * @param float $green
+     * @param float $blue
      * @return void
      */
-    public function color3f($red, $green, $blue): void
+    public function color3f(float $red, float $green, float $blue): void
     {
-        $red = $red instanceof \FFI\CData ? $red->cdata : $red;
-        $green = $green instanceof \FFI\CData ? $green->cdata : $green;
-        $blue = $blue instanceof \FFI\CData ? $blue->cdata : $blue;
-
-        assert(Type::isFloat32($red), 'Argument $red must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Type::isFloat32($green), 'Argument $green must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Type::isFloat32($blue), 'Argument $blue must be a C-like GLfloat, but incompatible or overflow value given');
-
         $this->info->ffi->glColor3f($red, $green, $blue);
     }
 
@@ -3968,7 +3557,7 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glColor
      * @since 1.1
-     * @param \FFI\CData|\FFI\CFloatPtr|null $v
+     * @param \FFI\CData|null $v
      * @return void
      */
     public function color3fv(?\FFI\CData $v): void
@@ -4000,21 +3589,13 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glColor
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $red
-     * @param int|\FFI\CData|\FFI\CInt $green
-     * @param int|\FFI\CData|\FFI\CInt $blue
+     * @param int $red
+     * @param int $green
+     * @param int $blue
      * @return void
      */
-    public function color3i($red, $green, $blue): void
+    public function color3i(int $red, int $green, int $blue): void
     {
-        $red = $red instanceof \FFI\CData ? $red->cdata : $red;
-        $green = $green instanceof \FFI\CData ? $green->cdata : $green;
-        $blue = $blue instanceof \FFI\CData ? $blue->cdata : $blue;
-
-        assert(Type::isInt16($red), 'Argument $red must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($green), 'Argument $green must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($blue), 'Argument $blue must be a C-like GLint, but incompatible or overflow value given');
-
         $this->info->ffi->glColor3i($red, $green, $blue);
     }
 
@@ -4042,7 +3623,7 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glColor
      * @since 1.1
-     * @param \FFI\CData|\FFI\CIntPtr|null $v
+     * @param \FFI\CData|null $v
      * @return void
      */
     public function color3iv(?\FFI\CData $v): void
@@ -4074,21 +3655,13 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glColor
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $red
-     * @param int|\FFI\CData|\FFI\CInt $green
-     * @param int|\FFI\CData|\FFI\CInt $blue
+     * @param int $red
+     * @param int $green
+     * @param int $blue
      * @return void
      */
-    public function color3s($red, $green, $blue): void
+    public function color3s(int $red, int $green, int $blue): void
     {
-        $red = $red instanceof \FFI\CData ? $red->cdata : $red;
-        $green = $green instanceof \FFI\CData ? $green->cdata : $green;
-        $blue = $blue instanceof \FFI\CData ? $blue->cdata : $blue;
-
-        assert(Type::isInt16($red), 'Argument $red must be a C-like GLshort, but incompatible or overflow value given');
-        assert(Type::isInt16($green), 'Argument $green must be a C-like GLshort, but incompatible or overflow value given');
-        assert(Type::isInt16($blue), 'Argument $blue must be a C-like GLshort, but incompatible or overflow value given');
-
         $this->info->ffi->glColor3s($red, $green, $blue);
     }
 
@@ -4106,7 +3679,7 @@ class GL11 extends GL
      * @see http://docs.gl/gl2/glColorMask
      * @see http://docs.gl/gl4/glColorMask
      * @since 1.1
-     * @param \FFI\CData|\FFI\CIntPtr|null $v
+     * @param \FFI\CData|null $v
      * @return void
      */
     public function color3sv(?\FFI\CData $v): void
@@ -4138,21 +3711,13 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glColor
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $red
-     * @param int|\FFI\CData|\FFI\CInt $green
-     * @param int|\FFI\CData|\FFI\CInt $blue
+     * @param int $red
+     * @param int $green
+     * @param int $blue
      * @return void
      */
-    public function color3ub($red, $green, $blue): void
+    public function color3ub(int $red, int $green, int $blue): void
     {
-        $red = $red instanceof \FFI\CData ? $red->cdata : $red;
-        $green = $green instanceof \FFI\CData ? $green->cdata : $green;
-        $blue = $blue instanceof \FFI\CData ? $blue->cdata : $blue;
-
-        assert(Type::isUint8($red), 'Argument $red must be a C-like GLubyte, but incompatible or overflow value given');
-        assert(Type::isUint8($green), 'Argument $green must be a C-like GLubyte, but incompatible or overflow value given');
-        assert(Type::isUint8($blue), 'Argument $blue must be a C-like GLubyte, but incompatible or overflow value given');
-
         $this->info->ffi->glColor3ub($red, $green, $blue);
     }
 
@@ -4171,7 +3736,7 @@ class GL11 extends GL
      * @see http://docs.gl/gl2/glColorTable
      * @see http://docs.gl/gl4/glColorMask
      * @since 1.1
-     * @param \FFI\CData|\FFI\CIntPtr|null $v
+     * @param \FFI\CData|null $v
      * @return void
      */
     public function color3ubv(?\FFI\CData $v): void
@@ -4203,21 +3768,13 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glColor
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $red
-     * @param int|\FFI\CData|\FFI\CInt $green
-     * @param int|\FFI\CData|\FFI\CInt $blue
+     * @param int $red
+     * @param int $green
+     * @param int $blue
      * @return void
      */
-    public function color3ui($red, $green, $blue): void
+    public function color3ui(int $red, int $green, int $blue): void
     {
-        $red = $red instanceof \FFI\CData ? $red->cdata : $red;
-        $green = $green instanceof \FFI\CData ? $green->cdata : $green;
-        $blue = $blue instanceof \FFI\CData ? $blue->cdata : $blue;
-
-        assert(Type::isUint16($red), 'Argument $red must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isUint16($green), 'Argument $green must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isUint16($blue), 'Argument $blue must be a C-like GLuint, but incompatible or overflow value given');
-
         $this->info->ffi->glColor3ui($red, $green, $blue);
     }
 
@@ -4235,7 +3792,7 @@ class GL11 extends GL
      * @see http://docs.gl/gl2/glColorMask
      * @see http://docs.gl/gl4/glColorMask
      * @since 1.1
-     * @param \FFI\CData|\FFI\CIntPtr|null $v
+     * @param \FFI\CData|null $v
      * @return void
      */
     public function color3uiv(?\FFI\CData $v): void
@@ -4257,21 +3814,13 @@ class GL11 extends GL
      * @see http://docs.gl/gl2/glColorMask
      * @see http://docs.gl/gl4/glColorMask
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $red
-     * @param int|\FFI\CData|\FFI\CInt $green
-     * @param int|\FFI\CData|\FFI\CInt $blue
+     * @param int $red
+     * @param int $green
+     * @param int $blue
      * @return void
      */
-    public function color3us($red, $green, $blue): void
+    public function color3us(int $red, int $green, int $blue): void
     {
-        $red = $red instanceof \FFI\CData ? $red->cdata : $red;
-        $green = $green instanceof \FFI\CData ? $green->cdata : $green;
-        $blue = $blue instanceof \FFI\CData ? $blue->cdata : $blue;
-
-        assert(Type::isUint16($red), 'Argument $red must be a C-like GLushort, but incompatible or overflow value given');
-        assert(Type::isUint16($green), 'Argument $green must be a C-like GLushort, but incompatible or overflow value given');
-        assert(Type::isUint16($blue), 'Argument $blue must be a C-like GLushort, but incompatible or overflow value given');
-
         $this->info->ffi->glColor3us($red, $green, $blue);
     }
 
@@ -4288,7 +3837,7 @@ class GL11 extends GL
      * @see http://docs.gl/gl2/glColorMask
      * @see http://docs.gl/gl4/glColorMask
      * @since 1.1
-     * @param \FFI\CData|\FFI\CIntPtr|null $v
+     * @param \FFI\CData|null $v
      * @return void
      */
     public function color3usv(?\FFI\CData $v): void
@@ -4320,24 +3869,14 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glColor
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $red
-     * @param int|\FFI\CData|\FFI\CInt $green
-     * @param int|\FFI\CData|\FFI\CInt $blue
-     * @param int|\FFI\CData|\FFI\CInt $alpha
+     * @param int $red
+     * @param int $green
+     * @param int $blue
+     * @param int $alpha
      * @return void
      */
-    public function color4b($red, $green, $blue, $alpha): void
+    public function color4b(int $red, int $green, int $blue, int $alpha): void
     {
-        $red = $red instanceof \FFI\CData ? $red->cdata : $red;
-        $green = $green instanceof \FFI\CData ? $green->cdata : $green;
-        $blue = $blue instanceof \FFI\CData ? $blue->cdata : $blue;
-        $alpha = $alpha instanceof \FFI\CData ? $alpha->cdata : $alpha;
-
-        assert(Type::isInt8($red), 'Argument $red must be a C-like GLbyte, but incompatible or overflow value given');
-        assert(Type::isInt8($green), 'Argument $green must be a C-like GLbyte, but incompatible or overflow value given');
-        assert(Type::isInt8($blue), 'Argument $blue must be a C-like GLbyte, but incompatible or overflow value given');
-        assert(Type::isInt8($alpha), 'Argument $alpha must be a C-like GLbyte, but incompatible or overflow value given');
-
         $this->info->ffi->glColor4b($red, $green, $blue, $alpha);
     }
 
@@ -4365,7 +3904,7 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glColor
      * @since 1.1
-     * @param \FFI\CData|\FFI\CIntPtr|null $v
+     * @param \FFI\CData|null $v
      * @return void
      */
     public function color4bv(?\FFI\CData $v): void
@@ -4397,24 +3936,14 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glColor
      * @since 1.1
-     * @param float|\FFI\CData|\FFI\CFloat $red
-     * @param float|\FFI\CData|\FFI\CFloat $green
-     * @param float|\FFI\CData|\FFI\CFloat $blue
-     * @param float|\FFI\CData|\FFI\CFloat $alpha
+     * @param float $red
+     * @param float $green
+     * @param float $blue
+     * @param float $alpha
      * @return void
      */
-    public function color4d($red, $green, $blue, $alpha): void
+    public function color4d(float $red, float $green, float $blue, float $alpha): void
     {
-        $red = $red instanceof \FFI\CData ? $red->cdata : $red;
-        $green = $green instanceof \FFI\CData ? $green->cdata : $green;
-        $blue = $blue instanceof \FFI\CData ? $blue->cdata : $blue;
-        $alpha = $alpha instanceof \FFI\CData ? $alpha->cdata : $alpha;
-
-        assert(Type::isFloat64($red), 'Argument $red must be a C-like GLdouble, but incompatible or overflow value given');
-        assert(Type::isFloat64($green), 'Argument $green must be a C-like GLdouble, but incompatible or overflow value given');
-        assert(Type::isFloat64($blue), 'Argument $blue must be a C-like GLdouble, but incompatible or overflow value given');
-        assert(Type::isFloat64($alpha), 'Argument $alpha must be a C-like GLdouble, but incompatible or overflow value given');
-
         $this->info->ffi->glColor4d($red, $green, $blue, $alpha);
     }
 
@@ -4442,7 +3971,7 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glColor
      * @since 1.1
-     * @param \FFI\CData|\FFI\CFloatPtr|null $v
+     * @param \FFI\CData|null $v
      * @return void
      */
     public function color4dv(?\FFI\CData $v): void
@@ -4474,24 +4003,14 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glColor
      * @since 1.1
-     * @param float|\FFI\CData|\FFI\CFloat $red
-     * @param float|\FFI\CData|\FFI\CFloat $green
-     * @param float|\FFI\CData|\FFI\CFloat $blue
-     * @param float|\FFI\CData|\FFI\CFloat $alpha
+     * @param float $red
+     * @param float $green
+     * @param float $blue
+     * @param float $alpha
      * @return void
      */
-    public function color4f($red, $green, $blue, $alpha): void
+    public function color4f(float $red, float $green, float $blue, float $alpha): void
     {
-        $red = $red instanceof \FFI\CData ? $red->cdata : $red;
-        $green = $green instanceof \FFI\CData ? $green->cdata : $green;
-        $blue = $blue instanceof \FFI\CData ? $blue->cdata : $blue;
-        $alpha = $alpha instanceof \FFI\CData ? $alpha->cdata : $alpha;
-
-        assert(Type::isFloat32($red), 'Argument $red must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Type::isFloat32($green), 'Argument $green must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Type::isFloat32($blue), 'Argument $blue must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Type::isFloat32($alpha), 'Argument $alpha must be a C-like GLfloat, but incompatible or overflow value given');
-
         $this->info->ffi->glColor4f($red, $green, $blue, $alpha);
     }
 
@@ -4519,7 +4038,7 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glColor
      * @since 1.1
-     * @param \FFI\CData|\FFI\CFloatPtr|null $v
+     * @param \FFI\CData|null $v
      * @return void
      */
     public function color4fv(?\FFI\CData $v): void
@@ -4551,24 +4070,14 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glColor
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $red
-     * @param int|\FFI\CData|\FFI\CInt $green
-     * @param int|\FFI\CData|\FFI\CInt $blue
-     * @param int|\FFI\CData|\FFI\CInt $alpha
+     * @param int $red
+     * @param int $green
+     * @param int $blue
+     * @param int $alpha
      * @return void
      */
-    public function color4i($red, $green, $blue, $alpha): void
+    public function color4i(int $red, int $green, int $blue, int $alpha): void
     {
-        $red = $red instanceof \FFI\CData ? $red->cdata : $red;
-        $green = $green instanceof \FFI\CData ? $green->cdata : $green;
-        $blue = $blue instanceof \FFI\CData ? $blue->cdata : $blue;
-        $alpha = $alpha instanceof \FFI\CData ? $alpha->cdata : $alpha;
-
-        assert(Type::isInt16($red), 'Argument $red must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($green), 'Argument $green must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($blue), 'Argument $blue must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($alpha), 'Argument $alpha must be a C-like GLint, but incompatible or overflow value given');
-
         $this->info->ffi->glColor4i($red, $green, $blue, $alpha);
     }
 
@@ -4596,7 +4105,7 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glColor
      * @since 1.1
-     * @param \FFI\CData|\FFI\CIntPtr|null $v
+     * @param \FFI\CData|null $v
      * @return void
      */
     public function color4iv(?\FFI\CData $v): void
@@ -4628,24 +4137,14 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glColor
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $red
-     * @param int|\FFI\CData|\FFI\CInt $green
-     * @param int|\FFI\CData|\FFI\CInt $blue
-     * @param int|\FFI\CData|\FFI\CInt $alpha
+     * @param int $red
+     * @param int $green
+     * @param int $blue
+     * @param int $alpha
      * @return void
      */
-    public function color4s($red, $green, $blue, $alpha): void
+    public function color4s(int $red, int $green, int $blue, int $alpha): void
     {
-        $red = $red instanceof \FFI\CData ? $red->cdata : $red;
-        $green = $green instanceof \FFI\CData ? $green->cdata : $green;
-        $blue = $blue instanceof \FFI\CData ? $blue->cdata : $blue;
-        $alpha = $alpha instanceof \FFI\CData ? $alpha->cdata : $alpha;
-
-        assert(Type::isInt16($red), 'Argument $red must be a C-like GLshort, but incompatible or overflow value given');
-        assert(Type::isInt16($green), 'Argument $green must be a C-like GLshort, but incompatible or overflow value given');
-        assert(Type::isInt16($blue), 'Argument $blue must be a C-like GLshort, but incompatible or overflow value given');
-        assert(Type::isInt16($alpha), 'Argument $alpha must be a C-like GLshort, but incompatible or overflow value given');
-
         $this->info->ffi->glColor4s($red, $green, $blue, $alpha);
     }
 
@@ -4663,7 +4162,7 @@ class GL11 extends GL
      * @see http://docs.gl/gl2/glColorMask
      * @see http://docs.gl/gl4/glColorMask
      * @since 1.1
-     * @param \FFI\CData|\FFI\CIntPtr|null $v
+     * @param \FFI\CData|null $v
      * @return void
      */
     public function color4sv(?\FFI\CData $v): void
@@ -4695,24 +4194,14 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glColor
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $red
-     * @param int|\FFI\CData|\FFI\CInt $green
-     * @param int|\FFI\CData|\FFI\CInt $blue
-     * @param int|\FFI\CData|\FFI\CInt $alpha
+     * @param int $red
+     * @param int $green
+     * @param int $blue
+     * @param int $alpha
      * @return void
      */
-    public function color4ub($red, $green, $blue, $alpha): void
+    public function color4ub(int $red, int $green, int $blue, int $alpha): void
     {
-        $red = $red instanceof \FFI\CData ? $red->cdata : $red;
-        $green = $green instanceof \FFI\CData ? $green->cdata : $green;
-        $blue = $blue instanceof \FFI\CData ? $blue->cdata : $blue;
-        $alpha = $alpha instanceof \FFI\CData ? $alpha->cdata : $alpha;
-
-        assert(Type::isUint8($red), 'Argument $red must be a C-like GLubyte, but incompatible or overflow value given');
-        assert(Type::isUint8($green), 'Argument $green must be a C-like GLubyte, but incompatible or overflow value given');
-        assert(Type::isUint8($blue), 'Argument $blue must be a C-like GLubyte, but incompatible or overflow value given');
-        assert(Type::isUint8($alpha), 'Argument $alpha must be a C-like GLubyte, but incompatible or overflow value given');
-
         $this->info->ffi->glColor4ub($red, $green, $blue, $alpha);
     }
 
@@ -4731,7 +4220,7 @@ class GL11 extends GL
      * @see http://docs.gl/gl2/glColorTable
      * @see http://docs.gl/gl4/glColorMask
      * @since 1.1
-     * @param \FFI\CData|\FFI\CIntPtr|null $v
+     * @param \FFI\CData|null $v
      * @return void
      */
     public function color4ubv(?\FFI\CData $v): void
@@ -4763,24 +4252,14 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glColor
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $red
-     * @param int|\FFI\CData|\FFI\CInt $green
-     * @param int|\FFI\CData|\FFI\CInt $blue
-     * @param int|\FFI\CData|\FFI\CInt $alpha
+     * @param int $red
+     * @param int $green
+     * @param int $blue
+     * @param int $alpha
      * @return void
      */
-    public function color4ui($red, $green, $blue, $alpha): void
+    public function color4ui(int $red, int $green, int $blue, int $alpha): void
     {
-        $red = $red instanceof \FFI\CData ? $red->cdata : $red;
-        $green = $green instanceof \FFI\CData ? $green->cdata : $green;
-        $blue = $blue instanceof \FFI\CData ? $blue->cdata : $blue;
-        $alpha = $alpha instanceof \FFI\CData ? $alpha->cdata : $alpha;
-
-        assert(Type::isUint16($red), 'Argument $red must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isUint16($green), 'Argument $green must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isUint16($blue), 'Argument $blue must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isUint16($alpha), 'Argument $alpha must be a C-like GLuint, but incompatible or overflow value given');
-
         $this->info->ffi->glColor4ui($red, $green, $blue, $alpha);
     }
 
@@ -4798,7 +4277,7 @@ class GL11 extends GL
      * @see http://docs.gl/gl2/glColorMask
      * @see http://docs.gl/gl4/glColorMask
      * @since 1.1
-     * @param \FFI\CData|\FFI\CIntPtr|null $v
+     * @param \FFI\CData|null $v
      * @return void
      */
     public function color4uiv(?\FFI\CData $v): void
@@ -4820,24 +4299,14 @@ class GL11 extends GL
      * @see http://docs.gl/gl2/glColorMask
      * @see http://docs.gl/gl4/glColorMask
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $red
-     * @param int|\FFI\CData|\FFI\CInt $green
-     * @param int|\FFI\CData|\FFI\CInt $blue
-     * @param int|\FFI\CData|\FFI\CInt $alpha
+     * @param int $red
+     * @param int $green
+     * @param int $blue
+     * @param int $alpha
      * @return void
      */
-    public function color4us($red, $green, $blue, $alpha): void
+    public function color4us(int $red, int $green, int $blue, int $alpha): void
     {
-        $red = $red instanceof \FFI\CData ? $red->cdata : $red;
-        $green = $green instanceof \FFI\CData ? $green->cdata : $green;
-        $blue = $blue instanceof \FFI\CData ? $blue->cdata : $blue;
-        $alpha = $alpha instanceof \FFI\CData ? $alpha->cdata : $alpha;
-
-        assert(Type::isUint16($red), 'Argument $red must be a C-like GLushort, but incompatible or overflow value given');
-        assert(Type::isUint16($green), 'Argument $green must be a C-like GLushort, but incompatible or overflow value given');
-        assert(Type::isUint16($blue), 'Argument $blue must be a C-like GLushort, but incompatible or overflow value given');
-        assert(Type::isUint16($alpha), 'Argument $alpha must be a C-like GLushort, but incompatible or overflow value given');
-
         $this->info->ffi->glColor4us($red, $green, $blue, $alpha);
     }
 
@@ -4854,7 +4323,7 @@ class GL11 extends GL
      * @see http://docs.gl/gl2/glColorMask
      * @see http://docs.gl/gl4/glColorMask
      * @since 1.1
-     * @param \FFI\CData|\FFI\CIntPtr|null $v
+     * @param \FFI\CData|null $v
      * @return void
      */
     public function color4usv(?\FFI\CData $v): void
@@ -4875,24 +4344,14 @@ class GL11 extends GL
      * @see http://docs.gl/gl2/glColorMask
      * @see http://docs.gl/gl4/glColorMask
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $red
-     * @param int|\FFI\CData|\FFI\CInt $green
-     * @param int|\FFI\CData|\FFI\CInt $blue
-     * @param int|\FFI\CData|\FFI\CInt $alpha
+     * @param int $red
+     * @param int $green
+     * @param int $blue
+     * @param int $alpha
      * @return void
      */
-    public function colorMask($red, $green, $blue, $alpha): void
+    public function colorMask(int $red, int $green, int $blue, int $alpha): void
     {
-        $red = $red instanceof \FFI\CData ? $red->cdata : $red;
-        $green = $green instanceof \FFI\CData ? $green->cdata : $green;
-        $blue = $blue instanceof \FFI\CData ? $blue->cdata : $blue;
-        $alpha = $alpha instanceof \FFI\CData ? $alpha->cdata : $alpha;
-
-        assert(Type::isUint8($red), 'Argument $red must be a C-like GLboolean, but incompatible or overflow value given');
-        assert(Type::isUint8($green), 'Argument $green must be a C-like GLboolean, but incompatible or overflow value given');
-        assert(Type::isUint8($blue), 'Argument $blue must be a C-like GLboolean, but incompatible or overflow value given');
-        assert(Type::isUint8($alpha), 'Argument $alpha must be a C-like GLboolean, but incompatible or overflow value given');
-
         $this->info->ffi->glColorMask($red, $green, $blue, $alpha);
     }
 
@@ -4906,18 +4365,12 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glColorMaterial
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $face
-     * @param int|\FFI\CData|\FFI\CInt $mode
+     * @param int $face
+     * @param int $mode
      * @return void
      */
-    public function colorMaterial($face, $mode): void
+    public function colorMaterial(int $face, int $mode): void
     {
-        $face = $face instanceof \FFI\CData ? $face->cdata : $face;
-        $mode = $mode instanceof \FFI\CData ? $mode->cdata : $mode;
-
-        assert(Type::isUint16($face), 'Argument $face must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($mode), 'Argument $mode must be a C-like GLenum, but incompatible or overflow value given');
-
         $this->info->ffi->glColorMaterial($face, $mode);
     }
 
@@ -4943,22 +4396,14 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glColorPointer
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $size
-     * @param int|\FFI\CData|\FFI\CInt $type
-     * @param int|\FFI\CData|\FFI\CInt $stride
-     * @param \FFI\CData|\FFI\CPtr|null $pointer
+     * @param int $size
+     * @param int $type
+     * @param int $stride
+     * @param \FFI\CData|null $pointer
      * @return void
      */
-    public function colorPointer($size, $type, $stride, ?\FFI\CData $pointer): void
+    public function colorPointer(int $size, int $type, int $stride, ?\FFI\CData $pointer): void
     {
-        $size = $size instanceof \FFI\CData ? $size->cdata : $size;
-        $type = $type instanceof \FFI\CData ? $type->cdata : $type;
-        $stride = $stride instanceof \FFI\CData ? $stride->cdata : $stride;
-
-        assert(Type::isInt16($size), 'Argument $size must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isUint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isInt16($stride), 'Argument $stride must be a C-like GLsizei, but incompatible or overflow value given');
-
         $this->info->ffi->glColorPointer($size, $type, $stride, $pointer);
     }
 
@@ -5085,27 +4530,15 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glCopyPixels
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $x
-     * @param int|\FFI\CData|\FFI\CInt $y
-     * @param int|\FFI\CData|\FFI\CInt $width
-     * @param int|\FFI\CData|\FFI\CInt $height
-     * @param int|\FFI\CData|\FFI\CInt $type
+     * @param int $x
+     * @param int $y
+     * @param int $width
+     * @param int $height
+     * @param int $type
      * @return void
      */
-    public function copyPixels($x, $y, $width, $height, $type): void
+    public function copyPixels(int $x, int $y, int $width, int $height, int $type): void
     {
-        $x = $x instanceof \FFI\CData ? $x->cdata : $x;
-        $y = $y instanceof \FFI\CData ? $y->cdata : $y;
-        $width = $width instanceof \FFI\CData ? $width->cdata : $width;
-        $height = $height instanceof \FFI\CData ? $height->cdata : $height;
-        $type = $type instanceof \FFI\CData ? $type->cdata : $type;
-
-        assert(Type::isInt16($x), 'Argument $x must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($y), 'Argument $y must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($width), 'Argument $width must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Type::isInt16($height), 'Argument $height must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Type::isUint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
-
         $this->info->ffi->glCopyPixels($x, $y, $width, $height, $type);
     }
 
@@ -5135,33 +4568,17 @@ class GL11 extends GL
      * @see http://docs.gl/gl2/glCopyTexImage1D
      * @see http://docs.gl/gl4/glCopyTexImage1D
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $target
-     * @param int|\FFI\CData|\FFI\CInt $level
-     * @param int|\FFI\CData|\FFI\CInt $internalFormat
-     * @param int|\FFI\CData|\FFI\CInt $x
-     * @param int|\FFI\CData|\FFI\CInt $y
-     * @param int|\FFI\CData|\FFI\CInt $width
-     * @param int|\FFI\CData|\FFI\CInt $border
+     * @param int $target
+     * @param int $level
+     * @param int $internalFormat
+     * @param int $x
+     * @param int $y
+     * @param int $width
+     * @param int $border
      * @return void
      */
-    public function copyTexImage1D($target, $level, $internalFormat, $x, $y, $width, $border): void
+    public function copyTexImage1D(int $target, int $level, int $internalFormat, int $x, int $y, int $width, int $border): void
     {
-        $target = $target instanceof \FFI\CData ? $target->cdata : $target;
-        $level = $level instanceof \FFI\CData ? $level->cdata : $level;
-        $internalFormat = $internalFormat instanceof \FFI\CData ? $internalFormat->cdata : $internalFormat;
-        $x = $x instanceof \FFI\CData ? $x->cdata : $x;
-        $y = $y instanceof \FFI\CData ? $y->cdata : $y;
-        $width = $width instanceof \FFI\CData ? $width->cdata : $width;
-        $border = $border instanceof \FFI\CData ? $border->cdata : $border;
-
-        assert(Type::isUint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isInt16($level), 'Argument $level must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isUint16($internalFormat), 'Argument $internalFormat must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isInt16($x), 'Argument $x must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($y), 'Argument $y must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($width), 'Argument $width must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Type::isInt16($border), 'Argument $border must be a C-like GLint, but incompatible or overflow value given');
-
         $this->info->ffi->glCopyTexImage1D($target, $level, $internalFormat, $x, $y, $width, $border);
     }
 
@@ -5188,36 +4605,18 @@ class GL11 extends GL
      * @see http://docs.gl/gl2/glCopyTexImage2D
      * @see http://docs.gl/gl4/glCopyTexImage2D
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $target
-     * @param int|\FFI\CData|\FFI\CInt $level
-     * @param int|\FFI\CData|\FFI\CInt $internalFormat
-     * @param int|\FFI\CData|\FFI\CInt $x
-     * @param int|\FFI\CData|\FFI\CInt $y
-     * @param int|\FFI\CData|\FFI\CInt $width
-     * @param int|\FFI\CData|\FFI\CInt $height
-     * @param int|\FFI\CData|\FFI\CInt $border
+     * @param int $target
+     * @param int $level
+     * @param int $internalFormat
+     * @param int $x
+     * @param int $y
+     * @param int $width
+     * @param int $height
+     * @param int $border
      * @return void
      */
-    public function copyTexImage2D($target, $level, $internalFormat, $x, $y, $width, $height, $border): void
+    public function copyTexImage2D(int $target, int $level, int $internalFormat, int $x, int $y, int $width, int $height, int $border): void
     {
-        $target = $target instanceof \FFI\CData ? $target->cdata : $target;
-        $level = $level instanceof \FFI\CData ? $level->cdata : $level;
-        $internalFormat = $internalFormat instanceof \FFI\CData ? $internalFormat->cdata : $internalFormat;
-        $x = $x instanceof \FFI\CData ? $x->cdata : $x;
-        $y = $y instanceof \FFI\CData ? $y->cdata : $y;
-        $width = $width instanceof \FFI\CData ? $width->cdata : $width;
-        $height = $height instanceof \FFI\CData ? $height->cdata : $height;
-        $border = $border instanceof \FFI\CData ? $border->cdata : $border;
-
-        assert(Type::isUint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isInt16($level), 'Argument $level must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isUint16($internalFormat), 'Argument $internalFormat must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isInt16($x), 'Argument $x must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($y), 'Argument $y must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($width), 'Argument $width must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Type::isInt16($height), 'Argument $height must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Type::isInt16($border), 'Argument $border must be a C-like GLint, but incompatible or overflow value given');
-
         $this->info->ffi->glCopyTexImage2D($target, $level, $internalFormat, $x, $y, $width, $height, $border);
     }
 
@@ -5246,30 +4645,16 @@ class GL11 extends GL
      * @see http://docs.gl/gl2/glCopyTexSubImage1D
      * @see http://docs.gl/gl4/glCopyTexSubImage1D
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $target
-     * @param int|\FFI\CData|\FFI\CInt $level
-     * @param int|\FFI\CData|\FFI\CInt $xoffset
-     * @param int|\FFI\CData|\FFI\CInt $x
-     * @param int|\FFI\CData|\FFI\CInt $y
-     * @param int|\FFI\CData|\FFI\CInt $width
+     * @param int $target
+     * @param int $level
+     * @param int $xoffset
+     * @param int $x
+     * @param int $y
+     * @param int $width
      * @return void
      */
-    public function copyTexSubImage1D($target, $level, $xoffset, $x, $y, $width): void
+    public function copyTexSubImage1D(int $target, int $level, int $xoffset, int $x, int $y, int $width): void
     {
-        $target = $target instanceof \FFI\CData ? $target->cdata : $target;
-        $level = $level instanceof \FFI\CData ? $level->cdata : $level;
-        $xoffset = $xoffset instanceof \FFI\CData ? $xoffset->cdata : $xoffset;
-        $x = $x instanceof \FFI\CData ? $x->cdata : $x;
-        $y = $y instanceof \FFI\CData ? $y->cdata : $y;
-        $width = $width instanceof \FFI\CData ? $width->cdata : $width;
-
-        assert(Type::isUint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isInt16($level), 'Argument $level must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($xoffset), 'Argument $xoffset must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($x), 'Argument $x must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($y), 'Argument $y must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($width), 'Argument $width must be a C-like GLsizei, but incompatible or overflow value given');
-
         $this->info->ffi->glCopyTexSubImage1D($target, $level, $xoffset, $x, $y, $width);
     }
 
@@ -5304,36 +4689,18 @@ class GL11 extends GL
      * @see http://docs.gl/gl2/glCopyTexSubImage2D
      * @see http://docs.gl/gl4/glCopyTexSubImage2D
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $target
-     * @param int|\FFI\CData|\FFI\CInt $level
-     * @param int|\FFI\CData|\FFI\CInt $xoffset
-     * @param int|\FFI\CData|\FFI\CInt $yoffset
-     * @param int|\FFI\CData|\FFI\CInt $x
-     * @param int|\FFI\CData|\FFI\CInt $y
-     * @param int|\FFI\CData|\FFI\CInt $width
-     * @param int|\FFI\CData|\FFI\CInt $height
+     * @param int $target
+     * @param int $level
+     * @param int $xoffset
+     * @param int $yoffset
+     * @param int $x
+     * @param int $y
+     * @param int $width
+     * @param int $height
      * @return void
      */
-    public function copyTexSubImage2D($target, $level, $xoffset, $yoffset, $x, $y, $width, $height): void
+    public function copyTexSubImage2D(int $target, int $level, int $xoffset, int $yoffset, int $x, int $y, int $width, int $height): void
     {
-        $target = $target instanceof \FFI\CData ? $target->cdata : $target;
-        $level = $level instanceof \FFI\CData ? $level->cdata : $level;
-        $xoffset = $xoffset instanceof \FFI\CData ? $xoffset->cdata : $xoffset;
-        $yoffset = $yoffset instanceof \FFI\CData ? $yoffset->cdata : $yoffset;
-        $x = $x instanceof \FFI\CData ? $x->cdata : $x;
-        $y = $y instanceof \FFI\CData ? $y->cdata : $y;
-        $width = $width instanceof \FFI\CData ? $width->cdata : $width;
-        $height = $height instanceof \FFI\CData ? $height->cdata : $height;
-
-        assert(Type::isUint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isInt16($level), 'Argument $level must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($xoffset), 'Argument $xoffset must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($yoffset), 'Argument $yoffset must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($x), 'Argument $x must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($y), 'Argument $y must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($width), 'Argument $width must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Type::isInt16($height), 'Argument $height must be a C-like GLsizei, but incompatible or overflow value given');
-
         $this->info->ffi->glCopyTexSubImage2D($target, $level, $xoffset, $yoffset, $x, $y, $width, $height);
     }
 
@@ -5349,15 +4716,11 @@ class GL11 extends GL
      * @see http://docs.gl/gl2/glCullFace
      * @see http://docs.gl/gl4/glCullFace
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $mode
+     * @param int $mode
      * @return void
      */
-    public function cullFace($mode): void
+    public function cullFace(int $mode): void
     {
-        $mode = $mode instanceof \FFI\CData ? $mode->cdata : $mode;
-
-        assert(Type::isUint16($mode), 'Argument $mode must be a C-like GLenum, but incompatible or overflow value given');
-
         $this->info->ffi->glCullFace($mode);
     }
 
@@ -5372,18 +4735,12 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glDeleteLists
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $list
-     * @param int|\FFI\CData|\FFI\CInt $range
+     * @param int $list
+     * @param int $range
      * @return void
      */
-    public function deleteLists($list, $range): void
+    public function deleteLists(int $list, int $range): void
     {
-        $list = $list instanceof \FFI\CData ? $list->cdata : $list;
-        $range = $range instanceof \FFI\CData ? $range->cdata : $range;
-
-        assert(Type::isUint16($list), 'Argument $list must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isInt16($range), 'Argument $range must be a C-like GLsizei, but incompatible or overflow value given');
-
         $this->info->ffi->glDeleteLists($list, $range);
     }
 
@@ -5398,16 +4755,12 @@ class GL11 extends GL
      * @see http://docs.gl/gl2/glDeleteTextures
      * @see http://docs.gl/gl4/glDeleteTextures
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $n
-     * @param \FFI\CData|\FFI\CIntPtr|null $textures
+     * @param int $n
+     * @param \FFI\CData|null $textures
      * @return void
      */
-    public function deleteTextures($n, ?\FFI\CData $textures): void
+    public function deleteTextures(int $n, ?\FFI\CData $textures): void
     {
-        $n = $n instanceof \FFI\CData ? $n->cdata : $n;
-
-        assert(Type::isInt16($n), 'Argument $n must be a C-like GLsizei, but incompatible or overflow value given');
-
         $this->info->ffi->glDeleteTextures($n, $textures);
     }
 
@@ -5446,15 +4799,11 @@ class GL11 extends GL
      * @see http://docs.gl/gl2/glDepthFunc
      * @see http://docs.gl/gl4/glDepthFunc
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $func
+     * @param int $func
      * @return void
      */
-    public function depthFunc($func): void
+    public function depthFunc(int $func): void
     {
-        $func = $func instanceof \FFI\CData ? $func->cdata : $func;
-
-        assert(Type::isUint16($func), 'Argument $func must be a C-like GLenum, but incompatible or overflow value given');
-
         $this->info->ffi->glDepthFunc($func);
     }
 
@@ -5466,15 +4815,11 @@ class GL11 extends GL
      * @see http://docs.gl/gl2/glDepthMask
      * @see http://docs.gl/gl4/glDepthMask
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $flag
+     * @param int $flag
      * @return void
      */
-    public function depthMask($flag): void
+    public function depthMask(int $flag): void
     {
-        $flag = $flag instanceof \FFI\CData ? $flag->cdata : $flag;
-
-        assert(Type::isUint8($flag), 'Argument $flag must be a C-like GLboolean, but incompatible or overflow value given');
-
         $this->info->ffi->glDepthMask($flag);
     }
 
@@ -5491,18 +4836,12 @@ class GL11 extends GL
      * @see http://docs.gl/gl2/glDepthRange
      * @see http://docs.gl/gl4/glDepthRange
      * @since 1.1
-     * @param float|\FFI\CData|\FFI\CFloat $zNear
-     * @param float|\FFI\CData|\FFI\CFloat $zFar
+     * @param float $zNear
+     * @param float $zFar
      * @return void
      */
-    public function depthRange($zNear, $zFar): void
+    public function depthRange(float $zNear, float $zFar): void
     {
-        $zNear = $zNear instanceof \FFI\CData ? $zNear->cdata : $zNear;
-        $zFar = $zFar instanceof \FFI\CData ? $zFar->cdata : $zFar;
-
-        assert(Type::isFloat64($zNear), 'Argument $zNear must be a C-like GLclampd, but incompatible or overflow value given');
-        assert(Type::isFloat64($zFar), 'Argument $zFar must be a C-like GLclampd, but incompatible or overflow value given');
-
         $this->info->ffi->glDepthRange($zNear, $zFar);
     }
 
@@ -5677,15 +5016,11 @@ class GL11 extends GL
      * @see http://docs.gl/gl2/glEnable
      * @see http://docs.gl/gl4/glEnable
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $cap
+     * @param int $cap
      * @return void
      */
-    public function disable($cap): void
+    public function disable(int $cap): void
     {
-        $cap = $cap instanceof \FFI\CData ? $cap->cdata : $cap;
-
-        assert(Type::isUint16($cap), 'Argument $cap must be a C-like GLenum, but incompatible or overflow value given');
-
         $this->info->ffi->glDisable($cap);
     }
 
@@ -5761,15 +5096,11 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glEnableClientState
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $array
+     * @param int $array
      * @return void
      */
-    public function disableClientState($array): void
+    public function disableClientState(int $array): void
     {
-        $array = $array instanceof \FFI\CData ? $array->cdata : $array;
-
-        assert(Type::isUint16($array), 'Argument $array must be a C-like GLenum, but incompatible or overflow value given');
-
         $this->info->ffi->glDisableClientState($array);
     }
 
@@ -5789,21 +5120,13 @@ class GL11 extends GL
      * @see http://docs.gl/gl2/glDrawArrays
      * @see http://docs.gl/gl4/glDrawArrays
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $mode
-     * @param int|\FFI\CData|\FFI\CInt $first
-     * @param int|\FFI\CData|\FFI\CInt $count
+     * @param int $mode
+     * @param int $first
+     * @param int $count
      * @return void
      */
-    public function drawArrays($mode, $first, $count): void
+    public function drawArrays(int $mode, int $first, int $count): void
     {
-        $mode = $mode instanceof \FFI\CData ? $mode->cdata : $mode;
-        $first = $first instanceof \FFI\CData ? $first->cdata : $first;
-        $count = $count instanceof \FFI\CData ? $count->cdata : $count;
-
-        assert(Type::isUint16($mode), 'Argument $mode must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isInt16($first), 'Argument $first must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
-
         $this->info->ffi->glDrawArrays($mode, $first, $count);
     }
 
@@ -5862,15 +5185,11 @@ class GL11 extends GL
      * @see http://docs.gl/gl2/glDrawBuffer
      * @see http://docs.gl/gl4/glDrawBuffer
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $mode
+     * @param int $mode
      * @return void
      */
-    public function drawBuffer($mode): void
+    public function drawBuffer(int $mode): void
     {
-        $mode = $mode instanceof \FFI\CData ? $mode->cdata : $mode;
-
-        assert(Type::isUint16($mode), 'Argument $mode must be a C-like GLenum, but incompatible or overflow value given');
-
         $this->info->ffi->glDrawBuffer($mode);
     }
 
@@ -5891,22 +5210,14 @@ class GL11 extends GL
      * @see http://docs.gl/gl2/glDrawElements
      * @see http://docs.gl/gl4/glDrawElements
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $mode
-     * @param int|\FFI\CData|\FFI\CInt $count
-     * @param int|\FFI\CData|\FFI\CInt $type
-     * @param \FFI\CData|\FFI\CPtr|null $indices
+     * @param int $mode
+     * @param int $count
+     * @param int $type
+     * @param \FFI\CData|null $indices
      * @return void
      */
-    public function drawElements($mode, $count, $type, ?\FFI\CData $indices): void
+    public function drawElements(int $mode, int $count, int $type, ?\FFI\CData $indices): void
     {
-        $mode = $mode instanceof \FFI\CData ? $mode->cdata : $mode;
-        $count = $count instanceof \FFI\CData ? $count->cdata : $count;
-        $type = $type instanceof \FFI\CData ? $type->cdata : $type;
-
-        assert(Type::isUint16($mode), 'Argument $mode must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isInt16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Type::isUint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
-
         $this->info->ffi->glDrawElements($mode, $count, $type, $indices);
     }
 
@@ -6179,25 +5490,15 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glDrawPixels
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $width
-     * @param int|\FFI\CData|\FFI\CInt $height
-     * @param int|\FFI\CData|\FFI\CInt $format
-     * @param int|\FFI\CData|\FFI\CInt $type
-     * @param \FFI\CData|\FFI\CPtr|null $pixels
+     * @param int $width
+     * @param int $height
+     * @param int $format
+     * @param int $type
+     * @param \FFI\CData|null $pixels
      * @return void
      */
-    public function drawPixels($width, $height, $format, $type, ?\FFI\CData $pixels): void
+    public function drawPixels(int $width, int $height, int $format, int $type, ?\FFI\CData $pixels): void
     {
-        $width = $width instanceof \FFI\CData ? $width->cdata : $width;
-        $height = $height instanceof \FFI\CData ? $height->cdata : $height;
-        $format = $format instanceof \FFI\CData ? $format->cdata : $format;
-        $type = $type instanceof \FFI\CData ? $type->cdata : $type;
-
-        assert(Type::isInt16($width), 'Argument $width must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Type::isInt16($height), 'Argument $height must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Type::isUint16($format), 'Argument $format must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
-
         $this->info->ffi->glDrawPixels($width, $height, $format, $type, $pixels);
     }
 
@@ -6216,15 +5517,11 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glEdgeFlag
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $flag
+     * @param int $flag
      * @return void
      */
-    public function edgeFlag($flag): void
+    public function edgeFlag(int $flag): void
     {
-        $flag = $flag instanceof \FFI\CData ? $flag->cdata : $flag;
-
-        assert(Type::isUint8($flag), 'Argument $flag must be a C-like GLboolean, but incompatible or overflow value given');
-
         $this->info->ffi->glEdgeFlag($flag);
     }
 
@@ -6248,16 +5545,12 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glEdgeFlagPointer
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $stride
-     * @param \FFI\CData|\FFI\CPtr|null $pointer
+     * @param int $stride
+     * @param \FFI\CData|null $pointer
      * @return void
      */
-    public function edgeFlagPointer($stride, ?\FFI\CData $pointer): void
+    public function edgeFlagPointer(int $stride, ?\FFI\CData $pointer): void
     {
-        $stride = $stride instanceof \FFI\CData ? $stride->cdata : $stride;
-
-        assert(Type::isInt16($stride), 'Argument $stride must be a C-like GLsizei, but incompatible or overflow value given');
-
         $this->info->ffi->glEdgeFlagPointer($stride, $pointer);
     }
 
@@ -6276,7 +5569,7 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glEdgeFlag
      * @since 1.1
-     * @param \FFI\CData|\FFI\CIntPtr|null $flag
+     * @param \FFI\CData|null $flag
      * @return void
      */
     public function edgeFlagv(?\FFI\CData $flag): void
@@ -6455,15 +5748,11 @@ class GL11 extends GL
      * @see http://docs.gl/gl2/glEnable
      * @see http://docs.gl/gl4/glEnable
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $cap
+     * @param int $cap
      * @return void
      */
-    public function enable($cap): void
+    public function enable(int $cap): void
     {
-        $cap = $cap instanceof \FFI\CData ? $cap->cdata : $cap;
-
-        assert(Type::isUint16($cap), 'Argument $cap must be a C-like GLenum, but incompatible or overflow value given');
-
         $this->info->ffi->glEnable($cap);
     }
 
@@ -6539,15 +5828,11 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glEnableClientState
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $array
+     * @param int $array
      * @return void
      */
-    public function enableClientState($array): void
+    public function enableClientState(int $array): void
     {
-        $array = $array instanceof \FFI\CData ? $array->cdata : $array;
-
-        assert(Type::isUint16($array), 'Argument $array must be a C-like GLenum, but incompatible or overflow value given');
-
         $this->info->ffi->glEnableClientState($array);
     }
 
@@ -6673,15 +5958,11 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glEvalCoord
      * @since 1.1
-     * @param float|\FFI\CData|\FFI\CFloat $u
+     * @param float $u
      * @return void
      */
-    public function evalCoord1d($u): void
+    public function evalCoord1d(float $u): void
     {
-        $u = $u instanceof \FFI\CData ? $u->cdata : $u;
-
-        assert(Type::isFloat64($u), 'Argument $u must be a C-like GLdouble, but incompatible or overflow value given');
-
         $this->info->ffi->glEvalCoord1d($u);
     }
 
@@ -6733,7 +6014,7 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glEvalCoord
      * @since 1.1
-     * @param \FFI\CData|\FFI\CFloatPtr|null $u
+     * @param \FFI\CData|null $u
      * @return void
      */
     public function evalCoord1dv(?\FFI\CData $u): void
@@ -6789,15 +6070,11 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glEvalCoord
      * @since 1.1
-     * @param float|\FFI\CData|\FFI\CFloat $u
+     * @param float $u
      * @return void
      */
-    public function evalCoord1f($u): void
+    public function evalCoord1f(float $u): void
     {
-        $u = $u instanceof \FFI\CData ? $u->cdata : $u;
-
-        assert(Type::isFloat32($u), 'Argument $u must be a C-like GLfloat, but incompatible or overflow value given');
-
         $this->info->ffi->glEvalCoord1f($u);
     }
 
@@ -6849,7 +6126,7 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glEvalCoord
      * @since 1.1
-     * @param \FFI\CData|\FFI\CFloatPtr|null $u
+     * @param \FFI\CData|null $u
      * @return void
      */
     public function evalCoord1fv(?\FFI\CData $u): void
@@ -6905,18 +6182,12 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glEvalCoord
      * @since 1.1
-     * @param float|\FFI\CData|\FFI\CFloat $u
-     * @param float|\FFI\CData|\FFI\CFloat $v
+     * @param float $u
+     * @param float $v
      * @return void
      */
-    public function evalCoord2d($u, $v): void
+    public function evalCoord2d(float $u, float $v): void
     {
-        $u = $u instanceof \FFI\CData ? $u->cdata : $u;
-        $v = $v instanceof \FFI\CData ? $v->cdata : $v;
-
-        assert(Type::isFloat64($u), 'Argument $u must be a C-like GLdouble, but incompatible or overflow value given');
-        assert(Type::isFloat64($v), 'Argument $v must be a C-like GLdouble, but incompatible or overflow value given');
-
         $this->info->ffi->glEvalCoord2d($u, $v);
     }
 
@@ -6968,7 +6239,7 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glEvalCoord
      * @since 1.1
-     * @param \FFI\CData|\FFI\CFloatPtr|null $u
+     * @param \FFI\CData|null $u
      * @return void
      */
     public function evalCoord2dv(?\FFI\CData $u): void
@@ -7024,18 +6295,12 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glEvalCoord
      * @since 1.1
-     * @param float|\FFI\CData|\FFI\CFloat $u
-     * @param float|\FFI\CData|\FFI\CFloat $v
+     * @param float $u
+     * @param float $v
      * @return void
      */
-    public function evalCoord2f($u, $v): void
+    public function evalCoord2f(float $u, float $v): void
     {
-        $u = $u instanceof \FFI\CData ? $u->cdata : $u;
-        $v = $v instanceof \FFI\CData ? $v->cdata : $v;
-
-        assert(Type::isFloat32($u), 'Argument $u must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Type::isFloat32($v), 'Argument $v must be a C-like GLfloat, but incompatible or overflow value given');
-
         $this->info->ffi->glEvalCoord2f($u, $v);
     }
 
@@ -7087,7 +6352,7 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glEvalCoord
      * @since 1.1
-     * @param \FFI\CData|\FFI\CFloatPtr|null $u
+     * @param \FFI\CData|null $u
      * @return void
      */
     public function evalCoord2fv(?\FFI\CData $u): void
@@ -7182,21 +6447,13 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glEvalMesh
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $mode
-     * @param int|\FFI\CData|\FFI\CInt $i1
-     * @param int|\FFI\CData|\FFI\CInt $i2
+     * @param int $mode
+     * @param int $i1
+     * @param int $i2
      * @return void
      */
-    public function evalMesh1($mode, $i1, $i2): void
+    public function evalMesh1(int $mode, int $i1, int $i2): void
     {
-        $mode = $mode instanceof \FFI\CData ? $mode->cdata : $mode;
-        $i1 = $i1 instanceof \FFI\CData ? $i1->cdata : $i1;
-        $i2 = $i2 instanceof \FFI\CData ? $i2->cdata : $i2;
-
-        assert(Type::isUint16($mode), 'Argument $mode must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isInt16($i1), 'Argument $i1 must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($i2), 'Argument $i2 must be a C-like GLint, but incompatible or overflow value given');
-
         $this->info->ffi->glEvalMesh1($mode, $i1, $i2);
     }
 
@@ -7287,27 +6544,15 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glEvalMesh
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $mode
-     * @param int|\FFI\CData|\FFI\CInt $i1
-     * @param int|\FFI\CData|\FFI\CInt $i2
-     * @param int|\FFI\CData|\FFI\CInt $j1
-     * @param int|\FFI\CData|\FFI\CInt $j2
+     * @param int $mode
+     * @param int $i1
+     * @param int $i2
+     * @param int $j1
+     * @param int $j2
      * @return void
      */
-    public function evalMesh2($mode, $i1, $i2, $j1, $j2): void
+    public function evalMesh2(int $mode, int $i1, int $i2, int $j1, int $j2): void
     {
-        $mode = $mode instanceof \FFI\CData ? $mode->cdata : $mode;
-        $i1 = $i1 instanceof \FFI\CData ? $i1->cdata : $i1;
-        $i2 = $i2 instanceof \FFI\CData ? $i2->cdata : $i2;
-        $j1 = $j1 instanceof \FFI\CData ? $j1->cdata : $j1;
-        $j2 = $j2 instanceof \FFI\CData ? $j2->cdata : $j2;
-
-        assert(Type::isUint16($mode), 'Argument $mode must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isInt16($i1), 'Argument $i1 must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($i2), 'Argument $i2 must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($j1), 'Argument $j1 must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($j2), 'Argument $j2 must be a C-like GLint, but incompatible or overflow value given');
-
         $this->info->ffi->glEvalMesh2($mode, $i1, $i2, $j1, $j2);
     }
 
@@ -7352,15 +6597,11 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glEvalPoint
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $i
+     * @param int $i
      * @return void
      */
-    public function evalPoint1($i): void
+    public function evalPoint1(int $i): void
     {
-        $i = $i instanceof \FFI\CData ? $i->cdata : $i;
-
-        assert(Type::isInt16($i), 'Argument $i must be a C-like GLint, but incompatible or overflow value given');
-
         $this->info->ffi->glEvalPoint1($i);
     }
 
@@ -7405,18 +6646,12 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glEvalPoint
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $i
-     * @param int|\FFI\CData|\FFI\CInt $j
+     * @param int $i
+     * @param int $j
      * @return void
      */
-    public function evalPoint2($i, $j): void
+    public function evalPoint2(int $i, int $j): void
     {
-        $i = $i instanceof \FFI\CData ? $i->cdata : $i;
-        $j = $j instanceof \FFI\CData ? $j->cdata : $j;
-
-        assert(Type::isInt16($i), 'Argument $i must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($j), 'Argument $j must be a C-like GLint, but incompatible or overflow value given');
-
         $this->info->ffi->glEvalPoint2($i, $j);
     }
 
@@ -7490,20 +6725,20 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glFeedbackBuffer
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $size
-     * @param int|\FFI\CData|\FFI\CInt $type
-     * @param \FFI\CData|\FFI\CFloatPtr|null $buffer
+     * @param int $size
+     * @param int $type
+     * @param float|null $buffer
      * @return void
      */
-    public function feedbackBuffer($size, $type, ?\FFI\CData $buffer): void
+    public function feedbackBuffer(int $size, int $type, ?float &$buffer): void
     {
-        $size = $size instanceof \FFI\CData ? $size->cdata : $size;
-        $type = $type instanceof \FFI\CData ? $type->cdata : $type;
-
-        assert(Type::isInt16($size), 'Argument $size must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Type::isUint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
-
-        $this->info->ffi->glFeedbackBuffer($size, $type, $buffer);
+        $bufferCType = $this->info->ffi->new('GLfloat', false);
+        try {
+            $this->info->ffi->glFeedbackBuffer($size, $type, \FFI::addr($bufferCType));
+        } finally {
+            $buffer = $bufferCType->cdata;
+            \FFI::free($bufferCType);
+        }
     }
 
     /**
@@ -7622,18 +6857,12 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glFog
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $pname
-     * @param float|\FFI\CData|\FFI\CFloat $param
+     * @param int $pname
+     * @param float $param
      * @return void
      */
-    public function fogf($pname, $param): void
+    public function fogf(int $pname, float $param): void
     {
-        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
-        $param = $param instanceof \FFI\CData ? $param->cdata : $param;
-
-        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isFloat32($param), 'Argument $param must be a C-like GLfloat, but incompatible or overflow value given');
-
         $this->info->ffi->glFogf($pname, $param);
     }
 
@@ -7717,16 +6946,12 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glFog
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $pname
-     * @param \FFI\CData|\FFI\CFloatPtr|null $params
+     * @param int $pname
+     * @param \FFI\CData|null $params
      * @return void
      */
-    public function fogfv($pname, ?\FFI\CData $params): void
+    public function fogfv(int $pname, ?\FFI\CData $params): void
     {
-        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
-
-        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-
         $this->info->ffi->glFogfv($pname, $params);
     }
 
@@ -7810,18 +7035,12 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glFog
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $pname
-     * @param int|\FFI\CData|\FFI\CInt $param
+     * @param int $pname
+     * @param int $param
      * @return void
      */
-    public function fogi($pname, $param): void
+    public function fogi(int $pname, int $param): void
     {
-        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
-        $param = $param instanceof \FFI\CData ? $param->cdata : $param;
-
-        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isInt16($param), 'Argument $param must be a C-like GLint, but incompatible or overflow value given');
-
         $this->info->ffi->glFogi($pname, $param);
     }
 
@@ -7905,16 +7124,12 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glFog
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $pname
-     * @param \FFI\CData|\FFI\CIntPtr|null $params
+     * @param int $pname
+     * @param \FFI\CData|null $params
      * @return void
      */
-    public function fogiv($pname, ?\FFI\CData $params): void
+    public function fogiv(int $pname, ?\FFI\CData $params): void
     {
-        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
-
-        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-
         $this->info->ffi->glFogiv($pname, $params);
     }
 
@@ -7937,15 +7152,11 @@ class GL11 extends GL
      * @see http://docs.gl/gl2/glFrontFace
      * @see http://docs.gl/gl4/glFrontFace
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $mode
+     * @param int $mode
      * @return void
      */
-    public function frontFace($mode): void
+    public function frontFace(int $mode): void
     {
-        $mode = $mode instanceof \FFI\CData ? $mode->cdata : $mode;
-
-        assert(Type::isUint16($mode), 'Argument $mode must be a C-like GLenum, but incompatible or overflow value given');
-
         $this->info->ffi->glFrontFace($mode);
     }
 
@@ -7974,31 +7185,33 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glFrustum
      * @since 1.1
-     * @param float|\FFI\CData|\FFI\CFloat $left
-     * @param float|\FFI\CData|\FFI\CFloat $right
-     * @param float|\FFI\CData|\FFI\CFloat $bottom
-     * @param float|\FFI\CData|\FFI\CFloat $top
-     * @param float|\FFI\CData|\FFI\CFloat $zNear
-     * @param float|\FFI\CData|\FFI\CFloat $zFar
+     * @param float $left
+     * @param float $right
+     * @param float $bottom
+     * @param float $top
+     * @param float $zNear
+     * @param float $zFar
      * @return void
      */
-    public function frustum($left, $right, $bottom, $top, $zNear, $zFar): void
+    public function frustum(float $left, float $right, float $bottom, float $top, float $zNear, float $zFar): void
     {
-        $left = $left instanceof \FFI\CData ? $left->cdata : $left;
-        $right = $right instanceof \FFI\CData ? $right->cdata : $right;
-        $bottom = $bottom instanceof \FFI\CData ? $bottom->cdata : $bottom;
-        $top = $top instanceof \FFI\CData ? $top->cdata : $top;
-        $zNear = $zNear instanceof \FFI\CData ? $zNear->cdata : $zNear;
-        $zFar = $zFar instanceof \FFI\CData ? $zFar->cdata : $zFar;
-
-        assert(Type::isFloat64($left), 'Argument $left must be a C-like GLdouble, but incompatible or overflow value given');
-        assert(Type::isFloat64($right), 'Argument $right must be a C-like GLdouble, but incompatible or overflow value given');
-        assert(Type::isFloat64($bottom), 'Argument $bottom must be a C-like GLdouble, but incompatible or overflow value given');
-        assert(Type::isFloat64($top), 'Argument $top must be a C-like GLdouble, but incompatible or overflow value given');
-        assert(Type::isFloat64($zNear), 'Argument $zNear must be a C-like GLdouble, but incompatible or overflow value given');
-        assert(Type::isFloat64($zFar), 'Argument $zFar must be a C-like GLdouble, but incompatible or overflow value given');
-
         $this->info->ffi->glFrustum($left, $right, $bottom, $top, $zNear, $zFar);
+    }
+
+    /**
+     * {@see GL46::glGenLists} has one argument, $range. It returns an integer n such that $range contiguous empty
+     * display lists, named n,    n + 1  ,   ... ,    n + range - 1  , are created. If $range is 0, if there is no
+     * group of $range contiguous names available, or if any error is generated, no display lists are generated, and
+     * 0 is returned.
+     *
+     * @see http://docs.gl/gl2/glGenLists
+     * @since 1.1
+     * @param int $range
+     * @return int
+     */
+    public function genLists(int $range): int
+    {
+        return $this->info->ffi->glGenLists($range);
     }
 
     /**
@@ -8015,17 +7228,19 @@ class GL11 extends GL
      * @see http://docs.gl/gl2/glGenTextures
      * @see http://docs.gl/gl4/glGenTextures
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $n
-     * @param \FFI\CData|\FFI\CIntPtr|null $textures
+     * @param int $n
+     * @param int|null $textures
      * @return void
      */
-    public function genTextures($n, ?\FFI\CData $textures): void
+    public function genTextures(int $n, ?int &$textures): void
     {
-        $n = $n instanceof \FFI\CData ? $n->cdata : $n;
-
-        assert(Type::isInt16($n), 'Argument $n must be a C-like GLsizei, but incompatible or overflow value given');
-
-        $this->info->ffi->glGenTextures($n, $textures);
+        $texturesCType = $this->info->ffi->new('GLuint', false);
+        try {
+            $this->info->ffi->glGenTextures($n, \FFI::addr($texturesCType));
+        } finally {
+            $textures = $texturesCType->cdata;
+            \FFI::free($texturesCType);
+        }
     }
 
     /**
@@ -8126,17 +7341,19 @@ class GL11 extends GL
      * @see http://docs.gl/gl4/glGetPointerv
      * @see http://docs.gl/gl4/glGetProgram
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $pname
-     * @param \FFI\CData|\FFI\CIntPtr|null $params
+     * @param int $pname
+     * @param bool|null $params
      * @return void
      */
-    public function getBooleanv($pname, ?\FFI\CData $params): void
+    public function getBooleanv(int $pname, ?bool &$params): void
     {
-        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
-
-        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-
-        $this->info->ffi->glGetBooleanv($pname, $params);
+        $paramsCType = $this->info->ffi->new('GLboolean', false);
+        try {
+            $this->info->ffi->glGetBooleanv($pname, \FFI::addr($paramsCType));
+        } finally {
+            $params = $paramsCType->cdata !== 0;
+            \FFI::free($paramsCType);
+        }
     }
 
     /**
@@ -8144,17 +7361,19 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glGetClipPlane
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $plane
-     * @param \FFI\CData|\FFI\CFloatPtr|null $equation
+     * @param int $plane
+     * @param float|null $equation
      * @return void
      */
-    public function getClipPlane($plane, ?\FFI\CData $equation): void
+    public function getClipPlane(int $plane, ?float &$equation): void
     {
-        $plane = $plane instanceof \FFI\CData ? $plane->cdata : $plane;
-
-        assert(Type::isUint16($plane), 'Argument $plane must be a C-like GLenum, but incompatible or overflow value given');
-
-        $this->info->ffi->glGetClipPlane($plane, $equation);
+        $equationCType = $this->info->ffi->new('GLdouble', false);
+        try {
+            $this->info->ffi->glGetClipPlane($plane, \FFI::addr($equationCType));
+        } finally {
+            $equation = $equationCType->cdata;
+            \FFI::free($equationCType);
+        }
     }
 
     /**
@@ -8173,17 +7392,82 @@ class GL11 extends GL
      * @see http://docs.gl/gl2/glGetPointerv
      * @see http://docs.gl/gl4/glGetPointerv
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $pname
-     * @param \FFI\CData|\FFI\CFloatPtr|null $params
+     * @param int $pname
+     * @param float|null $params
      * @return void
      */
-    public function getDoublev($pname, ?\FFI\CData $params): void
+    public function getDoublev(int $pname, ?float &$params): void
     {
-        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
+        $paramsCType = $this->info->ffi->new('GLdouble', false);
+        try {
+            $this->info->ffi->glGetDoublev($pname, \FFI::addr($paramsCType));
+        } finally {
+            $params = $paramsCType->cdata;
+            \FFI::free($paramsCType);
+        }
+    }
 
-        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-
-        $this->info->ffi->glGetDoublev($pname, $params);
+    /**
+     * {@see GL46::glGetError} returns the value of the error flag. Each detectable error is assigned a numeric code
+     * and symbolic name. When an error occurs, the error flag is set to the appropriate error code value. No other
+     * errors are recorded until {@see GL46::glGetError} is called, the error code is returned, and the flag is reset
+     * to {@see GL46::GL_NO_ERROR}. If a call to {@see GL46::glGetError} returns {@see GL46::GL_NO_ERROR}, there has
+     * been no detectable error since the last call to {@see GL46::glGetError}, or since the GL was initialized.
+     *
+     * To allow for distributed implementations, there may be several error flags. If any single error flag has
+     * recorded an error, the value of that flag is returned and that flag is reset to {@see GL46::GL_NO_ERROR} when
+     * {@see GL46::glGetError} is called. If more than one flag has recorded an error, {@see GL46::glGetError}
+     * returns and clears an arbitrary error flag value. Thus, {@see GL46::glGetError} should always be called in a
+     * loop, until it returns {@see GL46::GL_NO_ERROR}, if all error flags are to be reset.
+     *
+     * Initially, all error flags are set to {@see GL46::GL_NO_ERROR}.
+     *
+     * The following errors are currently defined:
+     *
+     *  - {@see GL46::GL_NO_ERROR}: No error has been recorded. The value of
+     *    this symbolic constant is guaranteed to be 0.
+     *
+     *  - {@see GL46::GL_INVALID_ENUM}: An unacceptable value is specified for
+     *    an enumerated argument. The offending command is ignored and has no
+     *    other side effect than to set the error flag.
+     *
+     *  - {@see GL46::GL_INVALID_VALUE}: A numeric argument is out of range. The
+     *    offending command is ignored and has no other side effect than to set
+     *    the error flag.
+     *
+     *  - {@see GL46::GL_INVALID_OPERATION}: The specified operation is not
+     *    allowed in the current state. The offending command is ignored and has
+     *    no
+     *    other side effect than to set the error flag.
+     *
+     *  - {@see GL46::GL_INVALID_FRAMEBUFFER_OPERATION}: The framebuffer object
+     *    is not complete. The offending command is ignored and has no other
+     *    side effect than to
+     *    set the error flag.
+     *
+     *  - {@see GL46::GL_OUT_OF_MEMORY}: There is not enough memory left to
+     *    execute the command. The state of the GL is undefined, except for the
+     *    state of the error flags, after this error is recorded.
+     *
+     *  - {@see GL46::GL_STACK_UNDERFLOW}: An attempt has been made to perform
+     *    an operation that would cause an internal stack to underflow.
+     *
+     *  - {@see GL46::GL_STACK_OVERFLOW}: An attempt has been made to perform an
+     *    operation that would cause an internal stack to overflow.
+     *
+     * When an error flag is set, results of a GL operation are undefined only if {@see GL46::GL_OUT_OF_MEMORY} has
+     * occurred. In all other cases, the command generating the error is ignored and has no effect on the GL state or
+     * frame buffer contents. If the generating command returns a value, it returns 0. If {@see GL46::glGetError}
+     * itself generates an error, it returns 0.
+     *
+     * @see http://docs.gl/gl2/glGetError
+     * @see http://docs.gl/gl4/glGetError
+     * @since 1.1
+     * @return int
+     */
+    public function getError(): int
+    {
+        return $this->info->ffi->glGetError();
     }
 
     /**
@@ -8298,17 +7582,19 @@ class GL11 extends GL
      * @see http://docs.gl/gl2/glGetMap
      * @see http://docs.gl/gl2/glGetTexEnv
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $pname
-     * @param \FFI\CData|\FFI\CFloatPtr|null $params
+     * @param int $pname
+     * @param float|null $params
      * @return void
      */
-    public function getFloatv($pname, ?\FFI\CData $params): void
+    public function getFloatv(int $pname, ?float &$params): void
     {
-        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
-
-        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-
-        $this->info->ffi->glGetFloatv($pname, $params);
+        $paramsCType = $this->info->ffi->new('GLfloat', false);
+        try {
+            $this->info->ffi->glGetFloatv($pname, \FFI::addr($paramsCType));
+        } finally {
+            $params = $paramsCType->cdata;
+            \FFI::free($paramsCType);
+        }
     }
 
     /**
@@ -8327,17 +7613,19 @@ class GL11 extends GL
      * @see http://docs.gl/gl2/glGetPointerv
      * @see http://docs.gl/gl4/glGetPointerv
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $pname
-     * @param \FFI\CData|\FFI\CIntPtr|null $params
+     * @param int $pname
+     * @param int|null $params
      * @return void
      */
-    public function getIntegerv($pname, ?\FFI\CData $params): void
+    public function getIntegerv(int $pname, ?int &$params): void
     {
-        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
-
-        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-
-        $this->info->ffi->glGetIntegerv($pname, $params);
+        $paramsCType = $this->info->ffi->new('GLint', false);
+        try {
+            $this->info->ffi->glGetIntegerv($pname, \FFI::addr($paramsCType));
+        } finally {
+            $params = $paramsCType->cdata;
+            \FFI::free($paramsCType);
+        }
     }
 
     /**
@@ -8446,20 +7734,20 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glGetLight
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $light
-     * @param int|\FFI\CData|\FFI\CInt $pname
-     * @param \FFI\CData|\FFI\CFloatPtr|null $params
+     * @param int $light
+     * @param int $pname
+     * @param float|null $params
      * @return void
      */
-    public function getLightfv($light, $pname, ?\FFI\CData $params): void
+    public function getLightfv(int $light, int $pname, ?float &$params): void
     {
-        $light = $light instanceof \FFI\CData ? $light->cdata : $light;
-        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
-
-        assert(Type::isUint16($light), 'Argument $light must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-
-        $this->info->ffi->glGetLightfv($light, $pname, $params);
+        $paramsCType = $this->info->ffi->new('GLfloat', false);
+        try {
+            $this->info->ffi->glGetLightfv($light, $pname, \FFI::addr($paramsCType));
+        } finally {
+            $params = $paramsCType->cdata;
+            \FFI::free($paramsCType);
+        }
     }
 
     /**
@@ -8568,20 +7856,20 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glGetLight
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $light
-     * @param int|\FFI\CData|\FFI\CInt $pname
-     * @param \FFI\CData|\FFI\CIntPtr|null $params
+     * @param int $light
+     * @param int $pname
+     * @param int|null $params
      * @return void
      */
-    public function getLightiv($light, $pname, ?\FFI\CData $params): void
+    public function getLightiv(int $light, int $pname, ?int &$params): void
     {
-        $light = $light instanceof \FFI\CData ? $light->cdata : $light;
-        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
-
-        assert(Type::isUint16($light), 'Argument $light must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-
-        $this->info->ffi->glGetLightiv($light, $pname, $params);
+        $paramsCType = $this->info->ffi->new('GLint', false);
+        try {
+            $this->info->ffi->glGetLightiv($light, $pname, \FFI::addr($paramsCType));
+        } finally {
+            $params = $paramsCType->cdata;
+            \FFI::free($paramsCType);
+        }
     }
 
     /**
@@ -8623,20 +7911,20 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glGetMap
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $target
-     * @param int|\FFI\CData|\FFI\CInt $query
-     * @param \FFI\CData|\FFI\CFloatPtr|null $v
+     * @param int $target
+     * @param int $query
+     * @param float|null $v
      * @return void
      */
-    public function getMapdv($target, $query, ?\FFI\CData $v): void
+    public function getMapdv(int $target, int $query, ?float &$v): void
     {
-        $target = $target instanceof \FFI\CData ? $target->cdata : $target;
-        $query = $query instanceof \FFI\CData ? $query->cdata : $query;
-
-        assert(Type::isUint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($query), 'Argument $query must be a C-like GLenum, but incompatible or overflow value given');
-
-        $this->info->ffi->glGetMapdv($target, $query, $v);
+        $vCType = $this->info->ffi->new('GLdouble', false);
+        try {
+            $this->info->ffi->glGetMapdv($target, $query, \FFI::addr($vCType));
+        } finally {
+            $v = $vCType->cdata;
+            \FFI::free($vCType);
+        }
     }
 
     /**
@@ -8678,20 +7966,20 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glGetMap
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $target
-     * @param int|\FFI\CData|\FFI\CInt $query
-     * @param \FFI\CData|\FFI\CFloatPtr|null $v
+     * @param int $target
+     * @param int $query
+     * @param float|null $v
      * @return void
      */
-    public function getMapfv($target, $query, ?\FFI\CData $v): void
+    public function getMapfv(int $target, int $query, ?float &$v): void
     {
-        $target = $target instanceof \FFI\CData ? $target->cdata : $target;
-        $query = $query instanceof \FFI\CData ? $query->cdata : $query;
-
-        assert(Type::isUint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($query), 'Argument $query must be a C-like GLenum, but incompatible or overflow value given');
-
-        $this->info->ffi->glGetMapfv($target, $query, $v);
+        $vCType = $this->info->ffi->new('GLfloat', false);
+        try {
+            $this->info->ffi->glGetMapfv($target, $query, \FFI::addr($vCType));
+        } finally {
+            $v = $vCType->cdata;
+            \FFI::free($vCType);
+        }
     }
 
     /**
@@ -8733,20 +8021,20 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glGetMap
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $target
-     * @param int|\FFI\CData|\FFI\CInt $query
-     * @param \FFI\CData|\FFI\CIntPtr|null $v
+     * @param int $target
+     * @param int $query
+     * @param int|null $v
      * @return void
      */
-    public function getMapiv($target, $query, ?\FFI\CData $v): void
+    public function getMapiv(int $target, int $query, ?int &$v): void
     {
-        $target = $target instanceof \FFI\CData ? $target->cdata : $target;
-        $query = $query instanceof \FFI\CData ? $query->cdata : $query;
-
-        assert(Type::isUint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($query), 'Argument $query must be a C-like GLenum, but incompatible or overflow value given');
-
-        $this->info->ffi->glGetMapiv($target, $query, $v);
+        $vCType = $this->info->ffi->new('GLint', false);
+        try {
+            $this->info->ffi->glGetMapiv($target, $query, \FFI::addr($vCType));
+        } finally {
+            $v = $vCType->cdata;
+            \FFI::free($vCType);
+        }
     }
 
     /**
@@ -8813,20 +8101,20 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glGetMaterial
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $face
-     * @param int|\FFI\CData|\FFI\CInt $pname
-     * @param \FFI\CData|\FFI\CFloatPtr|null $params
+     * @param int $face
+     * @param int $pname
+     * @param float|null $params
      * @return void
      */
-    public function getMaterialfv($face, $pname, ?\FFI\CData $params): void
+    public function getMaterialfv(int $face, int $pname, ?float &$params): void
     {
-        $face = $face instanceof \FFI\CData ? $face->cdata : $face;
-        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
-
-        assert(Type::isUint16($face), 'Argument $face must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-
-        $this->info->ffi->glGetMaterialfv($face, $pname, $params);
+        $paramsCType = $this->info->ffi->new('GLfloat', false);
+        try {
+            $this->info->ffi->glGetMaterialfv($face, $pname, \FFI::addr($paramsCType));
+        } finally {
+            $params = $paramsCType->cdata;
+            \FFI::free($paramsCType);
+        }
     }
 
     /**
@@ -8893,20 +8181,20 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glGetMaterial
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $face
-     * @param int|\FFI\CData|\FFI\CInt $pname
-     * @param \FFI\CData|\FFI\CIntPtr|null $params
+     * @param int $face
+     * @param int $pname
+     * @param int|null $params
      * @return void
      */
-    public function getMaterialiv($face, $pname, ?\FFI\CData $params): void
+    public function getMaterialiv(int $face, int $pname, ?int &$params): void
     {
-        $face = $face instanceof \FFI\CData ? $face->cdata : $face;
-        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
-
-        assert(Type::isUint16($face), 'Argument $face must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-
-        $this->info->ffi->glGetMaterialiv($face, $pname, $params);
+        $paramsCType = $this->info->ffi->new('GLint', false);
+        try {
+            $this->info->ffi->glGetMaterialiv($face, $pname, \FFI::addr($paramsCType));
+        } finally {
+            $params = $paramsCType->cdata;
+            \FFI::free($paramsCType);
+        }
     }
 
     /**
@@ -8931,17 +8219,19 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glGetPixelMap
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $map
-     * @param \FFI\CData|\FFI\CFloatPtr|null $values
+     * @param int $map
+     * @param float|null $values
      * @return void
      */
-    public function getPixelMapfv($map, ?\FFI\CData $values): void
+    public function getPixelMapfv(int $map, ?float &$values): void
     {
-        $map = $map instanceof \FFI\CData ? $map->cdata : $map;
-
-        assert(Type::isUint16($map), 'Argument $map must be a C-like GLenum, but incompatible or overflow value given');
-
-        $this->info->ffi->glGetPixelMapfv($map, $values);
+        $valuesCType = $this->info->ffi->new('GLfloat', false);
+        try {
+            $this->info->ffi->glGetPixelMapfv($map, \FFI::addr($valuesCType));
+        } finally {
+            $values = $valuesCType->cdata;
+            \FFI::free($valuesCType);
+        }
     }
 
     /**
@@ -8966,17 +8256,19 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glGetPixelMap
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $map
-     * @param \FFI\CData|\FFI\CIntPtr|null $values
+     * @param int $map
+     * @param int|null $values
      * @return void
      */
-    public function getPixelMapuiv($map, ?\FFI\CData $values): void
+    public function getPixelMapuiv(int $map, ?int &$values): void
     {
-        $map = $map instanceof \FFI\CData ? $map->cdata : $map;
-
-        assert(Type::isUint16($map), 'Argument $map must be a C-like GLenum, but incompatible or overflow value given');
-
-        $this->info->ffi->glGetPixelMapuiv($map, $values);
+        $valuesCType = $this->info->ffi->new('GLuint', false);
+        try {
+            $this->info->ffi->glGetPixelMapuiv($map, \FFI::addr($valuesCType));
+        } finally {
+            $values = $valuesCType->cdata;
+            \FFI::free($valuesCType);
+        }
     }
 
     /**
@@ -9001,17 +8293,19 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glGetPixelMap
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $map
-     * @param \FFI\CData|\FFI\CIntPtr|null $values
+     * @param int $map
+     * @param int|null $values
      * @return void
      */
-    public function getPixelMapusv($map, ?\FFI\CData $values): void
+    public function getPixelMapusv(int $map, ?int &$values): void
     {
-        $map = $map instanceof \FFI\CData ? $map->cdata : $map;
-
-        assert(Type::isUint16($map), 'Argument $map must be a C-like GLenum, but incompatible or overflow value given');
-
-        $this->info->ffi->glGetPixelMapusv($map, $values);
+        $valuesCType = $this->info->ffi->new('GLushort', false);
+        try {
+            $this->info->ffi->glGetPixelMapusv($map, \FFI::addr($valuesCType));
+        } finally {
+            $values = $valuesCType->cdata;
+            \FFI::free($valuesCType);
+        }
     }
 
     /**
@@ -9030,16 +8324,12 @@ class GL11 extends GL
      * @see http://docs.gl/gl2/glGetPointerv
      * @see http://docs.gl/gl4/glGetPointerv
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $pname
-     * @param \FFI\CData|\FFI\CPtrPtr|null $params
+     * @param int $pname
+     * @param \FFI\CData|null $params
      * @return void
      */
-    public function getPointerv($pname, ?\FFI\CData $params): void
+    public function getPointerv(int $pname, ?\FFI\CData $params): void
     {
-        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
-
-        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-
         $this->info->ffi->glGetPointerv($pname, $params);
     }
 
@@ -9056,12 +8346,66 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glGetPolygonStipple
      * @since 1.1
-     * @param \FFI\CData|\FFI\CIntPtr|null $mask
+     * @param int|null $mask
      * @return void
      */
-    public function getPolygonStipple(?\FFI\CData $mask): void
+    public function getPolygonStipple(?int &$mask): void
     {
-        $this->info->ffi->glGetPolygonStipple($mask);
+        $maskCType = $this->info->ffi->new('GLubyte', false);
+        try {
+            $this->info->ffi->glGetPolygonStipple(\FFI::addr($maskCType));
+        } finally {
+            $mask = $maskCType->cdata;
+            \FFI::free($maskCType);
+        }
+    }
+
+    /**
+     * {@see GL46::glGetString} returns a pointer to a static string describing some aspect of the current GL
+     * connection. $name can be one of the following:
+     *
+     *  - {@see GL46::GL_VENDOR}: Returns the company responsible for this GL
+     *    implementation. This name does not change from release to
+     *    release.
+     *
+     *  - {@see GL46::GL_RENDERER}: Returns the name of the renderer. This name
+     *    is typically specific to a particular configuration of a hardware
+     *    platform. It does not change from release to release.
+     *
+     *  - {@see GL46::GL_VERSION}: Returns a version or release number.
+     *
+     *  - {@see GL46::GL_SHADING_LANGUAGE_VERSION}: Returns a version or release
+     *    number for the shading language.
+     *
+     * {@see GL46::glGetStringi} returns a pointer to a static string indexed by $index. $name can be one of the
+     * following:
+     *
+     *  - {@see GL46::GL_EXTENSIONS}: For {@see GL46::glGetStringi} only,
+     *    returns the extension string supported by the implementation at
+     *    $index.
+     *
+     * Strings {@see GL46::GL_VENDOR} and {@see GL46::GL_RENDERER} together uniquely specify a platform. They do not
+     * change from release to release and should be used by platform-recognition algorithms.
+     *
+     * The {@see GL46::GL_VERSION} and {@see GL46::GL_SHADING_LANGUAGE_VERSION} strings begin with a version number.
+     * The version number uses one of these forms:
+     *
+     * major_number.minor_number major_number.minor_number.release_number
+     *
+     * Vendor-specific information may follow the version number. Its format depends on the implementation, but a
+     * space always separates the version number and the vendor-specific information.
+     *
+     * All strings are null-terminated.
+     *
+     * @see http://docs.gl/gl2/glGetString
+     * @see http://docs.gl/gl4/glGetString
+     * @since 1.1
+     * @param int $name
+     * @return string
+     */
+    public function getString(int $name): string
+    {
+        return \FFI::string(\FFI::cast('char*', $this->info->ffi->glGetString($name)));
     }
 
     /**
@@ -9174,20 +8518,20 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glGetTexEnv
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $target
-     * @param int|\FFI\CData|\FFI\CInt $pname
-     * @param \FFI\CData|\FFI\CFloatPtr|null $params
+     * @param int $target
+     * @param int $pname
+     * @param float|null $params
      * @return void
      */
-    public function getTexEnvfv($target, $pname, ?\FFI\CData $params): void
+    public function getTexEnvfv(int $target, int $pname, ?float &$params): void
     {
-        $target = $target instanceof \FFI\CData ? $target->cdata : $target;
-        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
-
-        assert(Type::isUint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-
-        $this->info->ffi->glGetTexEnvfv($target, $pname, $params);
+        $paramsCType = $this->info->ffi->new('GLfloat', false);
+        try {
+            $this->info->ffi->glGetTexEnvfv($target, $pname, \FFI::addr($paramsCType));
+        } finally {
+            $params = $paramsCType->cdata;
+            \FFI::free($paramsCType);
+        }
     }
 
     /**
@@ -9300,20 +8644,20 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glGetTexEnv
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $target
-     * @param int|\FFI\CData|\FFI\CInt $pname
-     * @param \FFI\CData|\FFI\CIntPtr|null $params
+     * @param int $target
+     * @param int $pname
+     * @param int|null $params
      * @return void
      */
-    public function getTexEnviv($target, $pname, ?\FFI\CData $params): void
+    public function getTexEnviv(int $target, int $pname, ?int &$params): void
     {
-        $target = $target instanceof \FFI\CData ? $target->cdata : $target;
-        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
-
-        assert(Type::isUint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-
-        $this->info->ffi->glGetTexEnviv($target, $pname, $params);
+        $paramsCType = $this->info->ffi->new('GLint', false);
+        try {
+            $this->info->ffi->glGetTexEnviv($target, $pname, \FFI::addr($paramsCType));
+        } finally {
+            $params = $paramsCType->cdata;
+            \FFI::free($paramsCType);
+        }
     }
 
     /**
@@ -9343,20 +8687,20 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glGetTexGen
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $coord
-     * @param int|\FFI\CData|\FFI\CInt $pname
-     * @param \FFI\CData|\FFI\CFloatPtr|null $params
+     * @param int $coord
+     * @param int $pname
+     * @param float|null $params
      * @return void
      */
-    public function getTexGendv($coord, $pname, ?\FFI\CData $params): void
+    public function getTexGendv(int $coord, int $pname, ?float &$params): void
     {
-        $coord = $coord instanceof \FFI\CData ? $coord->cdata : $coord;
-        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
-
-        assert(Type::isUint16($coord), 'Argument $coord must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-
-        $this->info->ffi->glGetTexGendv($coord, $pname, $params);
+        $paramsCType = $this->info->ffi->new('GLdouble', false);
+        try {
+            $this->info->ffi->glGetTexGendv($coord, $pname, \FFI::addr($paramsCType));
+        } finally {
+            $params = $paramsCType->cdata;
+            \FFI::free($paramsCType);
+        }
     }
 
     /**
@@ -9386,20 +8730,20 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glGetTexGen
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $coord
-     * @param int|\FFI\CData|\FFI\CInt $pname
-     * @param \FFI\CData|\FFI\CFloatPtr|null $params
+     * @param int $coord
+     * @param int $pname
+     * @param float|null $params
      * @return void
      */
-    public function getTexGenfv($coord, $pname, ?\FFI\CData $params): void
+    public function getTexGenfv(int $coord, int $pname, ?float &$params): void
     {
-        $coord = $coord instanceof \FFI\CData ? $coord->cdata : $coord;
-        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
-
-        assert(Type::isUint16($coord), 'Argument $coord must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-
-        $this->info->ffi->glGetTexGenfv($coord, $pname, $params);
+        $paramsCType = $this->info->ffi->new('GLfloat', false);
+        try {
+            $this->info->ffi->glGetTexGenfv($coord, $pname, \FFI::addr($paramsCType));
+        } finally {
+            $params = $paramsCType->cdata;
+            \FFI::free($paramsCType);
+        }
     }
 
     /**
@@ -9429,20 +8773,20 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glGetTexGen
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $coord
-     * @param int|\FFI\CData|\FFI\CInt $pname
-     * @param \FFI\CData|\FFI\CIntPtr|null $params
+     * @param int $coord
+     * @param int $pname
+     * @param int|null $params
      * @return void
      */
-    public function getTexGeniv($coord, $pname, ?\FFI\CData $params): void
+    public function getTexGeniv(int $coord, int $pname, ?int &$params): void
     {
-        $coord = $coord instanceof \FFI\CData ? $coord->cdata : $coord;
-        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
-
-        assert(Type::isUint16($coord), 'Argument $coord must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-
-        $this->info->ffi->glGetTexGeniv($coord, $pname, $params);
+        $paramsCType = $this->info->ffi->new('GLint', false);
+        try {
+            $this->info->ffi->glGetTexGeniv($coord, $pname, \FFI::addr($paramsCType));
+        } finally {
+            $params = $paramsCType->cdata;
+            \FFI::free($paramsCType);
+        }
     }
 
     /**
@@ -9496,25 +8840,15 @@ class GL11 extends GL
      * @see http://docs.gl/gl2/glGetTexImage
      * @see http://docs.gl/gl4/glGetTexImage
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $target
-     * @param int|\FFI\CData|\FFI\CInt $level
-     * @param int|\FFI\CData|\FFI\CInt $format
-     * @param int|\FFI\CData|\FFI\CInt $type
-     * @param \FFI\CData|\FFI\CPtr|null $pixels
+     * @param int $target
+     * @param int $level
+     * @param int $format
+     * @param int $type
+     * @param \FFI\CData|null $pixels
      * @return void
      */
-    public function getTexImage($target, $level, $format, $type, ?\FFI\CData $pixels): void
+    public function getTexImage(int $target, int $level, int $format, int $type, ?\FFI\CData $pixels): void
     {
-        $target = $target instanceof \FFI\CData ? $target->cdata : $target;
-        $level = $level instanceof \FFI\CData ? $level->cdata : $level;
-        $format = $format instanceof \FFI\CData ? $format->cdata : $format;
-        $type = $type instanceof \FFI\CData ? $type->cdata : $type;
-
-        assert(Type::isUint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isInt16($level), 'Argument $level must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isUint16($format), 'Argument $format must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
-
         $this->info->ffi->glGetTexImage($target, $level, $format, $type, $pixels);
     }
 
@@ -9598,23 +8932,21 @@ class GL11 extends GL
      * @see http://docs.gl/gl2/glGetTexLevelParameter
      * @see http://docs.gl/gl4/glGetTexLevelParameter
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $target
-     * @param int|\FFI\CData|\FFI\CInt $level
-     * @param int|\FFI\CData|\FFI\CInt $pname
-     * @param \FFI\CData|\FFI\CFloatPtr|null $params
+     * @param int $target
+     * @param int $level
+     * @param int $pname
+     * @param float|null $params
      * @return void
      */
-    public function getTexLevelParameterfv($target, $level, $pname, ?\FFI\CData $params): void
+    public function getTexLevelParameterfv(int $target, int $level, int $pname, ?float &$params): void
     {
-        $target = $target instanceof \FFI\CData ? $target->cdata : $target;
-        $level = $level instanceof \FFI\CData ? $level->cdata : $level;
-        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
-
-        assert(Type::isUint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isInt16($level), 'Argument $level must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-
-        $this->info->ffi->glGetTexLevelParameterfv($target, $level, $pname, $params);
+        $paramsCType = $this->info->ffi->new('GLfloat', false);
+        try {
+            $this->info->ffi->glGetTexLevelParameterfv($target, $level, $pname, \FFI::addr($paramsCType));
+        } finally {
+            $params = $paramsCType->cdata;
+            \FFI::free($paramsCType);
+        }
     }
 
     /**
@@ -9697,23 +9029,21 @@ class GL11 extends GL
      * @see http://docs.gl/gl2/glGetTexLevelParameter
      * @see http://docs.gl/gl4/glGetTexLevelParameter
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $target
-     * @param int|\FFI\CData|\FFI\CInt $level
-     * @param int|\FFI\CData|\FFI\CInt $pname
-     * @param \FFI\CData|\FFI\CIntPtr|null $params
+     * @param int $target
+     * @param int $level
+     * @param int $pname
+     * @param int|null $params
      * @return void
      */
-    public function getTexLevelParameteriv($target, $level, $pname, ?\FFI\CData $params): void
+    public function getTexLevelParameteriv(int $target, int $level, int $pname, ?int &$params): void
     {
-        $target = $target instanceof \FFI\CData ? $target->cdata : $target;
-        $level = $level instanceof \FFI\CData ? $level->cdata : $level;
-        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
-
-        assert(Type::isUint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isInt16($level), 'Argument $level must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-
-        $this->info->ffi->glGetTexLevelParameteriv($target, $level, $pname, $params);
+        $paramsCType = $this->info->ffi->new('GLint', false);
+        try {
+            $this->info->ffi->glGetTexLevelParameteriv($target, $level, $pname, \FFI::addr($paramsCType));
+        } finally {
+            $params = $paramsCType->cdata;
+            \FFI::free($paramsCType);
+        }
     }
 
     /**
@@ -9848,20 +9178,20 @@ class GL11 extends GL
      * @see http://docs.gl/gl2/glGetTexParameter
      * @see http://docs.gl/gl4/glGetTexParameter
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $target
-     * @param int|\FFI\CData|\FFI\CInt $pname
-     * @param \FFI\CData|\FFI\CFloatPtr|null $params
+     * @param int $target
+     * @param int $pname
+     * @param float|null $params
      * @return void
      */
-    public function getTexParameterfv($target, $pname, ?\FFI\CData $params): void
+    public function getTexParameterfv(int $target, int $pname, ?float &$params): void
     {
-        $target = $target instanceof \FFI\CData ? $target->cdata : $target;
-        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
-
-        assert(Type::isUint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-
-        $this->info->ffi->glGetTexParameterfv($target, $pname, $params);
+        $paramsCType = $this->info->ffi->new('GLfloat', false);
+        try {
+            $this->info->ffi->glGetTexParameterfv($target, $pname, \FFI::addr($paramsCType));
+        } finally {
+            $params = $paramsCType->cdata;
+            \FFI::free($paramsCType);
+        }
     }
 
     /**
@@ -9996,20 +9326,20 @@ class GL11 extends GL
      * @see http://docs.gl/gl2/glGetTexParameter
      * @see http://docs.gl/gl4/glGetTexParameter
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $target
-     * @param int|\FFI\CData|\FFI\CInt $pname
-     * @param \FFI\CData|\FFI\CIntPtr|null $params
+     * @param int $target
+     * @param int $pname
+     * @param int|null $params
      * @return void
      */
-    public function getTexParameteriv($target, $pname, ?\FFI\CData $params): void
+    public function getTexParameteriv(int $target, int $pname, ?int &$params): void
     {
-        $target = $target instanceof \FFI\CData ? $target->cdata : $target;
-        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
-
-        assert(Type::isUint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-
-        $this->info->ffi->glGetTexParameteriv($target, $pname, $params);
+        $paramsCType = $this->info->ffi->new('GLint', false);
+        try {
+            $this->info->ffi->glGetTexParameteriv($target, $pname, \FFI::addr($paramsCType));
+        } finally {
+            $params = $paramsCType->cdata;
+            \FFI::free($paramsCType);
+        }
     }
 
     /**
@@ -10060,18 +9390,12 @@ class GL11 extends GL
      * @see http://docs.gl/gl2/glHint
      * @see http://docs.gl/gl4/glHint
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $target
-     * @param int|\FFI\CData|\FFI\CInt $mode
+     * @param int $target
+     * @param int $mode
      * @return void
      */
-    public function hint($target, $mode): void
+    public function hint(int $target, int $mode): void
     {
-        $target = $target instanceof \FFI\CData ? $target->cdata : $target;
-        $mode = $mode instanceof \FFI\CData ? $mode->cdata : $mode;
-
-        assert(Type::isUint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($mode), 'Argument $mode must be a C-like GLenum, but incompatible or overflow value given');
-
         $this->info->ffi->glHint($target, $mode);
     }
 
@@ -10086,15 +9410,11 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glIndexMask
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $mask
+     * @param int $mask
      * @return void
      */
-    public function indexMask($mask): void
+    public function indexMask(int $mask): void
     {
-        $mask = $mask instanceof \FFI\CData ? $mask->cdata : $mask;
-
-        assert(Type::isUint16($mask), 'Argument $mask must be a C-like GLuint, but incompatible or overflow value given');
-
         $this->info->ffi->glIndexMask($mask);
     }
 
@@ -10119,19 +9439,13 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glIndexPointer
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $type
-     * @param int|\FFI\CData|\FFI\CInt $stride
-     * @param \FFI\CData|\FFI\CPtr|null $pointer
+     * @param int $type
+     * @param int $stride
+     * @param \FFI\CData|null $pointer
      * @return void
      */
-    public function indexPointer($type, $stride, ?\FFI\CData $pointer): void
+    public function indexPointer(int $type, int $stride, ?\FFI\CData $pointer): void
     {
-        $type = $type instanceof \FFI\CData ? $type->cdata : $type;
-        $stride = $stride instanceof \FFI\CData ? $stride->cdata : $stride;
-
-        assert(Type::isUint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isInt16($stride), 'Argument $stride must be a C-like GLsizei, but incompatible or overflow value given');
-
         $this->info->ffi->glIndexPointer($type, $stride, $pointer);
     }
 
@@ -10149,15 +9463,11 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glIndex
      * @since 1.1
-     * @param float|\FFI\CData|\FFI\CFloat $c
+     * @param float $c
      * @return void
      */
-    public function indexd($c): void
+    public function indexd(float $c): void
     {
-        $c = $c instanceof \FFI\CData ? $c->cdata : $c;
-
-        assert(Type::isFloat64($c), 'Argument $c must be a C-like GLdouble, but incompatible or overflow value given');
-
         $this->info->ffi->glIndexd($c);
     }
 
@@ -10175,7 +9485,7 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glIndex
      * @since 1.1
-     * @param \FFI\CData|\FFI\CFloatPtr|null $c
+     * @param \FFI\CData|null $c
      * @return void
      */
     public function indexdv(?\FFI\CData $c): void
@@ -10197,15 +9507,11 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glIndex
      * @since 1.1
-     * @param float|\FFI\CData|\FFI\CFloat $c
+     * @param float $c
      * @return void
      */
-    public function indexf($c): void
+    public function indexf(float $c): void
     {
-        $c = $c instanceof \FFI\CData ? $c->cdata : $c;
-
-        assert(Type::isFloat32($c), 'Argument $c must be a C-like GLfloat, but incompatible or overflow value given');
-
         $this->info->ffi->glIndexf($c);
     }
 
@@ -10223,7 +9529,7 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glIndex
      * @since 1.1
-     * @param \FFI\CData|\FFI\CFloatPtr|null $c
+     * @param \FFI\CData|null $c
      * @return void
      */
     public function indexfv(?\FFI\CData $c): void
@@ -10245,15 +9551,11 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glIndex
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $c
+     * @param int $c
      * @return void
      */
-    public function indexi($c): void
+    public function indexi(int $c): void
     {
-        $c = $c instanceof \FFI\CData ? $c->cdata : $c;
-
-        assert(Type::isInt16($c), 'Argument $c must be a C-like GLint, but incompatible or overflow value given');
-
         $this->info->ffi->glIndexi($c);
     }
 
@@ -10271,7 +9573,7 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glIndex
      * @since 1.1
-     * @param \FFI\CData|\FFI\CIntPtr|null $c
+     * @param \FFI\CData|null $c
      * @return void
      */
     public function indexiv(?\FFI\CData $c): void
@@ -10293,15 +9595,11 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glIndex
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $c
+     * @param int $c
      * @return void
      */
-    public function indexs($c): void
+    public function indexs(int $c): void
     {
-        $c = $c instanceof \FFI\CData ? $c->cdata : $c;
-
-        assert(Type::isInt16($c), 'Argument $c must be a C-like GLshort, but incompatible or overflow value given');
-
         $this->info->ffi->glIndexs($c);
     }
 
@@ -10319,7 +9617,7 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glIndex
      * @since 1.1
-     * @param \FFI\CData|\FFI\CIntPtr|null $c
+     * @param \FFI\CData|null $c
      * @return void
      */
     public function indexsv(?\FFI\CData $c): void
@@ -10341,15 +9639,11 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glIndex
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $c
+     * @param int $c
      * @return void
      */
-    public function indexub($c): void
+    public function indexub(int $c): void
     {
-        $c = $c instanceof \FFI\CData ? $c->cdata : $c;
-
-        assert(Type::isUint8($c), 'Argument $c must be a C-like GLubyte, but incompatible or overflow value given');
-
         $this->info->ffi->glIndexub($c);
     }
 
@@ -10367,7 +9661,7 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glIndex
      * @since 1.1
-     * @param \FFI\CData|\FFI\CIntPtr|null $c
+     * @param \FFI\CData|null $c
      * @return void
      */
     public function indexubv(?\FFI\CData $c): void
@@ -10412,20 +9706,95 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glInterleavedArrays
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $format
-     * @param int|\FFI\CData|\FFI\CInt $stride
-     * @param \FFI\CData|\FFI\CPtr|null $pointer
+     * @param int $format
+     * @param int $stride
+     * @param \FFI\CData|null $pointer
      * @return void
      */
-    public function interleavedArrays($format, $stride, ?\FFI\CData $pointer): void
+    public function interleavedArrays(int $format, int $stride, ?\FFI\CData $pointer): void
     {
-        $format = $format instanceof \FFI\CData ? $format->cdata : $format;
-        $stride = $stride instanceof \FFI\CData ? $stride->cdata : $stride;
-
-        assert(Type::isUint16($format), 'Argument $format must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isInt16($stride), 'Argument $stride must be a C-like GLsizei, but incompatible or overflow value given');
-
         $this->info->ffi->glInterleavedArrays($format, $stride, $pointer);
+    }
+
+    /**
+     * {@see GL46::glIsEnabled} returns {@see GL46::GL_TRUE} if $cap is an enabled capability and returns
+     * {@see GL46::GL_FALSE} otherwise. Boolean states that are indexed may be tested with {@see GL46::glIsEnabledi}.
+     * For {@see GL46::glIsEnabledi}, $index specifies the index of the capability to test. $index must be between
+     * zero and the count of indexed capabilities for $cap. Initially all capabilities except {@see GL46::GL_DITHER}
+     * are disabled; {@see GL46::GL_DITHER} is initially enabled.
+     *
+     * The following capabilities are accepted for $cap:
+     *
+     * | {@see GL46::GL_BLEND}                     | {@see GL46::glBlendFunc}, {@see GL46::glLogicOp}            |
+     * | {@see GL46::GL_CLIP_DISTANCE}i            | {@see GL46::glEnable}                                       |
+     * | {@see GL46::GL_COLOR_LOGIC_OP}            | {@see GL46::glLogicOp}                                      |
+     * | {@see GL46::GL_CULL_FACE}                 | {@see GL46::glCullFace}                                     |
+     * | {@see GL46::GL_DEPTH_CLAMP}               | {@see GL46::glEnable}                                       |
+     * | {@see GL46::GL_DEBUG_OUTPUT}              | {@see GL46::glEnable}                                       |
+     * | {@see GL46::GL_DEBUG_OUTPUT_SYNCHRONOUS}  | {@see GL46::glEnable}                                       |
+     * | {@see GL46::GL_DEPTH_TEST}                | {@see GL46::glDepthFunc}, {@see GL46::glDepthRange}         |
+     * | {@see GL46::GL_DITHER}                    | {@see GL46::glEnable}                                       |
+     * | {@see GL46::GL_FRAMEBUFFER_SRGB}          | {@see GL46::glEnable}                                       |
+     * | {@see GL46::GL_LINE_SMOOTH}               | {@see GL46::glLineWidth}                                    |
+     * | {@see GL46::GL_MULTISAMPLE}               | {@see GL46::glSampleCoverage}                               |
+     * | {@see GL46::GL_POLYGON_SMOOTH}            | {@see GL46::glPolygonMode}                                  |
+     * | {@see GL46::GL_POLYGON_OFFSET_FILL}       | {@see GL46::glPolygonOffset}                                |
+     * | {@see GL46::GL_POLYGON_OFFSET_LINE}       | {@see GL46::glPolygonOffset}                                |
+     * | {@see GL46::GL_POLYGON_OFFSET_POINT}      | {@see GL46::glPolygonOffset}                                |
+     * | {@see GL46::GL_PROGRAM_POINT_SIZE}        | {@see GL46::glEnable}                                       |
+     * | {@see GL46::GL_PRIMITIVE_RESTART}         | {@see GL46::glEnable}, {@see GL46::glPrimitiveRestartIndex} |
+     * | {@see GL46::GL_SAMPLE_ALPHA_TO_COVERAGE}  | {@see GL46::glSampleCoverage}                               |
+     * | {@see GL46::GL_SAMPLE_ALPHA_TO_ONE}       | {@see GL46::glSampleCoverage}                               |
+     * | {@see GL46::GL_SAMPLE_COVERAGE}           | {@see GL46::glSampleCoverage}                               |
+     * | {@see GL46::GL_SAMPLE_MASK}               | {@see GL46::glEnable}                                       |
+     * | {@see GL46::GL_SCISSOR_TEST}              | {@see GL46::glScissor}                                      |
+     * | {@see GL46::GL_STENCIL_TEST}              | {@see GL46::glStencilFunc}, {@see GL46::glStencilOp}        |
+     * | {@see GL46::GL_TEXTURE_CUBE_MAP_SEAMLESS} | {@see GL46::glEnable}                                       |
+     * @see http://docs.gl/gl2/glIsEnabled
+     * @see http://docs.gl/gl4/glIsEnabled
+     * @since 1.1
+     * @param int $cap
+     * @return bool
+     */
+    public function isEnabled(int $cap): bool
+    {
+        return $this->info->ffi->glIsEnabled($cap) !== 0;
+    }
+
+    /**
+     * {@see GL46::glIsList} returns {@see GL46::GL_TRUE} if $list is the name of a display list and returns
+     * {@see GL46::GL_FALSE} if it is not, or if an error occurs.
+     *
+     * A name returned by {@see GL46::glGenLists}, but not yet associated with a display list by calling
+     * {@see GL46::glNewList}, is not the name of a display list.
+     *
+     * @see http://docs.gl/gl2/glIsList
+     * @since 1.1
+     * @param int $list
+     * @return bool
+     */
+    public function isList(int $list): bool
+    {
+        return $this->info->ffi->glIsList($list) !== 0;
+    }
+
+    /**
+     * {@see GL46::glIsTexture} returns {@see GL46::GL_TRUE} if $texture is currently the name of a texture. If
+     * $texture is zero, or is a non-zero value that is not currently the name of a texture, or if an error occurs,
+     * {@see GL46::glIsTexture} returns {@see GL46::GL_FALSE}.
+     *
+     * A name returned by {@see GL46::glGenTextures}, but not yet associated with a texture by calling
+     * {@see GL46::glBindTexture}, is not the name of a texture.
+     *
+     * @see http://docs.gl/gl2/glIsTexture
+     * @see http://docs.gl/gl4/glIsTexture
+     * @since 1.1
+     * @param int $texture
+     * @return bool
+     */
+    public function isTexture(int $texture): bool
+    {
+        return $this->info->ffi->glIsTexture($texture) !== 0;
     }
 
     /**
@@ -10502,18 +9871,12 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glLightModel
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $pname
-     * @param float|\FFI\CData|\FFI\CFloat $param
+     * @param int $pname
+     * @param float $param
      * @return void
      */
-    public function lightModelf($pname, $param): void
+    public function lightModelf(int $pname, float $param): void
     {
-        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
-        $param = $param instanceof \FFI\CData ? $param->cdata : $param;
-
-        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isFloat32($param), 'Argument $param must be a C-like GLfloat, but incompatible or overflow value given');
-
         $this->info->ffi->glLightModelf($pname, $param);
     }
 
@@ -10591,16 +9954,12 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glLightModel
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $pname
-     * @param \FFI\CData|\FFI\CFloatPtr|null $params
+     * @param int $pname
+     * @param \FFI\CData|null $params
      * @return void
      */
-    public function lightModelfv($pname, ?\FFI\CData $params): void
+    public function lightModelfv(int $pname, ?\FFI\CData $params): void
     {
-        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
-
-        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-
         $this->info->ffi->glLightModelfv($pname, $params);
     }
 
@@ -10678,18 +10037,12 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glLightModel
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $pname
-     * @param int|\FFI\CData|\FFI\CInt $param
+     * @param int $pname
+     * @param int $param
      * @return void
      */
-    public function lightModeli($pname, $param): void
+    public function lightModeli(int $pname, int $param): void
     {
-        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
-        $param = $param instanceof \FFI\CData ? $param->cdata : $param;
-
-        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isInt16($param), 'Argument $param must be a C-like GLint, but incompatible or overflow value given');
-
         $this->info->ffi->glLightModeli($pname, $param);
     }
 
@@ -10767,16 +10120,12 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glLightModel
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $pname
-     * @param \FFI\CData|\FFI\CIntPtr|null $params
+     * @param int $pname
+     * @param \FFI\CData|null $params
      * @return void
      */
-    public function lightModeliv($pname, ?\FFI\CData $params): void
+    public function lightModeliv(int $pname, ?\FFI\CData $params): void
     {
-        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
-
-        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-
         $this->info->ffi->glLightModeliv($pname, $params);
     }
 
@@ -10902,21 +10251,13 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glLight
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $light
-     * @param int|\FFI\CData|\FFI\CInt $pname
-     * @param float|\FFI\CData|\FFI\CFloat $param
+     * @param int $light
+     * @param int $pname
+     * @param float $param
      * @return void
      */
-    public function lightf($light, $pname, $param): void
+    public function lightf(int $light, int $pname, float $param): void
     {
-        $light = $light instanceof \FFI\CData ? $light->cdata : $light;
-        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
-        $param = $param instanceof \FFI\CData ? $param->cdata : $param;
-
-        assert(Type::isUint16($light), 'Argument $light must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isFloat32($param), 'Argument $param must be a C-like GLfloat, but incompatible or overflow value given');
-
         $this->info->ffi->glLightf($light, $pname, $param);
     }
 
@@ -11042,19 +10383,13 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glLight
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $light
-     * @param int|\FFI\CData|\FFI\CInt $pname
-     * @param \FFI\CData|\FFI\CFloatPtr|null $params
+     * @param int $light
+     * @param int $pname
+     * @param \FFI\CData|null $params
      * @return void
      */
-    public function lightfv($light, $pname, ?\FFI\CData $params): void
+    public function lightfv(int $light, int $pname, ?\FFI\CData $params): void
     {
-        $light = $light instanceof \FFI\CData ? $light->cdata : $light;
-        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
-
-        assert(Type::isUint16($light), 'Argument $light must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-
         $this->info->ffi->glLightfv($light, $pname, $params);
     }
 
@@ -11180,21 +10515,13 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glLight
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $light
-     * @param int|\FFI\CData|\FFI\CInt $pname
-     * @param int|\FFI\CData|\FFI\CInt $param
+     * @param int $light
+     * @param int $pname
+     * @param int $param
      * @return void
      */
-    public function lighti($light, $pname, $param): void
+    public function lighti(int $light, int $pname, int $param): void
     {
-        $light = $light instanceof \FFI\CData ? $light->cdata : $light;
-        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
-        $param = $param instanceof \FFI\CData ? $param->cdata : $param;
-
-        assert(Type::isUint16($light), 'Argument $light must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isInt16($param), 'Argument $param must be a C-like GLint, but incompatible or overflow value given');
-
         $this->info->ffi->glLighti($light, $pname, $param);
     }
 
@@ -11320,19 +10647,13 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glLight
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $light
-     * @param int|\FFI\CData|\FFI\CInt $pname
-     * @param \FFI\CData|\FFI\CIntPtr|null $params
+     * @param int $light
+     * @param int $pname
+     * @param \FFI\CData|null $params
      * @return void
      */
-    public function lightiv($light, $pname, ?\FFI\CData $params): void
+    public function lightiv(int $light, int $pname, ?\FFI\CData $params): void
     {
-        $light = $light instanceof \FFI\CData ? $light->cdata : $light;
-        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
-
-        assert(Type::isUint16($light), 'Argument $light must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-
         $this->info->ffi->glLightiv($light, $pname, $params);
     }
 
@@ -11361,18 +10682,12 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glLineStipple
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $factor
-     * @param int|\FFI\CData|\FFI\CInt $pattern
+     * @param int $factor
+     * @param int $pattern
      * @return void
      */
-    public function lineStipple($factor, $pattern): void
+    public function lineStipple(int $factor, int $pattern): void
     {
-        $factor = $factor instanceof \FFI\CData ? $factor->cdata : $factor;
-        $pattern = $pattern instanceof \FFI\CData ? $pattern->cdata : $pattern;
-
-        assert(Type::isInt16($factor), 'Argument $factor must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isUint16($pattern), 'Argument $pattern must be a C-like GLushort, but incompatible or overflow value given');
-
         $this->info->ffi->glLineStipple($factor, $pattern);
     }
 
@@ -11403,15 +10718,11 @@ class GL11 extends GL
      * @see http://docs.gl/gl2/glLineWidth
      * @see http://docs.gl/gl4/glLineWidth
      * @since 1.1
-     * @param float|\FFI\CData|\FFI\CFloat $width
+     * @param float $width
      * @return void
      */
-    public function lineWidth($width): void
+    public function lineWidth(float $width): void
     {
-        $width = $width instanceof \FFI\CData ? $width->cdata : $width;
-
-        assert(Type::isFloat32($width), 'Argument $width must be a C-like GLfloat, but incompatible or overflow value given');
-
         $this->info->ffi->glLineWidth($width);
     }
 
@@ -11421,15 +10732,11 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glListBase
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $base
+     * @param int $base
      * @return void
      */
-    public function listBase($base): void
+    public function listBase(int $base): void
     {
-        $base = $base instanceof \FFI\CData ? $base->cdata : $base;
-
-        assert(Type::isUint16($base), 'Argument $base must be a C-like GLuint, but incompatible or overflow value given');
-
         $this->info->ffi->glListBase($base);
     }
 
@@ -11470,7 +10777,7 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glLoadMatrix
      * @since 1.1
-     * @param \FFI\CData|\FFI\CFloatPtr|null $m
+     * @param \FFI\CData|null $m
      * @return void
      */
     public function loadMatrixd(?\FFI\CData $m): void
@@ -11498,7 +10805,7 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glLoadMatrix
      * @since 1.1
-     * @param \FFI\CData|\FFI\CFloatPtr|null $m
+     * @param \FFI\CData|null $m
      * @return void
      */
     public function loadMatrixf(?\FFI\CData $m): void
@@ -11517,15 +10824,11 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glLoadName
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $name
+     * @param int $name
      * @return void
      */
-    public function loadName($name): void
+    public function loadName(int $name): void
     {
-        $name = $name instanceof \FFI\CData ? $name->cdata : $name;
-
-        assert(Type::isUint16($name), 'Argument $name must be a C-like GLuint, but incompatible or overflow value given');
-
         $this->info->ffi->glLoadName($name);
     }
 
@@ -11559,15 +10862,11 @@ class GL11 extends GL
      * @see http://docs.gl/gl2/glLogicOp
      * @see http://docs.gl/gl4/glLogicOp
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $opcode
+     * @param int $opcode
      * @return void
      */
-    public function logicOp($opcode): void
+    public function logicOp(int $opcode): void
     {
-        $opcode = $opcode instanceof \FFI\CData ? $opcode->cdata : $opcode;
-
-        assert(Type::isUint16($opcode), 'Argument $opcode must be a C-like GLenum, but incompatible or overflow value given');
-
         $this->info->ffi->glLogicOp($opcode);
     }
 
@@ -11675,28 +10974,16 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glMap1
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $target
-     * @param float|\FFI\CData|\FFI\CFloat $u1
-     * @param float|\FFI\CData|\FFI\CFloat $u2
-     * @param int|\FFI\CData|\FFI\CInt $stride
-     * @param int|\FFI\CData|\FFI\CInt $order
-     * @param \FFI\CData|\FFI\CFloatPtr|null $points
+     * @param int $target
+     * @param float $u1
+     * @param float $u2
+     * @param int $stride
+     * @param int $order
+     * @param \FFI\CData|null $points
      * @return void
      */
-    public function map1d($target, $u1, $u2, $stride, $order, ?\FFI\CData $points): void
+    public function map1d(int $target, float $u1, float $u2, int $stride, int $order, ?\FFI\CData $points): void
     {
-        $target = $target instanceof \FFI\CData ? $target->cdata : $target;
-        $u1 = $u1 instanceof \FFI\CData ? $u1->cdata : $u1;
-        $u2 = $u2 instanceof \FFI\CData ? $u2->cdata : $u2;
-        $stride = $stride instanceof \FFI\CData ? $stride->cdata : $stride;
-        $order = $order instanceof \FFI\CData ? $order->cdata : $order;
-
-        assert(Type::isUint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isFloat64($u1), 'Argument $u1 must be a C-like GLdouble, but incompatible or overflow value given');
-        assert(Type::isFloat64($u2), 'Argument $u2 must be a C-like GLdouble, but incompatible or overflow value given');
-        assert(Type::isInt16($stride), 'Argument $stride must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($order), 'Argument $order must be a C-like GLint, but incompatible or overflow value given');
-
         $this->info->ffi->glMap1d($target, $u1, $u2, $stride, $order, $points);
     }
 
@@ -11804,28 +11091,16 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glMap1
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $target
-     * @param float|\FFI\CData|\FFI\CFloat $u1
-     * @param float|\FFI\CData|\FFI\CFloat $u2
-     * @param int|\FFI\CData|\FFI\CInt $stride
-     * @param int|\FFI\CData|\FFI\CInt $order
-     * @param \FFI\CData|\FFI\CFloatPtr|null $points
+     * @param int $target
+     * @param float $u1
+     * @param float $u2
+     * @param int $stride
+     * @param int $order
+     * @param \FFI\CData|null $points
      * @return void
      */
-    public function map1f($target, $u1, $u2, $stride, $order, ?\FFI\CData $points): void
+    public function map1f(int $target, float $u1, float $u2, int $stride, int $order, ?\FFI\CData $points): void
     {
-        $target = $target instanceof \FFI\CData ? $target->cdata : $target;
-        $u1 = $u1 instanceof \FFI\CData ? $u1->cdata : $u1;
-        $u2 = $u2 instanceof \FFI\CData ? $u2->cdata : $u2;
-        $stride = $stride instanceof \FFI\CData ? $stride->cdata : $stride;
-        $order = $order instanceof \FFI\CData ? $order->cdata : $order;
-
-        assert(Type::isUint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isFloat32($u1), 'Argument $u1 must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Type::isFloat32($u2), 'Argument $u2 must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Type::isInt16($stride), 'Argument $stride must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($order), 'Argument $order must be a C-like GLint, but incompatible or overflow value given');
-
         $this->info->ffi->glMap1f($target, $u1, $u2, $stride, $order, $points);
     }
 
@@ -11943,40 +11218,30 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glMap2
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $target
-     * @param float|\FFI\CData|\FFI\CFloat $u1
-     * @param float|\FFI\CData|\FFI\CFloat $u2
-     * @param int|\FFI\CData|\FFI\CInt $ustride
-     * @param int|\FFI\CData|\FFI\CInt $uorder
-     * @param float|\FFI\CData|\FFI\CFloat $v1
-     * @param float|\FFI\CData|\FFI\CFloat $v2
-     * @param int|\FFI\CData|\FFI\CInt $vstride
-     * @param int|\FFI\CData|\FFI\CInt $vorder
-     * @param \FFI\CData|\FFI\CFloatPtr|null $points
+     * @param int $target
+     * @param float $u1
+     * @param float $u2
+     * @param int $ustride
+     * @param int $uorder
+     * @param float $v1
+     * @param float $v2
+     * @param int $vstride
+     * @param int $vorder
+     * @param \FFI\CData|null $points
      * @return void
      */
-    public function map2d($target, $u1, $u2, $ustride, $uorder, $v1, $v2, $vstride, $vorder, ?\FFI\CData $points): void
-    {
-        $target = $target instanceof \FFI\CData ? $target->cdata : $target;
-        $u1 = $u1 instanceof \FFI\CData ? $u1->cdata : $u1;
-        $u2 = $u2 instanceof \FFI\CData ? $u2->cdata : $u2;
-        $ustride = $ustride instanceof \FFI\CData ? $ustride->cdata : $ustride;
-        $uorder = $uorder instanceof \FFI\CData ? $uorder->cdata : $uorder;
-        $v1 = $v1 instanceof \FFI\CData ? $v1->cdata : $v1;
-        $v2 = $v2 instanceof \FFI\CData ? $v2->cdata : $v2;
-        $vstride = $vstride instanceof \FFI\CData ? $vstride->cdata : $vstride;
-        $vorder = $vorder instanceof \FFI\CData ? $vorder->cdata : $vorder;
-
-        assert(Type::isUint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isFloat64($u1), 'Argument $u1 must be a C-like GLdouble, but incompatible or overflow value given');
-        assert(Type::isFloat64($u2), 'Argument $u2 must be a C-like GLdouble, but incompatible or overflow value given');
-        assert(Type::isInt16($ustride), 'Argument $ustride must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($uorder), 'Argument $uorder must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isFloat64($v1), 'Argument $v1 must be a C-like GLdouble, but incompatible or overflow value given');
-        assert(Type::isFloat64($v2), 'Argument $v2 must be a C-like GLdouble, but incompatible or overflow value given');
-        assert(Type::isInt16($vstride), 'Argument $vstride must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($vorder), 'Argument $vorder must be a C-like GLint, but incompatible or overflow value given');
-
+    public function map2d(
+        int $target,
+        float $u1,
+        float $u2,
+        int $ustride,
+        int $uorder,
+        float $v1,
+        float $v2,
+        int $vstride,
+        int $vorder,
+        ?\FFI\CData $points
+    ): void {
         $this->info->ffi->glMap2d($target, $u1, $u2, $ustride, $uorder, $v1, $v2, $vstride, $vorder, $points);
     }
 
@@ -12094,40 +11359,30 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glMap2
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $target
-     * @param float|\FFI\CData|\FFI\CFloat $u1
-     * @param float|\FFI\CData|\FFI\CFloat $u2
-     * @param int|\FFI\CData|\FFI\CInt $ustride
-     * @param int|\FFI\CData|\FFI\CInt $uorder
-     * @param float|\FFI\CData|\FFI\CFloat $v1
-     * @param float|\FFI\CData|\FFI\CFloat $v2
-     * @param int|\FFI\CData|\FFI\CInt $vstride
-     * @param int|\FFI\CData|\FFI\CInt $vorder
-     * @param \FFI\CData|\FFI\CFloatPtr|null $points
+     * @param int $target
+     * @param float $u1
+     * @param float $u2
+     * @param int $ustride
+     * @param int $uorder
+     * @param float $v1
+     * @param float $v2
+     * @param int $vstride
+     * @param int $vorder
+     * @param \FFI\CData|null $points
      * @return void
      */
-    public function map2f($target, $u1, $u2, $ustride, $uorder, $v1, $v2, $vstride, $vorder, ?\FFI\CData $points): void
-    {
-        $target = $target instanceof \FFI\CData ? $target->cdata : $target;
-        $u1 = $u1 instanceof \FFI\CData ? $u1->cdata : $u1;
-        $u2 = $u2 instanceof \FFI\CData ? $u2->cdata : $u2;
-        $ustride = $ustride instanceof \FFI\CData ? $ustride->cdata : $ustride;
-        $uorder = $uorder instanceof \FFI\CData ? $uorder->cdata : $uorder;
-        $v1 = $v1 instanceof \FFI\CData ? $v1->cdata : $v1;
-        $v2 = $v2 instanceof \FFI\CData ? $v2->cdata : $v2;
-        $vstride = $vstride instanceof \FFI\CData ? $vstride->cdata : $vstride;
-        $vorder = $vorder instanceof \FFI\CData ? $vorder->cdata : $vorder;
-
-        assert(Type::isUint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isFloat32($u1), 'Argument $u1 must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Type::isFloat32($u2), 'Argument $u2 must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Type::isInt16($ustride), 'Argument $ustride must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($uorder), 'Argument $uorder must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isFloat32($v1), 'Argument $v1 must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Type::isFloat32($v2), 'Argument $v2 must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Type::isInt16($vstride), 'Argument $vstride must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($vorder), 'Argument $vorder must be a C-like GLint, but incompatible or overflow value given');
-
+    public function map2f(
+        int $target,
+        float $u1,
+        float $u2,
+        int $ustride,
+        int $uorder,
+        float $v1,
+        float $v2,
+        int $vstride,
+        int $vorder,
+        ?\FFI\CData $points
+    ): void {
         $this->info->ffi->glMap2f($target, $u1, $u2, $ustride, $uorder, $v1, $v2, $vstride, $vorder, $points);
     }
 
@@ -12161,21 +11416,13 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glMapGrid
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $un
-     * @param float|\FFI\CData|\FFI\CFloat $u1
-     * @param float|\FFI\CData|\FFI\CFloat $u2
+     * @param int $un
+     * @param float $u1
+     * @param float $u2
      * @return void
      */
-    public function mapGrid1d($un, $u1, $u2): void
+    public function mapGrid1d(int $un, float $u1, float $u2): void
     {
-        $un = $un instanceof \FFI\CData ? $un->cdata : $un;
-        $u1 = $u1 instanceof \FFI\CData ? $u1->cdata : $u1;
-        $u2 = $u2 instanceof \FFI\CData ? $u2->cdata : $u2;
-
-        assert(Type::isInt16($un), 'Argument $un must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isFloat64($u1), 'Argument $u1 must be a C-like GLdouble, but incompatible or overflow value given');
-        assert(Type::isFloat64($u2), 'Argument $u2 must be a C-like GLdouble, but incompatible or overflow value given');
-
         $this->info->ffi->glMapGrid1d($un, $u1, $u2);
     }
 
@@ -12209,21 +11456,13 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glMapGrid
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $un
-     * @param float|\FFI\CData|\FFI\CFloat $u1
-     * @param float|\FFI\CData|\FFI\CFloat $u2
+     * @param int $un
+     * @param float $u1
+     * @param float $u2
      * @return void
      */
-    public function mapGrid1f($un, $u1, $u2): void
+    public function mapGrid1f(int $un, float $u1, float $u2): void
     {
-        $un = $un instanceof \FFI\CData ? $un->cdata : $un;
-        $u1 = $u1 instanceof \FFI\CData ? $u1->cdata : $u1;
-        $u2 = $u2 instanceof \FFI\CData ? $u2->cdata : $u2;
-
-        assert(Type::isInt16($un), 'Argument $un must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isFloat32($u1), 'Argument $u1 must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Type::isFloat32($u2), 'Argument $u2 must be a C-like GLfloat, but incompatible or overflow value given');
-
         $this->info->ffi->glMapGrid1f($un, $u1, $u2);
     }
 
@@ -12257,30 +11496,16 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glMapGrid
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $un
-     * @param float|\FFI\CData|\FFI\CFloat $u1
-     * @param float|\FFI\CData|\FFI\CFloat $u2
-     * @param int|\FFI\CData|\FFI\CInt $vn
-     * @param float|\FFI\CData|\FFI\CFloat $v1
-     * @param float|\FFI\CData|\FFI\CFloat $v2
+     * @param int $un
+     * @param float $u1
+     * @param float $u2
+     * @param int $vn
+     * @param float $v1
+     * @param float $v2
      * @return void
      */
-    public function mapGrid2d($un, $u1, $u2, $vn, $v1, $v2): void
+    public function mapGrid2d(int $un, float $u1, float $u2, int $vn, float $v1, float $v2): void
     {
-        $un = $un instanceof \FFI\CData ? $un->cdata : $un;
-        $u1 = $u1 instanceof \FFI\CData ? $u1->cdata : $u1;
-        $u2 = $u2 instanceof \FFI\CData ? $u2->cdata : $u2;
-        $vn = $vn instanceof \FFI\CData ? $vn->cdata : $vn;
-        $v1 = $v1 instanceof \FFI\CData ? $v1->cdata : $v1;
-        $v2 = $v2 instanceof \FFI\CData ? $v2->cdata : $v2;
-
-        assert(Type::isInt16($un), 'Argument $un must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isFloat64($u1), 'Argument $u1 must be a C-like GLdouble, but incompatible or overflow value given');
-        assert(Type::isFloat64($u2), 'Argument $u2 must be a C-like GLdouble, but incompatible or overflow value given');
-        assert(Type::isInt16($vn), 'Argument $vn must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isFloat64($v1), 'Argument $v1 must be a C-like GLdouble, but incompatible or overflow value given');
-        assert(Type::isFloat64($v2), 'Argument $v2 must be a C-like GLdouble, but incompatible or overflow value given');
-
         $this->info->ffi->glMapGrid2d($un, $u1, $u2, $vn, $v1, $v2);
     }
 
@@ -12314,30 +11539,16 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glMapGrid
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $un
-     * @param float|\FFI\CData|\FFI\CFloat $u1
-     * @param float|\FFI\CData|\FFI\CFloat $u2
-     * @param int|\FFI\CData|\FFI\CInt $vn
-     * @param float|\FFI\CData|\FFI\CFloat $v1
-     * @param float|\FFI\CData|\FFI\CFloat $v2
+     * @param int $un
+     * @param float $u1
+     * @param float $u2
+     * @param int $vn
+     * @param float $v1
+     * @param float $v2
      * @return void
      */
-    public function mapGrid2f($un, $u1, $u2, $vn, $v1, $v2): void
+    public function mapGrid2f(int $un, float $u1, float $u2, int $vn, float $v1, float $v2): void
     {
-        $un = $un instanceof \FFI\CData ? $un->cdata : $un;
-        $u1 = $u1 instanceof \FFI\CData ? $u1->cdata : $u1;
-        $u2 = $u2 instanceof \FFI\CData ? $u2->cdata : $u2;
-        $vn = $vn instanceof \FFI\CData ? $vn->cdata : $vn;
-        $v1 = $v1 instanceof \FFI\CData ? $v1->cdata : $v1;
-        $v2 = $v2 instanceof \FFI\CData ? $v2->cdata : $v2;
-
-        assert(Type::isInt16($un), 'Argument $un must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isFloat32($u1), 'Argument $u1 must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Type::isFloat32($u2), 'Argument $u2 must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Type::isInt16($vn), 'Argument $vn must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isFloat32($v1), 'Argument $v1 must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Type::isFloat32($v2), 'Argument $v2 must be a C-like GLfloat, but incompatible or overflow value given');
-
         $this->info->ffi->glMapGrid2f($un, $u1, $u2, $vn, $v1, $v2);
     }
 
@@ -12421,21 +11632,13 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glMaterial
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $face
-     * @param int|\FFI\CData|\FFI\CInt $pname
-     * @param float|\FFI\CData|\FFI\CFloat $param
+     * @param int $face
+     * @param int $pname
+     * @param float $param
      * @return void
      */
-    public function materialf($face, $pname, $param): void
+    public function materialf(int $face, int $pname, float $param): void
     {
-        $face = $face instanceof \FFI\CData ? $face->cdata : $face;
-        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
-        $param = $param instanceof \FFI\CData ? $param->cdata : $param;
-
-        assert(Type::isUint16($face), 'Argument $face must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isFloat32($param), 'Argument $param must be a C-like GLfloat, but incompatible or overflow value given');
-
         $this->info->ffi->glMaterialf($face, $pname, $param);
     }
 
@@ -12519,19 +11722,13 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glMaterial
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $face
-     * @param int|\FFI\CData|\FFI\CInt $pname
-     * @param \FFI\CData|\FFI\CFloatPtr|null $params
+     * @param int $face
+     * @param int $pname
+     * @param \FFI\CData|null $params
      * @return void
      */
-    public function materialfv($face, $pname, ?\FFI\CData $params): void
+    public function materialfv(int $face, int $pname, ?\FFI\CData $params): void
     {
-        $face = $face instanceof \FFI\CData ? $face->cdata : $face;
-        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
-
-        assert(Type::isUint16($face), 'Argument $face must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-
         $this->info->ffi->glMaterialfv($face, $pname, $params);
     }
 
@@ -12615,21 +11812,13 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glMaterial
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $face
-     * @param int|\FFI\CData|\FFI\CInt $pname
-     * @param int|\FFI\CData|\FFI\CInt $param
+     * @param int $face
+     * @param int $pname
+     * @param int $param
      * @return void
      */
-    public function materiali($face, $pname, $param): void
+    public function materiali(int $face, int $pname, int $param): void
     {
-        $face = $face instanceof \FFI\CData ? $face->cdata : $face;
-        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
-        $param = $param instanceof \FFI\CData ? $param->cdata : $param;
-
-        assert(Type::isUint16($face), 'Argument $face must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isInt16($param), 'Argument $param must be a C-like GLint, but incompatible or overflow value given');
-
         $this->info->ffi->glMateriali($face, $pname, $param);
     }
 
@@ -12713,19 +11902,13 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glMaterial
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $face
-     * @param int|\FFI\CData|\FFI\CInt $pname
-     * @param \FFI\CData|\FFI\CIntPtr|null $params
+     * @param int $face
+     * @param int $pname
+     * @param \FFI\CData|null $params
      * @return void
      */
-    public function materialiv($face, $pname, ?\FFI\CData $params): void
+    public function materialiv(int $face, int $pname, ?\FFI\CData $params): void
     {
-        $face = $face instanceof \FFI\CData ? $face->cdata : $face;
-        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
-
-        assert(Type::isUint16($face), 'Argument $face must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-
         $this->info->ffi->glMaterialiv($face, $pname, $params);
     }
 
@@ -12749,15 +11932,11 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glMatrixMode
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $mode
+     * @param int $mode
      * @return void
      */
-    public function matrixMode($mode): void
+    public function matrixMode(int $mode): void
     {
-        $mode = $mode instanceof \FFI\CData ? $mode->cdata : $mode;
-
-        assert(Type::isUint16($mode), 'Argument $mode must be a C-like GLenum, but incompatible or overflow value given');
-
         $this->info->ffi->glMatrixMode($mode);
     }
 
@@ -12770,7 +11949,7 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glMultMatrix
      * @since 1.1
-     * @param \FFI\CData|\FFI\CFloatPtr|null $m
+     * @param \FFI\CData|null $m
      * @return void
      */
     public function multMatrixd(?\FFI\CData $m): void
@@ -12787,7 +11966,7 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glMultMatrix
      * @since 1.1
-     * @param \FFI\CData|\FFI\CFloatPtr|null $m
+     * @param \FFI\CData|null $m
      * @return void
      */
     public function multMatrixf(?\FFI\CData $m): void
@@ -12840,18 +12019,12 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glNewList
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $list
-     * @param int|\FFI\CData|\FFI\CInt $mode
+     * @param int $list
+     * @param int $mode
      * @return void
      */
-    public function newList($list, $mode): void
+    public function newList(int $list, int $mode): void
     {
-        $list = $list instanceof \FFI\CData ? $list->cdata : $list;
-        $mode = $mode instanceof \FFI\CData ? $mode->cdata : $mode;
-
-        assert(Type::isUint16($list), 'Argument $list must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isUint16($mode), 'Argument $mode must be a C-like GLenum, but incompatible or overflow value given');
-
         $this->info->ffi->glNewList($list, $mode);
     }
 
@@ -12870,21 +12043,13 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glNormal
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $nx
-     * @param int|\FFI\CData|\FFI\CInt $ny
-     * @param int|\FFI\CData|\FFI\CInt $nz
+     * @param int $nx
+     * @param int $ny
+     * @param int $nz
      * @return void
      */
-    public function normal3b($nx, $ny, $nz): void
+    public function normal3b(int $nx, int $ny, int $nz): void
     {
-        $nx = $nx instanceof \FFI\CData ? $nx->cdata : $nx;
-        $ny = $ny instanceof \FFI\CData ? $ny->cdata : $ny;
-        $nz = $nz instanceof \FFI\CData ? $nz->cdata : $nz;
-
-        assert(Type::isInt8($nx), 'Argument $nx must be a C-like GLbyte, but incompatible or overflow value given');
-        assert(Type::isInt8($ny), 'Argument $ny must be a C-like GLbyte, but incompatible or overflow value given');
-        assert(Type::isInt8($nz), 'Argument $nz must be a C-like GLbyte, but incompatible or overflow value given');
-
         $this->info->ffi->glNormal3b($nx, $ny, $nz);
     }
 
@@ -12903,7 +12068,7 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glNormal
      * @since 1.1
-     * @param \FFI\CData|\FFI\CIntPtr|null $v
+     * @param \FFI\CData|null $v
      * @return void
      */
     public function normal3bv(?\FFI\CData $v): void
@@ -12926,21 +12091,13 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glNormal
      * @since 1.1
-     * @param float|\FFI\CData|\FFI\CFloat $nx
-     * @param float|\FFI\CData|\FFI\CFloat $ny
-     * @param float|\FFI\CData|\FFI\CFloat $nz
+     * @param float $nx
+     * @param float $ny
+     * @param float $nz
      * @return void
      */
-    public function normal3d($nx, $ny, $nz): void
+    public function normal3d(float $nx, float $ny, float $nz): void
     {
-        $nx = $nx instanceof \FFI\CData ? $nx->cdata : $nx;
-        $ny = $ny instanceof \FFI\CData ? $ny->cdata : $ny;
-        $nz = $nz instanceof \FFI\CData ? $nz->cdata : $nz;
-
-        assert(Type::isFloat64($nx), 'Argument $nx must be a C-like GLdouble, but incompatible or overflow value given');
-        assert(Type::isFloat64($ny), 'Argument $ny must be a C-like GLdouble, but incompatible or overflow value given');
-        assert(Type::isFloat64($nz), 'Argument $nz must be a C-like GLdouble, but incompatible or overflow value given');
-
         $this->info->ffi->glNormal3d($nx, $ny, $nz);
     }
 
@@ -12959,7 +12116,7 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glNormal
      * @since 1.1
-     * @param \FFI\CData|\FFI\CFloatPtr|null $v
+     * @param \FFI\CData|null $v
      * @return void
      */
     public function normal3dv(?\FFI\CData $v): void
@@ -12982,21 +12139,13 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glNormal
      * @since 1.1
-     * @param float|\FFI\CData|\FFI\CFloat $nx
-     * @param float|\FFI\CData|\FFI\CFloat $ny
-     * @param float|\FFI\CData|\FFI\CFloat $nz
+     * @param float $nx
+     * @param float $ny
+     * @param float $nz
      * @return void
      */
-    public function normal3f($nx, $ny, $nz): void
+    public function normal3f(float $nx, float $ny, float $nz): void
     {
-        $nx = $nx instanceof \FFI\CData ? $nx->cdata : $nx;
-        $ny = $ny instanceof \FFI\CData ? $ny->cdata : $ny;
-        $nz = $nz instanceof \FFI\CData ? $nz->cdata : $nz;
-
-        assert(Type::isFloat32($nx), 'Argument $nx must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Type::isFloat32($ny), 'Argument $ny must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Type::isFloat32($nz), 'Argument $nz must be a C-like GLfloat, but incompatible or overflow value given');
-
         $this->info->ffi->glNormal3f($nx, $ny, $nz);
     }
 
@@ -13015,7 +12164,7 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glNormal
      * @since 1.1
-     * @param \FFI\CData|\FFI\CFloatPtr|null $v
+     * @param \FFI\CData|null $v
      * @return void
      */
     public function normal3fv(?\FFI\CData $v): void
@@ -13038,21 +12187,13 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glNormal
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $nx
-     * @param int|\FFI\CData|\FFI\CInt $ny
-     * @param int|\FFI\CData|\FFI\CInt $nz
+     * @param int $nx
+     * @param int $ny
+     * @param int $nz
      * @return void
      */
-    public function normal3i($nx, $ny, $nz): void
+    public function normal3i(int $nx, int $ny, int $nz): void
     {
-        $nx = $nx instanceof \FFI\CData ? $nx->cdata : $nx;
-        $ny = $ny instanceof \FFI\CData ? $ny->cdata : $ny;
-        $nz = $nz instanceof \FFI\CData ? $nz->cdata : $nz;
-
-        assert(Type::isInt16($nx), 'Argument $nx must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($ny), 'Argument $ny must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($nz), 'Argument $nz must be a C-like GLint, but incompatible or overflow value given');
-
         $this->info->ffi->glNormal3i($nx, $ny, $nz);
     }
 
@@ -13071,7 +12212,7 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glNormal
      * @since 1.1
-     * @param \FFI\CData|\FFI\CIntPtr|null $v
+     * @param \FFI\CData|null $v
      * @return void
      */
     public function normal3iv(?\FFI\CData $v): void
@@ -13094,21 +12235,13 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glNormal
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $nx
-     * @param int|\FFI\CData|\FFI\CInt $ny
-     * @param int|\FFI\CData|\FFI\CInt $nz
+     * @param int $nx
+     * @param int $ny
+     * @param int $nz
      * @return void
      */
-    public function normal3s($nx, $ny, $nz): void
+    public function normal3s(int $nx, int $ny, int $nz): void
     {
-        $nx = $nx instanceof \FFI\CData ? $nx->cdata : $nx;
-        $ny = $ny instanceof \FFI\CData ? $ny->cdata : $ny;
-        $nz = $nz instanceof \FFI\CData ? $nz->cdata : $nz;
-
-        assert(Type::isInt16($nx), 'Argument $nx must be a C-like GLshort, but incompatible or overflow value given');
-        assert(Type::isInt16($ny), 'Argument $ny must be a C-like GLshort, but incompatible or overflow value given');
-        assert(Type::isInt16($nz), 'Argument $nz must be a C-like GLshort, but incompatible or overflow value given');
-
         $this->info->ffi->glNormal3s($nx, $ny, $nz);
     }
 
@@ -13127,7 +12260,7 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glNormal
      * @since 1.1
-     * @param \FFI\CData|\FFI\CIntPtr|null $v
+     * @param \FFI\CData|null $v
      * @return void
      */
     public function normal3sv(?\FFI\CData $v): void
@@ -13157,19 +12290,13 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glNormalPointer
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $type
-     * @param int|\FFI\CData|\FFI\CInt $stride
-     * @param \FFI\CData|\FFI\CPtr|null $pointer
+     * @param int $type
+     * @param int $stride
+     * @param \FFI\CData|null $pointer
      * @return void
      */
-    public function normalPointer($type, $stride, ?\FFI\CData $pointer): void
+    public function normalPointer(int $type, int $stride, ?\FFI\CData $pointer): void
     {
-        $type = $type instanceof \FFI\CData ? $type->cdata : $type;
-        $stride = $stride instanceof \FFI\CData ? $stride->cdata : $stride;
-
-        assert(Type::isUint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isInt16($stride), 'Argument $stride must be a C-like GLsizei, but incompatible or overflow value given');
-
         $this->info->ffi->glNormalPointer($type, $stride, $pointer);
     }
 
@@ -13193,30 +12320,16 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glOrtho
      * @since 1.1
-     * @param float|\FFI\CData|\FFI\CFloat $left
-     * @param float|\FFI\CData|\FFI\CFloat $right
-     * @param float|\FFI\CData|\FFI\CFloat $bottom
-     * @param float|\FFI\CData|\FFI\CFloat $top
-     * @param float|\FFI\CData|\FFI\CFloat $zNear
-     * @param float|\FFI\CData|\FFI\CFloat $zFar
+     * @param float $left
+     * @param float $right
+     * @param float $bottom
+     * @param float $top
+     * @param float $zNear
+     * @param float $zFar
      * @return void
      */
-    public function ortho($left, $right, $bottom, $top, $zNear, $zFar): void
+    public function ortho(float $left, float $right, float $bottom, float $top, float $zNear, float $zFar): void
     {
-        $left = $left instanceof \FFI\CData ? $left->cdata : $left;
-        $right = $right instanceof \FFI\CData ? $right->cdata : $right;
-        $bottom = $bottom instanceof \FFI\CData ? $bottom->cdata : $bottom;
-        $top = $top instanceof \FFI\CData ? $top->cdata : $top;
-        $zNear = $zNear instanceof \FFI\CData ? $zNear->cdata : $zNear;
-        $zFar = $zFar instanceof \FFI\CData ? $zFar->cdata : $zFar;
-
-        assert(Type::isFloat64($left), 'Argument $left must be a C-like GLdouble, but incompatible or overflow value given');
-        assert(Type::isFloat64($right), 'Argument $right must be a C-like GLdouble, but incompatible or overflow value given');
-        assert(Type::isFloat64($bottom), 'Argument $bottom must be a C-like GLdouble, but incompatible or overflow value given');
-        assert(Type::isFloat64($top), 'Argument $top must be a C-like GLdouble, but incompatible or overflow value given');
-        assert(Type::isFloat64($zNear), 'Argument $zNear must be a C-like GLdouble, but incompatible or overflow value given');
-        assert(Type::isFloat64($zFar), 'Argument $zFar must be a C-like GLdouble, but incompatible or overflow value given');
-
         $this->info->ffi->glOrtho($left, $right, $bottom, $top, $zNear, $zFar);
     }
 
@@ -13234,15 +12347,11 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glPassThrough
      * @since 1.1
-     * @param float|\FFI\CData|\FFI\CFloat $token
+     * @param float $token
      * @return void
      */
-    public function passThrough($token): void
+    public function passThrough(float $token): void
     {
-        $token = $token instanceof \FFI\CData ? $token->cdata : $token;
-
-        assert(Type::isFloat32($token), 'Argument $token must be a C-like GLfloat, but incompatible or overflow value given');
-
         $this->info->ffi->glPassThrough($token);
     }
 
@@ -13327,19 +12436,13 @@ class GL11 extends GL
      * | {@see GL46::GL_PIXEL_MAP_A_TO_A} | A             | A             | 1 | 0 |
      * @see http://docs.gl/gl2/glPixelMap
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $map
-     * @param int|\FFI\CData|\FFI\CInt $mapsize
-     * @param \FFI\CData|\FFI\CFloatPtr|null $values
+     * @param int $map
+     * @param int $mapsize
+     * @param \FFI\CData|null $values
      * @return void
      */
-    public function pixelMapfv($map, $mapsize, ?\FFI\CData $values): void
+    public function pixelMapfv(int $map, int $mapsize, ?\FFI\CData $values): void
     {
-        $map = $map instanceof \FFI\CData ? $map->cdata : $map;
-        $mapsize = $mapsize instanceof \FFI\CData ? $mapsize->cdata : $mapsize;
-
-        assert(Type::isUint16($map), 'Argument $map must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isInt16($mapsize), 'Argument $mapsize must be a C-like GLsizei, but incompatible or overflow value given');
-
         $this->info->ffi->glPixelMapfv($map, $mapsize, $values);
     }
 
@@ -13424,19 +12527,13 @@ class GL11 extends GL
      * | {@see GL46::GL_PIXEL_MAP_A_TO_A} | A             | A             | 1 | 0 |
      * @see http://docs.gl/gl2/glPixelMap
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $map
-     * @param int|\FFI\CData|\FFI\CInt $mapsize
-     * @param \FFI\CData|\FFI\CIntPtr|null $values
+     * @param int $map
+     * @param int $mapsize
+     * @param \FFI\CData|null $values
      * @return void
      */
-    public function pixelMapuiv($map, $mapsize, ?\FFI\CData $values): void
+    public function pixelMapuiv(int $map, int $mapsize, ?\FFI\CData $values): void
     {
-        $map = $map instanceof \FFI\CData ? $map->cdata : $map;
-        $mapsize = $mapsize instanceof \FFI\CData ? $mapsize->cdata : $mapsize;
-
-        assert(Type::isUint16($map), 'Argument $map must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isInt16($mapsize), 'Argument $mapsize must be a C-like GLsizei, but incompatible or overflow value given');
-
         $this->info->ffi->glPixelMapuiv($map, $mapsize, $values);
     }
 
@@ -13521,19 +12618,13 @@ class GL11 extends GL
      * | {@see GL46::GL_PIXEL_MAP_A_TO_A} | A             | A             | 1 | 0 |
      * @see http://docs.gl/gl2/glPixelMap
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $map
-     * @param int|\FFI\CData|\FFI\CInt $mapsize
-     * @param \FFI\CData|\FFI\CIntPtr|null $values
+     * @param int $map
+     * @param int $mapsize
+     * @param \FFI\CData|null $values
      * @return void
      */
-    public function pixelMapusv($map, $mapsize, ?\FFI\CData $values): void
+    public function pixelMapusv(int $map, int $mapsize, ?\FFI\CData $values): void
     {
-        $map = $map instanceof \FFI\CData ? $map->cdata : $map;
-        $mapsize = $mapsize instanceof \FFI\CData ? $mapsize->cdata : $mapsize;
-
-        assert(Type::isUint16($map), 'Argument $map must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isInt16($mapsize), 'Argument $mapsize must be a C-like GLsizei, but incompatible or overflow value given');
-
         $this->info->ffi->glPixelMapusv($map, $mapsize, $values);
     }
 
@@ -13770,18 +12861,12 @@ class GL11 extends GL
      * @see http://docs.gl/gl2/glPixelStore
      * @see http://docs.gl/gl4/glPixelStore
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $pname
-     * @param float|\FFI\CData|\FFI\CFloat $param
+     * @param int $pname
+     * @param float $param
      * @return void
      */
-    public function pixelStoref($pname, $param): void
+    public function pixelStoref(int $pname, float $param): void
     {
-        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
-        $param = $param instanceof \FFI\CData ? $param->cdata : $param;
-
-        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isFloat32($param), 'Argument $param must be a C-like GLfloat, but incompatible or overflow value given');
-
         $this->info->ffi->glPixelStoref($pname, $param);
     }
 
@@ -14018,18 +13103,12 @@ class GL11 extends GL
      * @see http://docs.gl/gl2/glPixelStore
      * @see http://docs.gl/gl4/glPixelStore
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $pname
-     * @param int|\FFI\CData|\FFI\CInt $param
+     * @param int $pname
+     * @param int $param
      * @return void
      */
-    public function pixelStorei($pname, $param): void
+    public function pixelStorei(int $pname, int $param): void
     {
-        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
-        $param = $param instanceof \FFI\CData ? $param->cdata : $param;
-
-        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isInt16($param), 'Argument $param must be a C-like GLint, but incompatible or overflow value given');
-
         $this->info->ffi->glPixelStorei($pname, $param);
     }
 
@@ -14224,18 +13303,12 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glPixelTransfer
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $pname
-     * @param float|\FFI\CData|\FFI\CFloat $param
+     * @param int $pname
+     * @param float $param
      * @return void
      */
-    public function pixelTransferf($pname, $param): void
+    public function pixelTransferf(int $pname, float $param): void
     {
-        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
-        $param = $param instanceof \FFI\CData ? $param->cdata : $param;
-
-        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isFloat32($param), 'Argument $param must be a C-like GLfloat, but incompatible or overflow value given');
-
         $this->info->ffi->glPixelTransferf($pname, $param);
     }
 
@@ -14430,18 +13503,12 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glPixelTransfer
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $pname
-     * @param int|\FFI\CData|\FFI\CInt $param
+     * @param int $pname
+     * @param int $param
      * @return void
      */
-    public function pixelTransferi($pname, $param): void
+    public function pixelTransferi(int $pname, int $param): void
     {
-        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
-        $param = $param instanceof \FFI\CData ? $param->cdata : $param;
-
-        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isInt16($param), 'Argument $param must be a C-like GLint, but incompatible or overflow value given');
-
         $this->info->ffi->glPixelTransferi($pname, $param);
     }
 
@@ -14463,18 +13530,12 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glPixelZoom
      * @since 1.1
-     * @param float|\FFI\CData|\FFI\CFloat $xfactor
-     * @param float|\FFI\CData|\FFI\CFloat $yfactor
+     * @param float $xfactor
+     * @param float $yfactor
      * @return void
      */
-    public function pixelZoom($xfactor, $yfactor): void
+    public function pixelZoom(float $xfactor, float $yfactor): void
     {
-        $xfactor = $xfactor instanceof \FFI\CData ? $xfactor->cdata : $xfactor;
-        $yfactor = $yfactor instanceof \FFI\CData ? $yfactor->cdata : $yfactor;
-
-        assert(Type::isFloat32($xfactor), 'Argument $xfactor must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Type::isFloat32($yfactor), 'Argument $yfactor must be a C-like GLfloat, but incompatible or overflow value given');
-
         $this->info->ffi->glPixelZoom($xfactor, $yfactor);
     }
 
@@ -14486,15 +13547,11 @@ class GL11 extends GL
      * @see http://docs.gl/gl2/glPointSize
      * @see http://docs.gl/gl4/glPointSize
      * @since 1.1
-     * @param float|\FFI\CData|\FFI\CFloat $size
+     * @param float $size
      * @return void
      */
-    public function pointSize($size): void
+    public function pointSize(float $size): void
     {
-        $size = $size instanceof \FFI\CData ? $size->cdata : $size;
-
-        assert(Type::isFloat32($size), 'Argument $size must be a C-like GLfloat, but incompatible or overflow value given');
-
         $this->info->ffi->glPointSize($size);
     }
 
@@ -14526,18 +13583,12 @@ class GL11 extends GL
      * @see http://docs.gl/gl2/glPolygonMode
      * @see http://docs.gl/gl4/glPolygonMode
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $face
-     * @param int|\FFI\CData|\FFI\CInt $mode
+     * @param int $face
+     * @param int $mode
      * @return void
      */
-    public function polygonMode($face, $mode): void
+    public function polygonMode(int $face, int $mode): void
     {
-        $face = $face instanceof \FFI\CData ? $face->cdata : $face;
-        $mode = $mode instanceof \FFI\CData ? $mode->cdata : $mode;
-
-        assert(Type::isUint16($face), 'Argument $face must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($mode), 'Argument $mode must be a C-like GLenum, but incompatible or overflow value given');
-
         $this->info->ffi->glPolygonMode($face, $mode);
     }
 
@@ -14556,18 +13607,12 @@ class GL11 extends GL
      * @see http://docs.gl/gl2/glPolygonOffset
      * @see http://docs.gl/gl4/glPolygonOffset
      * @since 1.1
-     * @param float|\FFI\CData|\FFI\CFloat $factor
-     * @param float|\FFI\CData|\FFI\CFloat $units
+     * @param float $factor
+     * @param float $units
      * @return void
      */
-    public function polygonOffset($factor, $units): void
+    public function polygonOffset(float $factor, float $units): void
     {
-        $factor = $factor instanceof \FFI\CData ? $factor->cdata : $factor;
-        $units = $units instanceof \FFI\CData ? $units->cdata : $units;
-
-        assert(Type::isFloat32($factor), 'Argument $factor must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Type::isFloat32($units), 'Argument $units must be a C-like GLfloat, but incompatible or overflow value given');
-
         $this->info->ffi->glPolygonOffset($factor, $units);
     }
 
@@ -14595,7 +13640,7 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glPolygonStipple
      * @since 1.1
-     * @param \FFI\CData|\FFI\CIntPtr|null $mask
+     * @param \FFI\CData|null $mask
      * @return void
      */
     public function polygonStipple(?\FFI\CData $mask): void
@@ -14890,17 +13935,13 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glPrioritizeTextures
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $n
-     * @param \FFI\CData|\FFI\CIntPtr|null $textures
-     * @param \FFI\CData|\FFI\CFloatPtr|null $priorities
+     * @param int $n
+     * @param \FFI\CData|null $textures
+     * @param \FFI\CData|null $priorities
      * @return void
      */
-    public function prioritizeTextures($n, ?\FFI\CData $textures, ?\FFI\CData $priorities): void
+    public function prioritizeTextures(int $n, ?\FFI\CData $textures, ?\FFI\CData $priorities): void
     {
-        $n = $n instanceof \FFI\CData ? $n->cdata : $n;
-
-        assert(Type::isInt16($n), 'Argument $n must be a C-like GLsizei, but incompatible or overflow value given');
-
         $this->info->ffi->glPrioritizeTextures($n, $textures, $priorities);
     }
 
@@ -15078,15 +14119,11 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glPushAttrib
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $mask
+     * @param int $mask
      * @return void
      */
-    public function pushAttrib($mask): void
+    public function pushAttrib(int $mask): void
     {
-        $mask = $mask instanceof \FFI\CData ? $mask->cdata : $mask;
-
-        assert(Type::isUint16($mask), 'Argument $mask must be a C-like GLbitfield, but incompatible or overflow value given');
-
         $this->info->ffi->glPushAttrib($mask);
     }
 
@@ -15112,15 +14149,11 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glPushClientAttrib
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $mask
+     * @param int $mask
      * @return void
      */
-    public function pushClientAttrib($mask): void
+    public function pushClientAttrib(int $mask): void
     {
-        $mask = $mask instanceof \FFI\CData ? $mask->cdata : $mask;
-
-        assert(Type::isUint16($mask), 'Argument $mask must be a C-like GLbitfield, but incompatible or overflow value given');
-
         $this->info->ffi->glPushClientAttrib($mask);
     }
 
@@ -15169,15 +14202,11 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glPushName
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $name
+     * @param int $name
      * @return void
      */
-    public function pushName($name): void
+    public function pushName(int $name): void
     {
-        $name = $name instanceof \FFI\CData ? $name->cdata : $name;
-
-        assert(Type::isUint16($name), 'Argument $name must be a C-like GLuint, but incompatible or overflow value given');
-
         $this->info->ffi->glPushName($name);
     }
 
@@ -15220,18 +14249,12 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glRasterPos
      * @since 1.1
-     * @param float|\FFI\CData|\FFI\CFloat $x
-     * @param float|\FFI\CData|\FFI\CFloat $y
+     * @param float $x
+     * @param float $y
      * @return void
      */
-    public function rasterPos2d($x, $y): void
+    public function rasterPos2d(float $x, float $y): void
     {
-        $x = $x instanceof \FFI\CData ? $x->cdata : $x;
-        $y = $y instanceof \FFI\CData ? $y->cdata : $y;
-
-        assert(Type::isFloat64($x), 'Argument $x must be a C-like GLdouble, but incompatible or overflow value given');
-        assert(Type::isFloat64($y), 'Argument $y must be a C-like GLdouble, but incompatible or overflow value given');
-
         $this->info->ffi->glRasterPos2d($x, $y);
     }
 
@@ -15274,7 +14297,7 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glRasterPos
      * @since 1.1
-     * @param \FFI\CData|\FFI\CFloatPtr|null $v
+     * @param \FFI\CData|null $v
      * @return void
      */
     public function rasterPos2dv(?\FFI\CData $v): void
@@ -15321,18 +14344,12 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glRasterPos
      * @since 1.1
-     * @param float|\FFI\CData|\FFI\CFloat $x
-     * @param float|\FFI\CData|\FFI\CFloat $y
+     * @param float $x
+     * @param float $y
      * @return void
      */
-    public function rasterPos2f($x, $y): void
+    public function rasterPos2f(float $x, float $y): void
     {
-        $x = $x instanceof \FFI\CData ? $x->cdata : $x;
-        $y = $y instanceof \FFI\CData ? $y->cdata : $y;
-
-        assert(Type::isFloat32($x), 'Argument $x must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Type::isFloat32($y), 'Argument $y must be a C-like GLfloat, but incompatible or overflow value given');
-
         $this->info->ffi->glRasterPos2f($x, $y);
     }
 
@@ -15375,7 +14392,7 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glRasterPos
      * @since 1.1
-     * @param \FFI\CData|\FFI\CFloatPtr|null $v
+     * @param \FFI\CData|null $v
      * @return void
      */
     public function rasterPos2fv(?\FFI\CData $v): void
@@ -15422,18 +14439,12 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glRasterPos
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $x
-     * @param int|\FFI\CData|\FFI\CInt $y
+     * @param int $x
+     * @param int $y
      * @return void
      */
-    public function rasterPos2i($x, $y): void
+    public function rasterPos2i(int $x, int $y): void
     {
-        $x = $x instanceof \FFI\CData ? $x->cdata : $x;
-        $y = $y instanceof \FFI\CData ? $y->cdata : $y;
-
-        assert(Type::isInt16($x), 'Argument $x must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($y), 'Argument $y must be a C-like GLint, but incompatible or overflow value given');
-
         $this->info->ffi->glRasterPos2i($x, $y);
     }
 
@@ -15476,7 +14487,7 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glRasterPos
      * @since 1.1
-     * @param \FFI\CData|\FFI\CIntPtr|null $v
+     * @param \FFI\CData|null $v
      * @return void
      */
     public function rasterPos2iv(?\FFI\CData $v): void
@@ -15523,18 +14534,12 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glRasterPos
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $x
-     * @param int|\FFI\CData|\FFI\CInt $y
+     * @param int $x
+     * @param int $y
      * @return void
      */
-    public function rasterPos2s($x, $y): void
+    public function rasterPos2s(int $x, int $y): void
     {
-        $x = $x instanceof \FFI\CData ? $x->cdata : $x;
-        $y = $y instanceof \FFI\CData ? $y->cdata : $y;
-
-        assert(Type::isInt16($x), 'Argument $x must be a C-like GLshort, but incompatible or overflow value given');
-        assert(Type::isInt16($y), 'Argument $y must be a C-like GLshort, but incompatible or overflow value given');
-
         $this->info->ffi->glRasterPos2s($x, $y);
     }
 
@@ -15577,7 +14582,7 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glRasterPos
      * @since 1.1
-     * @param \FFI\CData|\FFI\CIntPtr|null $v
+     * @param \FFI\CData|null $v
      * @return void
      */
     public function rasterPos2sv(?\FFI\CData $v): void
@@ -15624,21 +14629,13 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glRasterPos
      * @since 1.1
-     * @param float|\FFI\CData|\FFI\CFloat $x
-     * @param float|\FFI\CData|\FFI\CFloat $y
-     * @param float|\FFI\CData|\FFI\CFloat $z
+     * @param float $x
+     * @param float $y
+     * @param float $z
      * @return void
      */
-    public function rasterPos3d($x, $y, $z): void
+    public function rasterPos3d(float $x, float $y, float $z): void
     {
-        $x = $x instanceof \FFI\CData ? $x->cdata : $x;
-        $y = $y instanceof \FFI\CData ? $y->cdata : $y;
-        $z = $z instanceof \FFI\CData ? $z->cdata : $z;
-
-        assert(Type::isFloat64($x), 'Argument $x must be a C-like GLdouble, but incompatible or overflow value given');
-        assert(Type::isFloat64($y), 'Argument $y must be a C-like GLdouble, but incompatible or overflow value given');
-        assert(Type::isFloat64($z), 'Argument $z must be a C-like GLdouble, but incompatible or overflow value given');
-
         $this->info->ffi->glRasterPos3d($x, $y, $z);
     }
 
@@ -15681,7 +14678,7 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glRasterPos
      * @since 1.1
-     * @param \FFI\CData|\FFI\CFloatPtr|null $v
+     * @param \FFI\CData|null $v
      * @return void
      */
     public function rasterPos3dv(?\FFI\CData $v): void
@@ -15728,21 +14725,13 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glRasterPos
      * @since 1.1
-     * @param float|\FFI\CData|\FFI\CFloat $x
-     * @param float|\FFI\CData|\FFI\CFloat $y
-     * @param float|\FFI\CData|\FFI\CFloat $z
+     * @param float $x
+     * @param float $y
+     * @param float $z
      * @return void
      */
-    public function rasterPos3f($x, $y, $z): void
+    public function rasterPos3f(float $x, float $y, float $z): void
     {
-        $x = $x instanceof \FFI\CData ? $x->cdata : $x;
-        $y = $y instanceof \FFI\CData ? $y->cdata : $y;
-        $z = $z instanceof \FFI\CData ? $z->cdata : $z;
-
-        assert(Type::isFloat32($x), 'Argument $x must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Type::isFloat32($y), 'Argument $y must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Type::isFloat32($z), 'Argument $z must be a C-like GLfloat, but incompatible or overflow value given');
-
         $this->info->ffi->glRasterPos3f($x, $y, $z);
     }
 
@@ -15785,7 +14774,7 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glRasterPos
      * @since 1.1
-     * @param \FFI\CData|\FFI\CFloatPtr|null $v
+     * @param \FFI\CData|null $v
      * @return void
      */
     public function rasterPos3fv(?\FFI\CData $v): void
@@ -15832,21 +14821,13 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glRasterPos
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $x
-     * @param int|\FFI\CData|\FFI\CInt $y
-     * @param int|\FFI\CData|\FFI\CInt $z
+     * @param int $x
+     * @param int $y
+     * @param int $z
      * @return void
      */
-    public function rasterPos3i($x, $y, $z): void
+    public function rasterPos3i(int $x, int $y, int $z): void
     {
-        $x = $x instanceof \FFI\CData ? $x->cdata : $x;
-        $y = $y instanceof \FFI\CData ? $y->cdata : $y;
-        $z = $z instanceof \FFI\CData ? $z->cdata : $z;
-
-        assert(Type::isInt16($x), 'Argument $x must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($y), 'Argument $y must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($z), 'Argument $z must be a C-like GLint, but incompatible or overflow value given');
-
         $this->info->ffi->glRasterPos3i($x, $y, $z);
     }
 
@@ -15889,7 +14870,7 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glRasterPos
      * @since 1.1
-     * @param \FFI\CData|\FFI\CIntPtr|null $v
+     * @param \FFI\CData|null $v
      * @return void
      */
     public function rasterPos3iv(?\FFI\CData $v): void
@@ -15936,21 +14917,13 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glRasterPos
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $x
-     * @param int|\FFI\CData|\FFI\CInt $y
-     * @param int|\FFI\CData|\FFI\CInt $z
+     * @param int $x
+     * @param int $y
+     * @param int $z
      * @return void
      */
-    public function rasterPos3s($x, $y, $z): void
+    public function rasterPos3s(int $x, int $y, int $z): void
     {
-        $x = $x instanceof \FFI\CData ? $x->cdata : $x;
-        $y = $y instanceof \FFI\CData ? $y->cdata : $y;
-        $z = $z instanceof \FFI\CData ? $z->cdata : $z;
-
-        assert(Type::isInt16($x), 'Argument $x must be a C-like GLshort, but incompatible or overflow value given');
-        assert(Type::isInt16($y), 'Argument $y must be a C-like GLshort, but incompatible or overflow value given');
-        assert(Type::isInt16($z), 'Argument $z must be a C-like GLshort, but incompatible or overflow value given');
-
         $this->info->ffi->glRasterPos3s($x, $y, $z);
     }
 
@@ -15993,7 +14966,7 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glRasterPos
      * @since 1.1
-     * @param \FFI\CData|\FFI\CIntPtr|null $v
+     * @param \FFI\CData|null $v
      * @return void
      */
     public function rasterPos3sv(?\FFI\CData $v): void
@@ -16040,24 +15013,14 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glRasterPos
      * @since 1.1
-     * @param float|\FFI\CData|\FFI\CFloat $x
-     * @param float|\FFI\CData|\FFI\CFloat $y
-     * @param float|\FFI\CData|\FFI\CFloat $z
-     * @param float|\FFI\CData|\FFI\CFloat $w
+     * @param float $x
+     * @param float $y
+     * @param float $z
+     * @param float $w
      * @return void
      */
-    public function rasterPos4d($x, $y, $z, $w): void
+    public function rasterPos4d(float $x, float $y, float $z, float $w): void
     {
-        $x = $x instanceof \FFI\CData ? $x->cdata : $x;
-        $y = $y instanceof \FFI\CData ? $y->cdata : $y;
-        $z = $z instanceof \FFI\CData ? $z->cdata : $z;
-        $w = $w instanceof \FFI\CData ? $w->cdata : $w;
-
-        assert(Type::isFloat64($x), 'Argument $x must be a C-like GLdouble, but incompatible or overflow value given');
-        assert(Type::isFloat64($y), 'Argument $y must be a C-like GLdouble, but incompatible or overflow value given');
-        assert(Type::isFloat64($z), 'Argument $z must be a C-like GLdouble, but incompatible or overflow value given');
-        assert(Type::isFloat64($w), 'Argument $w must be a C-like GLdouble, but incompatible or overflow value given');
-
         $this->info->ffi->glRasterPos4d($x, $y, $z, $w);
     }
 
@@ -16100,7 +15063,7 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glRasterPos
      * @since 1.1
-     * @param \FFI\CData|\FFI\CFloatPtr|null $v
+     * @param \FFI\CData|null $v
      * @return void
      */
     public function rasterPos4dv(?\FFI\CData $v): void
@@ -16147,24 +15110,14 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glRasterPos
      * @since 1.1
-     * @param float|\FFI\CData|\FFI\CFloat $x
-     * @param float|\FFI\CData|\FFI\CFloat $y
-     * @param float|\FFI\CData|\FFI\CFloat $z
-     * @param float|\FFI\CData|\FFI\CFloat $w
+     * @param float $x
+     * @param float $y
+     * @param float $z
+     * @param float $w
      * @return void
      */
-    public function rasterPos4f($x, $y, $z, $w): void
+    public function rasterPos4f(float $x, float $y, float $z, float $w): void
     {
-        $x = $x instanceof \FFI\CData ? $x->cdata : $x;
-        $y = $y instanceof \FFI\CData ? $y->cdata : $y;
-        $z = $z instanceof \FFI\CData ? $z->cdata : $z;
-        $w = $w instanceof \FFI\CData ? $w->cdata : $w;
-
-        assert(Type::isFloat32($x), 'Argument $x must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Type::isFloat32($y), 'Argument $y must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Type::isFloat32($z), 'Argument $z must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Type::isFloat32($w), 'Argument $w must be a C-like GLfloat, but incompatible or overflow value given');
-
         $this->info->ffi->glRasterPos4f($x, $y, $z, $w);
     }
 
@@ -16207,7 +15160,7 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glRasterPos
      * @since 1.1
-     * @param \FFI\CData|\FFI\CFloatPtr|null $v
+     * @param \FFI\CData|null $v
      * @return void
      */
     public function rasterPos4fv(?\FFI\CData $v): void
@@ -16254,24 +15207,14 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glRasterPos
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $x
-     * @param int|\FFI\CData|\FFI\CInt $y
-     * @param int|\FFI\CData|\FFI\CInt $z
-     * @param int|\FFI\CData|\FFI\CInt $w
+     * @param int $x
+     * @param int $y
+     * @param int $z
+     * @param int $w
      * @return void
      */
-    public function rasterPos4i($x, $y, $z, $w): void
+    public function rasterPos4i(int $x, int $y, int $z, int $w): void
     {
-        $x = $x instanceof \FFI\CData ? $x->cdata : $x;
-        $y = $y instanceof \FFI\CData ? $y->cdata : $y;
-        $z = $z instanceof \FFI\CData ? $z->cdata : $z;
-        $w = $w instanceof \FFI\CData ? $w->cdata : $w;
-
-        assert(Type::isInt16($x), 'Argument $x must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($y), 'Argument $y must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($z), 'Argument $z must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($w), 'Argument $w must be a C-like GLint, but incompatible or overflow value given');
-
         $this->info->ffi->glRasterPos4i($x, $y, $z, $w);
     }
 
@@ -16314,7 +15257,7 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glRasterPos
      * @since 1.1
-     * @param \FFI\CData|\FFI\CIntPtr|null $v
+     * @param \FFI\CData|null $v
      * @return void
      */
     public function rasterPos4iv(?\FFI\CData $v): void
@@ -16361,24 +15304,14 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glRasterPos
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $x
-     * @param int|\FFI\CData|\FFI\CInt $y
-     * @param int|\FFI\CData|\FFI\CInt $z
-     * @param int|\FFI\CData|\FFI\CInt $w
+     * @param int $x
+     * @param int $y
+     * @param int $z
+     * @param int $w
      * @return void
      */
-    public function rasterPos4s($x, $y, $z, $w): void
+    public function rasterPos4s(int $x, int $y, int $z, int $w): void
     {
-        $x = $x instanceof \FFI\CData ? $x->cdata : $x;
-        $y = $y instanceof \FFI\CData ? $y->cdata : $y;
-        $z = $z instanceof \FFI\CData ? $z->cdata : $z;
-        $w = $w instanceof \FFI\CData ? $w->cdata : $w;
-
-        assert(Type::isInt16($x), 'Argument $x must be a C-like GLshort, but incompatible or overflow value given');
-        assert(Type::isInt16($y), 'Argument $y must be a C-like GLshort, but incompatible or overflow value given');
-        assert(Type::isInt16($z), 'Argument $z must be a C-like GLshort, but incompatible or overflow value given');
-        assert(Type::isInt16($w), 'Argument $w must be a C-like GLshort, but incompatible or overflow value given');
-
         $this->info->ffi->glRasterPos4s($x, $y, $z, $w);
     }
 
@@ -16421,7 +15354,7 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glRasterPos
      * @since 1.1
-     * @param \FFI\CData|\FFI\CIntPtr|null $v
+     * @param \FFI\CData|null $v
      * @return void
      */
     public function rasterPos4sv(?\FFI\CData $v): void
@@ -16455,15 +15388,11 @@ class GL11 extends GL
      * @see http://docs.gl/gl2/glReadBuffer
      * @see http://docs.gl/gl4/glReadBuffer
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $mode
+     * @param int $mode
      * @return void
      */
-    public function readBuffer($mode): void
+    public function readBuffer(int $mode): void
     {
-        $mode = $mode instanceof \FFI\CData ? $mode->cdata : $mode;
-
-        assert(Type::isUint16($mode), 'Argument $mode must be a C-like GLenum, but incompatible or overflow value given');
-
         $this->info->ffi->glReadBuffer($mode);
     }
 
@@ -16553,31 +15482,17 @@ class GL11 extends GL
      * @see http://docs.gl/gl2/glReadPixels
      * @see http://docs.gl/gl4/glReadPixels
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $x
-     * @param int|\FFI\CData|\FFI\CInt $y
-     * @param int|\FFI\CData|\FFI\CInt $width
-     * @param int|\FFI\CData|\FFI\CInt $height
-     * @param int|\FFI\CData|\FFI\CInt $format
-     * @param int|\FFI\CData|\FFI\CInt $type
-     * @param \FFI\CData|\FFI\CPtr|null $pixels
+     * @param int $x
+     * @param int $y
+     * @param int $width
+     * @param int $height
+     * @param int $format
+     * @param int $type
+     * @param \FFI\CData|null $pixels
      * @return void
      */
-    public function readPixels($x, $y, $width, $height, $format, $type, ?\FFI\CData $pixels): void
+    public function readPixels(int $x, int $y, int $width, int $height, int $format, int $type, ?\FFI\CData $pixels): void
     {
-        $x = $x instanceof \FFI\CData ? $x->cdata : $x;
-        $y = $y instanceof \FFI\CData ? $y->cdata : $y;
-        $width = $width instanceof \FFI\CData ? $width->cdata : $width;
-        $height = $height instanceof \FFI\CData ? $height->cdata : $height;
-        $format = $format instanceof \FFI\CData ? $format->cdata : $format;
-        $type = $type instanceof \FFI\CData ? $type->cdata : $type;
-
-        assert(Type::isInt16($x), 'Argument $x must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($y), 'Argument $y must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($width), 'Argument $width must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Type::isInt16($height), 'Argument $height must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Type::isUint16($format), 'Argument $format must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
-
         $this->info->ffi->glReadPixels($x, $y, $width, $height, $format, $type, $pixels);
     }
 
@@ -16605,24 +15520,14 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glRect
      * @since 1.1
-     * @param float|\FFI\CData|\FFI\CFloat $x1
-     * @param float|\FFI\CData|\FFI\CFloat $y1
-     * @param float|\FFI\CData|\FFI\CFloat $x2
-     * @param float|\FFI\CData|\FFI\CFloat $y2
+     * @param float $x1
+     * @param float $y1
+     * @param float $x2
+     * @param float $y2
      * @return void
      */
-    public function rectd($x1, $y1, $x2, $y2): void
+    public function rectd(float $x1, float $y1, float $x2, float $y2): void
     {
-        $x1 = $x1 instanceof \FFI\CData ? $x1->cdata : $x1;
-        $y1 = $y1 instanceof \FFI\CData ? $y1->cdata : $y1;
-        $x2 = $x2 instanceof \FFI\CData ? $x2->cdata : $x2;
-        $y2 = $y2 instanceof \FFI\CData ? $y2->cdata : $y2;
-
-        assert(Type::isFloat64($x1), 'Argument $x1 must be a C-like GLdouble, but incompatible or overflow value given');
-        assert(Type::isFloat64($y1), 'Argument $y1 must be a C-like GLdouble, but incompatible or overflow value given');
-        assert(Type::isFloat64($x2), 'Argument $x2 must be a C-like GLdouble, but incompatible or overflow value given');
-        assert(Type::isFloat64($y2), 'Argument $y2 must be a C-like GLdouble, but incompatible or overflow value given');
-
         $this->info->ffi->glRectd($x1, $y1, $x2, $y2);
     }
 
@@ -16650,8 +15555,8 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glRect
      * @since 1.1
-     * @param \FFI\CData|\FFI\CFloatPtr|null $v1
-     * @param \FFI\CData|\FFI\CFloatPtr|null $v2
+     * @param \FFI\CData|null $v1
+     * @param \FFI\CData|null $v2
      * @return void
      */
     public function rectdv(?\FFI\CData $v1, ?\FFI\CData $v2): void
@@ -16683,24 +15588,14 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glRect
      * @since 1.1
-     * @param float|\FFI\CData|\FFI\CFloat $x1
-     * @param float|\FFI\CData|\FFI\CFloat $y1
-     * @param float|\FFI\CData|\FFI\CFloat $x2
-     * @param float|\FFI\CData|\FFI\CFloat $y2
+     * @param float $x1
+     * @param float $y1
+     * @param float $x2
+     * @param float $y2
      * @return void
      */
-    public function rectf($x1, $y1, $x2, $y2): void
+    public function rectf(float $x1, float $y1, float $x2, float $y2): void
     {
-        $x1 = $x1 instanceof \FFI\CData ? $x1->cdata : $x1;
-        $y1 = $y1 instanceof \FFI\CData ? $y1->cdata : $y1;
-        $x2 = $x2 instanceof \FFI\CData ? $x2->cdata : $x2;
-        $y2 = $y2 instanceof \FFI\CData ? $y2->cdata : $y2;
-
-        assert(Type::isFloat32($x1), 'Argument $x1 must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Type::isFloat32($y1), 'Argument $y1 must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Type::isFloat32($x2), 'Argument $x2 must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Type::isFloat32($y2), 'Argument $y2 must be a C-like GLfloat, but incompatible or overflow value given');
-
         $this->info->ffi->glRectf($x1, $y1, $x2, $y2);
     }
 
@@ -16728,8 +15623,8 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glRect
      * @since 1.1
-     * @param \FFI\CData|\FFI\CFloatPtr|null $v1
-     * @param \FFI\CData|\FFI\CFloatPtr|null $v2
+     * @param \FFI\CData|null $v1
+     * @param \FFI\CData|null $v2
      * @return void
      */
     public function rectfv(?\FFI\CData $v1, ?\FFI\CData $v2): void
@@ -16761,24 +15656,14 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glRect
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $x1
-     * @param int|\FFI\CData|\FFI\CInt $y1
-     * @param int|\FFI\CData|\FFI\CInt $x2
-     * @param int|\FFI\CData|\FFI\CInt $y2
+     * @param int $x1
+     * @param int $y1
+     * @param int $x2
+     * @param int $y2
      * @return void
      */
-    public function recti($x1, $y1, $x2, $y2): void
+    public function recti(int $x1, int $y1, int $x2, int $y2): void
     {
-        $x1 = $x1 instanceof \FFI\CData ? $x1->cdata : $x1;
-        $y1 = $y1 instanceof \FFI\CData ? $y1->cdata : $y1;
-        $x2 = $x2 instanceof \FFI\CData ? $x2->cdata : $x2;
-        $y2 = $y2 instanceof \FFI\CData ? $y2->cdata : $y2;
-
-        assert(Type::isInt16($x1), 'Argument $x1 must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($y1), 'Argument $y1 must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($x2), 'Argument $x2 must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($y2), 'Argument $y2 must be a C-like GLint, but incompatible or overflow value given');
-
         $this->info->ffi->glRecti($x1, $y1, $x2, $y2);
     }
 
@@ -16806,8 +15691,8 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glRect
      * @since 1.1
-     * @param \FFI\CData|\FFI\CIntPtr|null $v1
-     * @param \FFI\CData|\FFI\CIntPtr|null $v2
+     * @param \FFI\CData|null $v1
+     * @param \FFI\CData|null $v2
      * @return void
      */
     public function rectiv(?\FFI\CData $v1, ?\FFI\CData $v2): void
@@ -16839,24 +15724,14 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glRect
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $x1
-     * @param int|\FFI\CData|\FFI\CInt $y1
-     * @param int|\FFI\CData|\FFI\CInt $x2
-     * @param int|\FFI\CData|\FFI\CInt $y2
+     * @param int $x1
+     * @param int $y1
+     * @param int $x2
+     * @param int $y2
      * @return void
      */
-    public function rects($x1, $y1, $x2, $y2): void
+    public function rects(int $x1, int $y1, int $x2, int $y2): void
     {
-        $x1 = $x1 instanceof \FFI\CData ? $x1->cdata : $x1;
-        $y1 = $y1 instanceof \FFI\CData ? $y1->cdata : $y1;
-        $x2 = $x2 instanceof \FFI\CData ? $x2->cdata : $x2;
-        $y2 = $y2 instanceof \FFI\CData ? $y2->cdata : $y2;
-
-        assert(Type::isInt16($x1), 'Argument $x1 must be a C-like GLshort, but incompatible or overflow value given');
-        assert(Type::isInt16($y1), 'Argument $y1 must be a C-like GLshort, but incompatible or overflow value given');
-        assert(Type::isInt16($x2), 'Argument $x2 must be a C-like GLshort, but incompatible or overflow value given');
-        assert(Type::isInt16($y2), 'Argument $y2 must be a C-like GLshort, but incompatible or overflow value given');
-
         $this->info->ffi->glRects($x1, $y1, $x2, $y2);
     }
 
@@ -16884,13 +15759,62 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glRect
      * @since 1.1
-     * @param \FFI\CData|\FFI\CIntPtr|null $v1
-     * @param \FFI\CData|\FFI\CIntPtr|null $v2
+     * @param \FFI\CData|null $v1
+     * @param \FFI\CData|null $v2
      * @return void
      */
     public function rectsv(?\FFI\CData $v1, ?\FFI\CData $v2): void
     {
         $this->info->ffi->glRectsv($v1, $v2);
+    }
+
+    /**
+     * {@see GL46::glRenderMode} sets the rasterization mode. It takes one argument, $mode, which can assume one of
+     * three predefined values:
+     *
+     *  - {@see GL46::GL_RENDER}: Render mode. Primitives are rasterized,
+     *    producing pixel fragments, which are written into the frame buffer.
+     *    This is the normal mode and also the default mode.
+     *
+     *  - {@see GL46::GL_SELECT}: Selection mode. No pixel fragments are
+     *    produced, and no change to the frame buffer contents is made. Instead,
+     *    a record of the names of primitives that would have been drawn if the
+     *    render mode had been
+     *    {@see GL46::GL_RENDER} is returned in a select buffer, which must be
+     *    created (see {@see GL46::glSelectBuffer})
+     *    before selection mode is entered.
+     *
+     *  - {@see GL46::GL_FEEDBACK}: Feedback mode. No pixel fragments are
+     *    produced, and no change to the frame buffer contents is made. Instead,
+     *    the coordinates and attributes of vertices that would have been drawn
+     *    if the render mode had been
+     *    {@see GL46::GL_RENDER} is returned in a feedback buffer, which must be
+     *    created (see
+     *    {@see GL46::glFeedbackBuffer}) before feedback mode is entered.
+     *
+     * The return value of {@see GL46::glRenderMode} is determined by the render mode at the time
+     * {@see GL46::glRenderMode} is called, rather than by $mode. The values returned for the three render modes are
+     * as follows:
+     *
+     *  - {@see GL46::GL_RENDER}: 0.
+     *
+     *  - {@see GL46::GL_SELECT}: The number of hit records transferred to the
+     *    select buffer.
+     *
+     *  - {@see GL46::GL_FEEDBACK}: The number of values (not vertices)
+     *    transferred to the feedback buffer.
+     *
+     * See the {@see GL46::glSelectBuffer} and {@see GL46::glFeedbackBuffer} reference pages for more details
+     * concerning selection and feedback operation.
+     *
+     * @see http://docs.gl/gl2/glRenderMode
+     * @since 1.1
+     * @param int $mode
+     * @return int
+     */
+    public function renderMode(int $mode): int
+    {
+        return $this->info->ffi->glRenderMode($mode);
     }
 
     /**
@@ -16913,24 +15837,14 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glRotate
      * @since 1.1
-     * @param float|\FFI\CData|\FFI\CFloat $angle
-     * @param float|\FFI\CData|\FFI\CFloat $x
-     * @param float|\FFI\CData|\FFI\CFloat $y
-     * @param float|\FFI\CData|\FFI\CFloat $z
+     * @param float $angle
+     * @param float $x
+     * @param float $y
+     * @param float $z
      * @return void
      */
-    public function rotated($angle, $x, $y, $z): void
+    public function rotated(float $angle, float $x, float $y, float $z): void
     {
-        $angle = $angle instanceof \FFI\CData ? $angle->cdata : $angle;
-        $x = $x instanceof \FFI\CData ? $x->cdata : $x;
-        $y = $y instanceof \FFI\CData ? $y->cdata : $y;
-        $z = $z instanceof \FFI\CData ? $z->cdata : $z;
-
-        assert(Type::isFloat64($angle), 'Argument $angle must be a C-like GLdouble, but incompatible or overflow value given');
-        assert(Type::isFloat64($x), 'Argument $x must be a C-like GLdouble, but incompatible or overflow value given');
-        assert(Type::isFloat64($y), 'Argument $y must be a C-like GLdouble, but incompatible or overflow value given');
-        assert(Type::isFloat64($z), 'Argument $z must be a C-like GLdouble, but incompatible or overflow value given');
-
         $this->info->ffi->glRotated($angle, $x, $y, $z);
     }
 
@@ -16954,24 +15868,14 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glRotate
      * @since 1.1
-     * @param float|\FFI\CData|\FFI\CFloat $angle
-     * @param float|\FFI\CData|\FFI\CFloat $x
-     * @param float|\FFI\CData|\FFI\CFloat $y
-     * @param float|\FFI\CData|\FFI\CFloat $z
+     * @param float $angle
+     * @param float $x
+     * @param float $y
+     * @param float $z
      * @return void
      */
-    public function rotatef($angle, $x, $y, $z): void
+    public function rotatef(float $angle, float $x, float $y, float $z): void
     {
-        $angle = $angle instanceof \FFI\CData ? $angle->cdata : $angle;
-        $x = $x instanceof \FFI\CData ? $x->cdata : $x;
-        $y = $y instanceof \FFI\CData ? $y->cdata : $y;
-        $z = $z instanceof \FFI\CData ? $z->cdata : $z;
-
-        assert(Type::isFloat32($angle), 'Argument $angle must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Type::isFloat32($x), 'Argument $x must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Type::isFloat32($y), 'Argument $y must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Type::isFloat32($z), 'Argument $z must be a C-like GLfloat, but incompatible or overflow value given');
-
         $this->info->ffi->glRotatef($angle, $x, $y, $z);
     }
 
@@ -16992,21 +15896,13 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glScale
      * @since 1.1
-     * @param float|\FFI\CData|\FFI\CFloat $x
-     * @param float|\FFI\CData|\FFI\CFloat $y
-     * @param float|\FFI\CData|\FFI\CFloat $z
+     * @param float $x
+     * @param float $y
+     * @param float $z
      * @return void
      */
-    public function scaled($x, $y, $z): void
+    public function scaled(float $x, float $y, float $z): void
     {
-        $x = $x instanceof \FFI\CData ? $x->cdata : $x;
-        $y = $y instanceof \FFI\CData ? $y->cdata : $y;
-        $z = $z instanceof \FFI\CData ? $z->cdata : $z;
-
-        assert(Type::isFloat64($x), 'Argument $x must be a C-like GLdouble, but incompatible or overflow value given');
-        assert(Type::isFloat64($y), 'Argument $y must be a C-like GLdouble, but incompatible or overflow value given');
-        assert(Type::isFloat64($z), 'Argument $z must be a C-like GLdouble, but incompatible or overflow value given');
-
         $this->info->ffi->glScaled($x, $y, $z);
     }
 
@@ -17027,21 +15923,13 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glScale
      * @since 1.1
-     * @param float|\FFI\CData|\FFI\CFloat $x
-     * @param float|\FFI\CData|\FFI\CFloat $y
-     * @param float|\FFI\CData|\FFI\CFloat $z
+     * @param float $x
+     * @param float $y
+     * @param float $z
      * @return void
      */
-    public function scalef($x, $y, $z): void
+    public function scalef(float $x, float $y, float $z): void
     {
-        $x = $x instanceof \FFI\CData ? $x->cdata : $x;
-        $y = $y instanceof \FFI\CData ? $y->cdata : $y;
-        $z = $z instanceof \FFI\CData ? $z->cdata : $z;
-
-        assert(Type::isFloat32($x), 'Argument $x must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Type::isFloat32($y), 'Argument $y must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Type::isFloat32($z), 'Argument $z must be a C-like GLfloat, but incompatible or overflow value given');
-
         $this->info->ffi->glScalef($x, $y, $z);
     }
 
@@ -17061,24 +15949,14 @@ class GL11 extends GL
      * @see http://docs.gl/gl2/glScissor
      * @see http://docs.gl/gl4/glScissor
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $x
-     * @param int|\FFI\CData|\FFI\CInt $y
-     * @param int|\FFI\CData|\FFI\CInt $width
-     * @param int|\FFI\CData|\FFI\CInt $height
+     * @param int $x
+     * @param int $y
+     * @param int $width
+     * @param int $height
      * @return void
      */
-    public function scissor($x, $y, $width, $height): void
+    public function scissor(int $x, int $y, int $width, int $height): void
     {
-        $x = $x instanceof \FFI\CData ? $x->cdata : $x;
-        $y = $y instanceof \FFI\CData ? $y->cdata : $y;
-        $width = $width instanceof \FFI\CData ? $width->cdata : $width;
-        $height = $height instanceof \FFI\CData ? $height->cdata : $height;
-
-        assert(Type::isInt16($x), 'Argument $x must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($y), 'Argument $y must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($width), 'Argument $width must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Type::isInt16($height), 'Argument $height must be a C-like GLsizei, but incompatible or overflow value given');
-
         $this->info->ffi->glScissor($x, $y, $width, $height);
     }
 
@@ -17118,17 +15996,19 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glSelectBuffer
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $size
-     * @param \FFI\CData|\FFI\CIntPtr|null $buffer
+     * @param int $size
+     * @param int|null $buffer
      * @return void
      */
-    public function selectBuffer($size, ?\FFI\CData $buffer): void
+    public function selectBuffer(int $size, ?int &$buffer): void
     {
-        $size = $size instanceof \FFI\CData ? $size->cdata : $size;
-
-        assert(Type::isInt16($size), 'Argument $size must be a C-like GLsizei, but incompatible or overflow value given');
-
-        $this->info->ffi->glSelectBuffer($size, $buffer);
+        $bufferCType = $this->info->ffi->new('GLuint', false);
+        try {
+            $this->info->ffi->glSelectBuffer($size, \FFI::addr($bufferCType));
+        } finally {
+            $buffer = $bufferCType->cdata;
+            \FFI::free($bufferCType);
+        }
     }
 
     /**
@@ -17156,15 +16036,11 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glShadeModel
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $mode
+     * @param int $mode
      * @return void
      */
-    public function shadeModel($mode): void
+    public function shadeModel(int $mode): void
     {
-        $mode = $mode instanceof \FFI\CData ? $mode->cdata : $mode;
-
-        assert(Type::isUint16($mode), 'Argument $mode must be a C-like GLenum, but incompatible or overflow value given');
-
         $this->info->ffi->glShadeModel($mode);
     }
 
@@ -17223,21 +16099,13 @@ class GL11 extends GL
      * @see http://docs.gl/gl2/glStencilFunc
      * @see http://docs.gl/gl4/glStencilFunc
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $func
-     * @param int|\FFI\CData|\FFI\CInt $ref
-     * @param int|\FFI\CData|\FFI\CInt $mask
+     * @param int $func
+     * @param int $ref
+     * @param int $mask
      * @return void
      */
-    public function stencilFunc($func, $ref, $mask): void
+    public function stencilFunc(int $func, int $ref, int $mask): void
     {
-        $func = $func instanceof \FFI\CData ? $func->cdata : $func;
-        $ref = $ref instanceof \FFI\CData ? $ref->cdata : $ref;
-        $mask = $mask instanceof \FFI\CData ? $mask->cdata : $mask;
-
-        assert(Type::isUint16($func), 'Argument $func must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isInt16($ref), 'Argument $ref must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isUint16($mask), 'Argument $mask must be a C-like GLuint, but incompatible or overflow value given');
-
         $this->info->ffi->glStencilFunc($func, $ref, $mask);
     }
 
@@ -17255,15 +16123,11 @@ class GL11 extends GL
      * @see http://docs.gl/gl2/glStencilMask
      * @see http://docs.gl/gl4/glStencilMask
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $mask
+     * @param int $mask
      * @return void
      */
-    public function stencilMask($mask): void
+    public function stencilMask(int $mask): void
     {
-        $mask = $mask instanceof \FFI\CData ? $mask->cdata : $mask;
-
-        assert(Type::isUint16($mask), 'Argument $mask must be a C-like GLuint, but incompatible or overflow value given');
-
         $this->info->ffi->glStencilMask($mask);
     }
 
@@ -17325,21 +16189,13 @@ class GL11 extends GL
      * @see http://docs.gl/gl2/glStencilOp
      * @see http://docs.gl/gl4/glStencilOp
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $fail
-     * @param int|\FFI\CData|\FFI\CInt $zfail
-     * @param int|\FFI\CData|\FFI\CInt $zpass
+     * @param int $fail
+     * @param int $zfail
+     * @param int $zpass
      * @return void
      */
-    public function stencilOp($fail, $zfail, $zpass): void
+    public function stencilOp(int $fail, int $zfail, int $zpass): void
     {
-        $fail = $fail instanceof \FFI\CData ? $fail->cdata : $fail;
-        $zfail = $zfail instanceof \FFI\CData ? $zfail->cdata : $zfail;
-        $zpass = $zpass instanceof \FFI\CData ? $zpass->cdata : $zpass;
-
-        assert(Type::isUint16($fail), 'Argument $fail must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($zfail), 'Argument $zfail must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($zpass), 'Argument $zpass must be a C-like GLenum, but incompatible or overflow value given');
-
         $this->info->ffi->glStencilOp($fail, $zfail, $zpass);
     }
 
@@ -17355,15 +16211,11 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glTexCoord
      * @since 1.1
-     * @param float|\FFI\CData|\FFI\CFloat $s
+     * @param float $s
      * @return void
      */
-    public function texCoord1d($s): void
+    public function texCoord1d(float $s): void
     {
-        $s = $s instanceof \FFI\CData ? $s->cdata : $s;
-
-        assert(Type::isFloat64($s), 'Argument $s must be a C-like GLdouble, but incompatible or overflow value given');
-
         $this->info->ffi->glTexCoord1d($s);
     }
 
@@ -17379,7 +16231,7 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glTexCoord
      * @since 1.1
-     * @param \FFI\CData|\FFI\CFloatPtr|null $v
+     * @param \FFI\CData|null $v
      * @return void
      */
     public function texCoord1dv(?\FFI\CData $v): void
@@ -17399,15 +16251,11 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glTexCoord
      * @since 1.1
-     * @param float|\FFI\CData|\FFI\CFloat $s
+     * @param float $s
      * @return void
      */
-    public function texCoord1f($s): void
+    public function texCoord1f(float $s): void
     {
-        $s = $s instanceof \FFI\CData ? $s->cdata : $s;
-
-        assert(Type::isFloat32($s), 'Argument $s must be a C-like GLfloat, but incompatible or overflow value given');
-
         $this->info->ffi->glTexCoord1f($s);
     }
 
@@ -17423,7 +16271,7 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glTexCoord
      * @since 1.1
-     * @param \FFI\CData|\FFI\CFloatPtr|null $v
+     * @param \FFI\CData|null $v
      * @return void
      */
     public function texCoord1fv(?\FFI\CData $v): void
@@ -17443,15 +16291,11 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glTexCoord
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $s
+     * @param int $s
      * @return void
      */
-    public function texCoord1i($s): void
+    public function texCoord1i(int $s): void
     {
-        $s = $s instanceof \FFI\CData ? $s->cdata : $s;
-
-        assert(Type::isInt16($s), 'Argument $s must be a C-like GLint, but incompatible or overflow value given');
-
         $this->info->ffi->glTexCoord1i($s);
     }
 
@@ -17467,7 +16311,7 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glTexCoord
      * @since 1.1
-     * @param \FFI\CData|\FFI\CIntPtr|null $v
+     * @param \FFI\CData|null $v
      * @return void
      */
     public function texCoord1iv(?\FFI\CData $v): void
@@ -17487,15 +16331,11 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glTexCoord
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $s
+     * @param int $s
      * @return void
      */
-    public function texCoord1s($s): void
+    public function texCoord1s(int $s): void
     {
-        $s = $s instanceof \FFI\CData ? $s->cdata : $s;
-
-        assert(Type::isInt16($s), 'Argument $s must be a C-like GLshort, but incompatible or overflow value given');
-
         $this->info->ffi->glTexCoord1s($s);
     }
 
@@ -17511,7 +16351,7 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glTexCoord
      * @since 1.1
-     * @param \FFI\CData|\FFI\CIntPtr|null $v
+     * @param \FFI\CData|null $v
      * @return void
      */
     public function texCoord1sv(?\FFI\CData $v): void
@@ -17531,18 +16371,12 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glTexCoord
      * @since 1.1
-     * @param float|\FFI\CData|\FFI\CFloat $s
-     * @param float|\FFI\CData|\FFI\CFloat $t
+     * @param float $s
+     * @param float $t
      * @return void
      */
-    public function texCoord2d($s, $t): void
+    public function texCoord2d(float $s, float $t): void
     {
-        $s = $s instanceof \FFI\CData ? $s->cdata : $s;
-        $t = $t instanceof \FFI\CData ? $t->cdata : $t;
-
-        assert(Type::isFloat64($s), 'Argument $s must be a C-like GLdouble, but incompatible or overflow value given');
-        assert(Type::isFloat64($t), 'Argument $t must be a C-like GLdouble, but incompatible or overflow value given');
-
         $this->info->ffi->glTexCoord2d($s, $t);
     }
 
@@ -17558,7 +16392,7 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glTexCoord
      * @since 1.1
-     * @param \FFI\CData|\FFI\CFloatPtr|null $v
+     * @param \FFI\CData|null $v
      * @return void
      */
     public function texCoord2dv(?\FFI\CData $v): void
@@ -17578,18 +16412,12 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glTexCoord
      * @since 1.1
-     * @param float|\FFI\CData|\FFI\CFloat $s
-     * @param float|\FFI\CData|\FFI\CFloat $t
+     * @param float $s
+     * @param float $t
      * @return void
      */
-    public function texCoord2f($s, $t): void
+    public function texCoord2f(float $s, float $t): void
     {
-        $s = $s instanceof \FFI\CData ? $s->cdata : $s;
-        $t = $t instanceof \FFI\CData ? $t->cdata : $t;
-
-        assert(Type::isFloat32($s), 'Argument $s must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Type::isFloat32($t), 'Argument $t must be a C-like GLfloat, but incompatible or overflow value given');
-
         $this->info->ffi->glTexCoord2f($s, $t);
     }
 
@@ -17605,7 +16433,7 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glTexCoord
      * @since 1.1
-     * @param \FFI\CData|\FFI\CFloatPtr|null $v
+     * @param \FFI\CData|null $v
      * @return void
      */
     public function texCoord2fv(?\FFI\CData $v): void
@@ -17625,18 +16453,12 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glTexCoord
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $s
-     * @param int|\FFI\CData|\FFI\CInt $t
+     * @param int $s
+     * @param int $t
      * @return void
      */
-    public function texCoord2i($s, $t): void
+    public function texCoord2i(int $s, int $t): void
     {
-        $s = $s instanceof \FFI\CData ? $s->cdata : $s;
-        $t = $t instanceof \FFI\CData ? $t->cdata : $t;
-
-        assert(Type::isInt16($s), 'Argument $s must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($t), 'Argument $t must be a C-like GLint, but incompatible or overflow value given');
-
         $this->info->ffi->glTexCoord2i($s, $t);
     }
 
@@ -17652,7 +16474,7 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glTexCoord
      * @since 1.1
-     * @param \FFI\CData|\FFI\CIntPtr|null $v
+     * @param \FFI\CData|null $v
      * @return void
      */
     public function texCoord2iv(?\FFI\CData $v): void
@@ -17672,18 +16494,12 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glTexCoord
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $s
-     * @param int|\FFI\CData|\FFI\CInt $t
+     * @param int $s
+     * @param int $t
      * @return void
      */
-    public function texCoord2s($s, $t): void
+    public function texCoord2s(int $s, int $t): void
     {
-        $s = $s instanceof \FFI\CData ? $s->cdata : $s;
-        $t = $t instanceof \FFI\CData ? $t->cdata : $t;
-
-        assert(Type::isInt16($s), 'Argument $s must be a C-like GLshort, but incompatible or overflow value given');
-        assert(Type::isInt16($t), 'Argument $t must be a C-like GLshort, but incompatible or overflow value given');
-
         $this->info->ffi->glTexCoord2s($s, $t);
     }
 
@@ -17699,7 +16515,7 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glTexCoord
      * @since 1.1
-     * @param \FFI\CData|\FFI\CIntPtr|null $v
+     * @param \FFI\CData|null $v
      * @return void
      */
     public function texCoord2sv(?\FFI\CData $v): void
@@ -17719,21 +16535,13 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glTexCoord
      * @since 1.1
-     * @param float|\FFI\CData|\FFI\CFloat $s
-     * @param float|\FFI\CData|\FFI\CFloat $t
-     * @param float|\FFI\CData|\FFI\CFloat $r
+     * @param float $s
+     * @param float $t
+     * @param float $r
      * @return void
      */
-    public function texCoord3d($s, $t, $r): void
+    public function texCoord3d(float $s, float $t, float $r): void
     {
-        $s = $s instanceof \FFI\CData ? $s->cdata : $s;
-        $t = $t instanceof \FFI\CData ? $t->cdata : $t;
-        $r = $r instanceof \FFI\CData ? $r->cdata : $r;
-
-        assert(Type::isFloat64($s), 'Argument $s must be a C-like GLdouble, but incompatible or overflow value given');
-        assert(Type::isFloat64($t), 'Argument $t must be a C-like GLdouble, but incompatible or overflow value given');
-        assert(Type::isFloat64($r), 'Argument $r must be a C-like GLdouble, but incompatible or overflow value given');
-
         $this->info->ffi->glTexCoord3d($s, $t, $r);
     }
 
@@ -17749,7 +16557,7 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glTexCoord
      * @since 1.1
-     * @param \FFI\CData|\FFI\CFloatPtr|null $v
+     * @param \FFI\CData|null $v
      * @return void
      */
     public function texCoord3dv(?\FFI\CData $v): void
@@ -17769,21 +16577,13 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glTexCoord
      * @since 1.1
-     * @param float|\FFI\CData|\FFI\CFloat $s
-     * @param float|\FFI\CData|\FFI\CFloat $t
-     * @param float|\FFI\CData|\FFI\CFloat $r
+     * @param float $s
+     * @param float $t
+     * @param float $r
      * @return void
      */
-    public function texCoord3f($s, $t, $r): void
+    public function texCoord3f(float $s, float $t, float $r): void
     {
-        $s = $s instanceof \FFI\CData ? $s->cdata : $s;
-        $t = $t instanceof \FFI\CData ? $t->cdata : $t;
-        $r = $r instanceof \FFI\CData ? $r->cdata : $r;
-
-        assert(Type::isFloat32($s), 'Argument $s must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Type::isFloat32($t), 'Argument $t must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Type::isFloat32($r), 'Argument $r must be a C-like GLfloat, but incompatible or overflow value given');
-
         $this->info->ffi->glTexCoord3f($s, $t, $r);
     }
 
@@ -17799,7 +16599,7 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glTexCoord
      * @since 1.1
-     * @param \FFI\CData|\FFI\CFloatPtr|null $v
+     * @param \FFI\CData|null $v
      * @return void
      */
     public function texCoord3fv(?\FFI\CData $v): void
@@ -17819,21 +16619,13 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glTexCoord
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $s
-     * @param int|\FFI\CData|\FFI\CInt $t
-     * @param int|\FFI\CData|\FFI\CInt $r
+     * @param int $s
+     * @param int $t
+     * @param int $r
      * @return void
      */
-    public function texCoord3i($s, $t, $r): void
+    public function texCoord3i(int $s, int $t, int $r): void
     {
-        $s = $s instanceof \FFI\CData ? $s->cdata : $s;
-        $t = $t instanceof \FFI\CData ? $t->cdata : $t;
-        $r = $r instanceof \FFI\CData ? $r->cdata : $r;
-
-        assert(Type::isInt16($s), 'Argument $s must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($t), 'Argument $t must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($r), 'Argument $r must be a C-like GLint, but incompatible or overflow value given');
-
         $this->info->ffi->glTexCoord3i($s, $t, $r);
     }
 
@@ -17849,7 +16641,7 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glTexCoord
      * @since 1.1
-     * @param \FFI\CData|\FFI\CIntPtr|null $v
+     * @param \FFI\CData|null $v
      * @return void
      */
     public function texCoord3iv(?\FFI\CData $v): void
@@ -17869,21 +16661,13 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glTexCoord
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $s
-     * @param int|\FFI\CData|\FFI\CInt $t
-     * @param int|\FFI\CData|\FFI\CInt $r
+     * @param int $s
+     * @param int $t
+     * @param int $r
      * @return void
      */
-    public function texCoord3s($s, $t, $r): void
+    public function texCoord3s(int $s, int $t, int $r): void
     {
-        $s = $s instanceof \FFI\CData ? $s->cdata : $s;
-        $t = $t instanceof \FFI\CData ? $t->cdata : $t;
-        $r = $r instanceof \FFI\CData ? $r->cdata : $r;
-
-        assert(Type::isInt16($s), 'Argument $s must be a C-like GLshort, but incompatible or overflow value given');
-        assert(Type::isInt16($t), 'Argument $t must be a C-like GLshort, but incompatible or overflow value given');
-        assert(Type::isInt16($r), 'Argument $r must be a C-like GLshort, but incompatible or overflow value given');
-
         $this->info->ffi->glTexCoord3s($s, $t, $r);
     }
 
@@ -17899,7 +16683,7 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glTexCoord
      * @since 1.1
-     * @param \FFI\CData|\FFI\CIntPtr|null $v
+     * @param \FFI\CData|null $v
      * @return void
      */
     public function texCoord3sv(?\FFI\CData $v): void
@@ -17919,24 +16703,14 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glTexCoord
      * @since 1.1
-     * @param float|\FFI\CData|\FFI\CFloat $s
-     * @param float|\FFI\CData|\FFI\CFloat $t
-     * @param float|\FFI\CData|\FFI\CFloat $r
-     * @param float|\FFI\CData|\FFI\CFloat $q
+     * @param float $s
+     * @param float $t
+     * @param float $r
+     * @param float $q
      * @return void
      */
-    public function texCoord4d($s, $t, $r, $q): void
+    public function texCoord4d(float $s, float $t, float $r, float $q): void
     {
-        $s = $s instanceof \FFI\CData ? $s->cdata : $s;
-        $t = $t instanceof \FFI\CData ? $t->cdata : $t;
-        $r = $r instanceof \FFI\CData ? $r->cdata : $r;
-        $q = $q instanceof \FFI\CData ? $q->cdata : $q;
-
-        assert(Type::isFloat64($s), 'Argument $s must be a C-like GLdouble, but incompatible or overflow value given');
-        assert(Type::isFloat64($t), 'Argument $t must be a C-like GLdouble, but incompatible or overflow value given');
-        assert(Type::isFloat64($r), 'Argument $r must be a C-like GLdouble, but incompatible or overflow value given');
-        assert(Type::isFloat64($q), 'Argument $q must be a C-like GLdouble, but incompatible or overflow value given');
-
         $this->info->ffi->glTexCoord4d($s, $t, $r, $q);
     }
 
@@ -17952,7 +16726,7 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glTexCoord
      * @since 1.1
-     * @param \FFI\CData|\FFI\CFloatPtr|null $v
+     * @param \FFI\CData|null $v
      * @return void
      */
     public function texCoord4dv(?\FFI\CData $v): void
@@ -17972,24 +16746,14 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glTexCoord
      * @since 1.1
-     * @param float|\FFI\CData|\FFI\CFloat $s
-     * @param float|\FFI\CData|\FFI\CFloat $t
-     * @param float|\FFI\CData|\FFI\CFloat $r
-     * @param float|\FFI\CData|\FFI\CFloat $q
+     * @param float $s
+     * @param float $t
+     * @param float $r
+     * @param float $q
      * @return void
      */
-    public function texCoord4f($s, $t, $r, $q): void
+    public function texCoord4f(float $s, float $t, float $r, float $q): void
     {
-        $s = $s instanceof \FFI\CData ? $s->cdata : $s;
-        $t = $t instanceof \FFI\CData ? $t->cdata : $t;
-        $r = $r instanceof \FFI\CData ? $r->cdata : $r;
-        $q = $q instanceof \FFI\CData ? $q->cdata : $q;
-
-        assert(Type::isFloat32($s), 'Argument $s must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Type::isFloat32($t), 'Argument $t must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Type::isFloat32($r), 'Argument $r must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Type::isFloat32($q), 'Argument $q must be a C-like GLfloat, but incompatible or overflow value given');
-
         $this->info->ffi->glTexCoord4f($s, $t, $r, $q);
     }
 
@@ -18005,7 +16769,7 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glTexCoord
      * @since 1.1
-     * @param \FFI\CData|\FFI\CFloatPtr|null $v
+     * @param \FFI\CData|null $v
      * @return void
      */
     public function texCoord4fv(?\FFI\CData $v): void
@@ -18025,24 +16789,14 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glTexCoord
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $s
-     * @param int|\FFI\CData|\FFI\CInt $t
-     * @param int|\FFI\CData|\FFI\CInt $r
-     * @param int|\FFI\CData|\FFI\CInt $q
+     * @param int $s
+     * @param int $t
+     * @param int $r
+     * @param int $q
      * @return void
      */
-    public function texCoord4i($s, $t, $r, $q): void
+    public function texCoord4i(int $s, int $t, int $r, int $q): void
     {
-        $s = $s instanceof \FFI\CData ? $s->cdata : $s;
-        $t = $t instanceof \FFI\CData ? $t->cdata : $t;
-        $r = $r instanceof \FFI\CData ? $r->cdata : $r;
-        $q = $q instanceof \FFI\CData ? $q->cdata : $q;
-
-        assert(Type::isInt16($s), 'Argument $s must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($t), 'Argument $t must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($r), 'Argument $r must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($q), 'Argument $q must be a C-like GLint, but incompatible or overflow value given');
-
         $this->info->ffi->glTexCoord4i($s, $t, $r, $q);
     }
 
@@ -18058,7 +16812,7 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glTexCoord
      * @since 1.1
-     * @param \FFI\CData|\FFI\CIntPtr|null $v
+     * @param \FFI\CData|null $v
      * @return void
      */
     public function texCoord4iv(?\FFI\CData $v): void
@@ -18078,24 +16832,14 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glTexCoord
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $s
-     * @param int|\FFI\CData|\FFI\CInt $t
-     * @param int|\FFI\CData|\FFI\CInt $r
-     * @param int|\FFI\CData|\FFI\CInt $q
+     * @param int $s
+     * @param int $t
+     * @param int $r
+     * @param int $q
      * @return void
      */
-    public function texCoord4s($s, $t, $r, $q): void
+    public function texCoord4s(int $s, int $t, int $r, int $q): void
     {
-        $s = $s instanceof \FFI\CData ? $s->cdata : $s;
-        $t = $t instanceof \FFI\CData ? $t->cdata : $t;
-        $r = $r instanceof \FFI\CData ? $r->cdata : $r;
-        $q = $q instanceof \FFI\CData ? $q->cdata : $q;
-
-        assert(Type::isInt16($s), 'Argument $s must be a C-like GLshort, but incompatible or overflow value given');
-        assert(Type::isInt16($t), 'Argument $t must be a C-like GLshort, but incompatible or overflow value given');
-        assert(Type::isInt16($r), 'Argument $r must be a C-like GLshort, but incompatible or overflow value given');
-        assert(Type::isInt16($q), 'Argument $q must be a C-like GLshort, but incompatible or overflow value given');
-
         $this->info->ffi->glTexCoord4s($s, $t, $r, $q);
     }
 
@@ -18111,7 +16855,7 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glTexCoord
      * @since 1.1
-     * @param \FFI\CData|\FFI\CIntPtr|null $v
+     * @param \FFI\CData|null $v
      * @return void
      */
     public function texCoord4sv(?\FFI\CData $v): void
@@ -18144,22 +16888,14 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glTexCoordPointer
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $size
-     * @param int|\FFI\CData|\FFI\CInt $type
-     * @param int|\FFI\CData|\FFI\CInt $stride
-     * @param \FFI\CData|\FFI\CPtr|null $pointer
+     * @param int $size
+     * @param int $type
+     * @param int $stride
+     * @param \FFI\CData|null $pointer
      * @return void
      */
-    public function texCoordPointer($size, $type, $stride, ?\FFI\CData $pointer): void
+    public function texCoordPointer(int $size, int $type, int $stride, ?\FFI\CData $pointer): void
     {
-        $size = $size instanceof \FFI\CData ? $size->cdata : $size;
-        $type = $type instanceof \FFI\CData ? $type->cdata : $type;
-        $stride = $stride instanceof \FFI\CData ? $stride->cdata : $stride;
-
-        assert(Type::isInt16($size), 'Argument $size must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isUint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isInt16($stride), 'Argument $stride must be a C-like GLsizei, but incompatible or overflow value given');
-
         $this->info->ffi->glTexCoordPointer($size, $type, $stride, $pointer);
     }
 
@@ -18307,21 +17043,13 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glTexEnv
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $target
-     * @param int|\FFI\CData|\FFI\CInt $pname
-     * @param float|\FFI\CData|\FFI\CFloat $param
+     * @param int $target
+     * @param int $pname
+     * @param float $param
      * @return void
      */
-    public function texEnvf($target, $pname, $param): void
+    public function texEnvf(int $target, int $pname, float $param): void
     {
-        $target = $target instanceof \FFI\CData ? $target->cdata : $target;
-        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
-        $param = $param instanceof \FFI\CData ? $param->cdata : $param;
-
-        assert(Type::isUint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isFloat32($param), 'Argument $param must be a C-like GLfloat, but incompatible or overflow value given');
-
         $this->info->ffi->glTexEnvf($target, $pname, $param);
     }
 
@@ -18469,19 +17197,13 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glTexEnv
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $target
-     * @param int|\FFI\CData|\FFI\CInt $pname
-     * @param \FFI\CData|\FFI\CFloatPtr|null $params
+     * @param int $target
+     * @param int $pname
+     * @param \FFI\CData|null $params
      * @return void
      */
-    public function texEnvfv($target, $pname, ?\FFI\CData $params): void
+    public function texEnvfv(int $target, int $pname, ?\FFI\CData $params): void
     {
-        $target = $target instanceof \FFI\CData ? $target->cdata : $target;
-        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
-
-        assert(Type::isUint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-
         $this->info->ffi->glTexEnvfv($target, $pname, $params);
     }
 
@@ -18629,21 +17351,13 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glTexEnv
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $target
-     * @param int|\FFI\CData|\FFI\CInt $pname
-     * @param int|\FFI\CData|\FFI\CInt $param
+     * @param int $target
+     * @param int $pname
+     * @param int $param
      * @return void
      */
-    public function texEnvi($target, $pname, $param): void
+    public function texEnvi(int $target, int $pname, int $param): void
     {
-        $target = $target instanceof \FFI\CData ? $target->cdata : $target;
-        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
-        $param = $param instanceof \FFI\CData ? $param->cdata : $param;
-
-        assert(Type::isUint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isInt16($param), 'Argument $param must be a C-like GLint, but incompatible or overflow value given');
-
         $this->info->ffi->glTexEnvi($target, $pname, $param);
     }
 
@@ -18791,19 +17505,13 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glTexEnv
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $target
-     * @param int|\FFI\CData|\FFI\CInt $pname
-     * @param \FFI\CData|\FFI\CIntPtr|null $params
+     * @param int $target
+     * @param int $pname
+     * @param \FFI\CData|null $params
      * @return void
      */
-    public function texEnviv($target, $pname, ?\FFI\CData $params): void
+    public function texEnviv(int $target, int $pname, ?\FFI\CData $params): void
     {
-        $target = $target instanceof \FFI\CData ? $target->cdata : $target;
-        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
-
-        assert(Type::isUint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-
         $this->info->ffi->glTexEnviv($target, $pname, $params);
     }
 
@@ -18878,21 +17586,13 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glTexGen
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $coord
-     * @param int|\FFI\CData|\FFI\CInt $pname
-     * @param float|\FFI\CData|\FFI\CFloat $param
+     * @param int $coord
+     * @param int $pname
+     * @param float $param
      * @return void
      */
-    public function texGend($coord, $pname, $param): void
+    public function texGend(int $coord, int $pname, float $param): void
     {
-        $coord = $coord instanceof \FFI\CData ? $coord->cdata : $coord;
-        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
-        $param = $param instanceof \FFI\CData ? $param->cdata : $param;
-
-        assert(Type::isUint16($coord), 'Argument $coord must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isFloat64($param), 'Argument $param must be a C-like GLdouble, but incompatible or overflow value given');
-
         $this->info->ffi->glTexGend($coord, $pname, $param);
     }
 
@@ -18967,19 +17667,13 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glTexGen
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $coord
-     * @param int|\FFI\CData|\FFI\CInt $pname
-     * @param \FFI\CData|\FFI\CFloatPtr|null $params
+     * @param int $coord
+     * @param int $pname
+     * @param \FFI\CData|null $params
      * @return void
      */
-    public function texGendv($coord, $pname, ?\FFI\CData $params): void
+    public function texGendv(int $coord, int $pname, ?\FFI\CData $params): void
     {
-        $coord = $coord instanceof \FFI\CData ? $coord->cdata : $coord;
-        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
-
-        assert(Type::isUint16($coord), 'Argument $coord must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-
         $this->info->ffi->glTexGendv($coord, $pname, $params);
     }
 
@@ -19054,21 +17748,13 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glTexGen
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $coord
-     * @param int|\FFI\CData|\FFI\CInt $pname
-     * @param float|\FFI\CData|\FFI\CFloat $param
+     * @param int $coord
+     * @param int $pname
+     * @param float $param
      * @return void
      */
-    public function texGenf($coord, $pname, $param): void
+    public function texGenf(int $coord, int $pname, float $param): void
     {
-        $coord = $coord instanceof \FFI\CData ? $coord->cdata : $coord;
-        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
-        $param = $param instanceof \FFI\CData ? $param->cdata : $param;
-
-        assert(Type::isUint16($coord), 'Argument $coord must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isFloat32($param), 'Argument $param must be a C-like GLfloat, but incompatible or overflow value given');
-
         $this->info->ffi->glTexGenf($coord, $pname, $param);
     }
 
@@ -19143,19 +17829,13 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glTexGen
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $coord
-     * @param int|\FFI\CData|\FFI\CInt $pname
-     * @param \FFI\CData|\FFI\CFloatPtr|null $params
+     * @param int $coord
+     * @param int $pname
+     * @param \FFI\CData|null $params
      * @return void
      */
-    public function texGenfv($coord, $pname, ?\FFI\CData $params): void
+    public function texGenfv(int $coord, int $pname, ?\FFI\CData $params): void
     {
-        $coord = $coord instanceof \FFI\CData ? $coord->cdata : $coord;
-        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
-
-        assert(Type::isUint16($coord), 'Argument $coord must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-
         $this->info->ffi->glTexGenfv($coord, $pname, $params);
     }
 
@@ -19230,21 +17910,13 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glTexGen
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $coord
-     * @param int|\FFI\CData|\FFI\CInt $pname
-     * @param int|\FFI\CData|\FFI\CInt $param
+     * @param int $coord
+     * @param int $pname
+     * @param int $param
      * @return void
      */
-    public function texGeni($coord, $pname, $param): void
+    public function texGeni(int $coord, int $pname, int $param): void
     {
-        $coord = $coord instanceof \FFI\CData ? $coord->cdata : $coord;
-        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
-        $param = $param instanceof \FFI\CData ? $param->cdata : $param;
-
-        assert(Type::isUint16($coord), 'Argument $coord must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isInt16($param), 'Argument $param must be a C-like GLint, but incompatible or overflow value given');
-
         $this->info->ffi->glTexGeni($coord, $pname, $param);
     }
 
@@ -19319,19 +17991,13 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glTexGen
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $coord
-     * @param int|\FFI\CData|\FFI\CInt $pname
-     * @param \FFI\CData|\FFI\CIntPtr|null $params
+     * @param int $coord
+     * @param int $pname
+     * @param \FFI\CData|null $params
      * @return void
      */
-    public function texGeniv($coord, $pname, ?\FFI\CData $params): void
+    public function texGeniv(int $coord, int $pname, ?\FFI\CData $params): void
     {
-        $coord = $coord instanceof \FFI\CData ? $coord->cdata : $coord;
-        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
-
-        assert(Type::isUint16($coord), 'Argument $coord must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-
         $this->info->ffi->glTexGeniv($coord, $pname, $params);
     }
 
@@ -19428,34 +18094,18 @@ class GL11 extends GL
      * @see http://docs.gl/gl2/glTexImage1D
      * @see http://docs.gl/gl4/glTexImage1D
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $target
-     * @param int|\FFI\CData|\FFI\CInt $level
-     * @param int|\FFI\CData|\FFI\CInt $internalformat
-     * @param int|\FFI\CData|\FFI\CInt $width
-     * @param int|\FFI\CData|\FFI\CInt $border
-     * @param int|\FFI\CData|\FFI\CInt $format
-     * @param int|\FFI\CData|\FFI\CInt $type
-     * @param \FFI\CData|\FFI\CPtr|null $pixels
+     * @param int $target
+     * @param int $level
+     * @param int $internalformat
+     * @param int $width
+     * @param int $border
+     * @param int $format
+     * @param int $type
+     * @param \FFI\CData|null $pixels
      * @return void
      */
-    public function texImage1D($target, $level, $internalformat, $width, $border, $format, $type, ?\FFI\CData $pixels): void
+    public function texImage1D(int $target, int $level, int $internalformat, int $width, int $border, int $format, int $type, ?\FFI\CData $pixels): void
     {
-        $target = $target instanceof \FFI\CData ? $target->cdata : $target;
-        $level = $level instanceof \FFI\CData ? $level->cdata : $level;
-        $internalformat = $internalformat instanceof \FFI\CData ? $internalformat->cdata : $internalformat;
-        $width = $width instanceof \FFI\CData ? $width->cdata : $width;
-        $border = $border instanceof \FFI\CData ? $border->cdata : $border;
-        $format = $format instanceof \FFI\CData ? $format->cdata : $format;
-        $type = $type instanceof \FFI\CData ? $type->cdata : $type;
-
-        assert(Type::isUint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isInt16($level), 'Argument $level must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($internalformat), 'Argument $internalformat must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($width), 'Argument $width must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Type::isInt16($border), 'Argument $border must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isUint16($format), 'Argument $format must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
-
         $this->info->ffi->glTexImage1D($target, $level, $internalformat, $width, $border, $format, $type, $pixels);
     }
 
@@ -19563,37 +18213,28 @@ class GL11 extends GL
      * @see http://docs.gl/gl2/glTexImage2D
      * @see http://docs.gl/gl4/glTexImage2D
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $target
-     * @param int|\FFI\CData|\FFI\CInt $level
-     * @param int|\FFI\CData|\FFI\CInt $internalformat
-     * @param int|\FFI\CData|\FFI\CInt $width
-     * @param int|\FFI\CData|\FFI\CInt $height
-     * @param int|\FFI\CData|\FFI\CInt $border
-     * @param int|\FFI\CData|\FFI\CInt $format
-     * @param int|\FFI\CData|\FFI\CInt $type
-     * @param \FFI\CData|\FFI\CPtr|null $pixels
+     * @param int $target
+     * @param int $level
+     * @param int $internalformat
+     * @param int $width
+     * @param int $height
+     * @param int $border
+     * @param int $format
+     * @param int $type
+     * @param \FFI\CData|null $pixels
      * @return void
      */
-    public function texImage2D($target, $level, $internalformat, $width, $height, $border, $format, $type, ?\FFI\CData $pixels): void
-    {
-        $target = $target instanceof \FFI\CData ? $target->cdata : $target;
-        $level = $level instanceof \FFI\CData ? $level->cdata : $level;
-        $internalformat = $internalformat instanceof \FFI\CData ? $internalformat->cdata : $internalformat;
-        $width = $width instanceof \FFI\CData ? $width->cdata : $width;
-        $height = $height instanceof \FFI\CData ? $height->cdata : $height;
-        $border = $border instanceof \FFI\CData ? $border->cdata : $border;
-        $format = $format instanceof \FFI\CData ? $format->cdata : $format;
-        $type = $type instanceof \FFI\CData ? $type->cdata : $type;
-
-        assert(Type::isUint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isInt16($level), 'Argument $level must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($internalformat), 'Argument $internalformat must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($width), 'Argument $width must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Type::isInt16($height), 'Argument $height must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Type::isInt16($border), 'Argument $border must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isUint16($format), 'Argument $format must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
-
+    public function texImage2D(
+        int $target,
+        int $level,
+        int $internalformat,
+        int $width,
+        int $height,
+        int $border,
+        int $format,
+        int $type,
+        ?\FFI\CData $pixels
+    ): void {
         $this->info->ffi->glTexImage2D($target, $level, $internalformat, $width, $height, $border, $format, $type, $pixels);
     }
 
@@ -19905,21 +18546,13 @@ class GL11 extends GL
      * @see http://docs.gl/gl2/glTexParameter
      * @see http://docs.gl/gl4/glTexParameter
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $target
-     * @param int|\FFI\CData|\FFI\CInt $pname
-     * @param float|\FFI\CData|\FFI\CFloat $param
+     * @param int $target
+     * @param int $pname
+     * @param float $param
      * @return void
      */
-    public function texParameterf($target, $pname, $param): void
+    public function texParameterf(int $target, int $pname, float $param): void
     {
-        $target = $target instanceof \FFI\CData ? $target->cdata : $target;
-        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
-        $param = $param instanceof \FFI\CData ? $param->cdata : $param;
-
-        assert(Type::isUint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isFloat32($param), 'Argument $param must be a C-like GLfloat, but incompatible or overflow value given');
-
         $this->info->ffi->glTexParameterf($target, $pname, $param);
     }
 
@@ -20231,19 +18864,13 @@ class GL11 extends GL
      * @see http://docs.gl/gl2/glTexParameter
      * @see http://docs.gl/gl4/glTexParameter
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $target
-     * @param int|\FFI\CData|\FFI\CInt $pname
-     * @param \FFI\CData|\FFI\CFloatPtr|null $params
+     * @param int $target
+     * @param int $pname
+     * @param \FFI\CData|null $params
      * @return void
      */
-    public function texParameterfv($target, $pname, ?\FFI\CData $params): void
+    public function texParameterfv(int $target, int $pname, ?\FFI\CData $params): void
     {
-        $target = $target instanceof \FFI\CData ? $target->cdata : $target;
-        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
-
-        assert(Type::isUint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-
         $this->info->ffi->glTexParameterfv($target, $pname, $params);
     }
 
@@ -20555,21 +19182,13 @@ class GL11 extends GL
      * @see http://docs.gl/gl2/glTexParameter
      * @see http://docs.gl/gl4/glTexParameter
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $target
-     * @param int|\FFI\CData|\FFI\CInt $pname
-     * @param int|\FFI\CData|\FFI\CInt $param
+     * @param int $target
+     * @param int $pname
+     * @param int $param
      * @return void
      */
-    public function texParameteri($target, $pname, $param): void
+    public function texParameteri(int $target, int $pname, int $param): void
     {
-        $target = $target instanceof \FFI\CData ? $target->cdata : $target;
-        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
-        $param = $param instanceof \FFI\CData ? $param->cdata : $param;
-
-        assert(Type::isUint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isInt16($param), 'Argument $param must be a C-like GLint, but incompatible or overflow value given');
-
         $this->info->ffi->glTexParameteri($target, $pname, $param);
     }
 
@@ -20881,19 +19500,13 @@ class GL11 extends GL
      * @see http://docs.gl/gl2/glTexParameter
      * @see http://docs.gl/gl4/glTexParameter
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $target
-     * @param int|\FFI\CData|\FFI\CInt $pname
-     * @param \FFI\CData|\FFI\CIntPtr|null $params
+     * @param int $target
+     * @param int $pname
+     * @param \FFI\CData|null $params
      * @return void
      */
-    public function texParameteriv($target, $pname, ?\FFI\CData $params): void
+    public function texParameteriv(int $target, int $pname, ?\FFI\CData $params): void
     {
-        $target = $target instanceof \FFI\CData ? $target->cdata : $target;
-        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
-
-        assert(Type::isUint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-
         $this->info->ffi->glTexParameteriv($target, $pname, $params);
     }
 
@@ -20915,31 +19528,17 @@ class GL11 extends GL
      * @see http://docs.gl/gl2/glTexSubImage1D
      * @see http://docs.gl/gl4/glTexSubImage1D
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $target
-     * @param int|\FFI\CData|\FFI\CInt $level
-     * @param int|\FFI\CData|\FFI\CInt $xoffset
-     * @param int|\FFI\CData|\FFI\CInt $width
-     * @param int|\FFI\CData|\FFI\CInt $format
-     * @param int|\FFI\CData|\FFI\CInt $type
-     * @param \FFI\CData|\FFI\CPtr|null $pixels
+     * @param int $target
+     * @param int $level
+     * @param int $xoffset
+     * @param int $width
+     * @param int $format
+     * @param int $type
+     * @param \FFI\CData|null $pixels
      * @return void
      */
-    public function texSubImage1D($target, $level, $xoffset, $width, $format, $type, ?\FFI\CData $pixels): void
+    public function texSubImage1D(int $target, int $level, int $xoffset, int $width, int $format, int $type, ?\FFI\CData $pixels): void
     {
-        $target = $target instanceof \FFI\CData ? $target->cdata : $target;
-        $level = $level instanceof \FFI\CData ? $level->cdata : $level;
-        $xoffset = $xoffset instanceof \FFI\CData ? $xoffset->cdata : $xoffset;
-        $width = $width instanceof \FFI\CData ? $width->cdata : $width;
-        $format = $format instanceof \FFI\CData ? $format->cdata : $format;
-        $type = $type instanceof \FFI\CData ? $type->cdata : $type;
-
-        assert(Type::isUint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isInt16($level), 'Argument $level must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($xoffset), 'Argument $xoffset must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($width), 'Argument $width must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Type::isUint16($format), 'Argument $format must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
-
         $this->info->ffi->glTexSubImage1D($target, $level, $xoffset, $width, $format, $type, $pixels);
     }
 
@@ -20961,37 +19560,28 @@ class GL11 extends GL
      * @see http://docs.gl/gl2/glTexSubImage2D
      * @see http://docs.gl/gl4/glTexSubImage2D
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $target
-     * @param int|\FFI\CData|\FFI\CInt $level
-     * @param int|\FFI\CData|\FFI\CInt $xoffset
-     * @param int|\FFI\CData|\FFI\CInt $yoffset
-     * @param int|\FFI\CData|\FFI\CInt $width
-     * @param int|\FFI\CData|\FFI\CInt $height
-     * @param int|\FFI\CData|\FFI\CInt $format
-     * @param int|\FFI\CData|\FFI\CInt $type
-     * @param \FFI\CData|\FFI\CPtr|null $pixels
+     * @param int $target
+     * @param int $level
+     * @param int $xoffset
+     * @param int $yoffset
+     * @param int $width
+     * @param int $height
+     * @param int $format
+     * @param int $type
+     * @param \FFI\CData|null $pixels
      * @return void
      */
-    public function texSubImage2D($target, $level, $xoffset, $yoffset, $width, $height, $format, $type, ?\FFI\CData $pixels): void
-    {
-        $target = $target instanceof \FFI\CData ? $target->cdata : $target;
-        $level = $level instanceof \FFI\CData ? $level->cdata : $level;
-        $xoffset = $xoffset instanceof \FFI\CData ? $xoffset->cdata : $xoffset;
-        $yoffset = $yoffset instanceof \FFI\CData ? $yoffset->cdata : $yoffset;
-        $width = $width instanceof \FFI\CData ? $width->cdata : $width;
-        $height = $height instanceof \FFI\CData ? $height->cdata : $height;
-        $format = $format instanceof \FFI\CData ? $format->cdata : $format;
-        $type = $type instanceof \FFI\CData ? $type->cdata : $type;
-
-        assert(Type::isUint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isInt16($level), 'Argument $level must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($xoffset), 'Argument $xoffset must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($yoffset), 'Argument $yoffset must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($width), 'Argument $width must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Type::isInt16($height), 'Argument $height must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Type::isUint16($format), 'Argument $format must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
-
+    public function texSubImage2D(
+        int $target,
+        int $level,
+        int $xoffset,
+        int $yoffset,
+        int $width,
+        int $height,
+        int $format,
+        int $type,
+        ?\FFI\CData $pixels
+    ): void {
         $this->info->ffi->glTexSubImage2D($target, $level, $xoffset, $yoffset, $width, $height, $format, $type, $pixels);
     }
 
@@ -21010,21 +19600,13 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glTranslate
      * @since 1.1
-     * @param float|\FFI\CData|\FFI\CFloat $x
-     * @param float|\FFI\CData|\FFI\CFloat $y
-     * @param float|\FFI\CData|\FFI\CFloat $z
+     * @param float $x
+     * @param float $y
+     * @param float $z
      * @return void
      */
-    public function translated($x, $y, $z): void
+    public function translated(float $x, float $y, float $z): void
     {
-        $x = $x instanceof \FFI\CData ? $x->cdata : $x;
-        $y = $y instanceof \FFI\CData ? $y->cdata : $y;
-        $z = $z instanceof \FFI\CData ? $z->cdata : $z;
-
-        assert(Type::isFloat64($x), 'Argument $x must be a C-like GLdouble, but incompatible or overflow value given');
-        assert(Type::isFloat64($y), 'Argument $y must be a C-like GLdouble, but incompatible or overflow value given');
-        assert(Type::isFloat64($z), 'Argument $z must be a C-like GLdouble, but incompatible or overflow value given');
-
         $this->info->ffi->glTranslated($x, $y, $z);
     }
 
@@ -21043,21 +19625,13 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glTranslate
      * @since 1.1
-     * @param float|\FFI\CData|\FFI\CFloat $x
-     * @param float|\FFI\CData|\FFI\CFloat $y
-     * @param float|\FFI\CData|\FFI\CFloat $z
+     * @param float $x
+     * @param float $y
+     * @param float $z
      * @return void
      */
-    public function translatef($x, $y, $z): void
+    public function translatef(float $x, float $y, float $z): void
     {
-        $x = $x instanceof \FFI\CData ? $x->cdata : $x;
-        $y = $y instanceof \FFI\CData ? $y->cdata : $y;
-        $z = $z instanceof \FFI\CData ? $z->cdata : $z;
-
-        assert(Type::isFloat32($x), 'Argument $x must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Type::isFloat32($y), 'Argument $y must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Type::isFloat32($z), 'Argument $z must be a C-like GLfloat, but incompatible or overflow value given');
-
         $this->info->ffi->glTranslatef($x, $y, $z);
     }
 
@@ -21071,18 +19645,12 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glVertex
      * @since 1.1
-     * @param float|\FFI\CData|\FFI\CFloat $x
-     * @param float|\FFI\CData|\FFI\CFloat $y
+     * @param float $x
+     * @param float $y
      * @return void
      */
-    public function vertex2d($x, $y): void
+    public function vertex2d(float $x, float $y): void
     {
-        $x = $x instanceof \FFI\CData ? $x->cdata : $x;
-        $y = $y instanceof \FFI\CData ? $y->cdata : $y;
-
-        assert(Type::isFloat64($x), 'Argument $x must be a C-like GLdouble, but incompatible or overflow value given');
-        assert(Type::isFloat64($y), 'Argument $y must be a C-like GLdouble, but incompatible or overflow value given');
-
         $this->info->ffi->glVertex2d($x, $y);
     }
 
@@ -21096,7 +19664,7 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glVertex
      * @since 1.1
-     * @param \FFI\CData|\FFI\CFloatPtr|null $v
+     * @param \FFI\CData|null $v
      * @return void
      */
     public function vertex2dv(?\FFI\CData $v): void
@@ -21114,18 +19682,12 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glVertex
      * @since 1.1
-     * @param float|\FFI\CData|\FFI\CFloat $x
-     * @param float|\FFI\CData|\FFI\CFloat $y
+     * @param float $x
+     * @param float $y
      * @return void
      */
-    public function vertex2f($x, $y): void
+    public function vertex2f(float $x, float $y): void
     {
-        $x = $x instanceof \FFI\CData ? $x->cdata : $x;
-        $y = $y instanceof \FFI\CData ? $y->cdata : $y;
-
-        assert(Type::isFloat32($x), 'Argument $x must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Type::isFloat32($y), 'Argument $y must be a C-like GLfloat, but incompatible or overflow value given');
-
         $this->info->ffi->glVertex2f($x, $y);
     }
 
@@ -21139,7 +19701,7 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glVertex
      * @since 1.1
-     * @param \FFI\CData|\FFI\CFloatPtr|null $v
+     * @param \FFI\CData|null $v
      * @return void
      */
     public function vertex2fv(?\FFI\CData $v): void
@@ -21157,18 +19719,12 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glVertex
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $x
-     * @param int|\FFI\CData|\FFI\CInt $y
+     * @param int $x
+     * @param int $y
      * @return void
      */
-    public function vertex2i($x, $y): void
+    public function vertex2i(int $x, int $y): void
     {
-        $x = $x instanceof \FFI\CData ? $x->cdata : $x;
-        $y = $y instanceof \FFI\CData ? $y->cdata : $y;
-
-        assert(Type::isInt16($x), 'Argument $x must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($y), 'Argument $y must be a C-like GLint, but incompatible or overflow value given');
-
         $this->info->ffi->glVertex2i($x, $y);
     }
 
@@ -21182,7 +19738,7 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glVertex
      * @since 1.1
-     * @param \FFI\CData|\FFI\CIntPtr|null $v
+     * @param \FFI\CData|null $v
      * @return void
      */
     public function vertex2iv(?\FFI\CData $v): void
@@ -21200,18 +19756,12 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glVertex
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $x
-     * @param int|\FFI\CData|\FFI\CInt $y
+     * @param int $x
+     * @param int $y
      * @return void
      */
-    public function vertex2s($x, $y): void
+    public function vertex2s(int $x, int $y): void
     {
-        $x = $x instanceof \FFI\CData ? $x->cdata : $x;
-        $y = $y instanceof \FFI\CData ? $y->cdata : $y;
-
-        assert(Type::isInt16($x), 'Argument $x must be a C-like GLshort, but incompatible or overflow value given');
-        assert(Type::isInt16($y), 'Argument $y must be a C-like GLshort, but incompatible or overflow value given');
-
         $this->info->ffi->glVertex2s($x, $y);
     }
 
@@ -21225,7 +19775,7 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glVertex
      * @since 1.1
-     * @param \FFI\CData|\FFI\CIntPtr|null $v
+     * @param \FFI\CData|null $v
      * @return void
      */
     public function vertex2sv(?\FFI\CData $v): void
@@ -21243,21 +19793,13 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glVertex
      * @since 1.1
-     * @param float|\FFI\CData|\FFI\CFloat $x
-     * @param float|\FFI\CData|\FFI\CFloat $y
-     * @param float|\FFI\CData|\FFI\CFloat $z
+     * @param float $x
+     * @param float $y
+     * @param float $z
      * @return void
      */
-    public function vertex3d($x, $y, $z): void
+    public function vertex3d(float $x, float $y, float $z): void
     {
-        $x = $x instanceof \FFI\CData ? $x->cdata : $x;
-        $y = $y instanceof \FFI\CData ? $y->cdata : $y;
-        $z = $z instanceof \FFI\CData ? $z->cdata : $z;
-
-        assert(Type::isFloat64($x), 'Argument $x must be a C-like GLdouble, but incompatible or overflow value given');
-        assert(Type::isFloat64($y), 'Argument $y must be a C-like GLdouble, but incompatible or overflow value given');
-        assert(Type::isFloat64($z), 'Argument $z must be a C-like GLdouble, but incompatible or overflow value given');
-
         $this->info->ffi->glVertex3d($x, $y, $z);
     }
 
@@ -21271,7 +19813,7 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glVertex
      * @since 1.1
-     * @param \FFI\CData|\FFI\CFloatPtr|null $v
+     * @param \FFI\CData|null $v
      * @return void
      */
     public function vertex3dv(?\FFI\CData $v): void
@@ -21289,21 +19831,13 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glVertex
      * @since 1.1
-     * @param float|\FFI\CData|\FFI\CFloat $x
-     * @param float|\FFI\CData|\FFI\CFloat $y
-     * @param float|\FFI\CData|\FFI\CFloat $z
+     * @param float $x
+     * @param float $y
+     * @param float $z
      * @return void
      */
-    public function vertex3f($x, $y, $z): void
+    public function vertex3f(float $x, float $y, float $z): void
     {
-        $x = $x instanceof \FFI\CData ? $x->cdata : $x;
-        $y = $y instanceof \FFI\CData ? $y->cdata : $y;
-        $z = $z instanceof \FFI\CData ? $z->cdata : $z;
-
-        assert(Type::isFloat32($x), 'Argument $x must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Type::isFloat32($y), 'Argument $y must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Type::isFloat32($z), 'Argument $z must be a C-like GLfloat, but incompatible or overflow value given');
-
         $this->info->ffi->glVertex3f($x, $y, $z);
     }
 
@@ -21317,7 +19851,7 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glVertex
      * @since 1.1
-     * @param \FFI\CData|\FFI\CFloatPtr|null $v
+     * @param \FFI\CData|null $v
      * @return void
      */
     public function vertex3fv(?\FFI\CData $v): void
@@ -21335,21 +19869,13 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glVertex
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $x
-     * @param int|\FFI\CData|\FFI\CInt $y
-     * @param int|\FFI\CData|\FFI\CInt $z
+     * @param int $x
+     * @param int $y
+     * @param int $z
      * @return void
      */
-    public function vertex3i($x, $y, $z): void
+    public function vertex3i(int $x, int $y, int $z): void
     {
-        $x = $x instanceof \FFI\CData ? $x->cdata : $x;
-        $y = $y instanceof \FFI\CData ? $y->cdata : $y;
-        $z = $z instanceof \FFI\CData ? $z->cdata : $z;
-
-        assert(Type::isInt16($x), 'Argument $x must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($y), 'Argument $y must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($z), 'Argument $z must be a C-like GLint, but incompatible or overflow value given');
-
         $this->info->ffi->glVertex3i($x, $y, $z);
     }
 
@@ -21363,7 +19889,7 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glVertex
      * @since 1.1
-     * @param \FFI\CData|\FFI\CIntPtr|null $v
+     * @param \FFI\CData|null $v
      * @return void
      */
     public function vertex3iv(?\FFI\CData $v): void
@@ -21381,21 +19907,13 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glVertex
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $x
-     * @param int|\FFI\CData|\FFI\CInt $y
-     * @param int|\FFI\CData|\FFI\CInt $z
+     * @param int $x
+     * @param int $y
+     * @param int $z
      * @return void
      */
-    public function vertex3s($x, $y, $z): void
+    public function vertex3s(int $x, int $y, int $z): void
     {
-        $x = $x instanceof \FFI\CData ? $x->cdata : $x;
-        $y = $y instanceof \FFI\CData ? $y->cdata : $y;
-        $z = $z instanceof \FFI\CData ? $z->cdata : $z;
-
-        assert(Type::isInt16($x), 'Argument $x must be a C-like GLshort, but incompatible or overflow value given');
-        assert(Type::isInt16($y), 'Argument $y must be a C-like GLshort, but incompatible or overflow value given');
-        assert(Type::isInt16($z), 'Argument $z must be a C-like GLshort, but incompatible or overflow value given');
-
         $this->info->ffi->glVertex3s($x, $y, $z);
     }
 
@@ -21409,7 +19927,7 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glVertex
      * @since 1.1
-     * @param \FFI\CData|\FFI\CIntPtr|null $v
+     * @param \FFI\CData|null $v
      * @return void
      */
     public function vertex3sv(?\FFI\CData $v): void
@@ -21427,24 +19945,14 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glVertex
      * @since 1.1
-     * @param float|\FFI\CData|\FFI\CFloat $x
-     * @param float|\FFI\CData|\FFI\CFloat $y
-     * @param float|\FFI\CData|\FFI\CFloat $z
-     * @param float|\FFI\CData|\FFI\CFloat $w
+     * @param float $x
+     * @param float $y
+     * @param float $z
+     * @param float $w
      * @return void
      */
-    public function vertex4d($x, $y, $z, $w): void
+    public function vertex4d(float $x, float $y, float $z, float $w): void
     {
-        $x = $x instanceof \FFI\CData ? $x->cdata : $x;
-        $y = $y instanceof \FFI\CData ? $y->cdata : $y;
-        $z = $z instanceof \FFI\CData ? $z->cdata : $z;
-        $w = $w instanceof \FFI\CData ? $w->cdata : $w;
-
-        assert(Type::isFloat64($x), 'Argument $x must be a C-like GLdouble, but incompatible or overflow value given');
-        assert(Type::isFloat64($y), 'Argument $y must be a C-like GLdouble, but incompatible or overflow value given');
-        assert(Type::isFloat64($z), 'Argument $z must be a C-like GLdouble, but incompatible or overflow value given');
-        assert(Type::isFloat64($w), 'Argument $w must be a C-like GLdouble, but incompatible or overflow value given');
-
         $this->info->ffi->glVertex4d($x, $y, $z, $w);
     }
 
@@ -21458,7 +19966,7 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glVertex
      * @since 1.1
-     * @param \FFI\CData|\FFI\CFloatPtr|null $v
+     * @param \FFI\CData|null $v
      * @return void
      */
     public function vertex4dv(?\FFI\CData $v): void
@@ -21476,24 +19984,14 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glVertex
      * @since 1.1
-     * @param float|\FFI\CData|\FFI\CFloat $x
-     * @param float|\FFI\CData|\FFI\CFloat $y
-     * @param float|\FFI\CData|\FFI\CFloat $z
-     * @param float|\FFI\CData|\FFI\CFloat $w
+     * @param float $x
+     * @param float $y
+     * @param float $z
+     * @param float $w
      * @return void
      */
-    public function vertex4f($x, $y, $z, $w): void
+    public function vertex4f(float $x, float $y, float $z, float $w): void
     {
-        $x = $x instanceof \FFI\CData ? $x->cdata : $x;
-        $y = $y instanceof \FFI\CData ? $y->cdata : $y;
-        $z = $z instanceof \FFI\CData ? $z->cdata : $z;
-        $w = $w instanceof \FFI\CData ? $w->cdata : $w;
-
-        assert(Type::isFloat32($x), 'Argument $x must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Type::isFloat32($y), 'Argument $y must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Type::isFloat32($z), 'Argument $z must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Type::isFloat32($w), 'Argument $w must be a C-like GLfloat, but incompatible or overflow value given');
-
         $this->info->ffi->glVertex4f($x, $y, $z, $w);
     }
 
@@ -21507,7 +20005,7 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glVertex
      * @since 1.1
-     * @param \FFI\CData|\FFI\CFloatPtr|null $v
+     * @param \FFI\CData|null $v
      * @return void
      */
     public function vertex4fv(?\FFI\CData $v): void
@@ -21525,24 +20023,14 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glVertex
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $x
-     * @param int|\FFI\CData|\FFI\CInt $y
-     * @param int|\FFI\CData|\FFI\CInt $z
-     * @param int|\FFI\CData|\FFI\CInt $w
+     * @param int $x
+     * @param int $y
+     * @param int $z
+     * @param int $w
      * @return void
      */
-    public function vertex4i($x, $y, $z, $w): void
+    public function vertex4i(int $x, int $y, int $z, int $w): void
     {
-        $x = $x instanceof \FFI\CData ? $x->cdata : $x;
-        $y = $y instanceof \FFI\CData ? $y->cdata : $y;
-        $z = $z instanceof \FFI\CData ? $z->cdata : $z;
-        $w = $w instanceof \FFI\CData ? $w->cdata : $w;
-
-        assert(Type::isInt16($x), 'Argument $x must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($y), 'Argument $y must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($z), 'Argument $z must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($w), 'Argument $w must be a C-like GLint, but incompatible or overflow value given');
-
         $this->info->ffi->glVertex4i($x, $y, $z, $w);
     }
 
@@ -21556,7 +20044,7 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glVertex
      * @since 1.1
-     * @param \FFI\CData|\FFI\CIntPtr|null $v
+     * @param \FFI\CData|null $v
      * @return void
      */
     public function vertex4iv(?\FFI\CData $v): void
@@ -21574,24 +20062,14 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glVertex
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $x
-     * @param int|\FFI\CData|\FFI\CInt $y
-     * @param int|\FFI\CData|\FFI\CInt $z
-     * @param int|\FFI\CData|\FFI\CInt $w
+     * @param int $x
+     * @param int $y
+     * @param int $z
+     * @param int $w
      * @return void
      */
-    public function vertex4s($x, $y, $z, $w): void
+    public function vertex4s(int $x, int $y, int $z, int $w): void
     {
-        $x = $x instanceof \FFI\CData ? $x->cdata : $x;
-        $y = $y instanceof \FFI\CData ? $y->cdata : $y;
-        $z = $z instanceof \FFI\CData ? $z->cdata : $z;
-        $w = $w instanceof \FFI\CData ? $w->cdata : $w;
-
-        assert(Type::isInt16($x), 'Argument $x must be a C-like GLshort, but incompatible or overflow value given');
-        assert(Type::isInt16($y), 'Argument $y must be a C-like GLshort, but incompatible or overflow value given');
-        assert(Type::isInt16($z), 'Argument $z must be a C-like GLshort, but incompatible or overflow value given');
-        assert(Type::isInt16($w), 'Argument $w must be a C-like GLshort, but incompatible or overflow value given');
-
         $this->info->ffi->glVertex4s($x, $y, $z, $w);
     }
 
@@ -21605,7 +20083,7 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glVertex
      * @since 1.1
-     * @param \FFI\CData|\FFI\CIntPtr|null $v
+     * @param \FFI\CData|null $v
      * @return void
      */
     public function vertex4sv(?\FFI\CData $v): void
@@ -21635,22 +20113,14 @@ class GL11 extends GL
      *
      * @see http://docs.gl/gl2/glVertexPointer
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $size
-     * @param int|\FFI\CData|\FFI\CInt $type
-     * @param int|\FFI\CData|\FFI\CInt $stride
-     * @param \FFI\CData|\FFI\CPtr|null $pointer
+     * @param int $size
+     * @param int $type
+     * @param int $stride
+     * @param \FFI\CData|null $pointer
      * @return void
      */
-    public function vertexPointer($size, $type, $stride, ?\FFI\CData $pointer): void
+    public function vertexPointer(int $size, int $type, int $stride, ?\FFI\CData $pointer): void
     {
-        $size = $size instanceof \FFI\CData ? $size->cdata : $size;
-        $type = $type instanceof \FFI\CData ? $type->cdata : $type;
-        $stride = $stride instanceof \FFI\CData ? $stride->cdata : $stride;
-
-        assert(Type::isInt16($size), 'Argument $size must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isUint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isInt16($stride), 'Argument $stride must be a C-like GLsizei, but incompatible or overflow value given');
-
         $this->info->ffi->glVertexPointer($size, $type, $stride, $pointer);
     }
 
@@ -21669,24 +20139,14 @@ class GL11 extends GL
      * @see http://docs.gl/gl2/glViewport
      * @see http://docs.gl/gl4/glViewport
      * @since 1.1
-     * @param int|\FFI\CData|\FFI\CInt $x
-     * @param int|\FFI\CData|\FFI\CInt $y
-     * @param int|\FFI\CData|\FFI\CInt $width
-     * @param int|\FFI\CData|\FFI\CInt $height
+     * @param int $x
+     * @param int $y
+     * @param int $width
+     * @param int $height
      * @return void
      */
-    public function viewport($x, $y, $width, $height): void
+    public function viewport(int $x, int $y, int $width, int $height): void
     {
-        $x = $x instanceof \FFI\CData ? $x->cdata : $x;
-        $y = $y instanceof \FFI\CData ? $y->cdata : $y;
-        $width = $width instanceof \FFI\CData ? $width->cdata : $width;
-        $height = $height instanceof \FFI\CData ? $height->cdata : $height;
-
-        assert(Type::isInt16($x), 'Argument $x must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($y), 'Argument $y must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($width), 'Argument $width must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Type::isInt16($height), 'Argument $height must be a C-like GLsizei, but incompatible or overflow value given');
-
         $this->info->ffi->glViewport($x, $y, $width, $height);
     }
 }

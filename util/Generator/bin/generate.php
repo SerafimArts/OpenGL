@@ -9,20 +9,39 @@
 
 declare(strict_types=1);
 
-use CodeGenerator\ClassGenerator;
+use CodeGenerator\CodeGenerator;
+use CodeGenerator\Type\Registry;
 use Documentation\KhronosDocumentationGenerator;
-use CodeGenerator\Json;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$types = Json::read(__DIR__ . '/../../../resources/types.json');
-$opengl = Json::read(__DIR__ . '/../../../resources/opengl.json');
+//
+// Config
+//
+const __ROOT_DIR__ = __DIR__ . '/../../..';
+const __SRC_DIR__ = __ROOT_DIR__ . '/src';
+const __RESOURCES_DIR__ = __ROOT_DIR__ . '/resources';
 
+//
+// Types
+//
+$types = new Registry();
+$types->addInputTypes(require __RESOURCES_DIR__ . '/types.in.php');
+$types->addOutputTypes(require __RESOURCES_DIR__ . '/types.out.php');
+$types->addAliases(require __RESOURCES_DIR__ . '/types.aliases.php');
+
+//
+// Documentation
+//
 $docs = KhronosDocumentationGenerator::download(__DIR__ . '/../docs');
 
-foreach ($opengl['classes'] as $key => $value) {
-    echo 'Generating ' . $key . "\n";
+//
+// Generator
+//
+$generator = new CodeGenerator($types, $docs);
 
-    $generator = new ClassGenerator($docs, $value, $types);
-    $generator->generate(__DIR__ . '/../../../src/' . $key . '.php');
+$opengl = require __RESOURCES_DIR__ . '/opengl.php';
+
+foreach ($opengl as $id => $meta) {
+    \file_put_contents(__SRC_DIR__ . '/' . $id . '.php', $generator->generate($meta));
 }

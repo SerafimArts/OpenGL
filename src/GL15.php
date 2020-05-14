@@ -13,235 +13,151 @@ declare(strict_types=1);
 
 namespace Serafim\OpenGL;
 
-use Serafim\OpenGL\Type\Type;
-
 /**
- * The OpenGL functionality up to version 1.5. Includes the deprecated symbols of the Compatibility Profile.
- *
- * Extensions promoted to core in this release:
- *
- * - ARB_vertex_buffer_object @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_vertex_buffer_object.txt
- * - ARB_occlusion_query @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_occlusion_query.txt
- * - EXT_shadow_funcs @see https://www.khronos.org/registry/OpenGL/extensions/EXT/EXT_shadow_funcs.txt
+ * @version 1.5
  */
 class GL15 extends GL14
 {
     /**
-     * @var int
      * @since 1.5
+     * @var int
      */
     public const GL_BUFFER_SIZE = 0x8764;
     /**
-     * @var int
      * @since 1.5
+     * @var int
      */
     public const GL_BUFFER_USAGE = 0x8765;
     /**
-     * @var int
      * @since 1.5
+     * @var int
      */
     public const GL_QUERY_COUNTER_BITS = 0x8864;
     /**
-     * @var int
      * @since 1.5
+     * @var int
      */
     public const GL_CURRENT_QUERY = 0x8865;
     /**
-     * @var int
      * @since 1.5
+     * @var int
      */
     public const GL_QUERY_RESULT = 0x8866;
     /**
-     * @var int
      * @since 1.5
+     * @var int
      */
     public const GL_QUERY_RESULT_AVAILABLE = 0x8867;
     /**
-     * @var int
      * @since 1.5
+     * @var int
      */
     public const GL_ARRAY_BUFFER = 0x8892;
     /**
-     * @var int
      * @since 1.5
+     * @var int
      */
     public const GL_ELEMENT_ARRAY_BUFFER = 0x8893;
     /**
-     * @var int
      * @since 1.5
+     * @var int
      */
     public const GL_ARRAY_BUFFER_BINDING = 0x8894;
     /**
-     * @var int
      * @since 1.5
+     * @var int
      */
     public const GL_ELEMENT_ARRAY_BUFFER_BINDING = 0x8895;
     /**
-     * @var int
      * @since 1.5
+     * @var int
      */
-    public const GL_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING = 0x889f;
+    public const GL_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING = 0x889F;
     /**
-     * @var int
      * @since 1.5
+     * @var int
      */
-    public const GL_READ_ONLY = 0x88b8;
+    public const GL_READ_ONLY = 0x88B8;
     /**
-     * @var int
      * @since 1.5
+     * @var int
      */
-    public const GL_WRITE_ONLY = 0x88b9;
+    public const GL_WRITE_ONLY = 0x88B9;
     /**
-     * @var int
      * @since 1.5
+     * @var int
      */
-    public const GL_READ_WRITE = 0x88ba;
+    public const GL_READ_WRITE = 0x88BA;
     /**
-     * @var int
      * @since 1.5
+     * @var int
      */
-    public const GL_BUFFER_ACCESS = 0x88bb;
+    public const GL_BUFFER_ACCESS = 0x88BB;
     /**
-     * @var int
      * @since 1.5
+     * @var int
      */
-    public const GL_BUFFER_MAPPED = 0x88bc;
+    public const GL_BUFFER_MAPPED = 0x88BC;
     /**
-     * @var int
      * @since 1.5
+     * @var int
      */
-    public const GL_BUFFER_MAP_POINTER = 0x88bd;
+    public const GL_BUFFER_MAP_POINTER = 0x88BD;
     /**
-     * @var int
      * @since 1.5
+     * @var int
      */
-    public const GL_STREAM_DRAW = 0x88e0;
+    public const GL_STREAM_DRAW = 0x88E0;
     /**
-     * @var int
      * @since 1.5
+     * @var int
      */
-    public const GL_STREAM_READ = 0x88e1;
+    public const GL_STREAM_READ = 0x88E1;
     /**
-     * @var int
      * @since 1.5
+     * @var int
      */
-    public const GL_STREAM_COPY = 0x88e2;
+    public const GL_STREAM_COPY = 0x88E2;
     /**
-     * @var int
      * @since 1.5
+     * @var int
      */
-    public const GL_STATIC_DRAW = 0x88e4;
+    public const GL_STATIC_DRAW = 0x88E4;
     /**
-     * @var int
      * @since 1.5
+     * @var int
      */
-    public const GL_STATIC_READ = 0x88e5;
+    public const GL_STATIC_READ = 0x88E5;
     /**
-     * @var int
      * @since 1.5
+     * @var int
      */
-    public const GL_STATIC_COPY = 0x88e6;
+    public const GL_STATIC_COPY = 0x88E6;
     /**
-     * @var int
      * @since 1.5
+     * @var int
      */
-    public const GL_DYNAMIC_DRAW = 0x88e8;
+    public const GL_DYNAMIC_DRAW = 0x88E8;
     /**
-     * @var int
      * @since 1.5
+     * @var int
      */
-    public const GL_DYNAMIC_READ = 0x88e9;
+    public const GL_DYNAMIC_READ = 0x88E9;
     /**
-     * @var int
      * @since 1.5
+     * @var int
      */
-    public const GL_DYNAMIC_COPY = 0x88ea;
+    public const GL_DYNAMIC_COPY = 0x88EA;
     /**
-     * @var int
      * @since 1.5
+     * @var int
      */
     public const GL_SAMPLES_PASSED = 0x8914;
     /**
-     * @var int
      * @since 1.5
+     * @var int
      */
     public const GL_SRC1_ALPHA = 0x8589;
-
-    /**
-     * {@see GL46::glGenQueries} returns $n query object names in $ids. There is no guarantee that the names form a
-     * contiguous set of integers; however, it is guaranteed that none of the returned names was in use immediately
-     * before the call to {@see GL46::glGenQueries}.
-     *
-     * Query object names returned by a call to {@see GL46::glGenQueries} are not returned by subsequent calls,
-     * unless they are first deleted with {@see GL46::glDeleteQueries}.
-     *
-     * No query objects are associated with the returned query object names until they are first used by calling
-     * {@see GL46::glBeginQuery}.
-     *
-     * @see http://docs.gl/gl2/glGenQueries
-     * @see http://docs.gl/gl4/glGenQueries
-     * @since 1.5
-     * @param int|\FFI\CData|\FFI\CInt $n
-     * @param \FFI\CData|\FFI\CIntPtr|null $ids
-     * @return void
-     */
-    public function genQueries($n, ?\FFI\CData $ids): void
-    {
-        $n = $n instanceof \FFI\CData ? $n->cdata : $n;
-
-        assert(Type::isInt16($n), 'Argument $n must be a C-like GLsizei, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glGenQueries', 'void (*)(GLsizei n, GLuint *ids)');
-        $proc($n, $ids);
-    }
-
-    /**
-     * {@see GL46::glDeleteQueries} deletes $n query objects named by the elements of the array $ids. After a query
-     * object is deleted, it has no contents, and its name is free for reuse (for example by
-     * {@see GL46::glGenQueries}).
-     *
-     * {@see GL46::glDeleteQueries} silently ignores 0's and names that do not correspond to existing query objects.
-     *
-     * @see http://docs.gl/gl2/glDeleteQueries
-     * @see http://docs.gl/gl4/glDeleteQueries
-     * @since 1.5
-     * @param int|\FFI\CData|\FFI\CInt $n
-     * @param \FFI\CData|\FFI\CIntPtr|null $ids
-     * @return void
-     */
-    public function deleteQueries($n, ?\FFI\CData $ids): void
-    {
-        $n = $n instanceof \FFI\CData ? $n->cdata : $n;
-
-        assert(Type::isInt16($n), 'Argument $n must be a C-like GLsizei, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glDeleteQueries', 'void (*)(GLsizei n, const GLuint *ids)');
-        $proc($n, $ids);
-    }
-
-    /**
-     * {@see GL46::glIsQuery} returns {@see GL46::GL_TRUE} if $id is currently the name of a query object. If $id is
-     * zero, or is a non-zero value that is not currently the name of a query object, or if an error occurs,
-     * {@see GL46::glIsQuery} returns {@see GL46::GL_FALSE}.
-     *
-     * A name returned by {@see GL46::glGenQueries}, but not yet associated with a query object by calling
-     * {@see GL46::glBeginQuery}, is not the name of a query object.
-     *
-     * @see http://docs.gl/gl2/glIsQuery
-     * @see http://docs.gl/gl4/glIsQuery
-     * @since 1.5
-     * @param int|\FFI\CData|\FFI\CInt $id
-     * @return int|\FFI\CData|\FFI\CInt
-     */
-    public function isQuery($id): int
-    {
-        $id = $id instanceof \FFI\CData ? $id->cdata : $id;
-
-        assert(Type::isUint16($id), 'Argument $id must be a C-like GLuint, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glIsQuery', 'GLboolean (*)(GLuint id)');
-        return $proc($id);
-    }
 
     /**
      * {@see GL46::glBeginQuery} and  {@see GL46::glEndQuery} delimit the boundaries of a query object. $query must
@@ -305,167 +221,14 @@ class GL15 extends GL14
      * @see http://docs.gl/gl2/glBeginQuery
      * @see http://docs.gl/gl4/glBeginQuery
      * @since 1.5
-     * @param int|\FFI\CData|\FFI\CInt $target
-     * @param int|\FFI\CData|\FFI\CInt $id
+     * @param int $target
+     * @param int $id
      * @return void
      */
-    public function beginQuery($target, $id): void
+    public function beginQuery(int $target, int $id): void
     {
-        $target = $target instanceof \FFI\CData ? $target->cdata : $target;
-        $id = $id instanceof \FFI\CData ? $id->cdata : $id;
-
-        assert(Type::isUint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($id), 'Argument $id must be a C-like GLuint, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glBeginQuery', 'void (*)(GLenum target, GLuint id)');
-        $proc($target, $id);
-    }
-
-    /**
-     * {@see GL46::glIsQuery} returns {@see GL46::GL_TRUE} if $id is currently the name of a query object. If $id is
-     * zero, or is a non-zero value that is not currently the name of a query object, or if an error occurs,
-     * {@see GL46::glIsQuery} returns {@see GL46::GL_FALSE}.
-     *
-     * A name returned by {@see GL46::glGenQueries}, but not yet associated with a query object by calling
-     * {@see GL46::glBeginQuery}, is not the name of a query object.
-     *
-     * @see http://docs.gl/gl2/glIsQuery
-     * @see http://docs.gl/gl4/glIsQuery
-     * @since 1.5
-     * @param int|\FFI\CData|\FFI\CInt $target
-     * @return void
-     */
-    public function endQuery($target): void
-    {
-        $target = $target instanceof \FFI\CData ? $target->cdata : $target;
-
-        assert(Type::isUint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glEndQuery', 'void (*)(GLenum target)');
-        $proc($target);
-    }
-
-    /**
-     * {@see GL46::glGetQueryiv} returns in $params a selected parameter of the query object target specified by
-     * $target.
-     *
-     * $pname names a specific query object target parameter. When $pname is {@see GL46::GL_CURRENT_QUERY}, the name
-     * of the currently active query for $target, or zero if no query is active, will be placed in $params. If $pname
-     * is {@see GL46::GL_QUERY_COUNTER_BITS}, the implementation-dependent number of bits used to hold the result of
-     * queries for $target is returned in $params.
-     *
-     * @see http://docs.gl/gl2/glGetQueryiv
-     * @see http://docs.gl/gl4/glGetQueryiv
-     * @since 1.5
-     * @param int|\FFI\CData|\FFI\CInt $target
-     * @param int|\FFI\CData|\FFI\CInt $pname
-     * @param \FFI\CData|\FFI\CIntPtr|null $params
-     * @return void
-     */
-    public function getQueryiv($target, $pname, ?\FFI\CData $params): void
-    {
-        $target = $target instanceof \FFI\CData ? $target->cdata : $target;
-        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
-
-        assert(Type::isUint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glGetQueryiv', 'void (*)(GLenum target, GLenum pname, GLint *params)');
-        $proc($target, $pname, $params);
-    }
-
-    /**
-     * These commands return a selected parameter of the query object specified by $id. {@see GL46::glGetQueryObject}
-     * returns in $params a selected parameter of the query object specified by $id.
-     * {@see GL46::glGetQueryBufferObject} returns in $buffer a selected parameter of the query object specified by
-     * $id, by writing it to $buffer's data store at the byte offset specified by $offset.
-     *
-     * $pname names a specific query object parameter. $pname can be as follows:
-     *
-     *  - {@see GL46::GL_QUERY_RESULT}: $params or $buffer returns the value of
-     *    the query object's passed samples counter. The initial value is 0.
-     *
-     *  - {@see GL46::GL_QUERY_RESULT_NO_WAIT}: If the result of the query is
-     *    available (that is, a query of {@see GL46::GL_QUERY_RESULT_AVAILABLE}
-     *    would
-     *    return non-zero), then $params or $buffer returns the value of the
-     *    query object's passed samples counter,
-     *    otherwise, the data referred to by $params or $buffer is not modified.
-     *    The initial value is 0.
-     *
-     *  - {@see GL46::GL_QUERY_RESULT_AVAILABLE}: $params or $buffer returns
-     *    whether the passed samples counter is immediately available. If a
-     *    delay would
-     *    occur waiting for the query result, {@see GL46::GL_FALSE} is returned.
-     *    Otherwise, {@see GL46::GL_TRUE} is
-     *    returned, which also indicates that the results of all previous
-     *    queries are available as well.
-     *
-     * @see http://docs.gl/gl2/glGetQueryObject
-     * @see http://docs.gl/gl4/glGetQueryObject
-     * @since 1.5
-     * @param int|\FFI\CData|\FFI\CInt $id
-     * @param int|\FFI\CData|\FFI\CInt $pname
-     * @param \FFI\CData|\FFI\CIntPtr|null $params
-     * @return void
-     */
-    public function getQueryObjectiv($id, $pname, ?\FFI\CData $params): void
-    {
-        $id = $id instanceof \FFI\CData ? $id->cdata : $id;
-        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
-
-        assert(Type::isUint16($id), 'Argument $id must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glGetQueryObjectiv', 'void (*)(GLuint id, GLenum pname, GLint *params)');
-        $proc($id, $pname, $params);
-    }
-
-    /**
-     * These commands return a selected parameter of the query object specified by $id. {@see GL46::glGetQueryObject}
-     * returns in $params a selected parameter of the query object specified by $id.
-     * {@see GL46::glGetQueryBufferObject} returns in $buffer a selected parameter of the query object specified by
-     * $id, by writing it to $buffer's data store at the byte offset specified by $offset.
-     *
-     * $pname names a specific query object parameter. $pname can be as follows:
-     *
-     *  - {@see GL46::GL_QUERY_RESULT}: $params or $buffer returns the value of
-     *    the query object's passed samples counter. The initial value is 0.
-     *
-     *  - {@see GL46::GL_QUERY_RESULT_NO_WAIT}: If the result of the query is
-     *    available (that is, a query of {@see GL46::GL_QUERY_RESULT_AVAILABLE}
-     *    would
-     *    return non-zero), then $params or $buffer returns the value of the
-     *    query object's passed samples counter,
-     *    otherwise, the data referred to by $params or $buffer is not modified.
-     *    The initial value is 0.
-     *
-     *  - {@see GL46::GL_QUERY_RESULT_AVAILABLE}: $params or $buffer returns
-     *    whether the passed samples counter is immediately available. If a
-     *    delay would
-     *    occur waiting for the query result, {@see GL46::GL_FALSE} is returned.
-     *    Otherwise, {@see GL46::GL_TRUE} is
-     *    returned, which also indicates that the results of all previous
-     *    queries are available as well.
-     *
-     * @see http://docs.gl/gl2/glGetQueryObject
-     * @see http://docs.gl/gl4/glGetQueryObject
-     * @since 1.5
-     * @param int|\FFI\CData|\FFI\CInt $id
-     * @param int|\FFI\CData|\FFI\CInt $pname
-     * @param \FFI\CData|\FFI\CIntPtr|null $params
-     * @return void
-     */
-    public function getQueryObjectuiv($id, $pname, ?\FFI\CData $params): void
-    {
-        $id = $id instanceof \FFI\CData ? $id->cdata : $id;
-        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
-
-        assert(Type::isUint16($id), 'Argument $id must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glGetQueryObjectuiv', 'void (*)(GLuint id, GLenum pname, GLuint *params)');
-        $proc($id, $pname, $params);
+        $__proc = $this->getProcAs('glBeginQuery', 'void (*)(GLenum target, GLuint id)');
+        $__proc($target, $id);
     }
 
     /**
@@ -553,97 +316,14 @@ class GL15 extends GL14
      * @see http://docs.gl/gl2/glBindBuffer
      * @see http://docs.gl/gl4/glBindBuffer
      * @since 1.5
-     * @param int|\FFI\CData|\FFI\CInt $target
-     * @param int|\FFI\CData|\FFI\CInt $buffer
+     * @param int $target
+     * @param int $buffer
      * @return void
      */
-    public function bindBuffer($target, $buffer): void
+    public function bindBuffer(int $target, int $buffer): void
     {
-        $target = $target instanceof \FFI\CData ? $target->cdata : $target;
-        $buffer = $buffer instanceof \FFI\CData ? $buffer->cdata : $buffer;
-
-        assert(Type::isUint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($buffer), 'Argument $buffer must be a C-like GLuint, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glBindBuffer', 'void (*)(GLenum target, GLuint buffer)');
-        $proc($target, $buffer);
-    }
-
-    /**
-     * {@see GL46::glDeleteBuffers} deletes $n buffer objects named by the elements of the array $buffers. After a
-     * buffer object is deleted, it has no contents, and its name is free for reuse (for example by
-     * {@see GL46::glGenBuffers}). If a buffer object that is currently bound is deleted, the binding reverts to 0
-     * (the absence of any buffer object).
-     *
-     * {@see GL46::glDeleteBuffers} silently ignores 0's and names that do not correspond to existing buffer objects.
-     *
-     * @see http://docs.gl/gl2/glDeleteBuffers
-     * @see http://docs.gl/gl4/glDeleteBuffers
-     * @since 1.5
-     * @param int|\FFI\CData|\FFI\CInt $n
-     * @param \FFI\CData|\FFI\CIntPtr|null $buffers
-     * @return void
-     */
-    public function deleteBuffers($n, ?\FFI\CData $buffers): void
-    {
-        $n = $n instanceof \FFI\CData ? $n->cdata : $n;
-
-        assert(Type::isInt16($n), 'Argument $n must be a C-like GLsizei, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glDeleteBuffers', 'void (*)(GLsizei n, const GLuint *buffers)');
-        $proc($n, $buffers);
-    }
-
-    /**
-     * {@see GL46::glGenBuffers} returns $n buffer object names in $buffers. There is no guarantee that the names
-     * form a contiguous set of integers; however, it is guaranteed that none of the returned names was in use
-     * immediately before the call to {@see GL46::glGenBuffers}.
-     *
-     * Buffer object names returned by a call to {@see GL46::glGenBuffers} are not returned by subsequent calls,
-     * unless they are first deleted with {@see GL46::glDeleteBuffers}.
-     *
-     * No buffer objects are associated with the returned buffer object names until they are first bound by calling
-     * {@see GL46::glBindBuffer}.
-     *
-     * @see http://docs.gl/gl2/glGenBuffers
-     * @see http://docs.gl/gl4/glGenBuffers
-     * @since 1.5
-     * @param int|\FFI\CData|\FFI\CInt $n
-     * @param \FFI\CData|\FFI\CIntPtr|null $buffers
-     * @return void
-     */
-    public function genBuffers($n, ?\FFI\CData $buffers): void
-    {
-        $n = $n instanceof \FFI\CData ? $n->cdata : $n;
-
-        assert(Type::isInt16($n), 'Argument $n must be a C-like GLsizei, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glGenBuffers', 'void (*)(GLsizei n, GLuint *buffers)');
-        $proc($n, $buffers);
-    }
-
-    /**
-     * {@see GL46::glIsBuffer} returns {@see GL46::GL_TRUE} if $buffer is currently the name of a buffer object. If
-     * $buffer is zero, or is a non-zero value that is not currently the name of a buffer object, or if an error
-     * occurs, {@see GL46::glIsBuffer} returns {@see GL46::GL_FALSE}.
-     *
-     * A name returned by {@see GL46::glGenBuffers}, but not yet associated with a buffer object by calling
-     * {@see GL46::glBindBuffer}, is not the name of a buffer object.
-     *
-     * @see http://docs.gl/gl2/glIsBuffer
-     * @see http://docs.gl/gl4/glIsBuffer
-     * @since 1.5
-     * @param int|\FFI\CData|\FFI\CInt $buffer
-     * @return int|\FFI\CData|\FFI\CInt
-     */
-    public function isBuffer($buffer): int
-    {
-        $buffer = $buffer instanceof \FFI\CData ? $buffer->cdata : $buffer;
-
-        assert(Type::isUint16($buffer), 'Argument $buffer must be a C-like GLuint, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glIsBuffer', 'GLboolean (*)(GLuint buffer)');
-        return $proc($buffer);
+        $__proc = $this->getProcAs('glBindBuffer', 'void (*)(GLenum target, GLuint buffer)');
+        $__proc($target, $buffer);
     }
 
     /**
@@ -689,23 +369,16 @@ class GL15 extends GL14
      * @see http://docs.gl/gl2/glBufferData
      * @see http://docs.gl/gl4/glBufferData
      * @since 1.5
-     * @param int|\FFI\CData|\FFI\CInt $target
-     * @param mixed|float|string|int|\FFI\CData|\FFI\CInt $size
-     * @param \FFI\CData|\FFI\CPtr|null $data
-     * @param int|\FFI\CData|\FFI\CInt $usage
+     * @param int $target
+     * @param int $size
+     * @param \FFI\CData|null $data
+     * @param int $usage
      * @return void
      */
-    public function bufferData($target, $size, ?\FFI\CData $data, $usage): void
+    public function bufferData(int $target, int $size, ?\FFI\CData $data, int $usage): void
     {
-        $target = $target instanceof \FFI\CData ? $target->cdata : $target;
-        $usage = $usage instanceof \FFI\CData ? $usage->cdata : $usage;
-
-        assert(Type::isUint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isInt64($size), 'Argument $size must be a C-like GLsizeiptr, but incompatible or overflow value given');
-        assert(Type::isUint16($usage), 'Argument $usage must be a C-like GLenum, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glBufferData', 'void (*)(GLenum target, GLsizeiptr size, const void *data, GLenum usage)');
-        $proc($target, $size, $data, $usage);
+        $__proc = $this->getProcAs('glBufferData', 'void (*)(GLenum target, GLsizeiptr size, const void *data, GLenum usage)');
+        $__proc($target, $size, $data, $usage);
     }
 
     /**
@@ -717,22 +390,197 @@ class GL15 extends GL14
      * @see http://docs.gl/gl2/glBufferSubData
      * @see http://docs.gl/gl4/glBufferSubData
      * @since 1.5
-     * @param int|\FFI\CData|\FFI\CInt $target
-     * @param mixed|float|string|int|\FFI\CData|\FFI\CInt $offset
-     * @param mixed|float|string|int|\FFI\CData|\FFI\CInt $size
-     * @param \FFI\CData|\FFI\CPtr|null $data
+     * @param int $target
+     * @param int $offset
+     * @param int $size
+     * @param \FFI\CData|null $data
      * @return void
      */
-    public function bufferSubData($target, $offset, $size, ?\FFI\CData $data): void
+    public function bufferSubData(int $target, int $offset, int $size, ?\FFI\CData $data): void
     {
-        $target = $target instanceof \FFI\CData ? $target->cdata : $target;
+        $__proc = $this->getProcAs('glBufferSubData', 'void (*)(GLenum target, GLintptr offset, GLsizeiptr size, const void *data)');
+        $__proc($target, $offset, $size, $data);
+    }
 
-        assert(Type::isUint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isInt64($offset), 'Argument $offset must be a C-like GLintptr, but incompatible or overflow value given');
-        assert(Type::isInt64($size), 'Argument $size must be a C-like GLsizeiptr, but incompatible or overflow value given');
+    /**
+     * {@see GL46::glDeleteBuffers} deletes $n buffer objects named by the elements of the array $buffers. After a
+     * buffer object is deleted, it has no contents, and its name is free for reuse (for example by
+     * {@see GL46::glGenBuffers}). If a buffer object that is currently bound is deleted, the binding reverts to 0
+     * (the absence of any buffer object).
+     *
+     * {@see GL46::glDeleteBuffers} silently ignores 0's and names that do not correspond to existing buffer objects.
+     *
+     * @see http://docs.gl/gl2/glDeleteBuffers
+     * @see http://docs.gl/gl4/glDeleteBuffers
+     * @since 1.5
+     * @param int $n
+     * @param \FFI\CData|null $buffers
+     * @return void
+     */
+    public function deleteBuffers(int $n, ?\FFI\CData $buffers): void
+    {
+        $__proc = $this->getProcAs('glDeleteBuffers', 'void (*)(GLsizei n, const GLuint *buffers)');
+        $__proc($n, $buffers);
+    }
 
-        $proc = $this->getProcAddress('glBufferSubData', 'void (*)(GLenum target, GLintptr offset, GLsizeiptr size, const void *data)');
-        $proc($target, $offset, $size, $data);
+    /**
+     * {@see GL46::glDeleteQueries} deletes $n query objects named by the elements of the array $ids. After a query
+     * object is deleted, it has no contents, and its name is free for reuse (for example by
+     * {@see GL46::glGenQueries}).
+     *
+     * {@see GL46::glDeleteQueries} silently ignores 0's and names that do not correspond to existing query objects.
+     *
+     * @see http://docs.gl/gl2/glDeleteQueries
+     * @see http://docs.gl/gl4/glDeleteQueries
+     * @since 1.5
+     * @param int $n
+     * @param \FFI\CData|null $ids
+     * @return void
+     */
+    public function deleteQueries(int $n, ?\FFI\CData $ids): void
+    {
+        $__proc = $this->getProcAs('glDeleteQueries', 'void (*)(GLsizei n, const GLuint *ids)');
+        $__proc($n, $ids);
+    }
+
+    /**
+     * {@see GL46::glIsQuery} returns {@see GL46::GL_TRUE} if $id is currently the name of a query object. If $id is
+     * zero, or is a non-zero value that is not currently the name of a query object, or if an error occurs,
+     * {@see GL46::glIsQuery} returns {@see GL46::GL_FALSE}.
+     *
+     * A name returned by {@see GL46::glGenQueries}, but not yet associated with a query object by calling
+     * {@see GL46::glBeginQuery}, is not the name of a query object.
+     *
+     * @see http://docs.gl/gl2/glIsQuery
+     * @see http://docs.gl/gl4/glIsQuery
+     * @since 1.5
+     * @param int $target
+     * @return void
+     */
+    public function endQuery(int $target): void
+    {
+        $__proc = $this->getProcAs('glEndQuery', 'void (*)(GLenum target)');
+        $__proc($target);
+    }
+
+    /**
+     * {@see GL46::glGenBuffers} returns $n buffer object names in $buffers. There is no guarantee that the names
+     * form a contiguous set of integers; however, it is guaranteed that none of the returned names was in use
+     * immediately before the call to {@see GL46::glGenBuffers}.
+     *
+     * Buffer object names returned by a call to {@see GL46::glGenBuffers} are not returned by subsequent calls,
+     * unless they are first deleted with {@see GL46::glDeleteBuffers}.
+     *
+     * No buffer objects are associated with the returned buffer object names until they are first bound by calling
+     * {@see GL46::glBindBuffer}.
+     *
+     * @see http://docs.gl/gl2/glGenBuffers
+     * @see http://docs.gl/gl4/glGenBuffers
+     * @since 1.5
+     * @param int $n
+     * @param int|null $buffers
+     * @return void
+     */
+    public function genBuffers(int $n, ?int &$buffers): void
+    {
+        $buffersCType = $this->info->ffi->new('GLuint', false);
+        try {
+            $__proc = $this->getProcAs('glGenBuffers', 'void (*)(GLsizei n, GLuint *buffers)');
+            $__proc($n, \FFI::addr($buffersCType));
+        } finally {
+            $buffers = $buffersCType->cdata;
+            \FFI::free($buffersCType);
+        }
+    }
+
+    /**
+     * {@see GL46::glGenQueries} returns $n query object names in $ids. There is no guarantee that the names form a
+     * contiguous set of integers; however, it is guaranteed that none of the returned names was in use immediately
+     * before the call to {@see GL46::glGenQueries}.
+     *
+     * Query object names returned by a call to {@see GL46::glGenQueries} are not returned by subsequent calls,
+     * unless they are first deleted with {@see GL46::glDeleteQueries}.
+     *
+     * No query objects are associated with the returned query object names until they are first used by calling
+     * {@see GL46::glBeginQuery}.
+     *
+     * @see http://docs.gl/gl2/glGenQueries
+     * @see http://docs.gl/gl4/glGenQueries
+     * @since 1.5
+     * @param int $n
+     * @param int|null $ids
+     * @return void
+     */
+    public function genQueries(int $n, ?int &$ids): void
+    {
+        $idsCType = $this->info->ffi->new('GLuint', false);
+        try {
+            $__proc = $this->getProcAs('glGenQueries', 'void (*)(GLsizei n, GLuint *ids)');
+            $__proc($n, \FFI::addr($idsCType));
+        } finally {
+            $ids = $idsCType->cdata;
+            \FFI::free($idsCType);
+        }
+    }
+
+    /**
+     * {@see GL46::glGetBufferParameteriv} returns in $data a selected parameter of the buffer object specified by
+     * $target.
+     *
+     * $value names a specific buffer object parameter, as follows:
+     *
+     *  - {@see GL46::GL_BUFFER_ACCESS}: $params returns the access policy set
+     *    while mapping the buffer object. The initial value is
+     *    {@see GL46::GL_READ_WRITE}.
+     *
+     *  - {@see GL46::GL_BUFFER_MAPPED}: $params returns a flag indicating
+     *    whether the buffer object is currently mapped. The initial value is
+     *    {@see GL46::GL_FALSE}.
+     *
+     *  - {@see GL46::GL_BUFFER_SIZE}: $params returns the size of the buffer
+     *    object, measured in bytes. The initial value is 0.
+     *
+     *  - {@see GL46::GL_BUFFER_USAGE}: $params returns the buffer object's
+     *    usage pattern. The initial value is {@see GL46::GL_STATIC_DRAW}.
+     *
+     * @see http://docs.gl/gl2/glGetBufferParameteriv
+     * @since 1.5
+     * @param int $target
+     * @param int $pname
+     * @param int|null $params
+     * @return void
+     */
+    public function getBufferParameteriv(int $target, int $pname, ?int &$params): void
+    {
+        $paramsCType = $this->info->ffi->new('GLint', false);
+        try {
+            $__proc = $this->getProcAs('glGetBufferParameteriv', 'void (*)(GLenum target, GLenum pname, GLint *params)');
+            $__proc($target, $pname, \FFI::addr($paramsCType));
+        } finally {
+            $params = $paramsCType->cdata;
+            \FFI::free($paramsCType);
+        }
+    }
+
+    /**
+     * {@see GL46::glGetBufferPointerv} and {@see GL46::glGetNamedBufferPointerv} return the buffer pointer $pname,
+     * which must be {@see GL46::GL_BUFFER_MAP_POINTER}. The single buffer map pointer is returned in $params. A
+     * {@see GL46::NULL} pointer is returned if the buffer object's data store is not currently mapped; or if the
+     * requesting context did not map the buffer object's data store, and the implementation is unable to support
+     * mappings on multiple clients.
+     *
+     * @see http://docs.gl/gl2/glGetBufferPointerv
+     * @see http://docs.gl/gl4/glGetBufferPointerv
+     * @since 1.5
+     * @param int $target
+     * @param int $pname
+     * @param \FFI\CData|null $params
+     * @return void
+     */
+    public function getBufferPointerv(int $target, int $pname, ?\FFI\CData $params): void
+    {
+        $__proc = $this->getProcAs('glGetBufferPointerv', 'void (*)(GLenum target, GLenum pname, void **params)');
+        $__proc($target, $pname, $params);
     }
 
     /**
@@ -745,22 +593,179 @@ class GL15 extends GL14
      * @see http://docs.gl/gl2/glGetBufferSubData
      * @see http://docs.gl/gl4/glGetBufferSubData
      * @since 1.5
-     * @param int|\FFI\CData|\FFI\CInt $target
-     * @param mixed|float|string|int|\FFI\CData|\FFI\CInt $offset
-     * @param mixed|float|string|int|\FFI\CData|\FFI\CInt $size
-     * @param \FFI\CData|\FFI\CPtr|null $data
+     * @param int $target
+     * @param int $offset
+     * @param int $size
+     * @param \FFI\CData|null $data
      * @return void
      */
-    public function getBufferSubData($target, $offset, $size, ?\FFI\CData $data): void
+    public function getBufferSubData(int $target, int $offset, int $size, ?\FFI\CData $data): void
     {
-        $target = $target instanceof \FFI\CData ? $target->cdata : $target;
+        $__proc = $this->getProcAs('glGetBufferSubData', 'void (*)(GLenum target, GLintptr offset, GLsizeiptr size, void *data)');
+        $__proc($target, $offset, $size, $data);
+    }
 
-        assert(Type::isUint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isInt64($offset), 'Argument $offset must be a C-like GLintptr, but incompatible or overflow value given');
-        assert(Type::isInt64($size), 'Argument $size must be a C-like GLsizeiptr, but incompatible or overflow value given');
+    /**
+     * These commands return a selected parameter of the query object specified by $id. {@see GL46::glGetQueryObject}
+     * returns in $params a selected parameter of the query object specified by $id.
+     * {@see GL46::glGetQueryBufferObject} returns in $buffer a selected parameter of the query object specified by
+     * $id, by writing it to $buffer's data store at the byte offset specified by $offset.
+     *
+     * $pname names a specific query object parameter. $pname can be as follows:
+     *
+     *  - {@see GL46::GL_QUERY_RESULT}: $params or $buffer returns the value of
+     *    the query object's passed samples counter. The initial value is 0.
+     *
+     *  - {@see GL46::GL_QUERY_RESULT_NO_WAIT}: If the result of the query is
+     *    available (that is, a query of {@see GL46::GL_QUERY_RESULT_AVAILABLE}
+     *    would
+     *    return non-zero), then $params or $buffer returns the value of the
+     *    query object's passed samples counter,
+     *    otherwise, the data referred to by $params or $buffer is not modified.
+     *    The initial value is 0.
+     *
+     *  - {@see GL46::GL_QUERY_RESULT_AVAILABLE}: $params or $buffer returns
+     *    whether the passed samples counter is immediately available. If a
+     *    delay would
+     *    occur waiting for the query result, {@see GL46::GL_FALSE} is returned.
+     *    Otherwise, {@see GL46::GL_TRUE} is
+     *    returned, which also indicates that the results of all previous
+     *    queries are available as well.
+     *
+     * @see http://docs.gl/gl2/glGetQueryObject
+     * @see http://docs.gl/gl4/glGetQueryObject
+     * @since 1.5
+     * @param int $id
+     * @param int $pname
+     * @param int|null $params
+     * @return void
+     */
+    public function getQueryObjectiv(int $id, int $pname, ?int &$params): void
+    {
+        $paramsCType = $this->info->ffi->new('GLint', false);
+        try {
+            $__proc = $this->getProcAs('glGetQueryObjectiv', 'void (*)(GLuint id, GLenum pname, GLint *params)');
+            $__proc($id, $pname, \FFI::addr($paramsCType));
+        } finally {
+            $params = $paramsCType->cdata;
+            \FFI::free($paramsCType);
+        }
+    }
 
-        $proc = $this->getProcAddress('glGetBufferSubData', 'void (*)(GLenum target, GLintptr offset, GLsizeiptr size, void *data)');
-        $proc($target, $offset, $size, $data);
+    /**
+     * These commands return a selected parameter of the query object specified by $id. {@see GL46::glGetQueryObject}
+     * returns in $params a selected parameter of the query object specified by $id.
+     * {@see GL46::glGetQueryBufferObject} returns in $buffer a selected parameter of the query object specified by
+     * $id, by writing it to $buffer's data store at the byte offset specified by $offset.
+     *
+     * $pname names a specific query object parameter. $pname can be as follows:
+     *
+     *  - {@see GL46::GL_QUERY_RESULT}: $params or $buffer returns the value of
+     *    the query object's passed samples counter. The initial value is 0.
+     *
+     *  - {@see GL46::GL_QUERY_RESULT_NO_WAIT}: If the result of the query is
+     *    available (that is, a query of {@see GL46::GL_QUERY_RESULT_AVAILABLE}
+     *    would
+     *    return non-zero), then $params or $buffer returns the value of the
+     *    query object's passed samples counter,
+     *    otherwise, the data referred to by $params or $buffer is not modified.
+     *    The initial value is 0.
+     *
+     *  - {@see GL46::GL_QUERY_RESULT_AVAILABLE}: $params or $buffer returns
+     *    whether the passed samples counter is immediately available. If a
+     *    delay would
+     *    occur waiting for the query result, {@see GL46::GL_FALSE} is returned.
+     *    Otherwise, {@see GL46::GL_TRUE} is
+     *    returned, which also indicates that the results of all previous
+     *    queries are available as well.
+     *
+     * @see http://docs.gl/gl2/glGetQueryObject
+     * @see http://docs.gl/gl4/glGetQueryObject
+     * @since 1.5
+     * @param int $id
+     * @param int $pname
+     * @param int|null $params
+     * @return void
+     */
+    public function getQueryObjectuiv(int $id, int $pname, ?int &$params): void
+    {
+        $paramsCType = $this->info->ffi->new('GLuint', false);
+        try {
+            $__proc = $this->getProcAs('glGetQueryObjectuiv', 'void (*)(GLuint id, GLenum pname, GLuint *params)');
+            $__proc($id, $pname, \FFI::addr($paramsCType));
+        } finally {
+            $params = $paramsCType->cdata;
+            \FFI::free($paramsCType);
+        }
+    }
+
+    /**
+     * {@see GL46::glGetQueryiv} returns in $params a selected parameter of the query object target specified by
+     * $target.
+     *
+     * $pname names a specific query object target parameter. When $pname is {@see GL46::GL_CURRENT_QUERY}, the name
+     * of the currently active query for $target, or zero if no query is active, will be placed in $params. If $pname
+     * is {@see GL46::GL_QUERY_COUNTER_BITS}, the implementation-dependent number of bits used to hold the result of
+     * queries for $target is returned in $params.
+     *
+     * @see http://docs.gl/gl2/glGetQueryiv
+     * @see http://docs.gl/gl4/glGetQueryiv
+     * @since 1.5
+     * @param int $target
+     * @param int $pname
+     * @param int|null $params
+     * @return void
+     */
+    public function getQueryiv(int $target, int $pname, ?int &$params): void
+    {
+        $paramsCType = $this->info->ffi->new('GLint', false);
+        try {
+            $__proc = $this->getProcAs('glGetQueryiv', 'void (*)(GLenum target, GLenum pname, GLint *params)');
+            $__proc($target, $pname, \FFI::addr($paramsCType));
+        } finally {
+            $params = $paramsCType->cdata;
+            \FFI::free($paramsCType);
+        }
+    }
+
+    /**
+     * {@see GL46::glIsBuffer} returns {@see GL46::GL_TRUE} if $buffer is currently the name of a buffer object. If
+     * $buffer is zero, or is a non-zero value that is not currently the name of a buffer object, or if an error
+     * occurs, {@see GL46::glIsBuffer} returns {@see GL46::GL_FALSE}.
+     *
+     * A name returned by {@see GL46::glGenBuffers}, but not yet associated with a buffer object by calling
+     * {@see GL46::glBindBuffer}, is not the name of a buffer object.
+     *
+     * @see http://docs.gl/gl2/glIsBuffer
+     * @see http://docs.gl/gl4/glIsBuffer
+     * @since 1.5
+     * @param int $buffer
+     * @return bool
+     */
+    public function isBuffer(int $buffer): bool
+    {
+        $__proc = $this->getProcAs('glIsBuffer', 'GLboolean (*)(GLuint buffer)');
+        return $__proc($buffer) !== 0;
+    }
+
+    /**
+     * {@see GL46::glIsQuery} returns {@see GL46::GL_TRUE} if $id is currently the name of a query object. If $id is
+     * zero, or is a non-zero value that is not currently the name of a query object, or if an error occurs,
+     * {@see GL46::glIsQuery} returns {@see GL46::GL_FALSE}.
+     *
+     * A name returned by {@see GL46::glGenQueries}, but not yet associated with a query object by calling
+     * {@see GL46::glBeginQuery}, is not the name of a query object.
+     *
+     * @see http://docs.gl/gl2/glIsQuery
+     * @see http://docs.gl/gl4/glIsQuery
+     * @since 1.5
+     * @param int $id
+     * @return bool
+     */
+    public function isQuery(int $id): bool
+    {
+        $__proc = $this->getProcAs('glIsQuery', 'GLboolean (*)(GLuint id)');
+        return $__proc($id) !== 0;
     }
 
     /**
@@ -798,20 +803,14 @@ class GL15 extends GL14
      * @see http://docs.gl/gl2/glMapBuffer
      * @see http://docs.gl/gl4/glMapBuffer
      * @since 1.5
-     * @param int|\FFI\CData|\FFI\CInt $target
-     * @param int|\FFI\CData|\FFI\CInt $access
-     * @return \FFI\CData|\FFI\CPtr|null
+     * @param int $target
+     * @param int $access
+     * @return \FFI\CData
      */
-    public function mapBuffer($target, $access): \FFI\CData
+    public function mapBuffer(int $target, int $access): \FFI\CData
     {
-        $target = $target instanceof \FFI\CData ? $target->cdata : $target;
-        $access = $access instanceof \FFI\CData ? $access->cdata : $access;
-
-        assert(Type::isUint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($access), 'Argument $access must be a C-like GLenum, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glMapBuffer', 'void * (*)(GLenum target, GLenum access)');
-        return $proc($target, $access);
+        $__proc = $this->getProcAs('glMapBuffer', 'void * (*)(GLenum target, GLenum access)');
+        return $__proc($target, $access);
     }
 
     /**
@@ -835,82 +834,12 @@ class GL15 extends GL14
      *
      * @see http://docs.gl/gl4/glUnmapBuffer
      * @since 1.5
-     * @param int|\FFI\CData|\FFI\CInt $target
-     * @return int|\FFI\CData|\FFI\CInt
+     * @param int $target
+     * @return bool
      */
-    public function unmapBuffer($target): int
+    public function unmapBuffer(int $target): bool
     {
-        $target = $target instanceof \FFI\CData ? $target->cdata : $target;
-
-        assert(Type::isUint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glUnmapBuffer', 'GLboolean (*)(GLenum target)');
-        return $proc($target);
-    }
-
-    /**
-     * {@see GL46::glGetBufferParameteriv} returns in $data a selected parameter of the buffer object specified by
-     * $target.
-     *
-     * $value names a specific buffer object parameter, as follows:
-     *
-     *  - {@see GL46::GL_BUFFER_ACCESS}: $params returns the access policy set
-     *    while mapping the buffer object. The initial value is
-     *    {@see GL46::GL_READ_WRITE}.
-     *
-     *  - {@see GL46::GL_BUFFER_MAPPED}: $params returns a flag indicating
-     *    whether the buffer object is currently mapped. The initial value is
-     *    {@see GL46::GL_FALSE}.
-     *
-     *  - {@see GL46::GL_BUFFER_SIZE}: $params returns the size of the buffer
-     *    object, measured in bytes. The initial value is 0.
-     *
-     *  - {@see GL46::GL_BUFFER_USAGE}: $params returns the buffer object's
-     *    usage pattern. The initial value is {@see GL46::GL_STATIC_DRAW}.
-     *
-     * @see http://docs.gl/gl2/glGetBufferParameteriv
-     * @since 1.5
-     * @param int|\FFI\CData|\FFI\CInt $target
-     * @param int|\FFI\CData|\FFI\CInt $pname
-     * @param \FFI\CData|\FFI\CIntPtr|null $params
-     * @return void
-     */
-    public function getBufferParameteriv($target, $pname, ?\FFI\CData $params): void
-    {
-        $target = $target instanceof \FFI\CData ? $target->cdata : $target;
-        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
-
-        assert(Type::isUint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glGetBufferParameteriv', 'void (*)(GLenum target, GLenum pname, GLint *params)');
-        $proc($target, $pname, $params);
-    }
-
-    /**
-     * {@see GL46::glGetBufferPointerv} and {@see GL46::glGetNamedBufferPointerv} return the buffer pointer $pname,
-     * which must be {@see GL46::GL_BUFFER_MAP_POINTER}. The single buffer map pointer is returned in $params. A
-     * {@see GL46::NULL} pointer is returned if the buffer object's data store is not currently mapped; or if the
-     * requesting context did not map the buffer object's data store, and the implementation is unable to support
-     * mappings on multiple clients.
-     *
-     * @see http://docs.gl/gl2/glGetBufferPointerv
-     * @see http://docs.gl/gl4/glGetBufferPointerv
-     * @since 1.5
-     * @param int|\FFI\CData|\FFI\CInt $target
-     * @param int|\FFI\CData|\FFI\CInt $pname
-     * @param \FFI\CData|\FFI\CPtrPtr|null $params
-     * @return void
-     */
-    public function getBufferPointerv($target, $pname, ?\FFI\CData $params): void
-    {
-        $target = $target instanceof \FFI\CData ? $target->cdata : $target;
-        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
-
-        assert(Type::isUint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glGetBufferPointerv', 'void (*)(GLenum target, GLenum pname, void **params)');
-        $proc($target, $pname, $params);
+        $__proc = $this->getProcAs('glUnmapBuffer', 'GLboolean (*)(GLenum target)');
+        return $__proc($target) !== 0;
     }
 }

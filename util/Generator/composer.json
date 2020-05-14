@@ -9,9 +9,7 @@
         "php": ">=7.4",
         "gl/documentation": "*",
         "illuminate/support": "~7.6",
-        "nette/php-generator": "~3.3",
-        "symfony/dom-crawler": "~5.0",
-        "symfony/css-selector": "~5.0"
+        "nette/php-generator": "~3.3"
     },
     "require-dev": {
         "roave/security-advisories": "dev-master",

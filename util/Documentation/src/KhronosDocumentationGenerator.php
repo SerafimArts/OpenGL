@@ -30,13 +30,18 @@ class KhronosDocumentationGenerator extends Documentation
     private KhronosRenderer $renderer;
 
     /**
+     * @var string
+     */
+    protected string $directory;
+
+    /**
      * KhronosDocumentationGenerator constructor.
      *
      * @param string $directory
      */
     public function __construct(string $directory)
     {
-        parent::__construct($directory);
+        $this->directory = $directory;
 
         $this->renderer = new KhronosRenderer();
 
@@ -81,9 +86,11 @@ class KhronosDocumentationGenerator extends Documentation
 
     /**
      * @param string $name
-     * @return string|null
+     * @param array $info
+     * @param array $parent
+     * @return string
      */
-    public function forFunction(string $name): ?string
+    public function forMethod(string $name, array $info, array $parent): string
     {
         $files = $this->files($name);
         $result = [$this->read(\end($files))];
@@ -94,7 +101,8 @@ class KhronosDocumentationGenerator extends Documentation
             $result[] = \sprintf('@see http://docs.gl/%s/%s', $version, $file->getBasename('.xml'));
         }
 
-        return \implode("\n", $result);
+        return \implode("\n", $result) . "\n" .
+            parent::forMethod($name, $info, $parent);
     }
 
     /**

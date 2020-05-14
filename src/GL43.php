@@ -13,1331 +13,1330 @@ declare(strict_types=1);
 
 namespace Serafim\OpenGL;
 
-use Serafim\OpenGL\Type\Type;
-
 /**
- * The OpenGL functionality up to version 4.3. Includes the deprecated symbols of the Compatibility Profile.
- *
- * OpenGL 4.3 implementations support revision 4.30 of the OpenGL Shading Language.
- *
- * Extensions promoted to core in this release:
- *
- * - ARB_arrays_of_arrays @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_arrays_of_arrays.txt
- * - ARB_ES3_compatibility @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_ES3_compatibility.txt
- * - ARB_clear_buffer_object @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_clear_buffer_object.txt
- * - ARB_compute_shader @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_compute_shader.txt
- * - ARB_copy_image @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_copy_image.txt
- * - EXT_debug_label @see https://www.khronos.org/registry/OpenGL/extensions/EXT/EXT_debug_label.txt
- * - ARB_debug_output @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_debug_output.txt
- * - ARB_explicit_uniform_location @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_explicit_uniform_location.txt
- * - ARB_fragment_layer_viewport @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_fragment_layer_viewport.txt
- * - ARB_framebuffer_no_attachments @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_framebuffer_no_attachments.txt
- * - ARB_internalformat_query2 @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_internalformat_query2.txt
- * - ARB_invalidate_subdata @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_invalidate_subdata.txt
- * - ARB_multi_draw_indirect @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_multi_draw_indirect.txt
- * - ARB_program_interface_query @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_program_interface_query.txt
- * - ARB_robust_buffer_access_behavior @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_robust_buffer_access_behavior.txt
- * - ARB_shader_image_size @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_shader_image_size.txt
- * - ARB_shader_storage_buffer_object @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_shader_storage_buffer_object.txt
- * - ARB_stencil_texturing @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_stencil_texturing.txt
- * - ARB_texture_buffer_range @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_texture_buffer_range.txt
- * - ARB_texture_query_levels @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_texture_query_levels.txt
- * - ARB_texture_storage_multisample @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_texture_storage_multisample.txt
- * - ARB_texture_view @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_texture_view.txt
- * - ARB_vertex_attrib_binding @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_vertex_attrib_binding.txt
+ * @version 4.3
  */
 class GL43 extends GL42
 {
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_NUM_SHADING_LANGUAGE_VERSIONS = 0x82e9;
+    public const GL_NUM_SHADING_LANGUAGE_VERSIONS = 0x82E9;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_VERTEX_ATTRIB_ARRAY_LONG = 0x874e;
+    public const GL_VERTEX_ATTRIB_ARRAY_LONG = 0x874E;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_COMPRESSED_RGB8_ETC2 = 0x9274;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_COMPRESSED_SRGB8_ETC2 = 0x9275;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_COMPRESSED_RGB8_PUNCHTHROUGH_ALPHA1_ETC2 = 0x9276;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_COMPRESSED_SRGB8_PUNCHTHROUGH_ALPHA1_ETC2 = 0x9277;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_COMPRESSED_RGBA8_ETC2_EAC = 0x9278;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_COMPRESSED_SRGB8_ALPHA8_ETC2_EAC = 0x9279;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_COMPRESSED_R11_EAC = 0x9270;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_COMPRESSED_SIGNED_R11_EAC = 0x9271;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_COMPRESSED_RG11_EAC = 0x9272;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_COMPRESSED_SIGNED_RG11_EAC = 0x9273;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_PRIMITIVE_RESTART_FIXED_INDEX = 0x8d69;
+    public const GL_PRIMITIVE_RESTART_FIXED_INDEX = 0x8D69;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_ANY_SAMPLES_PASSED_CONSERVATIVE = 0x8d6a;
+    public const GL_ANY_SAMPLES_PASSED_CONSERVATIVE = 0x8D6A;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_MAX_ELEMENT_INDEX = 0x8d6b;
+    public const GL_MAX_ELEMENT_INDEX = 0x8D6B;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_COMPUTE_SHADER = 0x91b9;
+    public const GL_COMPUTE_SHADER = 0x91B9;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_MAX_COMPUTE_UNIFORM_BLOCKS = 0x91bb;
+    public const GL_MAX_COMPUTE_UNIFORM_BLOCKS = 0x91BB;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_MAX_COMPUTE_TEXTURE_IMAGE_UNITS = 0x91bc;
+    public const GL_MAX_COMPUTE_TEXTURE_IMAGE_UNITS = 0x91BC;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_MAX_COMPUTE_IMAGE_UNIFORMS = 0x91bd;
+    public const GL_MAX_COMPUTE_IMAGE_UNIFORMS = 0x91BD;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_MAX_COMPUTE_SHARED_MEMORY_SIZE = 0x8262;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_MAX_COMPUTE_UNIFORM_COMPONENTS = 0x8263;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_MAX_COMPUTE_ATOMIC_COUNTER_BUFFERS = 0x8264;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_MAX_COMPUTE_ATOMIC_COUNTERS = 0x8265;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_MAX_COMBINED_COMPUTE_UNIFORM_COMPONENTS = 0x8266;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_MAX_COMPUTE_WORK_GROUP_INVOCATIONS = 0x90eb;
+    public const GL_MAX_COMPUTE_WORK_GROUP_INVOCATIONS = 0x90EB;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_MAX_COMPUTE_WORK_GROUP_COUNT = 0x91be;
+    public const GL_MAX_COMPUTE_WORK_GROUP_COUNT = 0x91BE;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_MAX_COMPUTE_WORK_GROUP_SIZE = 0x91bf;
+    public const GL_MAX_COMPUTE_WORK_GROUP_SIZE = 0x91BF;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_COMPUTE_WORK_GROUP_SIZE = 0x8267;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_UNIFORM_BLOCK_REFERENCED_BY_COMPUTE_SHADER = 0x90ec;
+    public const GL_UNIFORM_BLOCK_REFERENCED_BY_COMPUTE_SHADER = 0x90EC;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_ATOMIC_COUNTER_BUFFER_REFERENCED_BY_COMPUTE_SHADER = 0x90ed;
+    public const GL_ATOMIC_COUNTER_BUFFER_REFERENCED_BY_COMPUTE_SHADER = 0x90ED;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_DISPATCH_INDIRECT_BUFFER = 0x90ee;
+    public const GL_DISPATCH_INDIRECT_BUFFER = 0x90EE;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_DISPATCH_INDIRECT_BUFFER_BINDING = 0x90ef;
+    public const GL_DISPATCH_INDIRECT_BUFFER_BINDING = 0x90EF;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_COMPUTE_SHADER_BIT = 0x0020;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_DEBUG_OUTPUT_SYNCHRONOUS = 0x8242;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_DEBUG_NEXT_LOGGED_MESSAGE_LENGTH = 0x8243;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_DEBUG_CALLBACK_FUNCTION = 0x8244;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_DEBUG_CALLBACK_USER_PARAM = 0x8245;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_DEBUG_SOURCE_API = 0x8246;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_DEBUG_SOURCE_WINDOW_SYSTEM = 0x8247;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_DEBUG_SOURCE_SHADER_COMPILER = 0x8248;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_DEBUG_SOURCE_THIRD_PARTY = 0x8249;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_DEBUG_SOURCE_APPLICATION = 0x824a;
+    public const GL_DEBUG_SOURCE_APPLICATION = 0x824A;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_DEBUG_SOURCE_OTHER = 0x824b;
+    public const GL_DEBUG_SOURCE_OTHER = 0x824B;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_DEBUG_TYPE_ERROR = 0x824c;
+    public const GL_DEBUG_TYPE_ERROR = 0x824C;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR = 0x824d;
+    public const GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR = 0x824D;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR = 0x824e;
+    public const GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR = 0x824E;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_DEBUG_TYPE_PORTABILITY = 0x824f;
+    public const GL_DEBUG_TYPE_PORTABILITY = 0x824F;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_DEBUG_TYPE_PERFORMANCE = 0x8250;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_DEBUG_TYPE_OTHER = 0x8251;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_MAX_DEBUG_MESSAGE_LENGTH = 0x9143;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_MAX_DEBUG_LOGGED_MESSAGES = 0x9144;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_DEBUG_LOGGED_MESSAGES = 0x9145;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_DEBUG_SEVERITY_HIGH = 0x9146;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_DEBUG_SEVERITY_MEDIUM = 0x9147;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_DEBUG_SEVERITY_LOW = 0x9148;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_DEBUG_TYPE_MARKER = 0x8268;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_DEBUG_TYPE_PUSH_GROUP = 0x8269;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_DEBUG_TYPE_POP_GROUP = 0x826a;
+    public const GL_DEBUG_TYPE_POP_GROUP = 0x826A;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_DEBUG_SEVERITY_NOTIFICATION = 0x826b;
+    public const GL_DEBUG_SEVERITY_NOTIFICATION = 0x826B;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_MAX_DEBUG_GROUP_STACK_DEPTH = 0x826c;
+    public const GL_MAX_DEBUG_GROUP_STACK_DEPTH = 0x826C;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_DEBUG_GROUP_STACK_DEPTH = 0x826d;
+    public const GL_DEBUG_GROUP_STACK_DEPTH = 0x826D;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_BUFFER = 0x82e0;
+    public const GL_BUFFER = 0x82E0;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_SHADER = 0x82e1;
+    public const GL_SHADER = 0x82E1;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_PROGRAM = 0x82e2;
+    public const GL_PROGRAM = 0x82E2;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_QUERY = 0x82e3;
+    public const GL_QUERY = 0x82E3;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_PROGRAM_PIPELINE = 0x82e4;
+    public const GL_PROGRAM_PIPELINE = 0x82E4;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_SAMPLER = 0x82e6;
+    public const GL_SAMPLER = 0x82E6;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_MAX_LABEL_LENGTH = 0x82e8;
+    public const GL_MAX_LABEL_LENGTH = 0x82E8;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_DEBUG_OUTPUT = 0x92e0;
+    public const GL_DEBUG_OUTPUT = 0x92E0;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_CONTEXT_FLAG_DEBUG_BIT = 0x0002;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_MAX_UNIFORM_LOCATIONS = 0x826e;
+    public const GL_MAX_UNIFORM_LOCATIONS = 0x826E;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_FRAMEBUFFER_DEFAULT_WIDTH = 0x9310;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_FRAMEBUFFER_DEFAULT_HEIGHT = 0x9311;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_FRAMEBUFFER_DEFAULT_LAYERS = 0x9312;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_FRAMEBUFFER_DEFAULT_SAMPLES = 0x9313;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_FRAMEBUFFER_DEFAULT_FIXED_SAMPLE_LOCATIONS = 0x9314;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_MAX_FRAMEBUFFER_WIDTH = 0x9315;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_MAX_FRAMEBUFFER_HEIGHT = 0x9316;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_MAX_FRAMEBUFFER_LAYERS = 0x9317;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_MAX_FRAMEBUFFER_SAMPLES = 0x9318;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_INTERNALFORMAT_SUPPORTED = 0x826f;
+    public const GL_INTERNALFORMAT_SUPPORTED = 0x826F;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_INTERNALFORMAT_PREFERRED = 0x8270;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_INTERNALFORMAT_RED_SIZE = 0x8271;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_INTERNALFORMAT_GREEN_SIZE = 0x8272;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_INTERNALFORMAT_BLUE_SIZE = 0x8273;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_INTERNALFORMAT_ALPHA_SIZE = 0x8274;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_INTERNALFORMAT_DEPTH_SIZE = 0x8275;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_INTERNALFORMAT_STENCIL_SIZE = 0x8276;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_INTERNALFORMAT_SHARED_SIZE = 0x8277;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_INTERNALFORMAT_RED_TYPE = 0x8278;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_INTERNALFORMAT_GREEN_TYPE = 0x8279;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_INTERNALFORMAT_BLUE_TYPE = 0x827a;
+    public const GL_INTERNALFORMAT_BLUE_TYPE = 0x827A;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_INTERNALFORMAT_ALPHA_TYPE = 0x827b;
+    public const GL_INTERNALFORMAT_ALPHA_TYPE = 0x827B;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_INTERNALFORMAT_DEPTH_TYPE = 0x827c;
+    public const GL_INTERNALFORMAT_DEPTH_TYPE = 0x827C;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_INTERNALFORMAT_STENCIL_TYPE = 0x827d;
+    public const GL_INTERNALFORMAT_STENCIL_TYPE = 0x827D;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_MAX_WIDTH = 0x827e;
+    public const GL_MAX_WIDTH = 0x827E;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_MAX_HEIGHT = 0x827f;
+    public const GL_MAX_HEIGHT = 0x827F;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_MAX_DEPTH = 0x8280;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_MAX_LAYERS = 0x8281;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_MAX_COMBINED_DIMENSIONS = 0x8282;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_COLOR_COMPONENTS = 0x8283;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_DEPTH_COMPONENTS = 0x8284;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_STENCIL_COMPONENTS = 0x8285;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_COLOR_RENDERABLE = 0x8286;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_DEPTH_RENDERABLE = 0x8287;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_STENCIL_RENDERABLE = 0x8288;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_FRAMEBUFFER_RENDERABLE = 0x8289;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_FRAMEBUFFER_RENDERABLE_LAYERED = 0x828a;
+    public const GL_FRAMEBUFFER_RENDERABLE_LAYERED = 0x828A;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_FRAMEBUFFER_BLEND = 0x828b;
+    public const GL_FRAMEBUFFER_BLEND = 0x828B;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_READ_PIXELS = 0x828c;
+    public const GL_READ_PIXELS = 0x828C;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_READ_PIXELS_FORMAT = 0x828d;
+    public const GL_READ_PIXELS_FORMAT = 0x828D;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_READ_PIXELS_TYPE = 0x828e;
+    public const GL_READ_PIXELS_TYPE = 0x828E;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_TEXTURE_IMAGE_FORMAT = 0x828f;
+    public const GL_TEXTURE_IMAGE_FORMAT = 0x828F;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_TEXTURE_IMAGE_TYPE = 0x8290;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_GET_TEXTURE_IMAGE_FORMAT = 0x8291;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_GET_TEXTURE_IMAGE_TYPE = 0x8292;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_MIPMAP = 0x8293;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_MANUAL_GENERATE_MIPMAP = 0x8294;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_AUTO_GENERATE_MIPMAP = 0x8295;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_COLOR_ENCODING = 0x8296;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_SRGB_READ = 0x8297;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_SRGB_WRITE = 0x8298;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_FILTER = 0x829a;
+    public const GL_FILTER = 0x829A;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_VERTEX_TEXTURE = 0x829b;
+    public const GL_VERTEX_TEXTURE = 0x829B;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_TESS_CONTROL_TEXTURE = 0x829c;
+    public const GL_TESS_CONTROL_TEXTURE = 0x829C;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_TESS_EVALUATION_TEXTURE = 0x829d;
+    public const GL_TESS_EVALUATION_TEXTURE = 0x829D;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_GEOMETRY_TEXTURE = 0x829e;
+    public const GL_GEOMETRY_TEXTURE = 0x829E;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_FRAGMENT_TEXTURE = 0x829f;
+    public const GL_FRAGMENT_TEXTURE = 0x829F;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_COMPUTE_TEXTURE = 0x82a0;
+    public const GL_COMPUTE_TEXTURE = 0x82A0;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_TEXTURE_SHADOW = 0x82a1;
+    public const GL_TEXTURE_SHADOW = 0x82A1;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_TEXTURE_GATHER = 0x82a2;
+    public const GL_TEXTURE_GATHER = 0x82A2;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_TEXTURE_GATHER_SHADOW = 0x82a3;
+    public const GL_TEXTURE_GATHER_SHADOW = 0x82A3;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_SHADER_IMAGE_LOAD = 0x82a4;
+    public const GL_SHADER_IMAGE_LOAD = 0x82A4;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_SHADER_IMAGE_STORE = 0x82a5;
+    public const GL_SHADER_IMAGE_STORE = 0x82A5;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_SHADER_IMAGE_ATOMIC = 0x82a6;
+    public const GL_SHADER_IMAGE_ATOMIC = 0x82A6;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_IMAGE_TEXEL_SIZE = 0x82a7;
+    public const GL_IMAGE_TEXEL_SIZE = 0x82A7;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_IMAGE_COMPATIBILITY_CLASS = 0x82a8;
+    public const GL_IMAGE_COMPATIBILITY_CLASS = 0x82A8;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_IMAGE_PIXEL_FORMAT = 0x82a9;
+    public const GL_IMAGE_PIXEL_FORMAT = 0x82A9;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_IMAGE_PIXEL_TYPE = 0x82aa;
+    public const GL_IMAGE_PIXEL_TYPE = 0x82AA;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_SIMULTANEOUS_TEXTURE_AND_DEPTH_TEST = 0x82ac;
+    public const GL_SIMULTANEOUS_TEXTURE_AND_DEPTH_TEST = 0x82AC;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_SIMULTANEOUS_TEXTURE_AND_STENCIL_TEST = 0x82ad;
+    public const GL_SIMULTANEOUS_TEXTURE_AND_STENCIL_TEST = 0x82AD;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_SIMULTANEOUS_TEXTURE_AND_DEPTH_WRITE = 0x82ae;
+    public const GL_SIMULTANEOUS_TEXTURE_AND_DEPTH_WRITE = 0x82AE;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_SIMULTANEOUS_TEXTURE_AND_STENCIL_WRITE = 0x82af;
+    public const GL_SIMULTANEOUS_TEXTURE_AND_STENCIL_WRITE = 0x82AF;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_TEXTURE_COMPRESSED_BLOCK_WIDTH = 0x82b1;
+    public const GL_TEXTURE_COMPRESSED_BLOCK_WIDTH = 0x82B1;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_TEXTURE_COMPRESSED_BLOCK_HEIGHT = 0x82b2;
+    public const GL_TEXTURE_COMPRESSED_BLOCK_HEIGHT = 0x82B2;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_TEXTURE_COMPRESSED_BLOCK_SIZE = 0x82b3;
+    public const GL_TEXTURE_COMPRESSED_BLOCK_SIZE = 0x82B3;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_CLEAR_BUFFER = 0x82b4;
+    public const GL_CLEAR_BUFFER = 0x82B4;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_TEXTURE_VIEW = 0x82b5;
+    public const GL_TEXTURE_VIEW = 0x82B5;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_VIEW_COMPATIBILITY_CLASS = 0x82b6;
+    public const GL_VIEW_COMPATIBILITY_CLASS = 0x82B6;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_FULL_SUPPORT = 0x82b7;
+    public const GL_FULL_SUPPORT = 0x82B7;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_CAVEAT_SUPPORT = 0x82b8;
+    public const GL_CAVEAT_SUPPORT = 0x82B8;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_IMAGE_CLASS_4_X_32 = 0x82b9;
+    public const GL_IMAGE_CLASS_4_X_32 = 0x82B9;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_IMAGE_CLASS_2_X_32 = 0x82ba;
+    public const GL_IMAGE_CLASS_2_X_32 = 0x82BA;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_IMAGE_CLASS_1_X_32 = 0x82bb;
+    public const GL_IMAGE_CLASS_1_X_32 = 0x82BB;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_IMAGE_CLASS_4_X_16 = 0x82bc;
+    public const GL_IMAGE_CLASS_4_X_16 = 0x82BC;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_IMAGE_CLASS_2_X_16 = 0x82bd;
+    public const GL_IMAGE_CLASS_2_X_16 = 0x82BD;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_IMAGE_CLASS_1_X_16 = 0x82be;
+    public const GL_IMAGE_CLASS_1_X_16 = 0x82BE;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_IMAGE_CLASS_4_X_8 = 0x82bf;
+    public const GL_IMAGE_CLASS_4_X_8 = 0x82BF;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_IMAGE_CLASS_2_X_8 = 0x82c0;
+    public const GL_IMAGE_CLASS_2_X_8 = 0x82C0;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_IMAGE_CLASS_1_X_8 = 0x82c1;
+    public const GL_IMAGE_CLASS_1_X_8 = 0x82C1;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_IMAGE_CLASS_11_11_10 = 0x82c2;
+    public const GL_IMAGE_CLASS_11_11_10 = 0x82C2;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_IMAGE_CLASS_10_10_10_2 = 0x82c3;
+    public const GL_IMAGE_CLASS_10_10_10_2 = 0x82C3;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_VIEW_CLASS_128_BITS = 0x82c4;
+    public const GL_VIEW_CLASS_128_BITS = 0x82C4;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_VIEW_CLASS_96_BITS = 0x82c5;
+    public const GL_VIEW_CLASS_96_BITS = 0x82C5;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_VIEW_CLASS_64_BITS = 0x82c6;
+    public const GL_VIEW_CLASS_64_BITS = 0x82C6;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_VIEW_CLASS_48_BITS = 0x82c7;
+    public const GL_VIEW_CLASS_48_BITS = 0x82C7;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_VIEW_CLASS_32_BITS = 0x82c8;
+    public const GL_VIEW_CLASS_32_BITS = 0x82C8;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_VIEW_CLASS_24_BITS = 0x82c9;
+    public const GL_VIEW_CLASS_24_BITS = 0x82C9;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_VIEW_CLASS_16_BITS = 0x82ca;
+    public const GL_VIEW_CLASS_16_BITS = 0x82CA;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_VIEW_CLASS_8_BITS = 0x82cb;
+    public const GL_VIEW_CLASS_8_BITS = 0x82CB;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_VIEW_CLASS_S3TC_DXT1_RGB = 0x82cc;
+    public const GL_VIEW_CLASS_S3TC_DXT1_RGB = 0x82CC;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_VIEW_CLASS_S3TC_DXT1_RGBA = 0x82cd;
+    public const GL_VIEW_CLASS_S3TC_DXT1_RGBA = 0x82CD;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_VIEW_CLASS_S3TC_DXT3_RGBA = 0x82ce;
+    public const GL_VIEW_CLASS_S3TC_DXT3_RGBA = 0x82CE;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_VIEW_CLASS_S3TC_DXT5_RGBA = 0x82cf;
+    public const GL_VIEW_CLASS_S3TC_DXT5_RGBA = 0x82CF;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_VIEW_CLASS_RGTC1_RED = 0x82d0;
+    public const GL_VIEW_CLASS_RGTC1_RED = 0x82D0;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_VIEW_CLASS_RGTC2_RG = 0x82d1;
+    public const GL_VIEW_CLASS_RGTC2_RG = 0x82D1;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_VIEW_CLASS_BPTC_UNORM = 0x82d2;
+    public const GL_VIEW_CLASS_BPTC_UNORM = 0x82D2;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_VIEW_CLASS_BPTC_FLOAT = 0x82d3;
+    public const GL_VIEW_CLASS_BPTC_FLOAT = 0x82D3;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_UNIFORM = 0x92e1;
+    public const GL_UNIFORM = 0x92E1;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_UNIFORM_BLOCK = 0x92e2;
+    public const GL_UNIFORM_BLOCK = 0x92E2;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_PROGRAM_INPUT = 0x92e3;
+    public const GL_PROGRAM_INPUT = 0x92E3;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_PROGRAM_OUTPUT = 0x92e4;
+    public const GL_PROGRAM_OUTPUT = 0x92E4;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_BUFFER_VARIABLE = 0x92e5;
+    public const GL_BUFFER_VARIABLE = 0x92E5;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_SHADER_STORAGE_BLOCK = 0x92e6;
+    public const GL_SHADER_STORAGE_BLOCK = 0x92E6;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_VERTEX_SUBROUTINE = 0x92e8;
+    public const GL_VERTEX_SUBROUTINE = 0x92E8;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_TESS_CONTROL_SUBROUTINE = 0x92e9;
+    public const GL_TESS_CONTROL_SUBROUTINE = 0x92E9;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_TESS_EVALUATION_SUBROUTINE = 0x92ea;
+    public const GL_TESS_EVALUATION_SUBROUTINE = 0x92EA;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_GEOMETRY_SUBROUTINE = 0x92eb;
+    public const GL_GEOMETRY_SUBROUTINE = 0x92EB;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_FRAGMENT_SUBROUTINE = 0x92ec;
+    public const GL_FRAGMENT_SUBROUTINE = 0x92EC;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_COMPUTE_SUBROUTINE = 0x92ed;
+    public const GL_COMPUTE_SUBROUTINE = 0x92ED;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_VERTEX_SUBROUTINE_UNIFORM = 0x92ee;
+    public const GL_VERTEX_SUBROUTINE_UNIFORM = 0x92EE;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_TESS_CONTROL_SUBROUTINE_UNIFORM = 0x92ef;
+    public const GL_TESS_CONTROL_SUBROUTINE_UNIFORM = 0x92EF;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_TESS_EVALUATION_SUBROUTINE_UNIFORM = 0x92f0;
+    public const GL_TESS_EVALUATION_SUBROUTINE_UNIFORM = 0x92F0;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_GEOMETRY_SUBROUTINE_UNIFORM = 0x92f1;
+    public const GL_GEOMETRY_SUBROUTINE_UNIFORM = 0x92F1;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_FRAGMENT_SUBROUTINE_UNIFORM = 0x92f2;
+    public const GL_FRAGMENT_SUBROUTINE_UNIFORM = 0x92F2;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_COMPUTE_SUBROUTINE_UNIFORM = 0x92f3;
+    public const GL_COMPUTE_SUBROUTINE_UNIFORM = 0x92F3;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_TRANSFORM_FEEDBACK_VARYING = 0x92f4;
+    public const GL_TRANSFORM_FEEDBACK_VARYING = 0x92F4;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_ACTIVE_RESOURCES = 0x92f5;
+    public const GL_ACTIVE_RESOURCES = 0x92F5;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_MAX_NAME_LENGTH = 0x92f6;
+    public const GL_MAX_NAME_LENGTH = 0x92F6;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_MAX_NUM_ACTIVE_VARIABLES = 0x92f7;
+    public const GL_MAX_NUM_ACTIVE_VARIABLES = 0x92F7;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_MAX_NUM_COMPATIBLE_SUBROUTINES = 0x92f8;
+    public const GL_MAX_NUM_COMPATIBLE_SUBROUTINES = 0x92F8;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_NAME_LENGTH = 0x92f9;
+    public const GL_NAME_LENGTH = 0x92F9;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_TYPE = 0x92fa;
+    public const GL_TYPE = 0x92FA;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_ARRAY_SIZE = 0x92fb;
+    public const GL_ARRAY_SIZE = 0x92FB;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_OFFSET = 0x92fc;
+    public const GL_OFFSET = 0x92FC;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_BLOCK_INDEX = 0x92fd;
+    public const GL_BLOCK_INDEX = 0x92FD;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_ARRAY_STRIDE = 0x92fe;
+    public const GL_ARRAY_STRIDE = 0x92FE;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_MATRIX_STRIDE = 0x92ff;
+    public const GL_MATRIX_STRIDE = 0x92FF;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_IS_ROW_MAJOR = 0x9300;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_ATOMIC_COUNTER_BUFFER_INDEX = 0x9301;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_BUFFER_BINDING = 0x9302;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_BUFFER_DATA_SIZE = 0x9303;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_NUM_ACTIVE_VARIABLES = 0x9304;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_ACTIVE_VARIABLES = 0x9305;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_REFERENCED_BY_VERTEX_SHADER = 0x9306;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_REFERENCED_BY_TESS_CONTROL_SHADER = 0x9307;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_REFERENCED_BY_TESS_EVALUATION_SHADER = 0x9308;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_REFERENCED_BY_GEOMETRY_SHADER = 0x9309;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_REFERENCED_BY_FRAGMENT_SHADER = 0x930a;
+    public const GL_REFERENCED_BY_FRAGMENT_SHADER = 0x930A;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_REFERENCED_BY_COMPUTE_SHADER = 0x930b;
+    public const GL_REFERENCED_BY_COMPUTE_SHADER = 0x930B;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_TOP_LEVEL_ARRAY_SIZE = 0x930c;
+    public const GL_TOP_LEVEL_ARRAY_SIZE = 0x930C;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_TOP_LEVEL_ARRAY_STRIDE = 0x930d;
+    public const GL_TOP_LEVEL_ARRAY_STRIDE = 0x930D;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_LOCATION = 0x930e;
+    public const GL_LOCATION = 0x930E;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_LOCATION_INDEX = 0x930f;
+    public const GL_LOCATION_INDEX = 0x930F;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_IS_PER_PATCH = 0x92e7;
+    public const GL_IS_PER_PATCH = 0x92E7;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_SHADER_STORAGE_BUFFER = 0x90d2;
+    public const GL_SHADER_STORAGE_BUFFER = 0x90D2;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_SHADER_STORAGE_BUFFER_BINDING = 0x90d3;
+    public const GL_SHADER_STORAGE_BUFFER_BINDING = 0x90D3;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_SHADER_STORAGE_BUFFER_START = 0x90d4;
+    public const GL_SHADER_STORAGE_BUFFER_START = 0x90D4;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_SHADER_STORAGE_BUFFER_SIZE = 0x90d5;
+    public const GL_SHADER_STORAGE_BUFFER_SIZE = 0x90D5;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_MAX_VERTEX_SHADER_STORAGE_BLOCKS = 0x90d6;
+    public const GL_MAX_VERTEX_SHADER_STORAGE_BLOCKS = 0x90D6;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_MAX_GEOMETRY_SHADER_STORAGE_BLOCKS = 0x90d7;
+    public const GL_MAX_GEOMETRY_SHADER_STORAGE_BLOCKS = 0x90D7;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_MAX_TESS_CONTROL_SHADER_STORAGE_BLOCKS = 0x90d8;
+    public const GL_MAX_TESS_CONTROL_SHADER_STORAGE_BLOCKS = 0x90D8;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_MAX_TESS_EVALUATION_SHADER_STORAGE_BLOCKS = 0x90d9;
+    public const GL_MAX_TESS_EVALUATION_SHADER_STORAGE_BLOCKS = 0x90D9;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_MAX_FRAGMENT_SHADER_STORAGE_BLOCKS = 0x90da;
+    public const GL_MAX_FRAGMENT_SHADER_STORAGE_BLOCKS = 0x90DA;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_MAX_COMPUTE_SHADER_STORAGE_BLOCKS = 0x90db;
+    public const GL_MAX_COMPUTE_SHADER_STORAGE_BLOCKS = 0x90DB;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_MAX_COMBINED_SHADER_STORAGE_BLOCKS = 0x90dc;
+    public const GL_MAX_COMBINED_SHADER_STORAGE_BLOCKS = 0x90DC;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_MAX_SHADER_STORAGE_BUFFER_BINDINGS = 0x90dd;
+    public const GL_MAX_SHADER_STORAGE_BUFFER_BINDINGS = 0x90DD;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_MAX_SHADER_STORAGE_BLOCK_SIZE = 0x90de;
+    public const GL_MAX_SHADER_STORAGE_BLOCK_SIZE = 0x90DE;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_SHADER_STORAGE_BUFFER_OFFSET_ALIGNMENT = 0x90df;
+    public const GL_SHADER_STORAGE_BUFFER_OFFSET_ALIGNMENT = 0x90DF;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
     public const GL_SHADER_STORAGE_BARRIER_BIT = 0x2000;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_MAX_COMBINED_SHADER_OUTPUT_RESOURCES = 0x8f39;
+    public const GL_MAX_COMBINED_SHADER_OUTPUT_RESOURCES = 0x8F39;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_DEPTH_STENCIL_TEXTURE_MODE = 0x90ea;
+    public const GL_DEPTH_STENCIL_TEXTURE_MODE = 0x90EA;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_TEXTURE_BUFFER_OFFSET = 0x919d;
+    public const GL_TEXTURE_BUFFER_OFFSET = 0x919D;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_TEXTURE_BUFFER_SIZE = 0x919e;
+    public const GL_TEXTURE_BUFFER_SIZE = 0x919E;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_TEXTURE_BUFFER_OFFSET_ALIGNMENT = 0x919f;
+    public const GL_TEXTURE_BUFFER_OFFSET_ALIGNMENT = 0x919F;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_TEXTURE_VIEW_MIN_LEVEL = 0x82db;
+    public const GL_TEXTURE_VIEW_MIN_LEVEL = 0x82DB;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_TEXTURE_VIEW_NUM_LEVELS = 0x82dc;
+    public const GL_TEXTURE_VIEW_NUM_LEVELS = 0x82DC;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_TEXTURE_VIEW_MIN_LAYER = 0x82dd;
+    public const GL_TEXTURE_VIEW_MIN_LAYER = 0x82DD;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_TEXTURE_VIEW_NUM_LAYERS = 0x82de;
+    public const GL_TEXTURE_VIEW_NUM_LAYERS = 0x82DE;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_TEXTURE_IMMUTABLE_LEVELS = 0x82df;
+    public const GL_TEXTURE_IMMUTABLE_LEVELS = 0x82DF;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_VERTEX_ATTRIB_BINDING = 0x82d4;
+    public const GL_VERTEX_ATTRIB_BINDING = 0x82D4;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_VERTEX_ATTRIB_RELATIVE_OFFSET = 0x82d5;
+    public const GL_VERTEX_ATTRIB_RELATIVE_OFFSET = 0x82D5;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_VERTEX_BINDING_DIVISOR = 0x82d6;
+    public const GL_VERTEX_BINDING_DIVISOR = 0x82D6;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_VERTEX_BINDING_OFFSET = 0x82d7;
+    public const GL_VERTEX_BINDING_OFFSET = 0x82D7;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_VERTEX_BINDING_STRIDE = 0x82d8;
+    public const GL_VERTEX_BINDING_STRIDE = 0x82D8;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_MAX_VERTEX_ATTRIB_RELATIVE_OFFSET = 0x82d9;
+    public const GL_MAX_VERTEX_ATTRIB_RELATIVE_OFFSET = 0x82D9;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_MAX_VERTEX_ATTRIB_BINDINGS = 0x82da;
+    public const GL_MAX_VERTEX_ATTRIB_BINDINGS = 0x82DA;
     /**
-     * @var int
      * @since 4.3
+     * @var int
      */
-    public const GL_VERTEX_BINDING_BUFFER = 0x8f4f;
+    public const GL_VERTEX_BINDING_BUFFER = 0x8F4F;
+
+    /**
+     * {@see GL46::glBindVertexBuffer} and {@see GL46::glVertexArrayVertexBuffer} bind the buffer named $buffer to
+     * the vertex buffer binding point whose index is given by $bindingindex. {@see GL46::glBindVertexBuffer}
+     * modifies the binding of the currently bound vertex array object, whereas
+     * {@see GL46::glVertexArrayVertexBuffer} allows the caller to specify ID of the vertex array object with an
+     * argument named $vaobj, for which the binding should be modified. $offset and $stride specify the offset of the
+     * first element within the buffer and the distance between elements within the buffer, respectively, and are
+     * both measured in basic machine units. $bindingindex must be less than the value of
+     * {@see GL46::GL_MAX_VERTEX_ATTRIB_BINDINGS}. $offset and $stride must be greater than or equal to zero. If
+     * $buffer is zero, then any buffer currently bound to the specified binding point is unbound.
+     *
+     * If $buffer is not the name of an existing buffer object, the GL first creates a new state vector, initialized
+     * with a zero-sized memory buffer and comprising all the state and with the same initial values as in case of
+     * {@see GL46::glBindBuffer}. $buffer is then attached to the specified $bindingindex of the vertex array object.
+     *
+     * @see http://docs.gl/gl4/glBindVertexBuffer
+     * @since 4.3
+     * @param int $bindingindex
+     * @param int $buffer
+     * @param int $offset
+     * @param int $stride
+     * @return void
+     */
+    public function bindVertexBuffer(int $bindingindex, int $buffer, int $offset, int $stride): void
+    {
+        $__proc = $this->getProcAs('glBindVertexBuffer', 'void (*)(GLuint bindingindex, GLuint buffer, GLintptr offset, GLsizei stride)');
+        $__proc($bindingindex, $buffer, $offset, $stride);
+    }
 
     /**
      * {@see GL46::glClearBufferData} and {@see GL46::glClearNamedBufferData} fill the entirety of a buffer object's
@@ -1386,27 +1385,17 @@ class GL43 extends GL42
      *
      * @see http://docs.gl/gl4/glClearBufferData
      * @since 4.3
-     * @param int|\FFI\CData|\FFI\CInt $target
-     * @param int|\FFI\CData|\FFI\CInt $internalformat
-     * @param int|\FFI\CData|\FFI\CInt $format
-     * @param int|\FFI\CData|\FFI\CInt $type
-     * @param \FFI\CData|\FFI\CPtr|null $data
+     * @param int $target
+     * @param int $internalformat
+     * @param int $format
+     * @param int $type
+     * @param \FFI\CData|null $data
      * @return void
      */
-    public function clearBufferData($target, $internalformat, $format, $type, ?\FFI\CData $data): void
+    public function clearBufferData(int $target, int $internalformat, int $format, int $type, ?\FFI\CData $data): void
     {
-        $target = $target instanceof \FFI\CData ? $target->cdata : $target;
-        $internalformat = $internalformat instanceof \FFI\CData ? $internalformat->cdata : $internalformat;
-        $format = $format instanceof \FFI\CData ? $format->cdata : $format;
-        $type = $type instanceof \FFI\CData ? $type->cdata : $type;
-
-        assert(Type::isUint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($internalformat), 'Argument $internalformat must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($format), 'Argument $format must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glClearBufferData', 'void (*)(GLenum target, GLenum internalformat, GLenum format, GLenum type, const void *data)');
-        $proc($target, $internalformat, $format, $type, $data);
+        $__proc = $this->getProcAs('glClearBufferData', 'void (*)(GLenum target, GLenum internalformat, GLenum format, GLenum type, const void *data)');
+        $__proc($target, $internalformat, $format, $type, $data);
     }
 
     /**
@@ -1457,102 +1446,19 @@ class GL43 extends GL42
      *
      * @see http://docs.gl/gl4/glClearBufferSubData
      * @since 4.3
-     * @param int|\FFI\CData|\FFI\CInt $target
-     * @param int|\FFI\CData|\FFI\CInt $internalformat
-     * @param mixed|float|string|int|\FFI\CData|\FFI\CInt $offset
-     * @param mixed|float|string|int|\FFI\CData|\FFI\CInt $size
-     * @param int|\FFI\CData|\FFI\CInt $format
-     * @param int|\FFI\CData|\FFI\CInt $type
-     * @param \FFI\CData|\FFI\CPtr|null $data
+     * @param int $target
+     * @param int $internalformat
+     * @param int $offset
+     * @param int $size
+     * @param int $format
+     * @param int $type
+     * @param \FFI\CData|null $data
      * @return void
      */
-    public function clearBufferSubData($target, $internalformat, $offset, $size, $format, $type, ?\FFI\CData $data): void
+    public function clearBufferSubData(int $target, int $internalformat, int $offset, int $size, int $format, int $type, ?\FFI\CData $data): void
     {
-        $target = $target instanceof \FFI\CData ? $target->cdata : $target;
-        $internalformat = $internalformat instanceof \FFI\CData ? $internalformat->cdata : $internalformat;
-        $format = $format instanceof \FFI\CData ? $format->cdata : $format;
-        $type = $type instanceof \FFI\CData ? $type->cdata : $type;
-
-        assert(Type::isUint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($internalformat), 'Argument $internalformat must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isInt64($offset), 'Argument $offset must be a C-like GLintptr, but incompatible or overflow value given');
-        assert(Type::isInt64($size), 'Argument $size must be a C-like GLsizeiptr, but incompatible or overflow value given');
-        assert(Type::isUint16($format), 'Argument $format must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glClearBufferSubData', 'void (*)(GLenum target, GLenum internalformat, GLintptr offset, GLsizeiptr size, GLenum format, GLenum type, const void *data)');
-        $proc($target, $internalformat, $offset, $size, $format, $type, $data);
-    }
-
-    /**
-     * {@see GL46::glDispatchCompute} launches one or more compute work groups. Each work group is processed by the
-     * active program object for the compute shader stage. While the individual shader invocations within a work
-     * group are executed as a unit, work groups are executed completely independently and in unspecified order.
-     * $num_groups_x, $num_groups_y and $num_groups_z specify the number of local work groups that will be dispatched
-     * in the X, Y and Z dimensions, respectively.
-     *
-     * @see http://docs.gl/gl4/glDispatchCompute
-     * @since 4.3
-     * @param int|\FFI\CData|\FFI\CInt $num_groups_x
-     * @param int|\FFI\CData|\FFI\CInt $num_groups_y
-     * @param int|\FFI\CData|\FFI\CInt $num_groups_z
-     * @return void
-     */
-    public function dispatchCompute($num_groups_x, $num_groups_y, $num_groups_z): void
-    {
-        $num_groups_x = $num_groups_x instanceof \FFI\CData ? $num_groups_x->cdata : $num_groups_x;
-        $num_groups_y = $num_groups_y instanceof \FFI\CData ? $num_groups_y->cdata : $num_groups_y;
-        $num_groups_z = $num_groups_z instanceof \FFI\CData ? $num_groups_z->cdata : $num_groups_z;
-
-        assert(Type::isUint16($num_groups_x), 'Argument $num_groups_x must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isUint16($num_groups_y), 'Argument $num_groups_y must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isUint16($num_groups_z), 'Argument $num_groups_z must be a C-like GLuint, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glDispatchCompute', 'void (*)(GLuint num_groups_x, GLuint num_groups_y, GLuint num_groups_z)');
-        $proc($num_groups_x, $num_groups_y, $num_groups_z);
-    }
-
-    /**
-     * {@see GL46::glDispatchComputeIndirect} launches one or more compute work groups using parameters stored in the
-     * buffer object currently bound to the {@see GL46::GL_DISPATCH_INDIRECT_BUFFER} target. Each work group is
-     * processed by the active program object for the compute shader stage. While the individual shader invocations
-     * within a work group are executed as a unit, work groups are executed completely independently and in
-     * unspecified order. $indirect contains the offset into the data store of the buffer object bound to the
-     * {@see GL46::GL_DISPATCH_INDIRECT_BUFFER} target at which the parameters are stored.
-     *
-     * The parameters addressed by $indirect are packed a structure, which takes the form (in C):
-     *
-     * <code>
-     *     typedef  struct {
-     *         uint  num_groups_x;
-     *         uint  num_groups_y;
-     *         uint  num_groups_z;
-     *     } DispatchIndirectCommand;
-     * </code>
-     *
-     * A call to {@see GL46::glDispatchComputeIndirect} is equivalent, assuming no errors are generated, to:
-     *
-     * <code>
-     *     cmd = (const DispatchIndirectCommand  *)indirect;
-     *     glDispatchCompute(cmd->num_groups_x, cmd->num_groups_y, cmd->num_groups_z);
-     * </code>
-     *
-     * Unlike {@see GL46::glDispatchCompute}, no error is generated if any of the `num_groups_x`, `num_groups_y` or
-     * `num_groups_z` members of the `DispatchIndirectCommand` is larger than the value of
-     * {@see GL46::GL_MAX_COMPUTE_WORK_GROUP_COUNT} for the corresponding dimension. In such circumstances, behavior
-     * is undefined and may lead to application termination.
-     *
-     * @see http://docs.gl/gl4/glDispatchComputeIndirect
-     * @since 4.3
-     * @param mixed|float|string|int|\FFI\CData|\FFI\CInt $indirect
-     * @return void
-     */
-    public function dispatchComputeIndirect($indirect): void
-    {
-        assert(Type::isInt64($indirect), 'Argument $indirect must be a C-like GLintptr, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glDispatchComputeIndirect', 'void (*)(GLintptr indirect)');
-        $proc($indirect);
+        $__proc = $this->getProcAs('glClearBufferSubData', 'void (*)(GLenum target, GLenum internalformat, GLintptr offset, GLsizeiptr size, GLenum format, GLenum type, const void *data)');
+        $__proc($target, $internalformat, $offset, $size, $format, $type, $data);
     }
 
     /**
@@ -1615,74 +1521,224 @@ class GL43 extends GL42
      * {@see GL46::GL_COMPRESSED_RED_RGTC1}, {@see GL46::GL_COMPRESSED_SIGNED_RED_RGTC1}                                                                                                                                                                                                          |
      * @see http://docs.gl/gl4/glCopyImageSubData
      * @since 4.3
-     * @param int|\FFI\CData|\FFI\CInt $srcName
-     * @param int|\FFI\CData|\FFI\CInt $srcTarget
-     * @param int|\FFI\CData|\FFI\CInt $srcLevel
-     * @param int|\FFI\CData|\FFI\CInt $srcX
-     * @param int|\FFI\CData|\FFI\CInt $srcY
-     * @param int|\FFI\CData|\FFI\CInt $srcZ
-     * @param int|\FFI\CData|\FFI\CInt $dstName
-     * @param int|\FFI\CData|\FFI\CInt $dstTarget
-     * @param int|\FFI\CData|\FFI\CInt $dstLevel
-     * @param int|\FFI\CData|\FFI\CInt $dstX
-     * @param int|\FFI\CData|\FFI\CInt $dstY
-     * @param int|\FFI\CData|\FFI\CInt $dstZ
-     * @param int|\FFI\CData|\FFI\CInt $srcWidth
-     * @param int|\FFI\CData|\FFI\CInt $srcHeight
-     * @param int|\FFI\CData|\FFI\CInt $srcDepth
+     * @param int $srcName
+     * @param int $srcTarget
+     * @param int $srcLevel
+     * @param int $srcX
+     * @param int $srcY
+     * @param int $srcZ
+     * @param int $dstName
+     * @param int $dstTarget
+     * @param int $dstLevel
+     * @param int $dstX
+     * @param int $dstY
+     * @param int $dstZ
+     * @param int $srcWidth
+     * @param int $srcHeight
+     * @param int $srcDepth
      * @return void
      */
     public function copyImageSubData(
-        $srcName,
-        $srcTarget,
-        $srcLevel,
-        $srcX,
-        $srcY,
-        $srcZ,
-        $dstName,
-        $dstTarget,
-        $dstLevel,
-        $dstX,
-        $dstY,
-        $dstZ,
-        $srcWidth,
-        $srcHeight,
-        $srcDepth
+        int $srcName,
+        int $srcTarget,
+        int $srcLevel,
+        int $srcX,
+        int $srcY,
+        int $srcZ,
+        int $dstName,
+        int $dstTarget,
+        int $dstLevel,
+        int $dstX,
+        int $dstY,
+        int $dstZ,
+        int $srcWidth,
+        int $srcHeight,
+        int $srcDepth
     ): void {
-        $srcName = $srcName instanceof \FFI\CData ? $srcName->cdata : $srcName;
-        $srcTarget = $srcTarget instanceof \FFI\CData ? $srcTarget->cdata : $srcTarget;
-        $srcLevel = $srcLevel instanceof \FFI\CData ? $srcLevel->cdata : $srcLevel;
-        $srcX = $srcX instanceof \FFI\CData ? $srcX->cdata : $srcX;
-        $srcY = $srcY instanceof \FFI\CData ? $srcY->cdata : $srcY;
-        $srcZ = $srcZ instanceof \FFI\CData ? $srcZ->cdata : $srcZ;
-        $dstName = $dstName instanceof \FFI\CData ? $dstName->cdata : $dstName;
-        $dstTarget = $dstTarget instanceof \FFI\CData ? $dstTarget->cdata : $dstTarget;
-        $dstLevel = $dstLevel instanceof \FFI\CData ? $dstLevel->cdata : $dstLevel;
-        $dstX = $dstX instanceof \FFI\CData ? $dstX->cdata : $dstX;
-        $dstY = $dstY instanceof \FFI\CData ? $dstY->cdata : $dstY;
-        $dstZ = $dstZ instanceof \FFI\CData ? $dstZ->cdata : $dstZ;
-        $srcWidth = $srcWidth instanceof \FFI\CData ? $srcWidth->cdata : $srcWidth;
-        $srcHeight = $srcHeight instanceof \FFI\CData ? $srcHeight->cdata : $srcHeight;
-        $srcDepth = $srcDepth instanceof \FFI\CData ? $srcDepth->cdata : $srcDepth;
+        $__proc = $this->getProcAs('glCopyImageSubData', 'void (*)(GLuint srcName, GLenum srcTarget, GLint srcLevel, GLint srcX, GLint srcY, GLint srcZ, GLuint dstName, GLenum dstTarget, GLint dstLevel, GLint dstX, GLint dstY, GLint dstZ, GLsizei srcWidth, GLsizei srcHeight, GLsizei srcDepth)');
+        $__proc($srcName, $srcTarget, $srcLevel, $srcX, $srcY, $srcZ, $dstName, $dstTarget, $dstLevel, $dstX, $dstY, $dstZ, $srcWidth, $srcHeight, $srcDepth);
+    }
 
-        assert(Type::isUint16($srcName), 'Argument $srcName must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isUint16($srcTarget), 'Argument $srcTarget must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isInt16($srcLevel), 'Argument $srcLevel must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($srcX), 'Argument $srcX must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($srcY), 'Argument $srcY must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($srcZ), 'Argument $srcZ must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isUint16($dstName), 'Argument $dstName must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isUint16($dstTarget), 'Argument $dstTarget must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isInt16($dstLevel), 'Argument $dstLevel must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($dstX), 'Argument $dstX must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($dstY), 'Argument $dstY must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($dstZ), 'Argument $dstZ must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($srcWidth), 'Argument $srcWidth must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Type::isInt16($srcHeight), 'Argument $srcHeight must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Type::isInt16($srcDepth), 'Argument $srcDepth must be a C-like GLsizei, but incompatible or overflow value given');
+    /**
+     * {@see GL46::glDebugMessageCallback} sets the current debug output callback function to the function whose
+     * address is given in $callback. The callback function should have the following prototype (in C), or be
+     * otherwise compatible with such a prototype:
+     *
+     * <code>
+     *         typedef void (APIENTRY *DEBUGPROC)(GLenum source,
+     *             GLenum type,
+     *             GLuint id,
+     *             GLenum severity,
+     *             GLsizei length,
+     *             const GLchar *message,
+     *             const void *userParam);
+     * </code>
+     * This function is defined to have the same calling convention as the GL API functions. In most cases this is
+     * defined as `APIENTRY`, although it will vary depending on platform, language and compiler.
+     *
+     * Each time a debug message is generated the debug callback function will be invoked with $source, $type, $id,
+     * and $severity associated with the message, and $length set to the length of debug message whose character
+     * string is in the array pointed to by $message $userParam will be set to the value passed in the $userParam
+     * parameter to the most recent call to {@see GL46::glDebugMessageCallback}.
+     *
+     * @see http://docs.gl/gl4/glDebugMessageCallback
+     * @since 4.3
+     * @param callable|\Closure $callback
+     * @param \FFI\CData|null $userParam
+     * @return void
+     */
+    public function debugMessageCallback(callable $callback, ?\FFI\CData $userParam): void
+    {
+        $__proc = $this->getProcAs('glDebugMessageCallback', 'void (*)(GLDEBUGPROC callback, const void *userParam)');
+        $__proc($callback, $userParam);
+    }
 
-        $proc = $this->getProcAddress('glCopyImageSubData', 'void (*)(GLuint srcName, GLenum srcTarget, GLint srcLevel, GLint srcX, GLint srcY, GLint srcZ, GLuint dstName, GLenum dstTarget, GLint dstLevel, GLint dstX, GLint dstY, GLint dstZ, GLsizei srcWidth, GLsizei srcHeight, GLsizei srcDepth)');
-        $proc($srcName, $srcTarget, $srcLevel, $srcX, $srcY, $srcZ, $dstName, $dstTarget, $dstLevel, $dstX, $dstY, $dstZ, $srcWidth, $srcHeight, $srcDepth);
+    /**
+     * {@see GL46::glDebugMessageControl} controls the reporting of debug messages generated by a debug context. The
+     * parameters $source, $type and $severity form a filter to select messages from the pool of potential messages
+     * generated by the GL.
+     *
+     * $source may be {@see GL46::GL_DEBUG_SOURCE_API}, {@see GL46::GL_DEBUG_SOURCE_WINDOW_SYSTEM_},
+     * {@see GL46::GL_DEBUG_SOURCE_SHADER_COMPILER}, {@see GL46::GL_DEBUG_SOURCE_THIRD_PARTY},
+     * {@see GL46::GL_DEBUG_SOURCE_APPLICATION}, {@see GL46::GL_DEBUG_SOURCE_OTHER} to select messages generated by
+     * usage of the GL API, the window system, the shader compiler, third party tools or libraries, explicitly by the
+     * application or by some other source, respectively. It may also take the value {@see GL46::GL_DONT_CARE}. If
+     * $source is not {@see GL46::GL_DONT_CARE} then only messages whose source matches $source will be referenced.
+     *
+     * $type may be one of {@see GL46::GL_DEBUG_TYPE_ERROR}, {@see GL46::GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR},
+     * {@see GL46::GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR}, {@see GL46::GL_DEBUG_TYPE_PORTABILITY},
+     * {@see GL46::GL_DEBUG_TYPE_PERFORMANCE}, {@see GL46::GL_DEBUG_TYPE_MARKER},
+     * {@see GL46::GL_DEBUG_TYPE_PUSH_GROUP}, {@see GL46::GL_DEBUG_TYPE_POP_GROUP}, or
+     * {@see GL46::GL_DEBUG_TYPE_OTHER} to indicate the type of messages describing GL errors, attempted use of
+     * deprecated features, triggering of undefined behavior, portability issues, performance notifications, markers,
+     * group push and pop events, and other types of messages, respectively. It may also take the value
+     * {@see GL46::GL_DONT_CARE}. If $type is not {@see GL46::GL_DONT_CARE} then only messages whose type matches
+     * $type will be referenced.
+     *
+     * $severity may be one of {@see GL46::GL_DEBUG_SEVERITY_LOW}, {@see GL46::GL_DEBUG_SEVERITY_MEDIUM}, or
+     * {@see GL46::GL_DEBUG_SEVERITY_HIGH} to select messages of low, medium or high severity messages or to
+     * {@see GL46::GL_DEBUG_SEVERITY_NOTIFICATION} for notifications. It may also take the value
+     * {@see GL46::GL_DONT_CARE}. If $severity is not {@see GL46::GL_DONT_CARE} then only messages whose severity
+     * matches $severity will be referenced.
+     *
+     * $ids contains a list of $count message identifiers to select specific messages from the pool of available
+     * messages. If $count is zero then the value of $ids is ignored. Otherwise, only messages appearing in this list
+     * are selected. In this case, $source and $type may not be {@see GL46::GL_DONT_CARE} and $severity must be
+     * {@see GL46::GL_DONT_CARE}.
+     *
+     * If $enabled is {@see GL46::GL_TRUE} then messages that match the filter formed by $source, $type, $severity
+     * and $ids are enabled. Otherwise, those messages are disabled.
+     *
+     * @see http://docs.gl/gl4/glDebugMessageControl
+     * @since 4.3
+     * @param int $source
+     * @param int $type
+     * @param int $severity
+     * @param int $count
+     * @param \FFI\CData|null $ids
+     * @param int $enabled
+     * @return void
+     */
+    public function debugMessageControl(int $source, int $type, int $severity, int $count, ?\FFI\CData $ids, int $enabled): void
+    {
+        $__proc = $this->getProcAs('glDebugMessageControl', 'void (*)(GLenum source, GLenum type, GLenum severity, GLsizei count, const GLuint *ids, GLboolean enabled)');
+        $__proc($source, $type, $severity, $count, $ids, $enabled);
+    }
+
+    /**
+     * {@see GL46::glDebugMessageInsert} inserts a user-supplied message into the debug output queue. $source
+     * specifies the source that will be used to classify the message and must be
+     * {@see GL46::GL_DEBUG_SOURCE_APPLICATION} or {@see GL46::GL_DEBUG_SOURCE_THIRD_PARTY}. All other sources are
+     * reserved for use by the GL implementation. $type indicates the type of the message to be inserted and may be
+     * one of {@see GL46::GL_DEBUG_TYPE_ERROR}, {@see GL46::GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR},
+     * {@see GL46::GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR}, {@see GL46::GL_DEBUG_TYPE_PORTABILITY},
+     * {@see GL46::GL_DEBUG_TYPE_PERFORMANCE}, {@see GL46::GL_DEBUG_TYPE_MARKER},
+     * {@see GL46::GL_DEBUG_TYPE_PUSH_GROUP}, {@see GL46::GL_DEBUG_TYPE_POP_GROUP}, or
+     * {@see GL46::GL_DEBUG_TYPE_OTHER}. $severity indicates the severity of the message and may be
+     * {@see GL46::GL_DEBUG_SEVERITY_LOW}, {@see GL46::GL_DEBUG_SEVERITY_MEDIUM}, {@see GL46::GL_DEBUG_SEVERITY_HIGH}
+     * or {@see GL46::GL_DEBUG_SEVERITY_NOTIFICATION}. $id is available for application defined use and may be any
+     * value. This value will be recorded and used to identify the message.
+     *
+     * $length contains a count of the characters in the character array whose address is given in $message. If
+     * $length is negative then $message is treated as a null-terminated string. The length of the message, whether
+     * specified explicitly or implicitly, must be less than or equal to the implementation defined constant
+     * {@see GL46::GL_MAX_DEBUG_MESSAGE_LENGTH}.
+     *
+     * @see http://docs.gl/gl4/glDebugMessageInsert
+     * @since 4.3
+     * @param int $source
+     * @param int $type
+     * @param int $id
+     * @param int $severity
+     * @param int $length
+     * @param \FFI\CData|null $buf
+     * @return void
+     */
+    public function debugMessageInsert(int $source, int $type, int $id, int $severity, int $length, ?\FFI\CData $buf): void
+    {
+        $__proc = $this->getProcAs('glDebugMessageInsert', 'void (*)(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar *buf)');
+        $__proc($source, $type, $id, $severity, $length, $buf);
+    }
+
+    /**
+     * {@see GL46::glDispatchCompute} launches one or more compute work groups. Each work group is processed by the
+     * active program object for the compute shader stage. While the individual shader invocations within a work
+     * group are executed as a unit, work groups are executed completely independently and in unspecified order.
+     * $num_groups_x, $num_groups_y and $num_groups_z specify the number of local work groups that will be dispatched
+     * in the X, Y and Z dimensions, respectively.
+     *
+     * @see http://docs.gl/gl4/glDispatchCompute
+     * @since 4.3
+     * @param int $num_groups_x
+     * @param int $num_groups_y
+     * @param int $num_groups_z
+     * @return void
+     */
+    public function dispatchCompute(int $num_groups_x, int $num_groups_y, int $num_groups_z): void
+    {
+        $__proc = $this->getProcAs('glDispatchCompute', 'void (*)(GLuint num_groups_x, GLuint num_groups_y, GLuint num_groups_z)');
+        $__proc($num_groups_x, $num_groups_y, $num_groups_z);
+    }
+
+    /**
+     * {@see GL46::glDispatchComputeIndirect} launches one or more compute work groups using parameters stored in the
+     * buffer object currently bound to the {@see GL46::GL_DISPATCH_INDIRECT_BUFFER} target. Each work group is
+     * processed by the active program object for the compute shader stage. While the individual shader invocations
+     * within a work group are executed as a unit, work groups are executed completely independently and in
+     * unspecified order. $indirect contains the offset into the data store of the buffer object bound to the
+     * {@see GL46::GL_DISPATCH_INDIRECT_BUFFER} target at which the parameters are stored.
+     *
+     * The parameters addressed by $indirect are packed a structure, which takes the form (in C):
+     *
+     * <code>
+     *     typedef  struct {
+     *         uint  num_groups_x;
+     *         uint  num_groups_y;
+     *         uint  num_groups_z;
+     *     } DispatchIndirectCommand;
+     * </code>
+     *
+     * A call to {@see GL46::glDispatchComputeIndirect} is equivalent, assuming no errors are generated, to:
+     *
+     * <code>
+     *     cmd = (const DispatchIndirectCommand  *)indirect;
+     *     glDispatchCompute(cmd->num_groups_x, cmd->num_groups_y, cmd->num_groups_z);
+     * </code>
+     *
+     * Unlike {@see GL46::glDispatchCompute}, no error is generated if any of the `num_groups_x`, `num_groups_y` or
+     * `num_groups_z` members of the `DispatchIndirectCommand` is larger than the value of
+     * {@see GL46::GL_MAX_COMPUTE_WORK_GROUP_COUNT} for the corresponding dimension. In such circumstances, behavior
+     * is undefined and may lead to application termination.
+     *
+     * @see http://docs.gl/gl4/glDispatchComputeIndirect
+     * @since 4.3
+     * @param int $indirect
+     * @return void
+     */
+    public function dispatchComputeIndirect(int $indirect): void
+    {
+        $__proc = $this->getProcAs('glDispatchComputeIndirect', 'void (*)(GLintptr indirect)');
+        $__proc($indirect);
     }
 
     /**
@@ -1749,23 +1805,80 @@ class GL43 extends GL42
      *
      * @see http://docs.gl/gl4/glFramebufferParameteri
      * @since 4.3
-     * @param int|\FFI\CData|\FFI\CInt $target
-     * @param int|\FFI\CData|\FFI\CInt $pname
-     * @param int|\FFI\CData|\FFI\CInt $param
+     * @param int $target
+     * @param int $pname
+     * @param int $param
      * @return void
      */
-    public function framebufferParameteri($target, $pname, $param): void
+    public function framebufferParameteri(int $target, int $pname, int $param): void
     {
-        $target = $target instanceof \FFI\CData ? $target->cdata : $target;
-        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
-        $param = $param instanceof \FFI\CData ? $param->cdata : $param;
+        $__proc = $this->getProcAs('glFramebufferParameteri', 'void (*)(GLenum target, GLenum pname, GLint param)');
+        $__proc($target, $pname, $param);
+    }
 
-        assert(Type::isUint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isInt16($param), 'Argument $param must be a C-like GLint, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glFramebufferParameteri', 'void (*)(GLenum target, GLenum pname, GLint param)');
-        $proc($target, $pname, $param);
+    /**
+     * {@see GL46::glGetDebugMessageLog} retrieves messages from the debug message log. A maximum of $count messages
+     * are retrieved from the log. If $sources is not NULL then the source of each message is written into up to
+     * $count elements of the array. If $types is not NULL then the type of each message is written into up to $count
+     * elements of the array. If $id is not NULL then the identifier of each message is written into up to $count
+     * elements of the array. If $severities is not NULL then the severity of each message is written into up to
+     * $count elements of the array. If $lengths is not NULL then the length of each message is written into up to
+     * $count elements of the array.
+     *
+     * $messageLog specifies the address of a character array into which the debug messages will be written. Each
+     * message will be concatenated onto the array starting at the first element of $messageLog. $bufSize specifies
+     * the size of the array $messageLog. If a message will not fit into the remaining space in $messageLog then the
+     * function terminates and returns the number of messages written so far, which may be zero.
+     *
+     * If {@see GL46::glGetDebugMessageLog} returns zero then no messages are present in the debug log, or there was
+     * not enough space in $messageLog to retrieve the first message in the queue. If $messageLog is NULL then no
+     * messages are written and the value of $bufSize is ignored.
+     *
+     * @see http://docs.gl/gl4/glGetDebugMessageLog
+     * @since 4.3
+     * @param int $count
+     * @param int $bufSize
+     * @param int|null $sources
+     * @param int|null $types
+     * @param int|null $ids
+     * @param int|null $severities
+     * @param int|null $lengths
+     * @param string|null $messageLog
+     * @return int
+     */
+    public function getDebugMessageLog(
+        int $count,
+        int $bufSize,
+        ?int &$sources,
+        ?int &$types,
+        ?int &$ids,
+        ?int &$severities,
+        ?int &$lengths,
+        ?string &$messageLog
+    ): int {
+        $sourcesCType = $this->info->ffi->new('GLenum', false);
+        $typesCType = $this->info->ffi->new('GLenum', false);
+        $idsCType = $this->info->ffi->new('GLuint', false);
+        $severitiesCType = $this->info->ffi->new('GLenum', false);
+        $lengthsCType = $this->info->ffi->new('GLsizei', false);
+        $messageLogCType = \FFI::addr($this->info->ffi->new('GLchar[' . $bufSize . ']', false)[0]);
+        try {
+            $__proc = $this->getProcAs('glGetDebugMessageLog', 'GLuint (*)(GLuint count, GLsizei bufSize, GLenum *sources, GLenum *types, GLuint *ids, GLenum *severities, GLsizei *lengths, GLchar *messageLog)');
+            return $__proc($count, $bufSize, \FFI::addr($sourcesCType), \FFI::addr($typesCType), \FFI::addr($idsCType), \FFI::addr($severitiesCType), \FFI::addr($lengthsCType), $messageLogCType);
+        } finally {
+            $sources = $sourcesCType->cdata;
+            \FFI::free($sourcesCType);
+            $types = $typesCType->cdata;
+            \FFI::free($typesCType);
+            $ids = $idsCType->cdata;
+            \FFI::free($idsCType);
+            $severities = $severitiesCType->cdata;
+            \FFI::free($severitiesCType);
+            $lengths = $lengthsCType->cdata;
+            \FFI::free($lengthsCType);
+            $messageLog = \FFI::string($messageLogCType);
+            \FFI::free($messageLogCType);
+        }
     }
 
     /**
@@ -1836,21 +1949,21 @@ class GL43 extends GL42
      *
      * @see http://docs.gl/gl4/glGetFramebufferParameter
      * @since 4.3
-     * @param int|\FFI\CData|\FFI\CInt $target
-     * @param int|\FFI\CData|\FFI\CInt $pname
-     * @param \FFI\CData|\FFI\CIntPtr|null $params
+     * @param int $target
+     * @param int $pname
+     * @param int|null $params
      * @return void
      */
-    public function getFramebufferParameteriv($target, $pname, ?\FFI\CData $params): void
+    public function getFramebufferParameteriv(int $target, int $pname, ?int &$params): void
     {
-        $target = $target instanceof \FFI\CData ? $target->cdata : $target;
-        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
-
-        assert(Type::isUint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glGetFramebufferParameteriv', 'void (*)(GLenum target, GLenum pname, GLint *params)');
-        $proc($target, $pname, $params);
+        $paramsCType = $this->info->ffi->new('GLint', false);
+        try {
+            $__proc = $this->getProcAs('glGetFramebufferParameteriv', 'void (*)(GLenum target, GLenum pname, GLint *params)');
+            $__proc($target, $pname, \FFI::addr($paramsCType));
+        } finally {
+            $params = $paramsCType->cdata;
+            \FFI::free($paramsCType);
+        }
     }
 
     /**
@@ -2071,424 +2184,92 @@ class GL43 extends GL42
      *
      * @see http://docs.gl/gl4/glGetInternalformat
      * @since 4.3
-     * @param int|\FFI\CData|\FFI\CInt $target
-     * @param int|\FFI\CData|\FFI\CInt $internalformat
-     * @param int|\FFI\CData|\FFI\CInt $pname
-     * @param int|\FFI\CData|\FFI\CInt $bufSize
-     * @param \FFI\CData|\FFI\CIntPtr|null $params
+     * @param int $target
+     * @param int $internalformat
+     * @param int $pname
+     * @param int $bufSize
+     * @param int|null $params
      * @return void
      */
-    public function getInternalformati64v($target, $internalformat, $pname, $bufSize, ?\FFI\CData $params): void
+    public function getInternalformati64v(int $target, int $internalformat, int $pname, int $bufSize, ?int &$params): void
     {
-        $target = $target instanceof \FFI\CData ? $target->cdata : $target;
-        $internalformat = $internalformat instanceof \FFI\CData ? $internalformat->cdata : $internalformat;
-        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
-        $bufSize = $bufSize instanceof \FFI\CData ? $bufSize->cdata : $bufSize;
-
-        assert(Type::isUint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($internalformat), 'Argument $internalformat must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isInt16($bufSize), 'Argument $bufSize must be a C-like GLsizei, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glGetInternalformati64v', 'void (*)(GLenum target, GLenum internalformat, GLenum pname, GLsizei bufSize, GLint64 *params)');
-        $proc($target, $internalformat, $pname, $bufSize, $params);
+        $paramsCType = $this->info->ffi->new('GLint64', false);
+        try {
+            $__proc = $this->getProcAs('glGetInternalformati64v', 'void (*)(GLenum target, GLenum internalformat, GLenum pname, GLsizei bufSize, GLint64 *params)');
+            $__proc($target, $internalformat, $pname, $bufSize, \FFI::addr($paramsCType));
+        } finally {
+            $params = $paramsCType->cdata;
+            \FFI::free($paramsCType);
+        }
     }
 
     /**
-     * {@see GL46::glInvalidateTexSubImage} invalidates all or part of a texture image. $texture and $level indicated
-     * which texture image is being invalidated. After this command, data in that subregion have undefined values.
-     * $xoffset, $yoffset, $zoffset, $width, $height, and $depth are interpreted as they are in
-     * {@see GL46::glTexSubImage3D}. For texture targets that don't have certain dimensions, this command treats
-     * those dimensions as having a size of 1. For example, to invalidate a portion of a two- dimensional texture,
-     * the application would use $zoffset equal to zero and $depth equal to one. Cube map textures are treated as an
-     * array of six slices in the z-dimension, where a value of $zoffset is interpreted as specifying face
-     * {@see GL46::GL_TEXTURE_CUBE_MAP_POSITIVE_X} + $zoffset.
+     * {@see GL46::glGetObjectLabel} retrieves the label of the object identified by $name within the namespace given
+     * by $identifier. $identifier must be one of {@see GL46::GL_BUFFER}, {@see GL46::GL_SHADER},
+     * {@see GL46::GL_PROGRAM}, {@see GL46::GL_VERTEX_ARRAY}, {@see GL46::GL_QUERY},
+     * {@see GL46::GL_PROGRAM_PIPELINE}, {@see GL46::GL_TRANSFORM_FEEDBACK}, {@see GL46::GL_SAMPLER},
+     * {@see GL46::GL_TEXTURE}, {@see GL46::GL_RENDERBUFFER}, {@see GL46::GL_FRAMEBUFFER}, to indicate the namespace
+     * containing the names of buffers, shaders, programs, vertex array objects, query objects, program pipelines,
+     * transform feedback objects, samplers, textures, renderbuffers and frame buffers, respectively.
      *
-     * $level must be greater than or equal to zero and be less than the base 2 logarithm of the maximum texture
-     * width, height, or depth. $xoffset, $yoffset and $zoffset must be greater than or equal to zero and be less
-     * than the width, height or depth of the image, respectively. Furthermore, $xoffset + $width, $yoffset +
-     * $height, and $zoffset + $depth must be less than or equal to the width, height or depth of the image,
-     * respectively.
+     * $label is the address of a string that will be used to store the object label. $bufSize specifies the number
+     * of characters in the array identified by $label. $length contains the address of a variable which will receive
+     * the number of characters in the object label. If $length is NULL, then it is ignored and no data is written.
+     * Likewise, if $label is NULL, or if $bufSize is zero then no data is written to $label.
      *
-     * For textures of targets {@see GL46::GL_TEXTURE_RECTANGLE}, {@see GL46::GL_TEXTURE_BUFFER},
-     * {@see GL46::GL_TEXTURE_2D_MULTISAMPLE}, or {@see GL46::GL_TEXTURE_2D_MULTISAMPLE_ARRAY}, level must be zero.
-     *
-     * @see http://docs.gl/gl4/glInvalidateTexSubImage
+     * @see http://docs.gl/gl4/glGetObjectLabel
      * @since 4.3
-     * @param int|\FFI\CData|\FFI\CInt $texture
-     * @param int|\FFI\CData|\FFI\CInt $level
-     * @param int|\FFI\CData|\FFI\CInt $xoffset
-     * @param int|\FFI\CData|\FFI\CInt $yoffset
-     * @param int|\FFI\CData|\FFI\CInt $zoffset
-     * @param int|\FFI\CData|\FFI\CInt $width
-     * @param int|\FFI\CData|\FFI\CInt $height
-     * @param int|\FFI\CData|\FFI\CInt $depth
+     * @param int $identifier
+     * @param int $name
+     * @param int $bufSize
+     * @param int|null $length
+     * @param string|null $label
      * @return void
      */
-    public function invalidateTexSubImage($texture, $level, $xoffset, $yoffset, $zoffset, $width, $height, $depth): void
+    public function getObjectLabel(int $identifier, int $name, int $bufSize, ?int &$length, ?string &$label): void
     {
-        $texture = $texture instanceof \FFI\CData ? $texture->cdata : $texture;
-        $level = $level instanceof \FFI\CData ? $level->cdata : $level;
-        $xoffset = $xoffset instanceof \FFI\CData ? $xoffset->cdata : $xoffset;
-        $yoffset = $yoffset instanceof \FFI\CData ? $yoffset->cdata : $yoffset;
-        $zoffset = $zoffset instanceof \FFI\CData ? $zoffset->cdata : $zoffset;
-        $width = $width instanceof \FFI\CData ? $width->cdata : $width;
-        $height = $height instanceof \FFI\CData ? $height->cdata : $height;
-        $depth = $depth instanceof \FFI\CData ? $depth->cdata : $depth;
-
-        assert(Type::isUint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isInt16($level), 'Argument $level must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($xoffset), 'Argument $xoffset must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($yoffset), 'Argument $yoffset must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($zoffset), 'Argument $zoffset must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($width), 'Argument $width must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Type::isInt16($height), 'Argument $height must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Type::isInt16($depth), 'Argument $depth must be a C-like GLsizei, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glInvalidateTexSubImage', 'void (*)(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth)');
-        $proc($texture, $level, $xoffset, $yoffset, $zoffset, $width, $height, $depth);
+        $lengthCType = $this->info->ffi->new('GLsizei', false);
+        $labelCType = \FFI::addr($this->info->ffi->new('GLchar[' . $bufSize . ']', false)[0]);
+        try {
+            $__proc = $this->getProcAs('glGetObjectLabel', 'void (*)(GLenum identifier, GLuint name, GLsizei bufSize, GLsizei *length, GLchar *label)');
+            $__proc($identifier, $name, $bufSize, \FFI::addr($lengthCType), $labelCType);
+        } finally {
+            $length = $lengthCType->cdata;
+            \FFI::free($lengthCType);
+            $label = \FFI::string($labelCType);
+            \FFI::free($labelCType);
+        }
     }
 
     /**
-     * {@see GL46::glInvalidateTexSubImage} invalidates all of a texture image. $texture and $level indicated which
-     * texture image is being invalidated. After this command, data in the texture image has undefined values.
+     * {@see GL46::glGetObjectPtrLabel} retrieves the label of the sync object identified by $ptr.
      *
-     * $level must be greater than or equal to zero and be less than the base 2 logarithm of the maximum texture
-     * width, height, or depth.
+     * $label is the address of a string that will be used to store the object label. $bufSize specifies the number
+     * of characters in the array identified by $label. $length contains the address of a variable which will receive
+     * the number of characters in the object label. If $length is NULL, then it is ignored and no data is written.
+     * Likewise, if $label is NULL, or if $bufSize is zero then no data is written to $label.
      *
-     * For textures of targets {@see GL46::GL_TEXTURE_RECTANGLE}, {@see GL46::GL_TEXTURE_BUFFER},
-     * {@see GL46::GL_TEXTURE_2D_MULTISAMPLE}, or {@see GL46::GL_TEXTURE_2D_MULTISAMPLE_ARRAY}, level must be zero.
-     *
-     * @see http://docs.gl/gl4/glInvalidateTexImage
+     * @see http://docs.gl/gl4/glGetObjectPtrLabel
      * @since 4.3
-     * @param int|\FFI\CData|\FFI\CInt $texture
-     * @param int|\FFI\CData|\FFI\CInt $level
+     * @param \FFI\CData|null $ptr
+     * @param int $bufSize
+     * @param int|null $length
+     * @param string|null $label
      * @return void
      */
-    public function invalidateTexImage($texture, $level): void
+    public function getObjectPtrLabel(?\FFI\CData $ptr, int $bufSize, ?int &$length, ?string &$label): void
     {
-        $texture = $texture instanceof \FFI\CData ? $texture->cdata : $texture;
-        $level = $level instanceof \FFI\CData ? $level->cdata : $level;
-
-        assert(Type::isUint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isInt16($level), 'Argument $level must be a C-like GLint, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glInvalidateTexImage', 'void (*)(GLuint texture, GLint level)');
-        $proc($texture, $level);
-    }
-
-    /**
-     * {@see GL46::glInvalidateBufferSubData} invalidates all or part of the content of the data store of a buffer
-     * object. After invalidation, the content of the specified range of the buffer's data store becomes undefined.
-     * The start of the range is given by $offset and its size is given by $length, both measured in basic machine
-     * units.
-     *
-     * @see http://docs.gl/gl4/glInvalidateBufferSubData
-     * @since 4.3
-     * @param int|\FFI\CData|\FFI\CInt $buffer
-     * @param mixed|float|string|int|\FFI\CData|\FFI\CInt $offset
-     * @param mixed|float|string|int|\FFI\CData|\FFI\CInt $length
-     * @return void
-     */
-    public function invalidateBufferSubData($buffer, $offset, $length): void
-    {
-        $buffer = $buffer instanceof \FFI\CData ? $buffer->cdata : $buffer;
-
-        assert(Type::isUint16($buffer), 'Argument $buffer must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isInt64($offset), 'Argument $offset must be a C-like GLintptr, but incompatible or overflow value given');
-        assert(Type::isInt64($length), 'Argument $length must be a C-like GLsizeiptr, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glInvalidateBufferSubData', 'void (*)(GLuint buffer, GLintptr offset, GLsizeiptr length)');
-        $proc($buffer, $offset, $length);
-    }
-
-    /**
-     * {@see GL46::glInvalidateBufferData} invalidates all of the content of the data store of a buffer object. After
-     * invalidation, the content of the buffer's data store becomes undefined.
-     *
-     * @see http://docs.gl/gl4/glInvalidateBufferData
-     * @since 4.3
-     * @param int|\FFI\CData|\FFI\CInt $buffer
-     * @return void
-     */
-    public function invalidateBufferData($buffer): void
-    {
-        $buffer = $buffer instanceof \FFI\CData ? $buffer->cdata : $buffer;
-
-        assert(Type::isUint16($buffer), 'Argument $buffer must be a C-like GLuint, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glInvalidateBufferData', 'void (*)(GLuint buffer)');
-        $proc($buffer);
-    }
-
-    /**
-     * {@see GL46::glInvalidateFramebuffer} and {@see GL46::glInvalidateNamedFramebufferData} invalidate the entire
-     * contents of a specified set of attachments of a framebuffer.
-     *
-     * For {@see GL46::glInvalidateFramebuffer}, the framebuffer object is that bound to $target. $target must be
-     * {@see GL46::GL_FRAMEBUFFER}, {@see GL46::GL_READ_FRAMEBUFFER} or {@see GL46::GL_DRAW_FRAMEBUFFER}.
-     * {@see GL46::GL_FRAMEBUFFER} is equivalent to {@see GL46::GL_DRAW_FRAMEBUFFER}. Default framebuffers may also
-     * be invalidated if bound to $target.
-     *
-     * For {@see GL46::glInvalidateNamedFramebufferData}, $framebuffer is the name of the framebuffer object. If
-     * $framebuffer is zero, the default draw framebuffer is affected.
-     *
-     * The set of attachments whose contents are to be invalidated are specified in the $attachments array, which
-     * contains $numAttachments elements.
-     *
-     * If the specified framebuffer is a framebuffer object, each element of $attachments must be one of
-     * {@see GL46::GL_DEPTH_ATTACHMENT}, {@see GL46::GL_STENCIL_ATTACHMENT} {@see GL46::GL_DEPTH_STENCIL_ATTACHMENT},
-     * or {@see GL46::GL_COLOR_ATTACHMENT}i, where i is between zero and the value of
-     * {@see GL46::GL_MAX_FRAMEBUFFER_ATTACHMENTS} minus one.
-     *
-     * If the specified framebuffer is a default framebuffer, each element of $attachments must be one of
-     * {@see GL46::GL_FRONT_LEFT}, {@see GL46::GL_FRONT_RIGHT}, {@see GL46::GL_BACK_LEFT},
-     * {@see GL46::GL_BACK_RIGHT}, {@see GL46::GL_AUX}i, {@see GL46::GL_ACCUM}, {@see GL46::GL_COLOR},
-     * {@see GL46::GL_DEPTH}, or {@see GL46::GL_STENCIL}. {@see GL46::GL_COLOR}, is treated as
-     * {@see GL46::GL_BACK_LEFT} for a double-buffered context and {@see GL46::GL_FRONT_LEFT} for a single-buffered
-     * context. The other attachments identify the corresponding specific buffer.
-     *
-     * The entire contents of each specified attachment become undefined after execution of
-     * {@see GL46::glInvalidateFramebuffer} or {@see GL46::glInvalidateNamedFramebufferData}.
-     *
-     * If the framebuffer object is not complete, {@see GL46::glInvalidateFramebuffer} and
-     * {@see GL46::glInvalidateNamedFramebufferData} may be ignored. This is not an error.
-     *
-     * @see http://docs.gl/gl4/glInvalidateFramebuffer
-     * @since 4.3
-     * @param int|\FFI\CData|\FFI\CInt $target
-     * @param int|\FFI\CData|\FFI\CInt $numAttachments
-     * @param \FFI\CData|\FFI\CIntPtr|null $attachments
-     * @return void
-     */
-    public function invalidateFramebuffer($target, $numAttachments, ?\FFI\CData $attachments): void
-    {
-        $target = $target instanceof \FFI\CData ? $target->cdata : $target;
-        $numAttachments = $numAttachments instanceof \FFI\CData ? $numAttachments->cdata : $numAttachments;
-
-        assert(Type::isUint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isInt16($numAttachments), 'Argument $numAttachments must be a C-like GLsizei, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glInvalidateFramebuffer', 'void (*)(GLenum target, GLsizei numAttachments, const GLenum *attachments)');
-        $proc($target, $numAttachments, $attachments);
-    }
-
-    /**
-     * {@see GL46::glInvalidateSubFramebuffer} and {@see GL46::glInvalidateNamedFramebufferSubData} invalidate the
-     * contents of a specified region of a specified set of attachments of a framebuffer.
-     *
-     * For {@see GL46::glInvalidateSubFramebuffer}, the framebuffer object is that bound to $target, which must be
-     * one of {@see GL46::GL_FRAMEBUFFER}, {@see GL46::GL_READ_FRAMEBUFFER} or {@see GL46::GL_DRAW_FRAMEBUFFER}.
-     * {@see GL46::GL_FRAMEBUFFER} is equivalent to {@see GL46::GL_DRAW_FRAMEBUFFER}. Default framebuffers may also
-     * be invalidated if bound to $target.
-     *
-     * For {@see GL46::glInvalidateNamedFramebufferSubData}, $framebuffer is the name of the framebuffer object. If
-     * $framebuffer is zero, the default draw framebuffer is affected.
-     *
-     * The set of attachments of which a region is to be invalidated are specified in the $attachments array, which
-     * contains $numAttachments elements.
-     *
-     * If the specified framebuffer is a framebuffer object, each element of $attachments must be one of
-     * {@see GL46::GL_DEPTH_ATTACHMENT}, {@see GL46::GL_STENCIL_ATTACHMENT} {@see GL46::GL_DEPTH_STENCIL_ATTACHMENT},
-     * or {@see GL46::GL_COLOR_ATTACHMENT}i, where i is between zero and the value of
-     * {@see GL46::GL_MAX_FRAMEBUFFER_ATTACHMENTS} minus one.
-     *
-     * If the specified framebuffer is a default framebuffer, each element of $attachments must be one of
-     * {@see GL46::GL_FRONT_LEFT}, {@see GL46::GL_FRONT_RIGHT}, {@see GL46::GL_BACK_LEFT},
-     * {@see GL46::GL_BACK_RIGHT}, {@see GL46::GL_AUX}i, {@see GL46::GL_ACCUM}, {@see GL46::GL_COLOR},
-     * {@see GL46::GL_DEPTH}, or {@see GL46::GL_STENCIL}. {@see GL46::GL_COLOR}, is treated as
-     * {@see GL46::GL_BACK_LEFT} for a double-buffered context and {@see GL46::GL_FRONT_LEFT} for a single-buffered
-     * context. The other attachments identify the corresponding specific buffer.
-     *
-     * The contents of the specified region of each specified attachment become undefined after execution of
-     * {@see GL46::glInvalidateSubFramebuffer} or {@see GL46::glInvalidateNamedFramebufferSubData}. The region to be
-     * invalidated is specified by $x, $y, $width and $height where $x and $y give the offset from the origin (with
-     * lower-left corner at $(0,0)$) and $width and $height are the width and height, respectively, of the region.
-     * Any pixels lying outside of the window allocated to the current GL context (for the default framebuffer), or
-     * outside of the attachments of the framebuffer object, are ignored. If the framebuffer object is not complete,
-     * these commands may be ignored.
-     *
-     * If the framebuffer object is not complete, {@see GL46::glInvalidateSubFramebuffer} and
-     * {@see GL46::glInvalidateNamedFramebufferSubData} may be ignored. This is not an error.
-     *
-     * @see http://docs.gl/gl4/glInvalidateSubFramebuffer
-     * @since 4.3
-     * @param int|\FFI\CData|\FFI\CInt $target
-     * @param int|\FFI\CData|\FFI\CInt $numAttachments
-     * @param \FFI\CData|\FFI\CIntPtr|null $attachments
-     * @param int|\FFI\CData|\FFI\CInt $x
-     * @param int|\FFI\CData|\FFI\CInt $y
-     * @param int|\FFI\CData|\FFI\CInt $width
-     * @param int|\FFI\CData|\FFI\CInt $height
-     * @return void
-     */
-    public function invalidateSubFramebuffer($target, $numAttachments, ?\FFI\CData $attachments, $x, $y, $width, $height): void
-    {
-        $target = $target instanceof \FFI\CData ? $target->cdata : $target;
-        $numAttachments = $numAttachments instanceof \FFI\CData ? $numAttachments->cdata : $numAttachments;
-        $x = $x instanceof \FFI\CData ? $x->cdata : $x;
-        $y = $y instanceof \FFI\CData ? $y->cdata : $y;
-        $width = $width instanceof \FFI\CData ? $width->cdata : $width;
-        $height = $height instanceof \FFI\CData ? $height->cdata : $height;
-
-        assert(Type::isUint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isInt16($numAttachments), 'Argument $numAttachments must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Type::isInt16($x), 'Argument $x must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($y), 'Argument $y must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($width), 'Argument $width must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Type::isInt16($height), 'Argument $height must be a C-like GLsizei, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glInvalidateSubFramebuffer', 'void (*)(GLenum target, GLsizei numAttachments, const GLenum *attachments, GLint x, GLint y, GLsizei width, GLsizei height)');
-        $proc($target, $numAttachments, $attachments, $x, $y, $width, $height);
-    }
-
-    /**
-     * {@see GL46::glMultiDrawArraysIndirect} specifies multiple geometric primitives with very few subroutine calls.
-     * {@see GL46::glMultiDrawArraysIndirect} behaves similarly to a multitude of calls to
-     * {@see GL46::glDrawArraysInstancedBaseInstance}, execept that the parameters to each call to
-     * {@see GL46::glDrawArraysInstancedBaseInstance} are stored in an array in memory at the address given by
-     * $indirect, separated by the stride, in basic machine units, specified by $stride. If $stride is zero, then the
-     * array is assumed to be tightly packed in memory.
-     *
-     * The parameters addressed by $indirect are packed into an array of structures, each element of which takes the
-     * form (in C):
-     *
-     * <code>
-     *     typedef  struct {
-     *         uint  count;
-     *         uint  instanceCount;
-     *         uint  first;
-     *         uint  baseInstance;
-     *     } DrawArraysIndirectCommand;
-     * </code>
-     *
-     * A single call to {@see GL46::glMultiDrawArraysIndirect} is equivalent, assuming no errors are generated to:
-     *
-     * <code>
-     *     GLsizei n;
-     *     for (n = 0; n < drawcount; n++) {
-     *         const DrawArraysIndirectCommand *cmd;
-     *         if (stride != 0) {
-     *             cmd = (const DrawArraysIndirectCommand  *)((uintptr)indirect + n * stride);
-     *         } else  {
-     *             cmd = (const DrawArraysIndirectCommand  *)indirect + n;
-     *         }
-     *
-     *         glDrawArraysInstancedBaseInstance(mode, cmd->first, cmd->count, cmd->instanceCount,
-     * cmd->baseInstance);
-     *     }
-     * </code>
-     *
-     * If a buffer is bound to the {@see GL46::GL_DRAW_INDIRECT_BUFFER} binding at the time of a call to
-     * {@see GL46::glMultiDrawArraysIndirect}, $indirect is interpreted as an offset, in basic machine units, into
-     * that buffer and the parameter data is read from the buffer rather than from client memory.
-     *
-     * In contrast to {@see GL46::glDrawArraysInstancedBaseInstance}, the `first` member of the parameter structure
-     * is unsigned, and out-of-range indices do not generate an error.
-     *
-     * Vertex attributes that are modified by {@see GL46::glMultiDrawArraysIndirect} have an unspecified value after
-     * {@see GL46::glMultiDrawArraysIndirect} returns. Attributes that aren't modified remain well defined.
-     *
-     * @see http://docs.gl/gl4/glMultiDrawArraysIndirect
-     * @since 4.3
-     * @param int|\FFI\CData|\FFI\CInt $mode
-     * @param \FFI\CData|\FFI\CPtr|null $indirect
-     * @param int|\FFI\CData|\FFI\CInt $drawcount
-     * @param int|\FFI\CData|\FFI\CInt $stride
-     * @return void
-     */
-    public function multiDrawArraysIndirect($mode, ?\FFI\CData $indirect, $drawcount, $stride): void
-    {
-        $mode = $mode instanceof \FFI\CData ? $mode->cdata : $mode;
-        $drawcount = $drawcount instanceof \FFI\CData ? $drawcount->cdata : $drawcount;
-        $stride = $stride instanceof \FFI\CData ? $stride->cdata : $stride;
-
-        assert(Type::isUint16($mode), 'Argument $mode must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isInt16($drawcount), 'Argument $drawcount must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Type::isInt16($stride), 'Argument $stride must be a C-like GLsizei, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glMultiDrawArraysIndirect', 'void (*)(GLenum mode, const void *indirect, GLsizei drawcount, GLsizei stride)');
-        $proc($mode, $indirect, $drawcount, $stride);
-    }
-
-    /**
-     * {@see GL46::glMultiDrawElementsIndirect} specifies multiple indexed geometric primitives with very few
-     * subroutine calls. {@see GL46::glMultiDrawElementsIndirect} behaves similarly to a multitude of calls to
-     * {@see GL46::glDrawElementsInstancedBaseVertexBaseInstance}, execpt that the parameters to
-     * {@see GL46::glDrawElementsInstancedBaseVertexBaseInstance} are stored in an array in memory at the address
-     * given by $indirect, separated by the stride, in basic machine units, specified by $stride. If $stride is zero,
-     * then the array is assumed to be tightly packed in memory.
-     *
-     * The parameters addressed by $indirect are packed into a structure that takes the form (in C):
-     *
-     * <code>
-     *     typedef  struct {
-     *         uint  count;
-     *         uint  instanceCount;
-     *         uint  firstIndex;
-     *         uint  baseVertex;
-     *         uint  baseInstance;
-     *     } DrawElementsIndirectCommand;
-     * </code>
-     *
-     * A single call to {@see GL46::glMultiDrawElementsIndirect} is equivalent, assuming no errors are generated to:
-     *
-     * <code>
-     *     GLsizei n;
-     *     for (n = 0; n < drawcount; n++) {
-     *         const DrawElementsIndirectCommand *cmd;
-     *         if (stride != 0) {
-     *             cmd = (const DrawElementsIndirectCommand  *)((uintptr)indirect + n * stride);
-     *         } else {
-     *             cmd = (const DrawElementsIndirectCommand  *)indirect + n;
-     *         }
-     *
-     *         glDrawElementsInstancedBaseVertexBaseInstance(mode,
-     *                                                       cmd->count,
-     *                                                       type,
-     *                                                       cmd->firstIndex * size-of-type,
-     *                                                       cmd->instanceCount,
-     *                                                       cmd->baseVertex,
-     *                                                       cmd->baseInstance);
-     *     }
-     * </code>
-     *
-     * If a buffer is bound to the {@see GL46::GL_DRAW_INDIRECT_BUFFER} binding at the time of a call to
-     * {@see GL46::glDrawElementsIndirect}, $indirect is interpreted as an offset, in basic machine units, into that
-     * buffer and the parameter data is read from the buffer rather than from client memory.
-     *
-     * Note that indices stored in client memory are not supported. If no buffer is bound to the
-     * {@see GL46::GL_ELEMENT_ARRAY_BUFFER} binding, an error will be generated.
-     *
-     * The results of the operation are undefined if the `reservedMustBeZero` member of the parameter structure is
-     * non-zero. However, no error is generated in this case.
-     *
-     * Vertex attributes that are modified by {@see GL46::glDrawElementsIndirect} have an unspecified value after
-     * {@see GL46::glDrawElementsIndirect} returns. Attributes that aren't modified remain well defined.
-     *
-     * @see http://docs.gl/gl4/glMultiDrawElementsIndirect
-     * @since 4.3
-     * @param int|\FFI\CData|\FFI\CInt $mode
-     * @param int|\FFI\CData|\FFI\CInt $type
-     * @param \FFI\CData|\FFI\CPtr|null $indirect
-     * @param int|\FFI\CData|\FFI\CInt $drawcount
-     * @param int|\FFI\CData|\FFI\CInt $stride
-     * @return void
-     */
-    public function multiDrawElementsIndirect($mode, $type, ?\FFI\CData $indirect, $drawcount, $stride): void
-    {
-        $mode = $mode instanceof \FFI\CData ? $mode->cdata : $mode;
-        $type = $type instanceof \FFI\CData ? $type->cdata : $type;
-        $drawcount = $drawcount instanceof \FFI\CData ? $drawcount->cdata : $drawcount;
-        $stride = $stride instanceof \FFI\CData ? $stride->cdata : $stride;
-
-        assert(Type::isUint16($mode), 'Argument $mode must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isInt16($drawcount), 'Argument $drawcount must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Type::isInt16($stride), 'Argument $stride must be a C-like GLsizei, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glMultiDrawElementsIndirect', 'void (*)(GLenum mode, GLenum type, const void *indirect, GLsizei drawcount, GLsizei stride)');
-        $proc($mode, $type, $indirect, $drawcount, $stride);
+        $lengthCType = $this->info->ffi->new('GLsizei', false);
+        $labelCType = \FFI::addr($this->info->ffi->new('GLchar[' . $bufSize . ']', false)[0]);
+        try {
+            $__proc = $this->getProcAs('glGetObjectPtrLabel', 'void (*)(const void *ptr, GLsizei bufSize, GLsizei *length, GLchar *label)');
+            $__proc($ptr, $bufSize, \FFI::addr($lengthCType), $labelCType);
+        } finally {
+            $length = $lengthCType->cdata;
+            \FFI::free($lengthCType);
+            $label = \FFI::string($labelCType);
+            \FFI::free($labelCType);
+        }
     }
 
     /**
@@ -2575,24 +2356,22 @@ class GL43 extends GL42
      *
      * @see http://docs.gl/gl4/glGetProgramInterface
      * @since 4.3
-     * @param int|\FFI\CData|\FFI\CInt $program
-     * @param int|\FFI\CData|\FFI\CInt $programInterface
-     * @param int|\FFI\CData|\FFI\CInt $pname
-     * @param \FFI\CData|\FFI\CIntPtr|null $params
+     * @param int $program
+     * @param int $programInterface
+     * @param int $pname
+     * @param int|null $params
      * @return void
      */
-    public function getProgramInterfaceiv($program, $programInterface, $pname, ?\FFI\CData $params): void
+    public function getProgramInterfaceiv(int $program, int $programInterface, int $pname, ?int &$params): void
     {
-        $program = $program instanceof \FFI\CData ? $program->cdata : $program;
-        $programInterface = $programInterface instanceof \FFI\CData ? $programInterface->cdata : $programInterface;
-        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
-
-        assert(Type::isUint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isUint16($programInterface), 'Argument $programInterface must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glGetProgramInterfaceiv', 'void (*)(GLuint program, GLenum programInterface, GLenum pname, GLint *params)');
-        $proc($program, $programInterface, $pname, $params);
+        $paramsCType = $this->info->ffi->new('GLint', false);
+        try {
+            $__proc = $this->getProcAs('glGetProgramInterfaceiv', 'void (*)(GLuint program, GLenum programInterface, GLenum pname, GLint *params)');
+            $__proc($program, $programInterface, $pname, \FFI::addr($paramsCType));
+        } finally {
+            $params = $paramsCType->cdata;
+            \FFI::free($paramsCType);
+        }
     }
 
     /**
@@ -2659,21 +2438,98 @@ class GL43 extends GL42
      *
      * @see http://docs.gl/gl4/glGetProgramResourceIndex
      * @since 4.3
-     * @param int|\FFI\CData|\FFI\CInt $program
-     * @param int|\FFI\CData|\FFI\CInt $programInterface
-     * @param \FFI\CData|\FFI\CIntPtr|null $name
-     * @return int|\FFI\CData|\FFI\CInt
+     * @param int $program
+     * @param int $programInterface
+     * @param \FFI\CData|null $name
+     * @return int
      */
-    public function getProgramResourceIndex($program, $programInterface, ?\FFI\CData $name): int
+    public function getProgramResourceIndex(int $program, int $programInterface, ?\FFI\CData $name): int
     {
-        $program = $program instanceof \FFI\CData ? $program->cdata : $program;
-        $programInterface = $programInterface instanceof \FFI\CData ? $programInterface->cdata : $programInterface;
+        $__proc = $this->getProcAs('glGetProgramResourceIndex', 'GLuint (*)(GLuint program, GLenum programInterface, const GLchar *name)');
+        return $__proc($program, $programInterface, $name);
+    }
 
-        assert(Type::isUint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isUint16($programInterface), 'Argument $programInterface must be a C-like GLenum, but incompatible or overflow value given');
+    /**
+     * {@see GL46::glGetProgramResourceLocation} returns the location assigned to the variable named $name in
+     * interface $programInterface of program object $program. $program must be the name of a program that has been
+     * linked successfully. $programInterface must be one of {@see GL46::GL_UNIFORM}, {@see GL46::GL_PROGRAM_INPUT},
+     * {@see GL46::GL_PROGRAM_OUTPUT}, {@see GL46::GL_VERTEX_SUBROUTINE_UNIFORM},
+     * {@see GL46::GL_TESS_CONTROL_SUBROUTINE_UNIFORM}, {@see GL46::GL_TESS_EVALUATION_SUBROUTINE_UNIFORM},
+     * {@see GL46::GL_GEOMETRY_SUBROUTINE_UNIFORM}, {@see GL46::GL_FRAGMENT_SUBROUTINE_UNIFORM},
+     * {@see GL46::GL_COMPUTE_SUBROUTINE_UNIFORM}, or {@see GL46::GL_TRANSFORM_FEEDBACK_BUFFER}.
+     *
+     * The value -1 will be returned if an error occurs, if $name does not identify an active variable on
+     * $programInterface, or if $name identifies an active variable that does not have a valid location assigned, as
+     * described above. The locations returned by these commands are the same locations returned when querying the
+     * {@see GL46::GL_LOCATION} and {@see GL46::GL_LOCATION_INDEX} resource properties.
+     *
+     * A string provided to {@see GL46::glGetProgramResourceLocation} is considered to match an active variable if:
+     *
+     *  -  the string exactly matches the name of the active variable
+     *  -  if the string identifies the base name of an active array, where the string would exactly match the name of
+     *    the variable if the suffix "[0]" were appended to the string
+     *  -  if the string identifies an active element of the array, where the string ends with the concatenation of the
+     *    "[" character, an integer with no "+" sign, extra leading zeroes, or whitespace identifying an array element,
+     *    and the "]" character, the integer is less than the number of active elements of the array variable, and where
+     *    the string would exactly match the enumerated name of the array if the decimal integer were replaced with
+     *    zero.
+     *
+     * Any other string is considered not to identify an active variable. If the string specifies an element of an
+     * array variable, {@see GL46::glGetProgramResourceLocation} returns the location assigned to that element. If it
+     * specifies the base name of an array, it identifies the resources associated with the first element of the
+     * array.
+     *
+     * @see http://docs.gl/gl4/glGetProgramResourceLocation
+     * @since 4.3
+     * @param int $program
+     * @param int $programInterface
+     * @param \FFI\CData|null $name
+     * @return int
+     */
+    public function getProgramResourceLocation(int $program, int $programInterface, ?\FFI\CData $name): int
+    {
+        $__proc = $this->getProcAs('glGetProgramResourceLocation', 'GLint (*)(GLuint program, GLenum programInterface, const GLchar *name)');
+        return $__proc($program, $programInterface, $name);
+    }
 
-        $proc = $this->getProcAddress('glGetProgramResourceIndex', 'GLuint (*)(GLuint program, GLenum programInterface, const GLchar *name)');
-        return $proc($program, $programInterface, $name);
+    /**
+     * {@see GL46::glGetProgramResourceLocationIndex} returns the fragment color index assigned to the variable named
+     * $name in interface $programInterface of program object $program. $program must be the name of a program that
+     * has been linked successfully. $programInterface must be {@see GL46::GL_PROGRAM_OUTPUT}.
+     *
+     * The value -1 will be returned if an error occurs, if $name does not identify an active variable on
+     * $programInterface, or if $name identifies an active variable that does not have a valid location assigned, as
+     * described above. The locations returned by these commands are the same locations returned when querying the
+     * {@see GL46::GL_LOCATION} and {@see GL46::GL_LOCATION_INDEX} resource properties.
+     *
+     * A string provided to {@see GL46::glGetProgramResourceLocationIndex} is considered to match an active variable
+     * if:
+     *
+     *  -  the string exactly matches the name of the active variable
+     *  -  if the string identifies the base name of an active array, where the string would exactly match the name of
+     *    the variable if the suffix "[0]" were appended to the string
+     *  -  if the string identifies an active element of the array, where the string ends with the concatenation of the
+     *    "[" character, an integer with no "+" sign, extra leading zeroes, or whitespace identifying an array element,
+     *    and the "]" character, the integer is less than the number of active elements of the array variable, and where
+     *    the string would exactly match the enumerated name of the array if the decimal integer were replaced with
+     *    zero.
+     *
+     * Any other string is considered not to identify an active variable. If the string specifies an element of an
+     * array variable, {@see GL46::glGetProgramResourceLocation} returns the location assigned to that element. If it
+     * specifies the base name of an array, it identifies the resources associated with the first element of the
+     * array.
+     *
+     * @see http://docs.gl/gl4/glGetProgramResourceLocationIndex
+     * @since 4.3
+     * @param int $program
+     * @param int $programInterface
+     * @param \FFI\CData|null $name
+     * @return int
+     */
+    public function getProgramResourceLocationIndex(int $program, int $programInterface, ?\FFI\CData $name): int
+    {
+        $__proc = $this->getProcAs('glGetProgramResourceLocationIndex', 'GLint (*)(GLuint program, GLenum programInterface, const GLchar *name)');
+        return $__proc($program, $programInterface, $name);
     }
 
     /**
@@ -2737,28 +2593,27 @@ class GL43 extends GL42
      *
      * @see http://docs.gl/gl4/glGetProgramResourceName
      * @since 4.3
-     * @param int|\FFI\CData|\FFI\CInt $program
-     * @param int|\FFI\CData|\FFI\CInt $programInterface
-     * @param int|\FFI\CData|\FFI\CInt $index
-     * @param int|\FFI\CData|\FFI\CInt $bufSize
-     * @param \FFI\CData|\FFI\CIntPtr|null $length
-     * @param \FFI\CData|\FFI\CIntPtr|null $name
+     * @param int $program
+     * @param int $programInterface
+     * @param int $index
+     * @param int $bufSize
+     * @param int|null $length
+     * @param string|null $name
      * @return void
      */
-    public function getProgramResourceName($program, $programInterface, $index, $bufSize, ?\FFI\CData $length, ?\FFI\CData $name): void
+    public function getProgramResourceName(int $program, int $programInterface, int $index, int $bufSize, ?int &$length, ?string &$name): void
     {
-        $program = $program instanceof \FFI\CData ? $program->cdata : $program;
-        $programInterface = $programInterface instanceof \FFI\CData ? $programInterface->cdata : $programInterface;
-        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
-        $bufSize = $bufSize instanceof \FFI\CData ? $bufSize->cdata : $bufSize;
-
-        assert(Type::isUint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isUint16($programInterface), 'Argument $programInterface must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isInt16($bufSize), 'Argument $bufSize must be a C-like GLsizei, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glGetProgramResourceName', 'void (*)(GLuint program, GLenum programInterface, GLuint index, GLsizei bufSize, GLsizei *length, GLchar *name)');
-        $proc($program, $programInterface, $index, $bufSize, $length, $name);
+        $lengthCType = $this->info->ffi->new('GLsizei', false);
+        $nameCType = \FFI::addr($this->info->ffi->new('GLchar[' . $bufSize . ']', false)[0]);
+        try {
+            $__proc = $this->getProcAs('glGetProgramResourceName', 'void (*)(GLuint program, GLenum programInterface, GLuint index, GLsizei bufSize, GLsizei *length, GLchar *name)');
+            $__proc($program, $programInterface, $index, $bufSize, \FFI::addr($lengthCType), $nameCType);
+        } finally {
+            $length = $lengthCType->cdata;
+            \FFI::free($lengthCType);
+            $name = \FFI::string($nameCType);
+            \FFI::free($nameCType);
+        }
     }
 
     /**
@@ -2947,127 +2802,453 @@ class GL43 extends GL42
      *
      * @see http://docs.gl/gl4/glGetProgramResource
      * @since 4.3
-     * @param int|\FFI\CData|\FFI\CInt $program
-     * @param int|\FFI\CData|\FFI\CInt $programInterface
-     * @param int|\FFI\CData|\FFI\CInt $index
-     * @param int|\FFI\CData|\FFI\CInt $propCount
-     * @param \FFI\CData|\FFI\CIntPtr|null $props
-     * @param int|\FFI\CData|\FFI\CInt $bufSize
-     * @param \FFI\CData|\FFI\CIntPtr|null $length
-     * @param \FFI\CData|\FFI\CIntPtr|null $params
+     * @param int $program
+     * @param int $programInterface
+     * @param int $index
+     * @param int $propCount
+     * @param \FFI\CData|null $props
+     * @param int $bufSize
+     * @param int|null $length
+     * @param int|null $params
      * @return void
      */
-    public function getProgramResourceiv($program, $programInterface, $index, $propCount, ?\FFI\CData $props, $bufSize, ?\FFI\CData $length, ?\FFI\CData $params): void
-    {
-        $program = $program instanceof \FFI\CData ? $program->cdata : $program;
-        $programInterface = $programInterface instanceof \FFI\CData ? $programInterface->cdata : $programInterface;
-        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
-        $propCount = $propCount instanceof \FFI\CData ? $propCount->cdata : $propCount;
-        $bufSize = $bufSize instanceof \FFI\CData ? $bufSize->cdata : $bufSize;
-
-        assert(Type::isUint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isUint16($programInterface), 'Argument $programInterface must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isInt16($propCount), 'Argument $propCount must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Type::isInt16($bufSize), 'Argument $bufSize must be a C-like GLsizei, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glGetProgramResourceiv', 'void (*)(GLuint program, GLenum programInterface, GLuint index, GLsizei propCount, const GLenum *props, GLsizei bufSize, GLsizei *length, GLint *params)');
-        $proc($program, $programInterface, $index, $propCount, $props, $bufSize, $length, $params);
+    public function getProgramResourceiv(
+        int $program,
+        int $programInterface,
+        int $index,
+        int $propCount,
+        ?\FFI\CData $props,
+        int $bufSize,
+        ?int &$length,
+        ?int &$params
+    ): void {
+        $lengthCType = $this->info->ffi->new('GLsizei', false);
+        $paramsCType = $this->info->ffi->new('GLint', false);
+        try {
+            $__proc = $this->getProcAs('glGetProgramResourceiv', 'void (*)(GLuint program, GLenum programInterface, GLuint index, GLsizei propCount, const GLenum *props, GLsizei bufSize, GLsizei *length, GLint *params)');
+            $__proc($program, $programInterface, $index, $propCount, $props, $bufSize, \FFI::addr($lengthCType), \FFI::addr($paramsCType));
+        } finally {
+            $length = $lengthCType->cdata;
+            \FFI::free($lengthCType);
+            $params = $paramsCType->cdata;
+            \FFI::free($paramsCType);
+        }
     }
 
     /**
-     * {@see GL46::glGetProgramResourceLocation} returns the location assigned to the variable named $name in
-     * interface $programInterface of program object $program. $program must be the name of a program that has been
-     * linked successfully. $programInterface must be one of {@see GL46::GL_UNIFORM}, {@see GL46::GL_PROGRAM_INPUT},
-     * {@see GL46::GL_PROGRAM_OUTPUT}, {@see GL46::GL_VERTEX_SUBROUTINE_UNIFORM},
-     * {@see GL46::GL_TESS_CONTROL_SUBROUTINE_UNIFORM}, {@see GL46::GL_TESS_EVALUATION_SUBROUTINE_UNIFORM},
-     * {@see GL46::GL_GEOMETRY_SUBROUTINE_UNIFORM}, {@see GL46::GL_FRAGMENT_SUBROUTINE_UNIFORM},
-     * {@see GL46::GL_COMPUTE_SUBROUTINE_UNIFORM}, or {@see GL46::GL_TRANSFORM_FEEDBACK_BUFFER}.
+     * {@see GL46::glInvalidateBufferData} invalidates all of the content of the data store of a buffer object. After
+     * invalidation, the content of the buffer's data store becomes undefined.
      *
-     * The value -1 will be returned if an error occurs, if $name does not identify an active variable on
-     * $programInterface, or if $name identifies an active variable that does not have a valid location assigned, as
-     * described above. The locations returned by these commands are the same locations returned when querying the
-     * {@see GL46::GL_LOCATION} and {@see GL46::GL_LOCATION_INDEX} resource properties.
-     *
-     * A string provided to {@see GL46::glGetProgramResourceLocation} is considered to match an active variable if:
-     *
-     *  -  the string exactly matches the name of the active variable
-     *  -  if the string identifies the base name of an active array, where the string would exactly match the name of
-     *    the variable if the suffix "[0]" were appended to the string
-     *  -  if the string identifies an active element of the array, where the string ends with the concatenation of the
-     *    "[" character, an integer with no "+" sign, extra leading zeroes, or whitespace identifying an array element,
-     *    and the "]" character, the integer is less than the number of active elements of the array variable, and where
-     *    the string would exactly match the enumerated name of the array if the decimal integer were replaced with
-     *    zero.
-     *
-     * Any other string is considered not to identify an active variable. If the string specifies an element of an
-     * array variable, {@see GL46::glGetProgramResourceLocation} returns the location assigned to that element. If it
-     * specifies the base name of an array, it identifies the resources associated with the first element of the
-     * array.
-     *
-     * @see http://docs.gl/gl4/glGetProgramResourceLocation
+     * @see http://docs.gl/gl4/glInvalidateBufferData
      * @since 4.3
-     * @param int|\FFI\CData|\FFI\CInt $program
-     * @param int|\FFI\CData|\FFI\CInt $programInterface
-     * @param \FFI\CData|\FFI\CIntPtr|null $name
-     * @return int|\FFI\CData|\FFI\CInt
+     * @param int $buffer
+     * @return void
      */
-    public function getProgramResourceLocation($program, $programInterface, ?\FFI\CData $name): int
+    public function invalidateBufferData(int $buffer): void
     {
-        $program = $program instanceof \FFI\CData ? $program->cdata : $program;
-        $programInterface = $programInterface instanceof \FFI\CData ? $programInterface->cdata : $programInterface;
-
-        assert(Type::isUint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isUint16($programInterface), 'Argument $programInterface must be a C-like GLenum, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glGetProgramResourceLocation', 'GLint (*)(GLuint program, GLenum programInterface, const GLchar *name)');
-        return $proc($program, $programInterface, $name);
+        $__proc = $this->getProcAs('glInvalidateBufferData', 'void (*)(GLuint buffer)');
+        $__proc($buffer);
     }
 
     /**
-     * {@see GL46::glGetProgramResourceLocationIndex} returns the fragment color index assigned to the variable named
-     * $name in interface $programInterface of program object $program. $program must be the name of a program that
-     * has been linked successfully. $programInterface must be {@see GL46::GL_PROGRAM_OUTPUT}.
+     * {@see GL46::glInvalidateBufferSubData} invalidates all or part of the content of the data store of a buffer
+     * object. After invalidation, the content of the specified range of the buffer's data store becomes undefined.
+     * The start of the range is given by $offset and its size is given by $length, both measured in basic machine
+     * units.
      *
-     * The value -1 will be returned if an error occurs, if $name does not identify an active variable on
-     * $programInterface, or if $name identifies an active variable that does not have a valid location assigned, as
-     * described above. The locations returned by these commands are the same locations returned when querying the
-     * {@see GL46::GL_LOCATION} and {@see GL46::GL_LOCATION_INDEX} resource properties.
-     *
-     * A string provided to {@see GL46::glGetProgramResourceLocationIndex} is considered to match an active variable
-     * if:
-     *
-     *  -  the string exactly matches the name of the active variable
-     *  -  if the string identifies the base name of an active array, where the string would exactly match the name of
-     *    the variable if the suffix "[0]" were appended to the string
-     *  -  if the string identifies an active element of the array, where the string ends with the concatenation of the
-     *    "[" character, an integer with no "+" sign, extra leading zeroes, or whitespace identifying an array element,
-     *    and the "]" character, the integer is less than the number of active elements of the array variable, and where
-     *    the string would exactly match the enumerated name of the array if the decimal integer were replaced with
-     *    zero.
-     *
-     * Any other string is considered not to identify an active variable. If the string specifies an element of an
-     * array variable, {@see GL46::glGetProgramResourceLocation} returns the location assigned to that element. If it
-     * specifies the base name of an array, it identifies the resources associated with the first element of the
-     * array.
-     *
-     * @see http://docs.gl/gl4/glGetProgramResourceLocationIndex
+     * @see http://docs.gl/gl4/glInvalidateBufferSubData
      * @since 4.3
-     * @param int|\FFI\CData|\FFI\CInt $program
-     * @param int|\FFI\CData|\FFI\CInt $programInterface
-     * @param \FFI\CData|\FFI\CIntPtr|null $name
-     * @return int|\FFI\CData|\FFI\CInt
+     * @param int $buffer
+     * @param int $offset
+     * @param int $length
+     * @return void
      */
-    public function getProgramResourceLocationIndex($program, $programInterface, ?\FFI\CData $name): int
+    public function invalidateBufferSubData(int $buffer, int $offset, int $length): void
     {
-        $program = $program instanceof \FFI\CData ? $program->cdata : $program;
-        $programInterface = $programInterface instanceof \FFI\CData ? $programInterface->cdata : $programInterface;
+        $__proc = $this->getProcAs('glInvalidateBufferSubData', 'void (*)(GLuint buffer, GLintptr offset, GLsizeiptr length)');
+        $__proc($buffer, $offset, $length);
+    }
 
-        assert(Type::isUint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isUint16($programInterface), 'Argument $programInterface must be a C-like GLenum, but incompatible or overflow value given');
+    /**
+     * {@see GL46::glInvalidateFramebuffer} and {@see GL46::glInvalidateNamedFramebufferData} invalidate the entire
+     * contents of a specified set of attachments of a framebuffer.
+     *
+     * For {@see GL46::glInvalidateFramebuffer}, the framebuffer object is that bound to $target. $target must be
+     * {@see GL46::GL_FRAMEBUFFER}, {@see GL46::GL_READ_FRAMEBUFFER} or {@see GL46::GL_DRAW_FRAMEBUFFER}.
+     * {@see GL46::GL_FRAMEBUFFER} is equivalent to {@see GL46::GL_DRAW_FRAMEBUFFER}. Default framebuffers may also
+     * be invalidated if bound to $target.
+     *
+     * For {@see GL46::glInvalidateNamedFramebufferData}, $framebuffer is the name of the framebuffer object. If
+     * $framebuffer is zero, the default draw framebuffer is affected.
+     *
+     * The set of attachments whose contents are to be invalidated are specified in the $attachments array, which
+     * contains $numAttachments elements.
+     *
+     * If the specified framebuffer is a framebuffer object, each element of $attachments must be one of
+     * {@see GL46::GL_DEPTH_ATTACHMENT}, {@see GL46::GL_STENCIL_ATTACHMENT} {@see GL46::GL_DEPTH_STENCIL_ATTACHMENT},
+     * or {@see GL46::GL_COLOR_ATTACHMENT}i, where i is between zero and the value of
+     * {@see GL46::GL_MAX_FRAMEBUFFER_ATTACHMENTS} minus one.
+     *
+     * If the specified framebuffer is a default framebuffer, each element of $attachments must be one of
+     * {@see GL46::GL_FRONT_LEFT}, {@see GL46::GL_FRONT_RIGHT}, {@see GL46::GL_BACK_LEFT},
+     * {@see GL46::GL_BACK_RIGHT}, {@see GL46::GL_AUX}i, {@see GL46::GL_ACCUM}, {@see GL46::GL_COLOR},
+     * {@see GL46::GL_DEPTH}, or {@see GL46::GL_STENCIL}. {@see GL46::GL_COLOR}, is treated as
+     * {@see GL46::GL_BACK_LEFT} for a double-buffered context and {@see GL46::GL_FRONT_LEFT} for a single-buffered
+     * context. The other attachments identify the corresponding specific buffer.
+     *
+     * The entire contents of each specified attachment become undefined after execution of
+     * {@see GL46::glInvalidateFramebuffer} or {@see GL46::glInvalidateNamedFramebufferData}.
+     *
+     * If the framebuffer object is not complete, {@see GL46::glInvalidateFramebuffer} and
+     * {@see GL46::glInvalidateNamedFramebufferData} may be ignored. This is not an error.
+     *
+     * @see http://docs.gl/gl4/glInvalidateFramebuffer
+     * @since 4.3
+     * @param int $target
+     * @param int $numAttachments
+     * @param \FFI\CData|null $attachments
+     * @return void
+     */
+    public function invalidateFramebuffer(int $target, int $numAttachments, ?\FFI\CData $attachments): void
+    {
+        $__proc = $this->getProcAs('glInvalidateFramebuffer', 'void (*)(GLenum target, GLsizei numAttachments, const GLenum *attachments)');
+        $__proc($target, $numAttachments, $attachments);
+    }
 
-        $proc = $this->getProcAddress('glGetProgramResourceLocationIndex', 'GLint (*)(GLuint program, GLenum programInterface, const GLchar *name)');
-        return $proc($program, $programInterface, $name);
+    /**
+     * {@see GL46::glInvalidateSubFramebuffer} and {@see GL46::glInvalidateNamedFramebufferSubData} invalidate the
+     * contents of a specified region of a specified set of attachments of a framebuffer.
+     *
+     * For {@see GL46::glInvalidateSubFramebuffer}, the framebuffer object is that bound to $target, which must be
+     * one of {@see GL46::GL_FRAMEBUFFER}, {@see GL46::GL_READ_FRAMEBUFFER} or {@see GL46::GL_DRAW_FRAMEBUFFER}.
+     * {@see GL46::GL_FRAMEBUFFER} is equivalent to {@see GL46::GL_DRAW_FRAMEBUFFER}. Default framebuffers may also
+     * be invalidated if bound to $target.
+     *
+     * For {@see GL46::glInvalidateNamedFramebufferSubData}, $framebuffer is the name of the framebuffer object. If
+     * $framebuffer is zero, the default draw framebuffer is affected.
+     *
+     * The set of attachments of which a region is to be invalidated are specified in the $attachments array, which
+     * contains $numAttachments elements.
+     *
+     * If the specified framebuffer is a framebuffer object, each element of $attachments must be one of
+     * {@see GL46::GL_DEPTH_ATTACHMENT}, {@see GL46::GL_STENCIL_ATTACHMENT} {@see GL46::GL_DEPTH_STENCIL_ATTACHMENT},
+     * or {@see GL46::GL_COLOR_ATTACHMENT}i, where i is between zero and the value of
+     * {@see GL46::GL_MAX_FRAMEBUFFER_ATTACHMENTS} minus one.
+     *
+     * If the specified framebuffer is a default framebuffer, each element of $attachments must be one of
+     * {@see GL46::GL_FRONT_LEFT}, {@see GL46::GL_FRONT_RIGHT}, {@see GL46::GL_BACK_LEFT},
+     * {@see GL46::GL_BACK_RIGHT}, {@see GL46::GL_AUX}i, {@see GL46::GL_ACCUM}, {@see GL46::GL_COLOR},
+     * {@see GL46::GL_DEPTH}, or {@see GL46::GL_STENCIL}. {@see GL46::GL_COLOR}, is treated as
+     * {@see GL46::GL_BACK_LEFT} for a double-buffered context and {@see GL46::GL_FRONT_LEFT} for a single-buffered
+     * context. The other attachments identify the corresponding specific buffer.
+     *
+     * The contents of the specified region of each specified attachment become undefined after execution of
+     * {@see GL46::glInvalidateSubFramebuffer} or {@see GL46::glInvalidateNamedFramebufferSubData}. The region to be
+     * invalidated is specified by $x, $y, $width and $height where $x and $y give the offset from the origin (with
+     * lower-left corner at $(0,0)$) and $width and $height are the width and height, respectively, of the region.
+     * Any pixels lying outside of the window allocated to the current GL context (for the default framebuffer), or
+     * outside of the attachments of the framebuffer object, are ignored. If the framebuffer object is not complete,
+     * these commands may be ignored.
+     *
+     * If the framebuffer object is not complete, {@see GL46::glInvalidateSubFramebuffer} and
+     * {@see GL46::glInvalidateNamedFramebufferSubData} may be ignored. This is not an error.
+     *
+     * @see http://docs.gl/gl4/glInvalidateSubFramebuffer
+     * @since 4.3
+     * @param int $target
+     * @param int $numAttachments
+     * @param \FFI\CData|null $attachments
+     * @param int $x
+     * @param int $y
+     * @param int $width
+     * @param int $height
+     * @return void
+     */
+    public function invalidateSubFramebuffer(int $target, int $numAttachments, ?\FFI\CData $attachments, int $x, int $y, int $width, int $height): void
+    {
+        $__proc = $this->getProcAs('glInvalidateSubFramebuffer', 'void (*)(GLenum target, GLsizei numAttachments, const GLenum *attachments, GLint x, GLint y, GLsizei width, GLsizei height)');
+        $__proc($target, $numAttachments, $attachments, $x, $y, $width, $height);
+    }
+
+    /**
+     * {@see GL46::glInvalidateTexSubImage} invalidates all of a texture image. $texture and $level indicated which
+     * texture image is being invalidated. After this command, data in the texture image has undefined values.
+     *
+     * $level must be greater than or equal to zero and be less than the base 2 logarithm of the maximum texture
+     * width, height, or depth.
+     *
+     * For textures of targets {@see GL46::GL_TEXTURE_RECTANGLE}, {@see GL46::GL_TEXTURE_BUFFER},
+     * {@see GL46::GL_TEXTURE_2D_MULTISAMPLE}, or {@see GL46::GL_TEXTURE_2D_MULTISAMPLE_ARRAY}, level must be zero.
+     *
+     * @see http://docs.gl/gl4/glInvalidateTexImage
+     * @since 4.3
+     * @param int $texture
+     * @param int $level
+     * @return void
+     */
+    public function invalidateTexImage(int $texture, int $level): void
+    {
+        $__proc = $this->getProcAs('glInvalidateTexImage', 'void (*)(GLuint texture, GLint level)');
+        $__proc($texture, $level);
+    }
+
+    /**
+     * {@see GL46::glInvalidateTexSubImage} invalidates all or part of a texture image. $texture and $level indicated
+     * which texture image is being invalidated. After this command, data in that subregion have undefined values.
+     * $xoffset, $yoffset, $zoffset, $width, $height, and $depth are interpreted as they are in
+     * {@see GL46::glTexSubImage3D}. For texture targets that don't have certain dimensions, this command treats
+     * those dimensions as having a size of 1. For example, to invalidate a portion of a two- dimensional texture,
+     * the application would use $zoffset equal to zero and $depth equal to one. Cube map textures are treated as an
+     * array of six slices in the z-dimension, where a value of $zoffset is interpreted as specifying face
+     * {@see GL46::GL_TEXTURE_CUBE_MAP_POSITIVE_X} + $zoffset.
+     *
+     * $level must be greater than or equal to zero and be less than the base 2 logarithm of the maximum texture
+     * width, height, or depth. $xoffset, $yoffset and $zoffset must be greater than or equal to zero and be less
+     * than the width, height or depth of the image, respectively. Furthermore, $xoffset + $width, $yoffset +
+     * $height, and $zoffset + $depth must be less than or equal to the width, height or depth of the image,
+     * respectively.
+     *
+     * For textures of targets {@see GL46::GL_TEXTURE_RECTANGLE}, {@see GL46::GL_TEXTURE_BUFFER},
+     * {@see GL46::GL_TEXTURE_2D_MULTISAMPLE}, or {@see GL46::GL_TEXTURE_2D_MULTISAMPLE_ARRAY}, level must be zero.
+     *
+     * @see http://docs.gl/gl4/glInvalidateTexSubImage
+     * @since 4.3
+     * @param int $texture
+     * @param int $level
+     * @param int $xoffset
+     * @param int $yoffset
+     * @param int $zoffset
+     * @param int $width
+     * @param int $height
+     * @param int $depth
+     * @return void
+     */
+    public function invalidateTexSubImage(int $texture, int $level, int $xoffset, int $yoffset, int $zoffset, int $width, int $height, int $depth): void
+    {
+        $__proc = $this->getProcAs('glInvalidateTexSubImage', 'void (*)(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth)');
+        $__proc($texture, $level, $xoffset, $yoffset, $zoffset, $width, $height, $depth);
+    }
+
+    /**
+     * {@see GL46::glMultiDrawArraysIndirect} specifies multiple geometric primitives with very few subroutine calls.
+     * {@see GL46::glMultiDrawArraysIndirect} behaves similarly to a multitude of calls to
+     * {@see GL46::glDrawArraysInstancedBaseInstance}, execept that the parameters to each call to
+     * {@see GL46::glDrawArraysInstancedBaseInstance} are stored in an array in memory at the address given by
+     * $indirect, separated by the stride, in basic machine units, specified by $stride. If $stride is zero, then the
+     * array is assumed to be tightly packed in memory.
+     *
+     * The parameters addressed by $indirect are packed into an array of structures, each element of which takes the
+     * form (in C):
+     *
+     * <code>
+     *     typedef  struct {
+     *         uint  count;
+     *         uint  instanceCount;
+     *         uint  first;
+     *         uint  baseInstance;
+     *     } DrawArraysIndirectCommand;
+     * </code>
+     *
+     * A single call to {@see GL46::glMultiDrawArraysIndirect} is equivalent, assuming no errors are generated to:
+     *
+     * <code>
+     *     GLsizei n;
+     *     for (n = 0; n < drawcount; n++) {
+     *         const DrawArraysIndirectCommand *cmd;
+     *         if (stride != 0) {
+     *             cmd = (const DrawArraysIndirectCommand  *)((uintptr)indirect + n * stride);
+     *         } else  {
+     *             cmd = (const DrawArraysIndirectCommand  *)indirect + n;
+     *         }
+     *
+     *         glDrawArraysInstancedBaseInstance(mode, cmd->first, cmd->count, cmd->instanceCount,
+     * cmd->baseInstance);
+     *     }
+     * </code>
+     *
+     * If a buffer is bound to the {@see GL46::GL_DRAW_INDIRECT_BUFFER} binding at the time of a call to
+     * {@see GL46::glMultiDrawArraysIndirect}, $indirect is interpreted as an offset, in basic machine units, into
+     * that buffer and the parameter data is read from the buffer rather than from client memory.
+     *
+     * In contrast to {@see GL46::glDrawArraysInstancedBaseInstance}, the `first` member of the parameter structure
+     * is unsigned, and out-of-range indices do not generate an error.
+     *
+     * Vertex attributes that are modified by {@see GL46::glMultiDrawArraysIndirect} have an unspecified value after
+     * {@see GL46::glMultiDrawArraysIndirect} returns. Attributes that aren't modified remain well defined.
+     *
+     * @see http://docs.gl/gl4/glMultiDrawArraysIndirect
+     * @since 4.3
+     * @param int $mode
+     * @param \FFI\CData|null $indirect
+     * @param int $drawcount
+     * @param int $stride
+     * @return void
+     */
+    public function multiDrawArraysIndirect(int $mode, ?\FFI\CData $indirect, int $drawcount, int $stride): void
+    {
+        $__proc = $this->getProcAs('glMultiDrawArraysIndirect', 'void (*)(GLenum mode, const void *indirect, GLsizei drawcount, GLsizei stride)');
+        $__proc($mode, $indirect, $drawcount, $stride);
+    }
+
+    /**
+     * {@see GL46::glMultiDrawElementsIndirect} specifies multiple indexed geometric primitives with very few
+     * subroutine calls. {@see GL46::glMultiDrawElementsIndirect} behaves similarly to a multitude of calls to
+     * {@see GL46::glDrawElementsInstancedBaseVertexBaseInstance}, execpt that the parameters to
+     * {@see GL46::glDrawElementsInstancedBaseVertexBaseInstance} are stored in an array in memory at the address
+     * given by $indirect, separated by the stride, in basic machine units, specified by $stride. If $stride is zero,
+     * then the array is assumed to be tightly packed in memory.
+     *
+     * The parameters addressed by $indirect are packed into a structure that takes the form (in C):
+     *
+     * <code>
+     *     typedef  struct {
+     *         uint  count;
+     *         uint  instanceCount;
+     *         uint  firstIndex;
+     *         uint  baseVertex;
+     *         uint  baseInstance;
+     *     } DrawElementsIndirectCommand;
+     * </code>
+     *
+     * A single call to {@see GL46::glMultiDrawElementsIndirect} is equivalent, assuming no errors are generated to:
+     *
+     * <code>
+     *     GLsizei n;
+     *     for (n = 0; n < drawcount; n++) {
+     *         const DrawElementsIndirectCommand *cmd;
+     *         if (stride != 0) {
+     *             cmd = (const DrawElementsIndirectCommand  *)((uintptr)indirect + n * stride);
+     *         } else {
+     *             cmd = (const DrawElementsIndirectCommand  *)indirect + n;
+     *         }
+     *
+     *         glDrawElementsInstancedBaseVertexBaseInstance(mode,
+     *                                                       cmd->count,
+     *                                                       type,
+     *                                                       cmd->firstIndex * size-of-type,
+     *                                                       cmd->instanceCount,
+     *                                                       cmd->baseVertex,
+     *                                                       cmd->baseInstance);
+     *     }
+     * </code>
+     *
+     * If a buffer is bound to the {@see GL46::GL_DRAW_INDIRECT_BUFFER} binding at the time of a call to
+     * {@see GL46::glDrawElementsIndirect}, $indirect is interpreted as an offset, in basic machine units, into that
+     * buffer and the parameter data is read from the buffer rather than from client memory.
+     *
+     * Note that indices stored in client memory are not supported. If no buffer is bound to the
+     * {@see GL46::GL_ELEMENT_ARRAY_BUFFER} binding, an error will be generated.
+     *
+     * The results of the operation are undefined if the `reservedMustBeZero` member of the parameter structure is
+     * non-zero. However, no error is generated in this case.
+     *
+     * Vertex attributes that are modified by {@see GL46::glDrawElementsIndirect} have an unspecified value after
+     * {@see GL46::glDrawElementsIndirect} returns. Attributes that aren't modified remain well defined.
+     *
+     * @see http://docs.gl/gl4/glMultiDrawElementsIndirect
+     * @since 4.3
+     * @param int $mode
+     * @param int $type
+     * @param \FFI\CData|null $indirect
+     * @param int $drawcount
+     * @param int $stride
+     * @return void
+     */
+    public function multiDrawElementsIndirect(int $mode, int $type, ?\FFI\CData $indirect, int $drawcount, int $stride): void
+    {
+        $__proc = $this->getProcAs('glMultiDrawElementsIndirect', 'void (*)(GLenum mode, GLenum type, const void *indirect, GLsizei drawcount, GLsizei stride)');
+        $__proc($mode, $type, $indirect, $drawcount, $stride);
+    }
+
+    /**
+     * {@see GL46::glObjectLabel} labels the object identified by $name within the namespace given by $identifier.
+     * $identifier must be one of {@see GL46::GL_BUFFER}, {@see GL46::GL_SHADER}, {@see GL46::GL_PROGRAM},
+     * {@see GL46::GL_VERTEX_ARRAY}, {@see GL46::GL_QUERY}, {@see GL46::GL_PROGRAM_PIPELINE},
+     * {@see GL46::GL_TRANSFORM_FEEDBACK}, {@see GL46::GL_SAMPLER}, {@see GL46::GL_TEXTURE},
+     * {@see GL46::GL_RENDERBUFFER}, {@see GL46::GL_FRAMEBUFFER}, to indicate the namespace containing the names of
+     * buffers, shaders, programs, vertex array objects, query objects, program pipelines, transform feedback
+     * objects, samplers, textures, renderbuffers and frame buffers, respectively.
+     *
+     * $label is the address of a string that will be used to label an object. $length contains the number of
+     * characters in $label. If $length is negative, it is implied that $label contains a null-terminated string. If
+     * $label is NULL, any debug label is effectively removed from the object.
+     *
+     * @see http://docs.gl/gl4/glObjectLabel
+     * @since 4.3
+     * @param int $identifier
+     * @param int $name
+     * @param int $length
+     * @param \FFI\CData|null $label
+     * @return void
+     */
+    public function objectLabel(int $identifier, int $name, int $length, ?\FFI\CData $label): void
+    {
+        $__proc = $this->getProcAs('glObjectLabel', 'void (*)(GLenum identifier, GLuint name, GLsizei length, const GLchar *label)');
+        $__proc($identifier, $name, $length, $label);
+    }
+
+    /**
+     * {@see GL46::glObjectPtrLabel} labels the sync object identified by $ptr.
+     *
+     * $label is the address of a string that will be used to label the object. $length contains the number of
+     * characters in $label. If $length is negative, it is implied that $label contains a null-terminated string. If
+     * $label is NULL, any debug label is effectively removed from the object.
+     *
+     * @see http://docs.gl/gl4/glObjectPtrLabel
+     * @since 4.3
+     * @param \FFI\CData|null $ptr
+     * @param int $length
+     * @param \FFI\CData|null $label
+     * @return void
+     */
+    public function objectPtrLabel(?\FFI\CData $ptr, int $length, ?\FFI\CData $label): void
+    {
+        $__proc = $this->getProcAs('glObjectPtrLabel', 'void (*)(const void *ptr, GLsizei length, const GLchar *label)');
+        $__proc($ptr, $length, $label);
+    }
+
+    /**
+     * {@see GL46::glPopDebugGroup} pops the active debug group. After popping a debug group, the GL will also
+     * generate a debug output message describing its cause based on the $message string, the source $source, and an
+     * ID $id submitted to the corresponding {@see GL46::glPushDebugGroup} command.
+     * {@see GL46::GL_DEBUG_TYPE_PUSH_GROUP} and {@see GL46::GL_DEBUG_TYPE_POP_GROUP} share a single namespace for
+     * message $id. $severity has the value {@see GL46::GL_DEBUG_SEVERITY_NOTIFICATION}. The $type has the value
+     * {@see GL46::GL_DEBUG_TYPE_POP_GROUP}. Popping a debug group restores the debug output volume control of the
+     * parent debug group.
+     *
+     * @see http://docs.gl/gl4/glPopDebugGroup
+     * @since 4.3
+     * @return void
+     */
+    public function popDebugGroup(): void
+    {
+        $__proc = $this->getProcAs('glPopDebugGroup', 'void (*)()');
+        $__proc();
+    }
+
+    /**
+     * {@see GL46::glPushDebugGroup} pushes a debug group described by the string $message into the command stream.
+     * The value of $id specifies the ID of messages generated. The parameter $length contains the number of
+     * characters in $message. If $length is negative, it is implied that $message contains a null terminated string.
+     * The message has the specified $source and $id, the $type {@see GL46::GL_DEBUG_TYPE_PUSH_GROUP}, and $severity
+     * {@see GL46::GL_DEBUG_SEVERITY_NOTIFICATION}. The GL will put a new debug group on top of the debug group stack
+     * which inherits the control of the volume of debug output of the debug group previously residing on the top of
+     * the debug group stack. Because debug groups are strictly hierarchical, any additional control of the debug
+     * output volume will only apply within the active debug group and the debug groups pushed on top of the active
+     * debug group.
+     *
+     * @see http://docs.gl/gl4/glPushDebugGroup
+     * @since 4.3
+     * @param int $source
+     * @param int $id
+     * @param int $length
+     * @param \FFI\CData|null $message
+     * @return void
+     */
+    public function pushDebugGroup(int $source, int $id, int $length, ?\FFI\CData $message): void
+    {
+        $__proc = $this->getProcAs('glPushDebugGroup', 'void (*)(GLenum source, GLuint id, GLsizei length, const GLchar *message)');
+        $__proc($source, $id, $length, $message);
     }
 
     /**
@@ -3081,23 +3262,15 @@ class GL43 extends GL42
      *
      * @see http://docs.gl/gl4/glShaderStorageBlockBinding
      * @since 4.3
-     * @param int|\FFI\CData|\FFI\CInt $program
-     * @param int|\FFI\CData|\FFI\CInt $storageBlockIndex
-     * @param int|\FFI\CData|\FFI\CInt $storageBlockBinding
+     * @param int $program
+     * @param int $storageBlockIndex
+     * @param int $storageBlockBinding
      * @return void
      */
-    public function shaderStorageBlockBinding($program, $storageBlockIndex, $storageBlockBinding): void
+    public function shaderStorageBlockBinding(int $program, int $storageBlockIndex, int $storageBlockBinding): void
     {
-        $program = $program instanceof \FFI\CData ? $program->cdata : $program;
-        $storageBlockIndex = $storageBlockIndex instanceof \FFI\CData ? $storageBlockIndex->cdata : $storageBlockIndex;
-        $storageBlockBinding = $storageBlockBinding instanceof \FFI\CData ? $storageBlockBinding->cdata : $storageBlockBinding;
-
-        assert(Type::isUint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isUint16($storageBlockIndex), 'Argument $storageBlockIndex must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isUint16($storageBlockBinding), 'Argument $storageBlockBinding must be a C-like GLuint, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glShaderStorageBlockBinding', 'void (*)(GLuint program, GLuint storageBlockIndex, GLuint storageBlockBinding)');
-        $proc($program, $storageBlockIndex, $storageBlockBinding);
+        $__proc = $this->getProcAs('glShaderStorageBlockBinding', 'void (*)(GLuint program, GLuint storageBlockIndex, GLuint storageBlockBinding)');
+        $__proc($program, $storageBlockIndex, $storageBlockBinding);
     }
 
     /**
@@ -3160,27 +3333,17 @@ class GL43 extends GL42
      *
      * @see http://docs.gl/gl4/glTexBufferRange
      * @since 4.3
-     * @param int|\FFI\CData|\FFI\CInt $target
-     * @param int|\FFI\CData|\FFI\CInt $internalformat
-     * @param int|\FFI\CData|\FFI\CInt $buffer
-     * @param mixed|float|string|int|\FFI\CData|\FFI\CInt $offset
-     * @param mixed|float|string|int|\FFI\CData|\FFI\CInt $size
+     * @param int $target
+     * @param int $internalformat
+     * @param int $buffer
+     * @param int $offset
+     * @param int $size
      * @return void
      */
-    public function texBufferRange($target, $internalformat, $buffer, $offset, $size): void
+    public function texBufferRange(int $target, int $internalformat, int $buffer, int $offset, int $size): void
     {
-        $target = $target instanceof \FFI\CData ? $target->cdata : $target;
-        $internalformat = $internalformat instanceof \FFI\CData ? $internalformat->cdata : $internalformat;
-        $buffer = $buffer instanceof \FFI\CData ? $buffer->cdata : $buffer;
-
-        assert(Type::isUint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($internalformat), 'Argument $internalformat must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($buffer), 'Argument $buffer must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isInt64($offset), 'Argument $offset must be a C-like GLintptr, but incompatible or overflow value given');
-        assert(Type::isInt64($size), 'Argument $size must be a C-like GLsizeiptr, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glTexBufferRange', 'void (*)(GLenum target, GLenum internalformat, GLuint buffer, GLintptr offset, GLsizeiptr size)');
-        $proc($target, $internalformat, $buffer, $offset, $size);
+        $__proc = $this->getProcAs('glTexBufferRange', 'void (*)(GLenum target, GLenum internalformat, GLuint buffer, GLintptr offset, GLsizeiptr size)');
+        $__proc($target, $internalformat, $buffer, $offset, $size);
     }
 
     /**
@@ -3199,32 +3362,18 @@ class GL43 extends GL42
      *
      * @see http://docs.gl/gl4/glTexStorage2DMultisample
      * @since 4.3
-     * @param int|\FFI\CData|\FFI\CInt $target
-     * @param int|\FFI\CData|\FFI\CInt $samples
-     * @param int|\FFI\CData|\FFI\CInt $internalformat
-     * @param int|\FFI\CData|\FFI\CInt $width
-     * @param int|\FFI\CData|\FFI\CInt $height
-     * @param int|\FFI\CData|\FFI\CInt $fixedsamplelocations
+     * @param int $target
+     * @param int $samples
+     * @param int $internalformat
+     * @param int $width
+     * @param int $height
+     * @param int $fixedsamplelocations
      * @return void
      */
-    public function texStorage2DMultisample($target, $samples, $internalformat, $width, $height, $fixedsamplelocations): void
+    public function texStorage2DMultisample(int $target, int $samples, int $internalformat, int $width, int $height, int $fixedsamplelocations): void
     {
-        $target = $target instanceof \FFI\CData ? $target->cdata : $target;
-        $samples = $samples instanceof \FFI\CData ? $samples->cdata : $samples;
-        $internalformat = $internalformat instanceof \FFI\CData ? $internalformat->cdata : $internalformat;
-        $width = $width instanceof \FFI\CData ? $width->cdata : $width;
-        $height = $height instanceof \FFI\CData ? $height->cdata : $height;
-        $fixedsamplelocations = $fixedsamplelocations instanceof \FFI\CData ? $fixedsamplelocations->cdata : $fixedsamplelocations;
-
-        assert(Type::isUint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isInt16($samples), 'Argument $samples must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Type::isUint16($internalformat), 'Argument $internalformat must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isInt16($width), 'Argument $width must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Type::isInt16($height), 'Argument $height must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Type::isUint8($fixedsamplelocations), 'Argument $fixedsamplelocations must be a C-like GLboolean, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glTexStorage2DMultisample', 'void (*)(GLenum target, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height, GLboolean fixedsamplelocations)');
-        $proc($target, $samples, $internalformat, $width, $height, $fixedsamplelocations);
+        $__proc = $this->getProcAs('glTexStorage2DMultisample', 'void (*)(GLenum target, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height, GLboolean fixedsamplelocations)');
+        $__proc($target, $samples, $internalformat, $width, $height, $fixedsamplelocations);
     }
 
     /**
@@ -3244,35 +3393,19 @@ class GL43 extends GL42
      *
      * @see http://docs.gl/gl4/glTexStorage3DMultisample
      * @since 4.3
-     * @param int|\FFI\CData|\FFI\CInt $target
-     * @param int|\FFI\CData|\FFI\CInt $samples
-     * @param int|\FFI\CData|\FFI\CInt $internalformat
-     * @param int|\FFI\CData|\FFI\CInt $width
-     * @param int|\FFI\CData|\FFI\CInt $height
-     * @param int|\FFI\CData|\FFI\CInt $depth
-     * @param int|\FFI\CData|\FFI\CInt $fixedsamplelocations
+     * @param int $target
+     * @param int $samples
+     * @param int $internalformat
+     * @param int $width
+     * @param int $height
+     * @param int $depth
+     * @param int $fixedsamplelocations
      * @return void
      */
-    public function texStorage3DMultisample($target, $samples, $internalformat, $width, $height, $depth, $fixedsamplelocations): void
+    public function texStorage3DMultisample(int $target, int $samples, int $internalformat, int $width, int $height, int $depth, int $fixedsamplelocations): void
     {
-        $target = $target instanceof \FFI\CData ? $target->cdata : $target;
-        $samples = $samples instanceof \FFI\CData ? $samples->cdata : $samples;
-        $internalformat = $internalformat instanceof \FFI\CData ? $internalformat->cdata : $internalformat;
-        $width = $width instanceof \FFI\CData ? $width->cdata : $width;
-        $height = $height instanceof \FFI\CData ? $height->cdata : $height;
-        $depth = $depth instanceof \FFI\CData ? $depth->cdata : $depth;
-        $fixedsamplelocations = $fixedsamplelocations instanceof \FFI\CData ? $fixedsamplelocations->cdata : $fixedsamplelocations;
-
-        assert(Type::isUint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isInt16($samples), 'Argument $samples must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Type::isUint16($internalformat), 'Argument $internalformat must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isInt16($width), 'Argument $width must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Type::isInt16($height), 'Argument $height must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Type::isInt16($depth), 'Argument $depth must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Type::isUint8($fixedsamplelocations), 'Argument $fixedsamplelocations must be a C-like GLboolean, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glTexStorage3DMultisample', 'void (*)(GLenum target, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height, GLsizei depth, GLboolean fixedsamplelocations)');
-        $proc($target, $samples, $internalformat, $width, $height, $depth, $fixedsamplelocations);
+        $__proc = $this->getProcAs('glTexStorage3DMultisample', 'void (*)(GLenum target, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height, GLsizei depth, GLboolean fixedsamplelocations)');
+        $__proc($target, $samples, $internalformat, $width, $height, $depth, $fixedsamplelocations);
     }
 
     /**
@@ -3351,280 +3484,28 @@ class GL43 extends GL42
      *
      * @see http://docs.gl/gl4/glTextureView
      * @since 4.3
-     * @param int|\FFI\CData|\FFI\CInt $texture
-     * @param int|\FFI\CData|\FFI\CInt $target
-     * @param int|\FFI\CData|\FFI\CInt $origtexture
-     * @param int|\FFI\CData|\FFI\CInt $internalformat
-     * @param int|\FFI\CData|\FFI\CInt $minlevel
-     * @param int|\FFI\CData|\FFI\CInt $numlevels
-     * @param int|\FFI\CData|\FFI\CInt $minlayer
-     * @param int|\FFI\CData|\FFI\CInt $numlayers
+     * @param int $texture
+     * @param int $target
+     * @param int $origtexture
+     * @param int $internalformat
+     * @param int $minlevel
+     * @param int $numlevels
+     * @param int $minlayer
+     * @param int $numlayers
      * @return void
      */
-    public function textureView($texture, $target, $origtexture, $internalformat, $minlevel, $numlevels, $minlayer, $numlayers): void
-    {
-        $texture = $texture instanceof \FFI\CData ? $texture->cdata : $texture;
-        $target = $target instanceof \FFI\CData ? $target->cdata : $target;
-        $origtexture = $origtexture instanceof \FFI\CData ? $origtexture->cdata : $origtexture;
-        $internalformat = $internalformat instanceof \FFI\CData ? $internalformat->cdata : $internalformat;
-        $minlevel = $minlevel instanceof \FFI\CData ? $minlevel->cdata : $minlevel;
-        $numlevels = $numlevels instanceof \FFI\CData ? $numlevels->cdata : $numlevels;
-        $minlayer = $minlayer instanceof \FFI\CData ? $minlayer->cdata : $minlayer;
-        $numlayers = $numlayers instanceof \FFI\CData ? $numlayers->cdata : $numlayers;
-
-        assert(Type::isUint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isUint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($origtexture), 'Argument $origtexture must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isUint16($internalformat), 'Argument $internalformat must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($minlevel), 'Argument $minlevel must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isUint16($numlevels), 'Argument $numlevels must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isUint16($minlayer), 'Argument $minlayer must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isUint16($numlayers), 'Argument $numlayers must be a C-like GLuint, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glTextureView', 'void (*)(GLuint texture, GLenum target, GLuint origtexture, GLenum internalformat, GLuint minlevel, GLuint numlevels, GLuint minlayer, GLuint numlayers)');
-        $proc($texture, $target, $origtexture, $internalformat, $minlevel, $numlevels, $minlayer, $numlayers);
-    }
-
-    /**
-     * {@see GL46::glBindVertexBuffer} and {@see GL46::glVertexArrayVertexBuffer} bind the buffer named $buffer to
-     * the vertex buffer binding point whose index is given by $bindingindex. {@see GL46::glBindVertexBuffer}
-     * modifies the binding of the currently bound vertex array object, whereas
-     * {@see GL46::glVertexArrayVertexBuffer} allows the caller to specify ID of the vertex array object with an
-     * argument named $vaobj, for which the binding should be modified. $offset and $stride specify the offset of the
-     * first element within the buffer and the distance between elements within the buffer, respectively, and are
-     * both measured in basic machine units. $bindingindex must be less than the value of
-     * {@see GL46::GL_MAX_VERTEX_ATTRIB_BINDINGS}. $offset and $stride must be greater than or equal to zero. If
-     * $buffer is zero, then any buffer currently bound to the specified binding point is unbound.
-     *
-     * If $buffer is not the name of an existing buffer object, the GL first creates a new state vector, initialized
-     * with a zero-sized memory buffer and comprising all the state and with the same initial values as in case of
-     * {@see GL46::glBindBuffer}. $buffer is then attached to the specified $bindingindex of the vertex array object.
-     *
-     * @see http://docs.gl/gl4/glBindVertexBuffer
-     * @since 4.3
-     * @param int|\FFI\CData|\FFI\CInt $bindingindex
-     * @param int|\FFI\CData|\FFI\CInt $buffer
-     * @param mixed|float|string|int|\FFI\CData|\FFI\CInt $offset
-     * @param int|\FFI\CData|\FFI\CInt $stride
-     * @return void
-     */
-    public function bindVertexBuffer($bindingindex, $buffer, $offset, $stride): void
-    {
-        $bindingindex = $bindingindex instanceof \FFI\CData ? $bindingindex->cdata : $bindingindex;
-        $buffer = $buffer instanceof \FFI\CData ? $buffer->cdata : $buffer;
-        $stride = $stride instanceof \FFI\CData ? $stride->cdata : $stride;
-
-        assert(Type::isUint16($bindingindex), 'Argument $bindingindex must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isUint16($buffer), 'Argument $buffer must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isInt64($offset), 'Argument $offset must be a C-like GLintptr, but incompatible or overflow value given');
-        assert(Type::isInt16($stride), 'Argument $stride must be a C-like GLsizei, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glBindVertexBuffer', 'void (*)(GLuint bindingindex, GLuint buffer, GLintptr offset, GLsizei stride)');
-        $proc($bindingindex, $buffer, $offset, $stride);
-    }
-
-    /**
-     * {@see GL46::glVertexAttribFormat}, {@see GL46::glVertexAttribIFormat} and {@see GL46::glVertexAttribLFormat},
-     * as well as {@see GL46::glVertexArrayAttribFormat}, {@see GL46::glVertexArrayAttribIFormat} and
-     * {@see GL46::glVertexArrayAttribLFormat} specify the organization of data in vertex arrays. The first three
-     * calls operate on the bound vertex array object, whereas the last three ones modify the state of a vertex array
-     * object with ID $vaobj. $attribindex specifies the index of the generic vertex attribute array whose data
-     * layout is being described, and must be less than the value of {@see GL46::GL_MAX_VERTEX_ATTRIBS}.
-     *
-     * $size determines the number of components per vertex are allocated to the specified attribute and must be 1,
-     * 2, 3 or 4. $type indicates the type of the data. If $type is one of {@see GL46::GL_BYTE},
-     * {@see GL46::GL_SHORT}, {@see GL46::GL_INT}, {@see GL46::GL_FIXED}, {@see GL46::GL_FLOAT},
-     * {@see GL46::GL_HALF_FLOAT}, and {@see GL46::GL_DOUBLE} indicate types `GLbyte`, `GLshort`, `GLint`, `GLfixed`,
-     * `GLfloat`, `GLhalf`, and `GLdouble`, respectively; the values {@see GL46::GL_UNSIGNED_BYTE},
-     * {@see GL46::GL_UNSIGNED_SHORT}, and {@see GL46::GL_UNSIGNED_INT} indicate types `GLubyte`, `GLushort`, and
-     * `GLuint`, respectively; the values {@see GL46::GL_INT_2_10_10_10_REV} and
-     * {@see GL46::GL_UNSIGNED_INT_2_10_10_10_REV} indicating respectively four signed or unsigned elements packed
-     * into a single `GLuint`; and the value {@see GL46::GL_UNSIGNED_INT_10F_11F_11F_REV} indicating three floating
-     * point values packed into a single `GLuint`.
-     *
-     * {@see GL46::glVertexAttribLFormat} and {@see GL46::glVertexArrayAttribLFormat} is used to specify layout for
-     * data associated with a generic attribute variable declared as 64-bit double precision components. For
-     * {@see GL46::glVertexAttribLFormat} and {@see GL46::glVertexArrayAttribLFormat}, $type must be
-     * {@see GL46::GL_DOUBLE}. In contrast to {@see GL46::glVertexAttribFormat} or
-     * {@see GL46::glVertexArrayAttribFormat}, which will cause data declared as {@see GL46::GL_DOUBLE} to be
-     * converted to 32-bit representation, {@see GL46::glVertexAttribLFormat} and
-     * {@see GL46::glVertexArrayAttribLFormat} cause such data to be left in its natural, 64-bit representation.
-     *
-     * For {@see GL46::glVertexAttribFormat} and {@see GL46::glVertexArrayAttribFormat}, if $normalized is
-     * {@see GL46::GL_TRUE}, then integer data is normalized to the range [-1, 1] or [0, 1] if it is signed or
-     * unsigned, respectively. If $normalized is {@see GL46::GL_FALSE} then integer data is directly converted to
-     * floating point.
-     *
-     * $relativeoffset is the offset, measured in basic machine units of the first element relative to the start of
-     * the vertex buffer binding this attribute fetches from.
-     *
-     * {@see GL46::glVertexAttribFormat} and {@see GL46::glVertexArrayAttribFormat} should be used to describe vertex
-     * attribute layout for floating-point vertex attributes, {@see GL46::glVertexAttribIFormat} and
-     * {@see GL46::glVertexArrayAttribIFormat} should be used to describe vertex attribute layout for integer vertex
-     * attribute, and {@see GL46::glVertexAttribLFormat} and {@see GL46::glVertexArrayAttribLFormat} should be used
-     * to describe the layout for 64-bit vertex attributes. Data for an array specified by
-     * {@see GL46::glVertexAttribIFormat} and {@see GL46::glVertexArrayAttribIFormat} will always be left as integer
-     * values; such data are referred to as pure integers.
-     *
-     * @see http://docs.gl/gl4/glVertexAttribFormat
-     * @since 4.3
-     * @param int|\FFI\CData|\FFI\CInt $attribindex
-     * @param int|\FFI\CData|\FFI\CInt $size
-     * @param int|\FFI\CData|\FFI\CInt $type
-     * @param int|\FFI\CData|\FFI\CInt $normalized
-     * @param int|\FFI\CData|\FFI\CInt $relativeoffset
-     * @return void
-     */
-    public function vertexAttribFormat($attribindex, $size, $type, $normalized, $relativeoffset): void
-    {
-        $attribindex = $attribindex instanceof \FFI\CData ? $attribindex->cdata : $attribindex;
-        $size = $size instanceof \FFI\CData ? $size->cdata : $size;
-        $type = $type instanceof \FFI\CData ? $type->cdata : $type;
-        $normalized = $normalized instanceof \FFI\CData ? $normalized->cdata : $normalized;
-        $relativeoffset = $relativeoffset instanceof \FFI\CData ? $relativeoffset->cdata : $relativeoffset;
-
-        assert(Type::isUint16($attribindex), 'Argument $attribindex must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isInt16($size), 'Argument $size must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isUint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint8($normalized), 'Argument $normalized must be a C-like GLboolean, but incompatible or overflow value given');
-        assert(Type::isUint16($relativeoffset), 'Argument $relativeoffset must be a C-like GLuint, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glVertexAttribFormat', 'void (*)(GLuint attribindex, GLint size, GLenum type, GLboolean normalized, GLuint relativeoffset)');
-        $proc($attribindex, $size, $type, $normalized, $relativeoffset);
-    }
-
-    /**
-     * {@see GL46::glVertexAttribFormat}, {@see GL46::glVertexAttribIFormat} and {@see GL46::glVertexAttribLFormat},
-     * as well as {@see GL46::glVertexArrayAttribFormat}, {@see GL46::glVertexArrayAttribIFormat} and
-     * {@see GL46::glVertexArrayAttribLFormat} specify the organization of data in vertex arrays. The first three
-     * calls operate on the bound vertex array object, whereas the last three ones modify the state of a vertex array
-     * object with ID $vaobj. $attribindex specifies the index of the generic vertex attribute array whose data
-     * layout is being described, and must be less than the value of {@see GL46::GL_MAX_VERTEX_ATTRIBS}.
-     *
-     * $size determines the number of components per vertex are allocated to the specified attribute and must be 1,
-     * 2, 3 or 4. $type indicates the type of the data. If $type is one of {@see GL46::GL_BYTE},
-     * {@see GL46::GL_SHORT}, {@see GL46::GL_INT}, {@see GL46::GL_FIXED}, {@see GL46::GL_FLOAT},
-     * {@see GL46::GL_HALF_FLOAT}, and {@see GL46::GL_DOUBLE} indicate types `GLbyte`, `GLshort`, `GLint`, `GLfixed`,
-     * `GLfloat`, `GLhalf`, and `GLdouble`, respectively; the values {@see GL46::GL_UNSIGNED_BYTE},
-     * {@see GL46::GL_UNSIGNED_SHORT}, and {@see GL46::GL_UNSIGNED_INT} indicate types `GLubyte`, `GLushort`, and
-     * `GLuint`, respectively; the values {@see GL46::GL_INT_2_10_10_10_REV} and
-     * {@see GL46::GL_UNSIGNED_INT_2_10_10_10_REV} indicating respectively four signed or unsigned elements packed
-     * into a single `GLuint`; and the value {@see GL46::GL_UNSIGNED_INT_10F_11F_11F_REV} indicating three floating
-     * point values packed into a single `GLuint`.
-     *
-     * {@see GL46::glVertexAttribLFormat} and {@see GL46::glVertexArrayAttribLFormat} is used to specify layout for
-     * data associated with a generic attribute variable declared as 64-bit double precision components. For
-     * {@see GL46::glVertexAttribLFormat} and {@see GL46::glVertexArrayAttribLFormat}, $type must be
-     * {@see GL46::GL_DOUBLE}. In contrast to {@see GL46::glVertexAttribFormat} or
-     * {@see GL46::glVertexArrayAttribFormat}, which will cause data declared as {@see GL46::GL_DOUBLE} to be
-     * converted to 32-bit representation, {@see GL46::glVertexAttribLFormat} and
-     * {@see GL46::glVertexArrayAttribLFormat} cause such data to be left in its natural, 64-bit representation.
-     *
-     * For {@see GL46::glVertexAttribFormat} and {@see GL46::glVertexArrayAttribFormat}, if $normalized is
-     * {@see GL46::GL_TRUE}, then integer data is normalized to the range [-1, 1] or [0, 1] if it is signed or
-     * unsigned, respectively. If $normalized is {@see GL46::GL_FALSE} then integer data is directly converted to
-     * floating point.
-     *
-     * $relativeoffset is the offset, measured in basic machine units of the first element relative to the start of
-     * the vertex buffer binding this attribute fetches from.
-     *
-     * {@see GL46::glVertexAttribFormat} and {@see GL46::glVertexArrayAttribFormat} should be used to describe vertex
-     * attribute layout for floating-point vertex attributes, {@see GL46::glVertexAttribIFormat} and
-     * {@see GL46::glVertexArrayAttribIFormat} should be used to describe vertex attribute layout for integer vertex
-     * attribute, and {@see GL46::glVertexAttribLFormat} and {@see GL46::glVertexArrayAttribLFormat} should be used
-     * to describe the layout for 64-bit vertex attributes. Data for an array specified by
-     * {@see GL46::glVertexAttribIFormat} and {@see GL46::glVertexArrayAttribIFormat} will always be left as integer
-     * values; such data are referred to as pure integers.
-     *
-     * @see http://docs.gl/gl4/glVertexAttribFormat
-     * @since 4.3
-     * @param int|\FFI\CData|\FFI\CInt $attribindex
-     * @param int|\FFI\CData|\FFI\CInt $size
-     * @param int|\FFI\CData|\FFI\CInt $type
-     * @param int|\FFI\CData|\FFI\CInt $relativeoffset
-     * @return void
-     */
-    public function vertexAttribIFormat($attribindex, $size, $type, $relativeoffset): void
-    {
-        $attribindex = $attribindex instanceof \FFI\CData ? $attribindex->cdata : $attribindex;
-        $size = $size instanceof \FFI\CData ? $size->cdata : $size;
-        $type = $type instanceof \FFI\CData ? $type->cdata : $type;
-        $relativeoffset = $relativeoffset instanceof \FFI\CData ? $relativeoffset->cdata : $relativeoffset;
-
-        assert(Type::isUint16($attribindex), 'Argument $attribindex must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isInt16($size), 'Argument $size must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isUint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($relativeoffset), 'Argument $relativeoffset must be a C-like GLuint, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glVertexAttribIFormat', 'void (*)(GLuint attribindex, GLint size, GLenum type, GLuint relativeoffset)');
-        $proc($attribindex, $size, $type, $relativeoffset);
-    }
-
-    /**
-     * {@see GL46::glVertexAttribFormat}, {@see GL46::glVertexAttribIFormat} and {@see GL46::glVertexAttribLFormat},
-     * as well as {@see GL46::glVertexArrayAttribFormat}, {@see GL46::glVertexArrayAttribIFormat} and
-     * {@see GL46::glVertexArrayAttribLFormat} specify the organization of data in vertex arrays. The first three
-     * calls operate on the bound vertex array object, whereas the last three ones modify the state of a vertex array
-     * object with ID $vaobj. $attribindex specifies the index of the generic vertex attribute array whose data
-     * layout is being described, and must be less than the value of {@see GL46::GL_MAX_VERTEX_ATTRIBS}.
-     *
-     * $size determines the number of components per vertex are allocated to the specified attribute and must be 1,
-     * 2, 3 or 4. $type indicates the type of the data. If $type is one of {@see GL46::GL_BYTE},
-     * {@see GL46::GL_SHORT}, {@see GL46::GL_INT}, {@see GL46::GL_FIXED}, {@see GL46::GL_FLOAT},
-     * {@see GL46::GL_HALF_FLOAT}, and {@see GL46::GL_DOUBLE} indicate types `GLbyte`, `GLshort`, `GLint`, `GLfixed`,
-     * `GLfloat`, `GLhalf`, and `GLdouble`, respectively; the values {@see GL46::GL_UNSIGNED_BYTE},
-     * {@see GL46::GL_UNSIGNED_SHORT}, and {@see GL46::GL_UNSIGNED_INT} indicate types `GLubyte`, `GLushort`, and
-     * `GLuint`, respectively; the values {@see GL46::GL_INT_2_10_10_10_REV} and
-     * {@see GL46::GL_UNSIGNED_INT_2_10_10_10_REV} indicating respectively four signed or unsigned elements packed
-     * into a single `GLuint`; and the value {@see GL46::GL_UNSIGNED_INT_10F_11F_11F_REV} indicating three floating
-     * point values packed into a single `GLuint`.
-     *
-     * {@see GL46::glVertexAttribLFormat} and {@see GL46::glVertexArrayAttribLFormat} is used to specify layout for
-     * data associated with a generic attribute variable declared as 64-bit double precision components. For
-     * {@see GL46::glVertexAttribLFormat} and {@see GL46::glVertexArrayAttribLFormat}, $type must be
-     * {@see GL46::GL_DOUBLE}. In contrast to {@see GL46::glVertexAttribFormat} or
-     * {@see GL46::glVertexArrayAttribFormat}, which will cause data declared as {@see GL46::GL_DOUBLE} to be
-     * converted to 32-bit representation, {@see GL46::glVertexAttribLFormat} and
-     * {@see GL46::glVertexArrayAttribLFormat} cause such data to be left in its natural, 64-bit representation.
-     *
-     * For {@see GL46::glVertexAttribFormat} and {@see GL46::glVertexArrayAttribFormat}, if $normalized is
-     * {@see GL46::GL_TRUE}, then integer data is normalized to the range [-1, 1] or [0, 1] if it is signed or
-     * unsigned, respectively. If $normalized is {@see GL46::GL_FALSE} then integer data is directly converted to
-     * floating point.
-     *
-     * $relativeoffset is the offset, measured in basic machine units of the first element relative to the start of
-     * the vertex buffer binding this attribute fetches from.
-     *
-     * {@see GL46::glVertexAttribFormat} and {@see GL46::glVertexArrayAttribFormat} should be used to describe vertex
-     * attribute layout for floating-point vertex attributes, {@see GL46::glVertexAttribIFormat} and
-     * {@see GL46::glVertexArrayAttribIFormat} should be used to describe vertex attribute layout for integer vertex
-     * attribute, and {@see GL46::glVertexAttribLFormat} and {@see GL46::glVertexArrayAttribLFormat} should be used
-     * to describe the layout for 64-bit vertex attributes. Data for an array specified by
-     * {@see GL46::glVertexAttribIFormat} and {@see GL46::glVertexArrayAttribIFormat} will always be left as integer
-     * values; such data are referred to as pure integers.
-     *
-     * @see http://docs.gl/gl4/glVertexAttribFormat
-     * @since 4.3
-     * @param int|\FFI\CData|\FFI\CInt $attribindex
-     * @param int|\FFI\CData|\FFI\CInt $size
-     * @param int|\FFI\CData|\FFI\CInt $type
-     * @param int|\FFI\CData|\FFI\CInt $relativeoffset
-     * @return void
-     */
-    public function vertexAttribLFormat($attribindex, $size, $type, $relativeoffset): void
-    {
-        $attribindex = $attribindex instanceof \FFI\CData ? $attribindex->cdata : $attribindex;
-        $size = $size instanceof \FFI\CData ? $size->cdata : $size;
-        $type = $type instanceof \FFI\CData ? $type->cdata : $type;
-        $relativeoffset = $relativeoffset instanceof \FFI\CData ? $relativeoffset->cdata : $relativeoffset;
-
-        assert(Type::isUint16($attribindex), 'Argument $attribindex must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isInt16($size), 'Argument $size must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isUint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($relativeoffset), 'Argument $relativeoffset must be a C-like GLuint, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glVertexAttribLFormat', 'void (*)(GLuint attribindex, GLint size, GLenum type, GLuint relativeoffset)');
-        $proc($attribindex, $size, $type, $relativeoffset);
+    public function textureView(
+        int $texture,
+        int $target,
+        int $origtexture,
+        int $internalformat,
+        int $minlevel,
+        int $numlevels,
+        int $minlayer,
+        int $numlayers
+    ): void {
+        $__proc = $this->getProcAs('glTextureView', 'void (*)(GLuint texture, GLenum target, GLuint origtexture, GLenum internalformat, GLuint minlevel, GLuint numlevels, GLuint minlayer, GLuint numlayers)');
+        $__proc($texture, $target, $origtexture, $internalformat, $minlevel, $numlevels, $minlayer, $numlayers);
     }
 
     /**
@@ -3639,20 +3520,186 @@ class GL43 extends GL42
      *
      * @see http://docs.gl/gl4/glVertexAttribBinding
      * @since 4.3
-     * @param int|\FFI\CData|\FFI\CInt $attribindex
-     * @param int|\FFI\CData|\FFI\CInt $bindingindex
+     * @param int $attribindex
+     * @param int $bindingindex
      * @return void
      */
-    public function vertexAttribBinding($attribindex, $bindingindex): void
+    public function vertexAttribBinding(int $attribindex, int $bindingindex): void
     {
-        $attribindex = $attribindex instanceof \FFI\CData ? $attribindex->cdata : $attribindex;
-        $bindingindex = $bindingindex instanceof \FFI\CData ? $bindingindex->cdata : $bindingindex;
+        $__proc = $this->getProcAs('glVertexAttribBinding', 'void (*)(GLuint attribindex, GLuint bindingindex)');
+        $__proc($attribindex, $bindingindex);
+    }
 
-        assert(Type::isUint16($attribindex), 'Argument $attribindex must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isUint16($bindingindex), 'Argument $bindingindex must be a C-like GLuint, but incompatible or overflow value given');
+    /**
+     * {@see GL46::glVertexAttribFormat}, {@see GL46::glVertexAttribIFormat} and {@see GL46::glVertexAttribLFormat},
+     * as well as {@see GL46::glVertexArrayAttribFormat}, {@see GL46::glVertexArrayAttribIFormat} and
+     * {@see GL46::glVertexArrayAttribLFormat} specify the organization of data in vertex arrays. The first three
+     * calls operate on the bound vertex array object, whereas the last three ones modify the state of a vertex array
+     * object with ID $vaobj. $attribindex specifies the index of the generic vertex attribute array whose data
+     * layout is being described, and must be less than the value of {@see GL46::GL_MAX_VERTEX_ATTRIBS}.
+     *
+     * $size determines the number of components per vertex are allocated to the specified attribute and must be 1,
+     * 2, 3 or 4. $type indicates the type of the data. If $type is one of {@see GL46::GL_BYTE},
+     * {@see GL46::GL_SHORT}, {@see GL46::GL_INT}, {@see GL46::GL_FIXED}, {@see GL46::GL_FLOAT},
+     * {@see GL46::GL_HALF_FLOAT}, and {@see GL46::GL_DOUBLE} indicate types `GLbyte`, `GLshort`, `GLint`, `GLfixed`,
+     * `GLfloat`, `GLhalf`, and `GLdouble`, respectively; the values {@see GL46::GL_UNSIGNED_BYTE},
+     * {@see GL46::GL_UNSIGNED_SHORT}, and {@see GL46::GL_UNSIGNED_INT} indicate types `GLubyte`, `GLushort`, and
+     * `GLuint`, respectively; the values {@see GL46::GL_INT_2_10_10_10_REV} and
+     * {@see GL46::GL_UNSIGNED_INT_2_10_10_10_REV} indicating respectively four signed or unsigned elements packed
+     * into a single `GLuint`; and the value {@see GL46::GL_UNSIGNED_INT_10F_11F_11F_REV} indicating three floating
+     * point values packed into a single `GLuint`.
+     *
+     * {@see GL46::glVertexAttribLFormat} and {@see GL46::glVertexArrayAttribLFormat} is used to specify layout for
+     * data associated with a generic attribute variable declared as 64-bit double precision components. For
+     * {@see GL46::glVertexAttribLFormat} and {@see GL46::glVertexArrayAttribLFormat}, $type must be
+     * {@see GL46::GL_DOUBLE}. In contrast to {@see GL46::glVertexAttribFormat} or
+     * {@see GL46::glVertexArrayAttribFormat}, which will cause data declared as {@see GL46::GL_DOUBLE} to be
+     * converted to 32-bit representation, {@see GL46::glVertexAttribLFormat} and
+     * {@see GL46::glVertexArrayAttribLFormat} cause such data to be left in its natural, 64-bit representation.
+     *
+     * For {@see GL46::glVertexAttribFormat} and {@see GL46::glVertexArrayAttribFormat}, if $normalized is
+     * {@see GL46::GL_TRUE}, then integer data is normalized to the range [-1, 1] or [0, 1] if it is signed or
+     * unsigned, respectively. If $normalized is {@see GL46::GL_FALSE} then integer data is directly converted to
+     * floating point.
+     *
+     * $relativeoffset is the offset, measured in basic machine units of the first element relative to the start of
+     * the vertex buffer binding this attribute fetches from.
+     *
+     * {@see GL46::glVertexAttribFormat} and {@see GL46::glVertexArrayAttribFormat} should be used to describe vertex
+     * attribute layout for floating-point vertex attributes, {@see GL46::glVertexAttribIFormat} and
+     * {@see GL46::glVertexArrayAttribIFormat} should be used to describe vertex attribute layout for integer vertex
+     * attribute, and {@see GL46::glVertexAttribLFormat} and {@see GL46::glVertexArrayAttribLFormat} should be used
+     * to describe the layout for 64-bit vertex attributes. Data for an array specified by
+     * {@see GL46::glVertexAttribIFormat} and {@see GL46::glVertexArrayAttribIFormat} will always be left as integer
+     * values; such data are referred to as pure integers.
+     *
+     * @see http://docs.gl/gl4/glVertexAttribFormat
+     * @since 4.3
+     * @param int $attribindex
+     * @param int $size
+     * @param int $type
+     * @param int $normalized
+     * @param int $relativeoffset
+     * @return void
+     */
+    public function vertexAttribFormat(int $attribindex, int $size, int $type, int $normalized, int $relativeoffset): void
+    {
+        $__proc = $this->getProcAs('glVertexAttribFormat', 'void (*)(GLuint attribindex, GLint size, GLenum type, GLboolean normalized, GLuint relativeoffset)');
+        $__proc($attribindex, $size, $type, $normalized, $relativeoffset);
+    }
 
-        $proc = $this->getProcAddress('glVertexAttribBinding', 'void (*)(GLuint attribindex, GLuint bindingindex)');
-        $proc($attribindex, $bindingindex);
+    /**
+     * {@see GL46::glVertexAttribFormat}, {@see GL46::glVertexAttribIFormat} and {@see GL46::glVertexAttribLFormat},
+     * as well as {@see GL46::glVertexArrayAttribFormat}, {@see GL46::glVertexArrayAttribIFormat} and
+     * {@see GL46::glVertexArrayAttribLFormat} specify the organization of data in vertex arrays. The first three
+     * calls operate on the bound vertex array object, whereas the last three ones modify the state of a vertex array
+     * object with ID $vaobj. $attribindex specifies the index of the generic vertex attribute array whose data
+     * layout is being described, and must be less than the value of {@see GL46::GL_MAX_VERTEX_ATTRIBS}.
+     *
+     * $size determines the number of components per vertex are allocated to the specified attribute and must be 1,
+     * 2, 3 or 4. $type indicates the type of the data. If $type is one of {@see GL46::GL_BYTE},
+     * {@see GL46::GL_SHORT}, {@see GL46::GL_INT}, {@see GL46::GL_FIXED}, {@see GL46::GL_FLOAT},
+     * {@see GL46::GL_HALF_FLOAT}, and {@see GL46::GL_DOUBLE} indicate types `GLbyte`, `GLshort`, `GLint`, `GLfixed`,
+     * `GLfloat`, `GLhalf`, and `GLdouble`, respectively; the values {@see GL46::GL_UNSIGNED_BYTE},
+     * {@see GL46::GL_UNSIGNED_SHORT}, and {@see GL46::GL_UNSIGNED_INT} indicate types `GLubyte`, `GLushort`, and
+     * `GLuint`, respectively; the values {@see GL46::GL_INT_2_10_10_10_REV} and
+     * {@see GL46::GL_UNSIGNED_INT_2_10_10_10_REV} indicating respectively four signed or unsigned elements packed
+     * into a single `GLuint`; and the value {@see GL46::GL_UNSIGNED_INT_10F_11F_11F_REV} indicating three floating
+     * point values packed into a single `GLuint`.
+     *
+     * {@see GL46::glVertexAttribLFormat} and {@see GL46::glVertexArrayAttribLFormat} is used to specify layout for
+     * data associated with a generic attribute variable declared as 64-bit double precision components. For
+     * {@see GL46::glVertexAttribLFormat} and {@see GL46::glVertexArrayAttribLFormat}, $type must be
+     * {@see GL46::GL_DOUBLE}. In contrast to {@see GL46::glVertexAttribFormat} or
+     * {@see GL46::glVertexArrayAttribFormat}, which will cause data declared as {@see GL46::GL_DOUBLE} to be
+     * converted to 32-bit representation, {@see GL46::glVertexAttribLFormat} and
+     * {@see GL46::glVertexArrayAttribLFormat} cause such data to be left in its natural, 64-bit representation.
+     *
+     * For {@see GL46::glVertexAttribFormat} and {@see GL46::glVertexArrayAttribFormat}, if $normalized is
+     * {@see GL46::GL_TRUE}, then integer data is normalized to the range [-1, 1] or [0, 1] if it is signed or
+     * unsigned, respectively. If $normalized is {@see GL46::GL_FALSE} then integer data is directly converted to
+     * floating point.
+     *
+     * $relativeoffset is the offset, measured in basic machine units of the first element relative to the start of
+     * the vertex buffer binding this attribute fetches from.
+     *
+     * {@see GL46::glVertexAttribFormat} and {@see GL46::glVertexArrayAttribFormat} should be used to describe vertex
+     * attribute layout for floating-point vertex attributes, {@see GL46::glVertexAttribIFormat} and
+     * {@see GL46::glVertexArrayAttribIFormat} should be used to describe vertex attribute layout for integer vertex
+     * attribute, and {@see GL46::glVertexAttribLFormat} and {@see GL46::glVertexArrayAttribLFormat} should be used
+     * to describe the layout for 64-bit vertex attributes. Data for an array specified by
+     * {@see GL46::glVertexAttribIFormat} and {@see GL46::glVertexArrayAttribIFormat} will always be left as integer
+     * values; such data are referred to as pure integers.
+     *
+     * @see http://docs.gl/gl4/glVertexAttribFormat
+     * @since 4.3
+     * @param int $attribindex
+     * @param int $size
+     * @param int $type
+     * @param int $relativeoffset
+     * @return void
+     */
+    public function vertexAttribIFormat(int $attribindex, int $size, int $type, int $relativeoffset): void
+    {
+        $__proc = $this->getProcAs('glVertexAttribIFormat', 'void (*)(GLuint attribindex, GLint size, GLenum type, GLuint relativeoffset)');
+        $__proc($attribindex, $size, $type, $relativeoffset);
+    }
+
+    /**
+     * {@see GL46::glVertexAttribFormat}, {@see GL46::glVertexAttribIFormat} and {@see GL46::glVertexAttribLFormat},
+     * as well as {@see GL46::glVertexArrayAttribFormat}, {@see GL46::glVertexArrayAttribIFormat} and
+     * {@see GL46::glVertexArrayAttribLFormat} specify the organization of data in vertex arrays. The first three
+     * calls operate on the bound vertex array object, whereas the last three ones modify the state of a vertex array
+     * object with ID $vaobj. $attribindex specifies the index of the generic vertex attribute array whose data
+     * layout is being described, and must be less than the value of {@see GL46::GL_MAX_VERTEX_ATTRIBS}.
+     *
+     * $size determines the number of components per vertex are allocated to the specified attribute and must be 1,
+     * 2, 3 or 4. $type indicates the type of the data. If $type is one of {@see GL46::GL_BYTE},
+     * {@see GL46::GL_SHORT}, {@see GL46::GL_INT}, {@see GL46::GL_FIXED}, {@see GL46::GL_FLOAT},
+     * {@see GL46::GL_HALF_FLOAT}, and {@see GL46::GL_DOUBLE} indicate types `GLbyte`, `GLshort`, `GLint`, `GLfixed`,
+     * `GLfloat`, `GLhalf`, and `GLdouble`, respectively; the values {@see GL46::GL_UNSIGNED_BYTE},
+     * {@see GL46::GL_UNSIGNED_SHORT}, and {@see GL46::GL_UNSIGNED_INT} indicate types `GLubyte`, `GLushort`, and
+     * `GLuint`, respectively; the values {@see GL46::GL_INT_2_10_10_10_REV} and
+     * {@see GL46::GL_UNSIGNED_INT_2_10_10_10_REV} indicating respectively four signed or unsigned elements packed
+     * into a single `GLuint`; and the value {@see GL46::GL_UNSIGNED_INT_10F_11F_11F_REV} indicating three floating
+     * point values packed into a single `GLuint`.
+     *
+     * {@see GL46::glVertexAttribLFormat} and {@see GL46::glVertexArrayAttribLFormat} is used to specify layout for
+     * data associated with a generic attribute variable declared as 64-bit double precision components. For
+     * {@see GL46::glVertexAttribLFormat} and {@see GL46::glVertexArrayAttribLFormat}, $type must be
+     * {@see GL46::GL_DOUBLE}. In contrast to {@see GL46::glVertexAttribFormat} or
+     * {@see GL46::glVertexArrayAttribFormat}, which will cause data declared as {@see GL46::GL_DOUBLE} to be
+     * converted to 32-bit representation, {@see GL46::glVertexAttribLFormat} and
+     * {@see GL46::glVertexArrayAttribLFormat} cause such data to be left in its natural, 64-bit representation.
+     *
+     * For {@see GL46::glVertexAttribFormat} and {@see GL46::glVertexArrayAttribFormat}, if $normalized is
+     * {@see GL46::GL_TRUE}, then integer data is normalized to the range [-1, 1] or [0, 1] if it is signed or
+     * unsigned, respectively. If $normalized is {@see GL46::GL_FALSE} then integer data is directly converted to
+     * floating point.
+     *
+     * $relativeoffset is the offset, measured in basic machine units of the first element relative to the start of
+     * the vertex buffer binding this attribute fetches from.
+     *
+     * {@see GL46::glVertexAttribFormat} and {@see GL46::glVertexArrayAttribFormat} should be used to describe vertex
+     * attribute layout for floating-point vertex attributes, {@see GL46::glVertexAttribIFormat} and
+     * {@see GL46::glVertexArrayAttribIFormat} should be used to describe vertex attribute layout for integer vertex
+     * attribute, and {@see GL46::glVertexAttribLFormat} and {@see GL46::glVertexArrayAttribLFormat} should be used
+     * to describe the layout for 64-bit vertex attributes. Data for an array specified by
+     * {@see GL46::glVertexAttribIFormat} and {@see GL46::glVertexArrayAttribIFormat} will always be left as integer
+     * values; such data are referred to as pure integers.
+     *
+     * @see http://docs.gl/gl4/glVertexAttribFormat
+     * @since 4.3
+     * @param int $attribindex
+     * @param int $size
+     * @param int $type
+     * @param int $relativeoffset
+     * @return void
+     */
+    public function vertexAttribLFormat(int $attribindex, int $size, int $type, int $relativeoffset): void
+    {
+        $__proc = $this->getProcAs('glVertexAttribLFormat', 'void (*)(GLuint attribindex, GLint size, GLenum type, GLuint relativeoffset)');
+        $__proc($attribindex, $size, $type, $relativeoffset);
     }
 
     /**
@@ -3667,388 +3714,13 @@ class GL43 extends GL42
      *
      * @see http://docs.gl/gl4/glVertexBindingDivisor
      * @since 4.3
-     * @param int|\FFI\CData|\FFI\CInt $bindingindex
-     * @param int|\FFI\CData|\FFI\CInt $divisor
+     * @param int $bindingindex
+     * @param int $divisor
      * @return void
      */
-    public function vertexBindingDivisor($bindingindex, $divisor): void
+    public function vertexBindingDivisor(int $bindingindex, int $divisor): void
     {
-        $bindingindex = $bindingindex instanceof \FFI\CData ? $bindingindex->cdata : $bindingindex;
-        $divisor = $divisor instanceof \FFI\CData ? $divisor->cdata : $divisor;
-
-        assert(Type::isUint16($bindingindex), 'Argument $bindingindex must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isUint16($divisor), 'Argument $divisor must be a C-like GLuint, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glVertexBindingDivisor', 'void (*)(GLuint bindingindex, GLuint divisor)');
-        $proc($bindingindex, $divisor);
-    }
-
-    /**
-     * {@see GL46::glDebugMessageControl} controls the reporting of debug messages generated by a debug context. The
-     * parameters $source, $type and $severity form a filter to select messages from the pool of potential messages
-     * generated by the GL.
-     *
-     * $source may be {@see GL46::GL_DEBUG_SOURCE_API}, {@see GL46::GL_DEBUG_SOURCE_WINDOW_SYSTEM_},
-     * {@see GL46::GL_DEBUG_SOURCE_SHADER_COMPILER}, {@see GL46::GL_DEBUG_SOURCE_THIRD_PARTY},
-     * {@see GL46::GL_DEBUG_SOURCE_APPLICATION}, {@see GL46::GL_DEBUG_SOURCE_OTHER} to select messages generated by
-     * usage of the GL API, the window system, the shader compiler, third party tools or libraries, explicitly by the
-     * application or by some other source, respectively. It may also take the value {@see GL46::GL_DONT_CARE}. If
-     * $source is not {@see GL46::GL_DONT_CARE} then only messages whose source matches $source will be referenced.
-     *
-     * $type may be one of {@see GL46::GL_DEBUG_TYPE_ERROR}, {@see GL46::GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR},
-     * {@see GL46::GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR}, {@see GL46::GL_DEBUG_TYPE_PORTABILITY},
-     * {@see GL46::GL_DEBUG_TYPE_PERFORMANCE}, {@see GL46::GL_DEBUG_TYPE_MARKER},
-     * {@see GL46::GL_DEBUG_TYPE_PUSH_GROUP}, {@see GL46::GL_DEBUG_TYPE_POP_GROUP}, or
-     * {@see GL46::GL_DEBUG_TYPE_OTHER} to indicate the type of messages describing GL errors, attempted use of
-     * deprecated features, triggering of undefined behavior, portability issues, performance notifications, markers,
-     * group push and pop events, and other types of messages, respectively. It may also take the value
-     * {@see GL46::GL_DONT_CARE}. If $type is not {@see GL46::GL_DONT_CARE} then only messages whose type matches
-     * $type will be referenced.
-     *
-     * $severity may be one of {@see GL46::GL_DEBUG_SEVERITY_LOW}, {@see GL46::GL_DEBUG_SEVERITY_MEDIUM}, or
-     * {@see GL46::GL_DEBUG_SEVERITY_HIGH} to select messages of low, medium or high severity messages or to
-     * {@see GL46::GL_DEBUG_SEVERITY_NOTIFICATION} for notifications. It may also take the value
-     * {@see GL46::GL_DONT_CARE}. If $severity is not {@see GL46::GL_DONT_CARE} then only messages whose severity
-     * matches $severity will be referenced.
-     *
-     * $ids contains a list of $count message identifiers to select specific messages from the pool of available
-     * messages. If $count is zero then the value of $ids is ignored. Otherwise, only messages appearing in this list
-     * are selected. In this case, $source and $type may not be {@see GL46::GL_DONT_CARE} and $severity must be
-     * {@see GL46::GL_DONT_CARE}.
-     *
-     * If $enabled is {@see GL46::GL_TRUE} then messages that match the filter formed by $source, $type, $severity
-     * and $ids are enabled. Otherwise, those messages are disabled.
-     *
-     * @see http://docs.gl/gl4/glDebugMessageControl
-     * @since 4.3
-     * @param int|\FFI\CData|\FFI\CInt $source
-     * @param int|\FFI\CData|\FFI\CInt $type
-     * @param int|\FFI\CData|\FFI\CInt $severity
-     * @param int|\FFI\CData|\FFI\CInt $count
-     * @param \FFI\CData|\FFI\CIntPtr|null $ids
-     * @param int|\FFI\CData|\FFI\CInt $enabled
-     * @return void
-     */
-    public function debugMessageControl($source, $type, $severity, $count, ?\FFI\CData $ids, $enabled): void
-    {
-        $source = $source instanceof \FFI\CData ? $source->cdata : $source;
-        $type = $type instanceof \FFI\CData ? $type->cdata : $type;
-        $severity = $severity instanceof \FFI\CData ? $severity->cdata : $severity;
-        $count = $count instanceof \FFI\CData ? $count->cdata : $count;
-        $enabled = $enabled instanceof \FFI\CData ? $enabled->cdata : $enabled;
-
-        assert(Type::isUint16($source), 'Argument $source must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($severity), 'Argument $severity must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isInt16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Type::isUint8($enabled), 'Argument $enabled must be a C-like GLboolean, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glDebugMessageControl', 'void (*)(GLenum source, GLenum type, GLenum severity, GLsizei count, const GLuint *ids, GLboolean enabled)');
-        $proc($source, $type, $severity, $count, $ids, $enabled);
-    }
-
-    /**
-     * {@see GL46::glDebugMessageInsert} inserts a user-supplied message into the debug output queue. $source
-     * specifies the source that will be used to classify the message and must be
-     * {@see GL46::GL_DEBUG_SOURCE_APPLICATION} or {@see GL46::GL_DEBUG_SOURCE_THIRD_PARTY}. All other sources are
-     * reserved for use by the GL implementation. $type indicates the type of the message to be inserted and may be
-     * one of {@see GL46::GL_DEBUG_TYPE_ERROR}, {@see GL46::GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR},
-     * {@see GL46::GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR}, {@see GL46::GL_DEBUG_TYPE_PORTABILITY},
-     * {@see GL46::GL_DEBUG_TYPE_PERFORMANCE}, {@see GL46::GL_DEBUG_TYPE_MARKER},
-     * {@see GL46::GL_DEBUG_TYPE_PUSH_GROUP}, {@see GL46::GL_DEBUG_TYPE_POP_GROUP}, or
-     * {@see GL46::GL_DEBUG_TYPE_OTHER}. $severity indicates the severity of the message and may be
-     * {@see GL46::GL_DEBUG_SEVERITY_LOW}, {@see GL46::GL_DEBUG_SEVERITY_MEDIUM}, {@see GL46::GL_DEBUG_SEVERITY_HIGH}
-     * or {@see GL46::GL_DEBUG_SEVERITY_NOTIFICATION}. $id is available for application defined use and may be any
-     * value. This value will be recorded and used to identify the message.
-     *
-     * $length contains a count of the characters in the character array whose address is given in $message. If
-     * $length is negative then $message is treated as a null-terminated string. The length of the message, whether
-     * specified explicitly or implicitly, must be less than or equal to the implementation defined constant
-     * {@see GL46::GL_MAX_DEBUG_MESSAGE_LENGTH}.
-     *
-     * @see http://docs.gl/gl4/glDebugMessageInsert
-     * @since 4.3
-     * @param int|\FFI\CData|\FFI\CInt $source
-     * @param int|\FFI\CData|\FFI\CInt $type
-     * @param int|\FFI\CData|\FFI\CInt $id
-     * @param int|\FFI\CData|\FFI\CInt $severity
-     * @param int|\FFI\CData|\FFI\CInt $length
-     * @param \FFI\CData|\FFI\CIntPtr|null $buf
-     * @return void
-     */
-    public function debugMessageInsert($source, $type, $id, $severity, $length, ?\FFI\CData $buf): void
-    {
-        $source = $source instanceof \FFI\CData ? $source->cdata : $source;
-        $type = $type instanceof \FFI\CData ? $type->cdata : $type;
-        $id = $id instanceof \FFI\CData ? $id->cdata : $id;
-        $severity = $severity instanceof \FFI\CData ? $severity->cdata : $severity;
-        $length = $length instanceof \FFI\CData ? $length->cdata : $length;
-
-        assert(Type::isUint16($source), 'Argument $source must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($id), 'Argument $id must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isUint16($severity), 'Argument $severity must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isInt16($length), 'Argument $length must be a C-like GLsizei, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glDebugMessageInsert', 'void (*)(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar *buf)');
-        $proc($source, $type, $id, $severity, $length, $buf);
-    }
-
-    /**
-     * {@see GL46::glDebugMessageCallback} sets the current debug output callback function to the function whose
-     * address is given in $callback. The callback function should have the following prototype (in C), or be
-     * otherwise compatible with such a prototype:
-     *
-     * <code>
-     *         typedef void (APIENTRY *DEBUGPROC)(GLenum source,
-     *             GLenum type,
-     *             GLuint id,
-     *             GLenum severity,
-     *             GLsizei length,
-     *             const GLchar *message,
-     *             const void *userParam);
-     * </code>
-     * This function is defined to have the same calling convention as the GL API functions. In most cases this is
-     * defined as `APIENTRY`, although it will vary depending on platform, language and compiler.
-     *
-     * Each time a debug message is generated the debug callback function will be invoked with $source, $type, $id,
-     * and $severity associated with the message, and $length set to the length of debug message whose character
-     * string is in the array pointed to by $message $userParam will be set to the value passed in the $userParam
-     * parameter to the most recent call to {@see GL46::glDebugMessageCallback}.
-     *
-     * @see http://docs.gl/gl4/glDebugMessageCallback
-     * @since 4.3
-     * @param \Closure $callback
-     * @param \FFI\CData|\FFI\CPtr|null $userParam
-     * @return void
-     */
-    public function debugMessageCallback(\Closure $callback, ?\FFI\CData $userParam): void
-    {
-        $proc = $this->getProcAddress('glDebugMessageCallback', 'void (*)(GLDEBUGPROC callback, const void *userParam)');
-        $proc($callback, $userParam);
-    }
-
-    /**
-     * {@see GL46::glGetDebugMessageLog} retrieves messages from the debug message log. A maximum of $count messages
-     * are retrieved from the log. If $sources is not NULL then the source of each message is written into up to
-     * $count elements of the array. If $types is not NULL then the type of each message is written into up to $count
-     * elements of the array. If $id is not NULL then the identifier of each message is written into up to $count
-     * elements of the array. If $severities is not NULL then the severity of each message is written into up to
-     * $count elements of the array. If $lengths is not NULL then the length of each message is written into up to
-     * $count elements of the array.
-     *
-     * $messageLog specifies the address of a character array into which the debug messages will be written. Each
-     * message will be concatenated onto the array starting at the first element of $messageLog. $bufSize specifies
-     * the size of the array $messageLog. If a message will not fit into the remaining space in $messageLog then the
-     * function terminates and returns the number of messages written so far, which may be zero.
-     *
-     * If {@see GL46::glGetDebugMessageLog} returns zero then no messages are present in the debug log, or there was
-     * not enough space in $messageLog to retrieve the first message in the queue. If $messageLog is NULL then no
-     * messages are written and the value of $bufSize is ignored.
-     *
-     * @see http://docs.gl/gl4/glGetDebugMessageLog
-     * @since 4.3
-     * @param int|\FFI\CData|\FFI\CInt $count
-     * @param int|\FFI\CData|\FFI\CInt $bufSize
-     * @param \FFI\CData|\FFI\CIntPtr|null $sources
-     * @param \FFI\CData|\FFI\CIntPtr|null $types
-     * @param \FFI\CData|\FFI\CIntPtr|null $ids
-     * @param \FFI\CData|\FFI\CIntPtr|null $severities
-     * @param \FFI\CData|\FFI\CIntPtr|null $lengths
-     * @param \FFI\CData|\FFI\CIntPtr|null $messageLog
-     * @return int|\FFI\CData|\FFI\CInt
-     */
-    public function getDebugMessageLog(
-        $count,
-        $bufSize,
-        ?\FFI\CData $sources,
-        ?\FFI\CData $types,
-        ?\FFI\CData $ids,
-        ?\FFI\CData $severities,
-        ?\FFI\CData $lengths,
-        ?\FFI\CData $messageLog
-    ): int {
-        $count = $count instanceof \FFI\CData ? $count->cdata : $count;
-        $bufSize = $bufSize instanceof \FFI\CData ? $bufSize->cdata : $bufSize;
-
-        assert(Type::isUint16($count), 'Argument $count must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isInt16($bufSize), 'Argument $bufSize must be a C-like GLsizei, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glGetDebugMessageLog', 'GLuint (*)(GLuint count, GLsizei bufSize, GLenum *sources, GLenum *types, GLuint *ids, GLenum *severities, GLsizei *lengths, GLchar *messageLog)');
-        return $proc($count, $bufSize, $sources, $types, $ids, $severities, $lengths, $messageLog);
-    }
-
-    /**
-     * {@see GL46::glPushDebugGroup} pushes a debug group described by the string $message into the command stream.
-     * The value of $id specifies the ID of messages generated. The parameter $length contains the number of
-     * characters in $message. If $length is negative, it is implied that $message contains a null terminated string.
-     * The message has the specified $source and $id, the $type {@see GL46::GL_DEBUG_TYPE_PUSH_GROUP}, and $severity
-     * {@see GL46::GL_DEBUG_SEVERITY_NOTIFICATION}. The GL will put a new debug group on top of the debug group stack
-     * which inherits the control of the volume of debug output of the debug group previously residing on the top of
-     * the debug group stack. Because debug groups are strictly hierarchical, any additional control of the debug
-     * output volume will only apply within the active debug group and the debug groups pushed on top of the active
-     * debug group.
-     *
-     * @see http://docs.gl/gl4/glPushDebugGroup
-     * @since 4.3
-     * @param int|\FFI\CData|\FFI\CInt $source
-     * @param int|\FFI\CData|\FFI\CInt $id
-     * @param int|\FFI\CData|\FFI\CInt $length
-     * @param \FFI\CData|\FFI\CIntPtr|null $message
-     * @return void
-     */
-    public function pushDebugGroup($source, $id, $length, ?\FFI\CData $message): void
-    {
-        $source = $source instanceof \FFI\CData ? $source->cdata : $source;
-        $id = $id instanceof \FFI\CData ? $id->cdata : $id;
-        $length = $length instanceof \FFI\CData ? $length->cdata : $length;
-
-        assert(Type::isUint16($source), 'Argument $source must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($id), 'Argument $id must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isInt16($length), 'Argument $length must be a C-like GLsizei, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glPushDebugGroup', 'void (*)(GLenum source, GLuint id, GLsizei length, const GLchar *message)');
-        $proc($source, $id, $length, $message);
-    }
-
-    /**
-     * {@see GL46::glPopDebugGroup} pops the active debug group. After popping a debug group, the GL will also
-     * generate a debug output message describing its cause based on the $message string, the source $source, and an
-     * ID $id submitted to the corresponding {@see GL46::glPushDebugGroup} command.
-     * {@see GL46::GL_DEBUG_TYPE_PUSH_GROUP} and {@see GL46::GL_DEBUG_TYPE_POP_GROUP} share a single namespace for
-     * message $id. $severity has the value {@see GL46::GL_DEBUG_SEVERITY_NOTIFICATION}. The $type has the value
-     * {@see GL46::GL_DEBUG_TYPE_POP_GROUP}. Popping a debug group restores the debug output volume control of the
-     * parent debug group.
-     *
-     * @see http://docs.gl/gl4/glPopDebugGroup
-     * @since 4.3
-     * @return void
-     */
-    public function popDebugGroup(): void
-    {
-        $proc = $this->getProcAddress('glPopDebugGroup', 'void (*)(void)');
-        $proc();
-    }
-
-    /**
-     * {@see GL46::glObjectLabel} labels the object identified by $name within the namespace given by $identifier.
-     * $identifier must be one of {@see GL46::GL_BUFFER}, {@see GL46::GL_SHADER}, {@see GL46::GL_PROGRAM},
-     * {@see GL46::GL_VERTEX_ARRAY}, {@see GL46::GL_QUERY}, {@see GL46::GL_PROGRAM_PIPELINE},
-     * {@see GL46::GL_TRANSFORM_FEEDBACK}, {@see GL46::GL_SAMPLER}, {@see GL46::GL_TEXTURE},
-     * {@see GL46::GL_RENDERBUFFER}, {@see GL46::GL_FRAMEBUFFER}, to indicate the namespace containing the names of
-     * buffers, shaders, programs, vertex array objects, query objects, program pipelines, transform feedback
-     * objects, samplers, textures, renderbuffers and frame buffers, respectively.
-     *
-     * $label is the address of a string that will be used to label an object. $length contains the number of
-     * characters in $label. If $length is negative, it is implied that $label contains a null-terminated string. If
-     * $label is NULL, any debug label is effectively removed from the object.
-     *
-     * @see http://docs.gl/gl4/glObjectLabel
-     * @since 4.3
-     * @param int|\FFI\CData|\FFI\CInt $identifier
-     * @param int|\FFI\CData|\FFI\CInt $name
-     * @param int|\FFI\CData|\FFI\CInt $length
-     * @param \FFI\CData|\FFI\CIntPtr|null $label
-     * @return void
-     */
-    public function objectLabel($identifier, $name, $length, ?\FFI\CData $label): void
-    {
-        $identifier = $identifier instanceof \FFI\CData ? $identifier->cdata : $identifier;
-        $name = $name instanceof \FFI\CData ? $name->cdata : $name;
-        $length = $length instanceof \FFI\CData ? $length->cdata : $length;
-
-        assert(Type::isUint16($identifier), 'Argument $identifier must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($name), 'Argument $name must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isInt16($length), 'Argument $length must be a C-like GLsizei, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glObjectLabel', 'void (*)(GLenum identifier, GLuint name, GLsizei length, const GLchar *label)');
-        $proc($identifier, $name, $length, $label);
-    }
-
-    /**
-     * {@see GL46::glGetObjectLabel} retrieves the label of the object identified by $name within the namespace given
-     * by $identifier. $identifier must be one of {@see GL46::GL_BUFFER}, {@see GL46::GL_SHADER},
-     * {@see GL46::GL_PROGRAM}, {@see GL46::GL_VERTEX_ARRAY}, {@see GL46::GL_QUERY},
-     * {@see GL46::GL_PROGRAM_PIPELINE}, {@see GL46::GL_TRANSFORM_FEEDBACK}, {@see GL46::GL_SAMPLER},
-     * {@see GL46::GL_TEXTURE}, {@see GL46::GL_RENDERBUFFER}, {@see GL46::GL_FRAMEBUFFER}, to indicate the namespace
-     * containing the names of buffers, shaders, programs, vertex array objects, query objects, program pipelines,
-     * transform feedback objects, samplers, textures, renderbuffers and frame buffers, respectively.
-     *
-     * $label is the address of a string that will be used to store the object label. $bufSize specifies the number
-     * of characters in the array identified by $label. $length contains the address of a variable which will receive
-     * the number of characters in the object label. If $length is NULL, then it is ignored and no data is written.
-     * Likewise, if $label is NULL, or if $bufSize is zero then no data is written to $label.
-     *
-     * @see http://docs.gl/gl4/glGetObjectLabel
-     * @since 4.3
-     * @param int|\FFI\CData|\FFI\CInt $identifier
-     * @param int|\FFI\CData|\FFI\CInt $name
-     * @param int|\FFI\CData|\FFI\CInt $bufSize
-     * @param \FFI\CData|\FFI\CIntPtr|null $length
-     * @param \FFI\CData|\FFI\CIntPtr|null $label
-     * @return void
-     */
-    public function getObjectLabel($identifier, $name, $bufSize, ?\FFI\CData $length, ?\FFI\CData $label): void
-    {
-        $identifier = $identifier instanceof \FFI\CData ? $identifier->cdata : $identifier;
-        $name = $name instanceof \FFI\CData ? $name->cdata : $name;
-        $bufSize = $bufSize instanceof \FFI\CData ? $bufSize->cdata : $bufSize;
-
-        assert(Type::isUint16($identifier), 'Argument $identifier must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($name), 'Argument $name must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isInt16($bufSize), 'Argument $bufSize must be a C-like GLsizei, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glGetObjectLabel', 'void (*)(GLenum identifier, GLuint name, GLsizei bufSize, GLsizei *length, GLchar *label)');
-        $proc($identifier, $name, $bufSize, $length, $label);
-    }
-
-    /**
-     * {@see GL46::glObjectPtrLabel} labels the sync object identified by $ptr.
-     *
-     * $label is the address of a string that will be used to label the object. $length contains the number of
-     * characters in $label. If $length is negative, it is implied that $label contains a null-terminated string. If
-     * $label is NULL, any debug label is effectively removed from the object.
-     *
-     * @see http://docs.gl/gl4/glObjectPtrLabel
-     * @since 4.3
-     * @param \FFI\CData|\FFI\CPtr|null $ptr
-     * @param int|\FFI\CData|\FFI\CInt $length
-     * @param \FFI\CData|\FFI\CIntPtr|null $label
-     * @return void
-     */
-    public function objectPtrLabel(?\FFI\CData $ptr, $length, ?\FFI\CData $label): void
-    {
-        $length = $length instanceof \FFI\CData ? $length->cdata : $length;
-
-        assert(Type::isInt16($length), 'Argument $length must be a C-like GLsizei, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glObjectPtrLabel', 'void (*)(const void *ptr, GLsizei length, const GLchar *label)');
-        $proc($ptr, $length, $label);
-    }
-
-    /**
-     * {@see GL46::glGetObjectPtrLabel} retrieves the label of the sync object identified by $ptr.
-     *
-     * $label is the address of a string that will be used to store the object label. $bufSize specifies the number
-     * of characters in the array identified by $label. $length contains the address of a variable which will receive
-     * the number of characters in the object label. If $length is NULL, then it is ignored and no data is written.
-     * Likewise, if $label is NULL, or if $bufSize is zero then no data is written to $label.
-     *
-     * @see http://docs.gl/gl4/glGetObjectPtrLabel
-     * @since 4.3
-     * @param \FFI\CData|\FFI\CPtr|null $ptr
-     * @param int|\FFI\CData|\FFI\CInt $bufSize
-     * @param \FFI\CData|\FFI\CIntPtr|null $length
-     * @param \FFI\CData|\FFI\CIntPtr|null $label
-     * @return void
-     */
-    public function getObjectPtrLabel(?\FFI\CData $ptr, $bufSize, ?\FFI\CData $length, ?\FFI\CData $label): void
-    {
-        $bufSize = $bufSize instanceof \FFI\CData ? $bufSize->cdata : $bufSize;
-
-        assert(Type::isInt16($bufSize), 'Argument $bufSize must be a C-like GLsizei, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glGetObjectPtrLabel', 'void (*)(const void *ptr, GLsizei bufSize, GLsizei *length, GLchar *label)');
-        $proc($ptr, $bufSize, $length, $label);
+        $__proc = $this->getProcAs('glVertexBindingDivisor', 'void (*)(GLuint bindingindex, GLuint divisor)');
+        $__proc($bindingindex, $divisor);
     }
 }

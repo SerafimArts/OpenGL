@@ -13,177 +13,121 @@ declare(strict_types=1);
 
 namespace Serafim\OpenGL;
 
-use Serafim\OpenGL\Type\Type;
-
 /**
- * The OpenGL functionality up to version 4.6. Includes the deprecated symbols of the Compatibility Profile.
- *
- * OpenGL 4.6 implementations support revision 4.60 of the OpenGL Shading Language.
- *
- * Extensions promoted to core in this release:
- *
- * - ARB_indirect_parameters @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_indirect_parameters.txt
- * - ARB_pipeline_statistics_query @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_pipeline_statistics_query.txt
- * - ARB_polygon_offset_clamp @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_polygon_offset_clamp.txt
- * - KHR_no_error @see https://www.khronos.org/registry/OpenGL/extensions/KHR/KHR_no_error.txt
- * - ARB_shader_atomic_counter_ops @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_shader_atomic_counter_ops.txt
- * - ARB_shader_draw_parameters @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_shader_draw_parameters.txt
- * - ARB_shader_group_vote @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_shader_group_vote.txt
- * - ARB_gl_spirv @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_gl_spirv.txt
- * - ARB_spirv_extensions @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_spirv_extensions.txt
- * - ARB_texture_filter_anisotropic @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_texture_filter_anisotropic.txt
- * - ARB_transform_feedback_overflow_query @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_transform_feedback_overflow_query.txt
+ * @version 4.6
  */
 class GL46 extends GL45
 {
     /**
-     * @var int
      * @since 4.6
+     * @var int
      */
     public const GL_SHADER_BINARY_FORMAT_SPIR_V = 0x9551;
     /**
-     * @var int
      * @since 4.6
+     * @var int
      */
     public const GL_SPIR_V_BINARY = 0x9552;
     /**
-     * @var int
      * @since 4.6
+     * @var int
      */
-    public const GL_PARAMETER_BUFFER = 0x80ee;
+    public const GL_PARAMETER_BUFFER = 0x80EE;
     /**
-     * @var int
      * @since 4.6
+     * @var int
      */
-    public const GL_PARAMETER_BUFFER_BINDING = 0x80ef;
+    public const GL_PARAMETER_BUFFER_BINDING = 0x80EF;
     /**
-     * @var int
      * @since 4.6
+     * @var int
      */
     public const GL_CONTEXT_FLAG_NO_ERROR_BIT = 0x0008;
     /**
-     * @var int
      * @since 4.6
+     * @var int
      */
-    public const GL_VERTICES_SUBMITTED = 0x82ee;
+    public const GL_VERTICES_SUBMITTED = 0x82EE;
     /**
-     * @var int
      * @since 4.6
+     * @var int
      */
-    public const GL_PRIMITIVES_SUBMITTED = 0x82ef;
+    public const GL_PRIMITIVES_SUBMITTED = 0x82EF;
     /**
-     * @var int
      * @since 4.6
+     * @var int
      */
-    public const GL_VERTEX_SHADER_INVOCATIONS = 0x82f0;
+    public const GL_VERTEX_SHADER_INVOCATIONS = 0x82F0;
     /**
-     * @var int
      * @since 4.6
+     * @var int
      */
-    public const GL_TESS_CONTROL_SHADER_PATCHES = 0x82f1;
+    public const GL_TESS_CONTROL_SHADER_PATCHES = 0x82F1;
     /**
-     * @var int
      * @since 4.6
+     * @var int
      */
-    public const GL_TESS_EVALUATION_SHADER_INVOCATIONS = 0x82f2;
+    public const GL_TESS_EVALUATION_SHADER_INVOCATIONS = 0x82F2;
     /**
-     * @var int
      * @since 4.6
+     * @var int
      */
-    public const GL_GEOMETRY_SHADER_PRIMITIVES_EMITTED = 0x82f3;
+    public const GL_GEOMETRY_SHADER_PRIMITIVES_EMITTED = 0x82F3;
     /**
-     * @var int
      * @since 4.6
+     * @var int
      */
-    public const GL_FRAGMENT_SHADER_INVOCATIONS = 0x82f4;
+    public const GL_FRAGMENT_SHADER_INVOCATIONS = 0x82F4;
     /**
-     * @var int
      * @since 4.6
+     * @var int
      */
-    public const GL_COMPUTE_SHADER_INVOCATIONS = 0x82f5;
+    public const GL_COMPUTE_SHADER_INVOCATIONS = 0x82F5;
     /**
-     * @var int
      * @since 4.6
+     * @var int
      */
-    public const GL_CLIPPING_INPUT_PRIMITIVES = 0x82f6;
+    public const GL_CLIPPING_INPUT_PRIMITIVES = 0x82F6;
     /**
-     * @var int
      * @since 4.6
+     * @var int
      */
-    public const GL_CLIPPING_OUTPUT_PRIMITIVES = 0x82f7;
+    public const GL_CLIPPING_OUTPUT_PRIMITIVES = 0x82F7;
     /**
-     * @var int
      * @since 4.6
+     * @var int
      */
-    public const GL_POLYGON_OFFSET_CLAMP = 0x8e1b;
+    public const GL_POLYGON_OFFSET_CLAMP = 0x8E1B;
     /**
-     * @var int
      * @since 4.6
+     * @var int
      */
     public const GL_SPIR_V_EXTENSIONS = 0x9553;
     /**
-     * @var int
      * @since 4.6
+     * @var int
      */
     public const GL_NUM_SPIR_V_EXTENSIONS = 0x9554;
     /**
+     * @since 4.6
      * @var int
-     * @since 4.6
      */
-    public const GL_TEXTURE_MAX_ANISOTROPY = 0x84fe;
+    public const GL_TEXTURE_MAX_ANISOTROPY = 0x84FE;
     /**
+     * @since 4.6
      * @var int
-     * @since 4.6
      */
-    public const GL_MAX_TEXTURE_MAX_ANISOTROPY = 0x84ff;
+    public const GL_MAX_TEXTURE_MAX_ANISOTROPY = 0x84FF;
     /**
+     * @since 4.6
      * @var int
-     * @since 4.6
      */
-    public const GL_TRANSFORM_FEEDBACK_OVERFLOW = 0x82ec;
+    public const GL_TRANSFORM_FEEDBACK_OVERFLOW = 0x82EC;
     /**
+     * @since 4.6
      * @var int
-     * @since 4.6
      */
-    public const GL_TRANSFORM_FEEDBACK_STREAM_OVERFLOW = 0x82ed;
-
-    /**
-     * {@see GL46::glDeleteShader} frees the memory and invalidates the name associated with the shader object
-     * specified by $shader. This command effectively undoes the effects of a call to {@see GL46::glCreateShader}.
-     *
-     * If a shader object to be deleted is attached to a program object, it will be flagged for deletion, but it will
-     * not be deleted until it is no longer attached to any program object, for any rendering context (i.e., it must
-     * be detached from wherever it was attached before it will be deleted). A value of 0 for $shader will be
-     * silently ignored.
-     *
-     * To determine whether an object has been flagged for deletion, call {@see GL46::glGetShader} with arguments
-     * $shader and {@see GL46::GL_DELETE_STATUS}.
-     *
-     * @see http://docs.gl/gl2/glCompileShader
-     * @see http://docs.gl/gl2/glCreateShader
-     * @see http://docs.gl/gl2/glDeleteShader
-     * @see http://docs.gl/gl4/glCompileShader
-     * @see http://docs.gl/gl4/glCreateShader
-     * @see http://docs.gl/gl4/glDeleteShader
-     * @since 4.6
-     * @param int|\FFI\CData|\FFI\CInt $shader
-     * @param \FFI\CData|\FFI\CIntPtr|null $pEntryPoint
-     * @param int|\FFI\CData|\FFI\CInt $numSpecializationConstants
-     * @param \FFI\CData|\FFI\CIntPtr|null $pConstantIndex
-     * @param \FFI\CData|\FFI\CIntPtr|null $pConstantValue
-     * @return void
-     */
-    public function specializeShader($shader, ?\FFI\CData $pEntryPoint, $numSpecializationConstants, ?\FFI\CData $pConstantIndex, ?\FFI\CData $pConstantValue): void
-    {
-        $shader = $shader instanceof \FFI\CData ? $shader->cdata : $shader;
-        $numSpecializationConstants = $numSpecializationConstants instanceof \FFI\CData ? $numSpecializationConstants->cdata : $numSpecializationConstants;
-
-        assert(Type::isUint16($shader), 'Argument $shader must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isUint16($numSpecializationConstants), 'Argument $numSpecializationConstants must be a C-like GLuint, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glSpecializeShader', 'void (*)(GLuint shader, const GLchar *pEntryPoint, GLuint numSpecializationConstants, const GLuint *pConstantIndex, const GLuint *pConstantValue)');
-        $proc($shader, $pEntryPoint, $numSpecializationConstants, $pConstantIndex, $pConstantValue);
-    }
+    public const GL_TRANSFORM_FEEDBACK_STREAM_OVERFLOW = 0x82ED;
 
     /**
      * {@see GL46::glMultiDrawArraysIndirect} specifies multiple geometric primitives with very few subroutine calls.
@@ -234,26 +178,17 @@ class GL46 extends GL45
      *
      * @see http://docs.gl/gl4/glMultiDrawArraysIndirect
      * @since 4.6
-     * @param int|\FFI\CData|\FFI\CInt $mode
-     * @param \FFI\CData|\FFI\CPtr|null $indirect
-     * @param mixed|float|string|int|\FFI\CData|\FFI\CInt $drawcount
-     * @param int|\FFI\CData|\FFI\CInt $maxdrawcount
-     * @param int|\FFI\CData|\FFI\CInt $stride
+     * @param int $mode
+     * @param \FFI\CData|null $indirect
+     * @param int $drawcount
+     * @param int $maxdrawcount
+     * @param int $stride
      * @return void
      */
-    public function multiDrawArraysIndirectCount($mode, ?\FFI\CData $indirect, $drawcount, $maxdrawcount, $stride): void
+    public function multiDrawArraysIndirectCount(int $mode, ?\FFI\CData $indirect, int $drawcount, int $maxdrawcount, int $stride): void
     {
-        $mode = $mode instanceof \FFI\CData ? $mode->cdata : $mode;
-        $maxdrawcount = $maxdrawcount instanceof \FFI\CData ? $maxdrawcount->cdata : $maxdrawcount;
-        $stride = $stride instanceof \FFI\CData ? $stride->cdata : $stride;
-
-        assert(Type::isUint16($mode), 'Argument $mode must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isInt64($drawcount), 'Argument $drawcount must be a C-like GLintptr, but incompatible or overflow value given');
-        assert(Type::isInt16($maxdrawcount), 'Argument $maxdrawcount must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Type::isInt16($stride), 'Argument $stride must be a C-like GLsizei, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glMultiDrawArraysIndirectCount', 'void (*)(GLenum mode, const void *indirect, GLintptr drawcount, GLsizei maxdrawcount, GLsizei stride)');
-        $proc($mode, $indirect, $drawcount, $maxdrawcount, $stride);
+        $__proc = $this->getProcAs('glMultiDrawArraysIndirectCount', 'void (*)(GLenum mode, const void *indirect, GLintptr drawcount, GLsizei maxdrawcount, GLsizei stride)');
+        $__proc($mode, $indirect, $drawcount, $maxdrawcount, $stride);
     }
 
     /**
@@ -313,29 +248,18 @@ class GL46 extends GL45
      *
      * @see http://docs.gl/gl4/glMultiDrawElementsIndirect
      * @since 4.6
-     * @param int|\FFI\CData|\FFI\CInt $mode
-     * @param int|\FFI\CData|\FFI\CInt $type
-     * @param \FFI\CData|\FFI\CPtr|null $indirect
-     * @param mixed|float|string|int|\FFI\CData|\FFI\CInt $drawcount
-     * @param int|\FFI\CData|\FFI\CInt $maxdrawcount
-     * @param int|\FFI\CData|\FFI\CInt $stride
+     * @param int $mode
+     * @param int $type
+     * @param \FFI\CData|null $indirect
+     * @param int $drawcount
+     * @param int $maxdrawcount
+     * @param int $stride
      * @return void
      */
-    public function multiDrawElementsIndirectCount($mode, $type, ?\FFI\CData $indirect, $drawcount, $maxdrawcount, $stride): void
+    public function multiDrawElementsIndirectCount(int $mode, int $type, ?\FFI\CData $indirect, int $drawcount, int $maxdrawcount, int $stride): void
     {
-        $mode = $mode instanceof \FFI\CData ? $mode->cdata : $mode;
-        $type = $type instanceof \FFI\CData ? $type->cdata : $type;
-        $maxdrawcount = $maxdrawcount instanceof \FFI\CData ? $maxdrawcount->cdata : $maxdrawcount;
-        $stride = $stride instanceof \FFI\CData ? $stride->cdata : $stride;
-
-        assert(Type::isUint16($mode), 'Argument $mode must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isInt64($drawcount), 'Argument $drawcount must be a C-like GLintptr, but incompatible or overflow value given');
-        assert(Type::isInt16($maxdrawcount), 'Argument $maxdrawcount must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Type::isInt16($stride), 'Argument $stride must be a C-like GLsizei, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glMultiDrawElementsIndirectCount', 'void (*)(GLenum mode, GLenum type, const void *indirect, GLintptr drawcount, GLsizei maxdrawcount, GLsizei stride)');
-        $proc($mode, $type, $indirect, $drawcount, $maxdrawcount, $stride);
+        $__proc = $this->getProcAs('glMultiDrawElementsIndirectCount', 'void (*)(GLenum mode, GLenum type, const void *indirect, GLintptr drawcount, GLsizei maxdrawcount, GLsizei stride)');
+        $__proc($mode, $type, $indirect, $drawcount, $maxdrawcount, $stride);
     }
 
     /**
@@ -353,22 +277,51 @@ class GL46 extends GL45
      * @see http://docs.gl/gl2/glPolygonOffset
      * @see http://docs.gl/gl4/glPolygonOffset
      * @since 4.6
-     * @param float|\FFI\CData|\FFI\CFloat $factor
-     * @param float|\FFI\CData|\FFI\CFloat $units
-     * @param float|\FFI\CData|\FFI\CFloat $clamp
+     * @param float $factor
+     * @param float $units
+     * @param float $clamp
      * @return void
      */
-    public function polygonOffsetClamp($factor, $units, $clamp): void
+    public function polygonOffsetClamp(float $factor, float $units, float $clamp): void
     {
-        $factor = $factor instanceof \FFI\CData ? $factor->cdata : $factor;
-        $units = $units instanceof \FFI\CData ? $units->cdata : $units;
-        $clamp = $clamp instanceof \FFI\CData ? $clamp->cdata : $clamp;
+        $__proc = $this->getProcAs('glPolygonOffsetClamp', 'void (*)(GLfloat factor, GLfloat units, GLfloat clamp)');
+        $__proc($factor, $units, $clamp);
+    }
 
-        assert(Type::isFloat32($factor), 'Argument $factor must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Type::isFloat32($units), 'Argument $units must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Type::isFloat32($clamp), 'Argument $clamp must be a C-like GLfloat, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glPolygonOffsetClamp', 'void (*)(GLfloat factor, GLfloat units, GLfloat clamp)');
-        $proc($factor, $units, $clamp);
+    /**
+     * {@see GL46::glDeleteShader} frees the memory and invalidates the name associated with the shader object
+     * specified by $shader. This command effectively undoes the effects of a call to {@see GL46::glCreateShader}.
+     *
+     * If a shader object to be deleted is attached to a program object, it will be flagged for deletion, but it will
+     * not be deleted until it is no longer attached to any program object, for any rendering context (i.e., it must
+     * be detached from wherever it was attached before it will be deleted). A value of 0 for $shader will be
+     * silently ignored.
+     *
+     * To determine whether an object has been flagged for deletion, call {@see GL46::glGetShader} with arguments
+     * $shader and {@see GL46::GL_DELETE_STATUS}.
+     *
+     * @see http://docs.gl/gl2/glCompileShader
+     * @see http://docs.gl/gl2/glCreateShader
+     * @see http://docs.gl/gl2/glDeleteShader
+     * @see http://docs.gl/gl4/glCompileShader
+     * @see http://docs.gl/gl4/glCreateShader
+     * @see http://docs.gl/gl4/glDeleteShader
+     * @since 4.6
+     * @param int $shader
+     * @param \FFI\CData|null $pEntryPoint
+     * @param int $numSpecializationConstants
+     * @param \FFI\CData|null $pConstantIndex
+     * @param \FFI\CData|null $pConstantValue
+     * @return void
+     */
+    public function specializeShader(
+        int $shader,
+        ?\FFI\CData $pEntryPoint,
+        int $numSpecializationConstants,
+        ?\FFI\CData $pConstantIndex,
+        ?\FFI\CData $pConstantValue
+    ): void {
+        $__proc = $this->getProcAs('glSpecializeShader', 'void (*)(GLuint shader, const GLchar *pEntryPoint, GLuint numSpecializationConstants, const GLuint *pConstantIndex, const GLuint *pConstantValue)');
+        $__proc($shader, $pEntryPoint, $numSpecializationConstants, $pConstantIndex, $pConstantValue);
     }
 }

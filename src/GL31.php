@@ -13,524 +13,316 @@ declare(strict_types=1);
 
 namespace Serafim\OpenGL;
 
-use Serafim\OpenGL\Type\Type;
-
 /**
- * The OpenGL functionality up to version 3.1. Includes the deprecated symbols of the Compatibility Profile.
- *
- * OpenGL 3.1 implementations support revision 1.40 of the OpenGL Shading Language.
- *
- * Extensions promoted to core in this release:
- *
- * - ARB_draw_instanced @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_draw_instanced.txt
- * - ARB_copy_buffer @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_copy_buffer.txt
- * - NV_primitive_restart @see https://www.khronos.org/registry/OpenGL/extensions/NV/NV_primitive_restart.txt
- * - ARB_texture_buffer_object @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_texture_buffer_object.txt
- * - ARB_texture_rectangle @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_texture_rectangle.txt
- * - ARB_uniform_buffer_object @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_uniform_buffer_object.txt
+ * @version 3.1
  */
 class GL31 extends GL30
 {
     /**
+     * @since 3.1
      * @var int
-     * @since 3.1
      */
-    public const GL_SAMPLER_2D_RECT = 0x8b63;
+    public const GL_SAMPLER_2D_RECT = 0x8B63;
     /**
+     * @since 3.1
      * @var int
-     * @since 3.1
      */
-    public const GL_SAMPLER_2D_RECT_SHADOW = 0x8b64;
+    public const GL_SAMPLER_2D_RECT_SHADOW = 0x8B64;
     /**
+     * @since 3.1
      * @var int
-     * @since 3.1
      */
-    public const GL_SAMPLER_BUFFER = 0x8dc2;
+    public const GL_SAMPLER_BUFFER = 0x8DC2;
     /**
+     * @since 3.1
      * @var int
-     * @since 3.1
      */
-    public const GL_INT_SAMPLER_2D_RECT = 0x8dcd;
+    public const GL_INT_SAMPLER_2D_RECT = 0x8DCD;
     /**
+     * @since 3.1
      * @var int
-     * @since 3.1
      */
-    public const GL_INT_SAMPLER_BUFFER = 0x8dd0;
+    public const GL_INT_SAMPLER_BUFFER = 0x8DD0;
     /**
+     * @since 3.1
      * @var int
-     * @since 3.1
      */
-    public const GL_UNSIGNED_INT_SAMPLER_2D_RECT = 0x8dd5;
+    public const GL_UNSIGNED_INT_SAMPLER_2D_RECT = 0x8DD5;
     /**
+     * @since 3.1
      * @var int
-     * @since 3.1
      */
-    public const GL_UNSIGNED_INT_SAMPLER_BUFFER = 0x8dd8;
+    public const GL_UNSIGNED_INT_SAMPLER_BUFFER = 0x8DD8;
     /**
+     * @since 3.1
      * @var int
-     * @since 3.1
      */
-    public const GL_TEXTURE_BUFFER = 0x8c2a;
+    public const GL_TEXTURE_BUFFER = 0x8C2A;
     /**
+     * @since 3.1
      * @var int
-     * @since 3.1
      */
-    public const GL_MAX_TEXTURE_BUFFER_SIZE = 0x8c2b;
+    public const GL_MAX_TEXTURE_BUFFER_SIZE = 0x8C2B;
     /**
+     * @since 3.1
      * @var int
-     * @since 3.1
      */
-    public const GL_TEXTURE_BINDING_BUFFER = 0x8c2c;
+    public const GL_TEXTURE_BINDING_BUFFER = 0x8C2C;
     /**
+     * @since 3.1
      * @var int
-     * @since 3.1
      */
-    public const GL_TEXTURE_BUFFER_DATA_STORE_BINDING = 0x8c2d;
+    public const GL_TEXTURE_BUFFER_DATA_STORE_BINDING = 0x8C2D;
     /**
+     * @since 3.1
      * @var int
-     * @since 3.1
      */
-    public const GL_TEXTURE_RECTANGLE = 0x84f5;
+    public const GL_TEXTURE_RECTANGLE = 0x84F5;
     /**
+     * @since 3.1
      * @var int
-     * @since 3.1
      */
-    public const GL_TEXTURE_BINDING_RECTANGLE = 0x84f6;
+    public const GL_TEXTURE_BINDING_RECTANGLE = 0x84F6;
     /**
+     * @since 3.1
      * @var int
-     * @since 3.1
      */
-    public const GL_PROXY_TEXTURE_RECTANGLE = 0x84f7;
+    public const GL_PROXY_TEXTURE_RECTANGLE = 0x84F7;
     /**
+     * @since 3.1
      * @var int
-     * @since 3.1
      */
-    public const GL_MAX_RECTANGLE_TEXTURE_SIZE = 0x84f8;
+    public const GL_MAX_RECTANGLE_TEXTURE_SIZE = 0x84F8;
     /**
+     * @since 3.1
      * @var int
-     * @since 3.1
      */
-    public const GL_R8_SNORM = 0x8f94;
+    public const GL_R8_SNORM = 0x8F94;
     /**
+     * @since 3.1
      * @var int
-     * @since 3.1
      */
-    public const GL_RG8_SNORM = 0x8f95;
+    public const GL_RG8_SNORM = 0x8F95;
     /**
+     * @since 3.1
      * @var int
-     * @since 3.1
      */
-    public const GL_RGB8_SNORM = 0x8f96;
+    public const GL_RGB8_SNORM = 0x8F96;
     /**
+     * @since 3.1
      * @var int
-     * @since 3.1
      */
-    public const GL_RGBA8_SNORM = 0x8f97;
+    public const GL_RGBA8_SNORM = 0x8F97;
     /**
+     * @since 3.1
      * @var int
-     * @since 3.1
      */
-    public const GL_R16_SNORM = 0x8f98;
+    public const GL_R16_SNORM = 0x8F98;
     /**
+     * @since 3.1
      * @var int
-     * @since 3.1
      */
-    public const GL_RG16_SNORM = 0x8f99;
+    public const GL_RG16_SNORM = 0x8F99;
     /**
+     * @since 3.1
      * @var int
-     * @since 3.1
      */
-    public const GL_RGB16_SNORM = 0x8f9a;
+    public const GL_RGB16_SNORM = 0x8F9A;
     /**
+     * @since 3.1
      * @var int
-     * @since 3.1
      */
-    public const GL_RGBA16_SNORM = 0x8f9b;
+    public const GL_RGBA16_SNORM = 0x8F9B;
     /**
+     * @since 3.1
      * @var int
-     * @since 3.1
      */
-    public const GL_SIGNED_NORMALIZED = 0x8f9c;
+    public const GL_SIGNED_NORMALIZED = 0x8F9C;
     /**
+     * @since 3.1
      * @var int
-     * @since 3.1
      */
-    public const GL_PRIMITIVE_RESTART = 0x8f9d;
+    public const GL_PRIMITIVE_RESTART = 0x8F9D;
     /**
+     * @since 3.1
      * @var int
-     * @since 3.1
      */
-    public const GL_PRIMITIVE_RESTART_INDEX = 0x8f9e;
+    public const GL_PRIMITIVE_RESTART_INDEX = 0x8F9E;
     /**
+     * @since 3.1
      * @var int
-     * @since 3.1
      */
-    public const GL_COPY_READ_BUFFER = 0x8f36;
+    public const GL_COPY_READ_BUFFER = 0x8F36;
     /**
+     * @since 3.1
      * @var int
-     * @since 3.1
      */
-    public const GL_COPY_WRITE_BUFFER = 0x8f37;
+    public const GL_COPY_WRITE_BUFFER = 0x8F37;
     /**
+     * @since 3.1
      * @var int
-     * @since 3.1
      */
-    public const GL_UNIFORM_BUFFER = 0x8a11;
+    public const GL_UNIFORM_BUFFER = 0x8A11;
     /**
+     * @since 3.1
      * @var int
-     * @since 3.1
      */
-    public const GL_UNIFORM_BUFFER_BINDING = 0x8a28;
+    public const GL_UNIFORM_BUFFER_BINDING = 0x8A28;
     /**
+     * @since 3.1
      * @var int
-     * @since 3.1
      */
-    public const GL_UNIFORM_BUFFER_START = 0x8a29;
+    public const GL_UNIFORM_BUFFER_START = 0x8A29;
     /**
+     * @since 3.1
      * @var int
-     * @since 3.1
      */
-    public const GL_UNIFORM_BUFFER_SIZE = 0x8a2a;
+    public const GL_UNIFORM_BUFFER_SIZE = 0x8A2A;
     /**
+     * @since 3.1
      * @var int
-     * @since 3.1
      */
-    public const GL_MAX_VERTEX_UNIFORM_BLOCKS = 0x8a2b;
+    public const GL_MAX_VERTEX_UNIFORM_BLOCKS = 0x8A2B;
     /**
+     * @since 3.1
      * @var int
-     * @since 3.1
      */
-    public const GL_MAX_GEOMETRY_UNIFORM_BLOCKS = 0x8a2c;
+    public const GL_MAX_GEOMETRY_UNIFORM_BLOCKS = 0x8A2C;
     /**
+     * @since 3.1
      * @var int
-     * @since 3.1
      */
-    public const GL_MAX_FRAGMENT_UNIFORM_BLOCKS = 0x8a2d;
+    public const GL_MAX_FRAGMENT_UNIFORM_BLOCKS = 0x8A2D;
     /**
+     * @since 3.1
      * @var int
-     * @since 3.1
      */
-    public const GL_MAX_COMBINED_UNIFORM_BLOCKS = 0x8a2e;
+    public const GL_MAX_COMBINED_UNIFORM_BLOCKS = 0x8A2E;
     /**
+     * @since 3.1
      * @var int
-     * @since 3.1
      */
-    public const GL_MAX_UNIFORM_BUFFER_BINDINGS = 0x8a2f;
+    public const GL_MAX_UNIFORM_BUFFER_BINDINGS = 0x8A2F;
     /**
+     * @since 3.1
      * @var int
-     * @since 3.1
      */
-    public const GL_MAX_UNIFORM_BLOCK_SIZE = 0x8a30;
+    public const GL_MAX_UNIFORM_BLOCK_SIZE = 0x8A30;
     /**
+     * @since 3.1
      * @var int
-     * @since 3.1
      */
-    public const GL_MAX_COMBINED_VERTEX_UNIFORM_COMPONENTS = 0x8a31;
+    public const GL_MAX_COMBINED_VERTEX_UNIFORM_COMPONENTS = 0x8A31;
     /**
+     * @since 3.1
      * @var int
-     * @since 3.1
      */
-    public const GL_MAX_COMBINED_GEOMETRY_UNIFORM_COMPONENTS = 0x8a32;
+    public const GL_MAX_COMBINED_GEOMETRY_UNIFORM_COMPONENTS = 0x8A32;
     /**
+     * @since 3.1
      * @var int
-     * @since 3.1
      */
-    public const GL_MAX_COMBINED_FRAGMENT_UNIFORM_COMPONENTS = 0x8a33;
+    public const GL_MAX_COMBINED_FRAGMENT_UNIFORM_COMPONENTS = 0x8A33;
     /**
+     * @since 3.1
      * @var int
-     * @since 3.1
      */
-    public const GL_UNIFORM_BUFFER_OFFSET_ALIGNMENT = 0x8a34;
+    public const GL_UNIFORM_BUFFER_OFFSET_ALIGNMENT = 0x8A34;
     /**
+     * @since 3.1
      * @var int
-     * @since 3.1
      */
-    public const GL_ACTIVE_UNIFORM_BLOCK_MAX_NAME_LENGTH = 0x8a35;
+    public const GL_ACTIVE_UNIFORM_BLOCK_MAX_NAME_LENGTH = 0x8A35;
     /**
+     * @since 3.1
      * @var int
-     * @since 3.1
      */
-    public const GL_ACTIVE_UNIFORM_BLOCKS = 0x8a36;
+    public const GL_ACTIVE_UNIFORM_BLOCKS = 0x8A36;
     /**
+     * @since 3.1
      * @var int
-     * @since 3.1
      */
-    public const GL_UNIFORM_TYPE = 0x8a37;
+    public const GL_UNIFORM_TYPE = 0x8A37;
     /**
+     * @since 3.1
      * @var int
-     * @since 3.1
      */
-    public const GL_UNIFORM_SIZE = 0x8a38;
+    public const GL_UNIFORM_SIZE = 0x8A38;
     /**
+     * @since 3.1
      * @var int
-     * @since 3.1
      */
-    public const GL_UNIFORM_NAME_LENGTH = 0x8a39;
+    public const GL_UNIFORM_NAME_LENGTH = 0x8A39;
     /**
+     * @since 3.1
      * @var int
-     * @since 3.1
      */
-    public const GL_UNIFORM_BLOCK_INDEX = 0x8a3a;
+    public const GL_UNIFORM_BLOCK_INDEX = 0x8A3A;
     /**
+     * @since 3.1
      * @var int
-     * @since 3.1
      */
-    public const GL_UNIFORM_OFFSET = 0x8a3b;
+    public const GL_UNIFORM_OFFSET = 0x8A3B;
     /**
+     * @since 3.1
      * @var int
-     * @since 3.1
      */
-    public const GL_UNIFORM_ARRAY_STRIDE = 0x8a3c;
+    public const GL_UNIFORM_ARRAY_STRIDE = 0x8A3C;
     /**
+     * @since 3.1
      * @var int
-     * @since 3.1
      */
-    public const GL_UNIFORM_MATRIX_STRIDE = 0x8a3d;
+    public const GL_UNIFORM_MATRIX_STRIDE = 0x8A3D;
     /**
+     * @since 3.1
      * @var int
-     * @since 3.1
      */
-    public const GL_UNIFORM_IS_ROW_MAJOR = 0x8a3e;
+    public const GL_UNIFORM_IS_ROW_MAJOR = 0x8A3E;
     /**
+     * @since 3.1
      * @var int
-     * @since 3.1
      */
-    public const GL_UNIFORM_BLOCK_BINDING = 0x8a3f;
+    public const GL_UNIFORM_BLOCK_BINDING = 0x8A3F;
     /**
+     * @since 3.1
      * @var int
-     * @since 3.1
      */
-    public const GL_UNIFORM_BLOCK_DATA_SIZE = 0x8a40;
+    public const GL_UNIFORM_BLOCK_DATA_SIZE = 0x8A40;
     /**
+     * @since 3.1
      * @var int
-     * @since 3.1
      */
-    public const GL_UNIFORM_BLOCK_NAME_LENGTH = 0x8a41;
+    public const GL_UNIFORM_BLOCK_NAME_LENGTH = 0x8A41;
     /**
+     * @since 3.1
      * @var int
-     * @since 3.1
      */
-    public const GL_UNIFORM_BLOCK_ACTIVE_UNIFORMS = 0x8a42;
+    public const GL_UNIFORM_BLOCK_ACTIVE_UNIFORMS = 0x8A42;
     /**
+     * @since 3.1
      * @var int
-     * @since 3.1
      */
-    public const GL_UNIFORM_BLOCK_ACTIVE_UNIFORM_INDICES = 0x8a43;
+    public const GL_UNIFORM_BLOCK_ACTIVE_UNIFORM_INDICES = 0x8A43;
     /**
+     * @since 3.1
      * @var int
-     * @since 3.1
      */
-    public const GL_UNIFORM_BLOCK_REFERENCED_BY_VERTEX_SHADER = 0x8a44;
+    public const GL_UNIFORM_BLOCK_REFERENCED_BY_VERTEX_SHADER = 0x8A44;
     /**
+     * @since 3.1
      * @var int
-     * @since 3.1
      */
-    public const GL_UNIFORM_BLOCK_REFERENCED_BY_GEOMETRY_SHADER = 0x8a45;
+    public const GL_UNIFORM_BLOCK_REFERENCED_BY_GEOMETRY_SHADER = 0x8A45;
     /**
+     * @since 3.1
      * @var int
-     * @since 3.1
      */
-    public const GL_UNIFORM_BLOCK_REFERENCED_BY_FRAGMENT_SHADER = 0x8a46;
+    public const GL_UNIFORM_BLOCK_REFERENCED_BY_FRAGMENT_SHADER = 0x8A46;
     /**
+     * @since 3.1
      * @var int
-     * @since 3.1
      */
-    public const GL_INVALID_INDEX = 0xffffffff;
-
-    /**
-     * {@see GL46::glDrawArraysInstanced} behaves identically to {@see GL46::glDrawArrays} except that $instancecount
-     * instances of the range of elements are executed and the value of the internal counter $instanceID advances for
-     * each iteration. $instanceID is an internal 32-bit integer counter that may be read by a vertex shader as
-     * {@see GL46::gl_InstanceID}.
-     *
-     * {@see GL46::glDrawArraysInstanced} has the same effect as:
-     *
-     * <code>
-     *     if ( mode or count is invalid )
-     *         generate appropriate error
-     *     else {
-     *         for (int i = 0; i < instancecount ; i++) {
-     *             instanceID = i;
-     *             glDrawArrays(mode, first, count);
-     *         }
-     *         instanceID = 0;
-     *     }
-     * </code>
-     *
-     * @see http://docs.gl/gl4/glDrawArraysInstanced
-     * @since 3.1
-     * @param int|\FFI\CData|\FFI\CInt $mode
-     * @param int|\FFI\CData|\FFI\CInt $first
-     * @param int|\FFI\CData|\FFI\CInt $count
-     * @param int|\FFI\CData|\FFI\CInt $instancecount
-     * @return void
-     */
-    public function drawArraysInstanced($mode, $first, $count, $instancecount): void
-    {
-        $mode = $mode instanceof \FFI\CData ? $mode->cdata : $mode;
-        $first = $first instanceof \FFI\CData ? $first->cdata : $first;
-        $count = $count instanceof \FFI\CData ? $count->cdata : $count;
-        $instancecount = $instancecount instanceof \FFI\CData ? $instancecount->cdata : $instancecount;
-
-        assert(Type::isUint16($mode), 'Argument $mode must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isInt16($first), 'Argument $first must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Type::isInt16($instancecount), 'Argument $instancecount must be a C-like GLsizei, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glDrawArraysInstanced', 'void (*)(GLenum mode, GLint first, GLsizei count, GLsizei instancecount)');
-        $proc($mode, $first, $count, $instancecount);
-    }
-
-    /**
-     * {@see GL46::glDrawElementsInstanced} behaves identically to {@see GL46::glDrawElements} except that
-     * $instancecount instances of the set of elements are executed and the value of the internal counter $instanceID
-     * advances for each iteration. $instanceID is an internal 32-bit integer counter that may be read by a vertex
-     * shader as {@see GL46::gl_InstanceID}.
-     *
-     * {@see GL46::glDrawElementsInstanced} has the same effect as:
-     *
-     * <code>
-     *     if (mode, count, or type is invalid )
-     *         generate appropriate error
-     *     else {
-     *         for (int i = 0; i < instancecount ; i++) {
-     *             instanceID = i;
-     *             glDrawElements(mode, count, type, indices);
-     *         }
-     *         instanceID = 0;
-     *     }
-     * </code>
-     *
-     * @see http://docs.gl/gl4/glDrawElementsInstanced
-     * @since 3.1
-     * @param int|\FFI\CData|\FFI\CInt $mode
-     * @param int|\FFI\CData|\FFI\CInt $count
-     * @param int|\FFI\CData|\FFI\CInt $type
-     * @param \FFI\CData|\FFI\CPtr|null $indices
-     * @param int|\FFI\CData|\FFI\CInt $instancecount
-     * @return void
-     */
-    public function drawElementsInstanced($mode, $count, $type, ?\FFI\CData $indices, $instancecount): void
-    {
-        $mode = $mode instanceof \FFI\CData ? $mode->cdata : $mode;
-        $count = $count instanceof \FFI\CData ? $count->cdata : $count;
-        $type = $type instanceof \FFI\CData ? $type->cdata : $type;
-        $instancecount = $instancecount instanceof \FFI\CData ? $instancecount->cdata : $instancecount;
-
-        assert(Type::isUint16($mode), 'Argument $mode must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isInt16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Type::isUint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isInt16($instancecount), 'Argument $instancecount must be a C-like GLsizei, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glDrawElementsInstanced', 'void (*)(GLenum mode, GLsizei count, GLenum type, const void *indices, GLsizei instancecount)');
-        $proc($mode, $count, $type, $indices, $instancecount);
-    }
-
-    /**
-     * {@see GL46::glTexBuffer} and {@see GL46::glTextureBuffer} attaches the data store of a specified buffer object
-     * to a specified texture object, and specify the storage format for the texture image found in the buffer
-     * object. The texture object must be a buffer texture.
-     *
-     * If $buffer is zero, any buffer object attached to the buffer texture is detached and no new buffer object is
-     * attached. If $buffer is non-zero, it must be the name of an existing buffer object.
-     *
-     * $internalformat specifies the storage format, and must be one of the following sized internal formats:
-     *
-     * $internalformat specifies the storage format, and must be one of the following sized internal formats:
-     *
-     * | {@see GL46::GL_R8}       | ubyte  | 1 | YES | R | 0 | 0 | 1 |
-     * | {@see GL46::GL_R16}      | ushort | 1 | YES | R | 0 | 0 | 1 |
-     * | {@see GL46::GL_R16F}     | half   | 1 | NO  | R | 0 | 0 | 1 |
-     * | {@see GL46::GL_R32F}     | float  | 1 | NO  | R | 0 | 0 | 1 |
-     * | {@see GL46::GL_R8I}      | byte   | 1 | NO  | R | 0 | 0 | 1 |
-     * | {@see GL46::GL_R16I}     | short  | 1 | NO  | R | 0 | 0 | 1 |
-     * | {@see GL46::GL_R32I}     | int    | 1 | NO  | R | 0 | 0 | 1 |
-     * | {@see GL46::GL_R8UI}     | ubyte  | 1 | NO  | R | 0 | 0 | 1 |
-     * | {@see GL46::GL_R16UI}    | ushort | 1 | NO  | R | 0 | 0 | 1 |
-     * | {@see GL46::GL_R32UI}    | uint   | 1 | NO  | R | 0 | 0 | 1 |
-     * | {@see GL46::GL_RG8}      | ubyte  | 2 | YES | R | G | 0 | 1 |
-     * | {@see GL46::GL_RG16}     | ushort | 2 | YES | R | G | 0 | 1 |
-     * | {@see GL46::GL_RG16F}    | half   | 2 | NO  | R | G | 0 | 1 |
-     * | {@see GL46::GL_RG32F}    | float  | 2 | NO  | R | G | 0 | 1 |
-     * | {@see GL46::GL_RG8I}     | byte   | 2 | NO  | R | G | 0 | 1 |
-     * | {@see GL46::GL_RG16I}    | short  | 2 | NO  | R | G | 0 | 1 |
-     * | {@see GL46::GL_RG32I}    | int    | 2 | NO  | R | G | 0 | 1 |
-     * | {@see GL46::GL_RG8UI}    | ubyte  | 2 | NO  | R | G | 0 | 1 |
-     * | {@see GL46::GL_RG16UI}   | ushort | 2 | NO  | R | G | 0 | 1 |
-     * | {@see GL46::GL_RG32UI}   | uint   | 2 | NO  | R | G | 0 | 1 |
-     * | {@see GL46::GL_RGB32F}   | float  | 3 | NO  | R | G | B | 1 |
-     * | {@see GL46::GL_RGB32I}   | int    | 3 | NO  | R | G | B | 1 |
-     * | {@see GL46::GL_RGB32UI}  | uint   | 3 | NO  | R | G | B | 1 |
-     * | {@see GL46::GL_RGBA8}    | uint   | 4 | YES | R | G | B | A |
-     * | {@see GL46::GL_RGBA16}   | short  | 4 | YES | R | G | B | A |
-     * | {@see GL46::GL_RGBA16F}  | half   | 4 | NO  | R | G | B | A |
-     * | {@see GL46::GL_RGBA32F}  | float  | 4 | NO  | R | G | B | A |
-     * | {@see GL46::GL_RGBA8I}   | byte   | 4 | NO  | R | G | B | A |
-     * | {@see GL46::GL_RGBA16I}  | short  | 4 | NO  | R | G | B | A |
-     * | {@see GL46::GL_RGBA32I}  | int    | 4 | NO  | R | G | B | A |
-     * | {@see GL46::GL_RGBA8UI}  | ubyte  | 4 | NO  | R | G | B | A |
-     * | {@see GL46::GL_RGBA16UI} | ushort | 4 | NO  | R | G | B | A |
-     * | {@see GL46::GL_RGBA32UI} | uint   | 4 | NO  | R | G | B | A |
-     *
-     * When a buffer object is attached to a buffer texture, the buffer object's data store is taken as the texture's
-     * texel array. The number of texels in the buffer texture's texel array is given by $$ \\left\\lfloor { size
-     * \\over { components \\times sizeof(base\\_type) } } \\right\\rfloor $$ where $size$ is the size of the buffer
-     * object in basic machine units (the value of {@see GL46::GL_BUFFER_SIZE} for $buffer), and $components$ and
-     * $base\\_type$ are the element count and base data type for elements, as specified in the table above. The
-     * number of texels in the texel array is then clamped to the value of the implementation-dependent limit
-     * {@see GL46::GL_MAX_TEXTURE_BUFFER_SIZE}. When a buffer texture is accessed in a shader, the results of a texel
-     * fetch are undefined if the specified texel coordinate is negative, or greater than or equal to the clamped
-     * number of texels in the texel array.
-     *
-     * @see http://docs.gl/gl4/glTexBuffer
-     * @since 3.1
-     * @param int|\FFI\CData|\FFI\CInt $target
-     * @param int|\FFI\CData|\FFI\CInt $internalformat
-     * @param int|\FFI\CData|\FFI\CInt $buffer
-     * @return void
-     */
-    public function texBuffer($target, $internalformat, $buffer): void
-    {
-        $target = $target instanceof \FFI\CData ? $target->cdata : $target;
-        $internalformat = $internalformat instanceof \FFI\CData ? $internalformat->cdata : $internalformat;
-        $buffer = $buffer instanceof \FFI\CData ? $buffer->cdata : $buffer;
-
-        assert(Type::isUint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($internalformat), 'Argument $internalformat must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($buffer), 'Argument $buffer must be a C-like GLuint, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glTexBuffer', 'void (*)(GLenum target, GLenum internalformat, GLuint buffer)');
-        $proc($target, $internalformat, $buffer);
-    }
-
-    /**
-     * {@see GL46::glPrimitiveRestartIndex} specifies a vertex array element that is treated specially when primitive
-     * restarting is enabled. This is known as the primitive restart index.
-     *
-     * When one of the {@see GL46::Draw*} commands transfers a set of generic attribute array elements to the GL, if
-     * the index within the vertex arrays corresponding to that set is equal to the primitive restart index, then the
-     * GL does not process those elements as a vertex. Instead, it is as if the drawing command ended with the
-     * immediately preceding transfer, and another drawing command is immediately started with the same parameters,
-     * but only transferring the immediately following element through the end of the originally specified elements.
-     *
-     * When either {@see GL46::glDrawElementsBaseVertex}, {@see GL46::glDrawElementsInstancedBaseVertex} or
-     * {@see GL46::glMultiDrawElementsBaseVertex} is used, the primitive restart comparison occurs before the
-     * basevertex offset is added to the array index.
-     *
-     * @see http://docs.gl/gl4/glPrimitiveRestartIndex
-     * @since 3.1
-     * @param int|\FFI\CData|\FFI\CInt $index
-     * @return void
-     */
-    public function primitiveRestartIndex($index): void
-    {
-        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
-
-        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glPrimitiveRestartIndex', 'void (*)(GLuint index)');
-        $proc($index);
-    }
+    public const GL_INVALID_INDEX = 0xFFFF_FFFF;
 
     /**
      * {@see GL46::glCopyBufferSubData} and {@see GL46::glCopyNamedBufferSubData} copy part of the data store
@@ -568,64 +360,237 @@ class GL31 extends GL30
      *
      * @see http://docs.gl/gl4/glCopyBufferSubData
      * @since 3.1
-     * @param int|\FFI\CData|\FFI\CInt $readTarget
-     * @param int|\FFI\CData|\FFI\CInt $writeTarget
-     * @param mixed|float|string|int|\FFI\CData|\FFI\CInt $readOffset
-     * @param mixed|float|string|int|\FFI\CData|\FFI\CInt $writeOffset
-     * @param mixed|float|string|int|\FFI\CData|\FFI\CInt $size
+     * @param int $readTarget
+     * @param int $writeTarget
+     * @param int $readOffset
+     * @param int $writeOffset
+     * @param int $size
      * @return void
      */
-    public function copyBufferSubData($readTarget, $writeTarget, $readOffset, $writeOffset, $size): void
+    public function copyBufferSubData(int $readTarget, int $writeTarget, int $readOffset, int $writeOffset, int $size): void
     {
-        $readTarget = $readTarget instanceof \FFI\CData ? $readTarget->cdata : $readTarget;
-        $writeTarget = $writeTarget instanceof \FFI\CData ? $writeTarget->cdata : $writeTarget;
-
-        assert(Type::isUint16($readTarget), 'Argument $readTarget must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($writeTarget), 'Argument $writeTarget must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isInt64($readOffset), 'Argument $readOffset must be a C-like GLintptr, but incompatible or overflow value given');
-        assert(Type::isInt64($writeOffset), 'Argument $writeOffset must be a C-like GLintptr, but incompatible or overflow value given');
-        assert(Type::isInt64($size), 'Argument $size must be a C-like GLsizeiptr, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glCopyBufferSubData', 'void (*)(GLenum readTarget, GLenum writeTarget, GLintptr readOffset, GLintptr writeOffset, GLsizeiptr size)');
-        $proc($readTarget, $writeTarget, $readOffset, $writeOffset, $size);
+        $__proc = $this->getProcAs('glCopyBufferSubData', 'void (*)(GLenum readTarget, GLenum writeTarget, GLintptr readOffset, GLintptr writeOffset, GLsizeiptr size)');
+        $__proc($readTarget, $writeTarget, $readOffset, $writeOffset, $size);
     }
 
     /**
-     * {@see GL46::glGetUniformIndices} retrieves the indices of a number of uniforms within $program.
+     * {@see GL46::glDrawArraysInstanced} behaves identically to {@see GL46::glDrawArrays} except that $instancecount
+     * instances of the range of elements are executed and the value of the internal counter $instanceID advances for
+     * each iteration. $instanceID is an internal 32-bit integer counter that may be read by a vertex shader as
+     * {@see GL46::gl_InstanceID}.
+     *
+     * {@see GL46::glDrawArraysInstanced} has the same effect as:
+     *
+     * <code>
+     *     if ( mode or count is invalid )
+     *         generate appropriate error
+     *     else {
+     *         for (int i = 0; i < instancecount ; i++) {
+     *             instanceID = i;
+     *             glDrawArrays(mode, first, count);
+     *         }
+     *         instanceID = 0;
+     *     }
+     * </code>
+     *
+     * @see http://docs.gl/gl4/glDrawArraysInstanced
+     * @since 3.1
+     * @param int $mode
+     * @param int $first
+     * @param int $count
+     * @param int $instancecount
+     * @return void
+     */
+    public function drawArraysInstanced(int $mode, int $first, int $count, int $instancecount): void
+    {
+        $__proc = $this->getProcAs('glDrawArraysInstanced', 'void (*)(GLenum mode, GLint first, GLsizei count, GLsizei instancecount)');
+        $__proc($mode, $first, $count, $instancecount);
+    }
+
+    /**
+     * {@see GL46::glDrawElementsInstanced} behaves identically to {@see GL46::glDrawElements} except that
+     * $instancecount instances of the set of elements are executed and the value of the internal counter $instanceID
+     * advances for each iteration. $instanceID is an internal 32-bit integer counter that may be read by a vertex
+     * shader as {@see GL46::gl_InstanceID}.
+     *
+     * {@see GL46::glDrawElementsInstanced} has the same effect as:
+     *
+     * <code>
+     *     if (mode, count, or type is invalid )
+     *         generate appropriate error
+     *     else {
+     *         for (int i = 0; i < instancecount ; i++) {
+     *             instanceID = i;
+     *             glDrawElements(mode, count, type, indices);
+     *         }
+     *         instanceID = 0;
+     *     }
+     * </code>
+     *
+     * @see http://docs.gl/gl4/glDrawElementsInstanced
+     * @since 3.1
+     * @param int $mode
+     * @param int $count
+     * @param int $type
+     * @param \FFI\CData|null $indices
+     * @param int $instancecount
+     * @return void
+     */
+    public function drawElementsInstanced(int $mode, int $count, int $type, ?\FFI\CData $indices, int $instancecount): void
+    {
+        $__proc = $this->getProcAs('glDrawElementsInstanced', 'void (*)(GLenum mode, GLsizei count, GLenum type, const void *indices, GLsizei instancecount)');
+        $__proc($mode, $count, $type, $indices, $instancecount);
+    }
+
+    /**
+     * {@see GL46::glGetActiveUniformBlockName} retrieves the name of the active uniform block at $uniformBlockIndex
+     * within $program.
      *
      * $program must be the name of a program object for which the command {@see GL46::glLinkProgram} must have been
      * called in the past, although it is not required that {@see GL46::glLinkProgram} must have succeeded. The link
      * could have failed because the number of active uniforms exceeded the limit.
      *
-     * $uniformCount indicates both the number of elements in the array of names $uniformNames and the number of
-     * indices that may be written to $uniformIndices.
+     * $uniformBlockIndex is an active uniform block index of $program, and must be less than the value of
+     * {@see GL46::GL_ACTIVE_UNIFORM_BLOCKS}.
      *
-     * $uniformNames contains a list of $uniformCount name strings identifying the uniform names to be queried for
-     * indices. For each name string in $uniformNames, the index assigned to the active uniform of that name will be
-     * written to the corresponding element of $uniformIndices. If a string in $uniformNames is not the name of an
-     * active uniform, the special value {@see GL46::GL_INVALID_INDEX} will be written to the corresponding element
-     * of $uniformIndices.
+     * Upon success, the name of the uniform block identified by $unifomBlockIndex is returned into
+     * $uniformBlockName. The name is nul-terminated. The actual number of characters written into $uniformBlockName,
+     * excluding the nul terminator, is returned in $length. If $length is `NULL`, no length is returned.
      *
-     * If an error occurs, nothing is written to $uniformIndices.
+     * $bufSize contains the maximum number of characters (including the nul terminator) that will be written into
+     * $uniformBlockName.
      *
-     * @see http://docs.gl/gl4/glGetUniformIndices
+     * If an error occurs, nothing will be written to $uniformBlockName or $length.
+     *
+     * @see http://docs.gl/gl4/glGetActiveUniformBlockName
      * @since 3.1
-     * @param int|\FFI\CData|\FFI\CInt $program
-     * @param int|\FFI\CData|\FFI\CInt $uniformCount
-     * @param \FFI\CData|\FFI\CIntPtrPtr|null $uniformNames
-     * @param \FFI\CData|\FFI\CIntPtr|null $uniformIndices
+     * @param int $program
+     * @param int $uniformBlockIndex
+     * @param int $bufSize
+     * @param int|null $length
+     * @param string|null $uniformBlockName
      * @return void
      */
-    public function getUniformIndices($program, $uniformCount, ?\FFI\CData $uniformNames, ?\FFI\CData $uniformIndices): void
+    public function getActiveUniformBlockName(int $program, int $uniformBlockIndex, int $bufSize, ?int &$length, ?string &$uniformBlockName): void
     {
-        $program = $program instanceof \FFI\CData ? $program->cdata : $program;
-        $uniformCount = $uniformCount instanceof \FFI\CData ? $uniformCount->cdata : $uniformCount;
+        $lengthCType = $this->info->ffi->new('GLsizei', false);
+        $uniformBlockNameCType = \FFI::addr($this->info->ffi->new('GLchar[' . $bufSize . ']', false)[0]);
+        try {
+            $__proc = $this->getProcAs('glGetActiveUniformBlockName', 'void (*)(GLuint program, GLuint uniformBlockIndex, GLsizei bufSize, GLsizei *length, GLchar *uniformBlockName)');
+            $__proc($program, $uniformBlockIndex, $bufSize, \FFI::addr($lengthCType), $uniformBlockNameCType);
+        } finally {
+            $length = $lengthCType->cdata;
+            \FFI::free($lengthCType);
+            $uniformBlockName = \FFI::string($uniformBlockNameCType);
+            \FFI::free($uniformBlockNameCType);
+        }
+    }
 
-        assert(Type::isUint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isInt16($uniformCount), 'Argument $uniformCount must be a C-like GLsizei, but incompatible or overflow value given');
+    /**
+     * {@see GL46::glGetActiveUniformBlockiv} retrieves information about an active uniform block within $program.
+     *
+     * $program must be the name of a program object for which the command {@see GL46::glLinkProgram} must have been
+     * called in the past, although it is not required that {@see GL46::glLinkProgram} must have succeeded. The link
+     * could have failed because the number of active uniforms exceeded the limit.
+     *
+     * $uniformBlockIndex is an active uniform block index of $program, and must be less than the value of
+     * {@see GL46::GL_ACTIVE_UNIFORM_BLOCKS}.
+     *
+     * Upon success, the uniform block parameter(s) specified by $pname are returned in $params. If an error occurs,
+     * nothing will be written to $params.
+     *
+     * If $pname is {@see GL46::GL_UNIFORM_BLOCK_BINDING}, then the index of the uniform buffer binding point last
+     * selected by the uniform block specified by $uniformBlockIndex for $program is returned. If no uniform block
+     * has been previously specified, zero is returned.
+     *
+     * If $pname is {@see GL46::GL_UNIFORM_BLOCK_DATA_SIZE}, then the implementation-dependent minimum total buffer
+     * object size, in basic machine units, required to hold all active uniforms in the uniform block identified by
+     * $uniformBlockIndex is returned. It is neither guaranteed nor expected that a given implementation will arrange
+     * uniform values as tightly packed in a buffer object. The exception to this is the std140 uniform block layout,
+     * which guarantees specific packing behavior and does not require the application to query for offsets and
+     * strides. In this case the minimum size may still be queried, even though it is determined in advance based
+     * only on the uniform block declaration.
+     *
+     * If $pname is {@see GL46::GL_UNIFORM_BLOCK_NAME_LENGTH}, then the total length (including the nul terminator)
+     * of the name of the uniform block identified by $uniformBlockIndex is returned.
+     *
+     * If $pname is {@see GL46::GL_UNIFORM_BLOCK_ACTIVE_UNIFORMS}, then the number of active uniforms in the uniform
+     * block identified by $uniformBlockIndex is returned.
+     *
+     * If $pname is {@see GL46::GL_UNIFORM_BLOCK_ACTIVE_UNIFORM_INDICES}, then a list of the active uniform indices
+     * for the uniform block identified by $uniformBlockIndex is returned. The number of elements that will be
+     * written to $params is the value of {@see GL46::GL_UNIFORM_BLOCK_ACTIVE_UNIFORMS} for $uniformBlockIndex.
+     *
+     * If $pname is {@see GL46::GL_UNIFORM_BLOCK_REFERENCED_BY_VERTEX_SHADER},
+     * {@see GL46::GL_UNIFORM_BLOCK_REFERENCED_BY_TESS_CONTROL_SHADER},
+     * {@see GL46::GL_UNIFORM_BLOCK_REFERENCED_BY_TESS_EVALUATION_SHADER},
+     * {@see GL46::GL_UNIFORM_BLOCK_REFERENCED_BY_GEOMETRY_SHADER},
+     * {@see GL46::GL_UNIFORM_BLOCK_REFERENCED_BY_FRAGMENT_SHADER}, or
+     * {@see GL46::GL_UNIFORM_BLOCK_REFERENCED_BY_COMPUTE_SHADER} then a boolean value indicating whether the uniform
+     * block identified by $uniformBlockIndex is referenced by the vertex, tessellation control, tessellation
+     * evaluation, geometry, fragment or compute programming stages of program, respectively, is returned.
+     *
+     * @see http://docs.gl/gl4/glGetActiveUniformBlock
+     * @since 3.1
+     * @param int $program
+     * @param int $uniformBlockIndex
+     * @param int $pname
+     * @param int|null $params
+     * @return void
+     */
+    public function getActiveUniformBlockiv(int $program, int $uniformBlockIndex, int $pname, ?int &$params): void
+    {
+        $paramsCType = $this->info->ffi->new('GLint', false);
+        try {
+            $__proc = $this->getProcAs('glGetActiveUniformBlockiv', 'void (*)(GLuint program, GLuint uniformBlockIndex, GLenum pname, GLint *params)');
+            $__proc($program, $uniformBlockIndex, $pname, \FFI::addr($paramsCType));
+        } finally {
+            $params = $paramsCType->cdata;
+            \FFI::free($paramsCType);
+        }
+    }
 
-        $proc = $this->getProcAddress('glGetUniformIndices', 'void (*)(GLuint program, GLsizei uniformCount, const GLchar *const*uniformNames, GLuint *uniformIndices)');
-        $proc($program, $uniformCount, $uniformNames, $uniformIndices);
+    /**
+     * {@see GL46::glGetActiveUniformName} returns the name of the active uniform at $uniformIndex within $program.
+     * If $uniformName is not `NULL`, up to $bufSize characters (including a nul-terminator) will be written into the
+     * array whose address is specified by $uniformName. If $length is not `NULL`, the number of characters that were
+     * (or would have been) written into $uniformName (not including the nul-terminator) will be placed in the
+     * variable whose address is specified in $length. If $length is `NULL`, no length is returned. The length of the
+     * longest uniform name in $program is given by the value of {@see GL46::GL_ACTIVE_UNIFORM_MAX_LENGTH}, which can
+     * be queried with {@see GL46::glGetProgram}.
+     *
+     * If {@see GL46::glGetActiveUniformName} is not successful, nothing is written to $length or $uniformName.
+     *
+     * $program must be the name of a program for which the command {@see GL46::glLinkProgram} has been issued in the
+     * past. It is not necessary for $program to have been linked successfully. The link could have failed because
+     * the number of active uniforms exceeded the limit.
+     *
+     * $uniformIndex must be an active uniform index of the program $program, in the range zero to the value of
+     * {@see GL46::GL_ACTIVE_UNIFORMS} minus one. The value of {@see GL46::GL_ACTIVE_UNIFORMS} can be queried with
+     * {@see GL46::glGetProgram}.
+     *
+     * @see http://docs.gl/gl4/glGetActiveUniformName
+     * @since 3.1
+     * @param int $program
+     * @param int $uniformIndex
+     * @param int $bufSize
+     * @param int|null $length
+     * @param string|null $uniformName
+     * @return void
+     */
+    public function getActiveUniformName(int $program, int $uniformIndex, int $bufSize, ?int &$length, ?string &$uniformName): void
+    {
+        $lengthCType = $this->info->ffi->new('GLsizei', false);
+        $uniformNameCType = \FFI::addr($this->info->ffi->new('GLchar[' . $bufSize . ']', false)[0]);
+        try {
+            $__proc = $this->getProcAs('glGetActiveUniformName', 'void (*)(GLuint program, GLuint uniformIndex, GLsizei bufSize, GLsizei *length, GLchar *uniformName)');
+            $__proc($program, $uniformIndex, $bufSize, \FFI::addr($lengthCType), $uniformNameCType);
+        } finally {
+            $length = $lengthCType->cdata;
+            \FFI::free($lengthCType);
+            $uniformName = \FFI::string($uniformNameCType);
+            \FFI::free($uniformNameCType);
+        }
     }
 
     /**
@@ -730,67 +695,23 @@ class GL31 extends GL30
      *
      * @see http://docs.gl/gl4/glGetActiveUniformsiv
      * @since 3.1
-     * @param int|\FFI\CData|\FFI\CInt $program
-     * @param int|\FFI\CData|\FFI\CInt $uniformCount
-     * @param \FFI\CData|\FFI\CIntPtr|null $uniformIndices
-     * @param int|\FFI\CData|\FFI\CInt $pname
-     * @param \FFI\CData|\FFI\CIntPtr|null $params
+     * @param int $program
+     * @param int $uniformCount
+     * @param \FFI\CData|null $uniformIndices
+     * @param int $pname
+     * @param int|null $params
      * @return void
      */
-    public function getActiveUniformsiv($program, $uniformCount, ?\FFI\CData $uniformIndices, $pname, ?\FFI\CData $params): void
+    public function getActiveUniformsiv(int $program, int $uniformCount, ?\FFI\CData $uniformIndices, int $pname, ?int &$params): void
     {
-        $program = $program instanceof \FFI\CData ? $program->cdata : $program;
-        $uniformCount = $uniformCount instanceof \FFI\CData ? $uniformCount->cdata : $uniformCount;
-        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
-
-        assert(Type::isUint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isInt16($uniformCount), 'Argument $uniformCount must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glGetActiveUniformsiv', 'void (*)(GLuint program, GLsizei uniformCount, const GLuint *uniformIndices, GLenum pname, GLint *params)');
-        $proc($program, $uniformCount, $uniformIndices, $pname, $params);
-    }
-
-    /**
-     * {@see GL46::glGetActiveUniformName} returns the name of the active uniform at $uniformIndex within $program.
-     * If $uniformName is not `NULL`, up to $bufSize characters (including a nul-terminator) will be written into the
-     * array whose address is specified by $uniformName. If $length is not `NULL`, the number of characters that were
-     * (or would have been) written into $uniformName (not including the nul-terminator) will be placed in the
-     * variable whose address is specified in $length. If $length is `NULL`, no length is returned. The length of the
-     * longest uniform name in $program is given by the value of {@see GL46::GL_ACTIVE_UNIFORM_MAX_LENGTH}, which can
-     * be queried with {@see GL46::glGetProgram}.
-     *
-     * If {@see GL46::glGetActiveUniformName} is not successful, nothing is written to $length or $uniformName.
-     *
-     * $program must be the name of a program for which the command {@see GL46::glLinkProgram} has been issued in the
-     * past. It is not necessary for $program to have been linked successfully. The link could have failed because
-     * the number of active uniforms exceeded the limit.
-     *
-     * $uniformIndex must be an active uniform index of the program $program, in the range zero to the value of
-     * {@see GL46::GL_ACTIVE_UNIFORMS} minus one. The value of {@see GL46::GL_ACTIVE_UNIFORMS} can be queried with
-     * {@see GL46::glGetProgram}.
-     *
-     * @see http://docs.gl/gl4/glGetActiveUniformName
-     * @since 3.1
-     * @param int|\FFI\CData|\FFI\CInt $program
-     * @param int|\FFI\CData|\FFI\CInt $uniformIndex
-     * @param int|\FFI\CData|\FFI\CInt $bufSize
-     * @param \FFI\CData|\FFI\CIntPtr|null $length
-     * @param \FFI\CData|\FFI\CIntPtr|null $uniformName
-     * @return void
-     */
-    public function getActiveUniformName($program, $uniformIndex, $bufSize, ?\FFI\CData $length, ?\FFI\CData $uniformName): void
-    {
-        $program = $program instanceof \FFI\CData ? $program->cdata : $program;
-        $uniformIndex = $uniformIndex instanceof \FFI\CData ? $uniformIndex->cdata : $uniformIndex;
-        $bufSize = $bufSize instanceof \FFI\CData ? $bufSize->cdata : $bufSize;
-
-        assert(Type::isUint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isUint16($uniformIndex), 'Argument $uniformIndex must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isInt16($bufSize), 'Argument $bufSize must be a C-like GLsizei, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glGetActiveUniformName', 'void (*)(GLuint program, GLuint uniformIndex, GLsizei bufSize, GLsizei *length, GLchar *uniformName)');
-        $proc($program, $uniformIndex, $bufSize, $length, $uniformName);
+        $paramsCType = $this->info->ffi->new('GLint', false);
+        try {
+            $__proc = $this->getProcAs('glGetActiveUniformsiv', 'void (*)(GLuint program, GLsizei uniformCount, const GLuint *uniformIndices, GLenum pname, GLint *params)');
+            $__proc($program, $uniformCount, $uniformIndices, $pname, \FFI::addr($paramsCType));
+        } finally {
+            $params = $paramsCType->cdata;
+            \FFI::free($paramsCType);
+        }
     }
 
     /**
@@ -809,127 +730,150 @@ class GL31 extends GL30
      *
      * @see http://docs.gl/gl4/glGetUniformBlockIndex
      * @since 3.1
-     * @param int|\FFI\CData|\FFI\CInt $program
-     * @param \FFI\CData|\FFI\CIntPtr|null $uniformBlockName
-     * @return int|\FFI\CData|\FFI\CInt
+     * @param int $program
+     * @param \FFI\CData|null $uniformBlockName
+     * @return int
      */
-    public function getUniformBlockIndex($program, ?\FFI\CData $uniformBlockName): int
+    public function getUniformBlockIndex(int $program, ?\FFI\CData $uniformBlockName): int
     {
-        $program = $program instanceof \FFI\CData ? $program->cdata : $program;
-
-        assert(Type::isUint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glGetUniformBlockIndex', 'GLuint (*)(GLuint program, const GLchar *uniformBlockName)');
-        return $proc($program, $uniformBlockName);
+        $__proc = $this->getProcAs('glGetUniformBlockIndex', 'GLuint (*)(GLuint program, const GLchar *uniformBlockName)');
+        return $__proc($program, $uniformBlockName);
     }
 
     /**
-     * {@see GL46::glGetActiveUniformBlockiv} retrieves information about an active uniform block within $program.
+     * {@see GL46::glGetUniformIndices} retrieves the indices of a number of uniforms within $program.
      *
      * $program must be the name of a program object for which the command {@see GL46::glLinkProgram} must have been
      * called in the past, although it is not required that {@see GL46::glLinkProgram} must have succeeded. The link
      * could have failed because the number of active uniforms exceeded the limit.
      *
-     * $uniformBlockIndex is an active uniform block index of $program, and must be less than the value of
-     * {@see GL46::GL_ACTIVE_UNIFORM_BLOCKS}.
+     * $uniformCount indicates both the number of elements in the array of names $uniformNames and the number of
+     * indices that may be written to $uniformIndices.
      *
-     * Upon success, the uniform block parameter(s) specified by $pname are returned in $params. If an error occurs,
-     * nothing will be written to $params.
+     * $uniformNames contains a list of $uniformCount name strings identifying the uniform names to be queried for
+     * indices. For each name string in $uniformNames, the index assigned to the active uniform of that name will be
+     * written to the corresponding element of $uniformIndices. If a string in $uniformNames is not the name of an
+     * active uniform, the special value {@see GL46::GL_INVALID_INDEX} will be written to the corresponding element
+     * of $uniformIndices.
      *
-     * If $pname is {@see GL46::GL_UNIFORM_BLOCK_BINDING}, then the index of the uniform buffer binding point last
-     * selected by the uniform block specified by $uniformBlockIndex for $program is returned. If no uniform block
-     * has been previously specified, zero is returned.
+     * If an error occurs, nothing is written to $uniformIndices.
      *
-     * If $pname is {@see GL46::GL_UNIFORM_BLOCK_DATA_SIZE}, then the implementation-dependent minimum total buffer
-     * object size, in basic machine units, required to hold all active uniforms in the uniform block identified by
-     * $uniformBlockIndex is returned. It is neither guaranteed nor expected that a given implementation will arrange
-     * uniform values as tightly packed in a buffer object. The exception to this is the std140 uniform block layout,
-     * which guarantees specific packing behavior and does not require the application to query for offsets and
-     * strides. In this case the minimum size may still be queried, even though it is determined in advance based
-     * only on the uniform block declaration.
-     *
-     * If $pname is {@see GL46::GL_UNIFORM_BLOCK_NAME_LENGTH}, then the total length (including the nul terminator)
-     * of the name of the uniform block identified by $uniformBlockIndex is returned.
-     *
-     * If $pname is {@see GL46::GL_UNIFORM_BLOCK_ACTIVE_UNIFORMS}, then the number of active uniforms in the uniform
-     * block identified by $uniformBlockIndex is returned.
-     *
-     * If $pname is {@see GL46::GL_UNIFORM_BLOCK_ACTIVE_UNIFORM_INDICES}, then a list of the active uniform indices
-     * for the uniform block identified by $uniformBlockIndex is returned. The number of elements that will be
-     * written to $params is the value of {@see GL46::GL_UNIFORM_BLOCK_ACTIVE_UNIFORMS} for $uniformBlockIndex.
-     *
-     * If $pname is {@see GL46::GL_UNIFORM_BLOCK_REFERENCED_BY_VERTEX_SHADER},
-     * {@see GL46::GL_UNIFORM_BLOCK_REFERENCED_BY_TESS_CONTROL_SHADER},
-     * {@see GL46::GL_UNIFORM_BLOCK_REFERENCED_BY_TESS_EVALUATION_SHADER},
-     * {@see GL46::GL_UNIFORM_BLOCK_REFERENCED_BY_GEOMETRY_SHADER},
-     * {@see GL46::GL_UNIFORM_BLOCK_REFERENCED_BY_FRAGMENT_SHADER}, or
-     * {@see GL46::GL_UNIFORM_BLOCK_REFERENCED_BY_COMPUTE_SHADER} then a boolean value indicating whether the uniform
-     * block identified by $uniformBlockIndex is referenced by the vertex, tessellation control, tessellation
-     * evaluation, geometry, fragment or compute programming stages of program, respectively, is returned.
-     *
-     * @see http://docs.gl/gl4/glGetActiveUniformBlock
+     * @see http://docs.gl/gl4/glGetUniformIndices
      * @since 3.1
-     * @param int|\FFI\CData|\FFI\CInt $program
-     * @param int|\FFI\CData|\FFI\CInt $uniformBlockIndex
-     * @param int|\FFI\CData|\FFI\CInt $pname
-     * @param \FFI\CData|\FFI\CIntPtr|null $params
+     * @param int $program
+     * @param int $uniformCount
+     * @param array|string[] $uniformNames
+     * @param int|null $uniformIndices
      * @return void
      */
-    public function getActiveUniformBlockiv($program, $uniformBlockIndex, $pname, ?\FFI\CData $params): void
+    public function getUniformIndices(int $program, int $uniformCount, array $uniformNames, ?int &$uniformIndices): void
     {
-        $program = $program instanceof \FFI\CData ? $program->cdata : $program;
-        $uniformBlockIndex = $uniformBlockIndex instanceof \FFI\CData ? $uniformBlockIndex->cdata : $uniformBlockIndex;
-        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
-
-        assert(Type::isUint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isUint16($uniformBlockIndex), 'Argument $uniformBlockIndex must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glGetActiveUniformBlockiv', 'void (*)(GLuint program, GLuint uniformBlockIndex, GLenum pname, GLint *params)');
-        $proc($program, $uniformBlockIndex, $pname, $params);
+        $uniformNamesCType = \FFI::new('char*[' . \count($uniformNames) . ']');
+        foreach ($uniformNames as $i => $v) {
+            $uniformNamesCType[$i] = Util::charPtr($v);
+        }
+        $uniformIndicesCType = $this->info->ffi->new('GLuint', false);
+        try {
+            $__proc = $this->getProcAs('glGetUniformIndices', 'void (*)(GLuint program, GLsizei uniformCount, const GLchar *const *uniformNames, GLuint *uniformIndices)');
+            $__proc($program, $uniformCount, $uniformNamesCType, \FFI::addr($uniformIndicesCType));
+        } finally {
+            $uniformIndices = $uniformIndicesCType->cdata;
+            \FFI::free($uniformIndicesCType);
+        }
     }
 
     /**
-     * {@see GL46::glGetActiveUniformBlockName} retrieves the name of the active uniform block at $uniformBlockIndex
-     * within $program.
+     * {@see GL46::glPrimitiveRestartIndex} specifies a vertex array element that is treated specially when primitive
+     * restarting is enabled. This is known as the primitive restart index.
      *
-     * $program must be the name of a program object for which the command {@see GL46::glLinkProgram} must have been
-     * called in the past, although it is not required that {@see GL46::glLinkProgram} must have succeeded. The link
-     * could have failed because the number of active uniforms exceeded the limit.
+     * When one of the {@see GL46::Draw*} commands transfers a set of generic attribute array elements to the GL, if
+     * the index within the vertex arrays corresponding to that set is equal to the primitive restart index, then the
+     * GL does not process those elements as a vertex. Instead, it is as if the drawing command ended with the
+     * immediately preceding transfer, and another drawing command is immediately started with the same parameters,
+     * but only transferring the immediately following element through the end of the originally specified elements.
      *
-     * $uniformBlockIndex is an active uniform block index of $program, and must be less than the value of
-     * {@see GL46::GL_ACTIVE_UNIFORM_BLOCKS}.
+     * When either {@see GL46::glDrawElementsBaseVertex}, {@see GL46::glDrawElementsInstancedBaseVertex} or
+     * {@see GL46::glMultiDrawElementsBaseVertex} is used, the primitive restart comparison occurs before the
+     * basevertex offset is added to the array index.
      *
-     * Upon success, the name of the uniform block identified by $unifomBlockIndex is returned into
-     * $uniformBlockName. The name is nul-terminated. The actual number of characters written into $uniformBlockName,
-     * excluding the nul terminator, is returned in $length. If $length is `NULL`, no length is returned.
-     *
-     * $bufSize contains the maximum number of characters (including the nul terminator) that will be written into
-     * $uniformBlockName.
-     *
-     * If an error occurs, nothing will be written to $uniformBlockName or $length.
-     *
-     * @see http://docs.gl/gl4/glGetActiveUniformBlockName
+     * @see http://docs.gl/gl4/glPrimitiveRestartIndex
      * @since 3.1
-     * @param int|\FFI\CData|\FFI\CInt $program
-     * @param int|\FFI\CData|\FFI\CInt $uniformBlockIndex
-     * @param int|\FFI\CData|\FFI\CInt $bufSize
-     * @param \FFI\CData|\FFI\CIntPtr|null $length
-     * @param \FFI\CData|\FFI\CIntPtr|null $uniformBlockName
+     * @param int $index
      * @return void
      */
-    public function getActiveUniformBlockName($program, $uniformBlockIndex, $bufSize, ?\FFI\CData $length, ?\FFI\CData $uniformBlockName): void
+    public function primitiveRestartIndex(int $index): void
     {
-        $program = $program instanceof \FFI\CData ? $program->cdata : $program;
-        $uniformBlockIndex = $uniformBlockIndex instanceof \FFI\CData ? $uniformBlockIndex->cdata : $uniformBlockIndex;
-        $bufSize = $bufSize instanceof \FFI\CData ? $bufSize->cdata : $bufSize;
+        $__proc = $this->getProcAs('glPrimitiveRestartIndex', 'void (*)(GLuint index)');
+        $__proc($index);
+    }
 
-        assert(Type::isUint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isUint16($uniformBlockIndex), 'Argument $uniformBlockIndex must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isInt16($bufSize), 'Argument $bufSize must be a C-like GLsizei, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glGetActiveUniformBlockName', 'void (*)(GLuint program, GLuint uniformBlockIndex, GLsizei bufSize, GLsizei *length, GLchar *uniformBlockName)');
-        $proc($program, $uniformBlockIndex, $bufSize, $length, $uniformBlockName);
+    /**
+     * {@see GL46::glTexBuffer} and {@see GL46::glTextureBuffer} attaches the data store of a specified buffer object
+     * to a specified texture object, and specify the storage format for the texture image found in the buffer
+     * object. The texture object must be a buffer texture.
+     *
+     * If $buffer is zero, any buffer object attached to the buffer texture is detached and no new buffer object is
+     * attached. If $buffer is non-zero, it must be the name of an existing buffer object.
+     *
+     * $internalformat specifies the storage format, and must be one of the following sized internal formats:
+     *
+     * $internalformat specifies the storage format, and must be one of the following sized internal formats:
+     *
+     * | {@see GL46::GL_R8}       | ubyte  | 1 | YES | R | 0 | 0 | 1 |
+     * | {@see GL46::GL_R16}      | ushort | 1 | YES | R | 0 | 0 | 1 |
+     * | {@see GL46::GL_R16F}     | half   | 1 | NO  | R | 0 | 0 | 1 |
+     * | {@see GL46::GL_R32F}     | float  | 1 | NO  | R | 0 | 0 | 1 |
+     * | {@see GL46::GL_R8I}      | byte   | 1 | NO  | R | 0 | 0 | 1 |
+     * | {@see GL46::GL_R16I}     | short  | 1 | NO  | R | 0 | 0 | 1 |
+     * | {@see GL46::GL_R32I}     | int    | 1 | NO  | R | 0 | 0 | 1 |
+     * | {@see GL46::GL_R8UI}     | ubyte  | 1 | NO  | R | 0 | 0 | 1 |
+     * | {@see GL46::GL_R16UI}    | ushort | 1 | NO  | R | 0 | 0 | 1 |
+     * | {@see GL46::GL_R32UI}    | uint   | 1 | NO  | R | 0 | 0 | 1 |
+     * | {@see GL46::GL_RG8}      | ubyte  | 2 | YES | R | G | 0 | 1 |
+     * | {@see GL46::GL_RG16}     | ushort | 2 | YES | R | G | 0 | 1 |
+     * | {@see GL46::GL_RG16F}    | half   | 2 | NO  | R | G | 0 | 1 |
+     * | {@see GL46::GL_RG32F}    | float  | 2 | NO  | R | G | 0 | 1 |
+     * | {@see GL46::GL_RG8I}     | byte   | 2 | NO  | R | G | 0 | 1 |
+     * | {@see GL46::GL_RG16I}    | short  | 2 | NO  | R | G | 0 | 1 |
+     * | {@see GL46::GL_RG32I}    | int    | 2 | NO  | R | G | 0 | 1 |
+     * | {@see GL46::GL_RG8UI}    | ubyte  | 2 | NO  | R | G | 0 | 1 |
+     * | {@see GL46::GL_RG16UI}   | ushort | 2 | NO  | R | G | 0 | 1 |
+     * | {@see GL46::GL_RG32UI}   | uint   | 2 | NO  | R | G | 0 | 1 |
+     * | {@see GL46::GL_RGB32F}   | float  | 3 | NO  | R | G | B | 1 |
+     * | {@see GL46::GL_RGB32I}   | int    | 3 | NO  | R | G | B | 1 |
+     * | {@see GL46::GL_RGB32UI}  | uint   | 3 | NO  | R | G | B | 1 |
+     * | {@see GL46::GL_RGBA8}    | uint   | 4 | YES | R | G | B | A |
+     * | {@see GL46::GL_RGBA16}   | short  | 4 | YES | R | G | B | A |
+     * | {@see GL46::GL_RGBA16F}  | half   | 4 | NO  | R | G | B | A |
+     * | {@see GL46::GL_RGBA32F}  | float  | 4 | NO  | R | G | B | A |
+     * | {@see GL46::GL_RGBA8I}   | byte   | 4 | NO  | R | G | B | A |
+     * | {@see GL46::GL_RGBA16I}  | short  | 4 | NO  | R | G | B | A |
+     * | {@see GL46::GL_RGBA32I}  | int    | 4 | NO  | R | G | B | A |
+     * | {@see GL46::GL_RGBA8UI}  | ubyte  | 4 | NO  | R | G | B | A |
+     * | {@see GL46::GL_RGBA16UI} | ushort | 4 | NO  | R | G | B | A |
+     * | {@see GL46::GL_RGBA32UI} | uint   | 4 | NO  | R | G | B | A |
+     *
+     * When a buffer object is attached to a buffer texture, the buffer object's data store is taken as the texture's
+     * texel array. The number of texels in the buffer texture's texel array is given by $$ \\left\\lfloor { size
+     * \\over { components \\times sizeof(base\\_type) } } \\right\\rfloor $$ where $size$ is the size of the buffer
+     * object in basic machine units (the value of {@see GL46::GL_BUFFER_SIZE} for $buffer), and $components$ and
+     * $base\\_type$ are the element count and base data type for elements, as specified in the table above. The
+     * number of texels in the texel array is then clamped to the value of the implementation-dependent limit
+     * {@see GL46::GL_MAX_TEXTURE_BUFFER_SIZE}. When a buffer texture is accessed in a shader, the results of a texel
+     * fetch are undefined if the specified texel coordinate is negative, or greater than or equal to the clamped
+     * number of texels in the texel array.
+     *
+     * @see http://docs.gl/gl4/glTexBuffer
+     * @since 3.1
+     * @param int $target
+     * @param int $internalformat
+     * @param int $buffer
+     * @return void
+     */
+    public function texBuffer(int $target, int $internalformat, int $buffer): void
+    {
+        $__proc = $this->getProcAs('glTexBuffer', 'void (*)(GLenum target, GLenum internalformat, GLuint buffer)');
+        $__proc($target, $internalformat, $buffer);
     }
 
     /**
@@ -946,22 +890,14 @@ class GL31 extends GL30
      *
      * @see http://docs.gl/gl4/glUniformBlockBinding
      * @since 3.1
-     * @param int|\FFI\CData|\FFI\CInt $program
-     * @param int|\FFI\CData|\FFI\CInt $uniformBlockIndex
-     * @param int|\FFI\CData|\FFI\CInt $uniformBlockBinding
+     * @param int $program
+     * @param int $uniformBlockIndex
+     * @param int $uniformBlockBinding
      * @return void
      */
-    public function uniformBlockBinding($program, $uniformBlockIndex, $uniformBlockBinding): void
+    public function uniformBlockBinding(int $program, int $uniformBlockIndex, int $uniformBlockBinding): void
     {
-        $program = $program instanceof \FFI\CData ? $program->cdata : $program;
-        $uniformBlockIndex = $uniformBlockIndex instanceof \FFI\CData ? $uniformBlockIndex->cdata : $uniformBlockIndex;
-        $uniformBlockBinding = $uniformBlockBinding instanceof \FFI\CData ? $uniformBlockBinding->cdata : $uniformBlockBinding;
-
-        assert(Type::isUint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isUint16($uniformBlockIndex), 'Argument $uniformBlockIndex must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isUint16($uniformBlockBinding), 'Argument $uniformBlockBinding must be a C-like GLuint, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glUniformBlockBinding', 'void (*)(GLuint program, GLuint uniformBlockIndex, GLuint uniformBlockBinding)');
-        $proc($program, $uniformBlockIndex, $uniformBlockBinding);
+        $__proc = $this->getProcAs('glUniformBlockBinding', 'void (*)(GLuint program, GLuint uniformBlockIndex, GLuint uniformBlockBinding)');
+        $__proc($program, $uniformBlockIndex, $uniformBlockBinding);
     }
 }

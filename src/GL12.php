@@ -13,240 +13,261 @@ declare(strict_types=1);
 
 namespace Serafim\OpenGL;
 
-use Serafim\OpenGL\Type\Type;
-
 /**
- * The OpenGL functionality up to version 1.2. Includes the deprecated symbols of the Compatibility Profile.
- *
- * Extensions promoted to core in this release:
- * - EXT_texture3D @see https://www.khronos.org/registry/OpenGL/extensions/EXT/EXT_texture3D.txt
- * - EXT_bgra @see https://www.khronos.org/registry/OpenGL/extensions/EXT/EXT_bgra.txt
- * - EXT_packed_pixels @see https://www.khronos.org/registry/OpenGL/extensions/EXT/EXT_packed_pixels.txt
- * - EXT_rescale_normal @see https://www.khronos.org/registry/OpenGL/extensions/EXT/EXT_rescale_normal.txt
- * - EXT_separate_specular_color @see https://www.khronos.org/registry/OpenGL/extensions/EXT/EXT_separate_specular_color.txt
- * - SGIS_texture_edge_clamp @see https://www.khronos.org/registry/OpenGL/extensions/SGIS/SGIS_texture_edge_clamp.txt
- * - SGIS_texture_lod @see https://www.khronos.org/registry/OpenGL/extensions/SGIS/SGIS_texture_lod.txt
- * - EXT_draw_range_elements @see https://www.khronos.org/registry/OpenGL/extensions/EXT/EXT_draw_range_elements.txt
- *
- * Extensions part of the imaging subset:
- *
- * - EXT_color_table @see https://www.khronos.org/registry/OpenGL/extensions/EXT/EXT_color_table.txt
- * - EXT_color_subtable @see https://www.khronos.org/registry/OpenGL/extensions/EXT/EXT_color_subtable.txt
- * - EXT_convolution @see https://www.khronos.org/registry/OpenGL/extensions/EXT/EXT_convolution.txt
- * - HP_convolution_border_modes @see https://www.khronos.org/registry/OpenGL/extensions/HP/HP_convolution_border_modes.txt
- * - SGI_color_matrix @see https://www.khronos.org/registry/OpenGL/extensions/SGI/SGI_color_matrix.txt
- * - EXT_histogram @see https://www.khronos.org/registry/OpenGL/extensions/EXT/EXT_histogram.txt
- * - EXT_blend_color @see https://www.khronos.org/registry/OpenGL/extensions/EXT/EXT_blend_color.txt
- * - EXT_blend_minmax @see https://www.khronos.org/registry/OpenGL/extensions/EXT/EXT_blend_minmax.txt
- * - EXT_blend_subtract @see https://www.khronos.org/registry/OpenGL/extensions/EXT/EXT_blend_subtract.txt
+ * @version 1.2
  */
 class GL12 extends GL11
 {
     /**
-     * @var int
      * @since 1.2
+     * @var int
      */
-    public const GL_ALIASED_POINT_SIZE_RANGE = 0x846d;
+    public const GL_ALIASED_POINT_SIZE_RANGE = 0x846D;
     /**
-     * @var int
      * @since 1.2
+     * @var int
      */
-    public const GL_ALIASED_LINE_WIDTH_RANGE = 0x846e;
+    public const GL_ALIASED_LINE_WIDTH_RANGE = 0x846E;
     /**
-     * @var int
      * @since 1.2
+     * @var int
      */
-    public const GL_SMOOTH_POINT_SIZE_RANGE = 0x0b12;
+    public const GL_SMOOTH_POINT_SIZE_RANGE = 0x0B12;
     /**
-     * @var int
      * @since 1.2
+     * @var int
      */
-    public const GL_SMOOTH_POINT_SIZE_GRANULARITY = 0x0b13;
+    public const GL_SMOOTH_POINT_SIZE_GRANULARITY = 0x0B13;
     /**
-     * @var int
      * @since 1.2
+     * @var int
      */
-    public const GL_SMOOTH_LINE_WIDTH_RANGE = 0x0b22;
+    public const GL_SMOOTH_LINE_WIDTH_RANGE = 0x0B22;
     /**
-     * @var int
      * @since 1.2
+     * @var int
      */
-    public const GL_SMOOTH_LINE_WIDTH_GRANULARITY = 0x0b23;
+    public const GL_SMOOTH_LINE_WIDTH_GRANULARITY = 0x0B23;
     /**
-     * @var int
      * @since 1.2
+     * @var int
      */
-    public const GL_TEXTURE_BINDING_3D = 0x806a;
+    public const GL_TEXTURE_BINDING_3D = 0x806A;
     /**
-     * @var int
      * @since 1.2
+     * @var int
      */
-    public const GL_PACK_SKIP_IMAGES = 0x806b;
+    public const GL_PACK_SKIP_IMAGES = 0x806B;
     /**
-     * @var int
      * @since 1.2
+     * @var int
      */
-    public const GL_PACK_IMAGE_HEIGHT = 0x806c;
+    public const GL_PACK_IMAGE_HEIGHT = 0x806C;
     /**
-     * @var int
      * @since 1.2
+     * @var int
      */
-    public const GL_UNPACK_SKIP_IMAGES = 0x806d;
+    public const GL_UNPACK_SKIP_IMAGES = 0x806D;
     /**
-     * @var int
      * @since 1.2
+     * @var int
      */
-    public const GL_UNPACK_IMAGE_HEIGHT = 0x806e;
+    public const GL_UNPACK_IMAGE_HEIGHT = 0x806E;
     /**
-     * @var int
      * @since 1.2
+     * @var int
      */
-    public const GL_TEXTURE_3D = 0x806f;
+    public const GL_TEXTURE_3D = 0x806F;
     /**
-     * @var int
      * @since 1.2
+     * @var int
      */
     public const GL_PROXY_TEXTURE_3D = 0x8070;
     /**
-     * @var int
      * @since 1.2
+     * @var int
      */
     public const GL_TEXTURE_DEPTH = 0x8071;
     /**
-     * @var int
      * @since 1.2
+     * @var int
      */
     public const GL_TEXTURE_WRAP_R = 0x8072;
     /**
-     * @var int
      * @since 1.2
+     * @var int
      */
     public const GL_MAX_3D_TEXTURE_SIZE = 0x8073;
     /**
-     * @var int
      * @since 1.2
+     * @var int
      */
-    public const GL_BGR = 0x80e0;
+    public const GL_BGR = 0x80E0;
     /**
-     * @var int
      * @since 1.2
+     * @var int
      */
-    public const GL_BGRA = 0x80e1;
+    public const GL_BGRA = 0x80E1;
     /**
-     * @var int
      * @since 1.2
+     * @var int
      */
     public const GL_UNSIGNED_BYTE_3_3_2 = 0x8032;
     /**
-     * @var int
      * @since 1.2
+     * @var int
      */
     public const GL_UNSIGNED_BYTE_2_3_3_REV = 0x8362;
     /**
-     * @var int
      * @since 1.2
+     * @var int
      */
     public const GL_UNSIGNED_SHORT_5_6_5 = 0x8363;
     /**
-     * @var int
      * @since 1.2
+     * @var int
      */
     public const GL_UNSIGNED_SHORT_5_6_5_REV = 0x8364;
     /**
-     * @var int
      * @since 1.2
+     * @var int
      */
     public const GL_UNSIGNED_SHORT_4_4_4_4 = 0x8033;
     /**
-     * @var int
      * @since 1.2
+     * @var int
      */
     public const GL_UNSIGNED_SHORT_4_4_4_4_REV = 0x8365;
     /**
-     * @var int
      * @since 1.2
+     * @var int
      */
     public const GL_UNSIGNED_SHORT_5_5_5_1 = 0x8034;
     /**
-     * @var int
      * @since 1.2
+     * @var int
      */
     public const GL_UNSIGNED_SHORT_1_5_5_5_REV = 0x8366;
     /**
-     * @var int
      * @since 1.2
+     * @var int
      */
     public const GL_UNSIGNED_INT_8_8_8_8 = 0x8035;
     /**
-     * @var int
      * @since 1.2
+     * @var int
      */
     public const GL_UNSIGNED_INT_8_8_8_8_REV = 0x8367;
     /**
-     * @var int
      * @since 1.2
+     * @var int
      */
     public const GL_UNSIGNED_INT_10_10_10_2 = 0x8036;
     /**
-     * @var int
      * @since 1.2
+     * @var int
      */
     public const GL_UNSIGNED_INT_2_10_10_10_REV = 0x8368;
     /**
-     * @var int
      * @since 1.2
+     * @var int
      */
-    public const GL_RESCALE_NORMAL = 0x803a;
+    public const GL_RESCALE_NORMAL = 0x803A;
     /**
-     * @var int
      * @since 1.2
+     * @var int
      */
-    public const GL_LIGHT_MODEL_COLOR_CONTROL = 0x81f8;
+    public const GL_LIGHT_MODEL_COLOR_CONTROL = 0x81F8;
     /**
-     * @var int
      * @since 1.2
+     * @var int
      */
-    public const GL_SINGLE_COLOR = 0x81f9;
+    public const GL_SINGLE_COLOR = 0x81F9;
     /**
-     * @var int
      * @since 1.2
+     * @var int
      */
-    public const GL_SEPARATE_SPECULAR_COLOR = 0x81fa;
+    public const GL_SEPARATE_SPECULAR_COLOR = 0x81FA;
     /**
-     * @var int
      * @since 1.2
+     * @var int
      */
-    public const GL_CLAMP_TO_EDGE = 0x812f;
+    public const GL_CLAMP_TO_EDGE = 0x812F;
     /**
-     * @var int
      * @since 1.2
+     * @var int
      */
-    public const GL_TEXTURE_MIN_LOD = 0x813a;
+    public const GL_TEXTURE_MIN_LOD = 0x813A;
     /**
-     * @var int
      * @since 1.2
+     * @var int
      */
-    public const GL_TEXTURE_MAX_LOD = 0x813b;
+    public const GL_TEXTURE_MAX_LOD = 0x813B;
     /**
-     * @var int
      * @since 1.2
+     * @var int
      */
-    public const GL_TEXTURE_BASE_LEVEL = 0x813c;
+    public const GL_TEXTURE_BASE_LEVEL = 0x813C;
     /**
-     * @var int
      * @since 1.2
+     * @var int
      */
-    public const GL_TEXTURE_MAX_LEVEL = 0x813d;
+    public const GL_TEXTURE_MAX_LEVEL = 0x813D;
     /**
-     * @var int
      * @since 1.2
+     * @var int
      */
-    public const GL_MAX_ELEMENTS_VERTICES = 0x80e8;
+    public const GL_MAX_ELEMENTS_VERTICES = 0x80E8;
     /**
-     * @var int
      * @since 1.2
+     * @var int
      */
-    public const GL_MAX_ELEMENTS_INDICES = 0x80e9;
+    public const GL_MAX_ELEMENTS_INDICES = 0x80E9;
+
+    /**
+     * {@see GL46::glCopyTexSubImage3D} and {@see GL46::glCopyTextureSubImage3D} functions replace a rectangular
+     * portion of a three-dimensional or two-dimensional array texture image with pixels from the current
+     * {@see GL46::GL_READ_BUFFER} (rather than from main memory, as is the case for {@see GL46::glTexSubImage3D}).
+     *
+     * The screen-aligned pixel rectangle with lower left corner at ($x, $y) and with width $width and height $height
+     * replaces the portion of the texture array with x indices $xoffset through    xoffset + width - 1  , inclusive,
+     * and y indices $yoffset through    yoffset + height - 1  , inclusive, at z index $zoffset and at the mipmap
+     * level specified by $level.
+     *
+     * The pixels in the rectangle are processed exactly as if {@see GL46::glReadPixels} had been called, but the
+     * process stops just before final conversion. At this point, all pixel component values are clamped to the range
+     *    0 1   and then converted to the texture's internal format for storage in the texel array.
+     *
+     * The destination rectangle in the texture array may not include any texels outside the texture array as it was
+     * originally specified. It is not an error to specify a subtexture with zero width or height, but such a
+     * specification has no effect.
+     *
+     * If any of the pixels within the specified rectangle of the current {@see GL46::GL_READ_BUFFER} are outside the
+     * read window associated with the current rendering context, then the values obtained for those pixels are
+     * undefined.
+     *
+     * No change is made to the internalformat, width, height, depth, or border parameters of the specified texture
+     * array or to texel values outside the specified subregion.
+     *
+     * @see http://docs.gl/gl2/glCopyTexSubImage3D
+     * @see http://docs.gl/gl4/glCopyTexSubImage3D
+     * @since 1.2
+     * @param int $target
+     * @param int $level
+     * @param int $xoffset
+     * @param int $yoffset
+     * @param int $zoffset
+     * @param int $x
+     * @param int $y
+     * @param int $width
+     * @param int $height
+     * @return void
+     */
+    public function copyTexSubImage3D(int $target, int $level, int $xoffset, int $yoffset, int $zoffset, int $x, int $y, int $width, int $height): void
+    {
+        $__proc = $this->getProcAs('glCopyTexSubImage3D', 'void (*)(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLint x, GLint y, GLsizei width, GLsizei height)');
+        $__proc($target, $level, $xoffset, $yoffset, $zoffset, $x, $y, $width, $height);
+    }
 
     /**
      * {@see GL46::glDrawRangeElements} is a restricted form of {@see GL46::glDrawElements}. $mode, and $count match
@@ -272,30 +293,18 @@ class GL12 extends GL11
      * @see http://docs.gl/gl2/glDrawRangeElements
      * @see http://docs.gl/gl4/glDrawRangeElements
      * @since 1.2
-     * @param int|\FFI\CData|\FFI\CInt $mode
-     * @param int|\FFI\CData|\FFI\CInt $start
-     * @param int|\FFI\CData|\FFI\CInt $end
-     * @param int|\FFI\CData|\FFI\CInt $count
-     * @param int|\FFI\CData|\FFI\CInt $type
-     * @param \FFI\CData|\FFI\CPtr|null $indices
+     * @param int $mode
+     * @param int $start
+     * @param int $end
+     * @param int $count
+     * @param int $type
+     * @param \FFI\CData|null $indices
      * @return void
      */
-    public function drawRangeElements($mode, $start, $end, $count, $type, ?\FFI\CData $indices): void
+    public function drawRangeElements(int $mode, int $start, int $end, int $count, int $type, ?\FFI\CData $indices): void
     {
-        $mode = $mode instanceof \FFI\CData ? $mode->cdata : $mode;
-        $start = $start instanceof \FFI\CData ? $start->cdata : $start;
-        $end = $end instanceof \FFI\CData ? $end->cdata : $end;
-        $count = $count instanceof \FFI\CData ? $count->cdata : $count;
-        $type = $type instanceof \FFI\CData ? $type->cdata : $type;
-
-        assert(Type::isUint16($mode), 'Argument $mode must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($start), 'Argument $start must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isUint16($end), 'Argument $end must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isInt16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Type::isUint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glDrawRangeElements', 'void (*)(GLenum mode, GLuint start, GLuint end, GLsizei count, GLenum type, const void *indices)');
-        $proc($mode, $start, $end, $count, $type, $indices);
+        $__proc = $this->getProcAs('glDrawRangeElements', 'void (*)(GLenum mode, GLuint start, GLuint end, GLsizei count, GLenum type, const void *indices)');
+        $__proc($mode, $start, $end, $count, $type, $indices);
     }
 
     /**
@@ -386,42 +395,32 @@ class GL12 extends GL11
      * @see http://docs.gl/gl2/glTexImage3D
      * @see http://docs.gl/gl4/glTexImage3D
      * @since 1.2
-     * @param int|\FFI\CData|\FFI\CInt $target
-     * @param int|\FFI\CData|\FFI\CInt $level
-     * @param int|\FFI\CData|\FFI\CInt $internalformat
-     * @param int|\FFI\CData|\FFI\CInt $width
-     * @param int|\FFI\CData|\FFI\CInt $height
-     * @param int|\FFI\CData|\FFI\CInt $depth
-     * @param int|\FFI\CData|\FFI\CInt $border
-     * @param int|\FFI\CData|\FFI\CInt $format
-     * @param int|\FFI\CData|\FFI\CInt $type
-     * @param \FFI\CData|\FFI\CPtr|null $pixels
+     * @param int $target
+     * @param int $level
+     * @param int $internalformat
+     * @param int $width
+     * @param int $height
+     * @param int $depth
+     * @param int $border
+     * @param int $format
+     * @param int $type
+     * @param \FFI\CData|null $pixels
      * @return void
      */
-    public function texImage3D($target, $level, $internalformat, $width, $height, $depth, $border, $format, $type, ?\FFI\CData $pixels): void
-    {
-        $target = $target instanceof \FFI\CData ? $target->cdata : $target;
-        $level = $level instanceof \FFI\CData ? $level->cdata : $level;
-        $internalformat = $internalformat instanceof \FFI\CData ? $internalformat->cdata : $internalformat;
-        $width = $width instanceof \FFI\CData ? $width->cdata : $width;
-        $height = $height instanceof \FFI\CData ? $height->cdata : $height;
-        $depth = $depth instanceof \FFI\CData ? $depth->cdata : $depth;
-        $border = $border instanceof \FFI\CData ? $border->cdata : $border;
-        $format = $format instanceof \FFI\CData ? $format->cdata : $format;
-        $type = $type instanceof \FFI\CData ? $type->cdata : $type;
-
-        assert(Type::isUint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isInt16($level), 'Argument $level must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($internalformat), 'Argument $internalformat must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($width), 'Argument $width must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Type::isInt16($height), 'Argument $height must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Type::isInt16($depth), 'Argument $depth must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Type::isInt16($border), 'Argument $border must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isUint16($format), 'Argument $format must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glTexImage3D', 'void (*)(GLenum target, GLint level, GLint internalformat, GLsizei width, GLsizei height, GLsizei depth, GLint border, GLenum format, GLenum type, const void *pixels)');
-        $proc($target, $level, $internalformat, $width, $height, $depth, $border, $format, $type, $pixels);
+    public function texImage3D(
+        int $target,
+        int $level,
+        int $internalformat,
+        int $width,
+        int $height,
+        int $depth,
+        int $border,
+        int $format,
+        int $type,
+        ?\FFI\CData $pixels
+    ): void {
+        $__proc = $this->getProcAs('glTexImage3D', 'void (*)(GLenum target, GLint level, GLint internalformat, GLsizei width, GLsizei height, GLsizei depth, GLint border, GLenum format, GLenum type, const void *pixels)');
+        $__proc($target, $level, $internalformat, $width, $height, $depth, $border, $format, $type, $pixels);
     }
 
     /**
@@ -444,109 +443,33 @@ class GL12 extends GL11
      * @see http://docs.gl/gl2/glTexSubImage3D
      * @see http://docs.gl/gl4/glTexSubImage3D
      * @since 1.2
-     * @param int|\FFI\CData|\FFI\CInt $target
-     * @param int|\FFI\CData|\FFI\CInt $level
-     * @param int|\FFI\CData|\FFI\CInt $xoffset
-     * @param int|\FFI\CData|\FFI\CInt $yoffset
-     * @param int|\FFI\CData|\FFI\CInt $zoffset
-     * @param int|\FFI\CData|\FFI\CInt $width
-     * @param int|\FFI\CData|\FFI\CInt $height
-     * @param int|\FFI\CData|\FFI\CInt $depth
-     * @param int|\FFI\CData|\FFI\CInt $format
-     * @param int|\FFI\CData|\FFI\CInt $type
-     * @param \FFI\CData|\FFI\CPtr|null $pixels
+     * @param int $target
+     * @param int $level
+     * @param int $xoffset
+     * @param int $yoffset
+     * @param int $zoffset
+     * @param int $width
+     * @param int $height
+     * @param int $depth
+     * @param int $format
+     * @param int $type
+     * @param \FFI\CData|null $pixels
      * @return void
      */
-    public function texSubImage3D($target, $level, $xoffset, $yoffset, $zoffset, $width, $height, $depth, $format, $type, ?\FFI\CData $pixels): void
-    {
-        $target = $target instanceof \FFI\CData ? $target->cdata : $target;
-        $level = $level instanceof \FFI\CData ? $level->cdata : $level;
-        $xoffset = $xoffset instanceof \FFI\CData ? $xoffset->cdata : $xoffset;
-        $yoffset = $yoffset instanceof \FFI\CData ? $yoffset->cdata : $yoffset;
-        $zoffset = $zoffset instanceof \FFI\CData ? $zoffset->cdata : $zoffset;
-        $width = $width instanceof \FFI\CData ? $width->cdata : $width;
-        $height = $height instanceof \FFI\CData ? $height->cdata : $height;
-        $depth = $depth instanceof \FFI\CData ? $depth->cdata : $depth;
-        $format = $format instanceof \FFI\CData ? $format->cdata : $format;
-        $type = $type instanceof \FFI\CData ? $type->cdata : $type;
-
-        assert(Type::isUint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isInt16($level), 'Argument $level must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($xoffset), 'Argument $xoffset must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($yoffset), 'Argument $yoffset must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($zoffset), 'Argument $zoffset must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($width), 'Argument $width must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Type::isInt16($height), 'Argument $height must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Type::isInt16($depth), 'Argument $depth must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Type::isUint16($format), 'Argument $format must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glTexSubImage3D', 'void (*)(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLenum type, const void *pixels)');
-        $proc($target, $level, $xoffset, $yoffset, $zoffset, $width, $height, $depth, $format, $type, $pixels);
-    }
-
-    /**
-     * {@see GL46::glCopyTexSubImage3D} and {@see GL46::glCopyTextureSubImage3D} functions replace a rectangular
-     * portion of a three-dimensional or two-dimensional array texture image with pixels from the current
-     * {@see GL46::GL_READ_BUFFER} (rather than from main memory, as is the case for {@see GL46::glTexSubImage3D}).
-     *
-     * The screen-aligned pixel rectangle with lower left corner at ($x, $y) and with width $width and height $height
-     * replaces the portion of the texture array with x indices $xoffset through    xoffset + width - 1  , inclusive,
-     * and y indices $yoffset through    yoffset + height - 1  , inclusive, at z index $zoffset and at the mipmap
-     * level specified by $level.
-     *
-     * The pixels in the rectangle are processed exactly as if {@see GL46::glReadPixels} had been called, but the
-     * process stops just before final conversion. At this point, all pixel component values are clamped to the range
-     *    0 1   and then converted to the texture's internal format for storage in the texel array.
-     *
-     * The destination rectangle in the texture array may not include any texels outside the texture array as it was
-     * originally specified. It is not an error to specify a subtexture with zero width or height, but such a
-     * specification has no effect.
-     *
-     * If any of the pixels within the specified rectangle of the current {@see GL46::GL_READ_BUFFER} are outside the
-     * read window associated with the current rendering context, then the values obtained for those pixels are
-     * undefined.
-     *
-     * No change is made to the internalformat, width, height, depth, or border parameters of the specified texture
-     * array or to texel values outside the specified subregion.
-     *
-     * @see http://docs.gl/gl2/glCopyTexSubImage3D
-     * @see http://docs.gl/gl4/glCopyTexSubImage3D
-     * @since 1.2
-     * @param int|\FFI\CData|\FFI\CInt $target
-     * @param int|\FFI\CData|\FFI\CInt $level
-     * @param int|\FFI\CData|\FFI\CInt $xoffset
-     * @param int|\FFI\CData|\FFI\CInt $yoffset
-     * @param int|\FFI\CData|\FFI\CInt $zoffset
-     * @param int|\FFI\CData|\FFI\CInt $x
-     * @param int|\FFI\CData|\FFI\CInt $y
-     * @param int|\FFI\CData|\FFI\CInt $width
-     * @param int|\FFI\CData|\FFI\CInt $height
-     * @return void
-     */
-    public function copyTexSubImage3D($target, $level, $xoffset, $yoffset, $zoffset, $x, $y, $width, $height): void
-    {
-        $target = $target instanceof \FFI\CData ? $target->cdata : $target;
-        $level = $level instanceof \FFI\CData ? $level->cdata : $level;
-        $xoffset = $xoffset instanceof \FFI\CData ? $xoffset->cdata : $xoffset;
-        $yoffset = $yoffset instanceof \FFI\CData ? $yoffset->cdata : $yoffset;
-        $zoffset = $zoffset instanceof \FFI\CData ? $zoffset->cdata : $zoffset;
-        $x = $x instanceof \FFI\CData ? $x->cdata : $x;
-        $y = $y instanceof \FFI\CData ? $y->cdata : $y;
-        $width = $width instanceof \FFI\CData ? $width->cdata : $width;
-        $height = $height instanceof \FFI\CData ? $height->cdata : $height;
-
-        assert(Type::isUint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isInt16($level), 'Argument $level must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($xoffset), 'Argument $xoffset must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($yoffset), 'Argument $yoffset must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($zoffset), 'Argument $zoffset must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($x), 'Argument $x must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($y), 'Argument $y must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($width), 'Argument $width must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Type::isInt16($height), 'Argument $height must be a C-like GLsizei, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glCopyTexSubImage3D', 'void (*)(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLint x, GLint y, GLsizei width, GLsizei height)');
-        $proc($target, $level, $xoffset, $yoffset, $zoffset, $x, $y, $width, $height);
+    public function texSubImage3D(
+        int $target,
+        int $level,
+        int $xoffset,
+        int $yoffset,
+        int $zoffset,
+        int $width,
+        int $height,
+        int $depth,
+        int $format,
+        int $type,
+        ?\FFI\CData $pixels
+    ): void {
+        $__proc = $this->getProcAs('glTexSubImage3D', 'void (*)(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLenum type, const void *pixels)');
+        $__proc($target, $level, $xoffset, $yoffset, $zoffset, $width, $height, $depth, $format, $type, $pixels);
     }
 }

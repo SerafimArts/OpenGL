@@ -13,100 +13,91 @@ declare(strict_types=1);
 
 namespace Serafim\OpenGL;
 
-use Serafim\OpenGL\Type\Type;
-
 /**
- * The OpenGL functionality up to version 2.1. Includes the deprecated symbols of the Compatibility Profile.
- *
- * OpenGL 2.1 implementations must support at least revision 1.20 of the OpenGL Shading Language.
- *
- * Extensions promoted to core in this release:
- *
- * - ARB_pixel_buffer_object @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_pixel_buffer_object.txt
- * - EXT_texture_sRGB @see https://www.khronos.org/registry/OpenGL/extensions/EXT/EXT_texture_sRGB.txt
+ * @version 2.1
  */
 class GL21 extends GL20
 {
     /**
-     * @var int
      * @since 2.1
+     * @var int
      */
-    public const GL_PIXEL_PACK_BUFFER = 0x88eb;
+    public const GL_PIXEL_PACK_BUFFER = 0x88EB;
     /**
-     * @var int
      * @since 2.1
+     * @var int
      */
-    public const GL_PIXEL_UNPACK_BUFFER = 0x88ec;
+    public const GL_PIXEL_UNPACK_BUFFER = 0x88EC;
     /**
-     * @var int
      * @since 2.1
+     * @var int
      */
-    public const GL_PIXEL_PACK_BUFFER_BINDING = 0x88ed;
+    public const GL_PIXEL_PACK_BUFFER_BINDING = 0x88ED;
     /**
-     * @var int
      * @since 2.1
+     * @var int
      */
-    public const GL_PIXEL_UNPACK_BUFFER_BINDING = 0x88ef;
+    public const GL_PIXEL_UNPACK_BUFFER_BINDING = 0x88EF;
     /**
-     * @var int
      * @since 2.1
+     * @var int
      */
-    public const GL_FLOAT_MAT2x3 = 0x8b65;
+    public const GL_FLOAT_MAT2x3 = 0x8B65;
     /**
-     * @var int
      * @since 2.1
+     * @var int
      */
-    public const GL_FLOAT_MAT2x4 = 0x8b66;
+    public const GL_FLOAT_MAT2x4 = 0x8B66;
     /**
-     * @var int
      * @since 2.1
+     * @var int
      */
-    public const GL_FLOAT_MAT3x2 = 0x8b67;
+    public const GL_FLOAT_MAT3x2 = 0x8B67;
     /**
-     * @var int
      * @since 2.1
+     * @var int
      */
-    public const GL_FLOAT_MAT3x4 = 0x8b68;
+    public const GL_FLOAT_MAT3x4 = 0x8B68;
     /**
-     * @var int
      * @since 2.1
+     * @var int
      */
-    public const GL_FLOAT_MAT4x2 = 0x8b69;
+    public const GL_FLOAT_MAT4x2 = 0x8B69;
     /**
-     * @var int
      * @since 2.1
+     * @var int
      */
-    public const GL_FLOAT_MAT4x3 = 0x8b6a;
+    public const GL_FLOAT_MAT4x3 = 0x8B6A;
     /**
-     * @var int
      * @since 2.1
+     * @var int
      */
-    public const GL_SRGB = 0x8c40;
+    public const GL_SRGB = 0x8C40;
     /**
-     * @var int
      * @since 2.1
+     * @var int
      */
-    public const GL_SRGB8 = 0x8c41;
+    public const GL_SRGB8 = 0x8C41;
     /**
-     * @var int
      * @since 2.1
+     * @var int
      */
-    public const GL_SRGB_ALPHA = 0x8c42;
+    public const GL_SRGB_ALPHA = 0x8C42;
     /**
-     * @var int
      * @since 2.1
+     * @var int
      */
-    public const GL_SRGB8_ALPHA8 = 0x8c43;
+    public const GL_SRGB8_ALPHA8 = 0x8C43;
     /**
-     * @var int
      * @since 2.1
+     * @var int
      */
-    public const GL_COMPRESSED_SRGB = 0x8c48;
+    public const GL_COMPRESSED_SRGB = 0x8C48;
     /**
-     * @var int
      * @since 2.1
+     * @var int
      */
-    public const GL_COMPRESSED_SRGB_ALPHA = 0x8c49;
+    public const GL_COMPRESSED_SRGB_ALPHA = 0x8C49;
 
     /**
      * {@see GL46::glUniformSubroutines} loads all active subroutine uniforms for shader stage $shadertype of the
@@ -117,24 +108,16 @@ class GL21 extends GL20
      *
      * @see http://docs.gl/gl4/glUniformSubroutines
      * @since 2.1
-     * @param int|\FFI\CData|\FFI\CInt $location
-     * @param int|\FFI\CData|\FFI\CInt $count
-     * @param int|\FFI\CData|\FFI\CInt $transpose
-     * @param \FFI\CData|\FFI\CFloatPtr|null $value
+     * @param int $location
+     * @param int $count
+     * @param int $transpose
+     * @param \FFI\CData|null $value
      * @return void
      */
-    public function uniformMatrix2x3fv($location, $count, $transpose, ?\FFI\CData $value): void
+    public function uniformMatrix2x3fv(int $location, int $count, int $transpose, ?\FFI\CData $value): void
     {
-        $location = $location instanceof \FFI\CData ? $location->cdata : $location;
-        $count = $count instanceof \FFI\CData ? $count->cdata : $count;
-        $transpose = $transpose instanceof \FFI\CData ? $transpose->cdata : $transpose;
-
-        assert(Type::isInt16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Type::isUint8($transpose), 'Argument $transpose must be a C-like GLboolean, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glUniformMatrix2x3fv', 'void (*)(GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)');
-        $proc($location, $count, $transpose, $value);
+        $__proc = $this->getProcAs('glUniformMatrix2x3fv', 'void (*)(GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)');
+        $__proc($location, $count, $transpose, $value);
     }
 
     /**
@@ -146,24 +129,16 @@ class GL21 extends GL20
      *
      * @see http://docs.gl/gl4/glUniformSubroutines
      * @since 2.1
-     * @param int|\FFI\CData|\FFI\CInt $location
-     * @param int|\FFI\CData|\FFI\CInt $count
-     * @param int|\FFI\CData|\FFI\CInt $transpose
-     * @param \FFI\CData|\FFI\CFloatPtr|null $value
+     * @param int $location
+     * @param int $count
+     * @param int $transpose
+     * @param \FFI\CData|null $value
      * @return void
      */
-    public function uniformMatrix3x2fv($location, $count, $transpose, ?\FFI\CData $value): void
+    public function uniformMatrix2x4fv(int $location, int $count, int $transpose, ?\FFI\CData $value): void
     {
-        $location = $location instanceof \FFI\CData ? $location->cdata : $location;
-        $count = $count instanceof \FFI\CData ? $count->cdata : $count;
-        $transpose = $transpose instanceof \FFI\CData ? $transpose->cdata : $transpose;
-
-        assert(Type::isInt16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Type::isUint8($transpose), 'Argument $transpose must be a C-like GLboolean, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glUniformMatrix3x2fv', 'void (*)(GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)');
-        $proc($location, $count, $transpose, $value);
+        $__proc = $this->getProcAs('glUniformMatrix2x4fv', 'void (*)(GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)');
+        $__proc($location, $count, $transpose, $value);
     }
 
     /**
@@ -175,24 +150,16 @@ class GL21 extends GL20
      *
      * @see http://docs.gl/gl4/glUniformSubroutines
      * @since 2.1
-     * @param int|\FFI\CData|\FFI\CInt $location
-     * @param int|\FFI\CData|\FFI\CInt $count
-     * @param int|\FFI\CData|\FFI\CInt $transpose
-     * @param \FFI\CData|\FFI\CFloatPtr|null $value
+     * @param int $location
+     * @param int $count
+     * @param int $transpose
+     * @param \FFI\CData|null $value
      * @return void
      */
-    public function uniformMatrix2x4fv($location, $count, $transpose, ?\FFI\CData $value): void
+    public function uniformMatrix3x2fv(int $location, int $count, int $transpose, ?\FFI\CData $value): void
     {
-        $location = $location instanceof \FFI\CData ? $location->cdata : $location;
-        $count = $count instanceof \FFI\CData ? $count->cdata : $count;
-        $transpose = $transpose instanceof \FFI\CData ? $transpose->cdata : $transpose;
-
-        assert(Type::isInt16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Type::isUint8($transpose), 'Argument $transpose must be a C-like GLboolean, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glUniformMatrix2x4fv', 'void (*)(GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)');
-        $proc($location, $count, $transpose, $value);
+        $__proc = $this->getProcAs('glUniformMatrix3x2fv', 'void (*)(GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)');
+        $__proc($location, $count, $transpose, $value);
     }
 
     /**
@@ -204,24 +171,16 @@ class GL21 extends GL20
      *
      * @see http://docs.gl/gl4/glUniformSubroutines
      * @since 2.1
-     * @param int|\FFI\CData|\FFI\CInt $location
-     * @param int|\FFI\CData|\FFI\CInt $count
-     * @param int|\FFI\CData|\FFI\CInt $transpose
-     * @param \FFI\CData|\FFI\CFloatPtr|null $value
+     * @param int $location
+     * @param int $count
+     * @param int $transpose
+     * @param \FFI\CData|null $value
      * @return void
      */
-    public function uniformMatrix4x2fv($location, $count, $transpose, ?\FFI\CData $value): void
+    public function uniformMatrix3x4fv(int $location, int $count, int $transpose, ?\FFI\CData $value): void
     {
-        $location = $location instanceof \FFI\CData ? $location->cdata : $location;
-        $count = $count instanceof \FFI\CData ? $count->cdata : $count;
-        $transpose = $transpose instanceof \FFI\CData ? $transpose->cdata : $transpose;
-
-        assert(Type::isInt16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Type::isUint8($transpose), 'Argument $transpose must be a C-like GLboolean, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glUniformMatrix4x2fv', 'void (*)(GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)');
-        $proc($location, $count, $transpose, $value);
+        $__proc = $this->getProcAs('glUniformMatrix3x4fv', 'void (*)(GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)');
+        $__proc($location, $count, $transpose, $value);
     }
 
     /**
@@ -233,24 +192,16 @@ class GL21 extends GL20
      *
      * @see http://docs.gl/gl4/glUniformSubroutines
      * @since 2.1
-     * @param int|\FFI\CData|\FFI\CInt $location
-     * @param int|\FFI\CData|\FFI\CInt $count
-     * @param int|\FFI\CData|\FFI\CInt $transpose
-     * @param \FFI\CData|\FFI\CFloatPtr|null $value
+     * @param int $location
+     * @param int $count
+     * @param int $transpose
+     * @param \FFI\CData|null $value
      * @return void
      */
-    public function uniformMatrix3x4fv($location, $count, $transpose, ?\FFI\CData $value): void
+    public function uniformMatrix4x2fv(int $location, int $count, int $transpose, ?\FFI\CData $value): void
     {
-        $location = $location instanceof \FFI\CData ? $location->cdata : $location;
-        $count = $count instanceof \FFI\CData ? $count->cdata : $count;
-        $transpose = $transpose instanceof \FFI\CData ? $transpose->cdata : $transpose;
-
-        assert(Type::isInt16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Type::isUint8($transpose), 'Argument $transpose must be a C-like GLboolean, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glUniformMatrix3x4fv', 'void (*)(GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)');
-        $proc($location, $count, $transpose, $value);
+        $__proc = $this->getProcAs('glUniformMatrix4x2fv', 'void (*)(GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)');
+        $__proc($location, $count, $transpose, $value);
     }
 
     /**
@@ -262,23 +213,15 @@ class GL21 extends GL20
      *
      * @see http://docs.gl/gl4/glUniformSubroutines
      * @since 2.1
-     * @param int|\FFI\CData|\FFI\CInt $location
-     * @param int|\FFI\CData|\FFI\CInt $count
-     * @param int|\FFI\CData|\FFI\CInt $transpose
-     * @param \FFI\CData|\FFI\CFloatPtr|null $value
+     * @param int $location
+     * @param int $count
+     * @param int $transpose
+     * @param \FFI\CData|null $value
      * @return void
      */
-    public function uniformMatrix4x3fv($location, $count, $transpose, ?\FFI\CData $value): void
+    public function uniformMatrix4x3fv(int $location, int $count, int $transpose, ?\FFI\CData $value): void
     {
-        $location = $location instanceof \FFI\CData ? $location->cdata : $location;
-        $count = $count instanceof \FFI\CData ? $count->cdata : $count;
-        $transpose = $transpose instanceof \FFI\CData ? $transpose->cdata : $transpose;
-
-        assert(Type::isInt16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Type::isUint8($transpose), 'Argument $transpose must be a C-like GLboolean, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glUniformMatrix4x3fv', 'void (*)(GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)');
-        $proc($location, $count, $transpose, $value);
+        $__proc = $this->getProcAs('glUniformMatrix4x3fv', 'void (*)(GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)');
+        $__proc($location, $count, $transpose, $value);
     }
 }

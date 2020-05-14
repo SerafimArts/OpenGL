@@ -96,4 +96,22 @@ final class Util
     {
         return \FFI::addr(self::string($string)[0]);
     }
+
+    /**
+     * @param int $length
+     * @return CData
+     */
+    public static function emptyCharPtr(int $length): CData
+    {
+        return \FFI::addr(self::emptyString($length)[0]);
+    }
+
+    /**
+     * @param int $length
+     * @return CData
+     */
+    public static function emptyString(int $length): CData
+    {
+        return \FFI::new("char[$length]", false);
+    }
 }

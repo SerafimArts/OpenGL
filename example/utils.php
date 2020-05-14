@@ -13,52 +13,48 @@ use Serafim\OpenGL\GL43 as GL;
 
 function assert_program(GL $gl, int $id, int $status): void
 {
-    $gl->getProgramiv($id, $status, FFI::addr($result = $gl->new('GLint')));
-    $gl->getProgramiv($id, GL::GL_INFO_LOG_LENGTH, FFI::addr($infoLogLength = $gl->new('int')));
+    $infoLogLength = $result = 0;
 
-    if ($result->cdata === GL::GL_FALSE) {
-        $ptr = $gl->charPtr(\str_repeat(' ', $infoLogLength->cdata));
-        $gl->getShaderInfoLog($id, $infoLogLength->cdata, null, $ptr);
+    $gl->getProgramiv($id, $status, $result);
+    $gl->getProgramiv($id, GL::GL_INFO_LOG_LENGTH, $infoLogLength);
 
-        throw new \RuntimeException(FFI::string($ptr));
+    if ($result === GL::GL_FALSE) {
+        $info = $log = null;
+        $gl->getShaderInfoLog($id, $infoLogLength, $info, $log);
+
+        throw new \RuntimeException($log);
     }
 }
 
 function assert_shader(GL $gl, int $id, int $status): void
 {
-    $gl->getShaderiv($id, $status, FFI::addr($result = $gl->new('GLint')));
-    $gl->getShaderiv($id, GL::GL_INFO_LOG_LENGTH, FFI::addr($infoLogLength = $gl->new('int')));
+    $infoLogLength = $result = 0;
 
-    if ($result->cdata === GL::GL_FALSE) {
-        $ptr = $gl->charPtr(\str_repeat(' ', $infoLogLength->cdata));
-        $gl->getShaderInfoLog($id, $infoLogLength->cdata, null, $ptr);
+    $gl->getShaderiv($id, $status, $result);
+    $gl->getShaderiv($id, GL::GL_INFO_LOG_LENGTH, $infoLogLength);
 
-        throw new \RuntimeException(FFI::string($ptr));
+    if ($result === GL::GL_FALSE) {
+        $info = $log = null;
+        $gl->getShaderInfoLog($id, $infoLogLength, $info, $log);
+
+        throw new \RuntimeException($log);
     }
 }
 
 function compile_shader(GL $gl, string $file, int $type): int
 {
-    $source = \trim(\file_get_contents($file));
-    $source = \str_replace("\r", '', $source);
-
-    $string = $gl->charPtr($source);
+    $sources = \file_get_contents($file);
 
     $id = $gl->createShader($type);
-    $gl->shaderSource($id, 1, FFI::addr($string), null);
+    $gl->shaderSource($id, 1, [$sources], null);
     $gl->compileShader($id);
 
-    $out = $gl->charPtr($source);
-
-    $gl->getShaderSource($id, 512, null, $out);
     try {
         assert_shader($gl, $id, GL::GL_COMPILE_STATUS);
 
         return $id;
     } catch (\Throwable $e) {
         throw new \RuntimeException($e->getMessage() . ' in shader ' . \realpath($file) . ':0', 0, $e);
-    } finally {
-        FFI::free($string);
     }
 }
 

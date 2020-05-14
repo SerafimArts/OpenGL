@@ -13,425 +13,479 @@ declare(strict_types=1);
 
 namespace Serafim\OpenGL;
 
-use Serafim\OpenGL\Type\Type;
-
 /**
- * The OpenGL functionality up to version 2.0. Includes the deprecated symbols of the Compatibility Profile.
- *
- * Extensions promoted to core in this release:
- *
- * - ARB_shader_objects @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_shader_objects.txt
- * - ARB_vertex_shader @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_vertex_shader.txt
- * - ARB_fragment_shader @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_fragment_shader.txt
- * - ARB_shading_language_100 @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_shading_language_100.txt
- * - ARB_draw_buffers @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_draw_buffers.txt
- * - ARB_texture_non_power_of_two @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_texture_non_power_of_two.txt
- * - ARB_point_sprite @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_point_sprite.txt
- * - ATI_separate_stencil @see https://www.khronos.org/registry/OpenGL/extensions/ATI/ATI_separate_stencil.txt
- * - EXT_stencil_two_side @see https://www.khronos.org/registry/OpenGL/extensions/EXT/EXT_stencil_two_side.txt
+ * @version 2.0
  */
 class GL20 extends GL15
 {
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
     public const GL_BLEND_EQUATION_RGB = 0x8009;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
     public const GL_VERTEX_ATTRIB_ARRAY_ENABLED = 0x8622;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
     public const GL_VERTEX_ATTRIB_ARRAY_SIZE = 0x8623;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
     public const GL_VERTEX_ATTRIB_ARRAY_STRIDE = 0x8624;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
     public const GL_VERTEX_ATTRIB_ARRAY_TYPE = 0x8625;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
     public const GL_CURRENT_VERTEX_ATTRIB = 0x8626;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
     public const GL_VERTEX_PROGRAM_POINT_SIZE = 0x8642;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
     public const GL_VERTEX_ATTRIB_ARRAY_POINTER = 0x8645;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
     public const GL_STENCIL_BACK_FUNC = 0x8800;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
     public const GL_STENCIL_BACK_FAIL = 0x8801;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
     public const GL_STENCIL_BACK_PASS_DEPTH_FAIL = 0x8802;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
     public const GL_STENCIL_BACK_PASS_DEPTH_PASS = 0x8803;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
     public const GL_MAX_DRAW_BUFFERS = 0x8824;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
     public const GL_DRAW_BUFFER0 = 0x8825;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
     public const GL_DRAW_BUFFER1 = 0x8826;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
     public const GL_DRAW_BUFFER2 = 0x8827;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
     public const GL_DRAW_BUFFER3 = 0x8828;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
     public const GL_DRAW_BUFFER4 = 0x8829;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
-    public const GL_DRAW_BUFFER5 = 0x882a;
+    public const GL_DRAW_BUFFER5 = 0x882A;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
-    public const GL_DRAW_BUFFER6 = 0x882b;
+    public const GL_DRAW_BUFFER6 = 0x882B;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
-    public const GL_DRAW_BUFFER7 = 0x882c;
+    public const GL_DRAW_BUFFER7 = 0x882C;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
-    public const GL_DRAW_BUFFER8 = 0x882d;
+    public const GL_DRAW_BUFFER8 = 0x882D;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
-    public const GL_DRAW_BUFFER9 = 0x882e;
+    public const GL_DRAW_BUFFER9 = 0x882E;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
-    public const GL_DRAW_BUFFER10 = 0x882f;
+    public const GL_DRAW_BUFFER10 = 0x882F;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
     public const GL_DRAW_BUFFER11 = 0x8830;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
     public const GL_DRAW_BUFFER12 = 0x8831;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
     public const GL_DRAW_BUFFER13 = 0x8832;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
     public const GL_DRAW_BUFFER14 = 0x8833;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
     public const GL_DRAW_BUFFER15 = 0x8834;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
-    public const GL_BLEND_EQUATION_ALPHA = 0x883d;
+    public const GL_BLEND_EQUATION_ALPHA = 0x883D;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
     public const GL_MAX_VERTEX_ATTRIBS = 0x8869;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
-    public const GL_VERTEX_ATTRIB_ARRAY_NORMALIZED = 0x886a;
+    public const GL_VERTEX_ATTRIB_ARRAY_NORMALIZED = 0x886A;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
     public const GL_MAX_TEXTURE_IMAGE_UNITS = 0x8872;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
-    public const GL_FRAGMENT_SHADER = 0x8b30;
+    public const GL_FRAGMENT_SHADER = 0x8B30;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
-    public const GL_VERTEX_SHADER = 0x8b31;
+    public const GL_VERTEX_SHADER = 0x8B31;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
-    public const GL_MAX_FRAGMENT_UNIFORM_COMPONENTS = 0x8b49;
+    public const GL_MAX_FRAGMENT_UNIFORM_COMPONENTS = 0x8B49;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
-    public const GL_MAX_VERTEX_UNIFORM_COMPONENTS = 0x8b4a;
+    public const GL_MAX_VERTEX_UNIFORM_COMPONENTS = 0x8B4A;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
-    public const GL_MAX_VARYING_FLOATS = 0x8b4b;
+    public const GL_MAX_VARYING_FLOATS = 0x8B4B;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
-    public const GL_MAX_VERTEX_TEXTURE_IMAGE_UNITS = 0x8b4c;
+    public const GL_MAX_VERTEX_TEXTURE_IMAGE_UNITS = 0x8B4C;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
-    public const GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS = 0x8b4d;
+    public const GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS = 0x8B4D;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
-    public const GL_SHADER_TYPE = 0x8b4f;
+    public const GL_SHADER_TYPE = 0x8B4F;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
-    public const GL_FLOAT_VEC2 = 0x8b50;
+    public const GL_FLOAT_VEC2 = 0x8B50;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
-    public const GL_FLOAT_VEC3 = 0x8b51;
+    public const GL_FLOAT_VEC3 = 0x8B51;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
-    public const GL_FLOAT_VEC4 = 0x8b52;
+    public const GL_FLOAT_VEC4 = 0x8B52;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
-    public const GL_INT_VEC2 = 0x8b53;
+    public const GL_INT_VEC2 = 0x8B53;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
-    public const GL_INT_VEC3 = 0x8b54;
+    public const GL_INT_VEC3 = 0x8B54;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
-    public const GL_INT_VEC4 = 0x8b55;
+    public const GL_INT_VEC4 = 0x8B55;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
-    public const GL_BOOL = 0x8b56;
+    public const GL_BOOL = 0x8B56;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
-    public const GL_BOOL_VEC2 = 0x8b57;
+    public const GL_BOOL_VEC2 = 0x8B57;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
-    public const GL_BOOL_VEC3 = 0x8b58;
+    public const GL_BOOL_VEC3 = 0x8B58;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
-    public const GL_BOOL_VEC4 = 0x8b59;
+    public const GL_BOOL_VEC4 = 0x8B59;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
-    public const GL_FLOAT_MAT2 = 0x8b5a;
+    public const GL_FLOAT_MAT2 = 0x8B5A;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
-    public const GL_FLOAT_MAT3 = 0x8b5b;
+    public const GL_FLOAT_MAT3 = 0x8B5B;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
-    public const GL_FLOAT_MAT4 = 0x8b5c;
+    public const GL_FLOAT_MAT4 = 0x8B5C;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
-    public const GL_SAMPLER_1D = 0x8b5d;
+    public const GL_SAMPLER_1D = 0x8B5D;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
-    public const GL_SAMPLER_2D = 0x8b5e;
+    public const GL_SAMPLER_2D = 0x8B5E;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
-    public const GL_SAMPLER_3D = 0x8b5f;
+    public const GL_SAMPLER_3D = 0x8B5F;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
-    public const GL_SAMPLER_CUBE = 0x8b60;
+    public const GL_SAMPLER_CUBE = 0x8B60;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
-    public const GL_SAMPLER_1D_SHADOW = 0x8b61;
+    public const GL_SAMPLER_1D_SHADOW = 0x8B61;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
-    public const GL_SAMPLER_2D_SHADOW = 0x8b62;
+    public const GL_SAMPLER_2D_SHADOW = 0x8B62;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
-    public const GL_DELETE_STATUS = 0x8b80;
+    public const GL_DELETE_STATUS = 0x8B80;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
-    public const GL_COMPILE_STATUS = 0x8b81;
+    public const GL_COMPILE_STATUS = 0x8B81;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
-    public const GL_LINK_STATUS = 0x8b82;
+    public const GL_LINK_STATUS = 0x8B82;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
-    public const GL_VALIDATE_STATUS = 0x8b83;
+    public const GL_VALIDATE_STATUS = 0x8B83;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
-    public const GL_INFO_LOG_LENGTH = 0x8b84;
+    public const GL_INFO_LOG_LENGTH = 0x8B84;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
-    public const GL_ATTACHED_SHADERS = 0x8b85;
+    public const GL_ATTACHED_SHADERS = 0x8B85;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
-    public const GL_ACTIVE_UNIFORMS = 0x8b86;
+    public const GL_ACTIVE_UNIFORMS = 0x8B86;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
-    public const GL_ACTIVE_UNIFORM_MAX_LENGTH = 0x8b87;
+    public const GL_ACTIVE_UNIFORM_MAX_LENGTH = 0x8B87;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
-    public const GL_SHADER_SOURCE_LENGTH = 0x8b88;
+    public const GL_SHADER_SOURCE_LENGTH = 0x8B88;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
-    public const GL_ACTIVE_ATTRIBUTES = 0x8b89;
+    public const GL_ACTIVE_ATTRIBUTES = 0x8B89;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
-    public const GL_ACTIVE_ATTRIBUTE_MAX_LENGTH = 0x8b8a;
+    public const GL_ACTIVE_ATTRIBUTE_MAX_LENGTH = 0x8B8A;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
-    public const GL_FRAGMENT_SHADER_DERIVATIVE_HINT = 0x8b8b;
+    public const GL_FRAGMENT_SHADER_DERIVATIVE_HINT = 0x8B8B;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
-    public const GL_SHADING_LANGUAGE_VERSION = 0x8b8c;
+    public const GL_SHADING_LANGUAGE_VERSION = 0x8B8C;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
-    public const GL_CURRENT_PROGRAM = 0x8b8d;
+    public const GL_CURRENT_PROGRAM = 0x8B8D;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
-    public const GL_POINT_SPRITE_COORD_ORIGIN = 0x8ca0;
+    public const GL_POINT_SPRITE_COORD_ORIGIN = 0x8CA0;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
-    public const GL_LOWER_LEFT = 0x8ca1;
+    public const GL_LOWER_LEFT = 0x8CA1;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
-    public const GL_UPPER_LEFT = 0x8ca2;
+    public const GL_UPPER_LEFT = 0x8CA2;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
-    public const GL_STENCIL_BACK_REF = 0x8ca3;
+    public const GL_STENCIL_BACK_REF = 0x8CA3;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
-    public const GL_STENCIL_BACK_VALUE_MASK = 0x8ca4;
+    public const GL_STENCIL_BACK_VALUE_MASK = 0x8CA4;
     /**
-     * @var int
      * @since 2.0
+     * @var int
      */
-    public const GL_STENCIL_BACK_WRITEMASK = 0x8ca5;
+    public const GL_STENCIL_BACK_WRITEMASK = 0x8CA5;
+
+    /**
+     * In order to create a complete shader program, there must be a way to specify the list of things that will be
+     * linked together. Program objects provide this mechanism. Shaders that are to be linked together in a program
+     * object must first be attached to that program object. {@see GL46::glAttachShader} attaches the shader object
+     * specified by $shader to the program object specified by $program. This indicates that $shader will be included
+     * in link operations that will be performed on $program.
+     *
+     * All operations that can be performed on a shader object are valid whether or not the shader object is attached
+     * to a program object. It is permissible to attach a shader object to a program object before source code has
+     * been loaded into the shader object or before the shader object has been compiled. It is permissible to attach
+     * multiple shader objects of the same type because each may contain a portion of the complete shader. It is also
+     * permissible to attach a shader object to more than one program object. If a shader object is deleted while it
+     * is attached to a program object, it will be flagged for deletion, and deletion will not occur until
+     * {@see GL46::glDetachShader} is called to detach it from all program objects to which it is attached.
+     *
+     * @see http://docs.gl/gl2/glAttachShader
+     * @see http://docs.gl/gl4/glAttachShader
+     * @since 2.0
+     * @param int $program
+     * @param int $shader
+     * @return void
+     */
+    public function attachShader(int $program, int $shader): void
+    {
+        $__proc = $this->getProcAs('glAttachShader', 'void (*)(GLuint program, GLuint shader)');
+        $__proc($program, $shader);
+    }
+
+    /**
+     * {@see GL46::glBindAttribLocation} is used to associate a user-defined attribute variable in the program object
+     * specified by $program with a generic vertex attribute index. The name of the user-defined attribute variable
+     * is passed as a null terminated string in $name. The generic vertex attribute index to be bound to this
+     * variable is specified by $index. When $program is made part of current state, values provided via the generic
+     * vertex attribute $index will modify the value of the user-defined attribute variable specified by $name.
+     *
+     * If $name refers to a matrix attribute variable, $index refers to the first column of the matrix. Other matrix
+     * columns are then automatically bound to locations $index+1 for a matrix of type {@see GL46::mat2}; $index+1
+     * and $index+2 for a matrix of type {@see GL46::mat3}; and $index+1, $index+2, and $index+3 for a matrix of type
+     * {@see GL46::mat4}.
+     *
+     * This command makes it possible for vertex shaders to use descriptive names for attribute variables rather than
+     * generic variables that are numbered from zero to the value of {@see GL46::GL_MAX_VERTEX_ATTRIBS} minus one.
+     * The values sent to each generic attribute index are part of current state. If a different program object is
+     * made current by calling {@see GL46::glUseProgram}, the generic vertex attributes are tracked in such a way
+     * that the same values will be observed by attributes in the new program object that are also bound to $index.
+     *
+     * Attribute variable name-to-generic attribute index bindings for a program object can be explicitly assigned at
+     * any time by calling {@see GL46::glBindAttribLocation}. Attribute bindings do not go into effect until
+     * {@see GL46::glLinkProgram} is called. After a program object has been linked successfully, the index values
+     * for generic attributes remain fixed (and their values can be queried) until the next link command occurs.
+     *
+     * Any attribute binding that occurs after the program object has been linked will not take effect until the next
+     * time the program object is linked.
+     *
+     * @see http://docs.gl/gl2/glBindAttribLocation
+     * @see http://docs.gl/gl4/glBindAttribLocation
+     * @since 2.0
+     * @param int $program
+     * @param int $index
+     * @param \FFI\CData|null $name
+     * @return void
+     */
+    public function bindAttribLocation(int $program, int $index, ?\FFI\CData $name): void
+    {
+        $__proc = $this->getProcAs('glBindAttribLocation', 'void (*)(GLuint program, GLuint index, const GLchar *name)');
+        $__proc($program, $index, $name);
+    }
 
     /**
      * The blend equations determines how a new pixel (the ''source'' color) is combined with a pixel already in the
@@ -471,20 +525,192 @@ class GL20 extends GL15
      * @see http://docs.gl/gl2/glBlendEquationSeparate
      * @see http://docs.gl/gl4/glBlendEquationSeparate
      * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $modeRGB
-     * @param int|\FFI\CData|\FFI\CInt $modeAlpha
+     * @param int $modeRGB
+     * @param int $modeAlpha
      * @return void
      */
-    public function blendEquationSeparate($modeRGB, $modeAlpha): void
+    public function blendEquationSeparate(int $modeRGB, int $modeAlpha): void
     {
-        $modeRGB = $modeRGB instanceof \FFI\CData ? $modeRGB->cdata : $modeRGB;
-        $modeAlpha = $modeAlpha instanceof \FFI\CData ? $modeAlpha->cdata : $modeAlpha;
+        $__proc = $this->getProcAs('glBlendEquationSeparate', 'void (*)(GLenum modeRGB, GLenum modeAlpha)');
+        $__proc($modeRGB, $modeAlpha);
+    }
 
-        assert(Type::isUint16($modeRGB), 'Argument $modeRGB must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($modeAlpha), 'Argument $modeAlpha must be a C-like GLenum, but incompatible or overflow value given');
+    /**
+     * {@see GL46::glCompileShader} compiles the source code strings that have been stored in the shader object
+     * specified by $shader.
+     *
+     * The compilation status will be stored as part of the shader object's state. This value will be set to
+     * {@see GL46::GL_TRUE} if the shader was compiled without errors and is ready for use, and {@see GL46::GL_FALSE}
+     * otherwise. It can be queried by calling {@see GL46::glGetShader} with arguments $shader and
+     * {@see GL46::GL_COMPILE_STATUS}.
+     *
+     * Compilation of a shader can fail for a number of reasons as specified by the OpenGL Shading Language
+     * Specification. Whether or not the compilation was successful, information about the compilation can be
+     * obtained from the shader object's information log by calling {@see GL46::glGetShaderInfoLog}.
+     *
+     * @see http://docs.gl/gl2/glCompileShader
+     * @see http://docs.gl/gl4/glCompileShader
+     * @since 2.0
+     * @param int $shader
+     * @return void
+     */
+    public function compileShader(int $shader): void
+    {
+        $__proc = $this->getProcAs('glCompileShader', 'void (*)(GLuint shader)');
+        $__proc($shader);
+    }
 
-        $proc = $this->getProcAddress('glBlendEquationSeparate', 'void (*)(GLenum modeRGB, GLenum modeAlpha)');
-        $proc($modeRGB, $modeAlpha);
+    /**
+     * {@see GL46::glCreateProgram} creates an empty program object and returns a non-zero value by which it can be
+     * referenced. A program object is an object to which shader objects can be attached. This provides a mechanism
+     * to specify the shader objects that will be linked to create a program. It also provides a means for checking
+     * the compatibility of the shaders that will be used to create a program (for instance, checking the
+     * compatibility between a vertex shader and a fragment shader). When no longer needed as part of a program
+     * object, shader objects can be detached.
+     *
+     * One or more executables are created in a program object by successfully attaching shader objects to it with
+     * {@see GL46::glAttachShader}, successfully compiling the shader objects with {@see GL46::glCompileShader}, and
+     * successfully linking the program object with {@see GL46::glLinkProgram}. These executables are made part of
+     * current state when {@see GL46::glUseProgram} is called. Program objects can be deleted by calling
+     * {@see GL46::glDeleteProgram}. The memory associated with the program object will be deleted when it is no
+     * longer part of current rendering state for any context.
+     *
+     * @see http://docs.gl/gl2/glCreateProgram
+     * @see http://docs.gl/gl4/glCreateProgram
+     * @since 2.0
+     * @return int
+     */
+    public function createProgram(): int
+    {
+        $__proc = $this->getProcAs('glCreateProgram', 'GLuint (*)()');
+        return $__proc();
+    }
+
+    /**
+     * {@see GL46::glCreateShader} creates an empty shader object and returns a non-zero value by which it can be
+     * referenced. A shader object is used to maintain the source code strings that define a shader. $shaderType
+     * indicates the type of shader to be created. Five types of shader are supported. A shader of type
+     * {@see GL46::GL_COMPUTE_SHADER} is a shader that is intended to run on the programmable compute processor. A
+     * shader of type {@see GL46::GL_VERTEX_SHADER} is a shader that is intended to run on the programmable vertex
+     * processor. A shader of type {@see GL46::GL_TESS_CONTROL_SHADER} is a shader that is intended to run on the
+     * programmable tessellation processor in the control stage. A shader of type
+     * {@see GL46::GL_TESS_EVALUATION_SHADER} is a shader that is intended to run on the programmable tessellation
+     * processor in the evaluation stage. A shader of type {@see GL46::GL_GEOMETRY_SHADER} is a shader that is
+     * intended to run on the programmable geometry processor. A shader of type {@see GL46::GL_FRAGMENT_SHADER} is a
+     * shader that is intended to run on the programmable fragment processor.
+     *
+     * When created, a shader object's {@see GL46::GL_SHADER_TYPE} parameter is set to either
+     * {@see GL46::GL_COMPUTE_SHADER}, {@see GL46::GL_VERTEX_SHADER}, {@see GL46::GL_TESS_CONTROL_SHADER},
+     * {@see GL46::GL_TESS_EVALUATION_SHADER}, {@see GL46::GL_GEOMETRY_SHADER} or {@see GL46::GL_FRAGMENT_SHADER},
+     * depending on the value of $shaderType.
+     *
+     * @see http://docs.gl/gl2/glCreateShader
+     * @see http://docs.gl/gl4/glCreateShader
+     * @since 2.0
+     * @param int $type
+     * @return int
+     */
+    public function createShader(int $type): int
+    {
+        $__proc = $this->getProcAs('glCreateShader', 'GLuint (*)(GLenum type)');
+        return $__proc($type);
+    }
+
+    /**
+     * {@see GL46::glDeleteProgram} frees the memory and invalidates the name associated with the program object
+     * specified by $program. This command effectively undoes the effects of a call to {@see GL46::glCreateProgram}.
+     *
+     * If a program object is in use as part of current rendering state, it will be flagged for deletion, but it will
+     * not be deleted until it is no longer part of current state for any rendering context. If a program object to
+     * be deleted has shader objects attached to it, those shader objects will be automatically detached but not
+     * deleted unless they have already been flagged for deletion by a previous call to {@see GL46::glDeleteShader}.
+     * A value of 0 for $program will be silently ignored.
+     *
+     * To determine whether a program object has been flagged for deletion, call {@see GL46::glGetProgram} with
+     * arguments $program and {@see GL46::GL_DELETE_STATUS}.
+     *
+     * @see http://docs.gl/gl2/glDeleteProgram
+     * @see http://docs.gl/gl4/glDeleteProgram
+     * @since 2.0
+     * @param int $program
+     * @return void
+     */
+    public function deleteProgram(int $program): void
+    {
+        $__proc = $this->getProcAs('glDeleteProgram', 'void (*)(GLuint program)');
+        $__proc($program);
+    }
+
+    /**
+     * {@see GL46::glDeleteShader} frees the memory and invalidates the name associated with the shader object
+     * specified by $shader. This command effectively undoes the effects of a call to {@see GL46::glCreateShader}.
+     *
+     * If a shader object to be deleted is attached to a program object, it will be flagged for deletion, but it will
+     * not be deleted until it is no longer attached to any program object, for any rendering context (i.e., it must
+     * be detached from wherever it was attached before it will be deleted). A value of 0 for $shader will be
+     * silently ignored.
+     *
+     * To determine whether an object has been flagged for deletion, call {@see GL46::glGetShader} with arguments
+     * $shader and {@see GL46::GL_DELETE_STATUS}.
+     *
+     * @see http://docs.gl/gl2/glDeleteShader
+     * @see http://docs.gl/gl4/glDeleteShader
+     * @since 2.0
+     * @param int $shader
+     * @return void
+     */
+    public function deleteShader(int $shader): void
+    {
+        $__proc = $this->getProcAs('glDeleteShader', 'void (*)(GLuint shader)');
+        $__proc($shader);
+    }
+
+    /**
+     * {@see GL46::glDetachShader} detaches the shader object specified by $shader from the program object specified
+     * by $program. This command can be used to undo the effect of the command {@see GL46::glAttachShader}.
+     *
+     * If $shader has already been flagged for deletion by a call to {@see GL46::glDeleteShader} and it is not
+     * attached to any other program object, it will be deleted after it has been detached.
+     *
+     * @see http://docs.gl/gl2/glDetachShader
+     * @see http://docs.gl/gl4/glDetachShader
+     * @since 2.0
+     * @param int $program
+     * @param int $shader
+     * @return void
+     */
+    public function detachShader(int $program, int $shader): void
+    {
+        $__proc = $this->getProcAs('glDetachShader', 'void (*)(GLuint program, GLuint shader)');
+        $__proc($program, $shader);
+    }
+
+    /**
+     * {@see GL46::glEnableVertexAttribArray} and {@see GL46::glEnableVertexArrayAttrib} enable the generic vertex
+     * attribute array specified by $index. {@see GL46::glEnableVertexAttribArray} uses currently bound vertex array
+     * object for the operation, whereas {@see GL46::glEnableVertexArrayAttrib} updates state of the vertex array
+     * object with ID $vaobj.
+     *
+     * {@see GL46::glDisableVertexAttribArray} and {@see GL46::glDisableVertexArrayAttrib} disable the generic vertex
+     * attribute array specified by $index. {@see GL46::glDisableVertexAttribArray} uses currently bound vertex array
+     * object for the operation, whereas {@see GL46::glDisableVertexArrayAttrib} updates state of the vertex array
+     * object with ID $vaobj.
+     *
+     * By default, all client-side capabilities are disabled, including all generic vertex attribute arrays. If
+     * enabled, the values in the generic vertex attribute array will be accessed and used for rendering when calls
+     * are made to vertex array commands such as {@see GL46::glDrawArrays}, {@see GL46::glDrawElements},
+     * {@see GL46::glDrawRangeElements}, {@see GL46::glMultiDrawElements}, or {@see GL46::glMultiDrawArrays}.
+     *
+     * @see http://docs.gl/gl2/glEnableVertexAttribArray
+     * @see http://docs.gl/gl4/glEnableVertexAttribArray
+     * @since 2.0
+     * @param int $index
+     * @return void
+     */
+    public function disableVertexAttribArray(int $index): void
+    {
+        $__proc = $this->getProcAs('glDisableVertexAttribArray', 'void (*)(GLuint index)');
+        $__proc($index);
     }
 
     /**
@@ -528,458 +754,14 @@ class GL20 extends GL15
      * @see http://docs.gl/gl2/glDrawBuffers
      * @see http://docs.gl/gl4/glDrawBuffers
      * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $n
-     * @param \FFI\CData|\FFI\CIntPtr|null $bufs
+     * @param int $n
+     * @param \FFI\CData|null $bufs
      * @return void
      */
-    public function drawBuffers($n, ?\FFI\CData $bufs): void
+    public function drawBuffers(int $n, ?\FFI\CData $bufs): void
     {
-        $n = $n instanceof \FFI\CData ? $n->cdata : $n;
-
-        assert(Type::isInt16($n), 'Argument $n must be a C-like GLsizei, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glDrawBuffers', 'void (*)(GLsizei n, const GLenum *bufs)');
-        $proc($n, $bufs);
-    }
-
-    /**
-     * Stenciling, like depth-buffering, enables and disables drawing on a per-pixel basis. You draw into the stencil
-     * planes using GL drawing primitives, then render geometry and images, using the stencil planes to mask out
-     * portions of the screen. Stenciling is typically used in multipass rendering algorithms to achieve special
-     * effects, such as decals, outlining, and constructive solid geometry rendering.
-     *
-     * The stencil test conditionally eliminates a pixel based on the outcome of a comparison between the value in
-     * the stencil buffer and a reference value. To enable and disable the test, call {@see GL46::glEnable} and
-     * {@see GL46::glDisable} with argument {@see GL46::GL_STENCIL_TEST}; to control it, call
-     * {@see GL46::glStencilFunc} or {@see GL46::glStencilFuncSeparate}.
-     *
-     * There can be two separate sets of $sfail, $dpfail, and $dppass parameters; one affects back-facing polygons,
-     * and the other affects front-facing polygons as well as other non-polygon primitives. {@see GL46::glStencilOp}
-     * sets both front and back stencil state to the same values, as if {@see GL46::glStencilOpSeparate} were called
-     * with $face set to {@see GL46::GL_FRONT_AND_BACK}.
-     *
-     * {@see GL46::glStencilOpSeparate} takes three arguments that indicate what happens to the stored stencil value
-     * while stenciling is enabled. If the stencil test fails, no change is made to the pixel's color or depth
-     * buffers, and $sfail specifies what happens to the stencil buffer contents. The following eight actions are
-     * possible.
-     *
-     *  - {@see GL46::GL_KEEP}: Keeps the current value.
-     *
-     *  - {@see GL46::GL_ZERO}: Sets the stencil buffer value to 0.
-     *
-     *  - {@see GL46::GL_REPLACE}: Sets the stencil buffer value to ref, as
-     *    specified by {@see GL46::glStencilFunc}.
-     *
-     *  - {@see GL46::GL_INCR}: Increments the current stencil buffer value.
-     *    Clamps to the maximum representable unsigned value.
-     *
-     *  - {@see GL46::GL_INCR_WRAP}: Increments the current stencil buffer
-     *    value. Wraps stencil buffer value to zero when incrementing the
-     *    maximum
-     *    representable unsigned value.
-     *
-     *  - {@see GL46::GL_DECR}: Decrements the current stencil buffer value.
-     *    Clamps to 0.
-     *
-     *  - {@see GL46::GL_DECR_WRAP}: Decrements the current stencil buffer
-     *    value. Wraps stencil buffer value to the maximum representable
-     *    unsigned
-     *    value when decrementing a stencil buffer value of zero.
-     *
-     *  - {@see GL46::GL_INVERT}: Bitwise inverts the current stencil buffer
-     *    value.
-     *
-     * Stencil buffer values are treated as unsigned integers. When incremented and decremented, values are clamped
-     * to 0 and    2 n  - 1  , where n is the value returned by querying {@see GL46::GL_STENCIL_BITS}.
-     *
-     * The other two arguments to {@see GL46::glStencilOpSeparate} specify stencil buffer actions that depend on
-     * whether subsequent depth buffer tests succeed ($dppass) or fail ($dpfail) (see {@see GL46::glDepthFunc}). The
-     * actions are specified using the same eight symbolic constants as $sfail. Note that $dpfail is ignored when
-     * there is no depth buffer, or when the depth buffer is not enabled. In these cases, $sfail and $dppass specify
-     * stencil action when the stencil test fails and passes, respectively.
-     *
-     * @see http://docs.gl/gl2/glStencilOpSeparate
-     * @see http://docs.gl/gl4/glStencilOpSeparate
-     * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $face
-     * @param int|\FFI\CData|\FFI\CInt $sfail
-     * @param int|\FFI\CData|\FFI\CInt $dpfail
-     * @param int|\FFI\CData|\FFI\CInt $dppass
-     * @return void
-     */
-    public function stencilOpSeparate($face, $sfail, $dpfail, $dppass): void
-    {
-        $face = $face instanceof \FFI\CData ? $face->cdata : $face;
-        $sfail = $sfail instanceof \FFI\CData ? $sfail->cdata : $sfail;
-        $dpfail = $dpfail instanceof \FFI\CData ? $dpfail->cdata : $dpfail;
-        $dppass = $dppass instanceof \FFI\CData ? $dppass->cdata : $dppass;
-
-        assert(Type::isUint16($face), 'Argument $face must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($sfail), 'Argument $sfail must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($dpfail), 'Argument $dpfail must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($dppass), 'Argument $dppass must be a C-like GLenum, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glStencilOpSeparate', 'void (*)(GLenum face, GLenum sfail, GLenum dpfail, GLenum dppass)');
-        $proc($face, $sfail, $dpfail, $dppass);
-    }
-
-    /**
-     * Stenciling, like depth-buffering, enables and disables drawing on a per-pixel basis. You draw into the stencil
-     * planes using GL drawing primitives, then render geometry and images, using the stencil planes to mask out
-     * portions of the screen. Stenciling is typically used in multipass rendering algorithms to achieve special
-     * effects, such as decals, outlining, and constructive solid geometry rendering.
-     *
-     * The stencil test conditionally eliminates a pixel based on the outcome of a comparison between the reference
-     * value and the value in the stencil buffer. To enable and disable the test, call {@see GL46::glEnable} and
-     * {@see GL46::glDisable} with argument {@see GL46::GL_STENCIL_TEST}. To specify actions based on the outcome of
-     * the stencil test, call {@see GL46::glStencilOp} or {@see GL46::glStencilOpSeparate}.
-     *
-     * There can be two separate sets of $func, $ref, and $mask parameters; one affects back-facing polygons, and the
-     * other affects front-facing polygons as well as other non-polygon primitives. {@see GL46::glStencilFunc} sets
-     * both front and back stencil state to the same values, as if {@see GL46::glStencilFuncSeparate} were called
-     * with $face set to {@see GL46::GL_FRONT_AND_BACK}.
-     *
-     * $func is a symbolic constant that determines the stencil comparison function. It accepts one of eight values,
-     * shown in the following list. $ref is an integer reference value that is used in the stencil comparison. It is
-     * clamped to the range    0  2 n  - 1   , where n is the number of bitplanes in the stencil buffer. $mask is
-     * bitwise ANDed with both the reference value and the stored stencil value, with the ANDed values participating
-     * in the comparison.
-     *
-     * If stencil represents the value stored in the corresponding stencil buffer location, the following list shows
-     * the effect of each comparison function that can be specified by $func. Only if the comparison succeeds is the
-     * pixel passed through to the next stage in the rasterization process (see {@see GL46::glStencilOp}). All tests
-     * treat stencil values as unsigned integers in the range    0  2 n  - 1   , where n is the number of bitplanes
-     * in the stencil buffer.
-     *
-     * The following values are accepted by $func:
-     *
-     *  - {@see GL46::GL_NEVER}: Always fails.
-     *
-     *  - {@see GL46::GL_LESS}: Passes if ( $ref &amp; $mask ) &lt; ( stencil
-     *    &amp; $mask ).
-     *
-     *  - {@see GL46::GL_LEQUAL}: Passes if ( $ref &amp; $mask ) &lt;= ( stencil
-     *    &amp; $mask ).
-     *
-     *  - {@see GL46::GL_GREATER}: Passes if ( $ref &amp; $mask ) &gt; ( stencil
-     *    &amp; $mask ).
-     *
-     *  - {@see GL46::GL_GEQUAL}: Passes if ( $ref &amp; $mask ) &gt;= ( stencil
-     *    &amp; $mask ).
-     *
-     *  - {@see GL46::GL_EQUAL}: Passes if ( $ref &amp; $mask ) = ( stencil
-     *    &amp; $mask ).
-     *
-     *  - {@see GL46::GL_NOTEQUAL}: Passes if ( $ref &amp; $mask ) != ( stencil
-     *    &amp; $mask ).
-     *
-     *  - {@see GL46::GL_ALWAYS}: Always passes.
-     *
-     * @see http://docs.gl/gl2/glStencilFuncSeparate
-     * @see http://docs.gl/gl4/glStencilFuncSeparate
-     * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $face
-     * @param int|\FFI\CData|\FFI\CInt $func
-     * @param int|\FFI\CData|\FFI\CInt $ref
-     * @param int|\FFI\CData|\FFI\CInt $mask
-     * @return void
-     */
-    public function stencilFuncSeparate($face, $func, $ref, $mask): void
-    {
-        $face = $face instanceof \FFI\CData ? $face->cdata : $face;
-        $func = $func instanceof \FFI\CData ? $func->cdata : $func;
-        $ref = $ref instanceof \FFI\CData ? $ref->cdata : $ref;
-        $mask = $mask instanceof \FFI\CData ? $mask->cdata : $mask;
-
-        assert(Type::isUint16($face), 'Argument $face must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($func), 'Argument $func must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isInt16($ref), 'Argument $ref must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isUint16($mask), 'Argument $mask must be a C-like GLuint, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glStencilFuncSeparate', 'void (*)(GLenum face, GLenum func, GLint ref, GLuint mask)');
-        $proc($face, $func, $ref, $mask);
-    }
-
-    /**
-     * {@see GL46::glStencilMaskSeparate} controls the writing of individual bits in the stencil planes. The least
-     * significant n bits of $mask, where n is the number of bits in the stencil buffer, specify a mask. Where a 1
-     * appears in the mask, it's possible to write to the corresponding bit in the stencil buffer. Where a 0 appears,
-     * the corresponding bit is write-protected. Initially, all bits are enabled for writing.
-     *
-     * There can be two separate $mask writemasks; one affects back-facing polygons, and the other affects
-     * front-facing polygons as well as other non-polygon primitives. {@see GL46::glStencilMask} sets both front and
-     * back stencil writemasks to the same values, as if {@see GL46::glStencilMaskSeparate} were called with $face
-     * set to {@see GL46::GL_FRONT_AND_BACK}.
-     *
-     * @see http://docs.gl/gl2/glStencilMaskSeparate
-     * @see http://docs.gl/gl4/glStencilMaskSeparate
-     * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $face
-     * @param int|\FFI\CData|\FFI\CInt $mask
-     * @return void
-     */
-    public function stencilMaskSeparate($face, $mask): void
-    {
-        $face = $face instanceof \FFI\CData ? $face->cdata : $face;
-        $mask = $mask instanceof \FFI\CData ? $mask->cdata : $mask;
-
-        assert(Type::isUint16($face), 'Argument $face must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($mask), 'Argument $mask must be a C-like GLuint, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glStencilMaskSeparate', 'void (*)(GLenum face, GLuint mask)');
-        $proc($face, $mask);
-    }
-
-    /**
-     * In order to create a complete shader program, there must be a way to specify the list of things that will be
-     * linked together. Program objects provide this mechanism. Shaders that are to be linked together in a program
-     * object must first be attached to that program object. {@see GL46::glAttachShader} attaches the shader object
-     * specified by $shader to the program object specified by $program. This indicates that $shader will be included
-     * in link operations that will be performed on $program.
-     *
-     * All operations that can be performed on a shader object are valid whether or not the shader object is attached
-     * to a program object. It is permissible to attach a shader object to a program object before source code has
-     * been loaded into the shader object or before the shader object has been compiled. It is permissible to attach
-     * multiple shader objects of the same type because each may contain a portion of the complete shader. It is also
-     * permissible to attach a shader object to more than one program object. If a shader object is deleted while it
-     * is attached to a program object, it will be flagged for deletion, and deletion will not occur until
-     * {@see GL46::glDetachShader} is called to detach it from all program objects to which it is attached.
-     *
-     * @see http://docs.gl/gl2/glAttachShader
-     * @see http://docs.gl/gl4/glAttachShader
-     * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $program
-     * @param int|\FFI\CData|\FFI\CInt $shader
-     * @return void
-     */
-    public function attachShader($program, $shader): void
-    {
-        $program = $program instanceof \FFI\CData ? $program->cdata : $program;
-        $shader = $shader instanceof \FFI\CData ? $shader->cdata : $shader;
-
-        assert(Type::isUint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isUint16($shader), 'Argument $shader must be a C-like GLuint, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glAttachShader', 'void (*)(GLuint program, GLuint shader)');
-        $proc($program, $shader);
-    }
-
-    /**
-     * {@see GL46::glBindAttribLocation} is used to associate a user-defined attribute variable in the program object
-     * specified by $program with a generic vertex attribute index. The name of the user-defined attribute variable
-     * is passed as a null terminated string in $name. The generic vertex attribute index to be bound to this
-     * variable is specified by $index. When $program is made part of current state, values provided via the generic
-     * vertex attribute $index will modify the value of the user-defined attribute variable specified by $name.
-     *
-     * If $name refers to a matrix attribute variable, $index refers to the first column of the matrix. Other matrix
-     * columns are then automatically bound to locations $index+1 for a matrix of type {@see GL46::mat2}; $index+1
-     * and $index+2 for a matrix of type {@see GL46::mat3}; and $index+1, $index+2, and $index+3 for a matrix of type
-     * {@see GL46::mat4}.
-     *
-     * This command makes it possible for vertex shaders to use descriptive names for attribute variables rather than
-     * generic variables that are numbered from zero to the value of {@see GL46::GL_MAX_VERTEX_ATTRIBS} minus one.
-     * The values sent to each generic attribute index are part of current state. If a different program object is
-     * made current by calling {@see GL46::glUseProgram}, the generic vertex attributes are tracked in such a way
-     * that the same values will be observed by attributes in the new program object that are also bound to $index.
-     *
-     * Attribute variable name-to-generic attribute index bindings for a program object can be explicitly assigned at
-     * any time by calling {@see GL46::glBindAttribLocation}. Attribute bindings do not go into effect until
-     * {@see GL46::glLinkProgram} is called. After a program object has been linked successfully, the index values
-     * for generic attributes remain fixed (and their values can be queried) until the next link command occurs.
-     *
-     * Any attribute binding that occurs after the program object has been linked will not take effect until the next
-     * time the program object is linked.
-     *
-     * @see http://docs.gl/gl2/glBindAttribLocation
-     * @see http://docs.gl/gl4/glBindAttribLocation
-     * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $program
-     * @param int|\FFI\CData|\FFI\CInt $index
-     * @param \FFI\CData|\FFI\CIntPtr|null $name
-     * @return void
-     */
-    public function bindAttribLocation($program, $index, ?\FFI\CData $name): void
-    {
-        $program = $program instanceof \FFI\CData ? $program->cdata : $program;
-        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
-
-        assert(Type::isUint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glBindAttribLocation', 'void (*)(GLuint program, GLuint index, const GLchar *name)');
-        $proc($program, $index, $name);
-    }
-
-    /**
-     * {@see GL46::glCompileShader} compiles the source code strings that have been stored in the shader object
-     * specified by $shader.
-     *
-     * The compilation status will be stored as part of the shader object's state. This value will be set to
-     * {@see GL46::GL_TRUE} if the shader was compiled without errors and is ready for use, and {@see GL46::GL_FALSE}
-     * otherwise. It can be queried by calling {@see GL46::glGetShader} with arguments $shader and
-     * {@see GL46::GL_COMPILE_STATUS}.
-     *
-     * Compilation of a shader can fail for a number of reasons as specified by the OpenGL Shading Language
-     * Specification. Whether or not the compilation was successful, information about the compilation can be
-     * obtained from the shader object's information log by calling {@see GL46::glGetShaderInfoLog}.
-     *
-     * @see http://docs.gl/gl2/glCompileShader
-     * @see http://docs.gl/gl4/glCompileShader
-     * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $shader
-     * @return void
-     */
-    public function compileShader($shader): void
-    {
-        $shader = $shader instanceof \FFI\CData ? $shader->cdata : $shader;
-
-        assert(Type::isUint16($shader), 'Argument $shader must be a C-like GLuint, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glCompileShader', 'void (*)(GLuint shader)');
-        $proc($shader);
-    }
-
-    /**
-     * {@see GL46::glCreateProgram} creates an empty program object and returns a non-zero value by which it can be
-     * referenced. A program object is an object to which shader objects can be attached. This provides a mechanism
-     * to specify the shader objects that will be linked to create a program. It also provides a means for checking
-     * the compatibility of the shaders that will be used to create a program (for instance, checking the
-     * compatibility between a vertex shader and a fragment shader). When no longer needed as part of a program
-     * object, shader objects can be detached.
-     *
-     * One or more executables are created in a program object by successfully attaching shader objects to it with
-     * {@see GL46::glAttachShader}, successfully compiling the shader objects with {@see GL46::glCompileShader}, and
-     * successfully linking the program object with {@see GL46::glLinkProgram}. These executables are made part of
-     * current state when {@see GL46::glUseProgram} is called. Program objects can be deleted by calling
-     * {@see GL46::glDeleteProgram}. The memory associated with the program object will be deleted when it is no
-     * longer part of current rendering state for any context.
-     *
-     * @see http://docs.gl/gl2/glCreateProgram
-     * @see http://docs.gl/gl4/glCreateProgram
-     * @since 2.0
-     * @return int|\FFI\CData|\FFI\CInt
-     */
-    public function createProgram(): int
-    {
-        $proc = $this->getProcAddress('glCreateProgram', 'GLuint (*)(void)');
-        return $proc();
-    }
-
-    /**
-     * {@see GL46::glCreateShader} creates an empty shader object and returns a non-zero value by which it can be
-     * referenced. A shader object is used to maintain the source code strings that define a shader. $shaderType
-     * indicates the type of shader to be created. Five types of shader are supported. A shader of type
-     * {@see GL46::GL_COMPUTE_SHADER} is a shader that is intended to run on the programmable compute processor. A
-     * shader of type {@see GL46::GL_VERTEX_SHADER} is a shader that is intended to run on the programmable vertex
-     * processor. A shader of type {@see GL46::GL_TESS_CONTROL_SHADER} is a shader that is intended to run on the
-     * programmable tessellation processor in the control stage. A shader of type
-     * {@see GL46::GL_TESS_EVALUATION_SHADER} is a shader that is intended to run on the programmable tessellation
-     * processor in the evaluation stage. A shader of type {@see GL46::GL_GEOMETRY_SHADER} is a shader that is
-     * intended to run on the programmable geometry processor. A shader of type {@see GL46::GL_FRAGMENT_SHADER} is a
-     * shader that is intended to run on the programmable fragment processor.
-     *
-     * When created, a shader object's {@see GL46::GL_SHADER_TYPE} parameter is set to either
-     * {@see GL46::GL_COMPUTE_SHADER}, {@see GL46::GL_VERTEX_SHADER}, {@see GL46::GL_TESS_CONTROL_SHADER},
-     * {@see GL46::GL_TESS_EVALUATION_SHADER}, {@see GL46::GL_GEOMETRY_SHADER} or {@see GL46::GL_FRAGMENT_SHADER},
-     * depending on the value of $shaderType.
-     *
-     * @see http://docs.gl/gl2/glCreateShader
-     * @see http://docs.gl/gl4/glCreateShader
-     * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $type
-     * @return int|\FFI\CData|\FFI\CInt
-     */
-    public function createShader($type): int
-    {
-        $type = $type instanceof \FFI\CData ? $type->cdata : $type;
-
-        assert(Type::isUint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glCreateShader', 'GLuint (*)(GLenum type)');
-        return $proc($type);
-    }
-
-    /**
-     * {@see GL46::glDeleteProgram} frees the memory and invalidates the name associated with the program object
-     * specified by $program. This command effectively undoes the effects of a call to {@see GL46::glCreateProgram}.
-     *
-     * If a program object is in use as part of current rendering state, it will be flagged for deletion, but it will
-     * not be deleted until it is no longer part of current state for any rendering context. If a program object to
-     * be deleted has shader objects attached to it, those shader objects will be automatically detached but not
-     * deleted unless they have already been flagged for deletion by a previous call to {@see GL46::glDeleteShader}.
-     * A value of 0 for $program will be silently ignored.
-     *
-     * To determine whether a program object has been flagged for deletion, call {@see GL46::glGetProgram} with
-     * arguments $program and {@see GL46::GL_DELETE_STATUS}.
-     *
-     * @see http://docs.gl/gl2/glDeleteProgram
-     * @see http://docs.gl/gl4/glDeleteProgram
-     * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $program
-     * @return void
-     */
-    public function deleteProgram($program): void
-    {
-        $program = $program instanceof \FFI\CData ? $program->cdata : $program;
-
-        assert(Type::isUint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glDeleteProgram', 'void (*)(GLuint program)');
-        $proc($program);
-    }
-
-    /**
-     * {@see GL46::glDeleteShader} frees the memory and invalidates the name associated with the shader object
-     * specified by $shader. This command effectively undoes the effects of a call to {@see GL46::glCreateShader}.
-     *
-     * If a shader object to be deleted is attached to a program object, it will be flagged for deletion, but it will
-     * not be deleted until it is no longer attached to any program object, for any rendering context (i.e., it must
-     * be detached from wherever it was attached before it will be deleted). A value of 0 for $shader will be
-     * silently ignored.
-     *
-     * To determine whether an object has been flagged for deletion, call {@see GL46::glGetShader} with arguments
-     * $shader and {@see GL46::GL_DELETE_STATUS}.
-     *
-     * @see http://docs.gl/gl2/glDeleteShader
-     * @see http://docs.gl/gl4/glDeleteShader
-     * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $shader
-     * @return void
-     */
-    public function deleteShader($shader): void
-    {
-        $shader = $shader instanceof \FFI\CData ? $shader->cdata : $shader;
-
-        assert(Type::isUint16($shader), 'Argument $shader must be a C-like GLuint, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glDeleteShader', 'void (*)(GLuint shader)');
-        $proc($shader);
-    }
-
-    /**
-     * {@see GL46::glDetachShader} detaches the shader object specified by $shader from the program object specified
-     * by $program. This command can be used to undo the effect of the command {@see GL46::glAttachShader}.
-     *
-     * If $shader has already been flagged for deletion by a call to {@see GL46::glDeleteShader} and it is not
-     * attached to any other program object, it will be deleted after it has been detached.
-     *
-     * @see http://docs.gl/gl2/glDetachShader
-     * @see http://docs.gl/gl4/glDetachShader
-     * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $program
-     * @param int|\FFI\CData|\FFI\CInt $shader
-     * @return void
-     */
-    public function detachShader($program, $shader): void
-    {
-        $program = $program instanceof \FFI\CData ? $program->cdata : $program;
-        $shader = $shader instanceof \FFI\CData ? $shader->cdata : $shader;
-
-        assert(Type::isUint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isUint16($shader), 'Argument $shader must be a C-like GLuint, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glDetachShader', 'void (*)(GLuint program, GLuint shader)');
-        $proc($program, $shader);
+        $__proc = $this->getProcAs('glDrawBuffers', 'void (*)(GLsizei n, const GLenum *bufs)');
+        $__proc($n, $bufs);
     }
 
     /**
@@ -1001,49 +783,13 @@ class GL20 extends GL15
      * @see http://docs.gl/gl2/glEnableVertexAttribArray
      * @see http://docs.gl/gl4/glEnableVertexAttribArray
      * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $index
+     * @param int $index
      * @return void
      */
-    public function disableVertexAttribArray($index): void
+    public function enableVertexAttribArray(int $index): void
     {
-        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
-
-        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glDisableVertexAttribArray', 'void (*)(GLuint index)');
-        $proc($index);
-    }
-
-    /**
-     * {@see GL46::glEnableVertexAttribArray} and {@see GL46::glEnableVertexArrayAttrib} enable the generic vertex
-     * attribute array specified by $index. {@see GL46::glEnableVertexAttribArray} uses currently bound vertex array
-     * object for the operation, whereas {@see GL46::glEnableVertexArrayAttrib} updates state of the vertex array
-     * object with ID $vaobj.
-     *
-     * {@see GL46::glDisableVertexAttribArray} and {@see GL46::glDisableVertexArrayAttrib} disable the generic vertex
-     * attribute array specified by $index. {@see GL46::glDisableVertexAttribArray} uses currently bound vertex array
-     * object for the operation, whereas {@see GL46::glDisableVertexArrayAttrib} updates state of the vertex array
-     * object with ID $vaobj.
-     *
-     * By default, all client-side capabilities are disabled, including all generic vertex attribute arrays. If
-     * enabled, the values in the generic vertex attribute array will be accessed and used for rendering when calls
-     * are made to vertex array commands such as {@see GL46::glDrawArrays}, {@see GL46::glDrawElements},
-     * {@see GL46::glDrawRangeElements}, {@see GL46::glMultiDrawElements}, or {@see GL46::glMultiDrawArrays}.
-     *
-     * @see http://docs.gl/gl2/glEnableVertexAttribArray
-     * @see http://docs.gl/gl4/glEnableVertexAttribArray
-     * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $index
-     * @return void
-     */
-    public function enableVertexAttribArray($index): void
-    {
-        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
-
-        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glEnableVertexAttribArray', 'void (*)(GLuint index)');
-        $proc($index);
+        $__proc = $this->getProcAs('glEnableVertexAttribArray', 'void (*)(GLuint index)');
+        $__proc($index);
     }
 
     /**
@@ -1097,27 +843,34 @@ class GL20 extends GL15
      * @see http://docs.gl/gl2/glGetActiveAttrib
      * @see http://docs.gl/gl4/glGetActiveAttrib
      * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $program
-     * @param int|\FFI\CData|\FFI\CInt $index
-     * @param int|\FFI\CData|\FFI\CInt $bufSize
-     * @param \FFI\CData|\FFI\CIntPtr|null $length
-     * @param \FFI\CData|\FFI\CIntPtr|null $size
-     * @param \FFI\CData|\FFI\CIntPtr|null $type
-     * @param \FFI\CData|\FFI\CIntPtr|null $name
+     * @param int $program
+     * @param int $index
+     * @param int $bufSize
+     * @param int|null $length
+     * @param int|null $size
+     * @param int|null $type
+     * @param string|null $name
      * @return void
      */
-    public function getActiveAttrib($program, $index, $bufSize, ?\FFI\CData $length, ?\FFI\CData $size, ?\FFI\CData $type, ?\FFI\CData $name): void
+    public function getActiveAttrib(int $program, int $index, int $bufSize, ?int &$length, ?int &$size, ?int &$type, ?string &$name): void
     {
-        $program = $program instanceof \FFI\CData ? $program->cdata : $program;
-        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
-        $bufSize = $bufSize instanceof \FFI\CData ? $bufSize->cdata : $bufSize;
-
-        assert(Type::isUint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isInt16($bufSize), 'Argument $bufSize must be a C-like GLsizei, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glGetActiveAttrib', 'void (*)(GLuint program, GLuint index, GLsizei bufSize, GLsizei *length, GLint *size, GLenum *type, GLchar *name)');
-        $proc($program, $index, $bufSize, $length, $size, $type, $name);
+        $lengthCType = $this->info->ffi->new('GLsizei', false);
+        $sizeCType = $this->info->ffi->new('GLint', false);
+        $typeCType = $this->info->ffi->new('GLenum', false);
+        $nameCType = \FFI::addr($this->info->ffi->new('GLchar[' . $bufSize . ']', false)[0]);
+        try {
+            $__proc = $this->getProcAs('glGetActiveAttrib', 'void (*)(GLuint program, GLuint index, GLsizei bufSize, GLsizei *length, GLint *size, GLenum *type, GLchar *name)');
+            $__proc($program, $index, $bufSize, \FFI::addr($lengthCType), \FFI::addr($sizeCType), \FFI::addr($typeCType), $nameCType);
+        } finally {
+            $length = $lengthCType->cdata;
+            \FFI::free($lengthCType);
+            $size = $sizeCType->cdata;
+            \FFI::free($sizeCType);
+            $type = $typeCType->cdata;
+            \FFI::free($typeCType);
+            $name = \FFI::string($nameCType);
+            \FFI::free($nameCType);
+        }
     }
 
     /**
@@ -1249,27 +1002,34 @@ class GL20 extends GL15
      * @see http://docs.gl/gl2/glGetActiveUniform
      * @see http://docs.gl/gl4/glGetActiveUniform
      * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $program
-     * @param int|\FFI\CData|\FFI\CInt $index
-     * @param int|\FFI\CData|\FFI\CInt $bufSize
-     * @param \FFI\CData|\FFI\CIntPtr|null $length
-     * @param \FFI\CData|\FFI\CIntPtr|null $size
-     * @param \FFI\CData|\FFI\CIntPtr|null $type
-     * @param \FFI\CData|\FFI\CIntPtr|null $name
+     * @param int $program
+     * @param int $index
+     * @param int $bufSize
+     * @param int|null $length
+     * @param int|null $size
+     * @param int|null $type
+     * @param string|null $name
      * @return void
      */
-    public function getActiveUniform($program, $index, $bufSize, ?\FFI\CData $length, ?\FFI\CData $size, ?\FFI\CData $type, ?\FFI\CData $name): void
+    public function getActiveUniform(int $program, int $index, int $bufSize, ?int &$length, ?int &$size, ?int &$type, ?string &$name): void
     {
-        $program = $program instanceof \FFI\CData ? $program->cdata : $program;
-        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
-        $bufSize = $bufSize instanceof \FFI\CData ? $bufSize->cdata : $bufSize;
-
-        assert(Type::isUint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isInt16($bufSize), 'Argument $bufSize must be a C-like GLsizei, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glGetActiveUniform', 'void (*)(GLuint program, GLuint index, GLsizei bufSize, GLsizei *length, GLint *size, GLenum *type, GLchar *name)');
-        $proc($program, $index, $bufSize, $length, $size, $type, $name);
+        $lengthCType = $this->info->ffi->new('GLsizei', false);
+        $sizeCType = $this->info->ffi->new('GLint', false);
+        $typeCType = $this->info->ffi->new('GLenum', false);
+        $nameCType = \FFI::addr($this->info->ffi->new('GLchar[' . $bufSize . ']', false)[0]);
+        try {
+            $__proc = $this->getProcAs('glGetActiveUniform', 'void (*)(GLuint program, GLuint index, GLsizei bufSize, GLsizei *length, GLint *size, GLenum *type, GLchar *name)');
+            $__proc($program, $index, $bufSize, \FFI::addr($lengthCType), \FFI::addr($sizeCType), \FFI::addr($typeCType), $nameCType);
+        } finally {
+            $length = $lengthCType->cdata;
+            \FFI::free($lengthCType);
+            $size = $sizeCType->cdata;
+            \FFI::free($sizeCType);
+            $type = $typeCType->cdata;
+            \FFI::free($typeCType);
+            $name = \FFI::string($nameCType);
+            \FFI::free($nameCType);
+        }
     }
 
     /**
@@ -1286,22 +1046,25 @@ class GL20 extends GL15
      * @see http://docs.gl/gl2/glGetAttachedShaders
      * @see http://docs.gl/gl4/glGetAttachedShaders
      * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $program
-     * @param int|\FFI\CData|\FFI\CInt $maxCount
-     * @param \FFI\CData|\FFI\CIntPtr|null $count
-     * @param \FFI\CData|\FFI\CIntPtr|null $shaders
+     * @param int $program
+     * @param int $maxCount
+     * @param int|null $count
+     * @param int|null $shaders
      * @return void
      */
-    public function getAttachedShaders($program, $maxCount, ?\FFI\CData $count, ?\FFI\CData $shaders): void
+    public function getAttachedShaders(int $program, int $maxCount, ?int &$count, ?int &$shaders): void
     {
-        $program = $program instanceof \FFI\CData ? $program->cdata : $program;
-        $maxCount = $maxCount instanceof \FFI\CData ? $maxCount->cdata : $maxCount;
-
-        assert(Type::isUint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isInt16($maxCount), 'Argument $maxCount must be a C-like GLsizei, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glGetAttachedShaders', 'void (*)(GLuint program, GLsizei maxCount, GLsizei *count, GLuint *shaders)');
-        $proc($program, $maxCount, $count, $shaders);
+        $countCType = $this->info->ffi->new('GLsizei', false);
+        $shadersCType = $this->info->ffi->new('GLuint', false);
+        try {
+            $__proc = $this->getProcAs('glGetAttachedShaders', 'void (*)(GLuint program, GLsizei maxCount, GLsizei *count, GLuint *shaders)');
+            $__proc($program, $maxCount, \FFI::addr($countCType), \FFI::addr($shadersCType));
+        } finally {
+            $count = $countCType->cdata;
+            \FFI::free($countCType);
+            $shaders = $shadersCType->cdata;
+            \FFI::free($shadersCType);
+        }
     }
 
     /**
@@ -1323,18 +1086,55 @@ class GL20 extends GL15
      * @see http://docs.gl/gl2/glGetAttribLocation
      * @see http://docs.gl/gl4/glGetAttribLocation
      * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $program
-     * @param \FFI\CData|\FFI\CIntPtr|null $name
-     * @return int|\FFI\CData|\FFI\CInt
+     * @param int $program
+     * @param \FFI\CData|null $name
+     * @return int
      */
-    public function getAttribLocation($program, ?\FFI\CData $name): int
+    public function getAttribLocation(int $program, ?\FFI\CData $name): int
     {
-        $program = $program instanceof \FFI\CData ? $program->cdata : $program;
+        $__proc = $this->getProcAs('glGetAttribLocation', 'GLint (*)(GLuint program, const GLchar *name)');
+        return $__proc($program, $name);
+    }
 
-        assert(Type::isUint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glGetAttribLocation', 'GLint (*)(GLuint program, const GLchar *name)');
-        return $proc($program, $name);
+    /**
+     * {@see GL46::glGetProgramInfoLog} returns the information log for the specified program object. The information
+     * log for a program object is modified when the program object is linked or validated. The string that is
+     * returned will be null terminated.
+     *
+     * {@see GL46::glGetProgramInfoLog} returns in $infoLog as much of the information log as it can, up to a maximum
+     * of $maxLength characters. The number of characters actually returned, excluding the null termination
+     * character, is specified by $length. If the length of the returned string is not required, a value of
+     * {@see GL46::NULL} can be passed in the $length argument. The size of the buffer required to store the returned
+     * information log can be obtained by calling {@see GL46::glGetProgram} with the value
+     * {@see GL46::GL_INFO_LOG_LENGTH}.
+     *
+     * The information log for a program object is either an empty string, or a string containing information about
+     * the last link operation, or a string containing information about the last validation operation. It may
+     * contain diagnostic messages, warning messages, and other information. When a program object is created, its
+     * information log will be a string of length 0.
+     *
+     * @see http://docs.gl/gl2/glGetProgramInfoLog
+     * @see http://docs.gl/gl4/glGetProgramInfoLog
+     * @since 2.0
+     * @param int $program
+     * @param int $bufSize
+     * @param int|null $length
+     * @param string|null $infoLog
+     * @return void
+     */
+    public function getProgramInfoLog(int $program, int $bufSize, ?int &$length, ?string &$infoLog): void
+    {
+        $lengthCType = $this->info->ffi->new('GLsizei', false);
+        $infoLogCType = \FFI::addr($this->info->ffi->new('GLchar[' . $bufSize . ']', false)[0]);
+        try {
+            $__proc = $this->getProcAs('glGetProgramInfoLog', 'void (*)(GLuint program, GLsizei bufSize, GLsizei *length, GLchar *infoLog)');
+            $__proc($program, $bufSize, \FFI::addr($lengthCType), $infoLogCType);
+        } finally {
+            $length = $lengthCType->cdata;
+            \FFI::free($lengthCType);
+            $infoLog = \FFI::string($infoLogCType);
+            \FFI::free($infoLogCType);
+        }
     }
 
     /**
@@ -1431,59 +1231,97 @@ class GL20 extends GL15
      * @see http://docs.gl/gl2/glGetProgram
      * @see http://docs.gl/gl4/glGetProgram
      * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $program
-     * @param int|\FFI\CData|\FFI\CInt $pname
-     * @param \FFI\CData|\FFI\CIntPtr|null $params
+     * @param int $program
+     * @param int $pname
+     * @param int|null $params
      * @return void
      */
-    public function getProgramiv($program, $pname, ?\FFI\CData $params): void
+    public function getProgramiv(int $program, int $pname, ?int &$params): void
     {
-        $program = $program instanceof \FFI\CData ? $program->cdata : $program;
-        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
-
-        assert(Type::isUint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glGetProgramiv', 'void (*)(GLuint program, GLenum pname, GLint *params)');
-        $proc($program, $pname, $params);
+        $paramsCType = $this->info->ffi->new('GLint', false);
+        try {
+            $__proc = $this->getProcAs('glGetProgramiv', 'void (*)(GLuint program, GLenum pname, GLint *params)');
+            $__proc($program, $pname, \FFI::addr($paramsCType));
+        } finally {
+            $params = $paramsCType->cdata;
+            \FFI::free($paramsCType);
+        }
     }
 
     /**
-     * {@see GL46::glGetProgramInfoLog} returns the information log for the specified program object. The information
-     * log for a program object is modified when the program object is linked or validated. The string that is
-     * returned will be null terminated.
+     * {@see GL46::glGetShaderInfoLog} returns the information log for the specified shader object. The information
+     * log for a shader object is modified when the shader is compiled. The string that is returned will be null
+     * terminated.
      *
-     * {@see GL46::glGetProgramInfoLog} returns in $infoLog as much of the information log as it can, up to a maximum
+     * {@see GL46::glGetShaderInfoLog} returns in $infoLog as much of the information log as it can, up to a maximum
      * of $maxLength characters. The number of characters actually returned, excluding the null termination
      * character, is specified by $length. If the length of the returned string is not required, a value of
      * {@see GL46::NULL} can be passed in the $length argument. The size of the buffer required to store the returned
-     * information log can be obtained by calling {@see GL46::glGetProgram} with the value
+     * information log can be obtained by calling {@see GL46::glGetShader} with the value
      * {@see GL46::GL_INFO_LOG_LENGTH}.
      *
-     * The information log for a program object is either an empty string, or a string containing information about
-     * the last link operation, or a string containing information about the last validation operation. It may
-     * contain diagnostic messages, warning messages, and other information. When a program object is created, its
-     * information log will be a string of length 0.
+     * The information log for a shader object is a string that may contain diagnostic messages, warning messages,
+     * and other information about the last compile operation. When a shader object is created, its information log
+     * will be a string of length 0.
      *
-     * @see http://docs.gl/gl2/glGetProgramInfoLog
-     * @see http://docs.gl/gl4/glGetProgramInfoLog
+     * @see http://docs.gl/gl2/glGetShaderInfoLog
+     * @see http://docs.gl/gl4/glGetShaderInfoLog
      * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $program
-     * @param int|\FFI\CData|\FFI\CInt $bufSize
-     * @param \FFI\CData|\FFI\CIntPtr|null $length
-     * @param \FFI\CData|\FFI\CIntPtr|null $infoLog
+     * @param int $shader
+     * @param int $bufSize
+     * @param int|null $length
+     * @param string|null $infoLog
      * @return void
      */
-    public function getProgramInfoLog($program, $bufSize, ?\FFI\CData $length, ?\FFI\CData $infoLog): void
+    public function getShaderInfoLog(int $shader, int $bufSize, ?int &$length, ?string &$infoLog): void
     {
-        $program = $program instanceof \FFI\CData ? $program->cdata : $program;
-        $bufSize = $bufSize instanceof \FFI\CData ? $bufSize->cdata : $bufSize;
+        $lengthCType = $this->info->ffi->new('GLsizei', false);
+        $infoLogCType = \FFI::addr($this->info->ffi->new('GLchar[' . $bufSize . ']', false)[0]);
+        try {
+            $__proc = $this->getProcAs('glGetShaderInfoLog', 'void (*)(GLuint shader, GLsizei bufSize, GLsizei *length, GLchar *infoLog)');
+            $__proc($shader, $bufSize, \FFI::addr($lengthCType), $infoLogCType);
+        } finally {
+            $length = $lengthCType->cdata;
+            \FFI::free($lengthCType);
+            $infoLog = \FFI::string($infoLogCType);
+            \FFI::free($infoLogCType);
+        }
+    }
 
-        assert(Type::isUint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isInt16($bufSize), 'Argument $bufSize must be a C-like GLsizei, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glGetProgramInfoLog', 'void (*)(GLuint program, GLsizei bufSize, GLsizei *length, GLchar *infoLog)');
-        $proc($program, $bufSize, $length, $infoLog);
+    /**
+     * {@see GL46::glGetShaderSource} returns the concatenation of the source code strings from the shader object
+     * specified by $shader. The source code strings for a shader object are the result of a previous call to
+     * {@see GL46::glShaderSource}. The string returned by the function will be null terminated.
+     *
+     * {@see GL46::glGetShaderSource} returns in $source as much of the source code string as it can, up to a maximum
+     * of $bufSize characters. The number of characters actually returned, excluding the null termination character,
+     * is specified by $length. If the length of the returned string is not required, a value of {@see GL46::NULL}
+     * can be passed in the $length argument. The size of the buffer required to store the returned source code
+     * string can be obtained by calling {@see GL46::glGetShader} with the value
+     * {@see GL46::GL_SHADER_SOURCE_LENGTH}.
+     *
+     * @see http://docs.gl/gl2/glGetShaderSource
+     * @see http://docs.gl/gl4/glGetShaderSource
+     * @since 2.0
+     * @param int $shader
+     * @param int $bufSize
+     * @param int|null $length
+     * @param string|null $source
+     * @return void
+     */
+    public function getShaderSource(int $shader, int $bufSize, ?int &$length, ?string &$source): void
+    {
+        $lengthCType = $this->info->ffi->new('GLsizei', false);
+        $sourceCType = \FFI::addr($this->info->ffi->new('GLchar[' . $bufSize . ']', false)[0]);
+        try {
+            $__proc = $this->getProcAs('glGetShaderSource', 'void (*)(GLuint shader, GLsizei bufSize, GLsizei *length, GLchar *source)');
+            $__proc($shader, $bufSize, \FFI::addr($lengthCType), $sourceCType);
+        } finally {
+            $length = $lengthCType->cdata;
+            \FFI::free($lengthCType);
+            $source = \FFI::string($sourceCType);
+            \FFI::free($sourceCType);
+        }
     }
 
     /**
@@ -1521,91 +1359,21 @@ class GL20 extends GL15
      * @see http://docs.gl/gl2/glGetShader
      * @see http://docs.gl/gl4/glGetShader
      * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $shader
-     * @param int|\FFI\CData|\FFI\CInt $pname
-     * @param \FFI\CData|\FFI\CIntPtr|null $params
+     * @param int $shader
+     * @param int $pname
+     * @param int|null $params
      * @return void
      */
-    public function getShaderiv($shader, $pname, ?\FFI\CData $params): void
+    public function getShaderiv(int $shader, int $pname, ?int &$params): void
     {
-        $shader = $shader instanceof \FFI\CData ? $shader->cdata : $shader;
-        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
-
-        assert(Type::isUint16($shader), 'Argument $shader must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glGetShaderiv', 'void (*)(GLuint shader, GLenum pname, GLint *params)');
-        $proc($shader, $pname, $params);
-    }
-
-    /**
-     * {@see GL46::glGetShaderInfoLog} returns the information log for the specified shader object. The information
-     * log for a shader object is modified when the shader is compiled. The string that is returned will be null
-     * terminated.
-     *
-     * {@see GL46::glGetShaderInfoLog} returns in $infoLog as much of the information log as it can, up to a maximum
-     * of $maxLength characters. The number of characters actually returned, excluding the null termination
-     * character, is specified by $length. If the length of the returned string is not required, a value of
-     * {@see GL46::NULL} can be passed in the $length argument. The size of the buffer required to store the returned
-     * information log can be obtained by calling {@see GL46::glGetShader} with the value
-     * {@see GL46::GL_INFO_LOG_LENGTH}.
-     *
-     * The information log for a shader object is a string that may contain diagnostic messages, warning messages,
-     * and other information about the last compile operation. When a shader object is created, its information log
-     * will be a string of length 0.
-     *
-     * @see http://docs.gl/gl2/glGetShaderInfoLog
-     * @see http://docs.gl/gl4/glGetShaderInfoLog
-     * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $shader
-     * @param int|\FFI\CData|\FFI\CInt $bufSize
-     * @param \FFI\CData|\FFI\CIntPtr|null $length
-     * @param \FFI\CData|\FFI\CIntPtr|null $infoLog
-     * @return void
-     */
-    public function getShaderInfoLog($shader, $bufSize, ?\FFI\CData $length, ?\FFI\CData $infoLog): void
-    {
-        $shader = $shader instanceof \FFI\CData ? $shader->cdata : $shader;
-        $bufSize = $bufSize instanceof \FFI\CData ? $bufSize->cdata : $bufSize;
-
-        assert(Type::isUint16($shader), 'Argument $shader must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isInt16($bufSize), 'Argument $bufSize must be a C-like GLsizei, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glGetShaderInfoLog', 'void (*)(GLuint shader, GLsizei bufSize, GLsizei *length, GLchar *infoLog)');
-        $proc($shader, $bufSize, $length, $infoLog);
-    }
-
-    /**
-     * {@see GL46::glGetShaderSource} returns the concatenation of the source code strings from the shader object
-     * specified by $shader. The source code strings for a shader object are the result of a previous call to
-     * {@see GL46::glShaderSource}. The string returned by the function will be null terminated.
-     *
-     * {@see GL46::glGetShaderSource} returns in $source as much of the source code string as it can, up to a maximum
-     * of $bufSize characters. The number of characters actually returned, excluding the null termination character,
-     * is specified by $length. If the length of the returned string is not required, a value of {@see GL46::NULL}
-     * can be passed in the $length argument. The size of the buffer required to store the returned source code
-     * string can be obtained by calling {@see GL46::glGetShader} with the value
-     * {@see GL46::GL_SHADER_SOURCE_LENGTH}.
-     *
-     * @see http://docs.gl/gl2/glGetShaderSource
-     * @see http://docs.gl/gl4/glGetShaderSource
-     * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $shader
-     * @param int|\FFI\CData|\FFI\CInt $bufSize
-     * @param \FFI\CData|\FFI\CIntPtr|null $length
-     * @param \FFI\CData|\FFI\CIntPtr|null $source
-     * @return void
-     */
-    public function getShaderSource($shader, $bufSize, ?\FFI\CData $length, ?\FFI\CData $source): void
-    {
-        $shader = $shader instanceof \FFI\CData ? $shader->cdata : $shader;
-        $bufSize = $bufSize instanceof \FFI\CData ? $bufSize->cdata : $bufSize;
-
-        assert(Type::isUint16($shader), 'Argument $shader must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isInt16($bufSize), 'Argument $bufSize must be a C-like GLsizei, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glGetShaderSource', 'void (*)(GLuint shader, GLsizei bufSize, GLsizei *length, GLchar *source)');
-        $proc($shader, $bufSize, $length, $source);
+        $paramsCType = $this->info->ffi->new('GLint', false);
+        try {
+            $__proc = $this->getProcAs('glGetShaderiv', 'void (*)(GLuint shader, GLenum pname, GLint *params)');
+            $__proc($shader, $pname, \FFI::addr($paramsCType));
+        } finally {
+            $params = $paramsCType->cdata;
+            \FFI::free($paramsCType);
+        }
     }
 
     /**
@@ -1635,18 +1403,14 @@ class GL20 extends GL15
      * @see http://docs.gl/gl2/glGetUniformLocation
      * @see http://docs.gl/gl4/glGetUniformLocation
      * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $program
-     * @param \FFI\CData|\FFI\CIntPtr|null $name
-     * @return int|\FFI\CData|\FFI\CInt
+     * @param int $program
+     * @param \FFI\CData|null $name
+     * @return int
      */
-    public function getUniformLocation($program, ?\FFI\CData $name): int
+    public function getUniformLocation(int $program, ?\FFI\CData $name): int
     {
-        $program = $program instanceof \FFI\CData ? $program->cdata : $program;
-
-        assert(Type::isUint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glGetUniformLocation', 'GLint (*)(GLuint program, const GLchar *name)');
-        return $proc($program, $name);
+        $__proc = $this->getProcAs('glGetUniformLocation', 'GLint (*)(GLuint program, const GLchar *name)');
+        return $__proc($program, $name);
     }
 
     /**
@@ -1673,21 +1437,21 @@ class GL20 extends GL15
      * @see http://docs.gl/gl2/glGetUniform
      * @see http://docs.gl/gl4/glGetUniform
      * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $program
-     * @param int|\FFI\CData|\FFI\CInt $location
-     * @param \FFI\CData|\FFI\CFloatPtr|null $params
+     * @param int $program
+     * @param int $location
+     * @param float|null $params
      * @return void
      */
-    public function getUniformfv($program, $location, ?\FFI\CData $params): void
+    public function getUniformfv(int $program, int $location, ?float &$params): void
     {
-        $program = $program instanceof \FFI\CData ? $program->cdata : $program;
-        $location = $location instanceof \FFI\CData ? $location->cdata : $location;
-
-        assert(Type::isUint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isInt16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glGetUniformfv', 'void (*)(GLuint program, GLint location, GLfloat *params)');
-        $proc($program, $location, $params);
+        $paramsCType = $this->info->ffi->new('GLfloat', false);
+        try {
+            $__proc = $this->getProcAs('glGetUniformfv', 'void (*)(GLuint program, GLint location, GLfloat *params)');
+            $__proc($program, $location, \FFI::addr($paramsCType));
+        } finally {
+            $params = $paramsCType->cdata;
+            \FFI::free($paramsCType);
+        }
     }
 
     /**
@@ -1714,375 +1478,21 @@ class GL20 extends GL15
      * @see http://docs.gl/gl2/glGetUniform
      * @see http://docs.gl/gl4/glGetUniform
      * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $program
-     * @param int|\FFI\CData|\FFI\CInt $location
-     * @param \FFI\CData|\FFI\CIntPtr|null $params
+     * @param int $program
+     * @param int $location
+     * @param int|null $params
      * @return void
      */
-    public function getUniformiv($program, $location, ?\FFI\CData $params): void
+    public function getUniformiv(int $program, int $location, ?int &$params): void
     {
-        $program = $program instanceof \FFI\CData ? $program->cdata : $program;
-        $location = $location instanceof \FFI\CData ? $location->cdata : $location;
-
-        assert(Type::isUint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isInt16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glGetUniformiv', 'void (*)(GLuint program, GLint location, GLint *params)');
-        $proc($program, $location, $params);
-    }
-
-    /**
-     * {@see GL46::glGetVertexAttrib} returns in $params the value of a generic vertex attribute parameter. The
-     * generic vertex attribute to be queried is specified by $index, and the parameter to be queried is specified by
-     * $pname.
-     *
-     * The accepted parameter names are as follows:
-     *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING}: $params returns a
-     *    single value, the name of the buffer object currently bound to the
-     *    binding point
-     *    corresponding to generic vertex attribute array $index. If no buffer
-     *    object is bound, 0 is returned. The
-     *    initial value is 0.
-     *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_ENABLED}: $params returns a single
-     *    value that is non-zero (true) if the vertex attribute array for $index
-     *    is enabled
-     *    and 0 (false) if it is disabled. The initial value is {@see
-     *    GL46::GL_FALSE}.
-     *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_SIZE}: $params returns a single
-     *    value, the size of the vertex attribute array for $index. The size is
-     *    the number
-     *    of values for each element of the vertex attribute array, and it will
-     *    be 1, 2, 3, or 4. The initial value is
-     *    4.
-     *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_STRIDE}: $params returns a single
-     *    value, the array stride for (number of bytes between successive
-     *    elements in) the
-     *    vertex attribute array for $index. A value of 0 indicates that the
-     *    array elements are stored sequentially in
-     *    memory. The initial value is 0.
-     *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_TYPE}: $params returns a single
-     *    value, a symbolic constant indicating the array type for the vertex
-     *    attribute
-     *    array for $index. Possible values are {@see GL46::GL_BYTE}, {@see
-     *    GL46::GL_UNSIGNED_BYTE},
-     *    {@see GL46::GL_SHORT}, {@see GL46::GL_UNSIGNED_SHORT}, {@see
-     *    GL46::GL_INT}, {@see GL46::GL_UNSIGNED_INT},
-     *    {@see GL46::GL_FLOAT}, and {@see GL46::GL_DOUBLE}. The initial value
-     *    is {@see GL46::GL_FLOAT}.
-     *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_NORMALIZED}: $params returns a
-     *    single value that is non-zero (true) if fixed-point data types for the
-     *    vertex attribute
-     *    array indicated by $index are normalized when they are converted to
-     *    floating point, and 0 (false) otherwise.
-     *    The initial value is {@see GL46::GL_FALSE}.
-     *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_INTEGER}: $params returns a single
-     *    value that is non-zero (true) if fixed-point data types for the vertex
-     *    attribute
-     *    array indicated by $index have integer data types, and 0 (false)
-     *    otherwise. The initial value is 0
-     *    ({@see GL46::GL_FALSE}).
-     *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_LONG}: $param returns a single
-     *    value that is non-zero (true) if a vertex attribute is stored as an
-     *    unconverted
-     *    double, and 0 (false) otherwise. The initial value is 0 ({@see
-     *    GL46::GL_FALSE}).
-     *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_DIVISOR}: $params returns a single
-     *    value that is the frequency divisor used for instanced rendering. See
-     *    {@see GL46::glVertexAttribDivisor}. The initial value is 0.
-     *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_BINDING}: $params returns a single value,
-     *    the vertex buffer binding of the vertex attribute array $index.
-     *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_RELATIVE_OFFSET}: $params returns a
-     *    single value that is the byte offset of the first element relative to
-     *    the start of the
-     *    vertex buffer binding specified attribute fetches from. The initial
-     *    value is 0.
-     *
-     *  - {@see GL46::GL_CURRENT_VERTEX_ATTRIB}: $params returns four values
-     *    that represent the current value for the generic vertex attribute
-     *    specified by
-     *    index. Generic vertex attribute 0 is unique in that it has no current
-     *    state, so an error will be generated if
-     *    $index is 0. The initial value for all other generic vertex attributes
-     *    is (0,0,0,1).
-     *    {@see GL46::glGetVertexAttribdv} and {@see GL46::glGetVertexAttribfv}
-     *    return the current attribute values as
-     *    four single-precision floating-point values; {@see
-     *    GL46::glGetVertexAttribiv} reads them as floating-point
-     *    values and converts them to four integer values; {@see
-     *    GL46::glGetVertexAttribIiv} and
-     *    {@see GL46::glGetVertexAttribIuiv} read and return them as signed or
-     *    unsigned integer values, respectively;
-     *    {@see GL46::glGetVertexAttribLdv} reads and returns them as four
-     *    double-precision floating-point values.
-     *
-     * All of the parameters except {@see GL46::GL_CURRENT_VERTEX_ATTRIB} represent state stored in the currently
-     * bound vertex array object.
-     *
-     * @see http://docs.gl/gl2/glGetVertexAttrib
-     * @see http://docs.gl/gl4/glGetVertexAttrib
-     * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $index
-     * @param int|\FFI\CData|\FFI\CInt $pname
-     * @param \FFI\CData|\FFI\CFloatPtr|null $params
-     * @return void
-     */
-    public function getVertexAttribdv($index, $pname, ?\FFI\CData $params): void
-    {
-        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
-        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
-
-        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glGetVertexAttribdv', 'void (*)(GLuint index, GLenum pname, GLdouble *params)');
-        $proc($index, $pname, $params);
-    }
-
-    /**
-     * {@see GL46::glGetVertexAttrib} returns in $params the value of a generic vertex attribute parameter. The
-     * generic vertex attribute to be queried is specified by $index, and the parameter to be queried is specified by
-     * $pname.
-     *
-     * The accepted parameter names are as follows:
-     *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING}: $params returns a
-     *    single value, the name of the buffer object currently bound to the
-     *    binding point
-     *    corresponding to generic vertex attribute array $index. If no buffer
-     *    object is bound, 0 is returned. The
-     *    initial value is 0.
-     *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_ENABLED}: $params returns a single
-     *    value that is non-zero (true) if the vertex attribute array for $index
-     *    is enabled
-     *    and 0 (false) if it is disabled. The initial value is {@see
-     *    GL46::GL_FALSE}.
-     *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_SIZE}: $params returns a single
-     *    value, the size of the vertex attribute array for $index. The size is
-     *    the number
-     *    of values for each element of the vertex attribute array, and it will
-     *    be 1, 2, 3, or 4. The initial value is
-     *    4.
-     *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_STRIDE}: $params returns a single
-     *    value, the array stride for (number of bytes between successive
-     *    elements in) the
-     *    vertex attribute array for $index. A value of 0 indicates that the
-     *    array elements are stored sequentially in
-     *    memory. The initial value is 0.
-     *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_TYPE}: $params returns a single
-     *    value, a symbolic constant indicating the array type for the vertex
-     *    attribute
-     *    array for $index. Possible values are {@see GL46::GL_BYTE}, {@see
-     *    GL46::GL_UNSIGNED_BYTE},
-     *    {@see GL46::GL_SHORT}, {@see GL46::GL_UNSIGNED_SHORT}, {@see
-     *    GL46::GL_INT}, {@see GL46::GL_UNSIGNED_INT},
-     *    {@see GL46::GL_FLOAT}, and {@see GL46::GL_DOUBLE}. The initial value
-     *    is {@see GL46::GL_FLOAT}.
-     *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_NORMALIZED}: $params returns a
-     *    single value that is non-zero (true) if fixed-point data types for the
-     *    vertex attribute
-     *    array indicated by $index are normalized when they are converted to
-     *    floating point, and 0 (false) otherwise.
-     *    The initial value is {@see GL46::GL_FALSE}.
-     *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_INTEGER}: $params returns a single
-     *    value that is non-zero (true) if fixed-point data types for the vertex
-     *    attribute
-     *    array indicated by $index have integer data types, and 0 (false)
-     *    otherwise. The initial value is 0
-     *    ({@see GL46::GL_FALSE}).
-     *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_LONG}: $param returns a single
-     *    value that is non-zero (true) if a vertex attribute is stored as an
-     *    unconverted
-     *    double, and 0 (false) otherwise. The initial value is 0 ({@see
-     *    GL46::GL_FALSE}).
-     *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_DIVISOR}: $params returns a single
-     *    value that is the frequency divisor used for instanced rendering. See
-     *    {@see GL46::glVertexAttribDivisor}. The initial value is 0.
-     *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_BINDING}: $params returns a single value,
-     *    the vertex buffer binding of the vertex attribute array $index.
-     *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_RELATIVE_OFFSET}: $params returns a
-     *    single value that is the byte offset of the first element relative to
-     *    the start of the
-     *    vertex buffer binding specified attribute fetches from. The initial
-     *    value is 0.
-     *
-     *  - {@see GL46::GL_CURRENT_VERTEX_ATTRIB}: $params returns four values
-     *    that represent the current value for the generic vertex attribute
-     *    specified by
-     *    index. Generic vertex attribute 0 is unique in that it has no current
-     *    state, so an error will be generated if
-     *    $index is 0. The initial value for all other generic vertex attributes
-     *    is (0,0,0,1).
-     *    {@see GL46::glGetVertexAttribdv} and {@see GL46::glGetVertexAttribfv}
-     *    return the current attribute values as
-     *    four single-precision floating-point values; {@see
-     *    GL46::glGetVertexAttribiv} reads them as floating-point
-     *    values and converts them to four integer values; {@see
-     *    GL46::glGetVertexAttribIiv} and
-     *    {@see GL46::glGetVertexAttribIuiv} read and return them as signed or
-     *    unsigned integer values, respectively;
-     *    {@see GL46::glGetVertexAttribLdv} reads and returns them as four
-     *    double-precision floating-point values.
-     *
-     * All of the parameters except {@see GL46::GL_CURRENT_VERTEX_ATTRIB} represent state stored in the currently
-     * bound vertex array object.
-     *
-     * @see http://docs.gl/gl2/glGetVertexAttrib
-     * @see http://docs.gl/gl4/glGetVertexAttrib
-     * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $index
-     * @param int|\FFI\CData|\FFI\CInt $pname
-     * @param \FFI\CData|\FFI\CFloatPtr|null $params
-     * @return void
-     */
-    public function getVertexAttribfv($index, $pname, ?\FFI\CData $params): void
-    {
-        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
-        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
-
-        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glGetVertexAttribfv', 'void (*)(GLuint index, GLenum pname, GLfloat *params)');
-        $proc($index, $pname, $params);
-    }
-
-    /**
-     * {@see GL46::glGetVertexAttrib} returns in $params the value of a generic vertex attribute parameter. The
-     * generic vertex attribute to be queried is specified by $index, and the parameter to be queried is specified by
-     * $pname.
-     *
-     * The accepted parameter names are as follows:
-     *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING}: $params returns a
-     *    single value, the name of the buffer object currently bound to the
-     *    binding point
-     *    corresponding to generic vertex attribute array $index. If no buffer
-     *    object is bound, 0 is returned. The
-     *    initial value is 0.
-     *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_ENABLED}: $params returns a single
-     *    value that is non-zero (true) if the vertex attribute array for $index
-     *    is enabled
-     *    and 0 (false) if it is disabled. The initial value is {@see
-     *    GL46::GL_FALSE}.
-     *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_SIZE}: $params returns a single
-     *    value, the size of the vertex attribute array for $index. The size is
-     *    the number
-     *    of values for each element of the vertex attribute array, and it will
-     *    be 1, 2, 3, or 4. The initial value is
-     *    4.
-     *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_STRIDE}: $params returns a single
-     *    value, the array stride for (number of bytes between successive
-     *    elements in) the
-     *    vertex attribute array for $index. A value of 0 indicates that the
-     *    array elements are stored sequentially in
-     *    memory. The initial value is 0.
-     *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_TYPE}: $params returns a single
-     *    value, a symbolic constant indicating the array type for the vertex
-     *    attribute
-     *    array for $index. Possible values are {@see GL46::GL_BYTE}, {@see
-     *    GL46::GL_UNSIGNED_BYTE},
-     *    {@see GL46::GL_SHORT}, {@see GL46::GL_UNSIGNED_SHORT}, {@see
-     *    GL46::GL_INT}, {@see GL46::GL_UNSIGNED_INT},
-     *    {@see GL46::GL_FLOAT}, and {@see GL46::GL_DOUBLE}. The initial value
-     *    is {@see GL46::GL_FLOAT}.
-     *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_NORMALIZED}: $params returns a
-     *    single value that is non-zero (true) if fixed-point data types for the
-     *    vertex attribute
-     *    array indicated by $index are normalized when they are converted to
-     *    floating point, and 0 (false) otherwise.
-     *    The initial value is {@see GL46::GL_FALSE}.
-     *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_INTEGER}: $params returns a single
-     *    value that is non-zero (true) if fixed-point data types for the vertex
-     *    attribute
-     *    array indicated by $index have integer data types, and 0 (false)
-     *    otherwise. The initial value is 0
-     *    ({@see GL46::GL_FALSE}).
-     *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_LONG}: $param returns a single
-     *    value that is non-zero (true) if a vertex attribute is stored as an
-     *    unconverted
-     *    double, and 0 (false) otherwise. The initial value is 0 ({@see
-     *    GL46::GL_FALSE}).
-     *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_DIVISOR}: $params returns a single
-     *    value that is the frequency divisor used for instanced rendering. See
-     *    {@see GL46::glVertexAttribDivisor}. The initial value is 0.
-     *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_BINDING}: $params returns a single value,
-     *    the vertex buffer binding of the vertex attribute array $index.
-     *
-     *  - {@see GL46::GL_VERTEX_ATTRIB_RELATIVE_OFFSET}: $params returns a
-     *    single value that is the byte offset of the first element relative to
-     *    the start of the
-     *    vertex buffer binding specified attribute fetches from. The initial
-     *    value is 0.
-     *
-     *  - {@see GL46::GL_CURRENT_VERTEX_ATTRIB}: $params returns four values
-     *    that represent the current value for the generic vertex attribute
-     *    specified by
-     *    index. Generic vertex attribute 0 is unique in that it has no current
-     *    state, so an error will be generated if
-     *    $index is 0. The initial value for all other generic vertex attributes
-     *    is (0,0,0,1).
-     *    {@see GL46::glGetVertexAttribdv} and {@see GL46::glGetVertexAttribfv}
-     *    return the current attribute values as
-     *    four single-precision floating-point values; {@see
-     *    GL46::glGetVertexAttribiv} reads them as floating-point
-     *    values and converts them to four integer values; {@see
-     *    GL46::glGetVertexAttribIiv} and
-     *    {@see GL46::glGetVertexAttribIuiv} read and return them as signed or
-     *    unsigned integer values, respectively;
-     *    {@see GL46::glGetVertexAttribLdv} reads and returns them as four
-     *    double-precision floating-point values.
-     *
-     * All of the parameters except {@see GL46::GL_CURRENT_VERTEX_ATTRIB} represent state stored in the currently
-     * bound vertex array object.
-     *
-     * @see http://docs.gl/gl2/glGetVertexAttrib
-     * @see http://docs.gl/gl4/glGetVertexAttrib
-     * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $index
-     * @param int|\FFI\CData|\FFI\CInt $pname
-     * @param \FFI\CData|\FFI\CIntPtr|null $params
-     * @return void
-     */
-    public function getVertexAttribiv($index, $pname, ?\FFI\CData $params): void
-    {
-        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
-        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
-
-        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glGetVertexAttribiv', 'void (*)(GLuint index, GLenum pname, GLint *params)');
-        $proc($index, $pname, $params);
+        $paramsCType = $this->info->ffi->new('GLint', false);
+        try {
+            $__proc = $this->getProcAs('glGetUniformiv', 'void (*)(GLuint program, GLint location, GLint *params)');
+            $__proc($program, $location, \FFI::addr($paramsCType));
+        } finally {
+            $params = $paramsCType->cdata;
+            \FFI::free($paramsCType);
+        }
     }
 
     /**
@@ -2097,21 +1507,369 @@ class GL20 extends GL15
      * @see http://docs.gl/gl2/glGetVertexAttribPointerv
      * @see http://docs.gl/gl4/glGetVertexAttribPointerv
      * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $index
-     * @param int|\FFI\CData|\FFI\CInt $pname
-     * @param \FFI\CData|\FFI\CPtrPtr|null $pointer
+     * @param int $index
+     * @param int $pname
+     * @param \FFI\CData|null $pointer
      * @return void
      */
-    public function getVertexAttribPointerv($index, $pname, ?\FFI\CData $pointer): void
+    public function getVertexAttribPointerv(int $index, int $pname, ?\FFI\CData $pointer): void
     {
-        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
-        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
+        $__proc = $this->getProcAs('glGetVertexAttribPointerv', 'void (*)(GLuint index, GLenum pname, void **pointer)');
+        $__proc($index, $pname, $pointer);
+    }
 
-        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
+    /**
+     * {@see GL46::glGetVertexAttrib} returns in $params the value of a generic vertex attribute parameter. The
+     * generic vertex attribute to be queried is specified by $index, and the parameter to be queried is specified by
+     * $pname.
+     *
+     * The accepted parameter names are as follows:
+     *
+     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING}: $params returns a
+     *    single value, the name of the buffer object currently bound to the
+     *    binding point
+     *    corresponding to generic vertex attribute array $index. If no buffer
+     *    object is bound, 0 is returned. The
+     *    initial value is 0.
+     *
+     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_ENABLED}: $params returns a single
+     *    value that is non-zero (true) if the vertex attribute array for $index
+     *    is enabled
+     *    and 0 (false) if it is disabled. The initial value is {@see
+     *    GL46::GL_FALSE}.
+     *
+     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_SIZE}: $params returns a single
+     *    value, the size of the vertex attribute array for $index. The size is
+     *    the number
+     *    of values for each element of the vertex attribute array, and it will
+     *    be 1, 2, 3, or 4. The initial value is
+     *    4.
+     *
+     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_STRIDE}: $params returns a single
+     *    value, the array stride for (number of bytes between successive
+     *    elements in) the
+     *    vertex attribute array for $index. A value of 0 indicates that the
+     *    array elements are stored sequentially in
+     *    memory. The initial value is 0.
+     *
+     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_TYPE}: $params returns a single
+     *    value, a symbolic constant indicating the array type for the vertex
+     *    attribute
+     *    array for $index. Possible values are {@see GL46::GL_BYTE}, {@see
+     *    GL46::GL_UNSIGNED_BYTE},
+     *    {@see GL46::GL_SHORT}, {@see GL46::GL_UNSIGNED_SHORT}, {@see
+     *    GL46::GL_INT}, {@see GL46::GL_UNSIGNED_INT},
+     *    {@see GL46::GL_FLOAT}, and {@see GL46::GL_DOUBLE}. The initial value
+     *    is {@see GL46::GL_FLOAT}.
+     *
+     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_NORMALIZED}: $params returns a
+     *    single value that is non-zero (true) if fixed-point data types for the
+     *    vertex attribute
+     *    array indicated by $index are normalized when they are converted to
+     *    floating point, and 0 (false) otherwise.
+     *    The initial value is {@see GL46::GL_FALSE}.
+     *
+     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_INTEGER}: $params returns a single
+     *    value that is non-zero (true) if fixed-point data types for the vertex
+     *    attribute
+     *    array indicated by $index have integer data types, and 0 (false)
+     *    otherwise. The initial value is 0
+     *    ({@see GL46::GL_FALSE}).
+     *
+     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_LONG}: $param returns a single
+     *    value that is non-zero (true) if a vertex attribute is stored as an
+     *    unconverted
+     *    double, and 0 (false) otherwise. The initial value is 0 ({@see
+     *    GL46::GL_FALSE}).
+     *
+     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_DIVISOR}: $params returns a single
+     *    value that is the frequency divisor used for instanced rendering. See
+     *    {@see GL46::glVertexAttribDivisor}. The initial value is 0.
+     *
+     *  - {@see GL46::GL_VERTEX_ATTRIB_BINDING}: $params returns a single value,
+     *    the vertex buffer binding of the vertex attribute array $index.
+     *
+     *  - {@see GL46::GL_VERTEX_ATTRIB_RELATIVE_OFFSET}: $params returns a
+     *    single value that is the byte offset of the first element relative to
+     *    the start of the
+     *    vertex buffer binding specified attribute fetches from. The initial
+     *    value is 0.
+     *
+     *  - {@see GL46::GL_CURRENT_VERTEX_ATTRIB}: $params returns four values
+     *    that represent the current value for the generic vertex attribute
+     *    specified by
+     *    index. Generic vertex attribute 0 is unique in that it has no current
+     *    state, so an error will be generated if
+     *    $index is 0. The initial value for all other generic vertex attributes
+     *    is (0,0,0,1).
+     *    {@see GL46::glGetVertexAttribdv} and {@see GL46::glGetVertexAttribfv}
+     *    return the current attribute values as
+     *    four single-precision floating-point values; {@see
+     *    GL46::glGetVertexAttribiv} reads them as floating-point
+     *    values and converts them to four integer values; {@see
+     *    GL46::glGetVertexAttribIiv} and
+     *    {@see GL46::glGetVertexAttribIuiv} read and return them as signed or
+     *    unsigned integer values, respectively;
+     *    {@see GL46::glGetVertexAttribLdv} reads and returns them as four
+     *    double-precision floating-point values.
+     *
+     * All of the parameters except {@see GL46::GL_CURRENT_VERTEX_ATTRIB} represent state stored in the currently
+     * bound vertex array object.
+     *
+     * @see http://docs.gl/gl2/glGetVertexAttrib
+     * @see http://docs.gl/gl4/glGetVertexAttrib
+     * @since 2.0
+     * @param int $index
+     * @param int $pname
+     * @param float|null $params
+     * @return void
+     */
+    public function getVertexAttribdv(int $index, int $pname, ?float &$params): void
+    {
+        $paramsCType = $this->info->ffi->new('GLdouble', false);
+        try {
+            $__proc = $this->getProcAs('glGetVertexAttribdv', 'void (*)(GLuint index, GLenum pname, GLdouble *params)');
+            $__proc($index, $pname, \FFI::addr($paramsCType));
+        } finally {
+            $params = $paramsCType->cdata;
+            \FFI::free($paramsCType);
+        }
+    }
 
-        $proc = $this->getProcAddress('glGetVertexAttribPointerv', 'void (*)(GLuint index, GLenum pname, void **pointer)');
-        $proc($index, $pname, $pointer);
+    /**
+     * {@see GL46::glGetVertexAttrib} returns in $params the value of a generic vertex attribute parameter. The
+     * generic vertex attribute to be queried is specified by $index, and the parameter to be queried is specified by
+     * $pname.
+     *
+     * The accepted parameter names are as follows:
+     *
+     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING}: $params returns a
+     *    single value, the name of the buffer object currently bound to the
+     *    binding point
+     *    corresponding to generic vertex attribute array $index. If no buffer
+     *    object is bound, 0 is returned. The
+     *    initial value is 0.
+     *
+     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_ENABLED}: $params returns a single
+     *    value that is non-zero (true) if the vertex attribute array for $index
+     *    is enabled
+     *    and 0 (false) if it is disabled. The initial value is {@see
+     *    GL46::GL_FALSE}.
+     *
+     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_SIZE}: $params returns a single
+     *    value, the size of the vertex attribute array for $index. The size is
+     *    the number
+     *    of values for each element of the vertex attribute array, and it will
+     *    be 1, 2, 3, or 4. The initial value is
+     *    4.
+     *
+     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_STRIDE}: $params returns a single
+     *    value, the array stride for (number of bytes between successive
+     *    elements in) the
+     *    vertex attribute array for $index. A value of 0 indicates that the
+     *    array elements are stored sequentially in
+     *    memory. The initial value is 0.
+     *
+     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_TYPE}: $params returns a single
+     *    value, a symbolic constant indicating the array type for the vertex
+     *    attribute
+     *    array for $index. Possible values are {@see GL46::GL_BYTE}, {@see
+     *    GL46::GL_UNSIGNED_BYTE},
+     *    {@see GL46::GL_SHORT}, {@see GL46::GL_UNSIGNED_SHORT}, {@see
+     *    GL46::GL_INT}, {@see GL46::GL_UNSIGNED_INT},
+     *    {@see GL46::GL_FLOAT}, and {@see GL46::GL_DOUBLE}. The initial value
+     *    is {@see GL46::GL_FLOAT}.
+     *
+     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_NORMALIZED}: $params returns a
+     *    single value that is non-zero (true) if fixed-point data types for the
+     *    vertex attribute
+     *    array indicated by $index are normalized when they are converted to
+     *    floating point, and 0 (false) otherwise.
+     *    The initial value is {@see GL46::GL_FALSE}.
+     *
+     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_INTEGER}: $params returns a single
+     *    value that is non-zero (true) if fixed-point data types for the vertex
+     *    attribute
+     *    array indicated by $index have integer data types, and 0 (false)
+     *    otherwise. The initial value is 0
+     *    ({@see GL46::GL_FALSE}).
+     *
+     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_LONG}: $param returns a single
+     *    value that is non-zero (true) if a vertex attribute is stored as an
+     *    unconverted
+     *    double, and 0 (false) otherwise. The initial value is 0 ({@see
+     *    GL46::GL_FALSE}).
+     *
+     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_DIVISOR}: $params returns a single
+     *    value that is the frequency divisor used for instanced rendering. See
+     *    {@see GL46::glVertexAttribDivisor}. The initial value is 0.
+     *
+     *  - {@see GL46::GL_VERTEX_ATTRIB_BINDING}: $params returns a single value,
+     *    the vertex buffer binding of the vertex attribute array $index.
+     *
+     *  - {@see GL46::GL_VERTEX_ATTRIB_RELATIVE_OFFSET}: $params returns a
+     *    single value that is the byte offset of the first element relative to
+     *    the start of the
+     *    vertex buffer binding specified attribute fetches from. The initial
+     *    value is 0.
+     *
+     *  - {@see GL46::GL_CURRENT_VERTEX_ATTRIB}: $params returns four values
+     *    that represent the current value for the generic vertex attribute
+     *    specified by
+     *    index. Generic vertex attribute 0 is unique in that it has no current
+     *    state, so an error will be generated if
+     *    $index is 0. The initial value for all other generic vertex attributes
+     *    is (0,0,0,1).
+     *    {@see GL46::glGetVertexAttribdv} and {@see GL46::glGetVertexAttribfv}
+     *    return the current attribute values as
+     *    four single-precision floating-point values; {@see
+     *    GL46::glGetVertexAttribiv} reads them as floating-point
+     *    values and converts them to four integer values; {@see
+     *    GL46::glGetVertexAttribIiv} and
+     *    {@see GL46::glGetVertexAttribIuiv} read and return them as signed or
+     *    unsigned integer values, respectively;
+     *    {@see GL46::glGetVertexAttribLdv} reads and returns them as four
+     *    double-precision floating-point values.
+     *
+     * All of the parameters except {@see GL46::GL_CURRENT_VERTEX_ATTRIB} represent state stored in the currently
+     * bound vertex array object.
+     *
+     * @see http://docs.gl/gl2/glGetVertexAttrib
+     * @see http://docs.gl/gl4/glGetVertexAttrib
+     * @since 2.0
+     * @param int $index
+     * @param int $pname
+     * @param float|null $params
+     * @return void
+     */
+    public function getVertexAttribfv(int $index, int $pname, ?float &$params): void
+    {
+        $paramsCType = $this->info->ffi->new('GLfloat', false);
+        try {
+            $__proc = $this->getProcAs('glGetVertexAttribfv', 'void (*)(GLuint index, GLenum pname, GLfloat *params)');
+            $__proc($index, $pname, \FFI::addr($paramsCType));
+        } finally {
+            $params = $paramsCType->cdata;
+            \FFI::free($paramsCType);
+        }
+    }
+
+    /**
+     * {@see GL46::glGetVertexAttrib} returns in $params the value of a generic vertex attribute parameter. The
+     * generic vertex attribute to be queried is specified by $index, and the parameter to be queried is specified by
+     * $pname.
+     *
+     * The accepted parameter names are as follows:
+     *
+     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING}: $params returns a
+     *    single value, the name of the buffer object currently bound to the
+     *    binding point
+     *    corresponding to generic vertex attribute array $index. If no buffer
+     *    object is bound, 0 is returned. The
+     *    initial value is 0.
+     *
+     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_ENABLED}: $params returns a single
+     *    value that is non-zero (true) if the vertex attribute array for $index
+     *    is enabled
+     *    and 0 (false) if it is disabled. The initial value is {@see
+     *    GL46::GL_FALSE}.
+     *
+     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_SIZE}: $params returns a single
+     *    value, the size of the vertex attribute array for $index. The size is
+     *    the number
+     *    of values for each element of the vertex attribute array, and it will
+     *    be 1, 2, 3, or 4. The initial value is
+     *    4.
+     *
+     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_STRIDE}: $params returns a single
+     *    value, the array stride for (number of bytes between successive
+     *    elements in) the
+     *    vertex attribute array for $index. A value of 0 indicates that the
+     *    array elements are stored sequentially in
+     *    memory. The initial value is 0.
+     *
+     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_TYPE}: $params returns a single
+     *    value, a symbolic constant indicating the array type for the vertex
+     *    attribute
+     *    array for $index. Possible values are {@see GL46::GL_BYTE}, {@see
+     *    GL46::GL_UNSIGNED_BYTE},
+     *    {@see GL46::GL_SHORT}, {@see GL46::GL_UNSIGNED_SHORT}, {@see
+     *    GL46::GL_INT}, {@see GL46::GL_UNSIGNED_INT},
+     *    {@see GL46::GL_FLOAT}, and {@see GL46::GL_DOUBLE}. The initial value
+     *    is {@see GL46::GL_FLOAT}.
+     *
+     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_NORMALIZED}: $params returns a
+     *    single value that is non-zero (true) if fixed-point data types for the
+     *    vertex attribute
+     *    array indicated by $index are normalized when they are converted to
+     *    floating point, and 0 (false) otherwise.
+     *    The initial value is {@see GL46::GL_FALSE}.
+     *
+     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_INTEGER}: $params returns a single
+     *    value that is non-zero (true) if fixed-point data types for the vertex
+     *    attribute
+     *    array indicated by $index have integer data types, and 0 (false)
+     *    otherwise. The initial value is 0
+     *    ({@see GL46::GL_FALSE}).
+     *
+     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_LONG}: $param returns a single
+     *    value that is non-zero (true) if a vertex attribute is stored as an
+     *    unconverted
+     *    double, and 0 (false) otherwise. The initial value is 0 ({@see
+     *    GL46::GL_FALSE}).
+     *
+     *  - {@see GL46::GL_VERTEX_ATTRIB_ARRAY_DIVISOR}: $params returns a single
+     *    value that is the frequency divisor used for instanced rendering. See
+     *    {@see GL46::glVertexAttribDivisor}. The initial value is 0.
+     *
+     *  - {@see GL46::GL_VERTEX_ATTRIB_BINDING}: $params returns a single value,
+     *    the vertex buffer binding of the vertex attribute array $index.
+     *
+     *  - {@see GL46::GL_VERTEX_ATTRIB_RELATIVE_OFFSET}: $params returns a
+     *    single value that is the byte offset of the first element relative to
+     *    the start of the
+     *    vertex buffer binding specified attribute fetches from. The initial
+     *    value is 0.
+     *
+     *  - {@see GL46::GL_CURRENT_VERTEX_ATTRIB}: $params returns four values
+     *    that represent the current value for the generic vertex attribute
+     *    specified by
+     *    index. Generic vertex attribute 0 is unique in that it has no current
+     *    state, so an error will be generated if
+     *    $index is 0. The initial value for all other generic vertex attributes
+     *    is (0,0,0,1).
+     *    {@see GL46::glGetVertexAttribdv} and {@see GL46::glGetVertexAttribfv}
+     *    return the current attribute values as
+     *    four single-precision floating-point values; {@see
+     *    GL46::glGetVertexAttribiv} reads them as floating-point
+     *    values and converts them to four integer values; {@see
+     *    GL46::glGetVertexAttribIiv} and
+     *    {@see GL46::glGetVertexAttribIuiv} read and return them as signed or
+     *    unsigned integer values, respectively;
+     *    {@see GL46::glGetVertexAttribLdv} reads and returns them as four
+     *    double-precision floating-point values.
+     *
+     * All of the parameters except {@see GL46::GL_CURRENT_VERTEX_ATTRIB} represent state stored in the currently
+     * bound vertex array object.
+     *
+     * @see http://docs.gl/gl2/glGetVertexAttrib
+     * @see http://docs.gl/gl4/glGetVertexAttrib
+     * @since 2.0
+     * @param int $index
+     * @param int $pname
+     * @param int|null $params
+     * @return void
+     */
+    public function getVertexAttribiv(int $index, int $pname, ?int &$params): void
+    {
+        $paramsCType = $this->info->ffi->new('GLint', false);
+        try {
+            $__proc = $this->getProcAs('glGetVertexAttribiv', 'void (*)(GLuint index, GLenum pname, GLint *params)');
+            $__proc($index, $pname, \FFI::addr($paramsCType));
+        } finally {
+            $params = $paramsCType->cdata;
+            \FFI::free($paramsCType);
+        }
     }
 
     /**
@@ -2123,17 +1881,13 @@ class GL20 extends GL15
      * @see http://docs.gl/gl2/glIsProgram
      * @see http://docs.gl/gl4/glIsProgram
      * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $program
-     * @return int|\FFI\CData|\FFI\CInt
+     * @param int $program
+     * @return bool
      */
-    public function isProgram($program): int
+    public function isProgram(int $program): bool
     {
-        $program = $program instanceof \FFI\CData ? $program->cdata : $program;
-
-        assert(Type::isUint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glIsProgram', 'GLboolean (*)(GLuint program)');
-        return $proc($program);
+        $__proc = $this->getProcAs('glIsProgram', 'GLboolean (*)(GLuint program)');
+        return $__proc($program) !== 0;
     }
 
     /**
@@ -2145,17 +1899,13 @@ class GL20 extends GL15
      * @see http://docs.gl/gl2/glIsShader
      * @see http://docs.gl/gl4/glIsShader
      * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $shader
-     * @return int|\FFI\CData|\FFI\CInt
+     * @param int $shader
+     * @return bool
      */
-    public function isShader($shader): int
+    public function isShader(int $shader): bool
     {
-        $shader = $shader instanceof \FFI\CData ? $shader->cdata : $shader;
-
-        assert(Type::isUint16($shader), 'Argument $shader must be a C-like GLuint, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glIsShader', 'GLboolean (*)(GLuint shader)');
-        return $proc($shader);
+        $__proc = $this->getProcAs('glIsShader', 'GLboolean (*)(GLuint shader)');
+        return $__proc($shader) !== 0;
     }
 
     /**
@@ -2246,17 +1996,13 @@ class GL20 extends GL15
      * @see http://docs.gl/gl2/glLinkProgram
      * @see http://docs.gl/gl4/glLinkProgram
      * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $program
+     * @param int $program
      * @return void
      */
-    public function linkProgram($program): void
+    public function linkProgram(int $program): void
     {
-        $program = $program instanceof \FFI\CData ? $program->cdata : $program;
-
-        assert(Type::isUint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glLinkProgram', 'void (*)(GLuint program)');
-        $proc($program);
+        $__proc = $this->getProcAs('glLinkProgram', 'void (*)(GLuint program)');
+        $__proc($program);
     }
 
     /**
@@ -2272,22 +2018,1507 @@ class GL20 extends GL15
      * @see http://docs.gl/gl2/glShaderSource
      * @see http://docs.gl/gl4/glShaderSource
      * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $shader
-     * @param int|\FFI\CData|\FFI\CInt $count
-     * @param \FFI\CData|\FFI\CIntPtrPtr|null $string
-     * @param \FFI\CData|\FFI\CIntPtr|null $length
+     * @param int $shader
+     * @param int $count
+     * @param array|string[] $string
+     * @param \FFI\CData|null $length
      * @return void
      */
-    public function shaderSource($shader, $count, ?\FFI\CData $string, ?\FFI\CData $length): void
+    public function shaderSource(int $shader, int $count, array $string, ?\FFI\CData $length): void
     {
-        $shader = $shader instanceof \FFI\CData ? $shader->cdata : $shader;
-        $count = $count instanceof \FFI\CData ? $count->cdata : $count;
+        $stringCType = \FFI::new('char*[' . \count($string) . ']');
+        foreach ($string as $i => $v) {
+            $stringCType[$i] = Util::charPtr($v);
+        }
 
-        assert(Type::isUint16($shader), 'Argument $shader must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isInt16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
+        $__proc = $this->getProcAs('glShaderSource', 'void (*)(GLuint shader, GLsizei count, const GLchar *const *string, const GLint *length)');
+        $__proc($shader, $count, $stringCType, $length);
+    }
 
-        $proc = $this->getProcAddress('glShaderSource', 'void (*)(GLuint shader, GLsizei count, const GLchar *const*string, const GLint *length)');
-        $proc($shader, $count, $string, $length);
+    /**
+     * Stenciling, like depth-buffering, enables and disables drawing on a per-pixel basis. You draw into the stencil
+     * planes using GL drawing primitives, then render geometry and images, using the stencil planes to mask out
+     * portions of the screen. Stenciling is typically used in multipass rendering algorithms to achieve special
+     * effects, such as decals, outlining, and constructive solid geometry rendering.
+     *
+     * The stencil test conditionally eliminates a pixel based on the outcome of a comparison between the reference
+     * value and the value in the stencil buffer. To enable and disable the test, call {@see GL46::glEnable} and
+     * {@see GL46::glDisable} with argument {@see GL46::GL_STENCIL_TEST}. To specify actions based on the outcome of
+     * the stencil test, call {@see GL46::glStencilOp} or {@see GL46::glStencilOpSeparate}.
+     *
+     * There can be two separate sets of $func, $ref, and $mask parameters; one affects back-facing polygons, and the
+     * other affects front-facing polygons as well as other non-polygon primitives. {@see GL46::glStencilFunc} sets
+     * both front and back stencil state to the same values, as if {@see GL46::glStencilFuncSeparate} were called
+     * with $face set to {@see GL46::GL_FRONT_AND_BACK}.
+     *
+     * $func is a symbolic constant that determines the stencil comparison function. It accepts one of eight values,
+     * shown in the following list. $ref is an integer reference value that is used in the stencil comparison. It is
+     * clamped to the range    0  2 n  - 1   , where n is the number of bitplanes in the stencil buffer. $mask is
+     * bitwise ANDed with both the reference value and the stored stencil value, with the ANDed values participating
+     * in the comparison.
+     *
+     * If stencil represents the value stored in the corresponding stencil buffer location, the following list shows
+     * the effect of each comparison function that can be specified by $func. Only if the comparison succeeds is the
+     * pixel passed through to the next stage in the rasterization process (see {@see GL46::glStencilOp}). All tests
+     * treat stencil values as unsigned integers in the range    0  2 n  - 1   , where n is the number of bitplanes
+     * in the stencil buffer.
+     *
+     * The following values are accepted by $func:
+     *
+     *  - {@see GL46::GL_NEVER}: Always fails.
+     *
+     *  - {@see GL46::GL_LESS}: Passes if ( $ref &amp; $mask ) &lt; ( stencil
+     *    &amp; $mask ).
+     *
+     *  - {@see GL46::GL_LEQUAL}: Passes if ( $ref &amp; $mask ) &lt;= ( stencil
+     *    &amp; $mask ).
+     *
+     *  - {@see GL46::GL_GREATER}: Passes if ( $ref &amp; $mask ) &gt; ( stencil
+     *    &amp; $mask ).
+     *
+     *  - {@see GL46::GL_GEQUAL}: Passes if ( $ref &amp; $mask ) &gt;= ( stencil
+     *    &amp; $mask ).
+     *
+     *  - {@see GL46::GL_EQUAL}: Passes if ( $ref &amp; $mask ) = ( stencil
+     *    &amp; $mask ).
+     *
+     *  - {@see GL46::GL_NOTEQUAL}: Passes if ( $ref &amp; $mask ) != ( stencil
+     *    &amp; $mask ).
+     *
+     *  - {@see GL46::GL_ALWAYS}: Always passes.
+     *
+     * @see http://docs.gl/gl2/glStencilFuncSeparate
+     * @see http://docs.gl/gl4/glStencilFuncSeparate
+     * @since 2.0
+     * @param int $face
+     * @param int $func
+     * @param int $ref
+     * @param int $mask
+     * @return void
+     */
+    public function stencilFuncSeparate(int $face, int $func, int $ref, int $mask): void
+    {
+        $__proc = $this->getProcAs('glStencilFuncSeparate', 'void (*)(GLenum face, GLenum func, GLint ref, GLuint mask)');
+        $__proc($face, $func, $ref, $mask);
+    }
+
+    /**
+     * {@see GL46::glStencilMaskSeparate} controls the writing of individual bits in the stencil planes. The least
+     * significant n bits of $mask, where n is the number of bits in the stencil buffer, specify a mask. Where a 1
+     * appears in the mask, it's possible to write to the corresponding bit in the stencil buffer. Where a 0 appears,
+     * the corresponding bit is write-protected. Initially, all bits are enabled for writing.
+     *
+     * There can be two separate $mask writemasks; one affects back-facing polygons, and the other affects
+     * front-facing polygons as well as other non-polygon primitives. {@see GL46::glStencilMask} sets both front and
+     * back stencil writemasks to the same values, as if {@see GL46::glStencilMaskSeparate} were called with $face
+     * set to {@see GL46::GL_FRONT_AND_BACK}.
+     *
+     * @see http://docs.gl/gl2/glStencilMaskSeparate
+     * @see http://docs.gl/gl4/glStencilMaskSeparate
+     * @since 2.0
+     * @param int $face
+     * @param int $mask
+     * @return void
+     */
+    public function stencilMaskSeparate(int $face, int $mask): void
+    {
+        $__proc = $this->getProcAs('glStencilMaskSeparate', 'void (*)(GLenum face, GLuint mask)');
+        $__proc($face, $mask);
+    }
+
+    /**
+     * Stenciling, like depth-buffering, enables and disables drawing on a per-pixel basis. You draw into the stencil
+     * planes using GL drawing primitives, then render geometry and images, using the stencil planes to mask out
+     * portions of the screen. Stenciling is typically used in multipass rendering algorithms to achieve special
+     * effects, such as decals, outlining, and constructive solid geometry rendering.
+     *
+     * The stencil test conditionally eliminates a pixel based on the outcome of a comparison between the value in
+     * the stencil buffer and a reference value. To enable and disable the test, call {@see GL46::glEnable} and
+     * {@see GL46::glDisable} with argument {@see GL46::GL_STENCIL_TEST}; to control it, call
+     * {@see GL46::glStencilFunc} or {@see GL46::glStencilFuncSeparate}.
+     *
+     * There can be two separate sets of $sfail, $dpfail, and $dppass parameters; one affects back-facing polygons,
+     * and the other affects front-facing polygons as well as other non-polygon primitives. {@see GL46::glStencilOp}
+     * sets both front and back stencil state to the same values, as if {@see GL46::glStencilOpSeparate} were called
+     * with $face set to {@see GL46::GL_FRONT_AND_BACK}.
+     *
+     * {@see GL46::glStencilOpSeparate} takes three arguments that indicate what happens to the stored stencil value
+     * while stenciling is enabled. If the stencil test fails, no change is made to the pixel's color or depth
+     * buffers, and $sfail specifies what happens to the stencil buffer contents. The following eight actions are
+     * possible.
+     *
+     *  - {@see GL46::GL_KEEP}: Keeps the current value.
+     *
+     *  - {@see GL46::GL_ZERO}: Sets the stencil buffer value to 0.
+     *
+     *  - {@see GL46::GL_REPLACE}: Sets the stencil buffer value to ref, as
+     *    specified by {@see GL46::glStencilFunc}.
+     *
+     *  - {@see GL46::GL_INCR}: Increments the current stencil buffer value.
+     *    Clamps to the maximum representable unsigned value.
+     *
+     *  - {@see GL46::GL_INCR_WRAP}: Increments the current stencil buffer
+     *    value. Wraps stencil buffer value to zero when incrementing the
+     *    maximum
+     *    representable unsigned value.
+     *
+     *  - {@see GL46::GL_DECR}: Decrements the current stencil buffer value.
+     *    Clamps to 0.
+     *
+     *  - {@see GL46::GL_DECR_WRAP}: Decrements the current stencil buffer
+     *    value. Wraps stencil buffer value to the maximum representable
+     *    unsigned
+     *    value when decrementing a stencil buffer value of zero.
+     *
+     *  - {@see GL46::GL_INVERT}: Bitwise inverts the current stencil buffer
+     *    value.
+     *
+     * Stencil buffer values are treated as unsigned integers. When incremented and decremented, values are clamped
+     * to 0 and    2 n  - 1  , where n is the value returned by querying {@see GL46::GL_STENCIL_BITS}.
+     *
+     * The other two arguments to {@see GL46::glStencilOpSeparate} specify stencil buffer actions that depend on
+     * whether subsequent depth buffer tests succeed ($dppass) or fail ($dpfail) (see {@see GL46::glDepthFunc}). The
+     * actions are specified using the same eight symbolic constants as $sfail. Note that $dpfail is ignored when
+     * there is no depth buffer, or when the depth buffer is not enabled. In these cases, $sfail and $dppass specify
+     * stencil action when the stencil test fails and passes, respectively.
+     *
+     * @see http://docs.gl/gl2/glStencilOpSeparate
+     * @see http://docs.gl/gl4/glStencilOpSeparate
+     * @since 2.0
+     * @param int $face
+     * @param int $sfail
+     * @param int $dpfail
+     * @param int $dppass
+     * @return void
+     */
+    public function stencilOpSeparate(int $face, int $sfail, int $dpfail, int $dppass): void
+    {
+        $__proc = $this->getProcAs('glStencilOpSeparate', 'void (*)(GLenum face, GLenum sfail, GLenum dpfail, GLenum dppass)');
+        $__proc($face, $sfail, $dpfail, $dppass);
+    }
+
+    /**
+     * {@see GL46::glUniform} modifies the value of a uniform variable or a uniform variable array. The location of
+     * the uniform variable to be modified is specified by $location, which should be a value returned by
+     * {@see GL46::glGetUniformLocation}. {@see GL46::glUniform} operates on the program object that was made part of
+     * current state by calling {@see GL46::glUseProgram}.
+     *
+     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform variable
+     * specified by $location using the values passed as arguments. The number specified in the command should match
+     * the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
+     * `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The suffix
+     * {@see GL46::f} indicates that floating-point values are being passed; the suffix {@see GL46::i} indicates that
+     * integer values are being passed; the suffix {@see GL46::ui} indicates that unsigned integer values are being
+     * passed, and this type should also match the data type of the specified uniform variable. The {@see GL46::i}
+     * variants of this function should be used to provide values for uniform variables defined as `int`, `ivec2`,
+     * `ivec3`, `ivec4`, or arrays of these. The {@see GL46::ui} variants of this function should be used to provide
+     * values for uniform variables defined as `unsigned int`, `uvec2`, `uvec3`, `uvec4`, or arrays of these. The
+     * {@see GL46::f} variants should be used to provide values for uniform variables of type `float`, `vec2`,
+     * `vec3`, `vec4`, or arrays of these. Either the {@see GL46::i}, {@see GL46::ui} or {@see GL46::f} variants may
+     * be used to provide values for uniform variables of type `bool`, `bvec2`, `bvec3`, `bvec4`, or arrays of these.
+     * The uniform variable will be set to `false` if the input value is 0 or 0.0f, and it will be set to `true`
+     * otherwise.
+     *
+     * All active uniform variables defined in a program object are initialized to 0 when the program object is
+     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glUniform } until the
+     * next successful link operation occurs on the program object, when they are once again initialized to 0.
+     *
+     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable or a
+     * uniform variable array. These commands pass a count and a pointer to the values to be loaded into a uniform
+     * variable or a uniform variable array. A count of 1 should be used if modifying the value of a single uniform
+     * variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When loading
+     * n elements starting at an arbitrary position m in a uniform variable array, elements m + n - 1 in the array
+     * will be replaced with the new values. If $m + $n - 1 is larger than the size of the uniform variable array,
+     * values for all array elements beyond the end of the array will be ignored. The number specified in the name of
+     * the command indicates the number of components for each element in $value, and it should match the number of
+     * components in the data type of the specified uniform variable (e.g., {@see GL46::1} for float, int, bool;
+     * {@see GL46::2} for vec2, ivec2, bvec2, etc.). The data type specified in the name of the command must match
+     * the data type for the specified uniform variable as described previously for
+     * {@see GL46::glUniform{1|2|3|4}{f|i|ui}}.
+     *
+     * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
+     * of the command (e.g., {@see GL46::glUniform3f} or {@see GL46::glUniform3fv} can be used to load a uniform
+     * variable array of type vec3). The number of elements of the uniform variable array to be modified is specified
+     * by $count
+     *
+     * The commands {@see GL46::glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix or an
+     * array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix. The
+     * number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3 × 3
+     * matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values). Non-square
+     * matrix dimensionality is explicit, with the first number representing the number of columns and the second
+     * number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2 columns
+     * and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be supplied in
+     * column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied in row major
+     * order. The $count argument indicates the number of matrices to be passed. A count of 1 should be used if
+     * modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of matrices.
+     *
+     * @see http://docs.gl/gl2/glUniform
+     * @see http://docs.gl/gl4/glUniform
+     * @since 2.0
+     * @param int $location
+     * @param float $v0
+     * @return void
+     */
+    public function uniform1f(int $location, float $v0): void
+    {
+        $__proc = $this->getProcAs('glUniform1f', 'void (*)(GLint location, GLfloat v0)');
+        $__proc($location, $v0);
+    }
+
+    /**
+     * {@see GL46::glUniform} modifies the value of a uniform variable or a uniform variable array. The location of
+     * the uniform variable to be modified is specified by $location, which should be a value returned by
+     * {@see GL46::glGetUniformLocation}. {@see GL46::glUniform} operates on the program object that was made part of
+     * current state by calling {@see GL46::glUseProgram}.
+     *
+     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform variable
+     * specified by $location using the values passed as arguments. The number specified in the command should match
+     * the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
+     * `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The suffix
+     * {@see GL46::f} indicates that floating-point values are being passed; the suffix {@see GL46::i} indicates that
+     * integer values are being passed; the suffix {@see GL46::ui} indicates that unsigned integer values are being
+     * passed, and this type should also match the data type of the specified uniform variable. The {@see GL46::i}
+     * variants of this function should be used to provide values for uniform variables defined as `int`, `ivec2`,
+     * `ivec3`, `ivec4`, or arrays of these. The {@see GL46::ui} variants of this function should be used to provide
+     * values for uniform variables defined as `unsigned int`, `uvec2`, `uvec3`, `uvec4`, or arrays of these. The
+     * {@see GL46::f} variants should be used to provide values for uniform variables of type `float`, `vec2`,
+     * `vec3`, `vec4`, or arrays of these. Either the {@see GL46::i}, {@see GL46::ui} or {@see GL46::f} variants may
+     * be used to provide values for uniform variables of type `bool`, `bvec2`, `bvec3`, `bvec4`, or arrays of these.
+     * The uniform variable will be set to `false` if the input value is 0 or 0.0f, and it will be set to `true`
+     * otherwise.
+     *
+     * All active uniform variables defined in a program object are initialized to 0 when the program object is
+     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glUniform } until the
+     * next successful link operation occurs on the program object, when they are once again initialized to 0.
+     *
+     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable or a
+     * uniform variable array. These commands pass a count and a pointer to the values to be loaded into a uniform
+     * variable or a uniform variable array. A count of 1 should be used if modifying the value of a single uniform
+     * variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When loading
+     * n elements starting at an arbitrary position m in a uniform variable array, elements m + n - 1 in the array
+     * will be replaced with the new values. If $m + $n - 1 is larger than the size of the uniform variable array,
+     * values for all array elements beyond the end of the array will be ignored. The number specified in the name of
+     * the command indicates the number of components for each element in $value, and it should match the number of
+     * components in the data type of the specified uniform variable (e.g., {@see GL46::1} for float, int, bool;
+     * {@see GL46::2} for vec2, ivec2, bvec2, etc.). The data type specified in the name of the command must match
+     * the data type for the specified uniform variable as described previously for
+     * {@see GL46::glUniform{1|2|3|4}{f|i|ui}}.
+     *
+     * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
+     * of the command (e.g., {@see GL46::glUniform3f} or {@see GL46::glUniform3fv} can be used to load a uniform
+     * variable array of type vec3). The number of elements of the uniform variable array to be modified is specified
+     * by $count
+     *
+     * The commands {@see GL46::glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix or an
+     * array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix. The
+     * number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3 × 3
+     * matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values). Non-square
+     * matrix dimensionality is explicit, with the first number representing the number of columns and the second
+     * number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2 columns
+     * and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be supplied in
+     * column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied in row major
+     * order. The $count argument indicates the number of matrices to be passed. A count of 1 should be used if
+     * modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of matrices.
+     *
+     * @see http://docs.gl/gl2/glUniform
+     * @see http://docs.gl/gl4/glUniform
+     * @since 2.0
+     * @param int $location
+     * @param int $count
+     * @param \FFI\CData|null $value
+     * @return void
+     */
+    public function uniform1fv(int $location, int $count, ?\FFI\CData $value): void
+    {
+        $__proc = $this->getProcAs('glUniform1fv', 'void (*)(GLint location, GLsizei count, const GLfloat *value)');
+        $__proc($location, $count, $value);
+    }
+
+    /**
+     * {@see GL46::glUniform} modifies the value of a uniform variable or a uniform variable array. The location of
+     * the uniform variable to be modified is specified by $location, which should be a value returned by
+     * {@see GL46::glGetUniformLocation}. {@see GL46::glUniform} operates on the program object that was made part of
+     * current state by calling {@see GL46::glUseProgram}.
+     *
+     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform variable
+     * specified by $location using the values passed as arguments. The number specified in the command should match
+     * the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
+     * `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The suffix
+     * {@see GL46::f} indicates that floating-point values are being passed; the suffix {@see GL46::i} indicates that
+     * integer values are being passed; the suffix {@see GL46::ui} indicates that unsigned integer values are being
+     * passed, and this type should also match the data type of the specified uniform variable. The {@see GL46::i}
+     * variants of this function should be used to provide values for uniform variables defined as `int`, `ivec2`,
+     * `ivec3`, `ivec4`, or arrays of these. The {@see GL46::ui} variants of this function should be used to provide
+     * values for uniform variables defined as `unsigned int`, `uvec2`, `uvec3`, `uvec4`, or arrays of these. The
+     * {@see GL46::f} variants should be used to provide values for uniform variables of type `float`, `vec2`,
+     * `vec3`, `vec4`, or arrays of these. Either the {@see GL46::i}, {@see GL46::ui} or {@see GL46::f} variants may
+     * be used to provide values for uniform variables of type `bool`, `bvec2`, `bvec3`, `bvec4`, or arrays of these.
+     * The uniform variable will be set to `false` if the input value is 0 or 0.0f, and it will be set to `true`
+     * otherwise.
+     *
+     * All active uniform variables defined in a program object are initialized to 0 when the program object is
+     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glUniform } until the
+     * next successful link operation occurs on the program object, when they are once again initialized to 0.
+     *
+     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable or a
+     * uniform variable array. These commands pass a count and a pointer to the values to be loaded into a uniform
+     * variable or a uniform variable array. A count of 1 should be used if modifying the value of a single uniform
+     * variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When loading
+     * n elements starting at an arbitrary position m in a uniform variable array, elements m + n - 1 in the array
+     * will be replaced with the new values. If $m + $n - 1 is larger than the size of the uniform variable array,
+     * values for all array elements beyond the end of the array will be ignored. The number specified in the name of
+     * the command indicates the number of components for each element in $value, and it should match the number of
+     * components in the data type of the specified uniform variable (e.g., {@see GL46::1} for float, int, bool;
+     * {@see GL46::2} for vec2, ivec2, bvec2, etc.). The data type specified in the name of the command must match
+     * the data type for the specified uniform variable as described previously for
+     * {@see GL46::glUniform{1|2|3|4}{f|i|ui}}.
+     *
+     * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
+     * of the command (e.g., {@see GL46::glUniform3f} or {@see GL46::glUniform3fv} can be used to load a uniform
+     * variable array of type vec3). The number of elements of the uniform variable array to be modified is specified
+     * by $count
+     *
+     * The commands {@see GL46::glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix or an
+     * array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix. The
+     * number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3 × 3
+     * matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values). Non-square
+     * matrix dimensionality is explicit, with the first number representing the number of columns and the second
+     * number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2 columns
+     * and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be supplied in
+     * column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied in row major
+     * order. The $count argument indicates the number of matrices to be passed. A count of 1 should be used if
+     * modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of matrices.
+     *
+     * @see http://docs.gl/gl2/glUniform
+     * @see http://docs.gl/gl4/glUniform
+     * @since 2.0
+     * @param int $location
+     * @param int $v0
+     * @return void
+     */
+    public function uniform1i(int $location, int $v0): void
+    {
+        $__proc = $this->getProcAs('glUniform1i', 'void (*)(GLint location, GLint v0)');
+        $__proc($location, $v0);
+    }
+
+    /**
+     * {@see GL46::glUniform} modifies the value of a uniform variable or a uniform variable array. The location of
+     * the uniform variable to be modified is specified by $location, which should be a value returned by
+     * {@see GL46::glGetUniformLocation}. {@see GL46::glUniform} operates on the program object that was made part of
+     * current state by calling {@see GL46::glUseProgram}.
+     *
+     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform variable
+     * specified by $location using the values passed as arguments. The number specified in the command should match
+     * the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
+     * `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The suffix
+     * {@see GL46::f} indicates that floating-point values are being passed; the suffix {@see GL46::i} indicates that
+     * integer values are being passed; the suffix {@see GL46::ui} indicates that unsigned integer values are being
+     * passed, and this type should also match the data type of the specified uniform variable. The {@see GL46::i}
+     * variants of this function should be used to provide values for uniform variables defined as `int`, `ivec2`,
+     * `ivec3`, `ivec4`, or arrays of these. The {@see GL46::ui} variants of this function should be used to provide
+     * values for uniform variables defined as `unsigned int`, `uvec2`, `uvec3`, `uvec4`, or arrays of these. The
+     * {@see GL46::f} variants should be used to provide values for uniform variables of type `float`, `vec2`,
+     * `vec3`, `vec4`, or arrays of these. Either the {@see GL46::i}, {@see GL46::ui} or {@see GL46::f} variants may
+     * be used to provide values for uniform variables of type `bool`, `bvec2`, `bvec3`, `bvec4`, or arrays of these.
+     * The uniform variable will be set to `false` if the input value is 0 or 0.0f, and it will be set to `true`
+     * otherwise.
+     *
+     * All active uniform variables defined in a program object are initialized to 0 when the program object is
+     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glUniform } until the
+     * next successful link operation occurs on the program object, when they are once again initialized to 0.
+     *
+     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable or a
+     * uniform variable array. These commands pass a count and a pointer to the values to be loaded into a uniform
+     * variable or a uniform variable array. A count of 1 should be used if modifying the value of a single uniform
+     * variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When loading
+     * n elements starting at an arbitrary position m in a uniform variable array, elements m + n - 1 in the array
+     * will be replaced with the new values. If $m + $n - 1 is larger than the size of the uniform variable array,
+     * values for all array elements beyond the end of the array will be ignored. The number specified in the name of
+     * the command indicates the number of components for each element in $value, and it should match the number of
+     * components in the data type of the specified uniform variable (e.g., {@see GL46::1} for float, int, bool;
+     * {@see GL46::2} for vec2, ivec2, bvec2, etc.). The data type specified in the name of the command must match
+     * the data type for the specified uniform variable as described previously for
+     * {@see GL46::glUniform{1|2|3|4}{f|i|ui}}.
+     *
+     * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
+     * of the command (e.g., {@see GL46::glUniform3f} or {@see GL46::glUniform3fv} can be used to load a uniform
+     * variable array of type vec3). The number of elements of the uniform variable array to be modified is specified
+     * by $count
+     *
+     * The commands {@see GL46::glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix or an
+     * array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix. The
+     * number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3 × 3
+     * matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values). Non-square
+     * matrix dimensionality is explicit, with the first number representing the number of columns and the second
+     * number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2 columns
+     * and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be supplied in
+     * column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied in row major
+     * order. The $count argument indicates the number of matrices to be passed. A count of 1 should be used if
+     * modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of matrices.
+     *
+     * @see http://docs.gl/gl2/glUniform
+     * @see http://docs.gl/gl4/glUniform
+     * @since 2.0
+     * @param int $location
+     * @param int $count
+     * @param \FFI\CData|null $value
+     * @return void
+     */
+    public function uniform1iv(int $location, int $count, ?\FFI\CData $value): void
+    {
+        $__proc = $this->getProcAs('glUniform1iv', 'void (*)(GLint location, GLsizei count, const GLint *value)');
+        $__proc($location, $count, $value);
+    }
+
+    /**
+     * {@see GL46::glUniform} modifies the value of a uniform variable or a uniform variable array. The location of
+     * the uniform variable to be modified is specified by $location, which should be a value returned by
+     * {@see GL46::glGetUniformLocation}. {@see GL46::glUniform} operates on the program object that was made part of
+     * current state by calling {@see GL46::glUseProgram}.
+     *
+     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform variable
+     * specified by $location using the values passed as arguments. The number specified in the command should match
+     * the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
+     * `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The suffix
+     * {@see GL46::f} indicates that floating-point values are being passed; the suffix {@see GL46::i} indicates that
+     * integer values are being passed; the suffix {@see GL46::ui} indicates that unsigned integer values are being
+     * passed, and this type should also match the data type of the specified uniform variable. The {@see GL46::i}
+     * variants of this function should be used to provide values for uniform variables defined as `int`, `ivec2`,
+     * `ivec3`, `ivec4`, or arrays of these. The {@see GL46::ui} variants of this function should be used to provide
+     * values for uniform variables defined as `unsigned int`, `uvec2`, `uvec3`, `uvec4`, or arrays of these. The
+     * {@see GL46::f} variants should be used to provide values for uniform variables of type `float`, `vec2`,
+     * `vec3`, `vec4`, or arrays of these. Either the {@see GL46::i}, {@see GL46::ui} or {@see GL46::f} variants may
+     * be used to provide values for uniform variables of type `bool`, `bvec2`, `bvec3`, `bvec4`, or arrays of these.
+     * The uniform variable will be set to `false` if the input value is 0 or 0.0f, and it will be set to `true`
+     * otherwise.
+     *
+     * All active uniform variables defined in a program object are initialized to 0 when the program object is
+     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glUniform } until the
+     * next successful link operation occurs on the program object, when they are once again initialized to 0.
+     *
+     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable or a
+     * uniform variable array. These commands pass a count and a pointer to the values to be loaded into a uniform
+     * variable or a uniform variable array. A count of 1 should be used if modifying the value of a single uniform
+     * variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When loading
+     * n elements starting at an arbitrary position m in a uniform variable array, elements m + n - 1 in the array
+     * will be replaced with the new values. If $m + $n - 1 is larger than the size of the uniform variable array,
+     * values for all array elements beyond the end of the array will be ignored. The number specified in the name of
+     * the command indicates the number of components for each element in $value, and it should match the number of
+     * components in the data type of the specified uniform variable (e.g., {@see GL46::1} for float, int, bool;
+     * {@see GL46::2} for vec2, ivec2, bvec2, etc.). The data type specified in the name of the command must match
+     * the data type for the specified uniform variable as described previously for
+     * {@see GL46::glUniform{1|2|3|4}{f|i|ui}}.
+     *
+     * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
+     * of the command (e.g., {@see GL46::glUniform3f} or {@see GL46::glUniform3fv} can be used to load a uniform
+     * variable array of type vec3). The number of elements of the uniform variable array to be modified is specified
+     * by $count
+     *
+     * The commands {@see GL46::glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix or an
+     * array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix. The
+     * number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3 × 3
+     * matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values). Non-square
+     * matrix dimensionality is explicit, with the first number representing the number of columns and the second
+     * number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2 columns
+     * and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be supplied in
+     * column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied in row major
+     * order. The $count argument indicates the number of matrices to be passed. A count of 1 should be used if
+     * modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of matrices.
+     *
+     * @see http://docs.gl/gl2/glUniform
+     * @see http://docs.gl/gl4/glUniform
+     * @since 2.0
+     * @param int $location
+     * @param float $v0
+     * @param float $v1
+     * @return void
+     */
+    public function uniform2f(int $location, float $v0, float $v1): void
+    {
+        $__proc = $this->getProcAs('glUniform2f', 'void (*)(GLint location, GLfloat v0, GLfloat v1)');
+        $__proc($location, $v0, $v1);
+    }
+
+    /**
+     * {@see GL46::glUniform} modifies the value of a uniform variable or a uniform variable array. The location of
+     * the uniform variable to be modified is specified by $location, which should be a value returned by
+     * {@see GL46::glGetUniformLocation}. {@see GL46::glUniform} operates on the program object that was made part of
+     * current state by calling {@see GL46::glUseProgram}.
+     *
+     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform variable
+     * specified by $location using the values passed as arguments. The number specified in the command should match
+     * the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
+     * `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The suffix
+     * {@see GL46::f} indicates that floating-point values are being passed; the suffix {@see GL46::i} indicates that
+     * integer values are being passed; the suffix {@see GL46::ui} indicates that unsigned integer values are being
+     * passed, and this type should also match the data type of the specified uniform variable. The {@see GL46::i}
+     * variants of this function should be used to provide values for uniform variables defined as `int`, `ivec2`,
+     * `ivec3`, `ivec4`, or arrays of these. The {@see GL46::ui} variants of this function should be used to provide
+     * values for uniform variables defined as `unsigned int`, `uvec2`, `uvec3`, `uvec4`, or arrays of these. The
+     * {@see GL46::f} variants should be used to provide values for uniform variables of type `float`, `vec2`,
+     * `vec3`, `vec4`, or arrays of these. Either the {@see GL46::i}, {@see GL46::ui} or {@see GL46::f} variants may
+     * be used to provide values for uniform variables of type `bool`, `bvec2`, `bvec3`, `bvec4`, or arrays of these.
+     * The uniform variable will be set to `false` if the input value is 0 or 0.0f, and it will be set to `true`
+     * otherwise.
+     *
+     * All active uniform variables defined in a program object are initialized to 0 when the program object is
+     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glUniform } until the
+     * next successful link operation occurs on the program object, when they are once again initialized to 0.
+     *
+     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable or a
+     * uniform variable array. These commands pass a count and a pointer to the values to be loaded into a uniform
+     * variable or a uniform variable array. A count of 1 should be used if modifying the value of a single uniform
+     * variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When loading
+     * n elements starting at an arbitrary position m in a uniform variable array, elements m + n - 1 in the array
+     * will be replaced with the new values. If $m + $n - 1 is larger than the size of the uniform variable array,
+     * values for all array elements beyond the end of the array will be ignored. The number specified in the name of
+     * the command indicates the number of components for each element in $value, and it should match the number of
+     * components in the data type of the specified uniform variable (e.g., {@see GL46::1} for float, int, bool;
+     * {@see GL46::2} for vec2, ivec2, bvec2, etc.). The data type specified in the name of the command must match
+     * the data type for the specified uniform variable as described previously for
+     * {@see GL46::glUniform{1|2|3|4}{f|i|ui}}.
+     *
+     * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
+     * of the command (e.g., {@see GL46::glUniform3f} or {@see GL46::glUniform3fv} can be used to load a uniform
+     * variable array of type vec3). The number of elements of the uniform variable array to be modified is specified
+     * by $count
+     *
+     * The commands {@see GL46::glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix or an
+     * array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix. The
+     * number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3 × 3
+     * matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values). Non-square
+     * matrix dimensionality is explicit, with the first number representing the number of columns and the second
+     * number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2 columns
+     * and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be supplied in
+     * column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied in row major
+     * order. The $count argument indicates the number of matrices to be passed. A count of 1 should be used if
+     * modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of matrices.
+     *
+     * @see http://docs.gl/gl2/glUniform
+     * @see http://docs.gl/gl4/glUniform
+     * @since 2.0
+     * @param int $location
+     * @param int $count
+     * @param \FFI\CData|null $value
+     * @return void
+     */
+    public function uniform2fv(int $location, int $count, ?\FFI\CData $value): void
+    {
+        $__proc = $this->getProcAs('glUniform2fv', 'void (*)(GLint location, GLsizei count, const GLfloat *value)');
+        $__proc($location, $count, $value);
+    }
+
+    /**
+     * {@see GL46::glUniform} modifies the value of a uniform variable or a uniform variable array. The location of
+     * the uniform variable to be modified is specified by $location, which should be a value returned by
+     * {@see GL46::glGetUniformLocation}. {@see GL46::glUniform} operates on the program object that was made part of
+     * current state by calling {@see GL46::glUseProgram}.
+     *
+     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform variable
+     * specified by $location using the values passed as arguments. The number specified in the command should match
+     * the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
+     * `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The suffix
+     * {@see GL46::f} indicates that floating-point values are being passed; the suffix {@see GL46::i} indicates that
+     * integer values are being passed; the suffix {@see GL46::ui} indicates that unsigned integer values are being
+     * passed, and this type should also match the data type of the specified uniform variable. The {@see GL46::i}
+     * variants of this function should be used to provide values for uniform variables defined as `int`, `ivec2`,
+     * `ivec3`, `ivec4`, or arrays of these. The {@see GL46::ui} variants of this function should be used to provide
+     * values for uniform variables defined as `unsigned int`, `uvec2`, `uvec3`, `uvec4`, or arrays of these. The
+     * {@see GL46::f} variants should be used to provide values for uniform variables of type `float`, `vec2`,
+     * `vec3`, `vec4`, or arrays of these. Either the {@see GL46::i}, {@see GL46::ui} or {@see GL46::f} variants may
+     * be used to provide values for uniform variables of type `bool`, `bvec2`, `bvec3`, `bvec4`, or arrays of these.
+     * The uniform variable will be set to `false` if the input value is 0 or 0.0f, and it will be set to `true`
+     * otherwise.
+     *
+     * All active uniform variables defined in a program object are initialized to 0 when the program object is
+     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glUniform } until the
+     * next successful link operation occurs on the program object, when they are once again initialized to 0.
+     *
+     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable or a
+     * uniform variable array. These commands pass a count and a pointer to the values to be loaded into a uniform
+     * variable or a uniform variable array. A count of 1 should be used if modifying the value of a single uniform
+     * variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When loading
+     * n elements starting at an arbitrary position m in a uniform variable array, elements m + n - 1 in the array
+     * will be replaced with the new values. If $m + $n - 1 is larger than the size of the uniform variable array,
+     * values for all array elements beyond the end of the array will be ignored. The number specified in the name of
+     * the command indicates the number of components for each element in $value, and it should match the number of
+     * components in the data type of the specified uniform variable (e.g., {@see GL46::1} for float, int, bool;
+     * {@see GL46::2} for vec2, ivec2, bvec2, etc.). The data type specified in the name of the command must match
+     * the data type for the specified uniform variable as described previously for
+     * {@see GL46::glUniform{1|2|3|4}{f|i|ui}}.
+     *
+     * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
+     * of the command (e.g., {@see GL46::glUniform3f} or {@see GL46::glUniform3fv} can be used to load a uniform
+     * variable array of type vec3). The number of elements of the uniform variable array to be modified is specified
+     * by $count
+     *
+     * The commands {@see GL46::glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix or an
+     * array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix. The
+     * number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3 × 3
+     * matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values). Non-square
+     * matrix dimensionality is explicit, with the first number representing the number of columns and the second
+     * number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2 columns
+     * and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be supplied in
+     * column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied in row major
+     * order. The $count argument indicates the number of matrices to be passed. A count of 1 should be used if
+     * modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of matrices.
+     *
+     * @see http://docs.gl/gl2/glUniform
+     * @see http://docs.gl/gl4/glUniform
+     * @since 2.0
+     * @param int $location
+     * @param int $v0
+     * @param int $v1
+     * @return void
+     */
+    public function uniform2i(int $location, int $v0, int $v1): void
+    {
+        $__proc = $this->getProcAs('glUniform2i', 'void (*)(GLint location, GLint v0, GLint v1)');
+        $__proc($location, $v0, $v1);
+    }
+
+    /**
+     * {@see GL46::glUniform} modifies the value of a uniform variable or a uniform variable array. The location of
+     * the uniform variable to be modified is specified by $location, which should be a value returned by
+     * {@see GL46::glGetUniformLocation}. {@see GL46::glUniform} operates on the program object that was made part of
+     * current state by calling {@see GL46::glUseProgram}.
+     *
+     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform variable
+     * specified by $location using the values passed as arguments. The number specified in the command should match
+     * the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
+     * `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The suffix
+     * {@see GL46::f} indicates that floating-point values are being passed; the suffix {@see GL46::i} indicates that
+     * integer values are being passed; the suffix {@see GL46::ui} indicates that unsigned integer values are being
+     * passed, and this type should also match the data type of the specified uniform variable. The {@see GL46::i}
+     * variants of this function should be used to provide values for uniform variables defined as `int`, `ivec2`,
+     * `ivec3`, `ivec4`, or arrays of these. The {@see GL46::ui} variants of this function should be used to provide
+     * values for uniform variables defined as `unsigned int`, `uvec2`, `uvec3`, `uvec4`, or arrays of these. The
+     * {@see GL46::f} variants should be used to provide values for uniform variables of type `float`, `vec2`,
+     * `vec3`, `vec4`, or arrays of these. Either the {@see GL46::i}, {@see GL46::ui} or {@see GL46::f} variants may
+     * be used to provide values for uniform variables of type `bool`, `bvec2`, `bvec3`, `bvec4`, or arrays of these.
+     * The uniform variable will be set to `false` if the input value is 0 or 0.0f, and it will be set to `true`
+     * otherwise.
+     *
+     * All active uniform variables defined in a program object are initialized to 0 when the program object is
+     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glUniform } until the
+     * next successful link operation occurs on the program object, when they are once again initialized to 0.
+     *
+     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable or a
+     * uniform variable array. These commands pass a count and a pointer to the values to be loaded into a uniform
+     * variable or a uniform variable array. A count of 1 should be used if modifying the value of a single uniform
+     * variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When loading
+     * n elements starting at an arbitrary position m in a uniform variable array, elements m + n - 1 in the array
+     * will be replaced with the new values. If $m + $n - 1 is larger than the size of the uniform variable array,
+     * values for all array elements beyond the end of the array will be ignored. The number specified in the name of
+     * the command indicates the number of components for each element in $value, and it should match the number of
+     * components in the data type of the specified uniform variable (e.g., {@see GL46::1} for float, int, bool;
+     * {@see GL46::2} for vec2, ivec2, bvec2, etc.). The data type specified in the name of the command must match
+     * the data type for the specified uniform variable as described previously for
+     * {@see GL46::glUniform{1|2|3|4}{f|i|ui}}.
+     *
+     * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
+     * of the command (e.g., {@see GL46::glUniform3f} or {@see GL46::glUniform3fv} can be used to load a uniform
+     * variable array of type vec3). The number of elements of the uniform variable array to be modified is specified
+     * by $count
+     *
+     * The commands {@see GL46::glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix or an
+     * array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix. The
+     * number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3 × 3
+     * matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values). Non-square
+     * matrix dimensionality is explicit, with the first number representing the number of columns and the second
+     * number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2 columns
+     * and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be supplied in
+     * column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied in row major
+     * order. The $count argument indicates the number of matrices to be passed. A count of 1 should be used if
+     * modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of matrices.
+     *
+     * @see http://docs.gl/gl2/glUniform
+     * @see http://docs.gl/gl4/glUniform
+     * @since 2.0
+     * @param int $location
+     * @param int $count
+     * @param \FFI\CData|null $value
+     * @return void
+     */
+    public function uniform2iv(int $location, int $count, ?\FFI\CData $value): void
+    {
+        $__proc = $this->getProcAs('glUniform2iv', 'void (*)(GLint location, GLsizei count, const GLint *value)');
+        $__proc($location, $count, $value);
+    }
+
+    /**
+     * {@see GL46::glUniform} modifies the value of a uniform variable or a uniform variable array. The location of
+     * the uniform variable to be modified is specified by $location, which should be a value returned by
+     * {@see GL46::glGetUniformLocation}. {@see GL46::glUniform} operates on the program object that was made part of
+     * current state by calling {@see GL46::glUseProgram}.
+     *
+     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform variable
+     * specified by $location using the values passed as arguments. The number specified in the command should match
+     * the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
+     * `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The suffix
+     * {@see GL46::f} indicates that floating-point values are being passed; the suffix {@see GL46::i} indicates that
+     * integer values are being passed; the suffix {@see GL46::ui} indicates that unsigned integer values are being
+     * passed, and this type should also match the data type of the specified uniform variable. The {@see GL46::i}
+     * variants of this function should be used to provide values for uniform variables defined as `int`, `ivec2`,
+     * `ivec3`, `ivec4`, or arrays of these. The {@see GL46::ui} variants of this function should be used to provide
+     * values for uniform variables defined as `unsigned int`, `uvec2`, `uvec3`, `uvec4`, or arrays of these. The
+     * {@see GL46::f} variants should be used to provide values for uniform variables of type `float`, `vec2`,
+     * `vec3`, `vec4`, or arrays of these. Either the {@see GL46::i}, {@see GL46::ui} or {@see GL46::f} variants may
+     * be used to provide values for uniform variables of type `bool`, `bvec2`, `bvec3`, `bvec4`, or arrays of these.
+     * The uniform variable will be set to `false` if the input value is 0 or 0.0f, and it will be set to `true`
+     * otherwise.
+     *
+     * All active uniform variables defined in a program object are initialized to 0 when the program object is
+     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glUniform } until the
+     * next successful link operation occurs on the program object, when they are once again initialized to 0.
+     *
+     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable or a
+     * uniform variable array. These commands pass a count and a pointer to the values to be loaded into a uniform
+     * variable or a uniform variable array. A count of 1 should be used if modifying the value of a single uniform
+     * variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When loading
+     * n elements starting at an arbitrary position m in a uniform variable array, elements m + n - 1 in the array
+     * will be replaced with the new values. If $m + $n - 1 is larger than the size of the uniform variable array,
+     * values for all array elements beyond the end of the array will be ignored. The number specified in the name of
+     * the command indicates the number of components for each element in $value, and it should match the number of
+     * components in the data type of the specified uniform variable (e.g., {@see GL46::1} for float, int, bool;
+     * {@see GL46::2} for vec2, ivec2, bvec2, etc.). The data type specified in the name of the command must match
+     * the data type for the specified uniform variable as described previously for
+     * {@see GL46::glUniform{1|2|3|4}{f|i|ui}}.
+     *
+     * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
+     * of the command (e.g., {@see GL46::glUniform3f} or {@see GL46::glUniform3fv} can be used to load a uniform
+     * variable array of type vec3). The number of elements of the uniform variable array to be modified is specified
+     * by $count
+     *
+     * The commands {@see GL46::glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix or an
+     * array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix. The
+     * number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3 × 3
+     * matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values). Non-square
+     * matrix dimensionality is explicit, with the first number representing the number of columns and the second
+     * number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2 columns
+     * and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be supplied in
+     * column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied in row major
+     * order. The $count argument indicates the number of matrices to be passed. A count of 1 should be used if
+     * modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of matrices.
+     *
+     * @see http://docs.gl/gl2/glUniform
+     * @see http://docs.gl/gl4/glUniform
+     * @since 2.0
+     * @param int $location
+     * @param float $v0
+     * @param float $v1
+     * @param float $v2
+     * @return void
+     */
+    public function uniform3f(int $location, float $v0, float $v1, float $v2): void
+    {
+        $__proc = $this->getProcAs('glUniform3f', 'void (*)(GLint location, GLfloat v0, GLfloat v1, GLfloat v2)');
+        $__proc($location, $v0, $v1, $v2);
+    }
+
+    /**
+     * {@see GL46::glUniform} modifies the value of a uniform variable or a uniform variable array. The location of
+     * the uniform variable to be modified is specified by $location, which should be a value returned by
+     * {@see GL46::glGetUniformLocation}. {@see GL46::glUniform} operates on the program object that was made part of
+     * current state by calling {@see GL46::glUseProgram}.
+     *
+     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform variable
+     * specified by $location using the values passed as arguments. The number specified in the command should match
+     * the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
+     * `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The suffix
+     * {@see GL46::f} indicates that floating-point values are being passed; the suffix {@see GL46::i} indicates that
+     * integer values are being passed; the suffix {@see GL46::ui} indicates that unsigned integer values are being
+     * passed, and this type should also match the data type of the specified uniform variable. The {@see GL46::i}
+     * variants of this function should be used to provide values for uniform variables defined as `int`, `ivec2`,
+     * `ivec3`, `ivec4`, or arrays of these. The {@see GL46::ui} variants of this function should be used to provide
+     * values for uniform variables defined as `unsigned int`, `uvec2`, `uvec3`, `uvec4`, or arrays of these. The
+     * {@see GL46::f} variants should be used to provide values for uniform variables of type `float`, `vec2`,
+     * `vec3`, `vec4`, or arrays of these. Either the {@see GL46::i}, {@see GL46::ui} or {@see GL46::f} variants may
+     * be used to provide values for uniform variables of type `bool`, `bvec2`, `bvec3`, `bvec4`, or arrays of these.
+     * The uniform variable will be set to `false` if the input value is 0 or 0.0f, and it will be set to `true`
+     * otherwise.
+     *
+     * All active uniform variables defined in a program object are initialized to 0 when the program object is
+     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glUniform } until the
+     * next successful link operation occurs on the program object, when they are once again initialized to 0.
+     *
+     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable or a
+     * uniform variable array. These commands pass a count and a pointer to the values to be loaded into a uniform
+     * variable or a uniform variable array. A count of 1 should be used if modifying the value of a single uniform
+     * variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When loading
+     * n elements starting at an arbitrary position m in a uniform variable array, elements m + n - 1 in the array
+     * will be replaced with the new values. If $m + $n - 1 is larger than the size of the uniform variable array,
+     * values for all array elements beyond the end of the array will be ignored. The number specified in the name of
+     * the command indicates the number of components for each element in $value, and it should match the number of
+     * components in the data type of the specified uniform variable (e.g., {@see GL46::1} for float, int, bool;
+     * {@see GL46::2} for vec2, ivec2, bvec2, etc.). The data type specified in the name of the command must match
+     * the data type for the specified uniform variable as described previously for
+     * {@see GL46::glUniform{1|2|3|4}{f|i|ui}}.
+     *
+     * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
+     * of the command (e.g., {@see GL46::glUniform3f} or {@see GL46::glUniform3fv} can be used to load a uniform
+     * variable array of type vec3). The number of elements of the uniform variable array to be modified is specified
+     * by $count
+     *
+     * The commands {@see GL46::glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix or an
+     * array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix. The
+     * number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3 × 3
+     * matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values). Non-square
+     * matrix dimensionality is explicit, with the first number representing the number of columns and the second
+     * number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2 columns
+     * and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be supplied in
+     * column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied in row major
+     * order. The $count argument indicates the number of matrices to be passed. A count of 1 should be used if
+     * modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of matrices.
+     *
+     * @see http://docs.gl/gl2/glUniform
+     * @see http://docs.gl/gl4/glUniform
+     * @since 2.0
+     * @param int $location
+     * @param int $count
+     * @param \FFI\CData|null $value
+     * @return void
+     */
+    public function uniform3fv(int $location, int $count, ?\FFI\CData $value): void
+    {
+        $__proc = $this->getProcAs('glUniform3fv', 'void (*)(GLint location, GLsizei count, const GLfloat *value)');
+        $__proc($location, $count, $value);
+    }
+
+    /**
+     * {@see GL46::glUniform} modifies the value of a uniform variable or a uniform variable array. The location of
+     * the uniform variable to be modified is specified by $location, which should be a value returned by
+     * {@see GL46::glGetUniformLocation}. {@see GL46::glUniform} operates on the program object that was made part of
+     * current state by calling {@see GL46::glUseProgram}.
+     *
+     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform variable
+     * specified by $location using the values passed as arguments. The number specified in the command should match
+     * the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
+     * `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The suffix
+     * {@see GL46::f} indicates that floating-point values are being passed; the suffix {@see GL46::i} indicates that
+     * integer values are being passed; the suffix {@see GL46::ui} indicates that unsigned integer values are being
+     * passed, and this type should also match the data type of the specified uniform variable. The {@see GL46::i}
+     * variants of this function should be used to provide values for uniform variables defined as `int`, `ivec2`,
+     * `ivec3`, `ivec4`, or arrays of these. The {@see GL46::ui} variants of this function should be used to provide
+     * values for uniform variables defined as `unsigned int`, `uvec2`, `uvec3`, `uvec4`, or arrays of these. The
+     * {@see GL46::f} variants should be used to provide values for uniform variables of type `float`, `vec2`,
+     * `vec3`, `vec4`, or arrays of these. Either the {@see GL46::i}, {@see GL46::ui} or {@see GL46::f} variants may
+     * be used to provide values for uniform variables of type `bool`, `bvec2`, `bvec3`, `bvec4`, or arrays of these.
+     * The uniform variable will be set to `false` if the input value is 0 or 0.0f, and it will be set to `true`
+     * otherwise.
+     *
+     * All active uniform variables defined in a program object are initialized to 0 when the program object is
+     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glUniform } until the
+     * next successful link operation occurs on the program object, when they are once again initialized to 0.
+     *
+     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable or a
+     * uniform variable array. These commands pass a count and a pointer to the values to be loaded into a uniform
+     * variable or a uniform variable array. A count of 1 should be used if modifying the value of a single uniform
+     * variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When loading
+     * n elements starting at an arbitrary position m in a uniform variable array, elements m + n - 1 in the array
+     * will be replaced with the new values. If $m + $n - 1 is larger than the size of the uniform variable array,
+     * values for all array elements beyond the end of the array will be ignored. The number specified in the name of
+     * the command indicates the number of components for each element in $value, and it should match the number of
+     * components in the data type of the specified uniform variable (e.g., {@see GL46::1} for float, int, bool;
+     * {@see GL46::2} for vec2, ivec2, bvec2, etc.). The data type specified in the name of the command must match
+     * the data type for the specified uniform variable as described previously for
+     * {@see GL46::glUniform{1|2|3|4}{f|i|ui}}.
+     *
+     * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
+     * of the command (e.g., {@see GL46::glUniform3f} or {@see GL46::glUniform3fv} can be used to load a uniform
+     * variable array of type vec3). The number of elements of the uniform variable array to be modified is specified
+     * by $count
+     *
+     * The commands {@see GL46::glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix or an
+     * array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix. The
+     * number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3 × 3
+     * matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values). Non-square
+     * matrix dimensionality is explicit, with the first number representing the number of columns and the second
+     * number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2 columns
+     * and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be supplied in
+     * column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied in row major
+     * order. The $count argument indicates the number of matrices to be passed. A count of 1 should be used if
+     * modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of matrices.
+     *
+     * @see http://docs.gl/gl2/glUniform
+     * @see http://docs.gl/gl4/glUniform
+     * @since 2.0
+     * @param int $location
+     * @param int $v0
+     * @param int $v1
+     * @param int $v2
+     * @return void
+     */
+    public function uniform3i(int $location, int $v0, int $v1, int $v2): void
+    {
+        $__proc = $this->getProcAs('glUniform3i', 'void (*)(GLint location, GLint v0, GLint v1, GLint v2)');
+        $__proc($location, $v0, $v1, $v2);
+    }
+
+    /**
+     * {@see GL46::glUniform} modifies the value of a uniform variable or a uniform variable array. The location of
+     * the uniform variable to be modified is specified by $location, which should be a value returned by
+     * {@see GL46::glGetUniformLocation}. {@see GL46::glUniform} operates on the program object that was made part of
+     * current state by calling {@see GL46::glUseProgram}.
+     *
+     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform variable
+     * specified by $location using the values passed as arguments. The number specified in the command should match
+     * the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
+     * `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The suffix
+     * {@see GL46::f} indicates that floating-point values are being passed; the suffix {@see GL46::i} indicates that
+     * integer values are being passed; the suffix {@see GL46::ui} indicates that unsigned integer values are being
+     * passed, and this type should also match the data type of the specified uniform variable. The {@see GL46::i}
+     * variants of this function should be used to provide values for uniform variables defined as `int`, `ivec2`,
+     * `ivec3`, `ivec4`, or arrays of these. The {@see GL46::ui} variants of this function should be used to provide
+     * values for uniform variables defined as `unsigned int`, `uvec2`, `uvec3`, `uvec4`, or arrays of these. The
+     * {@see GL46::f} variants should be used to provide values for uniform variables of type `float`, `vec2`,
+     * `vec3`, `vec4`, or arrays of these. Either the {@see GL46::i}, {@see GL46::ui} or {@see GL46::f} variants may
+     * be used to provide values for uniform variables of type `bool`, `bvec2`, `bvec3`, `bvec4`, or arrays of these.
+     * The uniform variable will be set to `false` if the input value is 0 or 0.0f, and it will be set to `true`
+     * otherwise.
+     *
+     * All active uniform variables defined in a program object are initialized to 0 when the program object is
+     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glUniform } until the
+     * next successful link operation occurs on the program object, when they are once again initialized to 0.
+     *
+     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable or a
+     * uniform variable array. These commands pass a count and a pointer to the values to be loaded into a uniform
+     * variable or a uniform variable array. A count of 1 should be used if modifying the value of a single uniform
+     * variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When loading
+     * n elements starting at an arbitrary position m in a uniform variable array, elements m + n - 1 in the array
+     * will be replaced with the new values. If $m + $n - 1 is larger than the size of the uniform variable array,
+     * values for all array elements beyond the end of the array will be ignored. The number specified in the name of
+     * the command indicates the number of components for each element in $value, and it should match the number of
+     * components in the data type of the specified uniform variable (e.g., {@see GL46::1} for float, int, bool;
+     * {@see GL46::2} for vec2, ivec2, bvec2, etc.). The data type specified in the name of the command must match
+     * the data type for the specified uniform variable as described previously for
+     * {@see GL46::glUniform{1|2|3|4}{f|i|ui}}.
+     *
+     * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
+     * of the command (e.g., {@see GL46::glUniform3f} or {@see GL46::glUniform3fv} can be used to load a uniform
+     * variable array of type vec3). The number of elements of the uniform variable array to be modified is specified
+     * by $count
+     *
+     * The commands {@see GL46::glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix or an
+     * array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix. The
+     * number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3 × 3
+     * matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values). Non-square
+     * matrix dimensionality is explicit, with the first number representing the number of columns and the second
+     * number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2 columns
+     * and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be supplied in
+     * column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied in row major
+     * order. The $count argument indicates the number of matrices to be passed. A count of 1 should be used if
+     * modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of matrices.
+     *
+     * @see http://docs.gl/gl2/glUniform
+     * @see http://docs.gl/gl4/glUniform
+     * @since 2.0
+     * @param int $location
+     * @param int $count
+     * @param \FFI\CData|null $value
+     * @return void
+     */
+    public function uniform3iv(int $location, int $count, ?\FFI\CData $value): void
+    {
+        $__proc = $this->getProcAs('glUniform3iv', 'void (*)(GLint location, GLsizei count, const GLint *value)');
+        $__proc($location, $count, $value);
+    }
+
+    /**
+     * {@see GL46::glUniform} modifies the value of a uniform variable or a uniform variable array. The location of
+     * the uniform variable to be modified is specified by $location, which should be a value returned by
+     * {@see GL46::glGetUniformLocation}. {@see GL46::glUniform} operates on the program object that was made part of
+     * current state by calling {@see GL46::glUseProgram}.
+     *
+     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform variable
+     * specified by $location using the values passed as arguments. The number specified in the command should match
+     * the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
+     * `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The suffix
+     * {@see GL46::f} indicates that floating-point values are being passed; the suffix {@see GL46::i} indicates that
+     * integer values are being passed; the suffix {@see GL46::ui} indicates that unsigned integer values are being
+     * passed, and this type should also match the data type of the specified uniform variable. The {@see GL46::i}
+     * variants of this function should be used to provide values for uniform variables defined as `int`, `ivec2`,
+     * `ivec3`, `ivec4`, or arrays of these. The {@see GL46::ui} variants of this function should be used to provide
+     * values for uniform variables defined as `unsigned int`, `uvec2`, `uvec3`, `uvec4`, or arrays of these. The
+     * {@see GL46::f} variants should be used to provide values for uniform variables of type `float`, `vec2`,
+     * `vec3`, `vec4`, or arrays of these. Either the {@see GL46::i}, {@see GL46::ui} or {@see GL46::f} variants may
+     * be used to provide values for uniform variables of type `bool`, `bvec2`, `bvec3`, `bvec4`, or arrays of these.
+     * The uniform variable will be set to `false` if the input value is 0 or 0.0f, and it will be set to `true`
+     * otherwise.
+     *
+     * All active uniform variables defined in a program object are initialized to 0 when the program object is
+     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glUniform } until the
+     * next successful link operation occurs on the program object, when they are once again initialized to 0.
+     *
+     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable or a
+     * uniform variable array. These commands pass a count and a pointer to the values to be loaded into a uniform
+     * variable or a uniform variable array. A count of 1 should be used if modifying the value of a single uniform
+     * variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When loading
+     * n elements starting at an arbitrary position m in a uniform variable array, elements m + n - 1 in the array
+     * will be replaced with the new values. If $m + $n - 1 is larger than the size of the uniform variable array,
+     * values for all array elements beyond the end of the array will be ignored. The number specified in the name of
+     * the command indicates the number of components for each element in $value, and it should match the number of
+     * components in the data type of the specified uniform variable (e.g., {@see GL46::1} for float, int, bool;
+     * {@see GL46::2} for vec2, ivec2, bvec2, etc.). The data type specified in the name of the command must match
+     * the data type for the specified uniform variable as described previously for
+     * {@see GL46::glUniform{1|2|3|4}{f|i|ui}}.
+     *
+     * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
+     * of the command (e.g., {@see GL46::glUniform3f} or {@see GL46::glUniform3fv} can be used to load a uniform
+     * variable array of type vec3). The number of elements of the uniform variable array to be modified is specified
+     * by $count
+     *
+     * The commands {@see GL46::glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix or an
+     * array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix. The
+     * number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3 × 3
+     * matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values). Non-square
+     * matrix dimensionality is explicit, with the first number representing the number of columns and the second
+     * number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2 columns
+     * and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be supplied in
+     * column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied in row major
+     * order. The $count argument indicates the number of matrices to be passed. A count of 1 should be used if
+     * modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of matrices.
+     *
+     * @see http://docs.gl/gl2/glUniform
+     * @see http://docs.gl/gl4/glUniform
+     * @since 2.0
+     * @param int $location
+     * @param float $v0
+     * @param float $v1
+     * @param float $v2
+     * @param float $v3
+     * @return void
+     */
+    public function uniform4f(int $location, float $v0, float $v1, float $v2, float $v3): void
+    {
+        $__proc = $this->getProcAs('glUniform4f', 'void (*)(GLint location, GLfloat v0, GLfloat v1, GLfloat v2, GLfloat v3)');
+        $__proc($location, $v0, $v1, $v2, $v3);
+    }
+
+    /**
+     * {@see GL46::glUniform} modifies the value of a uniform variable or a uniform variable array. The location of
+     * the uniform variable to be modified is specified by $location, which should be a value returned by
+     * {@see GL46::glGetUniformLocation}. {@see GL46::glUniform} operates on the program object that was made part of
+     * current state by calling {@see GL46::glUseProgram}.
+     *
+     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform variable
+     * specified by $location using the values passed as arguments. The number specified in the command should match
+     * the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
+     * `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The suffix
+     * {@see GL46::f} indicates that floating-point values are being passed; the suffix {@see GL46::i} indicates that
+     * integer values are being passed; the suffix {@see GL46::ui} indicates that unsigned integer values are being
+     * passed, and this type should also match the data type of the specified uniform variable. The {@see GL46::i}
+     * variants of this function should be used to provide values for uniform variables defined as `int`, `ivec2`,
+     * `ivec3`, `ivec4`, or arrays of these. The {@see GL46::ui} variants of this function should be used to provide
+     * values for uniform variables defined as `unsigned int`, `uvec2`, `uvec3`, `uvec4`, or arrays of these. The
+     * {@see GL46::f} variants should be used to provide values for uniform variables of type `float`, `vec2`,
+     * `vec3`, `vec4`, or arrays of these. Either the {@see GL46::i}, {@see GL46::ui} or {@see GL46::f} variants may
+     * be used to provide values for uniform variables of type `bool`, `bvec2`, `bvec3`, `bvec4`, or arrays of these.
+     * The uniform variable will be set to `false` if the input value is 0 or 0.0f, and it will be set to `true`
+     * otherwise.
+     *
+     * All active uniform variables defined in a program object are initialized to 0 when the program object is
+     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glUniform } until the
+     * next successful link operation occurs on the program object, when they are once again initialized to 0.
+     *
+     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable or a
+     * uniform variable array. These commands pass a count and a pointer to the values to be loaded into a uniform
+     * variable or a uniform variable array. A count of 1 should be used if modifying the value of a single uniform
+     * variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When loading
+     * n elements starting at an arbitrary position m in a uniform variable array, elements m + n - 1 in the array
+     * will be replaced with the new values. If $m + $n - 1 is larger than the size of the uniform variable array,
+     * values for all array elements beyond the end of the array will be ignored. The number specified in the name of
+     * the command indicates the number of components for each element in $value, and it should match the number of
+     * components in the data type of the specified uniform variable (e.g., {@see GL46::1} for float, int, bool;
+     * {@see GL46::2} for vec2, ivec2, bvec2, etc.). The data type specified in the name of the command must match
+     * the data type for the specified uniform variable as described previously for
+     * {@see GL46::glUniform{1|2|3|4}{f|i|ui}}.
+     *
+     * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
+     * of the command (e.g., {@see GL46::glUniform3f} or {@see GL46::glUniform3fv} can be used to load a uniform
+     * variable array of type vec3). The number of elements of the uniform variable array to be modified is specified
+     * by $count
+     *
+     * The commands {@see GL46::glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix or an
+     * array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix. The
+     * number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3 × 3
+     * matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values). Non-square
+     * matrix dimensionality is explicit, with the first number representing the number of columns and the second
+     * number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2 columns
+     * and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be supplied in
+     * column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied in row major
+     * order. The $count argument indicates the number of matrices to be passed. A count of 1 should be used if
+     * modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of matrices.
+     *
+     * @see http://docs.gl/gl2/glUniform
+     * @see http://docs.gl/gl4/glUniform
+     * @since 2.0
+     * @param int $location
+     * @param int $count
+     * @param \FFI\CData|null $value
+     * @return void
+     */
+    public function uniform4fv(int $location, int $count, ?\FFI\CData $value): void
+    {
+        $__proc = $this->getProcAs('glUniform4fv', 'void (*)(GLint location, GLsizei count, const GLfloat *value)');
+        $__proc($location, $count, $value);
+    }
+
+    /**
+     * {@see GL46::glUniform} modifies the value of a uniform variable or a uniform variable array. The location of
+     * the uniform variable to be modified is specified by $location, which should be a value returned by
+     * {@see GL46::glGetUniformLocation}. {@see GL46::glUniform} operates on the program object that was made part of
+     * current state by calling {@see GL46::glUseProgram}.
+     *
+     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform variable
+     * specified by $location using the values passed as arguments. The number specified in the command should match
+     * the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
+     * `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The suffix
+     * {@see GL46::f} indicates that floating-point values are being passed; the suffix {@see GL46::i} indicates that
+     * integer values are being passed; the suffix {@see GL46::ui} indicates that unsigned integer values are being
+     * passed, and this type should also match the data type of the specified uniform variable. The {@see GL46::i}
+     * variants of this function should be used to provide values for uniform variables defined as `int`, `ivec2`,
+     * `ivec3`, `ivec4`, or arrays of these. The {@see GL46::ui} variants of this function should be used to provide
+     * values for uniform variables defined as `unsigned int`, `uvec2`, `uvec3`, `uvec4`, or arrays of these. The
+     * {@see GL46::f} variants should be used to provide values for uniform variables of type `float`, `vec2`,
+     * `vec3`, `vec4`, or arrays of these. Either the {@see GL46::i}, {@see GL46::ui} or {@see GL46::f} variants may
+     * be used to provide values for uniform variables of type `bool`, `bvec2`, `bvec3`, `bvec4`, or arrays of these.
+     * The uniform variable will be set to `false` if the input value is 0 or 0.0f, and it will be set to `true`
+     * otherwise.
+     *
+     * All active uniform variables defined in a program object are initialized to 0 when the program object is
+     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glUniform } until the
+     * next successful link operation occurs on the program object, when they are once again initialized to 0.
+     *
+     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable or a
+     * uniform variable array. These commands pass a count and a pointer to the values to be loaded into a uniform
+     * variable or a uniform variable array. A count of 1 should be used if modifying the value of a single uniform
+     * variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When loading
+     * n elements starting at an arbitrary position m in a uniform variable array, elements m + n - 1 in the array
+     * will be replaced with the new values. If $m + $n - 1 is larger than the size of the uniform variable array,
+     * values for all array elements beyond the end of the array will be ignored. The number specified in the name of
+     * the command indicates the number of components for each element in $value, and it should match the number of
+     * components in the data type of the specified uniform variable (e.g., {@see GL46::1} for float, int, bool;
+     * {@see GL46::2} for vec2, ivec2, bvec2, etc.). The data type specified in the name of the command must match
+     * the data type for the specified uniform variable as described previously for
+     * {@see GL46::glUniform{1|2|3|4}{f|i|ui}}.
+     *
+     * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
+     * of the command (e.g., {@see GL46::glUniform3f} or {@see GL46::glUniform3fv} can be used to load a uniform
+     * variable array of type vec3). The number of elements of the uniform variable array to be modified is specified
+     * by $count
+     *
+     * The commands {@see GL46::glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix or an
+     * array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix. The
+     * number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3 × 3
+     * matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values). Non-square
+     * matrix dimensionality is explicit, with the first number representing the number of columns and the second
+     * number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2 columns
+     * and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be supplied in
+     * column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied in row major
+     * order. The $count argument indicates the number of matrices to be passed. A count of 1 should be used if
+     * modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of matrices.
+     *
+     * @see http://docs.gl/gl2/glUniform
+     * @see http://docs.gl/gl4/glUniform
+     * @since 2.0
+     * @param int $location
+     * @param int $v0
+     * @param int $v1
+     * @param int $v2
+     * @param int $v3
+     * @return void
+     */
+    public function uniform4i(int $location, int $v0, int $v1, int $v2, int $v3): void
+    {
+        $__proc = $this->getProcAs('glUniform4i', 'void (*)(GLint location, GLint v0, GLint v1, GLint v2, GLint v3)');
+        $__proc($location, $v0, $v1, $v2, $v3);
+    }
+
+    /**
+     * {@see GL46::glUniform} modifies the value of a uniform variable or a uniform variable array. The location of
+     * the uniform variable to be modified is specified by $location, which should be a value returned by
+     * {@see GL46::glGetUniformLocation}. {@see GL46::glUniform} operates on the program object that was made part of
+     * current state by calling {@see GL46::glUseProgram}.
+     *
+     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform variable
+     * specified by $location using the values passed as arguments. The number specified in the command should match
+     * the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
+     * `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The suffix
+     * {@see GL46::f} indicates that floating-point values are being passed; the suffix {@see GL46::i} indicates that
+     * integer values are being passed; the suffix {@see GL46::ui} indicates that unsigned integer values are being
+     * passed, and this type should also match the data type of the specified uniform variable. The {@see GL46::i}
+     * variants of this function should be used to provide values for uniform variables defined as `int`, `ivec2`,
+     * `ivec3`, `ivec4`, or arrays of these. The {@see GL46::ui} variants of this function should be used to provide
+     * values for uniform variables defined as `unsigned int`, `uvec2`, `uvec3`, `uvec4`, or arrays of these. The
+     * {@see GL46::f} variants should be used to provide values for uniform variables of type `float`, `vec2`,
+     * `vec3`, `vec4`, or arrays of these. Either the {@see GL46::i}, {@see GL46::ui} or {@see GL46::f} variants may
+     * be used to provide values for uniform variables of type `bool`, `bvec2`, `bvec3`, `bvec4`, or arrays of these.
+     * The uniform variable will be set to `false` if the input value is 0 or 0.0f, and it will be set to `true`
+     * otherwise.
+     *
+     * All active uniform variables defined in a program object are initialized to 0 when the program object is
+     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glUniform } until the
+     * next successful link operation occurs on the program object, when they are once again initialized to 0.
+     *
+     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable or a
+     * uniform variable array. These commands pass a count and a pointer to the values to be loaded into a uniform
+     * variable or a uniform variable array. A count of 1 should be used if modifying the value of a single uniform
+     * variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When loading
+     * n elements starting at an arbitrary position m in a uniform variable array, elements m + n - 1 in the array
+     * will be replaced with the new values. If $m + $n - 1 is larger than the size of the uniform variable array,
+     * values for all array elements beyond the end of the array will be ignored. The number specified in the name of
+     * the command indicates the number of components for each element in $value, and it should match the number of
+     * components in the data type of the specified uniform variable (e.g., {@see GL46::1} for float, int, bool;
+     * {@see GL46::2} for vec2, ivec2, bvec2, etc.). The data type specified in the name of the command must match
+     * the data type for the specified uniform variable as described previously for
+     * {@see GL46::glUniform{1|2|3|4}{f|i|ui}}.
+     *
+     * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
+     * of the command (e.g., {@see GL46::glUniform3f} or {@see GL46::glUniform3fv} can be used to load a uniform
+     * variable array of type vec3). The number of elements of the uniform variable array to be modified is specified
+     * by $count
+     *
+     * The commands {@see GL46::glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix or an
+     * array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix. The
+     * number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3 × 3
+     * matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values). Non-square
+     * matrix dimensionality is explicit, with the first number representing the number of columns and the second
+     * number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2 columns
+     * and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be supplied in
+     * column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied in row major
+     * order. The $count argument indicates the number of matrices to be passed. A count of 1 should be used if
+     * modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of matrices.
+     *
+     * @see http://docs.gl/gl2/glUniform
+     * @see http://docs.gl/gl4/glUniform
+     * @since 2.0
+     * @param int $location
+     * @param int $count
+     * @param \FFI\CData|null $value
+     * @return void
+     */
+    public function uniform4iv(int $location, int $count, ?\FFI\CData $value): void
+    {
+        $__proc = $this->getProcAs('glUniform4iv', 'void (*)(GLint location, GLsizei count, const GLint *value)');
+        $__proc($location, $count, $value);
+    }
+
+    /**
+     * {@see GL46::glUniform} modifies the value of a uniform variable or a uniform variable array. The location of
+     * the uniform variable to be modified is specified by $location, which should be a value returned by
+     * {@see GL46::glGetUniformLocation}. {@see GL46::glUniform} operates on the program object that was made part of
+     * current state by calling {@see GL46::glUseProgram}.
+     *
+     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform variable
+     * specified by $location using the values passed as arguments. The number specified in the command should match
+     * the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
+     * `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The suffix
+     * {@see GL46::f} indicates that floating-point values are being passed; the suffix {@see GL46::i} indicates that
+     * integer values are being passed; the suffix {@see GL46::ui} indicates that unsigned integer values are being
+     * passed, and this type should also match the data type of the specified uniform variable. The {@see GL46::i}
+     * variants of this function should be used to provide values for uniform variables defined as `int`, `ivec2`,
+     * `ivec3`, `ivec4`, or arrays of these. The {@see GL46::ui} variants of this function should be used to provide
+     * values for uniform variables defined as `unsigned int`, `uvec2`, `uvec3`, `uvec4`, or arrays of these. The
+     * {@see GL46::f} variants should be used to provide values for uniform variables of type `float`, `vec2`,
+     * `vec3`, `vec4`, or arrays of these. Either the {@see GL46::i}, {@see GL46::ui} or {@see GL46::f} variants may
+     * be used to provide values for uniform variables of type `bool`, `bvec2`, `bvec3`, `bvec4`, or arrays of these.
+     * The uniform variable will be set to `false` if the input value is 0 or 0.0f, and it will be set to `true`
+     * otherwise.
+     *
+     * All active uniform variables defined in a program object are initialized to 0 when the program object is
+     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glUniform } until the
+     * next successful link operation occurs on the program object, when they are once again initialized to 0.
+     *
+     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable or a
+     * uniform variable array. These commands pass a count and a pointer to the values to be loaded into a uniform
+     * variable or a uniform variable array. A count of 1 should be used if modifying the value of a single uniform
+     * variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When loading
+     * n elements starting at an arbitrary position m in a uniform variable array, elements m + n - 1 in the array
+     * will be replaced with the new values. If $m + $n - 1 is larger than the size of the uniform variable array,
+     * values for all array elements beyond the end of the array will be ignored. The number specified in the name of
+     * the command indicates the number of components for each element in $value, and it should match the number of
+     * components in the data type of the specified uniform variable (e.g., {@see GL46::1} for float, int, bool;
+     * {@see GL46::2} for vec2, ivec2, bvec2, etc.). The data type specified in the name of the command must match
+     * the data type for the specified uniform variable as described previously for
+     * {@see GL46::glUniform{1|2|3|4}{f|i|ui}}.
+     *
+     * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
+     * of the command (e.g., {@see GL46::glUniform3f} or {@see GL46::glUniform3fv} can be used to load a uniform
+     * variable array of type vec3). The number of elements of the uniform variable array to be modified is specified
+     * by $count
+     *
+     * The commands {@see GL46::glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix or an
+     * array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix. The
+     * number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3 × 3
+     * matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values). Non-square
+     * matrix dimensionality is explicit, with the first number representing the number of columns and the second
+     * number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2 columns
+     * and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be supplied in
+     * column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied in row major
+     * order. The $count argument indicates the number of matrices to be passed. A count of 1 should be used if
+     * modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of matrices.
+     *
+     * @see http://docs.gl/gl2/glLoadMatrix
+     * @see http://docs.gl/gl2/glUniform
+     * @see http://docs.gl/gl2/gluPickMatrix
+     * @see http://docs.gl/gl4/glUniform
+     * @since 2.0
+     * @param int $location
+     * @param int $count
+     * @param int $transpose
+     * @param \FFI\CData|null $value
+     * @return void
+     */
+    public function uniformMatrix2fv(int $location, int $count, int $transpose, ?\FFI\CData $value): void
+    {
+        $__proc = $this->getProcAs('glUniformMatrix2fv', 'void (*)(GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)');
+        $__proc($location, $count, $transpose, $value);
+    }
+
+    /**
+     * {@see GL46::glUniform} modifies the value of a uniform variable or a uniform variable array. The location of
+     * the uniform variable to be modified is specified by $location, which should be a value returned by
+     * {@see GL46::glGetUniformLocation}. {@see GL46::glUniform} operates on the program object that was made part of
+     * current state by calling {@see GL46::glUseProgram}.
+     *
+     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform variable
+     * specified by $location using the values passed as arguments. The number specified in the command should match
+     * the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
+     * `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The suffix
+     * {@see GL46::f} indicates that floating-point values are being passed; the suffix {@see GL46::i} indicates that
+     * integer values are being passed; the suffix {@see GL46::ui} indicates that unsigned integer values are being
+     * passed, and this type should also match the data type of the specified uniform variable. The {@see GL46::i}
+     * variants of this function should be used to provide values for uniform variables defined as `int`, `ivec2`,
+     * `ivec3`, `ivec4`, or arrays of these. The {@see GL46::ui} variants of this function should be used to provide
+     * values for uniform variables defined as `unsigned int`, `uvec2`, `uvec3`, `uvec4`, or arrays of these. The
+     * {@see GL46::f} variants should be used to provide values for uniform variables of type `float`, `vec2`,
+     * `vec3`, `vec4`, or arrays of these. Either the {@see GL46::i}, {@see GL46::ui} or {@see GL46::f} variants may
+     * be used to provide values for uniform variables of type `bool`, `bvec2`, `bvec3`, `bvec4`, or arrays of these.
+     * The uniform variable will be set to `false` if the input value is 0 or 0.0f, and it will be set to `true`
+     * otherwise.
+     *
+     * All active uniform variables defined in a program object are initialized to 0 when the program object is
+     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glUniform } until the
+     * next successful link operation occurs on the program object, when they are once again initialized to 0.
+     *
+     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable or a
+     * uniform variable array. These commands pass a count and a pointer to the values to be loaded into a uniform
+     * variable or a uniform variable array. A count of 1 should be used if modifying the value of a single uniform
+     * variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When loading
+     * n elements starting at an arbitrary position m in a uniform variable array, elements m + n - 1 in the array
+     * will be replaced with the new values. If $m + $n - 1 is larger than the size of the uniform variable array,
+     * values for all array elements beyond the end of the array will be ignored. The number specified in the name of
+     * the command indicates the number of components for each element in $value, and it should match the number of
+     * components in the data type of the specified uniform variable (e.g., {@see GL46::1} for float, int, bool;
+     * {@see GL46::2} for vec2, ivec2, bvec2, etc.). The data type specified in the name of the command must match
+     * the data type for the specified uniform variable as described previously for
+     * {@see GL46::glUniform{1|2|3|4}{f|i|ui}}.
+     *
+     * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
+     * of the command (e.g., {@see GL46::glUniform3f} or {@see GL46::glUniform3fv} can be used to load a uniform
+     * variable array of type vec3). The number of elements of the uniform variable array to be modified is specified
+     * by $count
+     *
+     * The commands {@see GL46::glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix or an
+     * array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix. The
+     * number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3 × 3
+     * matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values). Non-square
+     * matrix dimensionality is explicit, with the first number representing the number of columns and the second
+     * number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2 columns
+     * and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be supplied in
+     * column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied in row major
+     * order. The $count argument indicates the number of matrices to be passed. A count of 1 should be used if
+     * modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of matrices.
+     *
+     * @see http://docs.gl/gl2/glLoadMatrix
+     * @see http://docs.gl/gl2/glUniform
+     * @see http://docs.gl/gl2/gluPickMatrix
+     * @see http://docs.gl/gl4/glUniform
+     * @since 2.0
+     * @param int $location
+     * @param int $count
+     * @param int $transpose
+     * @param \FFI\CData|null $value
+     * @return void
+     */
+    public function uniformMatrix3fv(int $location, int $count, int $transpose, ?\FFI\CData $value): void
+    {
+        $__proc = $this->getProcAs('glUniformMatrix3fv', 'void (*)(GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)');
+        $__proc($location, $count, $transpose, $value);
+    }
+
+    /**
+     * {@see GL46::glUniform} modifies the value of a uniform variable or a uniform variable array. The location of
+     * the uniform variable to be modified is specified by $location, which should be a value returned by
+     * {@see GL46::glGetUniformLocation}. {@see GL46::glUniform} operates on the program object that was made part of
+     * current state by calling {@see GL46::glUseProgram}.
+     *
+     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform variable
+     * specified by $location using the values passed as arguments. The number specified in the command should match
+     * the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
+     * `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The suffix
+     * {@see GL46::f} indicates that floating-point values are being passed; the suffix {@see GL46::i} indicates that
+     * integer values are being passed; the suffix {@see GL46::ui} indicates that unsigned integer values are being
+     * passed, and this type should also match the data type of the specified uniform variable. The {@see GL46::i}
+     * variants of this function should be used to provide values for uniform variables defined as `int`, `ivec2`,
+     * `ivec3`, `ivec4`, or arrays of these. The {@see GL46::ui} variants of this function should be used to provide
+     * values for uniform variables defined as `unsigned int`, `uvec2`, `uvec3`, `uvec4`, or arrays of these. The
+     * {@see GL46::f} variants should be used to provide values for uniform variables of type `float`, `vec2`,
+     * `vec3`, `vec4`, or arrays of these. Either the {@see GL46::i}, {@see GL46::ui} or {@see GL46::f} variants may
+     * be used to provide values for uniform variables of type `bool`, `bvec2`, `bvec3`, `bvec4`, or arrays of these.
+     * The uniform variable will be set to `false` if the input value is 0 or 0.0f, and it will be set to `true`
+     * otherwise.
+     *
+     * All active uniform variables defined in a program object are initialized to 0 when the program object is
+     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glUniform } until the
+     * next successful link operation occurs on the program object, when they are once again initialized to 0.
+     *
+     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable or a
+     * uniform variable array. These commands pass a count and a pointer to the values to be loaded into a uniform
+     * variable or a uniform variable array. A count of 1 should be used if modifying the value of a single uniform
+     * variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When loading
+     * n elements starting at an arbitrary position m in a uniform variable array, elements m + n - 1 in the array
+     * will be replaced with the new values. If $m + $n - 1 is larger than the size of the uniform variable array,
+     * values for all array elements beyond the end of the array will be ignored. The number specified in the name of
+     * the command indicates the number of components for each element in $value, and it should match the number of
+     * components in the data type of the specified uniform variable (e.g., {@see GL46::1} for float, int, bool;
+     * {@see GL46::2} for vec2, ivec2, bvec2, etc.). The data type specified in the name of the command must match
+     * the data type for the specified uniform variable as described previously for
+     * {@see GL46::glUniform{1|2|3|4}{f|i|ui}}.
+     *
+     * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
+     * of the command (e.g., {@see GL46::glUniform3f} or {@see GL46::glUniform3fv} can be used to load a uniform
+     * variable array of type vec3). The number of elements of the uniform variable array to be modified is specified
+     * by $count
+     *
+     * The commands {@see GL46::glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix or an
+     * array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix. The
+     * number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3 × 3
+     * matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values). Non-square
+     * matrix dimensionality is explicit, with the first number representing the number of columns and the second
+     * number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2 columns
+     * and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be supplied in
+     * column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied in row major
+     * order. The $count argument indicates the number of matrices to be passed. A count of 1 should be used if
+     * modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of matrices.
+     *
+     * @see http://docs.gl/gl2/glLoadMatrix
+     * @see http://docs.gl/gl2/glUniform
+     * @see http://docs.gl/gl2/gluPickMatrix
+     * @see http://docs.gl/gl4/glUniform
+     * @since 2.0
+     * @param int $location
+     * @param int $count
+     * @param int $transpose
+     * @param \FFI\CData|null $value
+     * @return void
+     */
+    public function uniformMatrix4fv(int $location, int $count, int $transpose, ?\FFI\CData $value): void
+    {
+        $__proc = $this->getProcAs('glUniformMatrix4fv', 'void (*)(GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)');
+        $__proc($location, $count, $transpose, $value);
     }
 
     /**
@@ -2324,1485 +3555,13 @@ class GL20 extends GL15
      * @see http://docs.gl/gl2/glUseProgram
      * @see http://docs.gl/gl4/glUseProgram
      * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $program
+     * @param int $program
      * @return void
      */
-    public function useProgram($program): void
+    public function useProgram(int $program): void
     {
-        $program = $program instanceof \FFI\CData ? $program->cdata : $program;
-
-        assert(Type::isUint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glUseProgram', 'void (*)(GLuint program)');
-        $proc($program);
-    }
-
-    /**
-     * {@see GL46::glUniform} modifies the value of a uniform variable or a uniform variable array. The location of
-     * the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glUniform} operates on the program object that was made part of
-     * current state by calling {@see GL46::glUseProgram}.
-     *
-     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform variable
-     * specified by $location using the values passed as arguments. The number specified in the command should match
-     * the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
-     * `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The suffix
-     * {@see GL46::f} indicates that floating-point values are being passed; the suffix {@see GL46::i} indicates that
-     * integer values are being passed; the suffix {@see GL46::ui} indicates that unsigned integer values are being
-     * passed, and this type should also match the data type of the specified uniform variable. The {@see GL46::i}
-     * variants of this function should be used to provide values for uniform variables defined as `int`, `ivec2`,
-     * `ivec3`, `ivec4`, or arrays of these. The {@see GL46::ui} variants of this function should be used to provide
-     * values for uniform variables defined as `unsigned int`, `uvec2`, `uvec3`, `uvec4`, or arrays of these. The
-     * {@see GL46::f} variants should be used to provide values for uniform variables of type `float`, `vec2`,
-     * `vec3`, `vec4`, or arrays of these. Either the {@see GL46::i}, {@see GL46::ui} or {@see GL46::f} variants may
-     * be used to provide values for uniform variables of type `bool`, `bvec2`, `bvec3`, `bvec4`, or arrays of these.
-     * The uniform variable will be set to `false` if the input value is 0 or 0.0f, and it will be set to `true`
-     * otherwise.
-     *
-     * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glUniform } until the
-     * next successful link operation occurs on the program object, when they are once again initialized to 0.
-     *
-     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable or a
-     * uniform variable array. These commands pass a count and a pointer to the values to be loaded into a uniform
-     * variable or a uniform variable array. A count of 1 should be used if modifying the value of a single uniform
-     * variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When loading
-     * n elements starting at an arbitrary position m in a uniform variable array, elements m + n - 1 in the array
-     * will be replaced with the new values. If $m + $n - 1 is larger than the size of the uniform variable array,
-     * values for all array elements beyond the end of the array will be ignored. The number specified in the name of
-     * the command indicates the number of components for each element in $value, and it should match the number of
-     * components in the data type of the specified uniform variable (e.g., {@see GL46::1} for float, int, bool;
-     * {@see GL46::2} for vec2, ivec2, bvec2, etc.). The data type specified in the name of the command must match
-     * the data type for the specified uniform variable as described previously for
-     * {@see GL46::glUniform{1|2|3|4}{f|i|ui}}.
-     *
-     * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glUniform3f} or {@see GL46::glUniform3fv} can be used to load a uniform
-     * variable array of type vec3). The number of elements of the uniform variable array to be modified is specified
-     * by $count
-     *
-     * The commands {@see GL46::glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix or an
-     * array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix. The
-     * number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3 × 3
-     * matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values). Non-square
-     * matrix dimensionality is explicit, with the first number representing the number of columns and the second
-     * number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2 columns
-     * and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be supplied in
-     * column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied in row major
-     * order. The $count argument indicates the number of matrices to be passed. A count of 1 should be used if
-     * modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of matrices.
-     *
-     * @see http://docs.gl/gl2/glUniform
-     * @see http://docs.gl/gl4/glUniform
-     * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $location
-     * @param float|\FFI\CData|\FFI\CFloat $v0
-     * @return void
-     */
-    public function uniform1f($location, $v0): void
-    {
-        $location = $location instanceof \FFI\CData ? $location->cdata : $location;
-        $v0 = $v0 instanceof \FFI\CData ? $v0->cdata : $v0;
-
-        assert(Type::isInt16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isFloat32($v0), 'Argument $v0 must be a C-like GLfloat, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glUniform1f', 'void (*)(GLint location, GLfloat v0)');
-        $proc($location, $v0);
-    }
-
-    /**
-     * {@see GL46::glUniform} modifies the value of a uniform variable or a uniform variable array. The location of
-     * the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glUniform} operates on the program object that was made part of
-     * current state by calling {@see GL46::glUseProgram}.
-     *
-     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform variable
-     * specified by $location using the values passed as arguments. The number specified in the command should match
-     * the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
-     * `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The suffix
-     * {@see GL46::f} indicates that floating-point values are being passed; the suffix {@see GL46::i} indicates that
-     * integer values are being passed; the suffix {@see GL46::ui} indicates that unsigned integer values are being
-     * passed, and this type should also match the data type of the specified uniform variable. The {@see GL46::i}
-     * variants of this function should be used to provide values for uniform variables defined as `int`, `ivec2`,
-     * `ivec3`, `ivec4`, or arrays of these. The {@see GL46::ui} variants of this function should be used to provide
-     * values for uniform variables defined as `unsigned int`, `uvec2`, `uvec3`, `uvec4`, or arrays of these. The
-     * {@see GL46::f} variants should be used to provide values for uniform variables of type `float`, `vec2`,
-     * `vec3`, `vec4`, or arrays of these. Either the {@see GL46::i}, {@see GL46::ui} or {@see GL46::f} variants may
-     * be used to provide values for uniform variables of type `bool`, `bvec2`, `bvec3`, `bvec4`, or arrays of these.
-     * The uniform variable will be set to `false` if the input value is 0 or 0.0f, and it will be set to `true`
-     * otherwise.
-     *
-     * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glUniform } until the
-     * next successful link operation occurs on the program object, when they are once again initialized to 0.
-     *
-     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable or a
-     * uniform variable array. These commands pass a count and a pointer to the values to be loaded into a uniform
-     * variable or a uniform variable array. A count of 1 should be used if modifying the value of a single uniform
-     * variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When loading
-     * n elements starting at an arbitrary position m in a uniform variable array, elements m + n - 1 in the array
-     * will be replaced with the new values. If $m + $n - 1 is larger than the size of the uniform variable array,
-     * values for all array elements beyond the end of the array will be ignored. The number specified in the name of
-     * the command indicates the number of components for each element in $value, and it should match the number of
-     * components in the data type of the specified uniform variable (e.g., {@see GL46::1} for float, int, bool;
-     * {@see GL46::2} for vec2, ivec2, bvec2, etc.). The data type specified in the name of the command must match
-     * the data type for the specified uniform variable as described previously for
-     * {@see GL46::glUniform{1|2|3|4}{f|i|ui}}.
-     *
-     * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glUniform3f} or {@see GL46::glUniform3fv} can be used to load a uniform
-     * variable array of type vec3). The number of elements of the uniform variable array to be modified is specified
-     * by $count
-     *
-     * The commands {@see GL46::glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix or an
-     * array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix. The
-     * number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3 × 3
-     * matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values). Non-square
-     * matrix dimensionality is explicit, with the first number representing the number of columns and the second
-     * number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2 columns
-     * and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be supplied in
-     * column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied in row major
-     * order. The $count argument indicates the number of matrices to be passed. A count of 1 should be used if
-     * modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of matrices.
-     *
-     * @see http://docs.gl/gl2/glUniform
-     * @see http://docs.gl/gl4/glUniform
-     * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $location
-     * @param float|\FFI\CData|\FFI\CFloat $v0
-     * @param float|\FFI\CData|\FFI\CFloat $v1
-     * @return void
-     */
-    public function uniform2f($location, $v0, $v1): void
-    {
-        $location = $location instanceof \FFI\CData ? $location->cdata : $location;
-        $v0 = $v0 instanceof \FFI\CData ? $v0->cdata : $v0;
-        $v1 = $v1 instanceof \FFI\CData ? $v1->cdata : $v1;
-
-        assert(Type::isInt16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isFloat32($v0), 'Argument $v0 must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Type::isFloat32($v1), 'Argument $v1 must be a C-like GLfloat, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glUniform2f', 'void (*)(GLint location, GLfloat v0, GLfloat v1)');
-        $proc($location, $v0, $v1);
-    }
-
-    /**
-     * {@see GL46::glUniform} modifies the value of a uniform variable or a uniform variable array. The location of
-     * the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glUniform} operates on the program object that was made part of
-     * current state by calling {@see GL46::glUseProgram}.
-     *
-     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform variable
-     * specified by $location using the values passed as arguments. The number specified in the command should match
-     * the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
-     * `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The suffix
-     * {@see GL46::f} indicates that floating-point values are being passed; the suffix {@see GL46::i} indicates that
-     * integer values are being passed; the suffix {@see GL46::ui} indicates that unsigned integer values are being
-     * passed, and this type should also match the data type of the specified uniform variable. The {@see GL46::i}
-     * variants of this function should be used to provide values for uniform variables defined as `int`, `ivec2`,
-     * `ivec3`, `ivec4`, or arrays of these. The {@see GL46::ui} variants of this function should be used to provide
-     * values for uniform variables defined as `unsigned int`, `uvec2`, `uvec3`, `uvec4`, or arrays of these. The
-     * {@see GL46::f} variants should be used to provide values for uniform variables of type `float`, `vec2`,
-     * `vec3`, `vec4`, or arrays of these. Either the {@see GL46::i}, {@see GL46::ui} or {@see GL46::f} variants may
-     * be used to provide values for uniform variables of type `bool`, `bvec2`, `bvec3`, `bvec4`, or arrays of these.
-     * The uniform variable will be set to `false` if the input value is 0 or 0.0f, and it will be set to `true`
-     * otherwise.
-     *
-     * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glUniform } until the
-     * next successful link operation occurs on the program object, when they are once again initialized to 0.
-     *
-     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable or a
-     * uniform variable array. These commands pass a count and a pointer to the values to be loaded into a uniform
-     * variable or a uniform variable array. A count of 1 should be used if modifying the value of a single uniform
-     * variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When loading
-     * n elements starting at an arbitrary position m in a uniform variable array, elements m + n - 1 in the array
-     * will be replaced with the new values. If $m + $n - 1 is larger than the size of the uniform variable array,
-     * values for all array elements beyond the end of the array will be ignored. The number specified in the name of
-     * the command indicates the number of components for each element in $value, and it should match the number of
-     * components in the data type of the specified uniform variable (e.g., {@see GL46::1} for float, int, bool;
-     * {@see GL46::2} for vec2, ivec2, bvec2, etc.). The data type specified in the name of the command must match
-     * the data type for the specified uniform variable as described previously for
-     * {@see GL46::glUniform{1|2|3|4}{f|i|ui}}.
-     *
-     * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glUniform3f} or {@see GL46::glUniform3fv} can be used to load a uniform
-     * variable array of type vec3). The number of elements of the uniform variable array to be modified is specified
-     * by $count
-     *
-     * The commands {@see GL46::glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix or an
-     * array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix. The
-     * number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3 × 3
-     * matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values). Non-square
-     * matrix dimensionality is explicit, with the first number representing the number of columns and the second
-     * number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2 columns
-     * and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be supplied in
-     * column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied in row major
-     * order. The $count argument indicates the number of matrices to be passed. A count of 1 should be used if
-     * modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of matrices.
-     *
-     * @see http://docs.gl/gl2/glUniform
-     * @see http://docs.gl/gl4/glUniform
-     * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $location
-     * @param float|\FFI\CData|\FFI\CFloat $v0
-     * @param float|\FFI\CData|\FFI\CFloat $v1
-     * @param float|\FFI\CData|\FFI\CFloat $v2
-     * @return void
-     */
-    public function uniform3f($location, $v0, $v1, $v2): void
-    {
-        $location = $location instanceof \FFI\CData ? $location->cdata : $location;
-        $v0 = $v0 instanceof \FFI\CData ? $v0->cdata : $v0;
-        $v1 = $v1 instanceof \FFI\CData ? $v1->cdata : $v1;
-        $v2 = $v2 instanceof \FFI\CData ? $v2->cdata : $v2;
-
-        assert(Type::isInt16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isFloat32($v0), 'Argument $v0 must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Type::isFloat32($v1), 'Argument $v1 must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Type::isFloat32($v2), 'Argument $v2 must be a C-like GLfloat, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glUniform3f', 'void (*)(GLint location, GLfloat v0, GLfloat v1, GLfloat v2)');
-        $proc($location, $v0, $v1, $v2);
-    }
-
-    /**
-     * {@see GL46::glUniform} modifies the value of a uniform variable or a uniform variable array. The location of
-     * the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glUniform} operates on the program object that was made part of
-     * current state by calling {@see GL46::glUseProgram}.
-     *
-     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform variable
-     * specified by $location using the values passed as arguments. The number specified in the command should match
-     * the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
-     * `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The suffix
-     * {@see GL46::f} indicates that floating-point values are being passed; the suffix {@see GL46::i} indicates that
-     * integer values are being passed; the suffix {@see GL46::ui} indicates that unsigned integer values are being
-     * passed, and this type should also match the data type of the specified uniform variable. The {@see GL46::i}
-     * variants of this function should be used to provide values for uniform variables defined as `int`, `ivec2`,
-     * `ivec3`, `ivec4`, or arrays of these. The {@see GL46::ui} variants of this function should be used to provide
-     * values for uniform variables defined as `unsigned int`, `uvec2`, `uvec3`, `uvec4`, or arrays of these. The
-     * {@see GL46::f} variants should be used to provide values for uniform variables of type `float`, `vec2`,
-     * `vec3`, `vec4`, or arrays of these. Either the {@see GL46::i}, {@see GL46::ui} or {@see GL46::f} variants may
-     * be used to provide values for uniform variables of type `bool`, `bvec2`, `bvec3`, `bvec4`, or arrays of these.
-     * The uniform variable will be set to `false` if the input value is 0 or 0.0f, and it will be set to `true`
-     * otherwise.
-     *
-     * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glUniform } until the
-     * next successful link operation occurs on the program object, when they are once again initialized to 0.
-     *
-     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable or a
-     * uniform variable array. These commands pass a count and a pointer to the values to be loaded into a uniform
-     * variable or a uniform variable array. A count of 1 should be used if modifying the value of a single uniform
-     * variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When loading
-     * n elements starting at an arbitrary position m in a uniform variable array, elements m + n - 1 in the array
-     * will be replaced with the new values. If $m + $n - 1 is larger than the size of the uniform variable array,
-     * values for all array elements beyond the end of the array will be ignored. The number specified in the name of
-     * the command indicates the number of components for each element in $value, and it should match the number of
-     * components in the data type of the specified uniform variable (e.g., {@see GL46::1} for float, int, bool;
-     * {@see GL46::2} for vec2, ivec2, bvec2, etc.). The data type specified in the name of the command must match
-     * the data type for the specified uniform variable as described previously for
-     * {@see GL46::glUniform{1|2|3|4}{f|i|ui}}.
-     *
-     * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glUniform3f} or {@see GL46::glUniform3fv} can be used to load a uniform
-     * variable array of type vec3). The number of elements of the uniform variable array to be modified is specified
-     * by $count
-     *
-     * The commands {@see GL46::glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix or an
-     * array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix. The
-     * number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3 × 3
-     * matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values). Non-square
-     * matrix dimensionality is explicit, with the first number representing the number of columns and the second
-     * number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2 columns
-     * and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be supplied in
-     * column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied in row major
-     * order. The $count argument indicates the number of matrices to be passed. A count of 1 should be used if
-     * modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of matrices.
-     *
-     * @see http://docs.gl/gl2/glUniform
-     * @see http://docs.gl/gl4/glUniform
-     * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $location
-     * @param float|\FFI\CData|\FFI\CFloat $v0
-     * @param float|\FFI\CData|\FFI\CFloat $v1
-     * @param float|\FFI\CData|\FFI\CFloat $v2
-     * @param float|\FFI\CData|\FFI\CFloat $v3
-     * @return void
-     */
-    public function uniform4f($location, $v0, $v1, $v2, $v3): void
-    {
-        $location = $location instanceof \FFI\CData ? $location->cdata : $location;
-        $v0 = $v0 instanceof \FFI\CData ? $v0->cdata : $v0;
-        $v1 = $v1 instanceof \FFI\CData ? $v1->cdata : $v1;
-        $v2 = $v2 instanceof \FFI\CData ? $v2->cdata : $v2;
-        $v3 = $v3 instanceof \FFI\CData ? $v3->cdata : $v3;
-
-        assert(Type::isInt16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isFloat32($v0), 'Argument $v0 must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Type::isFloat32($v1), 'Argument $v1 must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Type::isFloat32($v2), 'Argument $v2 must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Type::isFloat32($v3), 'Argument $v3 must be a C-like GLfloat, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glUniform4f', 'void (*)(GLint location, GLfloat v0, GLfloat v1, GLfloat v2, GLfloat v3)');
-        $proc($location, $v0, $v1, $v2, $v3);
-    }
-
-    /**
-     * {@see GL46::glUniform} modifies the value of a uniform variable or a uniform variable array. The location of
-     * the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glUniform} operates on the program object that was made part of
-     * current state by calling {@see GL46::glUseProgram}.
-     *
-     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform variable
-     * specified by $location using the values passed as arguments. The number specified in the command should match
-     * the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
-     * `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The suffix
-     * {@see GL46::f} indicates that floating-point values are being passed; the suffix {@see GL46::i} indicates that
-     * integer values are being passed; the suffix {@see GL46::ui} indicates that unsigned integer values are being
-     * passed, and this type should also match the data type of the specified uniform variable. The {@see GL46::i}
-     * variants of this function should be used to provide values for uniform variables defined as `int`, `ivec2`,
-     * `ivec3`, `ivec4`, or arrays of these. The {@see GL46::ui} variants of this function should be used to provide
-     * values for uniform variables defined as `unsigned int`, `uvec2`, `uvec3`, `uvec4`, or arrays of these. The
-     * {@see GL46::f} variants should be used to provide values for uniform variables of type `float`, `vec2`,
-     * `vec3`, `vec4`, or arrays of these. Either the {@see GL46::i}, {@see GL46::ui} or {@see GL46::f} variants may
-     * be used to provide values for uniform variables of type `bool`, `bvec2`, `bvec3`, `bvec4`, or arrays of these.
-     * The uniform variable will be set to `false` if the input value is 0 or 0.0f, and it will be set to `true`
-     * otherwise.
-     *
-     * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glUniform } until the
-     * next successful link operation occurs on the program object, when they are once again initialized to 0.
-     *
-     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable or a
-     * uniform variable array. These commands pass a count and a pointer to the values to be loaded into a uniform
-     * variable or a uniform variable array. A count of 1 should be used if modifying the value of a single uniform
-     * variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When loading
-     * n elements starting at an arbitrary position m in a uniform variable array, elements m + n - 1 in the array
-     * will be replaced with the new values. If $m + $n - 1 is larger than the size of the uniform variable array,
-     * values for all array elements beyond the end of the array will be ignored. The number specified in the name of
-     * the command indicates the number of components for each element in $value, and it should match the number of
-     * components in the data type of the specified uniform variable (e.g., {@see GL46::1} for float, int, bool;
-     * {@see GL46::2} for vec2, ivec2, bvec2, etc.). The data type specified in the name of the command must match
-     * the data type for the specified uniform variable as described previously for
-     * {@see GL46::glUniform{1|2|3|4}{f|i|ui}}.
-     *
-     * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glUniform3f} or {@see GL46::glUniform3fv} can be used to load a uniform
-     * variable array of type vec3). The number of elements of the uniform variable array to be modified is specified
-     * by $count
-     *
-     * The commands {@see GL46::glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix or an
-     * array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix. The
-     * number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3 × 3
-     * matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values). Non-square
-     * matrix dimensionality is explicit, with the first number representing the number of columns and the second
-     * number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2 columns
-     * and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be supplied in
-     * column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied in row major
-     * order. The $count argument indicates the number of matrices to be passed. A count of 1 should be used if
-     * modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of matrices.
-     *
-     * @see http://docs.gl/gl2/glUniform
-     * @see http://docs.gl/gl4/glUniform
-     * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $location
-     * @param int|\FFI\CData|\FFI\CInt $v0
-     * @return void
-     */
-    public function uniform1i($location, $v0): void
-    {
-        $location = $location instanceof \FFI\CData ? $location->cdata : $location;
-        $v0 = $v0 instanceof \FFI\CData ? $v0->cdata : $v0;
-
-        assert(Type::isInt16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($v0), 'Argument $v0 must be a C-like GLint, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glUniform1i', 'void (*)(GLint location, GLint v0)');
-        $proc($location, $v0);
-    }
-
-    /**
-     * {@see GL46::glUniform} modifies the value of a uniform variable or a uniform variable array. The location of
-     * the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glUniform} operates on the program object that was made part of
-     * current state by calling {@see GL46::glUseProgram}.
-     *
-     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform variable
-     * specified by $location using the values passed as arguments. The number specified in the command should match
-     * the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
-     * `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The suffix
-     * {@see GL46::f} indicates that floating-point values are being passed; the suffix {@see GL46::i} indicates that
-     * integer values are being passed; the suffix {@see GL46::ui} indicates that unsigned integer values are being
-     * passed, and this type should also match the data type of the specified uniform variable. The {@see GL46::i}
-     * variants of this function should be used to provide values for uniform variables defined as `int`, `ivec2`,
-     * `ivec3`, `ivec4`, or arrays of these. The {@see GL46::ui} variants of this function should be used to provide
-     * values for uniform variables defined as `unsigned int`, `uvec2`, `uvec3`, `uvec4`, or arrays of these. The
-     * {@see GL46::f} variants should be used to provide values for uniform variables of type `float`, `vec2`,
-     * `vec3`, `vec4`, or arrays of these. Either the {@see GL46::i}, {@see GL46::ui} or {@see GL46::f} variants may
-     * be used to provide values for uniform variables of type `bool`, `bvec2`, `bvec3`, `bvec4`, or arrays of these.
-     * The uniform variable will be set to `false` if the input value is 0 or 0.0f, and it will be set to `true`
-     * otherwise.
-     *
-     * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glUniform } until the
-     * next successful link operation occurs on the program object, when they are once again initialized to 0.
-     *
-     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable or a
-     * uniform variable array. These commands pass a count and a pointer to the values to be loaded into a uniform
-     * variable or a uniform variable array. A count of 1 should be used if modifying the value of a single uniform
-     * variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When loading
-     * n elements starting at an arbitrary position m in a uniform variable array, elements m + n - 1 in the array
-     * will be replaced with the new values. If $m + $n - 1 is larger than the size of the uniform variable array,
-     * values for all array elements beyond the end of the array will be ignored. The number specified in the name of
-     * the command indicates the number of components for each element in $value, and it should match the number of
-     * components in the data type of the specified uniform variable (e.g., {@see GL46::1} for float, int, bool;
-     * {@see GL46::2} for vec2, ivec2, bvec2, etc.). The data type specified in the name of the command must match
-     * the data type for the specified uniform variable as described previously for
-     * {@see GL46::glUniform{1|2|3|4}{f|i|ui}}.
-     *
-     * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glUniform3f} or {@see GL46::glUniform3fv} can be used to load a uniform
-     * variable array of type vec3). The number of elements of the uniform variable array to be modified is specified
-     * by $count
-     *
-     * The commands {@see GL46::glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix or an
-     * array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix. The
-     * number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3 × 3
-     * matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values). Non-square
-     * matrix dimensionality is explicit, with the first number representing the number of columns and the second
-     * number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2 columns
-     * and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be supplied in
-     * column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied in row major
-     * order. The $count argument indicates the number of matrices to be passed. A count of 1 should be used if
-     * modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of matrices.
-     *
-     * @see http://docs.gl/gl2/glUniform
-     * @see http://docs.gl/gl4/glUniform
-     * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $location
-     * @param int|\FFI\CData|\FFI\CInt $v0
-     * @param int|\FFI\CData|\FFI\CInt $v1
-     * @return void
-     */
-    public function uniform2i($location, $v0, $v1): void
-    {
-        $location = $location instanceof \FFI\CData ? $location->cdata : $location;
-        $v0 = $v0 instanceof \FFI\CData ? $v0->cdata : $v0;
-        $v1 = $v1 instanceof \FFI\CData ? $v1->cdata : $v1;
-
-        assert(Type::isInt16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($v0), 'Argument $v0 must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($v1), 'Argument $v1 must be a C-like GLint, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glUniform2i', 'void (*)(GLint location, GLint v0, GLint v1)');
-        $proc($location, $v0, $v1);
-    }
-
-    /**
-     * {@see GL46::glUniform} modifies the value of a uniform variable or a uniform variable array. The location of
-     * the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glUniform} operates on the program object that was made part of
-     * current state by calling {@see GL46::glUseProgram}.
-     *
-     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform variable
-     * specified by $location using the values passed as arguments. The number specified in the command should match
-     * the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
-     * `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The suffix
-     * {@see GL46::f} indicates that floating-point values are being passed; the suffix {@see GL46::i} indicates that
-     * integer values are being passed; the suffix {@see GL46::ui} indicates that unsigned integer values are being
-     * passed, and this type should also match the data type of the specified uniform variable. The {@see GL46::i}
-     * variants of this function should be used to provide values for uniform variables defined as `int`, `ivec2`,
-     * `ivec3`, `ivec4`, or arrays of these. The {@see GL46::ui} variants of this function should be used to provide
-     * values for uniform variables defined as `unsigned int`, `uvec2`, `uvec3`, `uvec4`, or arrays of these. The
-     * {@see GL46::f} variants should be used to provide values for uniform variables of type `float`, `vec2`,
-     * `vec3`, `vec4`, or arrays of these. Either the {@see GL46::i}, {@see GL46::ui} or {@see GL46::f} variants may
-     * be used to provide values for uniform variables of type `bool`, `bvec2`, `bvec3`, `bvec4`, or arrays of these.
-     * The uniform variable will be set to `false` if the input value is 0 or 0.0f, and it will be set to `true`
-     * otherwise.
-     *
-     * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glUniform } until the
-     * next successful link operation occurs on the program object, when they are once again initialized to 0.
-     *
-     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable or a
-     * uniform variable array. These commands pass a count and a pointer to the values to be loaded into a uniform
-     * variable or a uniform variable array. A count of 1 should be used if modifying the value of a single uniform
-     * variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When loading
-     * n elements starting at an arbitrary position m in a uniform variable array, elements m + n - 1 in the array
-     * will be replaced with the new values. If $m + $n - 1 is larger than the size of the uniform variable array,
-     * values for all array elements beyond the end of the array will be ignored. The number specified in the name of
-     * the command indicates the number of components for each element in $value, and it should match the number of
-     * components in the data type of the specified uniform variable (e.g., {@see GL46::1} for float, int, bool;
-     * {@see GL46::2} for vec2, ivec2, bvec2, etc.). The data type specified in the name of the command must match
-     * the data type for the specified uniform variable as described previously for
-     * {@see GL46::glUniform{1|2|3|4}{f|i|ui}}.
-     *
-     * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glUniform3f} or {@see GL46::glUniform3fv} can be used to load a uniform
-     * variable array of type vec3). The number of elements of the uniform variable array to be modified is specified
-     * by $count
-     *
-     * The commands {@see GL46::glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix or an
-     * array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix. The
-     * number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3 × 3
-     * matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values). Non-square
-     * matrix dimensionality is explicit, with the first number representing the number of columns and the second
-     * number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2 columns
-     * and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be supplied in
-     * column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied in row major
-     * order. The $count argument indicates the number of matrices to be passed. A count of 1 should be used if
-     * modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of matrices.
-     *
-     * @see http://docs.gl/gl2/glUniform
-     * @see http://docs.gl/gl4/glUniform
-     * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $location
-     * @param int|\FFI\CData|\FFI\CInt $v0
-     * @param int|\FFI\CData|\FFI\CInt $v1
-     * @param int|\FFI\CData|\FFI\CInt $v2
-     * @return void
-     */
-    public function uniform3i($location, $v0, $v1, $v2): void
-    {
-        $location = $location instanceof \FFI\CData ? $location->cdata : $location;
-        $v0 = $v0 instanceof \FFI\CData ? $v0->cdata : $v0;
-        $v1 = $v1 instanceof \FFI\CData ? $v1->cdata : $v1;
-        $v2 = $v2 instanceof \FFI\CData ? $v2->cdata : $v2;
-
-        assert(Type::isInt16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($v0), 'Argument $v0 must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($v1), 'Argument $v1 must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($v2), 'Argument $v2 must be a C-like GLint, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glUniform3i', 'void (*)(GLint location, GLint v0, GLint v1, GLint v2)');
-        $proc($location, $v0, $v1, $v2);
-    }
-
-    /**
-     * {@see GL46::glUniform} modifies the value of a uniform variable or a uniform variable array. The location of
-     * the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glUniform} operates on the program object that was made part of
-     * current state by calling {@see GL46::glUseProgram}.
-     *
-     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform variable
-     * specified by $location using the values passed as arguments. The number specified in the command should match
-     * the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
-     * `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The suffix
-     * {@see GL46::f} indicates that floating-point values are being passed; the suffix {@see GL46::i} indicates that
-     * integer values are being passed; the suffix {@see GL46::ui} indicates that unsigned integer values are being
-     * passed, and this type should also match the data type of the specified uniform variable. The {@see GL46::i}
-     * variants of this function should be used to provide values for uniform variables defined as `int`, `ivec2`,
-     * `ivec3`, `ivec4`, or arrays of these. The {@see GL46::ui} variants of this function should be used to provide
-     * values for uniform variables defined as `unsigned int`, `uvec2`, `uvec3`, `uvec4`, or arrays of these. The
-     * {@see GL46::f} variants should be used to provide values for uniform variables of type `float`, `vec2`,
-     * `vec3`, `vec4`, or arrays of these. Either the {@see GL46::i}, {@see GL46::ui} or {@see GL46::f} variants may
-     * be used to provide values for uniform variables of type `bool`, `bvec2`, `bvec3`, `bvec4`, or arrays of these.
-     * The uniform variable will be set to `false` if the input value is 0 or 0.0f, and it will be set to `true`
-     * otherwise.
-     *
-     * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glUniform } until the
-     * next successful link operation occurs on the program object, when they are once again initialized to 0.
-     *
-     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable or a
-     * uniform variable array. These commands pass a count and a pointer to the values to be loaded into a uniform
-     * variable or a uniform variable array. A count of 1 should be used if modifying the value of a single uniform
-     * variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When loading
-     * n elements starting at an arbitrary position m in a uniform variable array, elements m + n - 1 in the array
-     * will be replaced with the new values. If $m + $n - 1 is larger than the size of the uniform variable array,
-     * values for all array elements beyond the end of the array will be ignored. The number specified in the name of
-     * the command indicates the number of components for each element in $value, and it should match the number of
-     * components in the data type of the specified uniform variable (e.g., {@see GL46::1} for float, int, bool;
-     * {@see GL46::2} for vec2, ivec2, bvec2, etc.). The data type specified in the name of the command must match
-     * the data type for the specified uniform variable as described previously for
-     * {@see GL46::glUniform{1|2|3|4}{f|i|ui}}.
-     *
-     * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glUniform3f} or {@see GL46::glUniform3fv} can be used to load a uniform
-     * variable array of type vec3). The number of elements of the uniform variable array to be modified is specified
-     * by $count
-     *
-     * The commands {@see GL46::glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix or an
-     * array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix. The
-     * number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3 × 3
-     * matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values). Non-square
-     * matrix dimensionality is explicit, with the first number representing the number of columns and the second
-     * number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2 columns
-     * and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be supplied in
-     * column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied in row major
-     * order. The $count argument indicates the number of matrices to be passed. A count of 1 should be used if
-     * modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of matrices.
-     *
-     * @see http://docs.gl/gl2/glUniform
-     * @see http://docs.gl/gl4/glUniform
-     * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $location
-     * @param int|\FFI\CData|\FFI\CInt $v0
-     * @param int|\FFI\CData|\FFI\CInt $v1
-     * @param int|\FFI\CData|\FFI\CInt $v2
-     * @param int|\FFI\CData|\FFI\CInt $v3
-     * @return void
-     */
-    public function uniform4i($location, $v0, $v1, $v2, $v3): void
-    {
-        $location = $location instanceof \FFI\CData ? $location->cdata : $location;
-        $v0 = $v0 instanceof \FFI\CData ? $v0->cdata : $v0;
-        $v1 = $v1 instanceof \FFI\CData ? $v1->cdata : $v1;
-        $v2 = $v2 instanceof \FFI\CData ? $v2->cdata : $v2;
-        $v3 = $v3 instanceof \FFI\CData ? $v3->cdata : $v3;
-
-        assert(Type::isInt16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($v0), 'Argument $v0 must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($v1), 'Argument $v1 must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($v2), 'Argument $v2 must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($v3), 'Argument $v3 must be a C-like GLint, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glUniform4i', 'void (*)(GLint location, GLint v0, GLint v1, GLint v2, GLint v3)');
-        $proc($location, $v0, $v1, $v2, $v3);
-    }
-
-    /**
-     * {@see GL46::glUniform} modifies the value of a uniform variable or a uniform variable array. The location of
-     * the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glUniform} operates on the program object that was made part of
-     * current state by calling {@see GL46::glUseProgram}.
-     *
-     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform variable
-     * specified by $location using the values passed as arguments. The number specified in the command should match
-     * the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
-     * `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The suffix
-     * {@see GL46::f} indicates that floating-point values are being passed; the suffix {@see GL46::i} indicates that
-     * integer values are being passed; the suffix {@see GL46::ui} indicates that unsigned integer values are being
-     * passed, and this type should also match the data type of the specified uniform variable. The {@see GL46::i}
-     * variants of this function should be used to provide values for uniform variables defined as `int`, `ivec2`,
-     * `ivec3`, `ivec4`, or arrays of these. The {@see GL46::ui} variants of this function should be used to provide
-     * values for uniform variables defined as `unsigned int`, `uvec2`, `uvec3`, `uvec4`, or arrays of these. The
-     * {@see GL46::f} variants should be used to provide values for uniform variables of type `float`, `vec2`,
-     * `vec3`, `vec4`, or arrays of these. Either the {@see GL46::i}, {@see GL46::ui} or {@see GL46::f} variants may
-     * be used to provide values for uniform variables of type `bool`, `bvec2`, `bvec3`, `bvec4`, or arrays of these.
-     * The uniform variable will be set to `false` if the input value is 0 or 0.0f, and it will be set to `true`
-     * otherwise.
-     *
-     * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glUniform } until the
-     * next successful link operation occurs on the program object, when they are once again initialized to 0.
-     *
-     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable or a
-     * uniform variable array. These commands pass a count and a pointer to the values to be loaded into a uniform
-     * variable or a uniform variable array. A count of 1 should be used if modifying the value of a single uniform
-     * variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When loading
-     * n elements starting at an arbitrary position m in a uniform variable array, elements m + n - 1 in the array
-     * will be replaced with the new values. If $m + $n - 1 is larger than the size of the uniform variable array,
-     * values for all array elements beyond the end of the array will be ignored. The number specified in the name of
-     * the command indicates the number of components for each element in $value, and it should match the number of
-     * components in the data type of the specified uniform variable (e.g., {@see GL46::1} for float, int, bool;
-     * {@see GL46::2} for vec2, ivec2, bvec2, etc.). The data type specified in the name of the command must match
-     * the data type for the specified uniform variable as described previously for
-     * {@see GL46::glUniform{1|2|3|4}{f|i|ui}}.
-     *
-     * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glUniform3f} or {@see GL46::glUniform3fv} can be used to load a uniform
-     * variable array of type vec3). The number of elements of the uniform variable array to be modified is specified
-     * by $count
-     *
-     * The commands {@see GL46::glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix or an
-     * array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix. The
-     * number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3 × 3
-     * matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values). Non-square
-     * matrix dimensionality is explicit, with the first number representing the number of columns and the second
-     * number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2 columns
-     * and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be supplied in
-     * column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied in row major
-     * order. The $count argument indicates the number of matrices to be passed. A count of 1 should be used if
-     * modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of matrices.
-     *
-     * @see http://docs.gl/gl2/glUniform
-     * @see http://docs.gl/gl4/glUniform
-     * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $location
-     * @param int|\FFI\CData|\FFI\CInt $count
-     * @param \FFI\CData|\FFI\CFloatPtr|null $value
-     * @return void
-     */
-    public function uniform1fv($location, $count, ?\FFI\CData $value): void
-    {
-        $location = $location instanceof \FFI\CData ? $location->cdata : $location;
-        $count = $count instanceof \FFI\CData ? $count->cdata : $count;
-
-        assert(Type::isInt16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glUniform1fv', 'void (*)(GLint location, GLsizei count, const GLfloat *value)');
-        $proc($location, $count, $value);
-    }
-
-    /**
-     * {@see GL46::glUniform} modifies the value of a uniform variable or a uniform variable array. The location of
-     * the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glUniform} operates on the program object that was made part of
-     * current state by calling {@see GL46::glUseProgram}.
-     *
-     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform variable
-     * specified by $location using the values passed as arguments. The number specified in the command should match
-     * the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
-     * `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The suffix
-     * {@see GL46::f} indicates that floating-point values are being passed; the suffix {@see GL46::i} indicates that
-     * integer values are being passed; the suffix {@see GL46::ui} indicates that unsigned integer values are being
-     * passed, and this type should also match the data type of the specified uniform variable. The {@see GL46::i}
-     * variants of this function should be used to provide values for uniform variables defined as `int`, `ivec2`,
-     * `ivec3`, `ivec4`, or arrays of these. The {@see GL46::ui} variants of this function should be used to provide
-     * values for uniform variables defined as `unsigned int`, `uvec2`, `uvec3`, `uvec4`, or arrays of these. The
-     * {@see GL46::f} variants should be used to provide values for uniform variables of type `float`, `vec2`,
-     * `vec3`, `vec4`, or arrays of these. Either the {@see GL46::i}, {@see GL46::ui} or {@see GL46::f} variants may
-     * be used to provide values for uniform variables of type `bool`, `bvec2`, `bvec3`, `bvec4`, or arrays of these.
-     * The uniform variable will be set to `false` if the input value is 0 or 0.0f, and it will be set to `true`
-     * otherwise.
-     *
-     * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glUniform } until the
-     * next successful link operation occurs on the program object, when they are once again initialized to 0.
-     *
-     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable or a
-     * uniform variable array. These commands pass a count and a pointer to the values to be loaded into a uniform
-     * variable or a uniform variable array. A count of 1 should be used if modifying the value of a single uniform
-     * variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When loading
-     * n elements starting at an arbitrary position m in a uniform variable array, elements m + n - 1 in the array
-     * will be replaced with the new values. If $m + $n - 1 is larger than the size of the uniform variable array,
-     * values for all array elements beyond the end of the array will be ignored. The number specified in the name of
-     * the command indicates the number of components for each element in $value, and it should match the number of
-     * components in the data type of the specified uniform variable (e.g., {@see GL46::1} for float, int, bool;
-     * {@see GL46::2} for vec2, ivec2, bvec2, etc.). The data type specified in the name of the command must match
-     * the data type for the specified uniform variable as described previously for
-     * {@see GL46::glUniform{1|2|3|4}{f|i|ui}}.
-     *
-     * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glUniform3f} or {@see GL46::glUniform3fv} can be used to load a uniform
-     * variable array of type vec3). The number of elements of the uniform variable array to be modified is specified
-     * by $count
-     *
-     * The commands {@see GL46::glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix or an
-     * array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix. The
-     * number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3 × 3
-     * matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values). Non-square
-     * matrix dimensionality is explicit, with the first number representing the number of columns and the second
-     * number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2 columns
-     * and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be supplied in
-     * column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied in row major
-     * order. The $count argument indicates the number of matrices to be passed. A count of 1 should be used if
-     * modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of matrices.
-     *
-     * @see http://docs.gl/gl2/glUniform
-     * @see http://docs.gl/gl4/glUniform
-     * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $location
-     * @param int|\FFI\CData|\FFI\CInt $count
-     * @param \FFI\CData|\FFI\CFloatPtr|null $value
-     * @return void
-     */
-    public function uniform2fv($location, $count, ?\FFI\CData $value): void
-    {
-        $location = $location instanceof \FFI\CData ? $location->cdata : $location;
-        $count = $count instanceof \FFI\CData ? $count->cdata : $count;
-
-        assert(Type::isInt16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glUniform2fv', 'void (*)(GLint location, GLsizei count, const GLfloat *value)');
-        $proc($location, $count, $value);
-    }
-
-    /**
-     * {@see GL46::glUniform} modifies the value of a uniform variable or a uniform variable array. The location of
-     * the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glUniform} operates on the program object that was made part of
-     * current state by calling {@see GL46::glUseProgram}.
-     *
-     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform variable
-     * specified by $location using the values passed as arguments. The number specified in the command should match
-     * the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
-     * `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The suffix
-     * {@see GL46::f} indicates that floating-point values are being passed; the suffix {@see GL46::i} indicates that
-     * integer values are being passed; the suffix {@see GL46::ui} indicates that unsigned integer values are being
-     * passed, and this type should also match the data type of the specified uniform variable. The {@see GL46::i}
-     * variants of this function should be used to provide values for uniform variables defined as `int`, `ivec2`,
-     * `ivec3`, `ivec4`, or arrays of these. The {@see GL46::ui} variants of this function should be used to provide
-     * values for uniform variables defined as `unsigned int`, `uvec2`, `uvec3`, `uvec4`, or arrays of these. The
-     * {@see GL46::f} variants should be used to provide values for uniform variables of type `float`, `vec2`,
-     * `vec3`, `vec4`, or arrays of these. Either the {@see GL46::i}, {@see GL46::ui} or {@see GL46::f} variants may
-     * be used to provide values for uniform variables of type `bool`, `bvec2`, `bvec3`, `bvec4`, or arrays of these.
-     * The uniform variable will be set to `false` if the input value is 0 or 0.0f, and it will be set to `true`
-     * otherwise.
-     *
-     * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glUniform } until the
-     * next successful link operation occurs on the program object, when they are once again initialized to 0.
-     *
-     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable or a
-     * uniform variable array. These commands pass a count and a pointer to the values to be loaded into a uniform
-     * variable or a uniform variable array. A count of 1 should be used if modifying the value of a single uniform
-     * variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When loading
-     * n elements starting at an arbitrary position m in a uniform variable array, elements m + n - 1 in the array
-     * will be replaced with the new values. If $m + $n - 1 is larger than the size of the uniform variable array,
-     * values for all array elements beyond the end of the array will be ignored. The number specified in the name of
-     * the command indicates the number of components for each element in $value, and it should match the number of
-     * components in the data type of the specified uniform variable (e.g., {@see GL46::1} for float, int, bool;
-     * {@see GL46::2} for vec2, ivec2, bvec2, etc.). The data type specified in the name of the command must match
-     * the data type for the specified uniform variable as described previously for
-     * {@see GL46::glUniform{1|2|3|4}{f|i|ui}}.
-     *
-     * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glUniform3f} or {@see GL46::glUniform3fv} can be used to load a uniform
-     * variable array of type vec3). The number of elements of the uniform variable array to be modified is specified
-     * by $count
-     *
-     * The commands {@see GL46::glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix or an
-     * array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix. The
-     * number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3 × 3
-     * matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values). Non-square
-     * matrix dimensionality is explicit, with the first number representing the number of columns and the second
-     * number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2 columns
-     * and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be supplied in
-     * column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied in row major
-     * order. The $count argument indicates the number of matrices to be passed. A count of 1 should be used if
-     * modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of matrices.
-     *
-     * @see http://docs.gl/gl2/glUniform
-     * @see http://docs.gl/gl4/glUniform
-     * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $location
-     * @param int|\FFI\CData|\FFI\CInt $count
-     * @param \FFI\CData|\FFI\CFloatPtr|null $value
-     * @return void
-     */
-    public function uniform3fv($location, $count, ?\FFI\CData $value): void
-    {
-        $location = $location instanceof \FFI\CData ? $location->cdata : $location;
-        $count = $count instanceof \FFI\CData ? $count->cdata : $count;
-
-        assert(Type::isInt16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glUniform3fv', 'void (*)(GLint location, GLsizei count, const GLfloat *value)');
-        $proc($location, $count, $value);
-    }
-
-    /**
-     * {@see GL46::glUniform} modifies the value of a uniform variable or a uniform variable array. The location of
-     * the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glUniform} operates on the program object that was made part of
-     * current state by calling {@see GL46::glUseProgram}.
-     *
-     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform variable
-     * specified by $location using the values passed as arguments. The number specified in the command should match
-     * the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
-     * `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The suffix
-     * {@see GL46::f} indicates that floating-point values are being passed; the suffix {@see GL46::i} indicates that
-     * integer values are being passed; the suffix {@see GL46::ui} indicates that unsigned integer values are being
-     * passed, and this type should also match the data type of the specified uniform variable. The {@see GL46::i}
-     * variants of this function should be used to provide values for uniform variables defined as `int`, `ivec2`,
-     * `ivec3`, `ivec4`, or arrays of these. The {@see GL46::ui} variants of this function should be used to provide
-     * values for uniform variables defined as `unsigned int`, `uvec2`, `uvec3`, `uvec4`, or arrays of these. The
-     * {@see GL46::f} variants should be used to provide values for uniform variables of type `float`, `vec2`,
-     * `vec3`, `vec4`, or arrays of these. Either the {@see GL46::i}, {@see GL46::ui} or {@see GL46::f} variants may
-     * be used to provide values for uniform variables of type `bool`, `bvec2`, `bvec3`, `bvec4`, or arrays of these.
-     * The uniform variable will be set to `false` if the input value is 0 or 0.0f, and it will be set to `true`
-     * otherwise.
-     *
-     * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glUniform } until the
-     * next successful link operation occurs on the program object, when they are once again initialized to 0.
-     *
-     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable or a
-     * uniform variable array. These commands pass a count and a pointer to the values to be loaded into a uniform
-     * variable or a uniform variable array. A count of 1 should be used if modifying the value of a single uniform
-     * variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When loading
-     * n elements starting at an arbitrary position m in a uniform variable array, elements m + n - 1 in the array
-     * will be replaced with the new values. If $m + $n - 1 is larger than the size of the uniform variable array,
-     * values for all array elements beyond the end of the array will be ignored. The number specified in the name of
-     * the command indicates the number of components for each element in $value, and it should match the number of
-     * components in the data type of the specified uniform variable (e.g., {@see GL46::1} for float, int, bool;
-     * {@see GL46::2} for vec2, ivec2, bvec2, etc.). The data type specified in the name of the command must match
-     * the data type for the specified uniform variable as described previously for
-     * {@see GL46::glUniform{1|2|3|4}{f|i|ui}}.
-     *
-     * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glUniform3f} or {@see GL46::glUniform3fv} can be used to load a uniform
-     * variable array of type vec3). The number of elements of the uniform variable array to be modified is specified
-     * by $count
-     *
-     * The commands {@see GL46::glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix or an
-     * array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix. The
-     * number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3 × 3
-     * matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values). Non-square
-     * matrix dimensionality is explicit, with the first number representing the number of columns and the second
-     * number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2 columns
-     * and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be supplied in
-     * column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied in row major
-     * order. The $count argument indicates the number of matrices to be passed. A count of 1 should be used if
-     * modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of matrices.
-     *
-     * @see http://docs.gl/gl2/glUniform
-     * @see http://docs.gl/gl4/glUniform
-     * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $location
-     * @param int|\FFI\CData|\FFI\CInt $count
-     * @param \FFI\CData|\FFI\CFloatPtr|null $value
-     * @return void
-     */
-    public function uniform4fv($location, $count, ?\FFI\CData $value): void
-    {
-        $location = $location instanceof \FFI\CData ? $location->cdata : $location;
-        $count = $count instanceof \FFI\CData ? $count->cdata : $count;
-
-        assert(Type::isInt16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glUniform4fv', 'void (*)(GLint location, GLsizei count, const GLfloat *value)');
-        $proc($location, $count, $value);
-    }
-
-    /**
-     * {@see GL46::glUniform} modifies the value of a uniform variable or a uniform variable array. The location of
-     * the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glUniform} operates on the program object that was made part of
-     * current state by calling {@see GL46::glUseProgram}.
-     *
-     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform variable
-     * specified by $location using the values passed as arguments. The number specified in the command should match
-     * the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
-     * `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The suffix
-     * {@see GL46::f} indicates that floating-point values are being passed; the suffix {@see GL46::i} indicates that
-     * integer values are being passed; the suffix {@see GL46::ui} indicates that unsigned integer values are being
-     * passed, and this type should also match the data type of the specified uniform variable. The {@see GL46::i}
-     * variants of this function should be used to provide values for uniform variables defined as `int`, `ivec2`,
-     * `ivec3`, `ivec4`, or arrays of these. The {@see GL46::ui} variants of this function should be used to provide
-     * values for uniform variables defined as `unsigned int`, `uvec2`, `uvec3`, `uvec4`, or arrays of these. The
-     * {@see GL46::f} variants should be used to provide values for uniform variables of type `float`, `vec2`,
-     * `vec3`, `vec4`, or arrays of these. Either the {@see GL46::i}, {@see GL46::ui} or {@see GL46::f} variants may
-     * be used to provide values for uniform variables of type `bool`, `bvec2`, `bvec3`, `bvec4`, or arrays of these.
-     * The uniform variable will be set to `false` if the input value is 0 or 0.0f, and it will be set to `true`
-     * otherwise.
-     *
-     * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glUniform } until the
-     * next successful link operation occurs on the program object, when they are once again initialized to 0.
-     *
-     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable or a
-     * uniform variable array. These commands pass a count and a pointer to the values to be loaded into a uniform
-     * variable or a uniform variable array. A count of 1 should be used if modifying the value of a single uniform
-     * variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When loading
-     * n elements starting at an arbitrary position m in a uniform variable array, elements m + n - 1 in the array
-     * will be replaced with the new values. If $m + $n - 1 is larger than the size of the uniform variable array,
-     * values for all array elements beyond the end of the array will be ignored. The number specified in the name of
-     * the command indicates the number of components for each element in $value, and it should match the number of
-     * components in the data type of the specified uniform variable (e.g., {@see GL46::1} for float, int, bool;
-     * {@see GL46::2} for vec2, ivec2, bvec2, etc.). The data type specified in the name of the command must match
-     * the data type for the specified uniform variable as described previously for
-     * {@see GL46::glUniform{1|2|3|4}{f|i|ui}}.
-     *
-     * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glUniform3f} or {@see GL46::glUniform3fv} can be used to load a uniform
-     * variable array of type vec3). The number of elements of the uniform variable array to be modified is specified
-     * by $count
-     *
-     * The commands {@see GL46::glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix or an
-     * array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix. The
-     * number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3 × 3
-     * matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values). Non-square
-     * matrix dimensionality is explicit, with the first number representing the number of columns and the second
-     * number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2 columns
-     * and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be supplied in
-     * column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied in row major
-     * order. The $count argument indicates the number of matrices to be passed. A count of 1 should be used if
-     * modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of matrices.
-     *
-     * @see http://docs.gl/gl2/glUniform
-     * @see http://docs.gl/gl4/glUniform
-     * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $location
-     * @param int|\FFI\CData|\FFI\CInt $count
-     * @param \FFI\CData|\FFI\CIntPtr|null $value
-     * @return void
-     */
-    public function uniform1iv($location, $count, ?\FFI\CData $value): void
-    {
-        $location = $location instanceof \FFI\CData ? $location->cdata : $location;
-        $count = $count instanceof \FFI\CData ? $count->cdata : $count;
-
-        assert(Type::isInt16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glUniform1iv', 'void (*)(GLint location, GLsizei count, const GLint *value)');
-        $proc($location, $count, $value);
-    }
-
-    /**
-     * {@see GL46::glUniform} modifies the value of a uniform variable or a uniform variable array. The location of
-     * the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glUniform} operates on the program object that was made part of
-     * current state by calling {@see GL46::glUseProgram}.
-     *
-     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform variable
-     * specified by $location using the values passed as arguments. The number specified in the command should match
-     * the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
-     * `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The suffix
-     * {@see GL46::f} indicates that floating-point values are being passed; the suffix {@see GL46::i} indicates that
-     * integer values are being passed; the suffix {@see GL46::ui} indicates that unsigned integer values are being
-     * passed, and this type should also match the data type of the specified uniform variable. The {@see GL46::i}
-     * variants of this function should be used to provide values for uniform variables defined as `int`, `ivec2`,
-     * `ivec3`, `ivec4`, or arrays of these. The {@see GL46::ui} variants of this function should be used to provide
-     * values for uniform variables defined as `unsigned int`, `uvec2`, `uvec3`, `uvec4`, or arrays of these. The
-     * {@see GL46::f} variants should be used to provide values for uniform variables of type `float`, `vec2`,
-     * `vec3`, `vec4`, or arrays of these. Either the {@see GL46::i}, {@see GL46::ui} or {@see GL46::f} variants may
-     * be used to provide values for uniform variables of type `bool`, `bvec2`, `bvec3`, `bvec4`, or arrays of these.
-     * The uniform variable will be set to `false` if the input value is 0 or 0.0f, and it will be set to `true`
-     * otherwise.
-     *
-     * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glUniform } until the
-     * next successful link operation occurs on the program object, when they are once again initialized to 0.
-     *
-     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable or a
-     * uniform variable array. These commands pass a count and a pointer to the values to be loaded into a uniform
-     * variable or a uniform variable array. A count of 1 should be used if modifying the value of a single uniform
-     * variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When loading
-     * n elements starting at an arbitrary position m in a uniform variable array, elements m + n - 1 in the array
-     * will be replaced with the new values. If $m + $n - 1 is larger than the size of the uniform variable array,
-     * values for all array elements beyond the end of the array will be ignored. The number specified in the name of
-     * the command indicates the number of components for each element in $value, and it should match the number of
-     * components in the data type of the specified uniform variable (e.g., {@see GL46::1} for float, int, bool;
-     * {@see GL46::2} for vec2, ivec2, bvec2, etc.). The data type specified in the name of the command must match
-     * the data type for the specified uniform variable as described previously for
-     * {@see GL46::glUniform{1|2|3|4}{f|i|ui}}.
-     *
-     * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glUniform3f} or {@see GL46::glUniform3fv} can be used to load a uniform
-     * variable array of type vec3). The number of elements of the uniform variable array to be modified is specified
-     * by $count
-     *
-     * The commands {@see GL46::glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix or an
-     * array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix. The
-     * number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3 × 3
-     * matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values). Non-square
-     * matrix dimensionality is explicit, with the first number representing the number of columns and the second
-     * number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2 columns
-     * and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be supplied in
-     * column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied in row major
-     * order. The $count argument indicates the number of matrices to be passed. A count of 1 should be used if
-     * modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of matrices.
-     *
-     * @see http://docs.gl/gl2/glUniform
-     * @see http://docs.gl/gl4/glUniform
-     * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $location
-     * @param int|\FFI\CData|\FFI\CInt $count
-     * @param \FFI\CData|\FFI\CIntPtr|null $value
-     * @return void
-     */
-    public function uniform2iv($location, $count, ?\FFI\CData $value): void
-    {
-        $location = $location instanceof \FFI\CData ? $location->cdata : $location;
-        $count = $count instanceof \FFI\CData ? $count->cdata : $count;
-
-        assert(Type::isInt16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glUniform2iv', 'void (*)(GLint location, GLsizei count, const GLint *value)');
-        $proc($location, $count, $value);
-    }
-
-    /**
-     * {@see GL46::glUniform} modifies the value of a uniform variable or a uniform variable array. The location of
-     * the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glUniform} operates on the program object that was made part of
-     * current state by calling {@see GL46::glUseProgram}.
-     *
-     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform variable
-     * specified by $location using the values passed as arguments. The number specified in the command should match
-     * the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
-     * `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The suffix
-     * {@see GL46::f} indicates that floating-point values are being passed; the suffix {@see GL46::i} indicates that
-     * integer values are being passed; the suffix {@see GL46::ui} indicates that unsigned integer values are being
-     * passed, and this type should also match the data type of the specified uniform variable. The {@see GL46::i}
-     * variants of this function should be used to provide values for uniform variables defined as `int`, `ivec2`,
-     * `ivec3`, `ivec4`, or arrays of these. The {@see GL46::ui} variants of this function should be used to provide
-     * values for uniform variables defined as `unsigned int`, `uvec2`, `uvec3`, `uvec4`, or arrays of these. The
-     * {@see GL46::f} variants should be used to provide values for uniform variables of type `float`, `vec2`,
-     * `vec3`, `vec4`, or arrays of these. Either the {@see GL46::i}, {@see GL46::ui} or {@see GL46::f} variants may
-     * be used to provide values for uniform variables of type `bool`, `bvec2`, `bvec3`, `bvec4`, or arrays of these.
-     * The uniform variable will be set to `false` if the input value is 0 or 0.0f, and it will be set to `true`
-     * otherwise.
-     *
-     * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glUniform } until the
-     * next successful link operation occurs on the program object, when they are once again initialized to 0.
-     *
-     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable or a
-     * uniform variable array. These commands pass a count and a pointer to the values to be loaded into a uniform
-     * variable or a uniform variable array. A count of 1 should be used if modifying the value of a single uniform
-     * variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When loading
-     * n elements starting at an arbitrary position m in a uniform variable array, elements m + n - 1 in the array
-     * will be replaced with the new values. If $m + $n - 1 is larger than the size of the uniform variable array,
-     * values for all array elements beyond the end of the array will be ignored. The number specified in the name of
-     * the command indicates the number of components for each element in $value, and it should match the number of
-     * components in the data type of the specified uniform variable (e.g., {@see GL46::1} for float, int, bool;
-     * {@see GL46::2} for vec2, ivec2, bvec2, etc.). The data type specified in the name of the command must match
-     * the data type for the specified uniform variable as described previously for
-     * {@see GL46::glUniform{1|2|3|4}{f|i|ui}}.
-     *
-     * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glUniform3f} or {@see GL46::glUniform3fv} can be used to load a uniform
-     * variable array of type vec3). The number of elements of the uniform variable array to be modified is specified
-     * by $count
-     *
-     * The commands {@see GL46::glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix or an
-     * array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix. The
-     * number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3 × 3
-     * matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values). Non-square
-     * matrix dimensionality is explicit, with the first number representing the number of columns and the second
-     * number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2 columns
-     * and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be supplied in
-     * column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied in row major
-     * order. The $count argument indicates the number of matrices to be passed. A count of 1 should be used if
-     * modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of matrices.
-     *
-     * @see http://docs.gl/gl2/glUniform
-     * @see http://docs.gl/gl4/glUniform
-     * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $location
-     * @param int|\FFI\CData|\FFI\CInt $count
-     * @param \FFI\CData|\FFI\CIntPtr|null $value
-     * @return void
-     */
-    public function uniform3iv($location, $count, ?\FFI\CData $value): void
-    {
-        $location = $location instanceof \FFI\CData ? $location->cdata : $location;
-        $count = $count instanceof \FFI\CData ? $count->cdata : $count;
-
-        assert(Type::isInt16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glUniform3iv', 'void (*)(GLint location, GLsizei count, const GLint *value)');
-        $proc($location, $count, $value);
-    }
-
-    /**
-     * {@see GL46::glUniform} modifies the value of a uniform variable or a uniform variable array. The location of
-     * the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glUniform} operates on the program object that was made part of
-     * current state by calling {@see GL46::glUseProgram}.
-     *
-     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform variable
-     * specified by $location using the values passed as arguments. The number specified in the command should match
-     * the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
-     * `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The suffix
-     * {@see GL46::f} indicates that floating-point values are being passed; the suffix {@see GL46::i} indicates that
-     * integer values are being passed; the suffix {@see GL46::ui} indicates that unsigned integer values are being
-     * passed, and this type should also match the data type of the specified uniform variable. The {@see GL46::i}
-     * variants of this function should be used to provide values for uniform variables defined as `int`, `ivec2`,
-     * `ivec3`, `ivec4`, or arrays of these. The {@see GL46::ui} variants of this function should be used to provide
-     * values for uniform variables defined as `unsigned int`, `uvec2`, `uvec3`, `uvec4`, or arrays of these. The
-     * {@see GL46::f} variants should be used to provide values for uniform variables of type `float`, `vec2`,
-     * `vec3`, `vec4`, or arrays of these. Either the {@see GL46::i}, {@see GL46::ui} or {@see GL46::f} variants may
-     * be used to provide values for uniform variables of type `bool`, `bvec2`, `bvec3`, `bvec4`, or arrays of these.
-     * The uniform variable will be set to `false` if the input value is 0 or 0.0f, and it will be set to `true`
-     * otherwise.
-     *
-     * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glUniform } until the
-     * next successful link operation occurs on the program object, when they are once again initialized to 0.
-     *
-     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable or a
-     * uniform variable array. These commands pass a count and a pointer to the values to be loaded into a uniform
-     * variable or a uniform variable array. A count of 1 should be used if modifying the value of a single uniform
-     * variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When loading
-     * n elements starting at an arbitrary position m in a uniform variable array, elements m + n - 1 in the array
-     * will be replaced with the new values. If $m + $n - 1 is larger than the size of the uniform variable array,
-     * values for all array elements beyond the end of the array will be ignored. The number specified in the name of
-     * the command indicates the number of components for each element in $value, and it should match the number of
-     * components in the data type of the specified uniform variable (e.g., {@see GL46::1} for float, int, bool;
-     * {@see GL46::2} for vec2, ivec2, bvec2, etc.). The data type specified in the name of the command must match
-     * the data type for the specified uniform variable as described previously for
-     * {@see GL46::glUniform{1|2|3|4}{f|i|ui}}.
-     *
-     * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glUniform3f} or {@see GL46::glUniform3fv} can be used to load a uniform
-     * variable array of type vec3). The number of elements of the uniform variable array to be modified is specified
-     * by $count
-     *
-     * The commands {@see GL46::glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix or an
-     * array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix. The
-     * number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3 × 3
-     * matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values). Non-square
-     * matrix dimensionality is explicit, with the first number representing the number of columns and the second
-     * number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2 columns
-     * and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be supplied in
-     * column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied in row major
-     * order. The $count argument indicates the number of matrices to be passed. A count of 1 should be used if
-     * modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of matrices.
-     *
-     * @see http://docs.gl/gl2/glUniform
-     * @see http://docs.gl/gl4/glUniform
-     * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $location
-     * @param int|\FFI\CData|\FFI\CInt $count
-     * @param \FFI\CData|\FFI\CIntPtr|null $value
-     * @return void
-     */
-    public function uniform4iv($location, $count, ?\FFI\CData $value): void
-    {
-        $location = $location instanceof \FFI\CData ? $location->cdata : $location;
-        $count = $count instanceof \FFI\CData ? $count->cdata : $count;
-
-        assert(Type::isInt16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glUniform4iv', 'void (*)(GLint location, GLsizei count, const GLint *value)');
-        $proc($location, $count, $value);
-    }
-
-    /**
-     * {@see GL46::glUniform} modifies the value of a uniform variable or a uniform variable array. The location of
-     * the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glUniform} operates on the program object that was made part of
-     * current state by calling {@see GL46::glUseProgram}.
-     *
-     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform variable
-     * specified by $location using the values passed as arguments. The number specified in the command should match
-     * the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
-     * `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The suffix
-     * {@see GL46::f} indicates that floating-point values are being passed; the suffix {@see GL46::i} indicates that
-     * integer values are being passed; the suffix {@see GL46::ui} indicates that unsigned integer values are being
-     * passed, and this type should also match the data type of the specified uniform variable. The {@see GL46::i}
-     * variants of this function should be used to provide values for uniform variables defined as `int`, `ivec2`,
-     * `ivec3`, `ivec4`, or arrays of these. The {@see GL46::ui} variants of this function should be used to provide
-     * values for uniform variables defined as `unsigned int`, `uvec2`, `uvec3`, `uvec4`, or arrays of these. The
-     * {@see GL46::f} variants should be used to provide values for uniform variables of type `float`, `vec2`,
-     * `vec3`, `vec4`, or arrays of these. Either the {@see GL46::i}, {@see GL46::ui} or {@see GL46::f} variants may
-     * be used to provide values for uniform variables of type `bool`, `bvec2`, `bvec3`, `bvec4`, or arrays of these.
-     * The uniform variable will be set to `false` if the input value is 0 or 0.0f, and it will be set to `true`
-     * otherwise.
-     *
-     * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glUniform } until the
-     * next successful link operation occurs on the program object, when they are once again initialized to 0.
-     *
-     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable or a
-     * uniform variable array. These commands pass a count and a pointer to the values to be loaded into a uniform
-     * variable or a uniform variable array. A count of 1 should be used if modifying the value of a single uniform
-     * variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When loading
-     * n elements starting at an arbitrary position m in a uniform variable array, elements m + n - 1 in the array
-     * will be replaced with the new values. If $m + $n - 1 is larger than the size of the uniform variable array,
-     * values for all array elements beyond the end of the array will be ignored. The number specified in the name of
-     * the command indicates the number of components for each element in $value, and it should match the number of
-     * components in the data type of the specified uniform variable (e.g., {@see GL46::1} for float, int, bool;
-     * {@see GL46::2} for vec2, ivec2, bvec2, etc.). The data type specified in the name of the command must match
-     * the data type for the specified uniform variable as described previously for
-     * {@see GL46::glUniform{1|2|3|4}{f|i|ui}}.
-     *
-     * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glUniform3f} or {@see GL46::glUniform3fv} can be used to load a uniform
-     * variable array of type vec3). The number of elements of the uniform variable array to be modified is specified
-     * by $count
-     *
-     * The commands {@see GL46::glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix or an
-     * array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix. The
-     * number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3 × 3
-     * matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values). Non-square
-     * matrix dimensionality is explicit, with the first number representing the number of columns and the second
-     * number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2 columns
-     * and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be supplied in
-     * column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied in row major
-     * order. The $count argument indicates the number of matrices to be passed. A count of 1 should be used if
-     * modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of matrices.
-     *
-     * @see http://docs.gl/gl2/glLoadMatrix
-     * @see http://docs.gl/gl2/glUniform
-     * @see http://docs.gl/gl2/gluPickMatrix
-     * @see http://docs.gl/gl4/glUniform
-     * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $location
-     * @param int|\FFI\CData|\FFI\CInt $count
-     * @param int|\FFI\CData|\FFI\CInt $transpose
-     * @param \FFI\CData|\FFI\CFloatPtr|null $value
-     * @return void
-     */
-    public function uniformMatrix2fv($location, $count, $transpose, ?\FFI\CData $value): void
-    {
-        $location = $location instanceof \FFI\CData ? $location->cdata : $location;
-        $count = $count instanceof \FFI\CData ? $count->cdata : $count;
-        $transpose = $transpose instanceof \FFI\CData ? $transpose->cdata : $transpose;
-
-        assert(Type::isInt16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Type::isUint8($transpose), 'Argument $transpose must be a C-like GLboolean, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glUniformMatrix2fv', 'void (*)(GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)');
-        $proc($location, $count, $transpose, $value);
-    }
-
-    /**
-     * {@see GL46::glUniform} modifies the value of a uniform variable or a uniform variable array. The location of
-     * the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glUniform} operates on the program object that was made part of
-     * current state by calling {@see GL46::glUseProgram}.
-     *
-     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform variable
-     * specified by $location using the values passed as arguments. The number specified in the command should match
-     * the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
-     * `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The suffix
-     * {@see GL46::f} indicates that floating-point values are being passed; the suffix {@see GL46::i} indicates that
-     * integer values are being passed; the suffix {@see GL46::ui} indicates that unsigned integer values are being
-     * passed, and this type should also match the data type of the specified uniform variable. The {@see GL46::i}
-     * variants of this function should be used to provide values for uniform variables defined as `int`, `ivec2`,
-     * `ivec3`, `ivec4`, or arrays of these. The {@see GL46::ui} variants of this function should be used to provide
-     * values for uniform variables defined as `unsigned int`, `uvec2`, `uvec3`, `uvec4`, or arrays of these. The
-     * {@see GL46::f} variants should be used to provide values for uniform variables of type `float`, `vec2`,
-     * `vec3`, `vec4`, or arrays of these. Either the {@see GL46::i}, {@see GL46::ui} or {@see GL46::f} variants may
-     * be used to provide values for uniform variables of type `bool`, `bvec2`, `bvec3`, `bvec4`, or arrays of these.
-     * The uniform variable will be set to `false` if the input value is 0 or 0.0f, and it will be set to `true`
-     * otherwise.
-     *
-     * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glUniform } until the
-     * next successful link operation occurs on the program object, when they are once again initialized to 0.
-     *
-     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable or a
-     * uniform variable array. These commands pass a count and a pointer to the values to be loaded into a uniform
-     * variable or a uniform variable array. A count of 1 should be used if modifying the value of a single uniform
-     * variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When loading
-     * n elements starting at an arbitrary position m in a uniform variable array, elements m + n - 1 in the array
-     * will be replaced with the new values. If $m + $n - 1 is larger than the size of the uniform variable array,
-     * values for all array elements beyond the end of the array will be ignored. The number specified in the name of
-     * the command indicates the number of components for each element in $value, and it should match the number of
-     * components in the data type of the specified uniform variable (e.g., {@see GL46::1} for float, int, bool;
-     * {@see GL46::2} for vec2, ivec2, bvec2, etc.). The data type specified in the name of the command must match
-     * the data type for the specified uniform variable as described previously for
-     * {@see GL46::glUniform{1|2|3|4}{f|i|ui}}.
-     *
-     * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glUniform3f} or {@see GL46::glUniform3fv} can be used to load a uniform
-     * variable array of type vec3). The number of elements of the uniform variable array to be modified is specified
-     * by $count
-     *
-     * The commands {@see GL46::glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix or an
-     * array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix. The
-     * number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3 × 3
-     * matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values). Non-square
-     * matrix dimensionality is explicit, with the first number representing the number of columns and the second
-     * number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2 columns
-     * and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be supplied in
-     * column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied in row major
-     * order. The $count argument indicates the number of matrices to be passed. A count of 1 should be used if
-     * modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of matrices.
-     *
-     * @see http://docs.gl/gl2/glLoadMatrix
-     * @see http://docs.gl/gl2/glUniform
-     * @see http://docs.gl/gl2/gluPickMatrix
-     * @see http://docs.gl/gl4/glUniform
-     * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $location
-     * @param int|\FFI\CData|\FFI\CInt $count
-     * @param int|\FFI\CData|\FFI\CInt $transpose
-     * @param \FFI\CData|\FFI\CFloatPtr|null $value
-     * @return void
-     */
-    public function uniformMatrix3fv($location, $count, $transpose, ?\FFI\CData $value): void
-    {
-        $location = $location instanceof \FFI\CData ? $location->cdata : $location;
-        $count = $count instanceof \FFI\CData ? $count->cdata : $count;
-        $transpose = $transpose instanceof \FFI\CData ? $transpose->cdata : $transpose;
-
-        assert(Type::isInt16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Type::isUint8($transpose), 'Argument $transpose must be a C-like GLboolean, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glUniformMatrix3fv', 'void (*)(GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)');
-        $proc($location, $count, $transpose, $value);
-    }
-
-    /**
-     * {@see GL46::glUniform} modifies the value of a uniform variable or a uniform variable array. The location of
-     * the uniform variable to be modified is specified by $location, which should be a value returned by
-     * {@see GL46::glGetUniformLocation}. {@see GL46::glUniform} operates on the program object that was made part of
-     * current state by calling {@see GL46::glUseProgram}.
-     *
-     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}} are used to change the value of the uniform variable
-     * specified by $location using the values passed as arguments. The number specified in the command should match
-     * the number of components in the data type of the specified uniform variable (e.g., {@see GL46::1} for `float`,
-     * `int`, `unsigned int`, `bool`; {@see GL46::2} for `vec2`, `ivec2`, `uvec2`, `bvec2`, etc.). The suffix
-     * {@see GL46::f} indicates that floating-point values are being passed; the suffix {@see GL46::i} indicates that
-     * integer values are being passed; the suffix {@see GL46::ui} indicates that unsigned integer values are being
-     * passed, and this type should also match the data type of the specified uniform variable. The {@see GL46::i}
-     * variants of this function should be used to provide values for uniform variables defined as `int`, `ivec2`,
-     * `ivec3`, `ivec4`, or arrays of these. The {@see GL46::ui} variants of this function should be used to provide
-     * values for uniform variables defined as `unsigned int`, `uvec2`, `uvec3`, `uvec4`, or arrays of these. The
-     * {@see GL46::f} variants should be used to provide values for uniform variables of type `float`, `vec2`,
-     * `vec3`, `vec4`, or arrays of these. Either the {@see GL46::i}, {@see GL46::ui} or {@see GL46::f} variants may
-     * be used to provide values for uniform variables of type `bool`, `bvec2`, `bvec3`, `bvec4`, or arrays of these.
-     * The uniform variable will be set to `false` if the input value is 0 or 0.0f, and it will be set to `true`
-     * otherwise.
-     *
-     * All active uniform variables defined in a program object are initialized to 0 when the program object is
-     * linked successfully. They retain the values assigned to them by a call to {@see GL46::glUniform } until the
-     * next successful link operation occurs on the program object, when they are once again initialized to 0.
-     *
-     * The commands {@see GL46::glUniform{1|2|3|4}{f|i|ui}v} can be used to modify a single uniform variable or a
-     * uniform variable array. These commands pass a count and a pointer to the values to be loaded into a uniform
-     * variable or a uniform variable array. A count of 1 should be used if modifying the value of a single uniform
-     * variable, and a count of 1 or greater can be used to modify an entire array or part of an array. When loading
-     * n elements starting at an arbitrary position m in a uniform variable array, elements m + n - 1 in the array
-     * will be replaced with the new values. If $m + $n - 1 is larger than the size of the uniform variable array,
-     * values for all array elements beyond the end of the array will be ignored. The number specified in the name of
-     * the command indicates the number of components for each element in $value, and it should match the number of
-     * components in the data type of the specified uniform variable (e.g., {@see GL46::1} for float, int, bool;
-     * {@see GL46::2} for vec2, ivec2, bvec2, etc.). The data type specified in the name of the command must match
-     * the data type for the specified uniform variable as described previously for
-     * {@see GL46::glUniform{1|2|3|4}{f|i|ui}}.
-     *
-     * For uniform variable arrays, each element of the array is considered to be of the type indicated in the name
-     * of the command (e.g., {@see GL46::glUniform3f} or {@see GL46::glUniform3fv} can be used to load a uniform
-     * variable array of type vec3). The number of elements of the uniform variable array to be modified is specified
-     * by $count
-     *
-     * The commands {@see GL46::glUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv} are used to modify a matrix or an
-     * array of matrices. The numbers in the command name are interpreted as the dimensionality of the matrix. The
-     * number {@see GL46::2} indicates a 2 × 2 matrix (i.e., 4 values), the number {@see GL46::3} indicates a 3 × 3
-     * matrix (i.e., 9 values), and the number {@see GL46::4} indicates a 4 × 4 matrix (i.e., 16 values). Non-square
-     * matrix dimensionality is explicit, with the first number representing the number of columns and the second
-     * number representing the number of rows. For example, {@see GL46::2x4} indicates a 2 × 4 matrix with 2 columns
-     * and 4 rows (i.e., 8 values). If $transpose is {@see GL46::GL_FALSE}, each matrix is assumed to be supplied in
-     * column major order. If $transpose is {@see GL46::GL_TRUE}, each matrix is assumed to be supplied in row major
-     * order. The $count argument indicates the number of matrices to be passed. A count of 1 should be used if
-     * modifying the value of a single matrix, and a count greater than 1 can be used to modify an array of matrices.
-     *
-     * @see http://docs.gl/gl2/glLoadMatrix
-     * @see http://docs.gl/gl2/glUniform
-     * @see http://docs.gl/gl2/gluPickMatrix
-     * @see http://docs.gl/gl4/glUniform
-     * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $location
-     * @param int|\FFI\CData|\FFI\CInt $count
-     * @param int|\FFI\CData|\FFI\CInt $transpose
-     * @param \FFI\CData|\FFI\CFloatPtr|null $value
-     * @return void
-     */
-    public function uniformMatrix4fv($location, $count, $transpose, ?\FFI\CData $value): void
-    {
-        $location = $location instanceof \FFI\CData ? $location->cdata : $location;
-        $count = $count instanceof \FFI\CData ? $count->cdata : $count;
-        $transpose = $transpose instanceof \FFI\CData ? $transpose->cdata : $transpose;
-
-        assert(Type::isInt16($location), 'Argument $location must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Type::isUint8($transpose), 'Argument $transpose must be a C-like GLboolean, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glUniformMatrix4fv', 'void (*)(GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)');
-        $proc($location, $count, $transpose, $value);
+        $__proc = $this->getProcAs('glUseProgram', 'void (*)(GLuint program)');
+        $__proc($program);
     }
 
     /**
@@ -3826,17 +3585,13 @@ class GL20 extends GL15
      * @see http://docs.gl/gl2/glValidateProgram
      * @see http://docs.gl/gl4/glValidateProgram
      * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $program
+     * @param int $program
      * @return void
      */
-    public function validateProgram($program): void
+    public function validateProgram(int $program): void
     {
-        $program = $program instanceof \FFI\CData ? $program->cdata : $program;
-
-        assert(Type::isUint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glValidateProgram', 'void (*)(GLuint program)');
-        $proc($program);
+        $__proc = $this->getProcAs('glValidateProgram', 'void (*)(GLuint program)');
+        $__proc($program);
     }
 
     /**
@@ -3904,20 +3659,14 @@ class GL20 extends GL15
      * @see http://docs.gl/gl2/glVertexAttrib
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $index
-     * @param float|\FFI\CData|\FFI\CFloat $x
+     * @param int $index
+     * @param float $x
      * @return void
      */
-    public function vertexAttrib1d($index, $x): void
+    public function vertexAttrib1d(int $index, float $x): void
     {
-        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
-        $x = $x instanceof \FFI\CData ? $x->cdata : $x;
-
-        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isFloat64($x), 'Argument $x must be a C-like GLdouble, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glVertexAttrib1d', 'void (*)(GLuint index, GLdouble x)');
-        $proc($index, $x);
+        $__proc = $this->getProcAs('glVertexAttrib1d', 'void (*)(GLuint index, GLdouble x)');
+        $__proc($index, $x);
     }
 
     /**
@@ -3985,18 +3734,14 @@ class GL20 extends GL15
      * @see http://docs.gl/gl2/glVertexAttrib
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $index
-     * @param \FFI\CData|\FFI\CFloatPtr|null $v
+     * @param int $index
+     * @param \FFI\CData|null $v
      * @return void
      */
-    public function vertexAttrib1dv($index, ?\FFI\CData $v): void
+    public function vertexAttrib1dv(int $index, ?\FFI\CData $v): void
     {
-        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
-
-        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glVertexAttrib1dv', 'void (*)(GLuint index, const GLdouble *v)');
-        $proc($index, $v);
+        $__proc = $this->getProcAs('glVertexAttrib1dv', 'void (*)(GLuint index, const GLdouble *v)');
+        $__proc($index, $v);
     }
 
     /**
@@ -4064,20 +3809,14 @@ class GL20 extends GL15
      * @see http://docs.gl/gl2/glVertexAttrib
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $index
-     * @param float|\FFI\CData|\FFI\CFloat $x
+     * @param int $index
+     * @param float $x
      * @return void
      */
-    public function vertexAttrib1f($index, $x): void
+    public function vertexAttrib1f(int $index, float $x): void
     {
-        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
-        $x = $x instanceof \FFI\CData ? $x->cdata : $x;
-
-        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isFloat32($x), 'Argument $x must be a C-like GLfloat, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glVertexAttrib1f', 'void (*)(GLuint index, GLfloat x)');
-        $proc($index, $x);
+        $__proc = $this->getProcAs('glVertexAttrib1f', 'void (*)(GLuint index, GLfloat x)');
+        $__proc($index, $x);
     }
 
     /**
@@ -4145,18 +3884,14 @@ class GL20 extends GL15
      * @see http://docs.gl/gl2/glVertexAttrib
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $index
-     * @param \FFI\CData|\FFI\CFloatPtr|null $v
+     * @param int $index
+     * @param \FFI\CData|null $v
      * @return void
      */
-    public function vertexAttrib1fv($index, ?\FFI\CData $v): void
+    public function vertexAttrib1fv(int $index, ?\FFI\CData $v): void
     {
-        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
-
-        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glVertexAttrib1fv', 'void (*)(GLuint index, const GLfloat *v)');
-        $proc($index, $v);
+        $__proc = $this->getProcAs('glVertexAttrib1fv', 'void (*)(GLuint index, const GLfloat *v)');
+        $__proc($index, $v);
     }
 
     /**
@@ -4224,20 +3959,14 @@ class GL20 extends GL15
      * @see http://docs.gl/gl2/glVertexAttrib
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $index
-     * @param int|\FFI\CData|\FFI\CInt $x
+     * @param int $index
+     * @param int $x
      * @return void
      */
-    public function vertexAttrib1s($index, $x): void
+    public function vertexAttrib1s(int $index, int $x): void
     {
-        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
-        $x = $x instanceof \FFI\CData ? $x->cdata : $x;
-
-        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isInt16($x), 'Argument $x must be a C-like GLshort, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glVertexAttrib1s', 'void (*)(GLuint index, GLshort x)');
-        $proc($index, $x);
+        $__proc = $this->getProcAs('glVertexAttrib1s', 'void (*)(GLuint index, GLshort x)');
+        $__proc($index, $x);
     }
 
     /**
@@ -4305,18 +4034,14 @@ class GL20 extends GL15
      * @see http://docs.gl/gl2/glVertexAttrib
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $index
-     * @param \FFI\CData|\FFI\CIntPtr|null $v
+     * @param int $index
+     * @param \FFI\CData|null $v
      * @return void
      */
-    public function vertexAttrib1sv($index, ?\FFI\CData $v): void
+    public function vertexAttrib1sv(int $index, ?\FFI\CData $v): void
     {
-        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
-
-        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glVertexAttrib1sv', 'void (*)(GLuint index, const GLshort *v)');
-        $proc($index, $v);
+        $__proc = $this->getProcAs('glVertexAttrib1sv', 'void (*)(GLuint index, const GLshort *v)');
+        $__proc($index, $v);
     }
 
     /**
@@ -4384,23 +4109,15 @@ class GL20 extends GL15
      * @see http://docs.gl/gl2/glVertexAttrib
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $index
-     * @param float|\FFI\CData|\FFI\CFloat $x
-     * @param float|\FFI\CData|\FFI\CFloat $y
+     * @param int $index
+     * @param float $x
+     * @param float $y
      * @return void
      */
-    public function vertexAttrib2d($index, $x, $y): void
+    public function vertexAttrib2d(int $index, float $x, float $y): void
     {
-        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
-        $x = $x instanceof \FFI\CData ? $x->cdata : $x;
-        $y = $y instanceof \FFI\CData ? $y->cdata : $y;
-
-        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isFloat64($x), 'Argument $x must be a C-like GLdouble, but incompatible or overflow value given');
-        assert(Type::isFloat64($y), 'Argument $y must be a C-like GLdouble, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glVertexAttrib2d', 'void (*)(GLuint index, GLdouble x, GLdouble y)');
-        $proc($index, $x, $y);
+        $__proc = $this->getProcAs('glVertexAttrib2d', 'void (*)(GLuint index, GLdouble x, GLdouble y)');
+        $__proc($index, $x, $y);
     }
 
     /**
@@ -4468,18 +4185,14 @@ class GL20 extends GL15
      * @see http://docs.gl/gl2/glVertexAttrib
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $index
-     * @param \FFI\CData|\FFI\CFloatPtr|null $v
+     * @param int $index
+     * @param \FFI\CData|null $v
      * @return void
      */
-    public function vertexAttrib2dv($index, ?\FFI\CData $v): void
+    public function vertexAttrib2dv(int $index, ?\FFI\CData $v): void
     {
-        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
-
-        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glVertexAttrib2dv', 'void (*)(GLuint index, const GLdouble *v)');
-        $proc($index, $v);
+        $__proc = $this->getProcAs('glVertexAttrib2dv', 'void (*)(GLuint index, const GLdouble *v)');
+        $__proc($index, $v);
     }
 
     /**
@@ -4547,23 +4260,15 @@ class GL20 extends GL15
      * @see http://docs.gl/gl2/glVertexAttrib
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $index
-     * @param float|\FFI\CData|\FFI\CFloat $x
-     * @param float|\FFI\CData|\FFI\CFloat $y
+     * @param int $index
+     * @param float $x
+     * @param float $y
      * @return void
      */
-    public function vertexAttrib2f($index, $x, $y): void
+    public function vertexAttrib2f(int $index, float $x, float $y): void
     {
-        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
-        $x = $x instanceof \FFI\CData ? $x->cdata : $x;
-        $y = $y instanceof \FFI\CData ? $y->cdata : $y;
-
-        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isFloat32($x), 'Argument $x must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Type::isFloat32($y), 'Argument $y must be a C-like GLfloat, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glVertexAttrib2f', 'void (*)(GLuint index, GLfloat x, GLfloat y)');
-        $proc($index, $x, $y);
+        $__proc = $this->getProcAs('glVertexAttrib2f', 'void (*)(GLuint index, GLfloat x, GLfloat y)');
+        $__proc($index, $x, $y);
     }
 
     /**
@@ -4631,18 +4336,14 @@ class GL20 extends GL15
      * @see http://docs.gl/gl2/glVertexAttrib
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $index
-     * @param \FFI\CData|\FFI\CFloatPtr|null $v
+     * @param int $index
+     * @param \FFI\CData|null $v
      * @return void
      */
-    public function vertexAttrib2fv($index, ?\FFI\CData $v): void
+    public function vertexAttrib2fv(int $index, ?\FFI\CData $v): void
     {
-        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
-
-        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glVertexAttrib2fv', 'void (*)(GLuint index, const GLfloat *v)');
-        $proc($index, $v);
+        $__proc = $this->getProcAs('glVertexAttrib2fv', 'void (*)(GLuint index, const GLfloat *v)');
+        $__proc($index, $v);
     }
 
     /**
@@ -4710,23 +4411,15 @@ class GL20 extends GL15
      * @see http://docs.gl/gl2/glVertexAttrib
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $index
-     * @param int|\FFI\CData|\FFI\CInt $x
-     * @param int|\FFI\CData|\FFI\CInt $y
+     * @param int $index
+     * @param int $x
+     * @param int $y
      * @return void
      */
-    public function vertexAttrib2s($index, $x, $y): void
+    public function vertexAttrib2s(int $index, int $x, int $y): void
     {
-        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
-        $x = $x instanceof \FFI\CData ? $x->cdata : $x;
-        $y = $y instanceof \FFI\CData ? $y->cdata : $y;
-
-        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isInt16($x), 'Argument $x must be a C-like GLshort, but incompatible or overflow value given');
-        assert(Type::isInt16($y), 'Argument $y must be a C-like GLshort, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glVertexAttrib2s', 'void (*)(GLuint index, GLshort x, GLshort y)');
-        $proc($index, $x, $y);
+        $__proc = $this->getProcAs('glVertexAttrib2s', 'void (*)(GLuint index, GLshort x, GLshort y)');
+        $__proc($index, $x, $y);
     }
 
     /**
@@ -4794,18 +4487,14 @@ class GL20 extends GL15
      * @see http://docs.gl/gl2/glVertexAttrib
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $index
-     * @param \FFI\CData|\FFI\CIntPtr|null $v
+     * @param int $index
+     * @param \FFI\CData|null $v
      * @return void
      */
-    public function vertexAttrib2sv($index, ?\FFI\CData $v): void
+    public function vertexAttrib2sv(int $index, ?\FFI\CData $v): void
     {
-        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
-
-        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glVertexAttrib2sv', 'void (*)(GLuint index, const GLshort *v)');
-        $proc($index, $v);
+        $__proc = $this->getProcAs('glVertexAttrib2sv', 'void (*)(GLuint index, const GLshort *v)');
+        $__proc($index, $v);
     }
 
     /**
@@ -4873,26 +4562,16 @@ class GL20 extends GL15
      * @see http://docs.gl/gl2/glVertexAttrib
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $index
-     * @param float|\FFI\CData|\FFI\CFloat $x
-     * @param float|\FFI\CData|\FFI\CFloat $y
-     * @param float|\FFI\CData|\FFI\CFloat $z
+     * @param int $index
+     * @param float $x
+     * @param float $y
+     * @param float $z
      * @return void
      */
-    public function vertexAttrib3d($index, $x, $y, $z): void
+    public function vertexAttrib3d(int $index, float $x, float $y, float $z): void
     {
-        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
-        $x = $x instanceof \FFI\CData ? $x->cdata : $x;
-        $y = $y instanceof \FFI\CData ? $y->cdata : $y;
-        $z = $z instanceof \FFI\CData ? $z->cdata : $z;
-
-        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isFloat64($x), 'Argument $x must be a C-like GLdouble, but incompatible or overflow value given');
-        assert(Type::isFloat64($y), 'Argument $y must be a C-like GLdouble, but incompatible or overflow value given');
-        assert(Type::isFloat64($z), 'Argument $z must be a C-like GLdouble, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glVertexAttrib3d', 'void (*)(GLuint index, GLdouble x, GLdouble y, GLdouble z)');
-        $proc($index, $x, $y, $z);
+        $__proc = $this->getProcAs('glVertexAttrib3d', 'void (*)(GLuint index, GLdouble x, GLdouble y, GLdouble z)');
+        $__proc($index, $x, $y, $z);
     }
 
     /**
@@ -4960,18 +4639,14 @@ class GL20 extends GL15
      * @see http://docs.gl/gl2/glVertexAttrib
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $index
-     * @param \FFI\CData|\FFI\CFloatPtr|null $v
+     * @param int $index
+     * @param \FFI\CData|null $v
      * @return void
      */
-    public function vertexAttrib3dv($index, ?\FFI\CData $v): void
+    public function vertexAttrib3dv(int $index, ?\FFI\CData $v): void
     {
-        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
-
-        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glVertexAttrib3dv', 'void (*)(GLuint index, const GLdouble *v)');
-        $proc($index, $v);
+        $__proc = $this->getProcAs('glVertexAttrib3dv', 'void (*)(GLuint index, const GLdouble *v)');
+        $__proc($index, $v);
     }
 
     /**
@@ -5039,26 +4714,16 @@ class GL20 extends GL15
      * @see http://docs.gl/gl2/glVertexAttrib
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $index
-     * @param float|\FFI\CData|\FFI\CFloat $x
-     * @param float|\FFI\CData|\FFI\CFloat $y
-     * @param float|\FFI\CData|\FFI\CFloat $z
+     * @param int $index
+     * @param float $x
+     * @param float $y
+     * @param float $z
      * @return void
      */
-    public function vertexAttrib3f($index, $x, $y, $z): void
+    public function vertexAttrib3f(int $index, float $x, float $y, float $z): void
     {
-        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
-        $x = $x instanceof \FFI\CData ? $x->cdata : $x;
-        $y = $y instanceof \FFI\CData ? $y->cdata : $y;
-        $z = $z instanceof \FFI\CData ? $z->cdata : $z;
-
-        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isFloat32($x), 'Argument $x must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Type::isFloat32($y), 'Argument $y must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Type::isFloat32($z), 'Argument $z must be a C-like GLfloat, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glVertexAttrib3f', 'void (*)(GLuint index, GLfloat x, GLfloat y, GLfloat z)');
-        $proc($index, $x, $y, $z);
+        $__proc = $this->getProcAs('glVertexAttrib3f', 'void (*)(GLuint index, GLfloat x, GLfloat y, GLfloat z)');
+        $__proc($index, $x, $y, $z);
     }
 
     /**
@@ -5126,18 +4791,14 @@ class GL20 extends GL15
      * @see http://docs.gl/gl2/glVertexAttrib
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $index
-     * @param \FFI\CData|\FFI\CFloatPtr|null $v
+     * @param int $index
+     * @param \FFI\CData|null $v
      * @return void
      */
-    public function vertexAttrib3fv($index, ?\FFI\CData $v): void
+    public function vertexAttrib3fv(int $index, ?\FFI\CData $v): void
     {
-        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
-
-        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glVertexAttrib3fv', 'void (*)(GLuint index, const GLfloat *v)');
-        $proc($index, $v);
+        $__proc = $this->getProcAs('glVertexAttrib3fv', 'void (*)(GLuint index, const GLfloat *v)');
+        $__proc($index, $v);
     }
 
     /**
@@ -5205,26 +4866,16 @@ class GL20 extends GL15
      * @see http://docs.gl/gl2/glVertexAttrib
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $index
-     * @param int|\FFI\CData|\FFI\CInt $x
-     * @param int|\FFI\CData|\FFI\CInt $y
-     * @param int|\FFI\CData|\FFI\CInt $z
+     * @param int $index
+     * @param int $x
+     * @param int $y
+     * @param int $z
      * @return void
      */
-    public function vertexAttrib3s($index, $x, $y, $z): void
+    public function vertexAttrib3s(int $index, int $x, int $y, int $z): void
     {
-        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
-        $x = $x instanceof \FFI\CData ? $x->cdata : $x;
-        $y = $y instanceof \FFI\CData ? $y->cdata : $y;
-        $z = $z instanceof \FFI\CData ? $z->cdata : $z;
-
-        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isInt16($x), 'Argument $x must be a C-like GLshort, but incompatible or overflow value given');
-        assert(Type::isInt16($y), 'Argument $y must be a C-like GLshort, but incompatible or overflow value given');
-        assert(Type::isInt16($z), 'Argument $z must be a C-like GLshort, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glVertexAttrib3s', 'void (*)(GLuint index, GLshort x, GLshort y, GLshort z)');
-        $proc($index, $x, $y, $z);
+        $__proc = $this->getProcAs('glVertexAttrib3s', 'void (*)(GLuint index, GLshort x, GLshort y, GLshort z)');
+        $__proc($index, $x, $y, $z);
     }
 
     /**
@@ -5292,18 +4943,14 @@ class GL20 extends GL15
      * @see http://docs.gl/gl2/glVertexAttrib
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $index
-     * @param \FFI\CData|\FFI\CIntPtr|null $v
+     * @param int $index
+     * @param \FFI\CData|null $v
      * @return void
      */
-    public function vertexAttrib3sv($index, ?\FFI\CData $v): void
+    public function vertexAttrib3sv(int $index, ?\FFI\CData $v): void
     {
-        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
-
-        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glVertexAttrib3sv', 'void (*)(GLuint index, const GLshort *v)');
-        $proc($index, $v);
+        $__proc = $this->getProcAs('glVertexAttrib3sv', 'void (*)(GLuint index, const GLshort *v)');
+        $__proc($index, $v);
     }
 
     /**
@@ -5371,18 +5018,14 @@ class GL20 extends GL15
      * @see http://docs.gl/gl2/glVertexAttrib
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $index
-     * @param \FFI\CData|\FFI\CIntPtr|null $v
+     * @param int $index
+     * @param \FFI\CData|null $v
      * @return void
      */
-    public function vertexAttrib4Nbv($index, ?\FFI\CData $v): void
+    public function vertexAttrib4Nbv(int $index, ?\FFI\CData $v): void
     {
-        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
-
-        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glVertexAttrib4Nbv', 'void (*)(GLuint index, const GLbyte *v)');
-        $proc($index, $v);
+        $__proc = $this->getProcAs('glVertexAttrib4Nbv', 'void (*)(GLuint index, const GLbyte *v)');
+        $__proc($index, $v);
     }
 
     /**
@@ -5450,18 +5093,14 @@ class GL20 extends GL15
      * @see http://docs.gl/gl2/glVertexAttrib
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $index
-     * @param \FFI\CData|\FFI\CIntPtr|null $v
+     * @param int $index
+     * @param \FFI\CData|null $v
      * @return void
      */
-    public function vertexAttrib4Niv($index, ?\FFI\CData $v): void
+    public function vertexAttrib4Niv(int $index, ?\FFI\CData $v): void
     {
-        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
-
-        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glVertexAttrib4Niv', 'void (*)(GLuint index, const GLint *v)');
-        $proc($index, $v);
+        $__proc = $this->getProcAs('glVertexAttrib4Niv', 'void (*)(GLuint index, const GLint *v)');
+        $__proc($index, $v);
     }
 
     /**
@@ -5529,18 +5168,14 @@ class GL20 extends GL15
      * @see http://docs.gl/gl2/glVertexAttrib
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $index
-     * @param \FFI\CData|\FFI\CIntPtr|null $v
+     * @param int $index
+     * @param \FFI\CData|null $v
      * @return void
      */
-    public function vertexAttrib4Nsv($index, ?\FFI\CData $v): void
+    public function vertexAttrib4Nsv(int $index, ?\FFI\CData $v): void
     {
-        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
-
-        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glVertexAttrib4Nsv', 'void (*)(GLuint index, const GLshort *v)');
-        $proc($index, $v);
+        $__proc = $this->getProcAs('glVertexAttrib4Nsv', 'void (*)(GLuint index, const GLshort *v)');
+        $__proc($index, $v);
     }
 
     /**
@@ -5608,29 +5243,17 @@ class GL20 extends GL15
      * @see http://docs.gl/gl2/glVertexAttrib
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $index
-     * @param int|\FFI\CData|\FFI\CInt $x
-     * @param int|\FFI\CData|\FFI\CInt $y
-     * @param int|\FFI\CData|\FFI\CInt $z
-     * @param int|\FFI\CData|\FFI\CInt $w
+     * @param int $index
+     * @param int $x
+     * @param int $y
+     * @param int $z
+     * @param int $w
      * @return void
      */
-    public function vertexAttrib4Nub($index, $x, $y, $z, $w): void
+    public function vertexAttrib4Nub(int $index, int $x, int $y, int $z, int $w): void
     {
-        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
-        $x = $x instanceof \FFI\CData ? $x->cdata : $x;
-        $y = $y instanceof \FFI\CData ? $y->cdata : $y;
-        $z = $z instanceof \FFI\CData ? $z->cdata : $z;
-        $w = $w instanceof \FFI\CData ? $w->cdata : $w;
-
-        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isUint8($x), 'Argument $x must be a C-like GLubyte, but incompatible or overflow value given');
-        assert(Type::isUint8($y), 'Argument $y must be a C-like GLubyte, but incompatible or overflow value given');
-        assert(Type::isUint8($z), 'Argument $z must be a C-like GLubyte, but incompatible or overflow value given');
-        assert(Type::isUint8($w), 'Argument $w must be a C-like GLubyte, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glVertexAttrib4Nub', 'void (*)(GLuint index, GLubyte x, GLubyte y, GLubyte z, GLubyte w)');
-        $proc($index, $x, $y, $z, $w);
+        $__proc = $this->getProcAs('glVertexAttrib4Nub', 'void (*)(GLuint index, GLubyte x, GLubyte y, GLubyte z, GLubyte w)');
+        $__proc($index, $x, $y, $z, $w);
     }
 
     /**
@@ -5698,18 +5321,14 @@ class GL20 extends GL15
      * @see http://docs.gl/gl2/glVertexAttrib
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $index
-     * @param \FFI\CData|\FFI\CIntPtr|null $v
+     * @param int $index
+     * @param \FFI\CData|null $v
      * @return void
      */
-    public function vertexAttrib4Nubv($index, ?\FFI\CData $v): void
+    public function vertexAttrib4Nubv(int $index, ?\FFI\CData $v): void
     {
-        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
-
-        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glVertexAttrib4Nubv', 'void (*)(GLuint index, const GLubyte *v)');
-        $proc($index, $v);
+        $__proc = $this->getProcAs('glVertexAttrib4Nubv', 'void (*)(GLuint index, const GLubyte *v)');
+        $__proc($index, $v);
     }
 
     /**
@@ -5777,18 +5396,14 @@ class GL20 extends GL15
      * @see http://docs.gl/gl2/glVertexAttrib
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $index
-     * @param \FFI\CData|\FFI\CIntPtr|null $v
+     * @param int $index
+     * @param \FFI\CData|null $v
      * @return void
      */
-    public function vertexAttrib4Nuiv($index, ?\FFI\CData $v): void
+    public function vertexAttrib4Nuiv(int $index, ?\FFI\CData $v): void
     {
-        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
-
-        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glVertexAttrib4Nuiv', 'void (*)(GLuint index, const GLuint *v)');
-        $proc($index, $v);
+        $__proc = $this->getProcAs('glVertexAttrib4Nuiv', 'void (*)(GLuint index, const GLuint *v)');
+        $__proc($index, $v);
     }
 
     /**
@@ -5856,18 +5471,14 @@ class GL20 extends GL15
      * @see http://docs.gl/gl2/glVertexAttrib
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $index
-     * @param \FFI\CData|\FFI\CIntPtr|null $v
+     * @param int $index
+     * @param \FFI\CData|null $v
      * @return void
      */
-    public function vertexAttrib4Nusv($index, ?\FFI\CData $v): void
+    public function vertexAttrib4Nusv(int $index, ?\FFI\CData $v): void
     {
-        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
-
-        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glVertexAttrib4Nusv', 'void (*)(GLuint index, const GLushort *v)');
-        $proc($index, $v);
+        $__proc = $this->getProcAs('glVertexAttrib4Nusv', 'void (*)(GLuint index, const GLushort *v)');
+        $__proc($index, $v);
     }
 
     /**
@@ -5935,18 +5546,14 @@ class GL20 extends GL15
      * @see http://docs.gl/gl2/glVertexAttrib
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $index
-     * @param \FFI\CData|\FFI\CIntPtr|null $v
+     * @param int $index
+     * @param \FFI\CData|null $v
      * @return void
      */
-    public function vertexAttrib4bv($index, ?\FFI\CData $v): void
+    public function vertexAttrib4bv(int $index, ?\FFI\CData $v): void
     {
-        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
-
-        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glVertexAttrib4bv', 'void (*)(GLuint index, const GLbyte *v)');
-        $proc($index, $v);
+        $__proc = $this->getProcAs('glVertexAttrib4bv', 'void (*)(GLuint index, const GLbyte *v)');
+        $__proc($index, $v);
     }
 
     /**
@@ -6014,29 +5621,17 @@ class GL20 extends GL15
      * @see http://docs.gl/gl2/glVertexAttrib
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $index
-     * @param float|\FFI\CData|\FFI\CFloat $x
-     * @param float|\FFI\CData|\FFI\CFloat $y
-     * @param float|\FFI\CData|\FFI\CFloat $z
-     * @param float|\FFI\CData|\FFI\CFloat $w
+     * @param int $index
+     * @param float $x
+     * @param float $y
+     * @param float $z
+     * @param float $w
      * @return void
      */
-    public function vertexAttrib4d($index, $x, $y, $z, $w): void
+    public function vertexAttrib4d(int $index, float $x, float $y, float $z, float $w): void
     {
-        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
-        $x = $x instanceof \FFI\CData ? $x->cdata : $x;
-        $y = $y instanceof \FFI\CData ? $y->cdata : $y;
-        $z = $z instanceof \FFI\CData ? $z->cdata : $z;
-        $w = $w instanceof \FFI\CData ? $w->cdata : $w;
-
-        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isFloat64($x), 'Argument $x must be a C-like GLdouble, but incompatible or overflow value given');
-        assert(Type::isFloat64($y), 'Argument $y must be a C-like GLdouble, but incompatible or overflow value given');
-        assert(Type::isFloat64($z), 'Argument $z must be a C-like GLdouble, but incompatible or overflow value given');
-        assert(Type::isFloat64($w), 'Argument $w must be a C-like GLdouble, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glVertexAttrib4d', 'void (*)(GLuint index, GLdouble x, GLdouble y, GLdouble z, GLdouble w)');
-        $proc($index, $x, $y, $z, $w);
+        $__proc = $this->getProcAs('glVertexAttrib4d', 'void (*)(GLuint index, GLdouble x, GLdouble y, GLdouble z, GLdouble w)');
+        $__proc($index, $x, $y, $z, $w);
     }
 
     /**
@@ -6104,18 +5699,14 @@ class GL20 extends GL15
      * @see http://docs.gl/gl2/glVertexAttrib
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $index
-     * @param \FFI\CData|\FFI\CFloatPtr|null $v
+     * @param int $index
+     * @param \FFI\CData|null $v
      * @return void
      */
-    public function vertexAttrib4dv($index, ?\FFI\CData $v): void
+    public function vertexAttrib4dv(int $index, ?\FFI\CData $v): void
     {
-        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
-
-        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glVertexAttrib4dv', 'void (*)(GLuint index, const GLdouble *v)');
-        $proc($index, $v);
+        $__proc = $this->getProcAs('glVertexAttrib4dv', 'void (*)(GLuint index, const GLdouble *v)');
+        $__proc($index, $v);
     }
 
     /**
@@ -6183,29 +5774,17 @@ class GL20 extends GL15
      * @see http://docs.gl/gl2/glVertexAttrib
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $index
-     * @param float|\FFI\CData|\FFI\CFloat $x
-     * @param float|\FFI\CData|\FFI\CFloat $y
-     * @param float|\FFI\CData|\FFI\CFloat $z
-     * @param float|\FFI\CData|\FFI\CFloat $w
+     * @param int $index
+     * @param float $x
+     * @param float $y
+     * @param float $z
+     * @param float $w
      * @return void
      */
-    public function vertexAttrib4f($index, $x, $y, $z, $w): void
+    public function vertexAttrib4f(int $index, float $x, float $y, float $z, float $w): void
     {
-        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
-        $x = $x instanceof \FFI\CData ? $x->cdata : $x;
-        $y = $y instanceof \FFI\CData ? $y->cdata : $y;
-        $z = $z instanceof \FFI\CData ? $z->cdata : $z;
-        $w = $w instanceof \FFI\CData ? $w->cdata : $w;
-
-        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isFloat32($x), 'Argument $x must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Type::isFloat32($y), 'Argument $y must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Type::isFloat32($z), 'Argument $z must be a C-like GLfloat, but incompatible or overflow value given');
-        assert(Type::isFloat32($w), 'Argument $w must be a C-like GLfloat, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glVertexAttrib4f', 'void (*)(GLuint index, GLfloat x, GLfloat y, GLfloat z, GLfloat w)');
-        $proc($index, $x, $y, $z, $w);
+        $__proc = $this->getProcAs('glVertexAttrib4f', 'void (*)(GLuint index, GLfloat x, GLfloat y, GLfloat z, GLfloat w)');
+        $__proc($index, $x, $y, $z, $w);
     }
 
     /**
@@ -6273,18 +5852,14 @@ class GL20 extends GL15
      * @see http://docs.gl/gl2/glVertexAttrib
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $index
-     * @param \FFI\CData|\FFI\CFloatPtr|null $v
+     * @param int $index
+     * @param \FFI\CData|null $v
      * @return void
      */
-    public function vertexAttrib4fv($index, ?\FFI\CData $v): void
+    public function vertexAttrib4fv(int $index, ?\FFI\CData $v): void
     {
-        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
-
-        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glVertexAttrib4fv', 'void (*)(GLuint index, const GLfloat *v)');
-        $proc($index, $v);
+        $__proc = $this->getProcAs('glVertexAttrib4fv', 'void (*)(GLuint index, const GLfloat *v)');
+        $__proc($index, $v);
     }
 
     /**
@@ -6352,18 +5927,14 @@ class GL20 extends GL15
      * @see http://docs.gl/gl2/glVertexAttrib
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $index
-     * @param \FFI\CData|\FFI\CIntPtr|null $v
+     * @param int $index
+     * @param \FFI\CData|null $v
      * @return void
      */
-    public function vertexAttrib4iv($index, ?\FFI\CData $v): void
+    public function vertexAttrib4iv(int $index, ?\FFI\CData $v): void
     {
-        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
-
-        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glVertexAttrib4iv', 'void (*)(GLuint index, const GLint *v)');
-        $proc($index, $v);
+        $__proc = $this->getProcAs('glVertexAttrib4iv', 'void (*)(GLuint index, const GLint *v)');
+        $__proc($index, $v);
     }
 
     /**
@@ -6431,29 +6002,17 @@ class GL20 extends GL15
      * @see http://docs.gl/gl2/glVertexAttrib
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $index
-     * @param int|\FFI\CData|\FFI\CInt $x
-     * @param int|\FFI\CData|\FFI\CInt $y
-     * @param int|\FFI\CData|\FFI\CInt $z
-     * @param int|\FFI\CData|\FFI\CInt $w
+     * @param int $index
+     * @param int $x
+     * @param int $y
+     * @param int $z
+     * @param int $w
      * @return void
      */
-    public function vertexAttrib4s($index, $x, $y, $z, $w): void
+    public function vertexAttrib4s(int $index, int $x, int $y, int $z, int $w): void
     {
-        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
-        $x = $x instanceof \FFI\CData ? $x->cdata : $x;
-        $y = $y instanceof \FFI\CData ? $y->cdata : $y;
-        $z = $z instanceof \FFI\CData ? $z->cdata : $z;
-        $w = $w instanceof \FFI\CData ? $w->cdata : $w;
-
-        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isInt16($x), 'Argument $x must be a C-like GLshort, but incompatible or overflow value given');
-        assert(Type::isInt16($y), 'Argument $y must be a C-like GLshort, but incompatible or overflow value given');
-        assert(Type::isInt16($z), 'Argument $z must be a C-like GLshort, but incompatible or overflow value given');
-        assert(Type::isInt16($w), 'Argument $w must be a C-like GLshort, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glVertexAttrib4s', 'void (*)(GLuint index, GLshort x, GLshort y, GLshort z, GLshort w)');
-        $proc($index, $x, $y, $z, $w);
+        $__proc = $this->getProcAs('glVertexAttrib4s', 'void (*)(GLuint index, GLshort x, GLshort y, GLshort z, GLshort w)');
+        $__proc($index, $x, $y, $z, $w);
     }
 
     /**
@@ -6521,18 +6080,14 @@ class GL20 extends GL15
      * @see http://docs.gl/gl2/glVertexAttrib
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $index
-     * @param \FFI\CData|\FFI\CIntPtr|null $v
+     * @param int $index
+     * @param \FFI\CData|null $v
      * @return void
      */
-    public function vertexAttrib4sv($index, ?\FFI\CData $v): void
+    public function vertexAttrib4sv(int $index, ?\FFI\CData $v): void
     {
-        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
-
-        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glVertexAttrib4sv', 'void (*)(GLuint index, const GLshort *v)');
-        $proc($index, $v);
+        $__proc = $this->getProcAs('glVertexAttrib4sv', 'void (*)(GLuint index, const GLshort *v)');
+        $__proc($index, $v);
     }
 
     /**
@@ -6600,18 +6155,14 @@ class GL20 extends GL15
      * @see http://docs.gl/gl2/glVertexAttrib
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $index
-     * @param \FFI\CData|\FFI\CIntPtr|null $v
+     * @param int $index
+     * @param \FFI\CData|null $v
      * @return void
      */
-    public function vertexAttrib4ubv($index, ?\FFI\CData $v): void
+    public function vertexAttrib4ubv(int $index, ?\FFI\CData $v): void
     {
-        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
-
-        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glVertexAttrib4ubv', 'void (*)(GLuint index, const GLubyte *v)');
-        $proc($index, $v);
+        $__proc = $this->getProcAs('glVertexAttrib4ubv', 'void (*)(GLuint index, const GLubyte *v)');
+        $__proc($index, $v);
     }
 
     /**
@@ -6679,18 +6230,14 @@ class GL20 extends GL15
      * @see http://docs.gl/gl2/glVertexAttrib
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $index
-     * @param \FFI\CData|\FFI\CIntPtr|null $v
+     * @param int $index
+     * @param \FFI\CData|null $v
      * @return void
      */
-    public function vertexAttrib4uiv($index, ?\FFI\CData $v): void
+    public function vertexAttrib4uiv(int $index, ?\FFI\CData $v): void
     {
-        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
-
-        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glVertexAttrib4uiv', 'void (*)(GLuint index, const GLuint *v)');
-        $proc($index, $v);
+        $__proc = $this->getProcAs('glVertexAttrib4uiv', 'void (*)(GLuint index, const GLuint *v)');
+        $__proc($index, $v);
     }
 
     /**
@@ -6758,18 +6305,14 @@ class GL20 extends GL15
      * @see http://docs.gl/gl2/glVertexAttrib
      * @see http://docs.gl/gl4/glVertexAttrib
      * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $index
-     * @param \FFI\CData|\FFI\CIntPtr|null $v
+     * @param int $index
+     * @param \FFI\CData|null $v
      * @return void
      */
-    public function vertexAttrib4usv($index, ?\FFI\CData $v): void
+    public function vertexAttrib4usv(int $index, ?\FFI\CData $v): void
     {
-        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
-
-        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glVertexAttrib4usv', 'void (*)(GLuint index, const GLushort *v)');
-        $proc($index, $v);
+        $__proc = $this->getProcAs('glVertexAttrib4usv', 'void (*)(GLuint index, const GLushort *v)');
+        $__proc($index, $v);
     }
 
     /**
@@ -6810,29 +6353,17 @@ class GL20 extends GL15
      * @see http://docs.gl/gl2/glVertexAttribPointer
      * @see http://docs.gl/gl4/glVertexAttribPointer
      * @since 2.0
-     * @param int|\FFI\CData|\FFI\CInt $index
-     * @param int|\FFI\CData|\FFI\CInt $size
-     * @param int|\FFI\CData|\FFI\CInt $type
-     * @param int|\FFI\CData|\FFI\CInt $normalized
-     * @param int|\FFI\CData|\FFI\CInt $stride
-     * @param \FFI\CData|\FFI\CPtr|null $pointer
+     * @param int $index
+     * @param int $size
+     * @param int $type
+     * @param int $normalized
+     * @param int $stride
+     * @param \FFI\CData|null $pointer
      * @return void
      */
-    public function vertexAttribPointer($index, $size, $type, $normalized, $stride, ?\FFI\CData $pointer): void
+    public function vertexAttribPointer(int $index, int $size, int $type, int $normalized, int $stride, ?\FFI\CData $pointer): void
     {
-        $index = $index instanceof \FFI\CData ? $index->cdata : $index;
-        $size = $size instanceof \FFI\CData ? $size->cdata : $size;
-        $type = $type instanceof \FFI\CData ? $type->cdata : $type;
-        $normalized = $normalized instanceof \FFI\CData ? $normalized->cdata : $normalized;
-        $stride = $stride instanceof \FFI\CData ? $stride->cdata : $stride;
-
-        assert(Type::isUint16($index), 'Argument $index must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isInt16($size), 'Argument $size must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isUint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint8($normalized), 'Argument $normalized must be a C-like GLboolean, but incompatible or overflow value given');
-        assert(Type::isInt16($stride), 'Argument $stride must be a C-like GLsizei, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glVertexAttribPointer', 'void (*)(GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const void *pointer)');
-        $proc($index, $size, $type, $normalized, $stride, $pointer);
+        $__proc = $this->getProcAs('glVertexAttribPointer', 'void (*)(GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const void *pointer)');
+        $__proc($index, $size, $type, $normalized, $stride, $pointer);
     }
 }

@@ -13,589 +13,633 @@ declare(strict_types=1);
 
 namespace Serafim\OpenGL;
 
-use Serafim\OpenGL\Type\Type;
-
 /**
- * The OpenGL functionality up to version 4.2. Includes the deprecated symbols of the Compatibility Profile.
- *
- * OpenGL 4.2 implementations support revision 4.20 of the OpenGL Shading Language.
- *
- * Extensions promoted to core in this release:
- *
- * - ARB_texture_compression_bptc @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_texture_compression_bptc.txt
- * - ARB_compressed_texture_pixel_storage @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_compressed_texture_pixel_storage.txt
- * - ARB_shader_atomic_counters @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_shader_atomic_counters.txt
- * - ARB_texture_storage @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_texture_storage.txt
- * - ARB_transform_feedback_instanced @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_transform_feedback_instanced.txt
- * - ARB_base_instance @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_base_instance.txt
- * - ARB_shader_image_load_store @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_shader_image_load_store.txt
- * - ARB_conservative_depth @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_conservative_depth.txt
- * - ARB_shading_language_420pack @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_shading_language_420pack.txt
- * - ARB_internalformat_query @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_internalformat_query.txt
- * - ARB_map_buffer_alignment @see https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_map_buffer_alignment.txt
+ * @version 4.2
  */
 class GL42 extends GL41
 {
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
-    public const GL_COPY_READ_BUFFER_BINDING = 0x8f36;
+    public const GL_COPY_READ_BUFFER_BINDING = 0x8F36;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
-    public const GL_COPY_WRITE_BUFFER_BINDING = 0x8f37;
+    public const GL_COPY_WRITE_BUFFER_BINDING = 0x8F37;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
-    public const GL_TRANSFORM_FEEDBACK_ACTIVE = 0x8e24;
+    public const GL_TRANSFORM_FEEDBACK_ACTIVE = 0x8E24;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
-    public const GL_TRANSFORM_FEEDBACK_PAUSED = 0x8e23;
+    public const GL_TRANSFORM_FEEDBACK_PAUSED = 0x8E23;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
     public const GL_UNPACK_COMPRESSED_BLOCK_WIDTH = 0x9127;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
     public const GL_UNPACK_COMPRESSED_BLOCK_HEIGHT = 0x9128;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
     public const GL_UNPACK_COMPRESSED_BLOCK_DEPTH = 0x9129;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
-    public const GL_UNPACK_COMPRESSED_BLOCK_SIZE = 0x912a;
+    public const GL_UNPACK_COMPRESSED_BLOCK_SIZE = 0x912A;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
-    public const GL_PACK_COMPRESSED_BLOCK_WIDTH = 0x912b;
+    public const GL_PACK_COMPRESSED_BLOCK_WIDTH = 0x912B;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
-    public const GL_PACK_COMPRESSED_BLOCK_HEIGHT = 0x912c;
+    public const GL_PACK_COMPRESSED_BLOCK_HEIGHT = 0x912C;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
-    public const GL_PACK_COMPRESSED_BLOCK_DEPTH = 0x912d;
+    public const GL_PACK_COMPRESSED_BLOCK_DEPTH = 0x912D;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
-    public const GL_PACK_COMPRESSED_BLOCK_SIZE = 0x912e;
+    public const GL_PACK_COMPRESSED_BLOCK_SIZE = 0x912E;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
     public const GL_NUM_SAMPLE_COUNTS = 0x9380;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
-    public const GL_MIN_MAP_BUFFER_ALIGNMENT = 0x90bc;
+    public const GL_MIN_MAP_BUFFER_ALIGNMENT = 0x90BC;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
-    public const GL_ATOMIC_COUNTER_BUFFER = 0x92c0;
+    public const GL_ATOMIC_COUNTER_BUFFER = 0x92C0;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
-    public const GL_ATOMIC_COUNTER_BUFFER_BINDING = 0x92c1;
+    public const GL_ATOMIC_COUNTER_BUFFER_BINDING = 0x92C1;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
-    public const GL_ATOMIC_COUNTER_BUFFER_START = 0x92c2;
+    public const GL_ATOMIC_COUNTER_BUFFER_START = 0x92C2;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
-    public const GL_ATOMIC_COUNTER_BUFFER_SIZE = 0x92c3;
+    public const GL_ATOMIC_COUNTER_BUFFER_SIZE = 0x92C3;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
-    public const GL_ATOMIC_COUNTER_BUFFER_DATA_SIZE = 0x92c4;
+    public const GL_ATOMIC_COUNTER_BUFFER_DATA_SIZE = 0x92C4;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
-    public const GL_ATOMIC_COUNTER_BUFFER_ACTIVE_ATOMIC_COUNTERS = 0x92c5;
+    public const GL_ATOMIC_COUNTER_BUFFER_ACTIVE_ATOMIC_COUNTERS = 0x92C5;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
-    public const GL_ATOMIC_COUNTER_BUFFER_ACTIVE_ATOMIC_COUNTER_INDICES = 0x92c6;
+    public const GL_ATOMIC_COUNTER_BUFFER_ACTIVE_ATOMIC_COUNTER_INDICES = 0x92C6;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
-    public const GL_ATOMIC_COUNTER_BUFFER_REFERENCED_BY_VERTEX_SHADER = 0x92c7;
+    public const GL_ATOMIC_COUNTER_BUFFER_REFERENCED_BY_VERTEX_SHADER = 0x92C7;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
-    public const GL_ATOMIC_COUNTER_BUFFER_REFERENCED_BY_TESS_CONTROL_SHADER = 0x92c8;
+    public const GL_ATOMIC_COUNTER_BUFFER_REFERENCED_BY_TESS_CONTROL_SHADER = 0x92C8;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
-    public const GL_ATOMIC_COUNTER_BUFFER_REFERENCED_BY_TESS_EVALUATION_SHADER = 0x92c9;
+    public const GL_ATOMIC_COUNTER_BUFFER_REFERENCED_BY_TESS_EVALUATION_SHADER = 0x92C9;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
-    public const GL_ATOMIC_COUNTER_BUFFER_REFERENCED_BY_GEOMETRY_SHADER = 0x92ca;
+    public const GL_ATOMIC_COUNTER_BUFFER_REFERENCED_BY_GEOMETRY_SHADER = 0x92CA;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
-    public const GL_ATOMIC_COUNTER_BUFFER_REFERENCED_BY_FRAGMENT_SHADER = 0x92cb;
+    public const GL_ATOMIC_COUNTER_BUFFER_REFERENCED_BY_FRAGMENT_SHADER = 0x92CB;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
-    public const GL_MAX_VERTEX_ATOMIC_COUNTER_BUFFERS = 0x92cc;
+    public const GL_MAX_VERTEX_ATOMIC_COUNTER_BUFFERS = 0x92CC;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
-    public const GL_MAX_TESS_CONTROL_ATOMIC_COUNTER_BUFFERS = 0x92cd;
+    public const GL_MAX_TESS_CONTROL_ATOMIC_COUNTER_BUFFERS = 0x92CD;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
-    public const GL_MAX_TESS_EVALUATION_ATOMIC_COUNTER_BUFFERS = 0x92ce;
+    public const GL_MAX_TESS_EVALUATION_ATOMIC_COUNTER_BUFFERS = 0x92CE;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
-    public const GL_MAX_GEOMETRY_ATOMIC_COUNTER_BUFFERS = 0x92cf;
+    public const GL_MAX_GEOMETRY_ATOMIC_COUNTER_BUFFERS = 0x92CF;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
-    public const GL_MAX_FRAGMENT_ATOMIC_COUNTER_BUFFERS = 0x92d0;
+    public const GL_MAX_FRAGMENT_ATOMIC_COUNTER_BUFFERS = 0x92D0;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
-    public const GL_MAX_COMBINED_ATOMIC_COUNTER_BUFFERS = 0x92d1;
+    public const GL_MAX_COMBINED_ATOMIC_COUNTER_BUFFERS = 0x92D1;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
-    public const GL_MAX_VERTEX_ATOMIC_COUNTERS = 0x92d2;
+    public const GL_MAX_VERTEX_ATOMIC_COUNTERS = 0x92D2;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
-    public const GL_MAX_TESS_CONTROL_ATOMIC_COUNTERS = 0x92d3;
+    public const GL_MAX_TESS_CONTROL_ATOMIC_COUNTERS = 0x92D3;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
-    public const GL_MAX_TESS_EVALUATION_ATOMIC_COUNTERS = 0x92d4;
+    public const GL_MAX_TESS_EVALUATION_ATOMIC_COUNTERS = 0x92D4;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
-    public const GL_MAX_GEOMETRY_ATOMIC_COUNTERS = 0x92d5;
+    public const GL_MAX_GEOMETRY_ATOMIC_COUNTERS = 0x92D5;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
-    public const GL_MAX_FRAGMENT_ATOMIC_COUNTERS = 0x92d6;
+    public const GL_MAX_FRAGMENT_ATOMIC_COUNTERS = 0x92D6;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
-    public const GL_MAX_COMBINED_ATOMIC_COUNTERS = 0x92d7;
+    public const GL_MAX_COMBINED_ATOMIC_COUNTERS = 0x92D7;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
-    public const GL_MAX_ATOMIC_COUNTER_BUFFER_SIZE = 0x92d8;
+    public const GL_MAX_ATOMIC_COUNTER_BUFFER_SIZE = 0x92D8;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
-    public const GL_MAX_ATOMIC_COUNTER_BUFFER_BINDINGS = 0x92dc;
+    public const GL_MAX_ATOMIC_COUNTER_BUFFER_BINDINGS = 0x92DC;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
-    public const GL_ACTIVE_ATOMIC_COUNTER_BUFFERS = 0x92d9;
+    public const GL_ACTIVE_ATOMIC_COUNTER_BUFFERS = 0x92D9;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
-    public const GL_UNIFORM_ATOMIC_COUNTER_BUFFER_INDEX = 0x92da;
+    public const GL_UNIFORM_ATOMIC_COUNTER_BUFFER_INDEX = 0x92DA;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
-    public const GL_UNSIGNED_INT_ATOMIC_COUNTER = 0x92db;
+    public const GL_UNSIGNED_INT_ATOMIC_COUNTER = 0x92DB;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
     public const GL_VERTEX_ATTRIB_ARRAY_BARRIER_BIT = 0x0001;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
     public const GL_ELEMENT_ARRAY_BARRIER_BIT = 0x0002;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
     public const GL_UNIFORM_BARRIER_BIT = 0x0004;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
     public const GL_TEXTURE_FETCH_BARRIER_BIT = 0x0008;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
     public const GL_SHADER_IMAGE_ACCESS_BARRIER_BIT = 0x0020;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
     public const GL_COMMAND_BARRIER_BIT = 0x0040;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
     public const GL_PIXEL_BUFFER_BARRIER_BIT = 0x0080;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
     public const GL_TEXTURE_UPDATE_BARRIER_BIT = 0x0100;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
     public const GL_BUFFER_UPDATE_BARRIER_BIT = 0x0200;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
     public const GL_FRAMEBUFFER_BARRIER_BIT = 0x0400;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
     public const GL_TRANSFORM_FEEDBACK_BARRIER_BIT = 0x0800;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
     public const GL_ATOMIC_COUNTER_BARRIER_BIT = 0x1000;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
-    public const GL_ALL_BARRIER_BITS = 0xffffffff;
+    public const GL_ALL_BARRIER_BITS = 0xFFFF_FFFF;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
-    public const GL_MAX_IMAGE_UNITS = 0x8f38;
+    public const GL_MAX_IMAGE_UNITS = 0x8F38;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
-    public const GL_MAX_COMBINED_IMAGE_UNITS_AND_FRAGMENT_OUTPUTS = 0x8f39;
+    public const GL_MAX_COMBINED_IMAGE_UNITS_AND_FRAGMENT_OUTPUTS = 0x8F39;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
-    public const GL_IMAGE_BINDING_NAME = 0x8f3a;
+    public const GL_IMAGE_BINDING_NAME = 0x8F3A;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
-    public const GL_IMAGE_BINDING_LEVEL = 0x8f3b;
+    public const GL_IMAGE_BINDING_LEVEL = 0x8F3B;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
-    public const GL_IMAGE_BINDING_LAYERED = 0x8f3c;
+    public const GL_IMAGE_BINDING_LAYERED = 0x8F3C;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
-    public const GL_IMAGE_BINDING_LAYER = 0x8f3d;
+    public const GL_IMAGE_BINDING_LAYER = 0x8F3D;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
-    public const GL_IMAGE_BINDING_ACCESS = 0x8f3e;
+    public const GL_IMAGE_BINDING_ACCESS = 0x8F3E;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
-    public const GL_IMAGE_1D = 0x904c;
+    public const GL_IMAGE_1D = 0x904C;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
-    public const GL_IMAGE_2D = 0x904d;
+    public const GL_IMAGE_2D = 0x904D;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
-    public const GL_IMAGE_3D = 0x904e;
+    public const GL_IMAGE_3D = 0x904E;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
-    public const GL_IMAGE_2D_RECT = 0x904f;
+    public const GL_IMAGE_2D_RECT = 0x904F;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
     public const GL_IMAGE_CUBE = 0x9050;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
     public const GL_IMAGE_BUFFER = 0x9051;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
     public const GL_IMAGE_1D_ARRAY = 0x9052;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
     public const GL_IMAGE_2D_ARRAY = 0x9053;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
     public const GL_IMAGE_CUBE_MAP_ARRAY = 0x9054;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
     public const GL_IMAGE_2D_MULTISAMPLE = 0x9055;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
     public const GL_IMAGE_2D_MULTISAMPLE_ARRAY = 0x9056;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
     public const GL_INT_IMAGE_1D = 0x9057;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
     public const GL_INT_IMAGE_2D = 0x9058;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
     public const GL_INT_IMAGE_3D = 0x9059;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
-    public const GL_INT_IMAGE_2D_RECT = 0x905a;
+    public const GL_INT_IMAGE_2D_RECT = 0x905A;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
-    public const GL_INT_IMAGE_CUBE = 0x905b;
+    public const GL_INT_IMAGE_CUBE = 0x905B;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
-    public const GL_INT_IMAGE_BUFFER = 0x905c;
+    public const GL_INT_IMAGE_BUFFER = 0x905C;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
-    public const GL_INT_IMAGE_1D_ARRAY = 0x905d;
+    public const GL_INT_IMAGE_1D_ARRAY = 0x905D;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
-    public const GL_INT_IMAGE_2D_ARRAY = 0x905e;
+    public const GL_INT_IMAGE_2D_ARRAY = 0x905E;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
-    public const GL_INT_IMAGE_CUBE_MAP_ARRAY = 0x905f;
+    public const GL_INT_IMAGE_CUBE_MAP_ARRAY = 0x905F;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
     public const GL_INT_IMAGE_2D_MULTISAMPLE = 0x9060;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
     public const GL_INT_IMAGE_2D_MULTISAMPLE_ARRAY = 0x9061;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
     public const GL_UNSIGNED_INT_IMAGE_1D = 0x9062;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
     public const GL_UNSIGNED_INT_IMAGE_2D = 0x9063;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
     public const GL_UNSIGNED_INT_IMAGE_3D = 0x9064;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
     public const GL_UNSIGNED_INT_IMAGE_2D_RECT = 0x9065;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
     public const GL_UNSIGNED_INT_IMAGE_CUBE = 0x9066;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
     public const GL_UNSIGNED_INT_IMAGE_BUFFER = 0x9067;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
     public const GL_UNSIGNED_INT_IMAGE_1D_ARRAY = 0x9068;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
     public const GL_UNSIGNED_INT_IMAGE_2D_ARRAY = 0x9069;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
-    public const GL_UNSIGNED_INT_IMAGE_CUBE_MAP_ARRAY = 0x906a;
+    public const GL_UNSIGNED_INT_IMAGE_CUBE_MAP_ARRAY = 0x906A;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
-    public const GL_UNSIGNED_INT_IMAGE_2D_MULTISAMPLE = 0x906b;
+    public const GL_UNSIGNED_INT_IMAGE_2D_MULTISAMPLE = 0x906B;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
-    public const GL_UNSIGNED_INT_IMAGE_2D_MULTISAMPLE_ARRAY = 0x906c;
+    public const GL_UNSIGNED_INT_IMAGE_2D_MULTISAMPLE_ARRAY = 0x906C;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
-    public const GL_MAX_IMAGE_SAMPLES = 0x906d;
+    public const GL_MAX_IMAGE_SAMPLES = 0x906D;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
-    public const GL_IMAGE_BINDING_FORMAT = 0x906e;
+    public const GL_IMAGE_BINDING_FORMAT = 0x906E;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
-    public const GL_IMAGE_FORMAT_COMPATIBILITY_TYPE = 0x90c7;
+    public const GL_IMAGE_FORMAT_COMPATIBILITY_TYPE = 0x90C7;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
-    public const GL_IMAGE_FORMAT_COMPATIBILITY_BY_SIZE = 0x90c8;
+    public const GL_IMAGE_FORMAT_COMPATIBILITY_BY_SIZE = 0x90C8;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
-    public const GL_IMAGE_FORMAT_COMPATIBILITY_BY_CLASS = 0x90c9;
+    public const GL_IMAGE_FORMAT_COMPATIBILITY_BY_CLASS = 0x90C9;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
-    public const GL_MAX_VERTEX_IMAGE_UNIFORMS = 0x90ca;
+    public const GL_MAX_VERTEX_IMAGE_UNIFORMS = 0x90CA;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
-    public const GL_MAX_TESS_CONTROL_IMAGE_UNIFORMS = 0x90cb;
+    public const GL_MAX_TESS_CONTROL_IMAGE_UNIFORMS = 0x90CB;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
-    public const GL_MAX_TESS_EVALUATION_IMAGE_UNIFORMS = 0x90cc;
+    public const GL_MAX_TESS_EVALUATION_IMAGE_UNIFORMS = 0x90CC;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
-    public const GL_MAX_GEOMETRY_IMAGE_UNIFORMS = 0x90cd;
+    public const GL_MAX_GEOMETRY_IMAGE_UNIFORMS = 0x90CD;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
-    public const GL_MAX_FRAGMENT_IMAGE_UNIFORMS = 0x90ce;
+    public const GL_MAX_FRAGMENT_IMAGE_UNIFORMS = 0x90CE;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
-    public const GL_MAX_COMBINED_IMAGE_UNIFORMS = 0x90cf;
+    public const GL_MAX_COMBINED_IMAGE_UNIFORMS = 0x90CF;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
-    public const GL_COMPRESSED_RGBA_BPTC_UNORM = 0x8e8c;
+    public const GL_COMPRESSED_RGBA_BPTC_UNORM = 0x8E8C;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
-    public const GL_COMPRESSED_SRGB_ALPHA_BPTC_UNORM = 0x8e8d;
+    public const GL_COMPRESSED_SRGB_ALPHA_BPTC_UNORM = 0x8E8D;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
-    public const GL_COMPRESSED_RGB_BPTC_SIGNED_FLOAT = 0x8e8e;
+    public const GL_COMPRESSED_RGB_BPTC_SIGNED_FLOAT = 0x8E8E;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
-    public const GL_COMPRESSED_RGB_BPTC_UNSIGNED_FLOAT = 0x8e8f;
+    public const GL_COMPRESSED_RGB_BPTC_UNSIGNED_FLOAT = 0x8E8F;
     /**
-     * @var int
      * @since 4.2
+     * @var int
      */
-    public const GL_TEXTURE_IMMUTABLE_FORMAT = 0x912f;
+    public const GL_TEXTURE_IMMUTABLE_FORMAT = 0x912F;
+
+    /**
+     * {@see GL46::glBindImageTexture} binds a single level of a texture to an image unit for the purpose of reading
+     * and writing it from shaders. $unit specifies the zero-based index of the image unit to which to bind the
+     * texture level. $texture specifies the name of an existing texture object to bind to the image unit. If
+     * $texture is zero, then any existing binding to the image unit is broken. $level specifies the level of the
+     * texture to bind to the image unit.
+     *
+     * If $texture is the name of a one-, two-, or three-dimensional array texture, a cube map or cube map array
+     * texture, or a two-dimensional multisample array texture, then it is possible to bind either the entire array,
+     * or only a single layer of the array to the image unit. In such cases, if $layered is {@see GL46::GL_TRUE}, the
+     * entire array is attached to the image unit and $layer is ignored. However, if $layered is
+     * {@see GL46::GL_FALSE} then $layer specifies the layer of the array to attach to the image unit.
+     *
+     * $access specifies the access types to be performed by shaders and may be set to {@see GL46::GL_READ_ONLY},
+     * {@see GL46::GL_WRITE_ONLY}, or {@see GL46::GL_READ_WRITE} to indicate read-only, write-only or read-write
+     * access, respectively. Violation of the access type specified in $access (for example, if a shader writes to an
+     * image bound with $access set to {@see GL46::GL_READ_ONLY}) will lead to undefined results, possibly including
+     * program termination.
+     *
+     * $format specifies the format that is to be used when performing formatted stores into the image from shaders.
+     * $format must be compatible with the texture's internal format and must be one of the formats listed in the
+     * following table.
+     *
+     *  Internal Image Formats        Image Unit Format     Format Qualifier       {@see GL46::GL_RGBA32F} `rgba32f`
+     *  {@see GL46::GL_RGBA16F} `rgba16f`   {@see GL46::GL_RG32F} `rg32f`   {@see GL46::GL_RG16F} `rg16f`
+     * {@see GL46::GL_R11F_G11F_B10F} `r11f_g11f_b10f`   {@see GL46::GL_R32F} `r32f`   {@see GL46::GL_R16F} `r16f`
+     * {@see GL46::GL_RGBA32UI} `rgba32ui`   {@see GL46::GL_RGBA16UI} `rgba16ui`   {@see GL46::GL_RGB10_A2UI}
+     * `rgb10_a2ui`   {@see GL46::GL_RGBA8UI} `rgba8ui`   {@see GL46::GL_RG32UI} `rg32ui`   {@see GL46::GL_RG16UI}
+     * `rg16ui`   {@see GL46::GL_RG8UI} `rg8ui`   {@see GL46::GL_R32UI} `r32ui`   {@see GL46::GL_R16UI} `r16ui`
+     * {@see GL46::GL_R8UI} `r8ui`   {@see GL46::GL_RGBA32I} `rgba32i`   {@see GL46::GL_RGBA16I} `rgba16i`
+     * {@see GL46::GL_RGBA8I} `rgba8i`   {@see GL46::GL_RG32I} `rg32i`   {@see GL46::GL_RG16I} `rg16i`
+     * {@see GL46::GL_RG8I} `rg8i`   {@see GL46::GL_R32I} `r32i`   {@see GL46::GL_R16I} `r16i`   {@see GL46::GL_R8I}
+     * `r8i`   {@see GL46::GL_RGBA16} `rgba16`   {@see GL46::GL_RGB10_A2} `rgb10_a2`   {@see GL46::GL_RGBA8} `rgba8`
+     *  {@see GL46::GL_RG16} `rg16`   {@see GL46::GL_RG8} `rg8`   {@see GL46::GL_R16} `r16`   {@see GL46::GL_R8} `r8`
+     *   {@see GL46::GL_RGBA16_SNORM} `rgba16_snorm`   {@see GL46::GL_RGBA8_SNORM} `rgba8_snorm`
+     * {@see GL46::GL_RG16_SNORM} `rg16_snorm`   {@see GL46::GL_RG8_SNORM} `rg8_snorm`   {@see GL46::GL_R16_SNORM}
+     * `r16_snorm`   {@see GL46::GL_R8_SNORM} `r8_snorm`
+     *
+     * When a texture is bound to an image unit, the $format parameter for the image unit need not exactly match the
+     * texture internal format as long as the formats are considered compatible as defined in the OpenGL
+     * Specification. The matching criterion used for a given texture may be determined by calling
+     * {@see GL46::glGetTexParameter} with $value set to {@see GL46::GL_IMAGE_FORMAT_COMPATIBILITY_TYPE}, with return
+     * values of {@see GL46::GL_IMAGE_FORMAT_COMPATIBILITY_BY_SIZE} and
+     * {@see GL46::GL_IMAGE_FORMAT_COMPATIBILITY_BY_CLASS}, specifying matches by size and class, respectively.
+     *
+     * @see http://docs.gl/gl4/glBindImageTexture
+     * @since 4.2
+     * @param int $unit
+     * @param int $texture
+     * @param int $level
+     * @param int $layered
+     * @param int $layer
+     * @param int $access
+     * @param int $format
+     * @return void
+     */
+    public function bindImageTexture(int $unit, int $texture, int $level, int $layered, int $layer, int $access, int $format): void
+    {
+        $__proc = $this->getProcAs('glBindImageTexture', 'void (*)(GLuint unit, GLuint texture, GLint level, GLboolean layered, GLint layer, GLenum access, GLenum format)');
+        $__proc($unit, $texture, $level, $layered, $layer, $access, $format);
+    }
 
     /**
      * {@see GL46::glDrawArraysInstancedBaseInstance} behaves identically to {@see GL46::glDrawArrays} except that
@@ -625,29 +669,17 @@ class GL42 extends GL41
      *
      * @see http://docs.gl/gl4/glDrawArraysInstancedBaseInstance
      * @since 4.2
-     * @param int|\FFI\CData|\FFI\CInt $mode
-     * @param int|\FFI\CData|\FFI\CInt $first
-     * @param int|\FFI\CData|\FFI\CInt $count
-     * @param int|\FFI\CData|\FFI\CInt $instancecount
-     * @param int|\FFI\CData|\FFI\CInt $baseinstance
+     * @param int $mode
+     * @param int $first
+     * @param int $count
+     * @param int $instancecount
+     * @param int $baseinstance
      * @return void
      */
-    public function drawArraysInstancedBaseInstance($mode, $first, $count, $instancecount, $baseinstance): void
+    public function drawArraysInstancedBaseInstance(int $mode, int $first, int $count, int $instancecount, int $baseinstance): void
     {
-        $mode = $mode instanceof \FFI\CData ? $mode->cdata : $mode;
-        $first = $first instanceof \FFI\CData ? $first->cdata : $first;
-        $count = $count instanceof \FFI\CData ? $count->cdata : $count;
-        $instancecount = $instancecount instanceof \FFI\CData ? $instancecount->cdata : $instancecount;
-        $baseinstance = $baseinstance instanceof \FFI\CData ? $baseinstance->cdata : $baseinstance;
-
-        assert(Type::isUint16($mode), 'Argument $mode must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isInt16($first), 'Argument $first must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isInt16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Type::isInt16($instancecount), 'Argument $instancecount must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Type::isUint16($baseinstance), 'Argument $baseinstance must be a C-like GLuint, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glDrawArraysInstancedBaseInstance', 'void (*)(GLenum mode, GLint first, GLsizei count, GLsizei instancecount, GLuint baseinstance)');
-        $proc($mode, $first, $count, $instancecount, $baseinstance);
+        $__proc = $this->getProcAs('glDrawArraysInstancedBaseInstance', 'void (*)(GLenum mode, GLint first, GLsizei count, GLsizei instancecount, GLuint baseinstance)');
+        $__proc($mode, $first, $count, $instancecount, $baseinstance);
     }
 
     /**
@@ -678,30 +710,18 @@ class GL42 extends GL41
      *
      * @see http://docs.gl/gl4/glDrawElementsInstancedBaseInstance
      * @since 4.2
-     * @param int|\FFI\CData|\FFI\CInt $mode
-     * @param int|\FFI\CData|\FFI\CInt $count
-     * @param int|\FFI\CData|\FFI\CInt $type
-     * @param \FFI\CData|\FFI\CPtr|null $indices
-     * @param int|\FFI\CData|\FFI\CInt $instancecount
-     * @param int|\FFI\CData|\FFI\CInt $baseinstance
+     * @param int $mode
+     * @param int $count
+     * @param int $type
+     * @param \FFI\CData|null $indices
+     * @param int $instancecount
+     * @param int $baseinstance
      * @return void
      */
-    public function drawElementsInstancedBaseInstance($mode, $count, $type, ?\FFI\CData $indices, $instancecount, $baseinstance): void
+    public function drawElementsInstancedBaseInstance(int $mode, int $count, int $type, ?\FFI\CData $indices, int $instancecount, int $baseinstance): void
     {
-        $mode = $mode instanceof \FFI\CData ? $mode->cdata : $mode;
-        $count = $count instanceof \FFI\CData ? $count->cdata : $count;
-        $type = $type instanceof \FFI\CData ? $type->cdata : $type;
-        $instancecount = $instancecount instanceof \FFI\CData ? $instancecount->cdata : $instancecount;
-        $baseinstance = $baseinstance instanceof \FFI\CData ? $baseinstance->cdata : $baseinstance;
-
-        assert(Type::isUint16($mode), 'Argument $mode must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isInt16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Type::isUint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isInt16($instancecount), 'Argument $instancecount must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Type::isUint16($baseinstance), 'Argument $baseinstance must be a C-like GLuint, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glDrawElementsInstancedBaseInstance', 'void (*)(GLenum mode, GLsizei count, GLenum type, const void *indices, GLsizei instancecount, GLuint baseinstance)');
-        $proc($mode, $count, $type, $indices, $instancecount, $baseinstance);
+        $__proc = $this->getProcAs('glDrawElementsInstancedBaseInstance', 'void (*)(GLenum mode, GLsizei count, GLenum type, const void *indices, GLsizei instancecount, GLuint baseinstance)');
+        $__proc($mode, $count, $type, $indices, $instancecount, $baseinstance);
     }
 
     /**
@@ -719,33 +739,127 @@ class GL42 extends GL41
      *
      * @see http://docs.gl/gl4/glDrawElementsInstancedBaseVertexBaseInstance
      * @since 4.2
-     * @param int|\FFI\CData|\FFI\CInt $mode
-     * @param int|\FFI\CData|\FFI\CInt $count
-     * @param int|\FFI\CData|\FFI\CInt $type
-     * @param \FFI\CData|\FFI\CPtr|null $indices
-     * @param int|\FFI\CData|\FFI\CInt $instancecount
-     * @param int|\FFI\CData|\FFI\CInt $basevertex
-     * @param int|\FFI\CData|\FFI\CInt $baseinstance
+     * @param int $mode
+     * @param int $count
+     * @param int $type
+     * @param \FFI\CData|null $indices
+     * @param int $instancecount
+     * @param int $basevertex
+     * @param int $baseinstance
      * @return void
      */
-    public function drawElementsInstancedBaseVertexBaseInstance($mode, $count, $type, ?\FFI\CData $indices, $instancecount, $basevertex, $baseinstance): void
+    public function drawElementsInstancedBaseVertexBaseInstance(int $mode, int $count, int $type, ?\FFI\CData $indices, int $instancecount, int $basevertex, int $baseinstance): void
     {
-        $mode = $mode instanceof \FFI\CData ? $mode->cdata : $mode;
-        $count = $count instanceof \FFI\CData ? $count->cdata : $count;
-        $type = $type instanceof \FFI\CData ? $type->cdata : $type;
-        $instancecount = $instancecount instanceof \FFI\CData ? $instancecount->cdata : $instancecount;
-        $basevertex = $basevertex instanceof \FFI\CData ? $basevertex->cdata : $basevertex;
-        $baseinstance = $baseinstance instanceof \FFI\CData ? $baseinstance->cdata : $baseinstance;
+        $__proc = $this->getProcAs('glDrawElementsInstancedBaseVertexBaseInstance', 'void (*)(GLenum mode, GLsizei count, GLenum type, const void *indices, GLsizei instancecount, GLint basevertex, GLuint baseinstance)');
+        $__proc($mode, $count, $type, $indices, $instancecount, $basevertex, $baseinstance);
+    }
 
-        assert(Type::isUint16($mode), 'Argument $mode must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isInt16($count), 'Argument $count must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Type::isUint16($type), 'Argument $type must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isInt16($instancecount), 'Argument $instancecount must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Type::isInt16($basevertex), 'Argument $basevertex must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isUint16($baseinstance), 'Argument $baseinstance must be a C-like GLuint, but incompatible or overflow value given');
+    /**
+     * {@see GL46::glDrawTransformFeedbackInstanced} draws multiple copies of a range of primitives of a type
+     * specified by $mode using a count retrieved from the transform feedback stream specified by $stream of the
+     * transform feedback object specified by $id. Calling {@see GL46::glDrawTransformFeedbackInstanced} is
+     * equivalent to calling {@see GL46::glDrawArraysInstanced} with $mode and $instancecount as specified, $first
+     * set to zero, and $count set to the number of vertices captured on vertex stream zero the last time transform
+     * feedback was active on the transform feedback object named by $id.
+     *
+     * Calling {@see GL46::glDrawTransformFeedbackInstanced} is equivalent to calling
+     * {@see GL46::glDrawTransformFeedbackStreamInstanced} with $stream set to zero.
+     *
+     * @see http://docs.gl/gl4/glDrawTransformFeedbackInstanced
+     * @since 4.2
+     * @param int $mode
+     * @param int $id
+     * @param int $instancecount
+     * @return void
+     */
+    public function drawTransformFeedbackInstanced(int $mode, int $id, int $instancecount): void
+    {
+        $__proc = $this->getProcAs('glDrawTransformFeedbackInstanced', 'void (*)(GLenum mode, GLuint id, GLsizei instancecount)');
+        $__proc($mode, $id, $instancecount);
+    }
 
-        $proc = $this->getProcAddress('glDrawElementsInstancedBaseVertexBaseInstance', 'void (*)(GLenum mode, GLsizei count, GLenum type, const void *indices, GLsizei instancecount, GLint basevertex, GLuint baseinstance)');
-        $proc($mode, $count, $type, $indices, $instancecount, $basevertex, $baseinstance);
+    /**
+     * {@see GL46::glDrawTransformFeedbackStreamInstanced} draws multiple copies of a range of primitives of a type
+     * specified by $mode using a count retrieved from the transform feedback stream specified by $stream of the
+     * transform feedback object specified by $id. Calling {@see GL46::glDrawTransformFeedbackStreamInstanced} is
+     * equivalent to calling {@see GL46::glDrawArraysInstanced} with $mode and $instancecount as specified, $first
+     * set to zero, and $count set to the number of vertices captured on vertex stream $stream the last time
+     * transform feedback was active on the transform feedback object named by $id.
+     *
+     * Calling {@see GL46::glDrawTransformFeedbackInstanced} is equivalent to calling
+     * {@see GL46::glDrawTransformFeedbackStreamInstanced} with $stream set to zero.
+     *
+     * @see http://docs.gl/gl4/glDrawTransformFeedbackStreamInstanced
+     * @since 4.2
+     * @param int $mode
+     * @param int $id
+     * @param int $stream
+     * @param int $instancecount
+     * @return void
+     */
+    public function drawTransformFeedbackStreamInstanced(int $mode, int $id, int $stream, int $instancecount): void
+    {
+        $__proc = $this->getProcAs('glDrawTransformFeedbackStreamInstanced', 'void (*)(GLenum mode, GLuint id, GLuint stream, GLsizei instancecount)');
+        $__proc($mode, $id, $stream, $instancecount);
+    }
+
+    /**
+     * {@see GL46::glGetActiveAtomicCounterBufferiv} retrieves information about the set of active atomic counter
+     * buffers for a program object. $program is the name of a program object for which the command
+     * {@see GL46::glLinkProgram} has been issued in the past. It is not necessary for $program to have been linked
+     * successfully. The link may have failed because the number of active atomic counters exceeded the limits.
+     *
+     * $bufferIndex specifies the index of an active atomic counter buffer and must be in the range zero to the value
+     * of {@see GL46::GL_ACTIVE_ATOMIC_COUNTER_BUFFERS} minus one. The value of
+     * {@see GL46::GL_ACTIVE_ATOMIC_COUNTER_BUFFERS} for $program indicates the number of active atomic counter
+     * buffer and can be queried with {@see GL46::glGetProgram}.
+     *
+     * If no error occurs, the parameter(s) specified by $pname are returned in $params. If an error is generated,
+     * the contents of $params are not modified.
+     *
+     * If $pname is {@see GL46::GL_ATOMIC_COUNTER_BUFFER_BINDING}, then the index of the counter buffer binding point
+     * associated with the active atomic counter buffer $bufferIndex for $program is returned.
+     *
+     * If $pname is {@see GL46::GL_ATOMIC_COUNTER_BUFFER_DATA_SIZE}, then the implementation-dependent minimum total
+     * buffer object size, in baseic machine units, required to hold all active atomic counters in the atomic counter
+     * binding point identified by $bufferIndex is returned.
+     *
+     * If $pname is {@see GL46::GL_ATOMIC_COUNTER_BUFFER_ACTIVE_ATOMIC_COUNTERS}, then the number of active atomic
+     * counters for the atomic counter buffer identified by $bufferIndex is returned.
+     *
+     * If $pname is {@see GL46::GL_ATOMIC_COUNTER_BUFFER_ACTIVE_ATOMIC_COUNTER_INDICES}, then a list of the active
+     * atomic counter indices for the atomic counter buffer identified by $bufferIndex is returned. The number of
+     * elements that will be written into $params is the value of
+     * {@see GL46::GL_ATOMIC_COUNTER_BUFFER_ACTIVE_ATOMIC_COUNTERS} for $bufferIndex.
+     *
+     * If $pname is {@see GL46::GL_ATOMIC_COUNTER_BUFFER_REFERENCED_BY_VERTEX_SHADER},
+     * {@see GL46::GL_ATOMIC_COUNTER_BUFFER_REFERENCED_BY_TESS_CONTROL_SHADER},
+     * {@see GL46::GL_ATOMIC_COUNTER_BUFFER_REFERENCED_BY_TESS_EVALUATION_SHADER},
+     * {@see GL46::GL_ATOMIC_COUNTER_BUFFER_REFERENCED_BY_GEOMETRY_SHADER},
+     * {@see GL46::GL_ATOMIC_COUNTER_BUFFER_REFERENCED_BY_FRAGMENT_SHADER},
+     * {@see GL46::GL_ATOMIC_COUNTER_BUFFER_REFERENCED_BY_COMPUTE_SHADER} then a boolean value indicating whether the
+     * atomic counter buffer identified by $bufferIndex is referenced by the vertex, tessellation control,
+     * tessellation evaluation, geometry, fragment or compute processing stages of $program, respectively, is
+     * returned.
+     *
+     * @see http://docs.gl/gl4/glGetActiveAtomicCounterBufferiv
+     * @since 4.2
+     * @param int $program
+     * @param int $bufferIndex
+     * @param int $pname
+     * @param int|null $params
+     * @return void
+     */
+    public function getActiveAtomicCounterBufferiv(int $program, int $bufferIndex, int $pname, ?int &$params): void
+    {
+        $paramsCType = $this->info->ffi->new('GLint', false);
+        try {
+            $__proc = $this->getProcAs('glGetActiveAtomicCounterBufferiv', 'void (*)(GLuint program, GLuint bufferIndex, GLenum pname, GLint *params)');
+            $__proc($program, $bufferIndex, $pname, \FFI::addr($paramsCType));
+        } finally {
+            $params = $paramsCType->cdata;
+            \FFI::free($paramsCType);
+        }
     }
 
     /**
@@ -966,166 +1080,23 @@ class GL42 extends GL41
      *
      * @see http://docs.gl/gl4/glGetInternalformat
      * @since 4.2
-     * @param int|\FFI\CData|\FFI\CInt $target
-     * @param int|\FFI\CData|\FFI\CInt $internalformat
-     * @param int|\FFI\CData|\FFI\CInt $pname
-     * @param int|\FFI\CData|\FFI\CInt $bufSize
-     * @param \FFI\CData|\FFI\CIntPtr|null $params
+     * @param int $target
+     * @param int $internalformat
+     * @param int $pname
+     * @param int $bufSize
+     * @param int|null $params
      * @return void
      */
-    public function getInternalformativ($target, $internalformat, $pname, $bufSize, ?\FFI\CData $params): void
+    public function getInternalformativ(int $target, int $internalformat, int $pname, int $bufSize, ?int &$params): void
     {
-        $target = $target instanceof \FFI\CData ? $target->cdata : $target;
-        $internalformat = $internalformat instanceof \FFI\CData ? $internalformat->cdata : $internalformat;
-        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
-        $bufSize = $bufSize instanceof \FFI\CData ? $bufSize->cdata : $bufSize;
-
-        assert(Type::isUint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($internalformat), 'Argument $internalformat must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isInt16($bufSize), 'Argument $bufSize must be a C-like GLsizei, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glGetInternalformativ', 'void (*)(GLenum target, GLenum internalformat, GLenum pname, GLsizei bufSize, GLint *params)');
-        $proc($target, $internalformat, $pname, $bufSize, $params);
-    }
-
-    /**
-     * {@see GL46::glGetActiveAtomicCounterBufferiv} retrieves information about the set of active atomic counter
-     * buffers for a program object. $program is the name of a program object for which the command
-     * {@see GL46::glLinkProgram} has been issued in the past. It is not necessary for $program to have been linked
-     * successfully. The link may have failed because the number of active atomic counters exceeded the limits.
-     *
-     * $bufferIndex specifies the index of an active atomic counter buffer and must be in the range zero to the value
-     * of {@see GL46::GL_ACTIVE_ATOMIC_COUNTER_BUFFERS} minus one. The value of
-     * {@see GL46::GL_ACTIVE_ATOMIC_COUNTER_BUFFERS} for $program indicates the number of active atomic counter
-     * buffer and can be queried with {@see GL46::glGetProgram}.
-     *
-     * If no error occurs, the parameter(s) specified by $pname are returned in $params. If an error is generated,
-     * the contents of $params are not modified.
-     *
-     * If $pname is {@see GL46::GL_ATOMIC_COUNTER_BUFFER_BINDING}, then the index of the counter buffer binding point
-     * associated with the active atomic counter buffer $bufferIndex for $program is returned.
-     *
-     * If $pname is {@see GL46::GL_ATOMIC_COUNTER_BUFFER_DATA_SIZE}, then the implementation-dependent minimum total
-     * buffer object size, in baseic machine units, required to hold all active atomic counters in the atomic counter
-     * binding point identified by $bufferIndex is returned.
-     *
-     * If $pname is {@see GL46::GL_ATOMIC_COUNTER_BUFFER_ACTIVE_ATOMIC_COUNTERS}, then the number of active atomic
-     * counters for the atomic counter buffer identified by $bufferIndex is returned.
-     *
-     * If $pname is {@see GL46::GL_ATOMIC_COUNTER_BUFFER_ACTIVE_ATOMIC_COUNTER_INDICES}, then a list of the active
-     * atomic counter indices for the atomic counter buffer identified by $bufferIndex is returned. The number of
-     * elements that will be written into $params is the value of
-     * {@see GL46::GL_ATOMIC_COUNTER_BUFFER_ACTIVE_ATOMIC_COUNTERS} for $bufferIndex.
-     *
-     * If $pname is {@see GL46::GL_ATOMIC_COUNTER_BUFFER_REFERENCED_BY_VERTEX_SHADER},
-     * {@see GL46::GL_ATOMIC_COUNTER_BUFFER_REFERENCED_BY_TESS_CONTROL_SHADER},
-     * {@see GL46::GL_ATOMIC_COUNTER_BUFFER_REFERENCED_BY_TESS_EVALUATION_SHADER},
-     * {@see GL46::GL_ATOMIC_COUNTER_BUFFER_REFERENCED_BY_GEOMETRY_SHADER},
-     * {@see GL46::GL_ATOMIC_COUNTER_BUFFER_REFERENCED_BY_FRAGMENT_SHADER},
-     * {@see GL46::GL_ATOMIC_COUNTER_BUFFER_REFERENCED_BY_COMPUTE_SHADER} then a boolean value indicating whether the
-     * atomic counter buffer identified by $bufferIndex is referenced by the vertex, tessellation control,
-     * tessellation evaluation, geometry, fragment or compute processing stages of $program, respectively, is
-     * returned.
-     *
-     * @see http://docs.gl/gl4/glGetActiveAtomicCounterBufferiv
-     * @since 4.2
-     * @param int|\FFI\CData|\FFI\CInt $program
-     * @param int|\FFI\CData|\FFI\CInt $bufferIndex
-     * @param int|\FFI\CData|\FFI\CInt $pname
-     * @param \FFI\CData|\FFI\CIntPtr|null $params
-     * @return void
-     */
-    public function getActiveAtomicCounterBufferiv($program, $bufferIndex, $pname, ?\FFI\CData $params): void
-    {
-        $program = $program instanceof \FFI\CData ? $program->cdata : $program;
-        $bufferIndex = $bufferIndex instanceof \FFI\CData ? $bufferIndex->cdata : $bufferIndex;
-        $pname = $pname instanceof \FFI\CData ? $pname->cdata : $pname;
-
-        assert(Type::isUint16($program), 'Argument $program must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isUint16($bufferIndex), 'Argument $bufferIndex must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isUint16($pname), 'Argument $pname must be a C-like GLenum, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glGetActiveAtomicCounterBufferiv', 'void (*)(GLuint program, GLuint bufferIndex, GLenum pname, GLint *params)');
-        $proc($program, $bufferIndex, $pname, $params);
-    }
-
-    /**
-     * {@see GL46::glBindImageTexture} binds a single level of a texture to an image unit for the purpose of reading
-     * and writing it from shaders. $unit specifies the zero-based index of the image unit to which to bind the
-     * texture level. $texture specifies the name of an existing texture object to bind to the image unit. If
-     * $texture is zero, then any existing binding to the image unit is broken. $level specifies the level of the
-     * texture to bind to the image unit.
-     *
-     * If $texture is the name of a one-, two-, or three-dimensional array texture, a cube map or cube map array
-     * texture, or a two-dimensional multisample array texture, then it is possible to bind either the entire array,
-     * or only a single layer of the array to the image unit. In such cases, if $layered is {@see GL46::GL_TRUE}, the
-     * entire array is attached to the image unit and $layer is ignored. However, if $layered is
-     * {@see GL46::GL_FALSE} then $layer specifies the layer of the array to attach to the image unit.
-     *
-     * $access specifies the access types to be performed by shaders and may be set to {@see GL46::GL_READ_ONLY},
-     * {@see GL46::GL_WRITE_ONLY}, or {@see GL46::GL_READ_WRITE} to indicate read-only, write-only or read-write
-     * access, respectively. Violation of the access type specified in $access (for example, if a shader writes to an
-     * image bound with $access set to {@see GL46::GL_READ_ONLY}) will lead to undefined results, possibly including
-     * program termination.
-     *
-     * $format specifies the format that is to be used when performing formatted stores into the image from shaders.
-     * $format must be compatible with the texture's internal format and must be one of the formats listed in the
-     * following table.
-     *
-     *  Internal Image Formats        Image Unit Format     Format Qualifier       {@see GL46::GL_RGBA32F} `rgba32f`
-     *  {@see GL46::GL_RGBA16F} `rgba16f`   {@see GL46::GL_RG32F} `rg32f`   {@see GL46::GL_RG16F} `rg16f`
-     * {@see GL46::GL_R11F_G11F_B10F} `r11f_g11f_b10f`   {@see GL46::GL_R32F} `r32f`   {@see GL46::GL_R16F} `r16f`
-     * {@see GL46::GL_RGBA32UI} `rgba32ui`   {@see GL46::GL_RGBA16UI} `rgba16ui`   {@see GL46::GL_RGB10_A2UI}
-     * `rgb10_a2ui`   {@see GL46::GL_RGBA8UI} `rgba8ui`   {@see GL46::GL_RG32UI} `rg32ui`   {@see GL46::GL_RG16UI}
-     * `rg16ui`   {@see GL46::GL_RG8UI} `rg8ui`   {@see GL46::GL_R32UI} `r32ui`   {@see GL46::GL_R16UI} `r16ui`
-     * {@see GL46::GL_R8UI} `r8ui`   {@see GL46::GL_RGBA32I} `rgba32i`   {@see GL46::GL_RGBA16I} `rgba16i`
-     * {@see GL46::GL_RGBA8I} `rgba8i`   {@see GL46::GL_RG32I} `rg32i`   {@see GL46::GL_RG16I} `rg16i`
-     * {@see GL46::GL_RG8I} `rg8i`   {@see GL46::GL_R32I} `r32i`   {@see GL46::GL_R16I} `r16i`   {@see GL46::GL_R8I}
-     * `r8i`   {@see GL46::GL_RGBA16} `rgba16`   {@see GL46::GL_RGB10_A2} `rgb10_a2`   {@see GL46::GL_RGBA8} `rgba8`
-     *  {@see GL46::GL_RG16} `rg16`   {@see GL46::GL_RG8} `rg8`   {@see GL46::GL_R16} `r16`   {@see GL46::GL_R8} `r8`
-     *   {@see GL46::GL_RGBA16_SNORM} `rgba16_snorm`   {@see GL46::GL_RGBA8_SNORM} `rgba8_snorm`
-     * {@see GL46::GL_RG16_SNORM} `rg16_snorm`   {@see GL46::GL_RG8_SNORM} `rg8_snorm`   {@see GL46::GL_R16_SNORM}
-     * `r16_snorm`   {@see GL46::GL_R8_SNORM} `r8_snorm`
-     *
-     * When a texture is bound to an image unit, the $format parameter for the image unit need not exactly match the
-     * texture internal format as long as the formats are considered compatible as defined in the OpenGL
-     * Specification. The matching criterion used for a given texture may be determined by calling
-     * {@see GL46::glGetTexParameter} with $value set to {@see GL46::GL_IMAGE_FORMAT_COMPATIBILITY_TYPE}, with return
-     * values of {@see GL46::GL_IMAGE_FORMAT_COMPATIBILITY_BY_SIZE} and
-     * {@see GL46::GL_IMAGE_FORMAT_COMPATIBILITY_BY_CLASS}, specifying matches by size and class, respectively.
-     *
-     * @see http://docs.gl/gl4/glBindImageTexture
-     * @since 4.2
-     * @param int|\FFI\CData|\FFI\CInt $unit
-     * @param int|\FFI\CData|\FFI\CInt $texture
-     * @param int|\FFI\CData|\FFI\CInt $level
-     * @param int|\FFI\CData|\FFI\CInt $layered
-     * @param int|\FFI\CData|\FFI\CInt $layer
-     * @param int|\FFI\CData|\FFI\CInt $access
-     * @param int|\FFI\CData|\FFI\CInt $format
-     * @return void
-     */
-    public function bindImageTexture($unit, $texture, $level, $layered, $layer, $access, $format): void
-    {
-        $unit = $unit instanceof \FFI\CData ? $unit->cdata : $unit;
-        $texture = $texture instanceof \FFI\CData ? $texture->cdata : $texture;
-        $level = $level instanceof \FFI\CData ? $level->cdata : $level;
-        $layered = $layered instanceof \FFI\CData ? $layered->cdata : $layered;
-        $layer = $layer instanceof \FFI\CData ? $layer->cdata : $layer;
-        $access = $access instanceof \FFI\CData ? $access->cdata : $access;
-        $format = $format instanceof \FFI\CData ? $format->cdata : $format;
-
-        assert(Type::isUint16($unit), 'Argument $unit must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isUint16($texture), 'Argument $texture must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isInt16($level), 'Argument $level must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isUint8($layered), 'Argument $layered must be a C-like GLboolean, but incompatible or overflow value given');
-        assert(Type::isInt16($layer), 'Argument $layer must be a C-like GLint, but incompatible or overflow value given');
-        assert(Type::isUint16($access), 'Argument $access must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($format), 'Argument $format must be a C-like GLenum, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glBindImageTexture', 'void (*)(GLuint unit, GLuint texture, GLint level, GLboolean layered, GLint layer, GLenum access, GLenum format)');
-        $proc($unit, $texture, $level, $layered, $layer, $access, $format);
+        $paramsCType = $this->info->ffi->new('GLint', false);
+        try {
+            $__proc = $this->getProcAs('glGetInternalformativ', 'void (*)(GLenum target, GLenum internalformat, GLenum pname, GLsizei bufSize, GLint *params)');
+            $__proc($target, $internalformat, $pname, $bufSize, \FFI::addr($paramsCType));
+        } finally {
+            $params = $paramsCType->cdata;
+            \FFI::free($paramsCType);
+        }
     }
 
     /**
@@ -1220,17 +1191,13 @@ class GL42 extends GL41
      *
      * @see http://docs.gl/gl4/glMemoryBarrier
      * @since 4.2
-     * @param int|\FFI\CData|\FFI\CInt $barriers
+     * @param int $barriers
      * @return void
      */
-    public function memoryBarrier($barriers): void
+    public function memoryBarrier(int $barriers): void
     {
-        $barriers = $barriers instanceof \FFI\CData ? $barriers->cdata : $barriers;
-
-        assert(Type::isUint16($barriers), 'Argument $barriers must be a C-like GLbitfield, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glMemoryBarrier', 'void (*)(GLbitfield barriers)');
-        $proc($barriers);
+        $__proc = $this->getProcAs('glMemoryBarrier', 'void (*)(GLbitfield barriers)');
+        $__proc($barriers);
     }
 
     /**
@@ -1269,26 +1236,16 @@ class GL42 extends GL41
      *
      * @see http://docs.gl/gl4/glTexStorage1D
      * @since 4.2
-     * @param int|\FFI\CData|\FFI\CInt $target
-     * @param int|\FFI\CData|\FFI\CInt $levels
-     * @param int|\FFI\CData|\FFI\CInt $internalformat
-     * @param int|\FFI\CData|\FFI\CInt $width
+     * @param int $target
+     * @param int $levels
+     * @param int $internalformat
+     * @param int $width
      * @return void
      */
-    public function texStorage1D($target, $levels, $internalformat, $width): void
+    public function texStorage1D(int $target, int $levels, int $internalformat, int $width): void
     {
-        $target = $target instanceof \FFI\CData ? $target->cdata : $target;
-        $levels = $levels instanceof \FFI\CData ? $levels->cdata : $levels;
-        $internalformat = $internalformat instanceof \FFI\CData ? $internalformat->cdata : $internalformat;
-        $width = $width instanceof \FFI\CData ? $width->cdata : $width;
-
-        assert(Type::isUint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isInt16($levels), 'Argument $levels must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Type::isUint16($internalformat), 'Argument $internalformat must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isInt16($width), 'Argument $width must be a C-like GLsizei, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glTexStorage1D', 'void (*)(GLenum target, GLsizei levels, GLenum internalformat, GLsizei width)');
-        $proc($target, $levels, $internalformat, $width);
+        $__proc = $this->getProcAs('glTexStorage1D', 'void (*)(GLenum target, GLsizei levels, GLenum internalformat, GLsizei width)');
+        $__proc($target, $levels, $internalformat, $width);
     }
 
     /**
@@ -1351,29 +1308,17 @@ class GL42 extends GL41
      *
      * @see http://docs.gl/gl4/glTexStorage2D
      * @since 4.2
-     * @param int|\FFI\CData|\FFI\CInt $target
-     * @param int|\FFI\CData|\FFI\CInt $levels
-     * @param int|\FFI\CData|\FFI\CInt $internalformat
-     * @param int|\FFI\CData|\FFI\CInt $width
-     * @param int|\FFI\CData|\FFI\CInt $height
+     * @param int $target
+     * @param int $levels
+     * @param int $internalformat
+     * @param int $width
+     * @param int $height
      * @return void
      */
-    public function texStorage2D($target, $levels, $internalformat, $width, $height): void
+    public function texStorage2D(int $target, int $levels, int $internalformat, int $width, int $height): void
     {
-        $target = $target instanceof \FFI\CData ? $target->cdata : $target;
-        $levels = $levels instanceof \FFI\CData ? $levels->cdata : $levels;
-        $internalformat = $internalformat instanceof \FFI\CData ? $internalformat->cdata : $internalformat;
-        $width = $width instanceof \FFI\CData ? $width->cdata : $width;
-        $height = $height instanceof \FFI\CData ? $height->cdata : $height;
-
-        assert(Type::isUint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isInt16($levels), 'Argument $levels must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Type::isUint16($internalformat), 'Argument $internalformat must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isInt16($width), 'Argument $width must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Type::isInt16($height), 'Argument $height must be a C-like GLsizei, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glTexStorage2D', 'void (*)(GLenum target, GLsizei levels, GLenum internalformat, GLsizei width, GLsizei height)');
-        $proc($target, $levels, $internalformat, $width, $height);
+        $__proc = $this->getProcAs('glTexStorage2D', 'void (*)(GLenum target, GLsizei levels, GLenum internalformat, GLsizei width, GLsizei height)');
+        $__proc($target, $levels, $internalformat, $width, $height);
     }
 
     /**
@@ -1426,98 +1371,17 @@ class GL42 extends GL41
      *
      * @see http://docs.gl/gl4/glTexStorage3D
      * @since 4.2
-     * @param int|\FFI\CData|\FFI\CInt $target
-     * @param int|\FFI\CData|\FFI\CInt $levels
-     * @param int|\FFI\CData|\FFI\CInt $internalformat
-     * @param int|\FFI\CData|\FFI\CInt $width
-     * @param int|\FFI\CData|\FFI\CInt $height
-     * @param int|\FFI\CData|\FFI\CInt $depth
+     * @param int $target
+     * @param int $levels
+     * @param int $internalformat
+     * @param int $width
+     * @param int $height
+     * @param int $depth
      * @return void
      */
-    public function texStorage3D($target, $levels, $internalformat, $width, $height, $depth): void
+    public function texStorage3D(int $target, int $levels, int $internalformat, int $width, int $height, int $depth): void
     {
-        $target = $target instanceof \FFI\CData ? $target->cdata : $target;
-        $levels = $levels instanceof \FFI\CData ? $levels->cdata : $levels;
-        $internalformat = $internalformat instanceof \FFI\CData ? $internalformat->cdata : $internalformat;
-        $width = $width instanceof \FFI\CData ? $width->cdata : $width;
-        $height = $height instanceof \FFI\CData ? $height->cdata : $height;
-        $depth = $depth instanceof \FFI\CData ? $depth->cdata : $depth;
-
-        assert(Type::isUint16($target), 'Argument $target must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isInt16($levels), 'Argument $levels must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Type::isUint16($internalformat), 'Argument $internalformat must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isInt16($width), 'Argument $width must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Type::isInt16($height), 'Argument $height must be a C-like GLsizei, but incompatible or overflow value given');
-        assert(Type::isInt16($depth), 'Argument $depth must be a C-like GLsizei, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glTexStorage3D', 'void (*)(GLenum target, GLsizei levels, GLenum internalformat, GLsizei width, GLsizei height, GLsizei depth)');
-        $proc($target, $levels, $internalformat, $width, $height, $depth);
-    }
-
-    /**
-     * {@see GL46::glDrawTransformFeedbackInstanced} draws multiple copies of a range of primitives of a type
-     * specified by $mode using a count retrieved from the transform feedback stream specified by $stream of the
-     * transform feedback object specified by $id. Calling {@see GL46::glDrawTransformFeedbackInstanced} is
-     * equivalent to calling {@see GL46::glDrawArraysInstanced} with $mode and $instancecount as specified, $first
-     * set to zero, and $count set to the number of vertices captured on vertex stream zero the last time transform
-     * feedback was active on the transform feedback object named by $id.
-     *
-     * Calling {@see GL46::glDrawTransformFeedbackInstanced} is equivalent to calling
-     * {@see GL46::glDrawTransformFeedbackStreamInstanced} with $stream set to zero.
-     *
-     * @see http://docs.gl/gl4/glDrawTransformFeedbackInstanced
-     * @since 4.2
-     * @param int|\FFI\CData|\FFI\CInt $mode
-     * @param int|\FFI\CData|\FFI\CInt $id
-     * @param int|\FFI\CData|\FFI\CInt $instancecount
-     * @return void
-     */
-    public function drawTransformFeedbackInstanced($mode, $id, $instancecount): void
-    {
-        $mode = $mode instanceof \FFI\CData ? $mode->cdata : $mode;
-        $id = $id instanceof \FFI\CData ? $id->cdata : $id;
-        $instancecount = $instancecount instanceof \FFI\CData ? $instancecount->cdata : $instancecount;
-
-        assert(Type::isUint16($mode), 'Argument $mode must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($id), 'Argument $id must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isInt16($instancecount), 'Argument $instancecount must be a C-like GLsizei, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glDrawTransformFeedbackInstanced', 'void (*)(GLenum mode, GLuint id, GLsizei instancecount)');
-        $proc($mode, $id, $instancecount);
-    }
-
-    /**
-     * {@see GL46::glDrawTransformFeedbackStreamInstanced} draws multiple copies of a range of primitives of a type
-     * specified by $mode using a count retrieved from the transform feedback stream specified by $stream of the
-     * transform feedback object specified by $id. Calling {@see GL46::glDrawTransformFeedbackStreamInstanced} is
-     * equivalent to calling {@see GL46::glDrawArraysInstanced} with $mode and $instancecount as specified, $first
-     * set to zero, and $count set to the number of vertices captured on vertex stream $stream the last time
-     * transform feedback was active on the transform feedback object named by $id.
-     *
-     * Calling {@see GL46::glDrawTransformFeedbackInstanced} is equivalent to calling
-     * {@see GL46::glDrawTransformFeedbackStreamInstanced} with $stream set to zero.
-     *
-     * @see http://docs.gl/gl4/glDrawTransformFeedbackStreamInstanced
-     * @since 4.2
-     * @param int|\FFI\CData|\FFI\CInt $mode
-     * @param int|\FFI\CData|\FFI\CInt $id
-     * @param int|\FFI\CData|\FFI\CInt $stream
-     * @param int|\FFI\CData|\FFI\CInt $instancecount
-     * @return void
-     */
-    public function drawTransformFeedbackStreamInstanced($mode, $id, $stream, $instancecount): void
-    {
-        $mode = $mode instanceof \FFI\CData ? $mode->cdata : $mode;
-        $id = $id instanceof \FFI\CData ? $id->cdata : $id;
-        $stream = $stream instanceof \FFI\CData ? $stream->cdata : $stream;
-        $instancecount = $instancecount instanceof \FFI\CData ? $instancecount->cdata : $instancecount;
-
-        assert(Type::isUint16($mode), 'Argument $mode must be a C-like GLenum, but incompatible or overflow value given');
-        assert(Type::isUint16($id), 'Argument $id must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isUint16($stream), 'Argument $stream must be a C-like GLuint, but incompatible or overflow value given');
-        assert(Type::isInt16($instancecount), 'Argument $instancecount must be a C-like GLsizei, but incompatible or overflow value given');
-
-        $proc = $this->getProcAddress('glDrawTransformFeedbackStreamInstanced', 'void (*)(GLenum mode, GLuint id, GLuint stream, GLsizei instancecount)');
-        $proc($mode, $id, $stream, $instancecount);
+        $__proc = $this->getProcAs('glTexStorage3D', 'void (*)(GLenum target, GLsizei levels, GLenum internalformat, GLsizei width, GLsizei height, GLsizei depth)');
+        $__proc($target, $levels, $internalformat, $width, $height, $depth);
     }
 }

@@ -62,7 +62,7 @@ abstract class GL
      * @param string $signature
      * @return CData|\Closure
      */
-    public function getProcAddress(string $fn, string $signature): CData
+    public function getProcAs(string $fn, string $signature): CData
     {
         return self::$virtualFunctions[$fn] ??= $this->cast($signature, $this->getProcAddressFunction($fn));
     }
